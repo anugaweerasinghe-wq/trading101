@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
+import { AIAssistant } from "@/components/AIAssistant";
+import { PortfolioChart } from "@/components/PortfolioChart";
 import { getPortfolio, updatePositionPrices } from "@/lib/portfolio";
+import { ASSETS } from "@/lib/assets";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart } from "lucide-react";
@@ -27,6 +30,11 @@ export default function Portfolio() {
       <main className="pt-24 pb-12">
         <div className="container mx-auto px-6">
           <h1 className="text-5xl font-bold mb-8">Portfolio</h1>
+
+          {/* Performance Chart */}
+          <div className="mb-12">
+            <PortfolioChart />
+          </div>
 
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -176,6 +184,8 @@ export default function Portfolio() {
           </div>
         </div>
       </main>
+
+      <AIAssistant portfolio={portfolio} assets={ASSETS} />
     </div>
   );
 }

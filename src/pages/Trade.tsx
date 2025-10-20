@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { AssetCard } from "@/components/AssetCard";
 import { TradeDialog } from "@/components/TradeDialog";
+import { AIAssistant } from "@/components/AIAssistant";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
@@ -120,6 +121,8 @@ export default function Trade() {
         onTrade={handleTrade}
         availableCash={portfolio.cash}
       />
+
+      <AIAssistant portfolio={portfolio} assets={ASSETS} />
     </div>
   );
 }

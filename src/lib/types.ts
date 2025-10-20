@@ -37,3 +37,17 @@ export interface Portfolio {
   positions: Position[];
   trades: Trade[];
 }
+
+export interface PortfolioSnapshot {
+  timestamp: Date;
+  totalValue: number;
+  cash: number;
+  positionsValue: number;
+}
+
+export interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+}

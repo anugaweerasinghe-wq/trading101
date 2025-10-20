@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Wallet, Home } from "lucide-react";
+import { TrendingUp, Wallet, Home, GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
@@ -49,6 +49,17 @@ export function Navigation() {
               >
                 <Wallet className="w-4 h-4 mr-2" />
                 Portfolio
+              </Button>
+            </Link>
+            <Link to="/learn">
+              <Button
+                variant="ghost"
+                className={cn(
+                  location.pathname === "/learn" && "bg-primary/10 text-primary"
+                )}
+              >
+                <GraduationCap className="w-4 h-4 mr-2" />
+                Learn
               </Button>
             </Link>
           </div>

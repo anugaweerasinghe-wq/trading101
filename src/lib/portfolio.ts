@@ -1,7 +1,9 @@
 import { Portfolio, Trade, Position, Asset } from './types';
 import { INITIAL_CASH, ASSETS } from './assets';
+import { recordSnapshot } from './portfolioHistory';
 
 const STORAGE_KEY = 'tradesandbox_portfolio';
+const HISTORY_KEY = 'tradesandbox_history';
 
 export function getPortfolio(): Portfolio {
   const stored = localStorage.getItem(STORAGE_KEY);
@@ -86,9 +88,11 @@ export function executeTrade(
     newPortfolio.trades.unshift(trade);
 
     // Update total value
-    newPortfolio.totalValue =
-      newPortfolio.cash +
-      newPortfolio.positions.reduce((sum, p) => sum + p.currentValue, 0);
+    const positionsValue = newPortfolio.positions.reduce((sum, p) => sum + p.currentValue, 0);
+    newPortfolio.totalValue = newPortfolio.cash + positionsValue;
+
+    // Record snapshot for chart
+    recordSnapshot(newPortfolio.cash, positionsValue);
 
     savePortfolio(newPortfolio);
     return {
@@ -133,9 +137,11 @@ export function executeTrade(
     newPortfolio.trades.unshift(trade);
 
     // Update total value
-    newPortfolio.totalValue =
-      newPortfolio.cash +
-      newPortfolio.positions.reduce((sum, p) => sum + p.currentValue, 0);
+    const positionsValue = newPortfolio.positions.reduce((sum, p) => sum + p.currentValue, 0);
+    newPortfolio.totalValue = newPortfolio.cash + positionsValue;
+
+    // Record snapshot for chart
+    recordSnapshot(newPortfolio.cash, positionsValue);
 
     savePortfolio(newPortfolio);
     return {
