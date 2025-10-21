@@ -1,7 +1,8 @@
 import { Navigation } from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target } from "lucide-react";
+import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const lessons = [
   {
@@ -85,6 +86,8 @@ const lessons = [
 ];
 
 export default function Learn() {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -104,7 +107,8 @@ export default function Learn() {
               return (
                 <Card 
                   key={lesson.id}
-                  className="p-6 hover-lift cursor-pointer border-border/50 hover:border-primary/50 bg-card/50 backdrop-blur-sm transition-all duration-300"
+                  onClick={() => navigate(`/learn/${lesson.id}`)}
+                  className="p-6 hover-lift cursor-pointer border-border/50 hover:border-primary/50 bg-card/50 backdrop-blur-sm transition-all duration-300 group"
                 >
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
@@ -122,7 +126,7 @@ export default function Learn() {
                     {lesson.description}
                   </p>
 
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 mb-4">
                     {lesson.content.map((item, index) => (
                       <li key={index} className="flex items-start gap-2 text-sm">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -130,6 +134,11 @@ export default function Learn() {
                       </li>
                     ))}
                   </ul>
+
+                  <div className="flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">
+                    <span>Start Learning</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
                 </Card>
               );
             })}
