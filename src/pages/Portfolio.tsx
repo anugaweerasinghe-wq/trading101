@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
 import { PortfolioChart } from "@/components/PortfolioChart";
-import { getPortfolio, updatePositionPrices } from "@/lib/portfolio";
+import { getPortfolio, updatePositionPrices, savePortfolio } from "@/lib/portfolio";
+import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
 import { ASSETS } from "@/lib/assets";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,8 +14,12 @@ export default function Portfolio() {
   const [portfolio, setPortfolio] = useState(getPortfolio());
 
   useEffect(() => {
-    const updated = updatePositionPrices(portfolio);
+    // First, simulate price changes over time since last visit
+    let updated = updatePortfolioOverTime(portfolio);
+    // Then update with current market prices
+    updated = updatePositionPrices(updated);
     setPortfolio(updated);
+    savePortfolio(updated);
   }, []);
 
   const totalPositionValue = portfolio.positions.reduce((sum, p) => sum + p.currentValue, 0);
