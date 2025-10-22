@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, BookOpen, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { lessonData } from "@/lib/lessonData";
 import { Quiz } from "@/components/Quiz";
@@ -68,52 +68,52 @@ export default function LessonDetail() {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <main className="pt-24 pb-12">
-        <div className="container mx-auto px-6 max-w-5xl">
+      <main className="pt-32 pb-20">
+        <div className="container mx-auto px-6 max-w-6xl">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-12 animate-fade-in">
             <Button
               variant="ghost"
               onClick={() => navigate("/learn")}
-              className="mb-4"
+              className="mb-8 hover:bg-primary/10"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Lessons
             </Button>
 
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <Badge variant="outline" className="mb-2">
-                  {lesson.category}
-                </Badge>
-                <h1 className="text-4xl md:text-5xl font-bold mb-2">{lesson.title}</h1>
-                <p className="text-xl text-muted-foreground">{lesson.description}</p>
-              </div>
+            <div className="mb-8">
+              <Badge variant="secondary" className="mb-4 px-4 py-1.5 text-sm">
+                {lesson.category}
+              </Badge>
+              <h1 className="text-5xl md:text-6xl font-bold mb-4 leading-tight">{lesson.title}</h1>
+              <p className="text-2xl text-muted-foreground leading-relaxed max-w-4xl">
+                {lesson.description}
+              </p>
             </div>
 
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">
+            <Card className="p-6 bg-card/50 backdrop-blur-sm border-0">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-medium text-muted-foreground">
                   Subtopic {currentSubtopic + 1} of {lesson.subtopics.length}
                 </span>
-                <span className="text-muted-foreground">{Math.round(progress)}% Complete</span>
+                <span className="text-sm font-semibold">{Math.round(progress)}% Complete</span>
               </div>
-              <Progress value={progress} className="h-2" />
-            </div>
+              <Progress value={progress} className="h-3" />
+            </Card>
           </div>
 
           {/* Subtopic Navigation */}
-          <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
+          <div className="flex gap-3 mb-12 overflow-x-auto pb-4 scrollbar-hide">
             {lesson.subtopics.map((subtopic, index) => (
               <Button
                 key={index}
                 variant={currentSubtopic === index ? "default" : "outline"}
-                size="sm"
+                size="lg"
                 onClick={() => setCurrentSubtopic(index)}
-                className="flex-shrink-0"
+                className="flex-shrink-0 font-medium px-6"
               >
                 {completedSubtopics.has(index) && (
-                  <CheckCircle2 className="w-4 h-4 mr-1" />
+                  <CheckCircle2 className="w-5 h-5 mr-2" />
                 )}
                 {subtopic.title}
               </Button>
@@ -121,47 +121,47 @@ export default function LessonDetail() {
           </div>
 
           {/* Content */}
-          <Card className="p-8 md:p-12 mb-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-primary" />
+          <Card className="p-12 md:p-16 mb-12 bg-card/30 backdrop-blur-xl border-0 shadow-2xl">
+            <div className="flex items-center gap-4 mb-12">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <BookOpen className="w-8 h-8 text-primary" />
               </div>
-              <h2 className="text-3xl font-bold">{currentTopic.title}</h2>
+              <h2 className="text-4xl md:text-5xl font-bold">{currentTopic.title}</h2>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-10 max-w-4xl">
               {currentTopic.content.map((section, index) => (
-                <div key={index}>
+                <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
                   {section.type === "text" && (
-                    <p className="text-lg leading-relaxed text-muted-foreground">
+                    <p className="text-xl leading-relaxed text-foreground/80">
                       {section.data}
                     </p>
                   )}
 
                   {section.type === "heading" && (
-                    <h3 className="text-2xl font-bold mt-8 mb-4">{section.data}</h3>
+                    <h3 className="text-3xl font-bold mt-12 mb-6">{section.data}</h3>
                   )}
 
                   {section.type === "list" && (
-                    <ul className="space-y-3 ml-6">
+                    <ul className="space-y-4 ml-2">
                       {(section.data as string[]).map((item, i) => (
-                        <li key={i} className="flex items-start gap-3 text-lg">
-                          <div className="w-2 h-2 rounded-full bg-primary mt-2.5 flex-shrink-0" />
-                          <span>{item}</span>
+                        <li key={i} className="flex items-start gap-4 text-lg">
+                          <div className="w-2 h-2 rounded-full bg-primary mt-3 flex-shrink-0" />
+                          <span className="text-foreground/80">{item}</span>
                         </li>
                       ))}
                     </ul>
                   )}
 
                   {section.type === "image" && (
-                    <div className="my-8 rounded-lg overflow-hidden">
+                    <div className="my-12 rounded-2xl overflow-hidden shadow-xl">
                       <img
                         src={section.data as string}
                         alt={section.alt || "Lesson visual"}
                         className="w-full h-auto"
                       />
                       {section.caption && (
-                        <p className="text-sm text-muted-foreground text-center mt-2">
+                        <p className="text-base text-muted-foreground text-center mt-4">
                           {section.caption}
                         </p>
                       )}
@@ -169,20 +169,20 @@ export default function LessonDetail() {
                   )}
 
                   {section.type === "example" && (
-                    <Card className="p-6 bg-primary/5 border-primary/20">
-                      <h4 className="font-bold text-lg mb-3 flex items-center gap-2">
-                        <span className="text-primary">💡</span> Example
+                    <Card className="p-8 bg-primary/5 border-primary/20 backdrop-blur-sm">
+                      <h4 className="font-bold text-2xl mb-4 flex items-center gap-3">
+                        <span className="text-3xl">💡</span> Example
                       </h4>
-                      <p className="text-muted-foreground">{section.data}</p>
+                      <p className="text-lg text-foreground/80 leading-relaxed">{section.data}</p>
                     </Card>
                   )}
 
                   {section.type === "tip" && (
-                    <Card className="p-6 bg-accent/50 border-accent">
-                      <h4 className="font-bold text-lg mb-3 flex items-center gap-2">
-                        <span>✨</span> Pro Tip
+                    <Card className="p-8 bg-gradient-to-br from-accent/30 to-accent/10 border-accent/30 backdrop-blur-sm">
+                      <h4 className="font-bold text-2xl mb-4 flex items-center gap-3">
+                        <span className="text-3xl">✨</span> Pro Tip
                       </h4>
-                      <p className="text-muted-foreground">{section.data}</p>
+                      <p className="text-lg text-foreground/80 leading-relaxed">{section.data}</p>
                     </Card>
                   )}
                 </div>
@@ -191,20 +191,22 @@ export default function LessonDetail() {
           </Card>
 
           {/* Navigation Buttons */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <Button
               variant="outline"
               onClick={() => setCurrentSubtopic(Math.max(0, currentSubtopic - 1))}
               disabled={currentSubtopic === 0}
+              size="lg"
+              className="px-8"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft className="w-5 h-5 mr-2" />
               Previous
             </Button>
 
-            <Button onClick={handleComplete} size="lg">
-              {currentSubtopic === lesson.subtopics.length - 1 ? "Take Quiz" : "Next Subtopic"}
+            <Button onClick={handleComplete} size="lg" className="px-8 text-lg">
+              {currentSubtopic === lesson.subtopics.length - 1 ? "Take Quiz" : "Continue"}
               {currentSubtopic < lesson.subtopics.length - 1 && (
-                <CheckCircle2 className="w-4 h-4 ml-2" />
+                <ArrowRight className="w-5 h-5 ml-2" />
               )}
             </Button>
           </div>
