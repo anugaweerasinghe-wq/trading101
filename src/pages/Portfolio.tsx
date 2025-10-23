@@ -2,16 +2,20 @@ import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
 import { PortfolioChart } from "@/components/PortfolioChart";
-import { getPortfolio, updatePositionPrices, savePortfolio } from "@/lib/portfolio";
+import { getPortfolio, updatePositionPrices, savePortfolio, canClaimWeeklyBonus, getTimeUntilNextBonus, claimWeeklyBonus } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
 import { ASSETS } from "@/lib/assets";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart, Gift } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Portfolio() {
   const [portfolio, setPortfolio] = useState(getPortfolio());
+  const [canClaim, setCanClaim] = useState(canClaimWeeklyBonus());
+  const { toast } = useToast();
 
   useEffect(() => {
     // First, simulate price changes over time since last visit
@@ -28,13 +32,42 @@ export default function Portfolio() {
     ? (totalProfitLoss / (totalPositionValue - totalProfitLoss)) * 100 
     : 0;
 
+  const handleClaimBonus = () => {
+    const result = claimWeeklyBonus(portfolio);
+    if (result.success && result.portfolio) {
+      setPortfolio(result.portfolio);
+      setCanClaim(false);
+      toast({
+        title: "Weekly Bonus Claimed!",
+        description: result.message,
+      });
+    } else {
+      toast({
+        title: "Cannot Claim Bonus",
+        description: result.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       
       <main className="pt-24 pb-12">
         <div className="container mx-auto px-6">
-          <h1 className="text-5xl font-bold mb-8">Portfolio</h1>
+          <div className="flex items-center justify-between mb-8">
+            <h1 className="text-5xl font-bold">Portfolio</h1>
+            <Button
+              onClick={handleClaimBonus}
+              disabled={!canClaim}
+              size="lg"
+              className="gap-2"
+            >
+              <Gift className="w-5 h-5" />
+              {canClaim ? "Claim $10,000 Bonus" : `Next Bonus: ${getTimeUntilNextBonus()}`}
+            </Button>
+          </div>
 
           {/* Performance Chart */}
           <div className="mb-12">

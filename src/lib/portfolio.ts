@@ -176,3 +176,55 @@ export function updatePositionPrices(portfolio: Portfolio): Portfolio {
 
   return newPortfolio;
 }
+
+const WEEKLY_BONUS_KEY = 'tradesandbox_last_bonus';
+const WEEKLY_BONUS_AMOUNT = 10000;
+const WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
+
+export function canClaimWeeklyBonus(): boolean {
+  const lastClaim = localStorage.getItem(WEEKLY_BONUS_KEY);
+  if (!lastClaim) return true;
+  
+  const timeSinceLastClaim = Date.now() - parseInt(lastClaim);
+  return timeSinceLastClaim >= WEEK_IN_MS;
+}
+
+export function getTimeUntilNextBonus(): string {
+  const lastClaim = localStorage.getItem(WEEKLY_BONUS_KEY);
+  if (!lastClaim) return 'Available now';
+  
+  const timeSinceLastClaim = Date.now() - parseInt(lastClaim);
+  const timeRemaining = WEEK_IN_MS - timeSinceLastClaim;
+  
+  if (timeRemaining <= 0) return 'Available now';
+  
+  const days = Math.floor(timeRemaining / (24 * 60 * 60 * 1000));
+  const hours = Math.floor((timeRemaining % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+  
+  if (days > 0) {
+    return `${days}d ${hours}h remaining`;
+  }
+  return `${hours}h remaining`;
+}
+
+export function claimWeeklyBonus(portfolio: Portfolio): { success: boolean; message: string; portfolio?: Portfolio } {
+  if (!canClaimWeeklyBonus()) {
+    return {
+      success: false,
+      message: `Weekly bonus already claimed. Next bonus in ${getTimeUntilNextBonus()}`,
+    };
+  }
+
+  const newPortfolio = { ...portfolio };
+  newPortfolio.cash += WEEKLY_BONUS_AMOUNT;
+  newPortfolio.totalValue += WEEKLY_BONUS_AMOUNT;
+
+  localStorage.setItem(WEEKLY_BONUS_KEY, Date.now().toString());
+  savePortfolio(newPortfolio);
+
+  return {
+    success: true,
+    message: `Claimed $${WEEKLY_BONUS_AMOUNT.toLocaleString()} weekly bonus!`,
+    portfolio: newPortfolio,
+  };
+}
