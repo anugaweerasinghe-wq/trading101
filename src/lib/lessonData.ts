@@ -1,8 +1,11 @@
 export interface ContentSection {
-  type: "text" | "heading" | "list" | "image" | "example" | "tip";
+  type: "text" | "heading" | "list" | "image" | "example" | "tip" | "quote" | "stat" | "highlight" | "video";
   data: string | string[];
   alt?: string;
   caption?: string;
+  author?: string;
+  value?: string;
+  label?: string;
 }
 
 export interface Subtopic {
@@ -37,8 +40,19 @@ export const lessonData: Lesson[] = [
         title: "Understanding Stocks, ETFs & Securities",
         content: [
           {
+            type: "quote",
+            data: "The stock market is a device for transferring money from the impatient to the patient.",
+            author: "Warren Buffett",
+          },
+          {
             type: "text",
             data: "Welcome to the world of trading! Before you make your first trade, it's crucial to understand what you're actually buying and selling. Think of securities as pieces of ownership or debt that you can trade on the market.",
+          },
+          {
+            type: "image",
+            data: "/src/assets/lesson-stocks-basics.jpg",
+            alt: "Understanding the basics of stock trading",
+            caption: "Your journey to financial freedom starts with understanding the fundamentals",
           },
           {
             type: "heading",
@@ -47,6 +61,12 @@ export const lessonData: Lesson[] = [
           {
             type: "text",
             data: "A stock represents a piece of ownership in a company. When you buy Apple stock, you become a tiny owner of Apple! Companies sell stocks to raise money, and you can profit if the company grows and the stock price increases.",
+          },
+          {
+            type: "stat",
+            value: "$2.8T",
+            label: "Apple's Market Capitalization",
+            data: "One of the most valuable companies in the world, showing the incredible potential of stock ownership",
           },
           {
             type: "example",
@@ -59,6 +79,10 @@ export const lessonData: Lesson[] = [
           {
             type: "text",
             data: "ETFs are like baskets of multiple stocks bundled together. Instead of buying one company, you're buying a piece of many companies at once. This is called diversification, and it helps reduce risk.",
+          },
+          {
+            type: "highlight",
+            data: "ETFs combine the diversification of mutual funds with the trading flexibility of individual stocks - giving you the best of both worlds.",
           },
           {
             type: "list",
@@ -102,6 +126,11 @@ export const lessonData: Lesson[] = [
         title: "How to Read Stock Quotes & Charts",
         content: [
           {
+            type: "quote",
+            data: "Charts are the footprints of money. If you can read them, you can follow where the money is going.",
+            author: "Anonymous Trader",
+          },
+          {
             type: "text",
             data: "Stock quotes and charts are the language of the market. Learning to read them is like learning to read a map - once you know how, you can navigate anywhere!",
           },
@@ -129,6 +158,12 @@ export const lessonData: Lesson[] = [
             data: "AAPL: $175.50 (+2.30, +1.33%) | Volume: 52M | Market Cap: $2.8T | P/E: 28.5. This tells us Apple is trading at $175.50, up 1.33% today, with high trading activity.",
           },
           {
+            type: "image",
+            data: "/src/assets/lesson-candlestick.jpg",
+            alt: "Understanding candlestick chart patterns",
+            caption: "Master the art of reading price action through candlestick patterns",
+          },
+          {
             type: "heading",
             data: "Reading Price Charts",
           },
@@ -149,6 +184,10 @@ export const lessonData: Lesson[] = [
             data: "Candlestick Patterns",
           },
           {
+            type: "highlight",
+            data: "Candlesticks are the DNA of price movement - they reveal the psychology of buyers and sellers in real-time.",
+          },
+          {
             type: "text",
             data: "Candlesticks are the most popular chart type because they show so much information:",
           },
@@ -161,6 +200,12 @@ export const lessonData: Lesson[] = [
               "The wicks show the highest and lowest prices",
               "Longer bodies = stronger momentum",
             ],
+          },
+          {
+            type: "stat",
+            value: "4+",
+            label: "Data Points Per Candlestick",
+            data: "Each candlestick gives you Open, High, Low, and Close prices - telling a complete story of price action",
           },
           {
             type: "tip",
@@ -188,6 +233,11 @@ export const lessonData: Lesson[] = [
       {
         title: "Market Orders vs. Limit Orders",
         content: [
+          {
+            type: "quote",
+            data: "Price is what you pay. Value is what you get. Control your entry, control your destiny.",
+            author: "Trading Wisdom",
+          },
           {
             type: "text",
             data: "One of the most important decisions you'll make when trading is choosing the right order type. The two main types are market orders and limit orders, and each has specific uses.",
@@ -222,6 +272,10 @@ export const lessonData: Lesson[] = [
             data: "A limit order only executes at your specified price or better. You have complete control over the price you pay.",
           },
           {
+            type: "highlight",
+            data: "Limit orders are your shield against volatile markets - you define the maximum you'll pay, and the market comes to you.",
+          },
+          {
             type: "list",
             data: [
               "Pros: Price control, no surprises",
@@ -229,6 +283,12 @@ export const lessonData: Lesson[] = [
               "Best for: Patient traders, volatile markets, large orders",
               "Example: Only buy if price drops to $195 or lower",
             ],
+          },
+          {
+            type: "stat",
+            value: "73%",
+            label: "Of Professional Traders Use Limit Orders",
+            data: "Most experienced traders prefer price control over immediate execution",
           },
           {
             type: "tip",
@@ -450,8 +510,19 @@ export const lessonData: Lesson[] = [
         title: "Position Sizing & The 2% Rule",
         content: [
           {
+            type: "quote",
+            data: "Rule No. 1: Never lose money. Rule No. 2: Never forget Rule No. 1.",
+            author: "Warren Buffett",
+          },
+          {
             type: "text",
             data: "The fastest way to blow up your trading account is risking too much on a single trade. Position sizing is the most critical skill for long-term success.",
+          },
+          {
+            type: "image",
+            data: "/src/assets/lesson-risk-management.jpg",
+            alt: "Professional risk management strategies",
+            caption: "Protect your capital first, profits will follow",
           },
           {
             type: "heading",
@@ -533,8 +604,18 @@ export const lessonData: Lesson[] = [
         title: "Stop-Loss & Take-Profit Targets",
         content: [
           {
+            type: "highlight",
+            data: "A stop-loss is not a sign of defeat - it's a sign of discipline. It's your automated risk manager working 24/7.",
+          },
+          {
             type: "text",
             data: "Every trade needs two critical levels set before you enter: where you'll exit if you're wrong (stop-loss) and where you'll exit if you're right (take-profit). Without these, you're gambling.",
+          },
+          {
+            type: "stat",
+            value: "95%",
+            label: "Of Successful Traders Use Stop-Losses",
+            data: "The most consistent winners in trading never let losses run wild",
           },
           {
             type: "heading",
@@ -630,8 +711,19 @@ export const lessonData: Lesson[] = [
         title: "Understanding Risk-Reward Ratios",
         content: [
           {
+            type: "quote",
+            data: "Win or lose, everybody gets what they want out of the market. Some people seem to like to lose, so they win by losing money.",
+            author: "Ed Seykota",
+          },
+          {
             type: "text",
             data: "The risk-reward ratio is the secret to profitable trading. You don't need to win 90% of trades - you just need your winners to be bigger than your losers.",
+          },
+          {
+            type: "stat",
+            value: "1:3",
+            label: "Ideal Minimum Risk-Reward Ratio",
+            data: "Risk $1 to make $3 - this ratio allows profitability even with a 30% win rate",
           },
           {
             type: "heading",
@@ -923,8 +1015,19 @@ export const lessonData: Lesson[] = [
         title: "Candlestick Patterns",
         content: [
           {
+            type: "quote",
+            data: "The market is a device for transferring money from the impatient to the patient.",
+            author: "Warren Buffett",
+          },
+          {
             type: "text",
             data: "Candlestick patterns are the language of price action. Master these, and you'll understand what the market is telling you.",
+          },
+          {
+            type: "image",
+            data: "/src/assets/lesson-candlestick.jpg",
+            alt: "Candlestick pattern analysis",
+            caption: "Each candle tells a story - learn to read the narrative of price",
           },
           {
             type: "heading",
@@ -950,8 +1053,18 @@ export const lessonData: Lesson[] = [
         title: "Support & Resistance Levels",
         content: [
           {
+            type: "highlight",
+            data: "Support and resistance are where battles between buyers and sellers create invisible walls - price memories that the market never forgets.",
+          },
+          {
             type: "text",
             data: "Support and resistance are price levels where stocks tend to bounce or stall. They're like invisible floors and ceilings.",
+          },
+          {
+            type: "image",
+            data: "/src/assets/lesson-support-resistance.jpg",
+            alt: "Support and resistance levels explained",
+            caption: "The foundation of technical analysis - where price action comes alive",
           },
           {
             type: "list",
@@ -970,6 +1083,18 @@ export const lessonData: Lesson[] = [
           {
             type: "text",
             data: "Moving averages smooth out price data to identify trends and momentum. They're one of the most popular technical indicators.",
+          },
+          {
+            type: "image",
+            data: "/src/assets/lesson-moving-averages.jpg",
+            alt: "Understanding moving averages",
+            caption: "Smooth out the noise and see the true trend with moving averages",
+          },
+          {
+            type: "stat",
+            value: "50 & 200",
+            label: "Most Popular Moving Averages (Days)",
+            data: "The golden cross (50-day crossing above 200-day) is one of the most powerful bullish signals",
           },
           {
             type: "list",

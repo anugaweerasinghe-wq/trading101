@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Quote, TrendingUp, Sparkles, Play } from "lucide-react";
 import { useState } from "react";
 import { lessonData } from "@/lib/lessonData";
 import { Quiz } from "@/components/Quiz";
@@ -178,11 +178,66 @@ export default function LessonDetail() {
                   )}
 
                   {section.type === "tip" && (
-                    <Card className="p-8 bg-gradient-to-br from-accent/30 to-accent/10 border-accent/30 backdrop-blur-sm">
+                    <Card className="p-8 bg-gradient-to-br from-accent/30 to-accent/10 border-accent/30 backdrop-blur-sm hover-lift">
                       <h4 className="font-bold text-2xl mb-4 flex items-center gap-3">
-                        <span className="text-3xl">✨</span> Pro Tip
+                        <Sparkles className="w-7 h-7 text-accent" /> Pro Tip
                       </h4>
                       <p className="text-lg text-foreground/80 leading-relaxed">{section.data}</p>
+                    </Card>
+                  )}
+
+                  {section.type === "quote" && (
+                    <Card className="p-10 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent border-primary/30 backdrop-blur-xl hover-lift relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+                      <Quote className="w-12 h-12 text-primary/40 mb-6" />
+                      <blockquote className="text-2xl md:text-3xl font-serif italic leading-relaxed mb-6 text-foreground">
+                        "{section.data}"
+                      </blockquote>
+                      {section.author && (
+                        <p className="text-lg text-primary font-semibold">— {section.author}</p>
+                      )}
+                    </Card>
+                  )}
+
+                  {section.type === "stat" && (
+                    <Card className="p-10 bg-gradient-gold border-0 backdrop-blur-xl hover-lift relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="relative">
+                        <TrendingUp className="w-10 h-10 text-primary mb-4 animate-pulse" />
+                        <div className="text-5xl md:text-6xl font-bold text-gradient-gold mb-3">
+                          {section.value}
+                        </div>
+                        <div className="text-xl font-semibold text-primary mb-4">
+                          {section.label}
+                        </div>
+                        <p className="text-lg text-foreground/70 leading-relaxed">
+                          {section.data}
+                        </p>
+                      </div>
+                    </Card>
+                  )}
+
+                  {section.type === "highlight" && (
+                    <Card className="p-8 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 border-0 backdrop-blur-sm hover-lift relative overflow-hidden">
+                      <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-primary to-accent" />
+                      <p className="text-xl md:text-2xl font-semibold leading-relaxed text-foreground pl-6">
+                        {section.data}
+                      </p>
+                    </Card>
+                  )}
+
+                  {section.type === "video" && (
+                    <Card className="relative overflow-hidden rounded-2xl shadow-2xl group cursor-pointer hover-lift">
+                      <div className="aspect-video bg-gradient-to-br from-background to-primary/20 flex items-center justify-center">
+                        <div className="w-20 h-20 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                          <Play className="w-10 h-10 text-primary ml-1" />
+                        </div>
+                      </div>
+                      {section.caption && (
+                        <div className="p-6 bg-card/50 backdrop-blur-sm">
+                          <p className="text-lg text-foreground/80">{section.caption}</p>
+                        </div>
+                      )}
                     </Card>
                   )}
                 </div>
