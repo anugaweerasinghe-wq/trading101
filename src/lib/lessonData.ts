@@ -1,5 +1,5 @@
 export interface ContentSection {
-  type: "text" | "heading" | "list" | "image" | "example" | "tip" | "quote" | "stat" | "highlight" | "video";
+  type: "text" | "heading" | "list" | "image" | "example" | "tip" | "quote" | "stat" | "highlight";
   data?: string | string[];
   alt?: string;
   caption?: string;
@@ -1262,10 +1262,6 @@ export const lessonData: Lesson[] = [
             type: "tip",
             data: "Review your allocation annually, but don't chase performance. Stick to your plan and rebalance when allocations drift more than 5% from targets.",
           },
-          {
-            type: "video",
-            caption: "Watch: Building Your Perfect Portfolio Allocation Strategy",
-          },
         ],
       },
       {
@@ -1468,10 +1464,6 @@ export const lessonData: Lesson[] = [
             type: "tip",
             data: "Use the 5/25 rule: Rebalance when any position drifts 5% from target OR grows to 25%+ of portfolio. This captures both small drifts and concentration risk.",
           },
-          {
-            type: "video",
-            caption: "Watch: The Science of Portfolio Rebalancing",
-          },
         ],
       },
     ],
@@ -1573,10 +1565,6 @@ export const lessonData: Lesson[] = [
             type: "tip",
             data: "Start with long-term investing. Once you're consistently profitable for 6+ months, consider adding swing trading. Only attempt day trading if you've mastered swing trading and can commit full-time.",
           },
-          {
-            type: "video",
-            caption: "Watch: Finding Your Perfect Trading Timeline",
-          },
         ],
       },
       {
@@ -1641,10 +1629,6 @@ export const lessonData: Lesson[] = [
             type: "tip",
             data: "Set three goals: Minimum (stay profitable), Target (realistic stretch), and Maximum (dream scenario). Hit minimum? Success. Hit target? Excellent month. Exceeded target? Take profits and tighten risk management.",
           },
-          {
-            type: "video",
-            caption: "Watch: The Psychology of Profitable Goal Setting",
-          },
         ],
       },
       {
@@ -1705,10 +1689,6 @@ export const lessonData: Lesson[] = [
           {
             type: "tip",
             data: "Use a spreadsheet or specialized software like TraderSync or Edgewonk. Include photos of chart setups. Review it before each trading session to remember lessons learned.",
-          },
-          {
-            type: "video",
-            caption: "Watch: Building Your Perfect Trading Journal System",
           },
         ],
       },
@@ -1878,10 +1858,6 @@ export const lessonData: Lesson[] = [
             type: "tip",
             data: "Use the 200-day moving average as your market compass: Above = bull market bias (buy dips). Below = bear market bias (cash and caution). When price crosses, the market may be transitioning.",
           },
-          {
-            type: "video",
-            caption: "Watch: Identifying Market Cycles for Maximum Profit",
-          },
         ],
       },
       {
@@ -1934,10 +1910,6 @@ export const lessonData: Lesson[] = [
           {
             type: "tip",
             data: "Never try to catch exact tops or bottoms. Wait for confirmation: Wait for trend line break + volume surge + divergence signal. Missing first 10% of move is fine - catching reversal early beats catching falling knife!",
-          },
-          {
-            type: "video",
-            caption: "Watch: Mastering Divergence for High-Probability Reversals",
           },
         ],
       },
@@ -2090,10 +2062,6 @@ export const lessonData: Lesson[] = [
           {
             type: "tip",
             data: "Create a sentiment checklist: VIX level, Put/Call ratio, headline sentiment, social media buzz. When 3+ indicators show extreme fear, start buying. When 3+ show extreme greed, start selling. Sentiment extremes don't last long!",
-          },
-          {
-            type: "video",
-            caption: "Watch: Using Sentiment to Time Market Entries and Exits",
           },
         ],
       },

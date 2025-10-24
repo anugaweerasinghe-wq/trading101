@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Quote, TrendingUp, Sparkles, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Quote, TrendingUp, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { lessonData } from "@/lib/lessonData";
 import { Quiz } from "@/components/Quiz";
@@ -223,21 +223,6 @@ export default function LessonDetail() {
                       <p className="text-xl md:text-2xl font-semibold leading-relaxed text-foreground pl-6">
                         {section.data}
                       </p>
-                    </Card>
-                  )}
-
-                  {section.type === "video" && (
-                    <Card className="relative overflow-hidden rounded-2xl shadow-2xl group cursor-pointer hover-lift">
-                      <div className="aspect-video bg-gradient-to-br from-background to-primary/20 flex items-center justify-center">
-                        <div className="w-20 h-20 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <Play className="w-10 h-10 text-primary ml-1" />
-                        </div>
-                      </div>
-                      {section.caption && (
-                        <div className="p-6 bg-card/50 backdrop-blur-sm">
-                          <p className="text-lg text-foreground/80">{section.caption}</p>
-                        </div>
-                      )}
                     </Card>
                   )}
                 </div>
