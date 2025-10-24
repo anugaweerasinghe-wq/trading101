@@ -1,6 +1,6 @@
 export interface ContentSection {
   type: "text" | "heading" | "list" | "image" | "example" | "tip" | "quote" | "stat" | "highlight" | "video";
-  data: string | string[];
+  data?: string | string[];
   alt?: string;
   caption?: string;
   author?: string;
@@ -1196,17 +1196,75 @@ export const lessonData: Lesson[] = [
         title: "Asset Allocation Strategies",
         content: [
           {
+            type: "quote",
+            data: "The most important decision you'll make is not what to buy, but how much of each asset to own.",
+            author: "Ray Dalio",
+          },
+          {
             type: "text",
-            data: "Asset allocation is how you divide your money among different investment types. It's the single most important factor in long-term returns.",
+            data: "Asset allocation is how you divide your money among different investment types. It's the single most important factor in long-term returns - more important than picking individual stocks.",
+          },
+          {
+            type: "image",
+            data: "/src/assets/lesson-portfolio-allocation.jpg",
+            alt: "Portfolio allocation strategy visualization",
+            caption: "Build your fortress - diversified allocation is your strongest defense",
+          },
+          {
+            type: "stat",
+            value: "90%",
+            label: "Of Portfolio Returns Determined by Asset Allocation",
+            data: "Research shows asset allocation explains 90% of a portfolio's performance variance - stock picking matters far less than most think",
+          },
+          {
+            type: "heading",
+            data: "The Three Core Strategies",
+          },
+          {
+            type: "text",
+            data: "Choose your allocation based on age, risk tolerance, and time horizon:",
+          },
+          {
+            type: "example",
+            data: "Aggressive (Age 20-35): 80% stocks, 15% crypto, 5% bonds. You have time to recover from downturns and capture maximum growth.",
+          },
+          {
+            type: "example",
+            data: "Moderate (Age 35-55): 60% stocks, 30% bonds, 10% alternatives. Balanced between growth and stability as you build wealth.",
+          },
+          {
+            type: "example",
+            data: "Conservative (Age 55+): 40% stocks, 50% bonds, 10% cash. Preserve capital while generating income for retirement.",
+          },
+          {
+            type: "highlight",
+            data: "Your age and goals determine your allocation. Young investors can afford more risk. Older investors need more stability.",
+          },
+          {
+            type: "heading",
+            data: "The 100-Minus-Age Rule",
+          },
+          {
+            type: "text",
+            data: "A simple rule of thumb for stock allocation:",
           },
           {
             type: "list",
             data: [
-              "Aggressive (high risk): 80% stocks, 15% crypto, 5% bonds",
-              "Moderate (balanced): 60% stocks, 30% bonds, 10% alternatives",
-              "Conservative (low risk): 40% stocks, 50% bonds, 10% cash",
-              "Your age and goals determine your allocation",
+              "Subtract your age from 100 = % in stocks",
+              "Age 25: 75% stocks, 25% bonds/cash",
+              "Age 50: 50% stocks, 50% bonds/cash",
+              "Age 70: 30% stocks, 70% bonds/cash",
+              "Adjust based on risk tolerance",
             ],
+          },
+          {
+            type: "tip",
+            data: "Review your allocation annually, but don't chase performance. Stick to your plan and rebalance when allocations drift more than 5% from targets.",
+          },
+          {
+            type: "video",
+            caption: "Watch: Building Your Perfect Portfolio Allocation Strategy",
           },
         ],
       },
@@ -1214,17 +1272,80 @@ export const lessonData: Lesson[] = [
         title: "Balancing Stocks, ETFs & Crypto",
         content: [
           {
+            type: "highlight",
+            data: "Each asset class serves a different purpose - ETFs for stability, stocks for growth, crypto for moonshots. The magic is in the mix.",
+          },
+          {
             type: "text",
-            data: "Each asset class serves a different purpose in your portfolio. Combine them strategically for optimal risk-adjusted returns.",
+            data: "Each asset class serves a different purpose in your portfolio. Combine them strategically for optimal risk-adjusted returns without putting all your eggs in one basket.",
+          },
+          {
+            type: "heading",
+            data: "ETFs: Your Foundation",
+          },
+          {
+            type: "text",
+            data: "ETFs should form 50-70% of most portfolios. They provide instant diversification and reduce single-stock risk.",
           },
           {
             type: "list",
             data: [
-              "ETFs: Core holdings for broad market exposure (50-70%)",
-              "Individual Stocks: Growth opportunities (20-40%)",
-              "Crypto: High-risk, high-reward allocation (5-15%)",
-              "Never put all eggs in one basket",
+              "SPY: S&P 500 tracker (broad US market)",
+              "QQQ: Tech-heavy NASDAQ tracker",
+              "VTI: Total US market",
+              "VXUS: International exposure",
+              "Lower fees than mutual funds",
             ],
+          },
+          {
+            type: "example",
+            data: "$10,000 portfolio: $6,000 in SPY/QQQ gives you exposure to 500+ companies with two purchases. That's instant diversification!",
+          },
+          {
+            type: "heading",
+            data: "Individual Stocks: Your Growth Engine",
+          },
+          {
+            type: "text",
+            data: "Allocate 20-40% to individual stocks for potential outperformance. Pick quality companies you understand:",
+          },
+          {
+            type: "list",
+            data: [
+              "Blue chips: AAPL, MSFT, GOOGL (stability + growth)",
+              "Growth stocks: TSLA, NVDA (higher risk, higher reward)",
+              "Dividend payers: JNJ, PG (income generation)",
+              "Limit to 5-8 individual positions",
+              "Focus on companies with competitive advantages",
+            ],
+          },
+          {
+            type: "stat",
+            value: "5-15%",
+            label: "Recommended Crypto Allocation Maximum",
+            data: "Crypto is exciting but volatile. Limit exposure to what you can afford to lose completely",
+          },
+          {
+            type: "heading",
+            data: "Cryptocurrency: Your High-Risk Bet",
+          },
+          {
+            type: "text",
+            data: "Allocate 5-15% maximum to crypto. It's speculative but offers asymmetric upside:",
+          },
+          {
+            type: "list",
+            data: [
+              "Bitcoin: Digital gold, most established",
+              "Ethereum: Smart contract platform leader",
+              "Altcoins: Higher risk, higher reward potential",
+              "Only invest what you can lose 100%",
+              "Never FOMO into crypto during mania phases",
+            ],
+          },
+          {
+            type: "tip",
+            data: "Use the core-satellite approach: 60-70% in ETFs (core), 20-30% in individual stocks (satellites), 5-15% in crypto (speculation). This balances stability with growth potential.",
           },
         ],
       },
@@ -1232,18 +1353,57 @@ export const lessonData: Lesson[] = [
         title: "Sector Diversification",
         content: [
           {
+            type: "quote",
+            data: "Diversification is protection against ignorance. It makes little sense if you know what you are doing.",
+            author: "Warren Buffett",
+          },
+          {
             type: "text",
-            data: "Different sectors perform well in different economic conditions. Spread across sectors to capture opportunities and reduce risk.",
+            data: "Different sectors perform well in different economic conditions. Spread across sectors to capture opportunities and reduce risk from sector-specific crashes.",
+          },
+          {
+            type: "heading",
+            data: "The 11 Market Sectors",
           },
           {
             type: "list",
             data: [
-              "Technology: Growth and innovation",
-              "Healthcare: Defensive, always needed",
-              "Finance: Economic growth proxy",
-              "Energy: Commodity exposure",
-              "Consumer: Stability and consistent demand",
+              "Technology: Growth and innovation (AAPL, MSFT, NVDA)",
+              "Healthcare: Defensive, always needed (JNJ, UNH, PFE)",
+              "Finance: Economic growth proxy (JPM, V, MA)",
+              "Energy: Commodity exposure (XOM, CVX)",
+              "Consumer Discretionary: Economic sentiment (AMZN, TSLA)",
+              "Consumer Staples: Recession-resistant (PG, KO, WMT)",
+              "Industrials: Manufacturing and infrastructure (BA, CAT)",
+              "Materials: Raw materials and chemicals",
+              "Utilities: Stable dividends, low growth",
+              "Real Estate: Property and REITs",
+              "Communication: Media and telecom (META, GOOGL)",
             ],
+          },
+          {
+            type: "highlight",
+            data: "Never put more than 30% of your portfolio in a single sector, no matter how hot it is. When tech crashed in 2022, diversified portfolios survived.",
+          },
+          {
+            type: "heading",
+            data: "Cyclical vs Defensive Sectors",
+          },
+          {
+            type: "text",
+            data: "Understand sector behavior in different economic phases:",
+          },
+          {
+            type: "example",
+            data: "Bull Market: Load up on cyclicals like tech, consumer discretionary, finance. These outperform when economy is strong.",
+          },
+          {
+            type: "example",
+            data: "Bear Market: Rotate to defensives like healthcare, utilities, consumer staples. These hold up when economy weakens.",
+          },
+          {
+            type: "tip",
+            data: "Build a 'weather any storm' portfolio: 40% tech/growth, 30% finance/cyclicals, 20% healthcare/staples, 10% energy/materials. This captures growth while providing downside protection.",
           },
         ],
       },
@@ -1251,18 +1411,66 @@ export const lessonData: Lesson[] = [
         title: "Rebalancing Your Portfolio",
         content: [
           {
+            type: "highlight",
+            data: "Rebalancing is the only strategy that forces you to sell high and buy low systematically. It's discipline automated.",
+          },
+          {
             type: "text",
-            data: "Markets move, and so should your portfolio. Rebalancing maintains your target allocation and forces you to buy low and sell high.",
+            data: "Markets move, and so should your portfolio. Rebalancing maintains your target allocation and forces you to buy low and sell high - the secret to long-term wealth.",
+          },
+          {
+            type: "heading",
+            data: "Why Rebalance?",
+          },
+          {
+            type: "text",
+            data: "Without rebalancing, your portfolio drifts from your target allocation. Winners grow too large, increasing risk:",
+          },
+          {
+            type: "example",
+            data: "You start with 60% stocks, 40% bonds. Stocks surge and now you're 80% stocks. Your risk just increased dramatically without you realizing it!",
           },
           {
             type: "list",
             data: [
-              "Review quarterly or when allocation drifts 5%+",
-              "Sell overweight positions (take profits)",
-              "Buy underweight positions (buy dips)",
-              "Maintains risk profile",
-              "Systematic approach removes emotion",
+              "Maintains your target risk profile",
+              "Forces selling winners (locks in gains)",
+              "Forces buying losers (buys dips)",
+              "Removes emotional decision-making",
+              "Historically adds 0.5-1% annual return",
             ],
+          },
+          {
+            type: "heading",
+            data: "When to Rebalance",
+          },
+          {
+            type: "text",
+            data: "Choose a rebalancing strategy that fits your style:",
+          },
+          {
+            type: "list",
+            data: [
+              "Calendar-based: Quarterly or annually on set date",
+              "Threshold-based: When allocation drifts 5%+ from target",
+              "Hybrid: Check quarterly, rebalance if drift exceeds 5%",
+              "Tax-loss harvest while rebalancing",
+              "Use new contributions to rebalance (avoids selling)",
+            ],
+          },
+          {
+            type: "stat",
+            value: "0.5-1%",
+            label: "Additional Annual Return from Rebalancing",
+            data: "Studies show disciplined rebalancing adds meaningful returns over time by systematically buying low and selling high",
+          },
+          {
+            type: "tip",
+            data: "Use the 5/25 rule: Rebalance when any position drifts 5% from target OR grows to 25%+ of portfolio. This captures both small drifts and concentration risk.",
+          },
+          {
+            type: "video",
+            caption: "Watch: The Science of Portfolio Rebalancing",
           },
         ],
       },
@@ -1297,36 +1505,77 @@ export const lessonData: Lesson[] = [
         title: "Short-term vs Long-term Strategies",
         content: [
           {
+            type: "quote",
+            data: "The stock market is a device for transferring money from the impatient to the patient.",
+            author: "Warren Buffett",
+          },
+          {
             type: "text",
-            data: "Your trading timeline dramatically affects your strategy, risk tolerance, and daily commitment. Choose what fits your lifestyle.",
+            data: "Your trading timeline dramatically affects your strategy, risk tolerance, and daily commitment. Choose what fits your lifestyle - not what looks exciting on social media.",
+          },
+          {
+            type: "stat",
+            value: "95%",
+            label: "Of Day Traders Lose Money Long-Term",
+            data: "Academic studies show the vast majority of day traders underperform buy-and-hold strategies after costs",
           },
           {
             type: "heading",
             data: "Short-term Trading (Days to Weeks)",
           },
           {
+            type: "text",
+            data: "Active trading requires skill, discipline, and significant time commitment:",
+          },
+          {
             type: "list",
             data: [
-              "Day Trading: In and out same day, high intensity",
+              "Day Trading: In and out same day, extremely high intensity",
               "Swing Trading: Hold 2-7 days, medium intensity",
-              "Requires active monitoring and quick decisions",
+              "Requires constant monitoring and quick decisions",
               "Higher transaction costs from frequent trading",
-              "Can generate consistent income if done well",
+              "Stressful - emotional discipline crucial",
+              "Can generate consistent income IF done well (rare)",
             ],
+          },
+          {
+            type: "example",
+            data: "Day trader Sarah monitors charts 8 hours daily, makes 20+ trades weekly, needs 55%+ win rate to overcome fees. One emotional mistake can wipe out weeks of profits.",
           },
           {
             type: "heading",
             data: "Long-term Investing (Months to Years)",
           },
           {
+            type: "text",
+            data: "Patient investing lets time and compound growth work for you:",
+          },
+          {
             type: "list",
             data: [
-              "Less stressful, less time commitment",
-              "Lower transaction costs",
-              "Ride out short-term volatility",
-              "Compound growth over time",
-              "Better for most beginners",
+              "Less stressful, minimal time commitment",
+              "Lower transaction costs (fewer trades)",
+              "Ride out short-term volatility without panic",
+              "Compound growth works its magic over time",
+              "Better tax treatment (long-term capital gains)",
+              "Proven to beat most active traders",
             ],
+          },
+          {
+            type: "example",
+            data: "Investor Mike buys quality stocks and holds for years. He checks his portfolio monthly, pays less in fees, and lets compound growth build wealth while he focuses on his career.",
+          },
+          {
+            type: "highlight",
+            data: "Be honest with yourself: Do you have 8+ hours daily to dedicate to trading? Can you handle the stress? If not, long-term investing is your path to wealth.",
+          },
+          {
+            type: "tip",
+            data: "Start with long-term investing. Once you're consistently profitable for 6+ months, consider adding swing trading. Only attempt day trading if you've mastered swing trading and can commit full-time.",
+          },
+          {
+            type: "video",
+            caption: "Watch: Finding Your Perfect Trading Timeline",
           },
         ],
       },
@@ -1334,18 +1583,67 @@ export const lessonData: Lesson[] = [
         title: "Setting Realistic Profit Targets",
         content: [
           {
+            type: "quote",
+            data: "Rule No. 1 is never lose money. Rule No. 2 is never forget Rule No. 1.",
+            author: "Warren Buffett",
+          },
+          {
             type: "text",
-            data: "Unrealistic expectations lead to overtrading and excessive risk. Set achievable goals based on your strategy and skill level.",
+            data: "Unrealistic expectations lead to overtrading, excessive risk, and blown accounts. Set achievable goals based on your strategy and skill level - not YouTube guru promises.",
+          },
+          {
+            type: "heading",
+            data: "Reality Check: What's Actually Possible",
           },
           {
             type: "list",
             data: [
-              "Beginners: 5-10% monthly returns are excellent",
-              "Intermediate: 10-15% monthly with experience",
-              "Professionals: 15-25% monthly (very rare)",
-              "Annual returns of 20-30% beat most funds",
-              "Focus on consistency, not home runs",
+              "Beginners: 5-10% monthly returns are EXCELLENT",
+              "Intermediate: 10-15% monthly with experience (rare)",
+              "Professionals: 15-25% monthly (extremely rare)",
+              "S&P 500 average: ~10% annually (not monthly!)",
+              "Warren Buffett career average: 20% annually",
             ],
+          },
+          {
+            type: "stat",
+            value: "20-30%",
+            label: "Annual Returns That Beat 95% of Funds",
+            data: "If you can consistently achieve 20-30% annual returns, you're outperforming virtually all professional money managers",
+          },
+          {
+            type: "highlight",
+            data: "A 10% monthly return = 214% annually. If it were easy, everyone would be rich. Set realistic targets or risk gambling your account away chasing impossible dreams.",
+          },
+          {
+            type: "heading",
+            data: "Focus on Process, Not Profits",
+          },
+          {
+            type: "text",
+            data: "Successful traders focus on executing their strategy consistently, not hitting specific profit targets:",
+          },
+          {
+            type: "list",
+            data: [
+              "Goal: Execute 20 quality trades following my rules",
+              "NOT: Make $5,000 this month at all costs",
+              "Track win rate, risk-reward, and process adherence",
+              "Profits are byproduct of good process",
+              "Bad months happen - focus on executing correctly",
+            ],
+          },
+          {
+            type: "example",
+            data: "Trader A targets $10,000 monthly, takes risky trades to hit goal, blows up account. Trader B focuses on quality setups only, makes $8,000 some months, $2,000 others, but compounds wealth steadily over years.",
+          },
+          {
+            type: "tip",
+            data: "Set three goals: Minimum (stay profitable), Target (realistic stretch), and Maximum (dream scenario). Hit minimum? Success. Hit target? Excellent month. Exceeded target? Take profits and tighten risk management.",
+          },
+          {
+            type: "video",
+            caption: "Watch: The Psychology of Profitable Goal Setting",
           },
         ],
       },
@@ -1353,18 +1651,64 @@ export const lessonData: Lesson[] = [
         title: "Creating a Trading Journal",
         content: [
           {
+            type: "highlight",
+            data: "Your trading journal is your most powerful tool. It transforms random trades into a systematic, improvable strategy.",
+          },
+          {
             type: "text",
-            data: "A trading journal is your roadmap to improvement. It transforms you from gambler to systematic trader.",
+            data: "A trading journal is your roadmap to improvement. It's the difference between gambling and trading systematically. Without it, you're flying blind.",
+          },
+          {
+            type: "heading",
+            data: "What to Track (The Essentials)",
           },
           {
             type: "list",
             data: [
-              "Record every trade: entry, exit, size, reasoning",
-              "Track emotions: Were you fearful? Greedy?",
-              "Screenshot your charts",
-              "Note what worked and what didn't",
-              "Review weekly to identify patterns",
+              "Entry price, exit price, and position size",
+              "Date and time (market conditions matter)",
+              "Reason for entry: What was your thesis?",
+              "Screenshots of charts before and after",
+              "Emotions: Fearful? Confident? Greedy? Revenge trading?",
+              "Result: Win/loss and percentage",
+              "What you'd do differently next time",
             ],
+          },
+          {
+            type: "example",
+            data: "Entry: AAPL at $180 on 12/1, 50 shares. Reason: Bounced off 50-day MA with high volume. Felt: Confident, followed my rules. Exit: $185 on 12/5. Win: +$250 (2.8%). Lesson: Patience paid off, let winners run worked.",
+          },
+          {
+            type: "heading",
+            data: "Weekly Review Process",
+          },
+          {
+            type: "text",
+            data: "Every Sunday, review your journal to identify patterns:",
+          },
+          {
+            type: "list",
+            data: [
+              "Which setups had highest win rate?",
+              "When did you break your rules? Why?",
+              "Were losses from bad luck or bad process?",
+              "What emotional patterns emerge?",
+              "Are you improving week over week?",
+            ],
+          },
+          {
+            type: "stat",
+            value: "3x",
+            label: "Profitability Increase with Journaling",
+            data: "Studies show traders who journal consistently are 3x more likely to be profitable than those who don't",
+          },
+          {
+            type: "tip",
+            data: "Use a spreadsheet or specialized software like TraderSync or Edgewonk. Include photos of chart setups. Review it before each trading session to remember lessons learned.",
+          },
+          {
+            type: "video",
+            caption: "Watch: Building Your Perfect Trading Journal System",
           },
         ],
       },
@@ -1372,18 +1716,66 @@ export const lessonData: Lesson[] = [
         title: "Evaluating Your Performance",
         content: [
           {
+            type: "quote",
+            data: "In the short run, the market is a voting machine but in the long run, it is a weighing machine.",
+            author: "Benjamin Graham",
+          },
+          {
             type: "text",
-            data: "Winning percentage doesn't matter as much as you think. Evaluate holistically using multiple metrics.",
+            data: "Winning percentage doesn't matter as much as you think. A 40% win rate with 1:3 risk-reward beats 70% win rate with 1:1. Evaluate holistically using multiple metrics.",
+          },
+          {
+            type: "heading",
+            data: "Key Performance Metrics",
           },
           {
             type: "list",
             data: [
-              "Total Return: Overall profit/loss percentage",
-              "Win Rate: Percentage of winning trades",
-              "Average Win vs Average Loss: Is your edge real?",
-              "Max Drawdown: Largest peak-to-valley decline",
-              "Sharpe Ratio: Risk-adjusted returns",
+              "Total Return: Overall profit/loss percentage over time",
+              "Win Rate: Percentage of winning trades (aim for 45%+)",
+              "Average Win vs Average Loss: Your edge (target 2:1 or better)",
+              "Max Drawdown: Largest peak-to-valley decline (keep under 20%)",
+              "Sharpe Ratio: Risk-adjusted returns (higher is better)",
+              "Profit Factor: Gross profit ÷ gross loss (target 1.5+)",
             ],
+          },
+          {
+            type: "example",
+            data: "Trader A: 80% win rate, avg win $100, avg loss $400, profit factor 0.5 = LOSING. Trader B: 40% win rate, avg win $300, avg loss $100, profit factor 2.0 = WINNING. Quality over quantity!",
+          },
+          {
+            type: "highlight",
+            data: "Track your Maximum Drawdown religiously. If you drop more than 20% from peak equity, stop trading and reassess your strategy - something is broken.",
+          },
+          {
+            type: "heading",
+            data: "The Monthly Review Checklist",
+          },
+          {
+            type: "text",
+            data: "Every month, evaluate these questions honestly:",
+          },
+          {
+            type: "list",
+            data: [
+              "Am I following my trading rules consistently?",
+              "Are my losses controlled (2% rule)?",
+              "Is my risk-reward ratio 1:2 or better?",
+              "Am I trading too much (overtrading)?",
+              "Am I trading too little (missing opportunities)?",
+              "What was my biggest mistake this month?",
+              "What did I do really well?",
+            ],
+          },
+          {
+            type: "tip",
+            data: "Create a performance dashboard. Track total return, win rate, profit factor, and max drawdown monthly. If any metric degrades for 2+ months, pause trading and fix the issue before continuing.",
+          },
+          {
+            type: "stat",
+            value: "1.5+",
+            label: "Target Profit Factor for Consistent Success",
+            data: "A profit factor above 1.5 means you make $1.50 for every $1 lost - a strong edge that compounds over time",
           },
         ],
       },
@@ -1418,36 +1810,77 @@ export const lessonData: Lesson[] = [
         title: "Bull Markets vs Bear Markets",
         content: [
           {
+            type: "quote",
+            data: "Be fearful when others are greedy. Be greedy when others are fearful.",
+            author: "Warren Buffett",
+          },
+          {
             type: "text",
-            data: "Markets move in cycles. Understanding whether you're in a bull or bear market completely changes your strategy.",
+            data: "Markets move in cycles between bull and bear markets. Understanding which phase you're in completely changes your strategy - what works in bulls destroys accounts in bears.",
+          },
+          {
+            type: "stat",
+            value: "4:1",
+            label: "Historical Bull vs Bear Market Time Ratio",
+            data: "Bull markets last ~4 years on average while bear markets last ~1 year. Time in the market beats timing the market.",
           },
           {
             type: "heading",
             data: "Bull Markets (Rising Prices)",
           },
           {
+            type: "text",
+            data: "Bull markets are characterized by optimism, rising prices, and expanding valuations:",
+          },
+          {
             type: "list",
             data: [
-              "Optimism and confidence dominate",
-              "Buy dips strategy works well",
-              "More stocks rise than fall",
-              "Long positions have edge",
+              "Optimism and confidence dominate psychology",
+              "'Buy the dip' strategy works consistently",
+              "More stocks rise than fall (breadth is positive)",
+              "Long positions have systematic edge",
               "Average bull market lasts 3-4 years",
+              "Corrections (10% drops) are buying opportunities",
             ],
+          },
+          {
+            type: "example",
+            data: "The 2009-2020 bull market lasted 11 years. Every significant dip recovered to new highs. Buyers who stayed calm and bought weakness accumulated wealth.",
           },
           {
             type: "heading",
             data: "Bear Markets (Falling Prices)",
           },
           {
+            type: "text",
+            data: "Bear markets are defined by fear, falling prices, and contracting valuations:",
+          },
+          {
             type: "list",
             data: [
-              "Fear and pessimism dominate",
-              "Short rallies fail quickly",
-              "More stocks fall than rise",
+              "Fear and pessimism dominate psychology",
+              "Rally attempts fail quickly ('bear market rallies')",
+              "More stocks fall than rise (negative breadth)",
               "Cash and defensive positions preferred",
               "Average bear market lasts 6-12 months",
+              "Official definition: 20%+ decline from highs",
             ],
+          },
+          {
+            type: "example",
+            data: "The 2022 bear market saw S&P 500 drop 25%. Every rally attempt failed. Traders who bought every dip lost money. Better strategy: cash position and patience.",
+          },
+          {
+            type: "highlight",
+            data: "In bull markets, optimism is rewarded. In bear markets, optimism is punished. Adapt your strategy or get destroyed by market conditions.",
+          },
+          {
+            type: "tip",
+            data: "Use the 200-day moving average as your market compass: Above = bull market bias (buy dips). Below = bear market bias (cash and caution). When price crosses, the market may be transitioning.",
+          },
+          {
+            type: "video",
+            caption: "Watch: Identifying Market Cycles for Maximum Profit",
           },
         ],
       },
@@ -1455,18 +1888,56 @@ export const lessonData: Lesson[] = [
         title: "Identifying Trend Reversals",
         content: [
           {
+            type: "highlight",
+            data: "The biggest money is made at market turning points. Learn to spot reversals early and position yourself ahead of the crowd.",
+          },
+          {
             type: "text",
-            data: "The best profits come from catching trend changes early. Learn to spot when momentum is shifting.",
+            data: "The best profits come from catching trend changes early. Learn to spot when momentum is shifting - these inflection points offer asymmetric risk-reward.",
+          },
+          {
+            type: "heading",
+            data: "Top 5 Reversal Signals",
           },
           {
             type: "list",
             data: [
-              "Divergence: Price makes new high but RSI doesn't",
-              "Support/Resistance breaks",
-              "Moving average crossovers",
-              "Volume spikes on reversals",
-              "Candlestick reversal patterns",
+              "Divergence: Price makes new high but RSI/MACD doesn't (very powerful)",
+              "Support/Resistance breaks: Key levels fail after multiple tests",
+              "Moving average crossovers: Death cross (bearish), Golden cross (bullish)",
+              "Volume spikes on reversals: Capitulation or euphoria",
+              "Candlestick reversal patterns: Doji, hammer, shooting star at extremes",
             ],
+          },
+          {
+            type: "example",
+            data: "Bitcoin tops at $69k in Nov 2021. RSI shows lower highs while price makes new highs (bearish divergence). Two weeks later, brutal 50% crash begins. Divergence warned early!",
+          },
+          {
+            type: "heading",
+            data: "Divergence: The Holy Grail Signal",
+          },
+          {
+            type: "text",
+            data: "When price and momentum indicators disagree, momentum is usually right:",
+          },
+          {
+            type: "list",
+            data: [
+              "Bullish divergence: Price makes lower low, RSI makes higher low",
+              "Bearish divergence: Price makes higher high, RSI makes lower high",
+              "Works on RSI, MACD, and momentum oscillators",
+              "Most reliable at major support/resistance levels",
+              "Don't fight divergence - it's usually right",
+            ],
+          },
+          {
+            type: "tip",
+            data: "Never try to catch exact tops or bottoms. Wait for confirmation: Wait for trend line break + volume surge + divergence signal. Missing first 10% of move is fine - catching reversal early beats catching falling knife!",
+          },
+          {
+            type: "video",
+            caption: "Watch: Mastering Divergence for High-Probability Reversals",
           },
         ],
       },
@@ -1474,17 +1945,66 @@ export const lessonData: Lesson[] = [
         title: "Volume Analysis",
         content: [
           {
+            type: "quote",
+            data: "Volume is the fuel that drives the market engine. Without fuel, price moves nowhere.",
+            author: "Trading Wisdom",
+          },
+          {
             type: "text",
-            data: "Volume confirms price movements. High volume = conviction. Low volume = suspect moves.",
+            data: "Volume confirms price movements. High volume = conviction and strength. Low volume = weak move likely to reverse. Always check volume before entering trades!",
+          },
+          {
+            type: "heading",
+            data: "The Volume-Price Relationship",
+          },
+          {
+            type: "text",
+            data: "Volume tells you if a price move is real or fake:",
           },
           {
             type: "list",
             data: [
-              "Rising prices + rising volume = strong uptrend",
-              "Rising prices + falling volume = weak, likely to reverse",
-              "Falling prices + rising volume = strong downtrend",
-              "Volume precedes price",
+              "Rising prices + rising volume = Strong uptrend (healthy)",
+              "Rising prices + falling volume = Weak uptrend (distribution, reversal coming)",
+              "Falling prices + rising volume = Strong downtrend (capitulation)",
+              "Falling prices + falling volume = Weak downtrend (accumulation possible)",
             ],
+          },
+          {
+            type: "example",
+            data: "Stock breaks out above resistance on 3x average volume = Strong move, likely to continue. Same breakout on below-average volume = Fake breakout, likely to fail.",
+          },
+          {
+            type: "stat",
+            value: "2-3x",
+            label: "Volume Spike Confirming Breakouts",
+            data: "Legitimate breakouts typically show 2-3x higher than average volume - this confirms real institutional buying",
+          },
+          {
+            type: "heading",
+            data: "Volume Precedes Price",
+          },
+          {
+            type: "text",
+            data: "Smart money accumulates before big moves. Watch for volume clues:",
+          },
+          {
+            type: "list",
+            data: [
+              "Volume spike without price movement = accumulation/distribution",
+              "Rising volume on down days = sellers gaining control",
+              "Rising volume on up days = buyers gaining control",
+              "Volume dries up at tops (distribution complete)",
+              "Volume spikes at bottoms (capitulation, wash-out)",
+            ],
+          },
+          {
+            type: "highlight",
+            data: "Never trust a breakout without volume confirmation. 70% of low-volume breakouts fail within days. Wait for volume surge to confirm the move is real.",
+          },
+          {
+            type: "tip",
+            data: "Add volume bars to your charts. Set an alert for volume 2x above 20-day average. These spikes often signal the start of major moves - both up and down. Act quickly when volume speaks.",
           },
         ],
       },
@@ -1492,18 +2012,88 @@ export const lessonData: Lesson[] = [
         title: "Market Sentiment Indicators",
         content: [
           {
+            type: "quote",
+            data: "The time to buy is when there's blood in the streets, even if the blood is your own.",
+            author: "Baron Rothschild",
+          },
+          {
             type: "text",
-            data: "Markets are driven by emotions: fear and greed. Sentiment indicators help you gauge crowd psychology.",
+            data: "Markets are driven by two emotions: fear and greed. Sentiment indicators help you gauge crowd psychology - and profit from extremes by doing the opposite.",
+          },
+          {
+            type: "heading",
+            data: "The VIX: Wall Street's Fear Gauge",
+          },
+          {
+            type: "text",
+            data: "The Volatility Index (VIX) measures market fear and uncertainty:",
           },
           {
             type: "list",
             data: [
-              "VIX (Fear Index): High = fear, Low = complacency",
-              "Put/Call Ratio: Extreme readings signal reversals",
-              "Sentiment Surveys: When everyone's bullish, be careful",
-              "Be greedy when others are fearful",
-              "Be fearful when others are greedy",
+              "VIX below 15: Complacency, low fear (market tops often form here)",
+              "VIX 15-25: Normal, moderate volatility",
+              "VIX 25-35: Elevated fear, increased volatility",
+              "VIX above 35: Extreme fear, panic (often marks bottoms)",
+              "When VIX spikes, markets usually bottom soon after",
             ],
+          },
+          {
+            type: "example",
+            data: "March 2020 COVID crash: VIX spiked to 80+ (extreme panic). Those who bought stocks during peak fear made 50-100%+ in following months. Fear = opportunity.",
+          },
+          {
+            type: "heading",
+            data: "Put/Call Ratio: Options Sentiment",
+          },
+          {
+            type: "text",
+            data: "Ratio of put options (bearish bets) to call options (bullish bets):",
+          },
+          {
+            type: "list",
+            data: [
+              "Ratio above 1.0: More puts than calls = extreme bearishness (contrarian bullish)",
+              "Ratio below 0.6: More calls than puts = extreme bullishness (contrarian bearish)",
+              "Extremes signal reversals (crowd is usually wrong at extremes)",
+              "Best used as contrarian indicator",
+            ],
+          },
+          {
+            type: "stat",
+            value: "80%",
+            label: "Of Retail Traders Wrong at Market Extremes",
+            data: "When retail sentiment hits extremes, the smart money does the opposite - and profits from the crowd's mistakes",
+          },
+          {
+            type: "heading",
+            data: "Sentiment Surveys & Social Media",
+          },
+          {
+            type: "text",
+            data: "Watch what the crowd is saying - then often do the opposite:",
+          },
+          {
+            type: "list",
+            data: [
+              "When everyone's bullish: Be cautious, take profits",
+              "When everyone's bearish: Look for buying opportunities",
+              "AAII Sentiment Survey tracks retail investor mood",
+              "Social media euphoria often marks tops",
+              "Fear headlines often mark bottoms",
+            ],
+          },
+          {
+            type: "highlight",
+            data: "Be greedy when others are fearful. Be fearful when others are greedy. The crowd is right during trends but wrong at turning points.",
+          },
+          {
+            type: "tip",
+            data: "Create a sentiment checklist: VIX level, Put/Call ratio, headline sentiment, social media buzz. When 3+ indicators show extreme fear, start buying. When 3+ show extreme greed, start selling. Sentiment extremes don't last long!",
+          },
+          {
+            type: "video",
+            caption: "Watch: Using Sentiment to Time Market Entries and Exits",
           },
         ],
       },
