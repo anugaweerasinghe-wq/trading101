@@ -50,8 +50,8 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "image",
-            data: "/src/assets/lesson-stocks-basics.jpg",
-            alt: "Understanding the basics of stock trading",
+            data: "/src/assets/lesson-trading-workspace.jpg",
+            alt: "Professional trading workspace with multiple monitors",
             caption: "Your journey to financial freedom starts with understanding the fundamentals",
           },
           {
@@ -79,6 +79,12 @@ export const lessonData: Lesson[] = [
           {
             type: "text",
             data: "ETFs are like baskets of multiple stocks bundled together. Instead of buying one company, you're buying a piece of many companies at once. This is called diversification, and it helps reduce risk.",
+          },
+          {
+            type: "image",
+            data: "/src/assets/lesson-etf-diversification.jpg",
+            alt: "ETF diversification network visualization",
+            caption: "ETFs connect you to multiple assets for better diversification",
           },
           {
             type: "highlight",
@@ -241,6 +247,12 @@ export const lessonData: Lesson[] = [
           {
             type: "text",
             data: "One of the most important decisions you'll make when trading is choosing the right order type. The two main types are market orders and limit orders, and each has specific uses.",
+          },
+          {
+            type: "image",
+            data: "/src/assets/lesson-order-types.jpg",
+            alt: "Market order book depth visualization",
+            caption: "Understanding order flow is key to mastering trade execution",
           },
           {
             type: "heading",
@@ -513,6 +525,16 @@ export const lessonData: Lesson[] = [
             type: "quote",
             data: "Rule No. 1: Never lose money. Rule No. 2: Never forget Rule No. 1.",
             author: "Warren Buffett",
+          },
+          {
+            type: "text",
+            data: "Position sizing is the cornerstone of risk management. It's not about IF you'll have losing trades (you will), but about surviving them and staying in the game long enough to win.",
+          },
+          {
+            type: "image",
+            data: "/src/assets/lesson-risk-shield.jpg",
+            alt: "Financial risk protection shield",
+            caption: "Protect your portfolio with proper risk management strategies",
           },
           {
             type: "text",
@@ -1015,6 +1037,12 @@ export const lessonData: Lesson[] = [
         title: "Candlestick Patterns",
         content: [
           {
+            type: "image",
+            data: "/src/assets/lesson-technical-indicators.jpg",
+            alt: "Technical analysis indicators and trend lines",
+            caption: "Master technical indicators to predict market movements",
+          },
+          {
             type: "quote",
             data: "The market is a device for transferring money from the impatient to the patient.",
             author: "Warren Buffett",
@@ -1195,6 +1223,12 @@ export const lessonData: Lesson[] = [
       {
         title: "Asset Allocation Strategies",
         content: [
+          {
+            type: "image",
+            data: "/src/assets/lesson-asset-allocation-chart.jpg",
+            alt: "Portfolio asset allocation visualization",
+            caption: "Strategic asset allocation is the foundation of portfolio success",
+          },
           {
             type: "quote",
             data: "The most important decision you'll make is not what to buy, but how much of each asset to own.",
@@ -1497,6 +1531,12 @@ export const lessonData: Lesson[] = [
         title: "Short-term vs Long-term Strategies",
         content: [
           {
+            type: "image",
+            data: "/src/assets/lesson-goals-roadmap.jpg",
+            alt: "Trading goals roadmap with milestones",
+            caption: "Chart your path to trading success with clear, achievable goals",
+          },
+          {
             type: "quote",
             data: "The stock market is a device for transferring money from the impatient to the patient.",
             author: "Warren Buffett",
@@ -1789,6 +1829,12 @@ export const lessonData: Lesson[] = [
       {
         title: "Bull Markets vs Bear Markets",
         content: [
+          {
+            type: "image",
+            data: "/src/assets/lesson-market-trends-arrows.jpg",
+            alt: "Market trend analysis with directional arrows",
+            caption: "Learn to identify and ride market trends for maximum profit",
+          },
           {
             type: "quote",
             data: "Be fearful when others are greedy. Be greedy when others are fearful.",

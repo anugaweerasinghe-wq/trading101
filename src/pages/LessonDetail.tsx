@@ -121,22 +121,25 @@ export default function LessonDetail() {
           </div>
 
           {/* Content */}
-          <Card className="p-12 md:p-16 mb-12 bg-card/30 backdrop-blur-xl border-0 shadow-2xl">
-            <div className="flex items-center gap-4 mb-12">
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <BookOpen className="w-8 h-8 text-primary" />
+          <Card className="p-12 md:p-16 mb-12 bg-gradient-to-br from-card/40 via-card/30 to-transparent backdrop-blur-xl border-0 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-12 animate-fade-in">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center shadow-lg">
+                  <BookOpen className="w-8 h-8 text-primary" />
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">{currentTopic.title}</h2>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold">{currentTopic.title}</h2>
-            </div>
 
-            <div className="space-y-10 max-w-4xl">
-              {currentTopic.content.map((section, index) => (
-                <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
-                  {section.type === "text" && (
-                    <p className="text-xl leading-relaxed text-foreground/80">
-                      {section.data}
-                    </p>
-                  )}
+              <div className="space-y-10 max-w-4xl">
+                {currentTopic.content.map((section, index) => (
+                  <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
+                    {section.type === "text" && (
+                      <p className="text-xl leading-relaxed text-foreground/90">
+                        {section.data}
+                      </p>
+                    )}
 
                   {section.type === "heading" && (
                     <h3 className="text-3xl font-bold mt-12 mb-6">{section.data}</h3>
@@ -154,16 +157,19 @@ export default function LessonDetail() {
                   )}
 
                   {section.type === "image" && (
-                    <div className="my-12 rounded-2xl overflow-hidden shadow-xl">
+                    <div className="my-12 rounded-3xl overflow-hidden shadow-2xl hover-lift relative group">
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                       <img
                         src={section.data as string}
                         alt={section.alt || "Lesson visual"}
-                        className="w-full h-auto"
+                        className="w-full h-auto transform group-hover:scale-105 transition-transform duration-700"
                       />
                       {section.caption && (
-                        <p className="text-base text-muted-foreground text-center mt-4">
-                          {section.caption}
-                        </p>
+                        <div className="relative bg-gradient-to-r from-primary/10 to-accent/10 p-6 border-t border-primary/20">
+                          <p className="text-lg text-foreground font-medium text-center">
+                            {section.caption}
+                          </p>
+                        </div>
                       )}
                     </div>
                   )}
@@ -218,17 +224,17 @@ export default function LessonDetail() {
                   )}
 
                   {section.type === "highlight" && (
-                    <Card className="p-8 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 border-0 backdrop-blur-sm hover-lift relative overflow-hidden">
-                      <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-primary to-accent" />
-                      <p className="text-xl md:text-2xl font-semibold leading-relaxed text-foreground pl-6">
-                        {section.data}
-                      </p>
+                    <Card className="p-8 bg-gradient-to-r from-primary/20 via-accent/15 to-primary/20 border-primary/40 backdrop-blur-sm hover-lift relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <Sparkles className="w-6 h-6 text-primary mb-3 relative" />
+                      <p className="text-xl font-semibold leading-relaxed relative">{section.data}</p>
                     </Card>
                   )}
                 </div>
               ))}
             </div>
-          </Card>
+          </div>
+        </Card>
 
           {/* Navigation Buttons */}
           <div className="flex items-center justify-between gap-4">
