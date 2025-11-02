@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
 import { PortfolioChart } from "@/components/PortfolioChart";
+import { PriceTicker } from "@/components/PriceTicker";
 import { getPortfolio, updatePositionPrices, savePortfolio, canClaimWeeklyBonus, getTimeUntilNextBonus, claimWeeklyBonus } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
 import { ASSETS } from "@/lib/assets";
+import { simulateAssetPrices, shouldUpdatePrices, setLastUpdateTime } from "@/lib/priceSimulation";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function Portfolio() {
   const [portfolio, setPortfolio] = useState(getPortfolio());
+  const [assets, setAssets] = useState(ASSETS);
   const [canClaim, setCanClaim] = useState(canClaimWeeklyBonus());
   const { toast } = useToast();
 
@@ -24,6 +27,21 @@ export default function Portfolio() {
     updated = updatePositionPrices(updated);
     setPortfolio(updated);
     savePortfolio(updated);
+
+    // Simulate price updates every 5 seconds
+    const priceInterval = setInterval(() => {
+      if (shouldUpdatePrices()) {
+        const updatedAssets = simulateAssetPrices(assets, 0.01);
+        setAssets(updatedAssets);
+        setLastUpdateTime(new Date());
+        
+        // Update portfolio with new prices
+        const updatedPortfolio = updatePositionPrices(getPortfolio());
+        setPortfolio(updatedPortfolio);
+      }
+    }, 5000);
+
+    return () => clearInterval(priceInterval);
   }, []);
 
   const totalPositionValue = portfolio.positions.reduce((sum, p) => sum + p.currentValue, 0);
@@ -53,11 +71,12 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <PriceTicker assets={assets} />
       
-      <main className="pt-24 pb-12">
+      <main className="pt-20 pb-12">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-5xl font-bold">Portfolio</h1>
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio</h1>
             <Button
               onClick={handleClaimBonus}
               disabled={!canClaim}
@@ -223,7 +242,7 @@ export default function Portfolio() {
         </div>
       </main>
 
-      <AIAssistant portfolio={portfolio} assets={ASSETS} />
+      <AIAssistant portfolio={portfolio} assets={assets} />
     </div>
   );
 }
