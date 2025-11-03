@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Premium Gold + Black Theme */
+    /* Premium Gold + Black Theme (Dark Mode) */
     --background: 0 0% 4%;
     --foreground: 0 0% 98%;
 
@@ -54,6 +54,47 @@ All colors MUST be HSL.
     
     /* Transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .light {
+    /* Light Mode Theme */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 45 100% 45%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 45 100% 45%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --success: 142 71% 35%;
+    --success-foreground: 0 0% 98%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 45 100% 45%;
+
+    --gradient-gold: linear-gradient(135deg, hsl(45 100% 45%) 0%, hsl(35 100% 38%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 92%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 98%) 0%, hsl(0 0% 92%) 50%, hsl(45 100% 45% / 0.05) 100%);
+    
+    --shadow-gold: 0 10px 40px -10px hsl(45 100% 45% / 0.2);
+    --shadow-luxury: 0 20px 60px -15px hsl(0 0% 0% / 0.1);
   }
 }
 

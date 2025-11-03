@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
 import { PortfolioChart } from "@/components/PortfolioChart";
+import { PortfolioAnalytics } from "@/components/PortfolioAnalytics";
 import { PriceTicker } from "@/components/PriceTicker";
 import { getPortfolio, updatePositionPrices, savePortfolio, canClaimWeeklyBonus, getTimeUntilNextBonus, claimWeeklyBonus } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
@@ -92,6 +93,9 @@ export default function Portfolio() {
           <div className="mb-12">
             <PortfolioChart />
           </div>
+
+          {/* Portfolio Analytics */}
+          <PortfolioAnalytics portfolio={portfolio} />
 
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">

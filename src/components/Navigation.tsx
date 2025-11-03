@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, Wallet, Home, GraduationCap } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
@@ -62,6 +63,7 @@ export function Navigation() {
                 Learn
               </Button>
             </Link>
+            <ThemeToggle />
           </div>
         </div>
       </div>

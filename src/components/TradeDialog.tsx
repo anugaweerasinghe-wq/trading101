@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Asset } from "@/lib/types";
+import { OrderType } from "@/lib/orderTypes";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -10,29 +12,47 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { TrendingUp, TrendingDown, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface TradeDialogProps {
   asset: Asset | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onTrade: (asset: Asset, type: 'buy' | 'sell', quantity: number) => void;
+  onTrade: (asset: Asset, type: 'buy' | 'sell', quantity: number, orderType?: OrderType, limitPrice?: number) => void;
   availableCash: number;
 }
 
 export function TradeDialog({ asset, open, onOpenChange, onTrade, availableCash }: TradeDialogProps) {
   const [quantity, setQuantity] = useState("1");
+  const [orderType, setOrderType] = useState<OrderType>("market");
+  const [limitPrice, setLimitPrice] = useState("");
 
   if (!asset) return null;
 
   const handleTrade = (type: 'buy' | 'sell') => {
     const qty = parseFloat(quantity);
-    if (qty > 0) {
-      onTrade(asset, type, qty);
+    const price = orderType !== 'market' ? parseFloat(limitPrice) : undefined;
+    
+    if (qty > 0 && (orderType === 'market' || (price && price > 0))) {
+      onTrade(asset, type, qty, orderType, price);
       setQuantity("1");
+      setLimitPrice("");
+      setOrderType("market");
       onOpenChange(false);
     }
+  };
+
+  const quickAmount = (amount: number) => {
+    const shares = Math.floor(amount / asset.price);
+    setQuantity(shares.toString());
   };
 
   const total = asset.price * parseFloat(quantity || "0");
@@ -47,6 +67,9 @@ export function TradeDialog({ asset, open, onOpenChange, onTrade, availableCash 
           <DialogTitle className="text-2xl">
             Trade {asset.symbol}
           </DialogTitle>
+          <DialogDescription>
+            Place a {orderType} order for {asset.name}
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -66,6 +89,43 @@ export function TradeDialog({ asset, open, onOpenChange, onTrade, availableCash 
 
           <div className="space-y-4">
             <div>
+              <Label>Order Type</Label>
+              <Select value={orderType} onValueChange={(value) => setOrderType(value as OrderType)}>
+                <SelectTrigger className="mt-2">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="market">Market Order</SelectItem>
+                  <SelectItem value="limit">Limit Order</SelectItem>
+                  <SelectItem value="stop-loss">Stop Loss</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground mt-1">
+                {orderType === 'market' && "Execute immediately at current price"}
+                {orderType === 'limit' && "Execute when price reaches your limit"}
+                {orderType === 'stop-loss' && "Sell automatically if price drops to stop level"}
+              </p>
+            </div>
+
+            {orderType !== 'market' && (
+              <div>
+                <Label htmlFor="limitPrice">
+                  {orderType === 'limit' ? 'Limit Price' : 'Stop Price'}
+                </Label>
+                <Input
+                  id="limitPrice"
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  value={limitPrice}
+                  onChange={(e) => setLimitPrice(e.target.value)}
+                  placeholder={`Enter ${orderType === 'limit' ? 'limit' : 'stop'} price`}
+                  className="mt-2"
+                />
+              </div>
+            )}
+
+            <div>
               <Label htmlFor="quantity">Quantity</Label>
               <div className="flex gap-2 mt-2">
                 <Input
@@ -82,6 +142,20 @@ export function TradeDialog({ asset, open, onOpenChange, onTrade, availableCash 
                   onClick={() => setQuantity(maxShares.toString())}
                 >
                   Max
+                </Button>
+              </div>
+              <div className="flex gap-2 mt-2">
+                <Button size="sm" variant="outline" onClick={() => quickAmount(100)} className="flex-1">
+                  <Zap className="w-3 h-3 mr-1" />
+                  $100
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => quickAmount(500)} className="flex-1">
+                  <Zap className="w-3 h-3 mr-1" />
+                  $500
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => quickAmount(1000)} className="flex-1">
+                  <Zap className="w-3 h-3 mr-1" />
+                  $1K
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground mt-1">
@@ -109,10 +183,14 @@ export function TradeDialog({ asset, open, onOpenChange, onTrade, availableCash 
             <Button
               size="lg"
               onClick={() => handleTrade('buy')}
-              disabled={totalWithFee > availableCash || parseFloat(quantity) <= 0}
+              disabled={
+                (orderType === 'market' && totalWithFee > availableCash) ||
+                parseFloat(quantity) <= 0 ||
+                (orderType !== 'market' && !limitPrice)
+              }
               className="bg-success hover:bg-success/90 text-success-foreground"
             >
-              Buy
+              {orderType === 'market' ? 'Buy Now' : 'Place Order'}
             </Button>
             <Button
               size="lg"

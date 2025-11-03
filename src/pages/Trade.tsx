@@ -9,9 +9,11 @@ import { WatchlistPanel } from "@/components/WatchlistPanel";
 import { PriceTicker } from "@/components/PriceTicker";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
+import { OrderType, createOrder, addOrder } from "@/lib/orderTypes";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
 import { simulateAssetPrices, shouldUpdatePrices, setLastUpdateTime } from "@/lib/priceSimulation";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Star, TrendingUp } from "lucide-react";
@@ -27,6 +29,16 @@ export default function Trade() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showTradeDialog, setShowTradeDialog] = useState(false);
   const { toast } = useToast();
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    's': () => document.getElementById('search-input')?.focus(),
+    'w': () => setFavorites(getFavorites()),
+    'escape': () => {
+      setShowTradeDialog(false);
+      setDetailAsset(null);
+    }
+  });
 
   useEffect(() => {
     const updated = updatePositionPrices(portfolio);
@@ -45,7 +57,21 @@ export default function Trade() {
     return () => clearInterval(priceInterval);
   }, []);
 
-  const handleTrade = (asset: Asset, type: 'buy' | 'sell', quantity: number) => {
+  const handleTrade = (asset: Asset, type: 'buy' | 'sell', quantity: number, orderType?: OrderType, limitPrice?: number) => {
+    if (orderType && orderType !== 'market') {
+      // Handle limit/stop-loss orders
+      const order = createOrder(asset.id, asset.symbol, orderType, type, quantity, limitPrice);
+      addOrder(order);
+      toast({
+        title: "Order Placed",
+        description: `${orderType} order for ${quantity} ${asset.symbol} at $${limitPrice?.toFixed(2)}`,
+      });
+      setShowTradeDialog(false);
+      setSelectedAsset(null);
+      return;
+    }
+
+    // Handle market orders
     const result = executeTrade(portfolio, asset, type, quantity);
     
     if (result.success && result.portfolio) {
