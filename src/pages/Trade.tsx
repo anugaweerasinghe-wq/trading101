@@ -12,7 +12,7 @@ import { Asset } from "@/lib/types";
 import { OrderType, createOrder, addOrder } from "@/lib/orderTypes";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
-import { simulateAssetPrices, shouldUpdatePrices, setLastUpdateTime } from "@/lib/priceSimulation";
+import { simulateAssetPrices, shouldUpdatePrices, setLastUpdateTime, fetchMarketPredictions } from "@/lib/priceSimulation";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -41,9 +41,21 @@ export default function Trade() {
   });
 
   useEffect(() => {
-    const updated = updatePositionPrices(portfolio);
-    setPortfolio(updated);
-    setFavorites(getFavorites());
+    // Initialize with AI predictions
+    const initTrade = async () => {
+      // Fetch AI predictions and update assets
+      const predictions = await fetchMarketPredictions(assets);
+      if (Object.keys(predictions).length > 0) {
+        const updatedAssets = simulateAssetPrices(assets, 0.01, predictions);
+        setAssets(updatedAssets);
+      }
+      
+      const updated = updatePositionPrices(portfolio);
+      setPortfolio(updated);
+      setFavorites(getFavorites());
+    };
+
+    initTrade();
 
     // Simulate price updates every 5 seconds
     const priceInterval = setInterval(() => {

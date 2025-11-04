@@ -3,7 +3,8 @@ import { ASSETS } from './assets';
 import { 
   getHoursSinceLastUpdate, 
   setLastUpdateTime, 
-  simulateAssetPrices 
+  simulateAssetPrices,
+  fetchMarketPredictions
 } from './priceSimulation';
 
 const HISTORY_KEY = 'tradesandbox_history';
@@ -45,9 +46,9 @@ export function recordSnapshot(cash: number, positionsValue: number): void {
 
 /**
  * Update portfolio with simulated price changes over time
- * This creates realistic portfolio value changes based on market movements
+ * This creates realistic portfolio value changes based on AI-driven market analysis
  */
-export function updatePortfolioOverTime(portfolio: Portfolio): Portfolio {
+export async function updatePortfolioOverTime(portfolio: Portfolio): Promise<Portfolio> {
   const hoursElapsed = getHoursSinceLastUpdate();
   
   // If less than 1 hour has passed, no update needed
@@ -55,20 +56,24 @@ export function updatePortfolioOverTime(portfolio: Portfolio): Portfolio {
     return portfolio;
   }
   
-  // Calculate how many hourly snapshots to create (max 168 = 1 week)
-  const hoursToSimulate = Math.min(Math.floor(hoursElapsed), 168);
+  // Calculate how many hourly snapshots to create (no max limit for long-term accuracy)
+  const hoursToSimulate = Math.floor(hoursElapsed);
   
   if (hoursToSimulate === 0) {
     return portfolio;
   }
+  
+  // Fetch AI predictions for realistic market movements
+  const predictions = await fetchMarketPredictions(ASSETS);
+  console.log('Using AI predictions for portfolio update:', Object.keys(predictions).length, 'assets');
   
   // Get current asset prices
   let currentAssets = [...ASSETS];
   
   // Simulate price changes for each hour that passed
   for (let i = 0; i < hoursToSimulate; i++) {
-    // Simulate 1 hour of price movement
-    currentAssets = simulateAssetPrices(currentAssets, 1);
+    // Simulate 1 hour of price movement with AI predictions
+    currentAssets = simulateAssetPrices(currentAssets, 1, predictions);
     
     // Calculate portfolio value with new prices
     let positionsValue = 0;

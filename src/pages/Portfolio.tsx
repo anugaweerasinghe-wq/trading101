@@ -22,12 +22,17 @@ export default function Portfolio() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // First, simulate price changes over time since last visit
-    let updated = updatePortfolioOverTime(portfolio);
-    // Then update with current market prices
-    updated = updatePositionPrices(updated);
-    setPortfolio(updated);
-    savePortfolio(updated);
+    // Initialize portfolio with AI-driven price updates
+    const initPortfolio = async () => {
+      // First, simulate price changes over time since last visit with AI predictions
+      let updated = await updatePortfolioOverTime(portfolio);
+      // Then update with current market prices
+      updated = updatePositionPrices(updated);
+      setPortfolio(updated);
+      savePortfolio(updated);
+    };
+
+    initPortfolio();
 
     // Simulate price updates every 5 seconds
     const priceInterval = setInterval(() => {
