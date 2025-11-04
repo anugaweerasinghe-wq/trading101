@@ -3,6 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
 import { PortfolioChart } from "@/components/PortfolioChart";
 import { PortfolioAnalytics } from "@/components/PortfolioAnalytics";
+import { RiskManagement } from "@/components/RiskManagement";
 import { PriceTicker } from "@/components/PriceTicker";
 import { getPortfolio, updatePositionPrices, savePortfolio, canClaimWeeklyBonus, getTimeUntilNextBonus, claimWeeklyBonus } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
@@ -11,14 +12,24 @@ import { simulateAssetPrices, shouldUpdatePrices, setLastUpdateTime } from "@/li
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart, Gift } from "lucide-react";
+import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart, Gift, Bell, BellOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { 
+  requestNotificationPermission, 
+  checkMilestones, 
+  initializeMilestones,
+  getMilestoneState,
+  MILESTONES 
+} from "@/lib/notifications";
 
 export default function Portfolio() {
   const [portfolio, setPortfolio] = useState(getPortfolio());
   const [assets, setAssets] = useState(ASSETS);
   const [canClaim, setCanClaim] = useState(canClaimWeeklyBonus());
+  const [notificationsEnabled, setNotificationsEnabled] = useState(
+    typeof Notification !== 'undefined' && Notification.permission === 'granted'
+  );
   const { toast } = useToast();
 
   useEffect(() => {
@@ -30,6 +41,9 @@ export default function Portfolio() {
       updated = updatePositionPrices(updated);
       setPortfolio(updated);
       savePortfolio(updated);
+      
+      // Initialize milestone tracking
+      initializeMilestones(updated.totalValue);
     };
 
     initPortfolio();
@@ -44,6 +58,18 @@ export default function Portfolio() {
         // Update portfolio with new prices
         const updatedPortfolio = updatePositionPrices(getPortfolio());
         setPortfolio(updatedPortfolio);
+        
+        // Check for milestone achievements
+        checkMilestones(updatedPortfolio.totalValue, (milestone, label, type) => {
+          const state = getMilestoneState();
+          const profit = updatedPortfolio.totalValue - state.initialValue;
+          
+          toast({
+            title: `🎯 Milestone Reached: ${label}!`,
+            description: `Your portfolio is now worth $${updatedPortfolio.totalValue.toFixed(2)} (${profit >= 0 ? '+' : ''}$${profit.toFixed(2)})`,
+            variant: type === 'danger' ? 'destructive' : 'default',
+          });
+        });
       }
     }, 5000);
 
@@ -74,6 +100,31 @@ export default function Portfolio() {
     }
   };
 
+  const handleToggleNotifications = async () => {
+    if (notificationsEnabled) {
+      setNotificationsEnabled(false);
+      toast({
+        title: "Notifications Disabled",
+        description: "You won't receive milestone notifications",
+      });
+    } else {
+      const permission = await requestNotificationPermission();
+      if (permission === 'granted') {
+        setNotificationsEnabled(true);
+        toast({
+          title: "Notifications Enabled!",
+          description: "You'll receive alerts when you hit milestones like +10%, +50%, or -20%",
+        });
+      } else {
+        toast({
+          title: "Permission Denied",
+          description: "Enable notifications in your browser settings",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -83,15 +134,35 @@ export default function Portfolio() {
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio</h1>
-            <Button
-              onClick={handleClaimBonus}
-              disabled={!canClaim}
-              size="lg"
-              className="gap-2"
-            >
-              <Gift className="w-5 h-5" />
-              {canClaim ? "Claim $10,000 Bonus" : `Next Bonus: ${getTimeUntilNextBonus()}`}
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button
+                onClick={handleToggleNotifications}
+                size="lg"
+                variant="outline"
+                className="gap-2"
+              >
+                {notificationsEnabled ? (
+                  <>
+                    <Bell className="w-5 h-5" />
+                    Notifications On
+                  </>
+                ) : (
+                  <>
+                    <BellOff className="w-5 h-5" />
+                    Enable Notifications
+                  </>
+                )}
+              </Button>
+              <Button
+                onClick={handleClaimBonus}
+                disabled={!canClaim}
+                size="lg"
+                className="gap-2"
+              >
+                <Gift className="w-5 h-5" />
+                {canClaim ? "Claim $10,000 Bonus" : `Next Bonus: ${getTimeUntilNextBonus()}`}
+              </Button>
+            </div>
           </div>
 
           {/* Performance Chart */}
@@ -100,7 +171,14 @@ export default function Portfolio() {
           </div>
 
           {/* Portfolio Analytics */}
-          <PortfolioAnalytics portfolio={portfolio} />
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-12">
+            <div className="xl:col-span-2">
+              <PortfolioAnalytics portfolio={portfolio} />
+            </div>
+            <div className="xl:col-span-1">
+              <RiskManagement portfolio={portfolio} />
+            </div>
+          </div>
 
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
