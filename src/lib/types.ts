@@ -20,6 +20,13 @@ export interface Position {
   profitLossPercent: number;
 }
 
+export interface JournalEntry {
+  notes: string;
+  emotions: string[];
+  screenshot?: string;
+  reasoning: string;
+}
+
 export interface Trade {
   id: string;
   assetId: string;
@@ -29,6 +36,13 @@ export interface Trade {
   price: number;
   total: number;
   timestamp: Date;
+  journal?: JournalEntry;
+}
+
+export interface OrderBookEntry {
+  price: number;
+  quantity: number;
+  total: number;
 }
 
 export interface Portfolio {

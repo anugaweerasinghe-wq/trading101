@@ -1,1 +1,10 @@
 project_id = "bpzedtifdjbfrojlkano"
+
+[functions.market-analysis]
+verify_jwt = false
+
+[functions.trading-advisor]
+verify_jwt = false
+
+[functions.analyze-trading-psychology]
+verify_jwt = false

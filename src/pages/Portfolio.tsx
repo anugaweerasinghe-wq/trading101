@@ -4,6 +4,7 @@ import { AIAssistant } from "@/components/AIAssistant";
 import { PortfolioChart } from "@/components/PortfolioChart";
 import { PortfolioAnalytics } from "@/components/PortfolioAnalytics";
 import { RiskManagement } from "@/components/RiskManagement";
+import { TradingJournal } from "@/components/TradingJournal";
 import { PriceTicker } from "@/components/PriceTicker";
 import { getPortfolio, updatePositionPrices, savePortfolio, canClaimWeeklyBonus, getTimeUntilNextBonus, claimWeeklyBonus } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
@@ -289,6 +290,11 @@ export default function Portfolio() {
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Trading Journal */}
+          <div className="mb-12">
+            <TradingJournal trades={portfolio.trades} />
           </div>
 
           {/* Trade History */}

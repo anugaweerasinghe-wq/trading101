@@ -6,10 +6,12 @@ import { AIAssistant } from "@/components/AIAssistant";
 import { AssetDetailDialog } from "@/components/AssetDetailDialog";
 import { MarketStats } from "@/components/MarketStats";
 import { WatchlistPanel } from "@/components/WatchlistPanel";
+import { OrderBook } from "@/components/OrderBook";
 import { PriceTicker } from "@/components/PriceTicker";
 import { ASSETS } from "@/lib/assets";
-import { Asset } from "@/lib/types";
+import { Asset, JournalEntry } from "@/lib/types";
 import { OrderType, createOrder, addOrder } from "@/lib/orderTypes";
+import { saveJournalToTrade } from "@/lib/tradingJournal";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
 import { simulateAssetPrices, shouldUpdatePrices, setLastUpdateTime, fetchMarketPredictions } from "@/lib/priceSimulation";
@@ -69,7 +71,7 @@ export default function Trade() {
     return () => clearInterval(priceInterval);
   }, []);
 
-  const handleTrade = (asset: Asset, type: 'buy' | 'sell', quantity: number, orderType?: OrderType, limitPrice?: number) => {
+  const handleTrade = (asset: Asset, type: 'buy' | 'sell', quantity: number, orderType?: OrderType, limitPrice?: number, journal?: JournalEntry) => {
     if (orderType && orderType !== 'market') {
       // Handle limit/stop-loss orders
       const order = createOrder(asset.id, asset.symbol, orderType, type, quantity, limitPrice);
@@ -87,6 +89,13 @@ export default function Trade() {
     const result = executeTrade(portfolio, asset, type, quantity);
     
     if (result.success && result.portfolio) {
+      // Add journal entry to the trade if provided
+      if (journal && result.portfolio.trades.length > 0) {
+        const lastTrade = result.portfolio.trades[result.portfolio.trades.length - 1];
+        const updatedTrade = saveJournalToTrade(lastTrade, journal);
+        result.portfolio.trades[result.portfolio.trades.length - 1] = updatedTrade;
+      }
+      
       setPortfolio(result.portfolio);
       toast({
         title: "Trade Executed",
@@ -185,6 +194,13 @@ export default function Trade() {
             gainers={gainers}
             losers={losers}
           />
+
+          {/* Order Book */}
+          {detailAsset && (
+            <div className="mb-8">
+              <OrderBook asset={detailAsset} />
+            </div>
+          )}
 
           <Tabs defaultValue="all" className="space-y-6">
             <TabsList className="grid w-full max-w-2xl grid-cols-6">

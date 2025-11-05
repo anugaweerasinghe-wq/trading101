@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Asset } from "@/lib/types";
+import { Asset, JournalEntry } from "@/lib/types";
 import { OrderType } from "@/lib/orderTypes";
+import { AVAILABLE_EMOTIONS } from "@/lib/tradingJournal";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +13,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TrendingUp, TrendingDown, Zap } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { TrendingUp, TrendingDown, Zap, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Select,
@@ -26,7 +29,7 @@ interface TradeDialogProps {
   asset: Asset | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onTrade: (asset: Asset, type: 'buy' | 'sell', quantity: number, orderType?: OrderType, limitPrice?: number) => void;
+  onTrade: (asset: Asset, type: 'buy' | 'sell', quantity: number, orderType?: OrderType, limitPrice?: number, journal?: JournalEntry) => void;
   availableCash: number;
 }
 
@@ -34,6 +37,9 @@ export function TradeDialog({ asset, open, onOpenChange, onTrade, availableCash 
   const [quantity, setQuantity] = useState("1");
   const [orderType, setOrderType] = useState<OrderType>("market");
   const [limitPrice, setLimitPrice] = useState("");
+  const [journalNotes, setJournalNotes] = useState("");
+  const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
+  const [reasoning, setReasoning] = useState("");
 
   if (!asset) return null;
 
@@ -42,12 +48,31 @@ export function TradeDialog({ asset, open, onOpenChange, onTrade, availableCash 
     const price = orderType !== 'market' ? parseFloat(limitPrice) : undefined;
     
     if (qty > 0 && (orderType === 'market' || (price && price > 0))) {
-      onTrade(asset, type, qty, orderType, price);
+      const journal: JournalEntry | undefined = journalNotes || selectedEmotions.length > 0 || reasoning
+        ? {
+            notes: journalNotes,
+            emotions: selectedEmotions,
+            reasoning: reasoning
+          }
+        : undefined;
+      
+      onTrade(asset, type, qty, orderType, price, journal);
       setQuantity("1");
       setLimitPrice("");
       setOrderType("market");
+      setJournalNotes("");
+      setSelectedEmotions([]);
+      setReasoning("");
       onOpenChange(false);
     }
+  };
+
+  const toggleEmotion = (emotion: string) => {
+    setSelectedEmotions(prev =>
+      prev.includes(emotion)
+        ? prev.filter(e => e !== emotion)
+        : [...prev, emotion]
+    );
   };
 
   const quickAmount = (amount: number) => {
@@ -175,6 +200,57 @@ export function TradeDialog({ asset, open, onOpenChange, onTrade, availableCash 
               <div className="flex justify-between text-lg font-bold pt-2 border-t border-border">
                 <span>Total</span>
                 <span>${totalWithFee.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Trading Journal */}
+          <div className="border-t border-border pt-4">
+            <div className="flex items-center gap-2 mb-4">
+              <BookOpen className="w-4 h-4" />
+              <span className="text-sm font-medium">Trading Journal (Optional)</span>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <Label>How are you feeling?</Label>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {AVAILABLE_EMOTIONS.map((emotion) => (
+                    <Button
+                      key={emotion}
+                      type="button"
+                      size="sm"
+                      variant={selectedEmotions.includes(emotion) ? "default" : "outline"}
+                      onClick={() => toggleEmotion(emotion)}
+                    >
+                      {emotion}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="reasoning">Why are you making this trade?</Label>
+                <Textarea
+                  id="reasoning"
+                  placeholder="Technical analysis, news, gut feeling..."
+                  value={reasoning}
+                  onChange={(e) => setReasoning(e.target.value)}
+                  className="mt-2"
+                  rows={2}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="notes">Additional Notes</Label>
+                <Textarea
+                  id="notes"
+                  placeholder="Any other thoughts or observations..."
+                  value={journalNotes}
+                  onChange={(e) => setJournalNotes(e.target.value)}
+                  className="mt-2"
+                  rows={2}
+                />
               </div>
             </div>
           </div>
