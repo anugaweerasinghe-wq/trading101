@@ -5,6 +5,7 @@ import { PortfolioChart } from "@/components/PortfolioChart";
 import { PortfolioAnalytics } from "@/components/PortfolioAnalytics";
 import { RiskManagement } from "@/components/RiskManagement";
 import { TradingJournal } from "@/components/TradingJournal";
+import { TradeHistory } from "@/components/TradeHistory";
 import { PriceTicker } from "@/components/PriceTicker";
 import { getPortfolio, updatePositionPrices, savePortfolio, canClaimWeeklyBonus, getTimeUntilNextBonus, claimWeeklyBonus } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
@@ -299,38 +300,7 @@ export default function Portfolio() {
 
           {/* Trade History */}
           <div>
-            <h2 className="text-3xl font-bold mb-6">Trade History</h2>
-            {portfolio.trades.length === 0 ? (
-              <Card className="p-12 text-center">
-                <p className="text-xl text-muted-foreground">No trades yet.</p>
-              </Card>
-            ) : (
-              <div className="grid gap-3">
-                {portfolio.trades.slice(0, 10).map((trade) => (
-                  <Card key={trade.id} className="p-4 bg-card/50 backdrop-blur-sm">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <Badge variant={trade.type === 'buy' ? 'default' : 'outline'}>
-                          {trade.type.toUpperCase()}
-                        </Badge>
-                        <div>
-                          <p className="font-semibold">{trade.symbol}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {trade.quantity} shares @ ${trade.price.toFixed(2)}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold">${trade.total.toFixed(2)}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(trade.timestamp).toLocaleString()}
-                        </p>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            )}
+            <TradeHistory trades={portfolio.trades} />
           </div>
         </div>
       </main>
