@@ -12,6 +12,7 @@ const VOLATILITY: Record<AssetType, number> = {
   etf: 0.15,
   crypto: 0.80,
   commodity: 0.20,
+  forex: 0.10,
 };
 
 interface MarketPrediction {

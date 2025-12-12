@@ -1,4 +1,4 @@
-export type AssetType = 'stock' | 'etf' | 'crypto' | 'commodity';
+export type AssetType = 'stock' | 'etf' | 'crypto' | 'commodity' | 'forex';
 
 export interface Asset {
   id: string;
@@ -57,6 +57,15 @@ export interface PortfolioSnapshot {
   totalValue: number;
   cash: number;
   positionsValue: number;
+}
+
+export interface CandlestickData {
+  time: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
 }
 
 export interface Message {

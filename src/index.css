@@ -2,99 +2,123 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Professional Trading Platform Design System
+   Inspired by Binance/Coinbase Pro */
 
 @layer base {
   :root {
-    /* Premium Gold + Black Theme (Dark Mode) */
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
+    /* Deep Dark Trading Theme */
+    --background: 222 47% 5%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 98%;
+    --card: 222 47% 7%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 222 47% 6%;
+    --popover-foreground: 210 40% 98%;
 
-    /* Luxurious Gold */
-    --primary: 45 100% 51%;
-    --primary-foreground: 0 0% 10%;
+    /* Trading accent - subtle blue-gray */
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 5%;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 222 47% 11%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 222 47% 15%;
+    --muted-foreground: 215 20% 55%;
 
-    --accent: 45 100% 51%;
-    --accent-foreground: 0 0% 10%;
+    --accent: 222 47% 14%;
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
+    /* Trading colors */
+    --success: 152 69% 45%;
+    --success-foreground: 222 47% 5%;
+    
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 210 40% 98%;
 
-    --success: 142 71% 45%;
-    --success-foreground: 0 0% 98%;
+    /* Trading-specific semantic colors */
+    --profit: 152 69% 45%;
+    --loss: 0 72% 55%;
+    --buy: 152 69% 45%;
+    --sell: 0 72% 55%;
+    --warning: 38 92% 50%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 45 100% 51%;
+    --border: 222 47% 14%;
+    --input: 222 47% 11%;
+    --ring: 217 91% 60%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Premium gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(45 100% 51%) 0%, hsl(35 100% 45%) 100%);
-    --gradient-dark: linear-gradient(180deg, hsl(0 0% 4%) 0%, hsl(0 0% 8%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 4%) 0%, hsl(0 0% 10%) 50%, hsl(45 100% 51% / 0.05) 100%);
+    /* Trading-specific gradients */
+    --gradient-profit: linear-gradient(135deg, hsl(152 69% 45%) 0%, hsl(152 69% 35%) 100%);
+    --gradient-loss: linear-gradient(135deg, hsl(0 72% 55%) 0%, hsl(0 72% 45%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(222 47% 8%) 0%, hsl(222 47% 6%) 100%);
+    --gradient-sidebar: linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(222 47% 4%) 100%);
     
     /* Shadows */
-    --shadow-gold: 0 10px 40px -10px hsl(45 100% 51% / 0.3);
-    --shadow-luxury: 0 20px 60px -15px hsl(0 0% 0% / 0.5);
+    --shadow-card: 0 4px 20px -4px hsl(222 47% 0% / 0.5);
+    --shadow-glow-profit: 0 0 20px hsl(152 69% 45% / 0.2);
+    --shadow-glow-loss: 0 0 20px hsl(0 72% 55% / 0.2);
     
     /* Transitions */
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Chart colors */
+    --chart-1: 152 69% 45%;
+    --chart-2: 217 91% 60%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 200 95% 50%;
   }
 
   .light {
-    /* Light Mode Theme */
     --background: 0 0% 98%;
-    --foreground: 0 0% 10%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 45 100% 45%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 217 91% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 90%;
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 0 0% 92%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 220 14% 93%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 45 100% 45%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 222 47% 11%;
 
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-
-    --success: 142 71% 35%;
-    --success-foreground: 0 0% 98%;
-
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
-    --ring: 45 100% 45%;
-
-    --gradient-gold: linear-gradient(135deg, hsl(45 100% 45%) 0%, hsl(35 100% 38%) 100%);
-    --gradient-dark: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 92%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 98%) 0%, hsl(0 0% 92%) 50%, hsl(45 100% 45% / 0.05) 100%);
+    --success: 152 69% 35%;
+    --success-foreground: 0 0% 100%;
     
-    --shadow-gold: 0 10px 40px -10px hsl(45 100% 45% / 0.2);
-    --shadow-luxury: 0 20px 60px -15px hsl(0 0% 0% / 0.1);
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --profit: 152 69% 35%;
+    --loss: 0 72% 51%;
+    --buy: 152 69% 35%;
+    --sell: 0 72% 51%;
+    --warning: 38 92% 45%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 217 91% 50%;
+
+    --gradient-profit: linear-gradient(135deg, hsl(152 69% 35%) 0%, hsl(152 69% 28%) 100%);
+    --gradient-loss: linear-gradient(135deg, hsl(0 72% 51%) 0%, hsl(0 72% 42%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
+    --gradient-sidebar: linear-gradient(180deg, hsl(220 14% 98%) 0%, hsl(220 14% 96%) 100%);
+    
+    --shadow-card: 0 4px 20px -4px hsl(220 13% 70% / 0.3);
+    --shadow-glow-profit: 0 0 20px hsl(152 69% 35% / 0.15);
+    --shadow-glow-loss: 0 0 20px hsl(0 72% 51% / 0.15);
   }
 }
 
@@ -105,29 +129,97 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "cv11", "ss01";
+    font-feature-settings: "cv11", "ss01", "tnum";
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-bold;
-    letter-spacing: -0.02em;
+    @apply font-sans font-semibold tracking-tight;
+  }
+
+  /* Tabular numbers for trading data */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }
 
 @layer utilities {
-  .text-gradient-gold {
-    @apply bg-gradient-to-r from-primary via-yellow-400 to-primary bg-clip-text text-transparent;
+  /* Trading-specific utilities */
+  .text-profit {
+    @apply text-[hsl(var(--profit))];
   }
   
-  .hover-lift {
-    @apply transition-transform duration-300 hover:-translate-y-1;
+  .text-loss {
+    @apply text-[hsl(var(--loss))];
+  }
+
+  .bg-profit {
+    @apply bg-[hsl(var(--profit))];
+  }
+
+  .bg-loss {
+    @apply bg-[hsl(var(--loss))];
+  }
+
+  .border-profit {
+    @apply border-[hsl(var(--profit))];
+  }
+
+  .border-loss {
+    @apply border-[hsl(var(--loss))];
+  }
+
+  .glow-profit {
+    box-shadow: var(--shadow-glow-profit);
+  }
+
+  .glow-loss {
+    box-shadow: var(--shadow-glow-loss);
+  }
+
+  /* Price animation */
+  .price-up {
+    animation: priceUp 0.3s ease;
   }
   
-  .glow-gold {
-    box-shadow: 0 0 20px hsl(45 100% 51% / 0.3);
+  .price-down {
+    animation: priceDown 0.3s ease;
+  }
+
+  @keyframes priceUp {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: hsl(var(--profit) / 0.2); }
+  }
+
+  @keyframes priceDown {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: hsl(var(--loss) / 0.2); }
+  }
+
+  /* Scrollbar styling for trading terminal */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted));
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
   }
 
   .scrollbar-hide {
@@ -138,4 +230,37 @@ All colors MUST be HSL.
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Bento grid glow effect */
+  .bento-glow {
+    @apply relative;
+  }
+
+  .bento-glow::before {
+    content: '';
+    @apply absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, transparent 100%);
+  }
+
+  .bento-glow:hover::before {
+    @apply opacity-100;
+  }
+}
+
+/* Custom animations */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Trading terminal grid lines */
+.grid-lines {
+  background-image: 
+    linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
 }

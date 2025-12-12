@@ -7,15 +7,15 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1920px",
       },
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-        serif: ["Playfair Display", "Georgia", "serif"],
+        sans: ["Inter", "SF Pro Display", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        mono: ["SF Mono", "Monaco", "Inconsolata", "Fira Code", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -55,42 +55,66 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Trading-specific colors
+        profit: "hsl(var(--profit))",
+        loss: "hsl(var(--loss))",
+        buy: "hsl(var(--buy))",
+        sell: "hsl(var(--sell))",
+        warning: "hsl(var(--warning))",
+        chart: {
+          1: "hsl(var(--chart-1))",
+          2: "hsl(var(--chart-2))",
+          3: "hsl(var(--chart-3))",
+          4: "hsl(var(--chart-4))",
+          5: "hsl(var(--chart-5))",
+        },
       },
       backgroundImage: {
-        "gradient-gold": "var(--gradient-gold)",
-        "gradient-dark": "var(--gradient-dark)",
-        "gradient-hero": "var(--gradient-hero)",
+        "gradient-profit": "var(--gradient-profit)",
+        "gradient-loss": "var(--gradient-loss)",
+        "gradient-card": "var(--gradient-card)",
+        "gradient-sidebar": "var(--gradient-sidebar)",
       },
       boxShadow: {
-        "gold": "var(--shadow-gold)",
-        "luxury": "var(--shadow-luxury)",
+        "card": "var(--shadow-card)",
+        "glow-profit": "var(--shadow-glow-profit)",
+        "glow-loss": "var(--shadow-glow-loss)",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontSize: {
+        "2xs": ["0.625rem", { lineHeight: "0.875rem" }],
+      },
+      spacing: {
+        "18": "4.5rem",
+        "88": "22rem",
+      },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "slide-in-right": {
+          from: { transform: "translateX(100%)" },
+          to: { transform: "translateX(0)" },
+        },
+        "slide-out-right": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(100%)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slide-in-right": "slide-in-right 0.3s ease-out",
+        "slide-out-right": "slide-out-right 0.3s ease-out",
       },
     },
   },
