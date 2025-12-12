@@ -6,6 +6,7 @@ import { PortfolioAnalytics } from "@/components/PortfolioAnalytics";
 import { RiskManagement } from "@/components/RiskManagement";
 import { TradingJournal } from "@/components/TradingJournal";
 import { TradeHistory } from "@/components/TradeHistory";
+import { TradeAnalytics } from "@/components/TradeAnalytics";
 import { PriceTicker } from "@/components/PriceTicker";
 import { getPortfolio, updatePositionPrices, savePortfolio, canClaimWeeklyBonus, getTimeUntilNextBonus, claimWeeklyBonus } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
@@ -291,6 +292,12 @@ export default function Portfolio() {
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Trade Performance Analytics */}
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold mb-6">Trade Performance</h2>
+            <TradeAnalytics portfolio={portfolio} />
           </div>
 
           {/* Trading Journal */}
