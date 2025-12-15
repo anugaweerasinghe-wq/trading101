@@ -3,8 +3,6 @@ import { TradingSidebar } from "@/components/trading/TradingSidebar";
 import { CandlestickChart } from "@/components/trading/CandlestickChart";
 import { AssetTable } from "@/components/trading/AssetTable";
 import { OrderPanel } from "@/components/trading/OrderPanel";
-import { ProOrderBook } from "@/components/trading/ProOrderBook";
-import { TradingTerminal } from "@/components/trading/TradingTerminal";
 import { PortfolioHeader } from "@/components/trading/PortfolioHeader";
 import { AIMentor } from "@/components/trading/AIMentor";
 import { ASSETS } from "@/lib/assets";
@@ -26,7 +24,6 @@ export default function Trade() {
     setPortfolio(updated);
     setFavorites(getFavorites());
 
-    // Simulate live price updates every 3 seconds
     const priceInterval = setInterval(() => {
       setAssets(prev => {
         const updated = simulateAssetPrices(prev, 0.05);
@@ -38,7 +35,6 @@ export default function Trade() {
     return () => clearInterval(priceInterval);
   }, []);
 
-  // Update selected asset when prices change
   useEffect(() => {
     if (selectedAsset) {
       const updated = assets.find(a => a.id === selectedAsset.id);
@@ -77,103 +73,91 @@ export default function Trade() {
 
   return (
     <div className="h-screen bg-background flex overflow-hidden">
-      {/* Left Sidebar */}
       <TradingSidebar />
 
-      {/* Main Content */}
       <div className="flex-1 ml-16 flex flex-col h-screen overflow-hidden">
-        {/* Portfolio Header - Compact */}
-        <header className="py-1 px-2 border-b border-border shrink-0">
+        {/* Header */}
+        <header className="h-14 px-4 border-b border-border/50 bg-card/50 backdrop-blur-sm flex items-center shrink-0">
           <PortfolioHeader portfolio={portfolio} />
         </header>
 
-        {/* Main Grid - No Scroll */}
-        <div className="flex-1 overflow-hidden">
-          {/* Desktop Layout */}
-          <div className="hidden lg:grid lg:grid-cols-[200px_1fr_260px] gap-px p-px bg-border h-full">
-            {/* Left: Asset Table */}
-            <div className="bg-card overflow-hidden">
-              <AssetTable
-                assets={assets}
-                favorites={favorites}
-                selectedAsset={selectedAsset}
-                onSelectAsset={setSelectedAsset}
-                onToggleFavorite={handleToggleFavorite}
-              />
-            </div>
+        {/* Desktop Layout */}
+        <div className="hidden lg:flex flex-1 overflow-hidden">
+          {/* Asset List */}
+          <aside className="w-56 border-r border-border/50 bg-card/30 overflow-hidden">
+            <AssetTable
+              assets={assets}
+              favorites={favorites}
+              selectedAsset={selectedAsset}
+              onSelectAsset={setSelectedAsset}
+              onToggleFavorite={handleToggleFavorite}
+            />
+          </aside>
 
-            {/* Center: Chart + Terminal */}
-            <div className="flex flex-col gap-px h-full">
-              <div className="flex-[2] min-h-0">
+          {/* Main Chart Area */}
+          <main className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 min-h-0 p-3">
+              <div className="h-full rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden shadow-lg">
                 {selectedAsset && <CandlestickChart asset={selectedAsset} />}
               </div>
-              <div className="h-[140px] shrink-0">
-                <TradingTerminal portfolio={portfolio} />
-              </div>
             </div>
+          </main>
 
-            {/* Right: Order Book + Order Panel */}
-            <div className="flex flex-col gap-px h-full">
-              <div className="flex-1 min-h-0">
-                {selectedAsset && <ProOrderBook asset={selectedAsset} />}
-              </div>
-              <div className="h-[260px] shrink-0">
-                <OrderPanel
-                  asset={selectedAsset}
-                  availableCash={portfolio.cash}
-                  onTrade={handleTrade}
-                />
-              </div>
-            </div>
-          </div>
+          {/* Order Panel */}
+          <aside className="w-72 border-l border-border/50 bg-card/30 overflow-hidden">
+            <OrderPanel
+              asset={selectedAsset}
+              availableCash={portfolio.cash}
+              onTrade={handleTrade}
+            />
+          </aside>
+        </div>
 
-          {/* Tablet Layout */}
-          <div className="hidden md:grid lg:hidden grid-cols-2 gap-px p-px bg-border h-full">
-            <div className="flex flex-col gap-px h-full">
-              <div className="flex-1 bg-card overflow-hidden">
+        {/* Tablet Layout */}
+        <div className="hidden md:flex lg:hidden flex-1 overflow-hidden">
+          <aside className="w-48 border-r border-border/50 bg-card/30 overflow-hidden">
+            <AssetTable
+              assets={assets}
+              favorites={favorites}
+              selectedAsset={selectedAsset}
+              onSelectAsset={setSelectedAsset}
+              onToggleFavorite={handleToggleFavorite}
+            />
+          </aside>
+
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <main className="flex-1 min-h-0 p-2">
+              <div className="h-full rounded-lg border border-border/50 bg-card/50 overflow-hidden">
                 {selectedAsset && <CandlestickChart asset={selectedAsset} />}
               </div>
-              <div className="h-[160px] bg-card overflow-hidden shrink-0">
-                {selectedAsset && <ProOrderBook asset={selectedAsset} />}
-              </div>
-            </div>
-            <div className="flex flex-col gap-px h-full">
-              <div className="flex-1 bg-card overflow-hidden">
-                <AssetTable
-                  assets={assets}
-                  favorites={favorites}
-                  selectedAsset={selectedAsset}
-                  onSelectAsset={setSelectedAsset}
-                  onToggleFavorite={handleToggleFavorite}
-                />
-              </div>
-              <div className="h-[200px] bg-card overflow-hidden shrink-0">
-                <OrderPanel
-                  asset={selectedAsset}
-                  availableCash={portfolio.cash}
-                  onTrade={handleTrade}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Layout - Fit screen */}
-          <div className="md:hidden flex flex-col h-full">
-            <div className="flex-1 min-h-0 bg-card">
-              {selectedAsset && <CandlestickChart asset={selectedAsset} />}
-            </div>
-            <div className="h-[220px] shrink-0 bg-card border-t border-border">
+            </main>
+            <aside className="h-52 shrink-0 border-t border-border/50 bg-card/30">
               <OrderPanel
                 asset={selectedAsset}
                 availableCash={portfolio.cash}
                 onTrade={handleTrade}
               />
-            </div>
+            </aside>
           </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="md:hidden flex flex-col flex-1 overflow-hidden">
+          <main className="flex-1 min-h-0 p-2">
+            <div className="h-full rounded-lg border border-border/50 bg-card/50 overflow-hidden">
+              {selectedAsset && <CandlestickChart asset={selectedAsset} />}
+            </div>
+          </main>
+          <aside className="h-48 shrink-0 border-t border-border/50 bg-card/30">
+            <OrderPanel
+              asset={selectedAsset}
+              availableCash={portfolio.cash}
+              onTrade={handleTrade}
+            />
+          </aside>
         </div>
       </div>
 
-      {/* AI Mentor */}
       <AIMentor 
         portfolio={portfolio} 
         assets={assets} 
