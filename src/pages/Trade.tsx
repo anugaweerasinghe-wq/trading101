@@ -76,21 +76,21 @@ export default function Trade() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="h-screen bg-background flex overflow-hidden">
       {/* Left Sidebar */}
       <TradingSidebar />
 
       {/* Main Content */}
-      <div className="flex-1 ml-16 flex flex-col overflow-hidden">
-        {/* Portfolio Header */}
-        <header className="p-2 md:p-3 border-b border-border shrink-0">
+      <div className="flex-1 ml-16 flex flex-col h-screen overflow-hidden">
+        {/* Portfolio Header - Compact */}
+        <header className="py-1 px-2 border-b border-border shrink-0">
           <PortfolioHeader portfolio={portfolio} />
         </header>
 
-        {/* Main Grid - Responsive */}
-        <div className="flex-1 overflow-auto">
+        {/* Main Grid - No Scroll */}
+        <div className="flex-1 overflow-hidden">
           {/* Desktop Layout */}
-          <div className="hidden lg:grid lg:grid-cols-[260px_1fr_300px] gap-0.5 p-0.5 bg-border h-[calc(100vh-80px)]">
+          <div className="hidden lg:grid lg:grid-cols-[200px_1fr_260px] gap-px p-px bg-border h-full">
             {/* Left: Asset Table */}
             <div className="bg-card overflow-hidden">
               <AssetTable
@@ -103,21 +103,21 @@ export default function Trade() {
             </div>
 
             {/* Center: Chart + Terminal */}
-            <div className="flex flex-col gap-0.5">
+            <div className="flex flex-col gap-px h-full">
               <div className="flex-[2] min-h-0">
                 {selectedAsset && <CandlestickChart asset={selectedAsset} />}
               </div>
-              <div className="flex-1 min-h-[180px]">
+              <div className="h-[140px] shrink-0">
                 <TradingTerminal portfolio={portfolio} />
               </div>
             </div>
 
             {/* Right: Order Book + Order Panel */}
-            <div className="flex flex-col gap-0.5">
+            <div className="flex flex-col gap-px h-full">
               <div className="flex-1 min-h-0">
                 {selectedAsset && <ProOrderBook asset={selectedAsset} />}
               </div>
-              <div className="h-[340px]">
+              <div className="h-[260px] shrink-0">
                 <OrderPanel
                   asset={selectedAsset}
                   availableCash={portfolio.cash}
@@ -128,12 +128,17 @@ export default function Trade() {
           </div>
 
           {/* Tablet Layout */}
-          <div className="hidden md:flex lg:hidden flex-col gap-2 p-2 h-[calc(100vh-80px)]">
-            <div className="grid grid-cols-2 gap-2 flex-1">
-              <div className="bg-card rounded-lg overflow-hidden">
+          <div className="hidden md:grid lg:hidden grid-cols-2 gap-px p-px bg-border h-full">
+            <div className="flex flex-col gap-px h-full">
+              <div className="flex-1 bg-card overflow-hidden">
                 {selectedAsset && <CandlestickChart asset={selectedAsset} />}
               </div>
-              <div className="bg-card rounded-lg overflow-hidden">
+              <div className="h-[160px] bg-card overflow-hidden shrink-0">
+                {selectedAsset && <ProOrderBook asset={selectedAsset} />}
+              </div>
+            </div>
+            <div className="flex flex-col gap-px h-full">
+              <div className="flex-1 bg-card overflow-hidden">
                 <AssetTable
                   assets={assets}
                   favorites={favorites}
@@ -142,12 +147,7 @@ export default function Trade() {
                   onToggleFavorite={handleToggleFavorite}
                 />
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2 h-[300px]">
-              <div className="bg-card rounded-lg overflow-hidden">
-                {selectedAsset && <ProOrderBook asset={selectedAsset} />}
-              </div>
-              <div className="bg-card rounded-lg overflow-hidden">
+              <div className="h-[200px] bg-card overflow-hidden shrink-0">
                 <OrderPanel
                   asset={selectedAsset}
                   availableCash={portfolio.cash}
@@ -157,36 +157,17 @@ export default function Trade() {
             </div>
           </div>
 
-          {/* Mobile Layout */}
-          <div className="md:hidden flex flex-col gap-2 p-2 pb-20">
-            {/* Chart */}
-            <div className="bg-card rounded-lg h-[250px] overflow-hidden">
+          {/* Mobile Layout - Fit screen */}
+          <div className="md:hidden flex flex-col h-full">
+            <div className="flex-1 min-h-0 bg-card">
               {selectedAsset && <CandlestickChart asset={selectedAsset} />}
             </div>
-            
-            {/* Order Panel */}
-            <div className="bg-card rounded-lg overflow-hidden">
+            <div className="h-[220px] shrink-0 bg-card border-t border-border">
               <OrderPanel
                 asset={selectedAsset}
                 availableCash={portfolio.cash}
                 onTrade={handleTrade}
               />
-            </div>
-
-            {/* Asset List */}
-            <div className="bg-card rounded-lg h-[300px] overflow-hidden">
-              <AssetTable
-                assets={assets}
-                favorites={favorites}
-                selectedAsset={selectedAsset}
-                onSelectAsset={setSelectedAsset}
-                onToggleFavorite={handleToggleFavorite}
-              />
-            </div>
-
-            {/* Order Book */}
-            <div className="bg-card rounded-lg h-[250px] overflow-hidden">
-              {selectedAsset && <ProOrderBook asset={selectedAsset} />}
             </div>
           </div>
         </div>
