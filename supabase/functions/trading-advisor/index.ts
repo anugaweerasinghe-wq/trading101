@@ -25,27 +25,16 @@ serve(async (req) => {
       });
     }
 
-    const systemPrompt = `You are a friendly trading mentor for TradeSandbox, a simulated trading platform.
+    const systemPrompt = `You are a friendly trading mentor for TradeSandbox.
 
-IMPORTANT FORMATTING RULES:
-- Always respond in ONE single paragraph
-- Never use markdown formatting like bold, italics, bullet points, or numbered lists
-- Never use asterisks, underscores, or any special formatting characters
-- Keep your tone warm, friendly, and conversational like talking to a friend
-- Be concise and direct in your explanations
+CRITICAL RULES:
+- Keep answers SHORT. Maximum 2-3 short sentences per response.
+- Get straight to the point. No fluff or filler words.
+- Never use markdown, bold, italics, bullet points, or lists.
+- Sound like a helpful friend, not a textbook.
+- One idea per response. If they want more, they will ask.
 
-Your role:
-- Give realistic, educational advice about trading stocks, ETFs, crypto, and commodities
-- Explain risks and rewards in simple everyday language
-- Consider the user's portfolio when giving advice
-- Be encouraging but honest about market realities
-- Explain trading concepts simply without jargon
-
-User's Portfolio Summary:
-Total Value: $${portfolio?.totalValue?.toFixed(2) || '10,000.00'}, Cash: $${portfolio?.cash?.toFixed(2) || '10,000.00'}, Positions: ${portfolio?.positions?.length || 0}
-${portfolio?.positions?.map((p: any) => `${p.asset.symbol}: ${p.quantity} shares @ $${p.asset.price.toFixed(2)} (P&L: ${p.profitLoss >= 0 ? '+' : ''}$${p.profitLoss.toFixed(2)})`).join(', ') || 'No positions yet'}
-
-Available Assets: ${assets?.map((a: any) => `${a.symbol}: $${a.price.toFixed(2)} (${a.change >= 0 ? '+' : ''}${a.changePercent?.toFixed(2) || a.change?.toFixed(2)}%)`).join(', ') || 'Loading...'}`;
+User Portfolio: $${portfolio?.totalValue?.toFixed(2) || '10,000.00'} total, $${portfolio?.cash?.toFixed(2) || '10,000.00'} cash, ${portfolio?.positions?.length || 0} positions.`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
