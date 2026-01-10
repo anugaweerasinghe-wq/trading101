@@ -21,7 +21,7 @@ const LearnTradingGuide = () => {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "Learn Trading for Beginners: Complete 2025 Guide",
+    "headline": "Learn Trading for Beginners: Complete 2026 Guide",
     "description": "Master the fundamentals of trading with our comprehensive beginner's guide. Learn about stocks, forex, crypto markets, risk management, and start your trading journey.",
     "author": {
       "@type": "Organization",
@@ -35,8 +35,8 @@ const LearnTradingGuide = () => {
         "url": "https://tradesandbox.com/logo.png"
       }
     },
-    "datePublished": "2025-01-10",
-    "dateModified": "2025-01-10",
+    "datePublished": "2026-01-10",
+    "dateModified": "2026-01-10",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https://tradesandbox.com/learn-trading-guide"
@@ -80,12 +80,33 @@ const LearnTradingGuide = () => {
   return (
     <>
       <Helmet>
-        <title>Learn Trading for Beginners | Complete 2025 Guide</title>
+        <title>Learn Trading for Beginners | Complete 2026 Guide</title>
         <meta 
           name="description" 
           content="Master trading basics with our free beginner guide. Learn stocks, forex, crypto, risk management & start trading confidently." 
         />
         <link rel="canonical" href="https://tradesandbox.com/learn-trading-guide" />
+        
+        {/* Open Graph Meta Tags */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="Master Trading in 2026: A Beginner's Guide" />
+        <meta property="og:description" content="Learn to trade stocks, forex & crypto with confidence. Free step-by-step guide covering risk management, market types & proven strategies." />
+        <meta property="og:url" content="https://tradesandbox.com/learn-trading-guide" />
+        <meta property="og:site_name" content="TradeSandbox" />
+        <meta property="og:image" content="https://tradesandbox.com/og-trading-guide.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="TradeSandbox - Learn Trading for Beginners Guide" />
+        <meta property="article:published_time" content="2025-01-10T00:00:00Z" />
+        <meta property="article:author" content="TradeSandbox" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Master Trading in 2026: A Beginner's Guide" />
+        <meta name="twitter:description" content="Learn to trade stocks, forex & crypto with confidence. Free step-by-step guide covering risk management & proven strategies." />
+        <meta name="twitter:image" content="https://tradesandbox.com/og-trading-guide.png" />
+        <meta name="twitter:image:alt" content="TradeSandbox - Learn Trading for Beginners Guide" />
+        
         <script type="application/ld+json">
           {JSON.stringify(articleSchema)}
         </script>
@@ -112,7 +133,7 @@ const LearnTradingGuide = () => {
               <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
                 Learn Trading for Beginners:
                 <br />
-                <span className="text-gradient-gold">Your Complete 2025 Guide</span>
+                <span className="text-gradient-gold">Your Complete 2026 Guide</span>
               </h1>
               
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
@@ -504,8 +525,8 @@ const LearnTradingGuide = () => {
             <div className="grid md:grid-cols-4 gap-8">
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-gradient-gold rounded-lg flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-primary-foreground" />
+                  <div className="w-8 h-8 bg-gradient-gold rounded-lg flex items-center justify-center" role="img" aria-label="TradeSandbox Logo">
+                    <TrendingUp className="w-5 h-5 text-primary-foreground" aria-hidden="true" />
                   </div>
                   <span className="text-xl font-bold font-serif">TradeSandbox</span>
                 </div>
