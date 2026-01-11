@@ -1,5 +1,5 @@
-# Robots.txt for TradeSandbox
-# https://tradesandbox.com
+# Robots.txt for TradingHQ
+# https://tradinghq.vercel.app/
 
 User-agent: Googlebot
 Allow: /
@@ -17,4 +17,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://tradesandbox.com/sitemap.xml
+Sitemap: https://tradinghq.vercel.app/sitemap.xml
