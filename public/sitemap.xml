@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tradesandbox.com/</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://tradinghq.vercel.app/</loc>
+    <lastmod>2026-01-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://tradesandbox.com/trade</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://tradinghq.vercel.app/trade</loc>
+    <lastmod>2026-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tradesandbox.com/portfolio</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://tradinghq.vercel.app/portfolio</loc>
+    <lastmod>2026-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tradesandbox.com/markets</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://tradinghq.vercel.app/markets</loc>
+    <lastmod>2026-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tradesandbox.com/learn</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://tradinghq.vercel.app/learn</loc>
+    <lastmod>2026-01-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tradesandbox.com/learn-trading-guide</loc>
-    <lastmod>2025-01-10</lastmod>
+    <loc>https://tradinghq.vercel.app/learn-trading-guide</loc>
+    <lastmod>2026-01-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
+const DOMAIN = "https://tradinghq.vercel.app";
+
 const LearnTradingGuide = () => {
   // JSON-LD Schema for Article
   const articleSchema = {
@@ -25,22 +27,23 @@ const LearnTradingGuide = () => {
     "description": "Master the fundamentals of trading with our comprehensive beginner's guide. Learn about stocks, forex, crypto markets, risk management, and start your trading journey.",
     "author": {
       "@type": "Organization",
-      "name": "TradeSandbox"
+      "name": "TradingHQ"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "TradeSandbox",
+      "name": "TradingHQ",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://tradesandbox.com/logo.png"
+        "url": `${DOMAIN}/og-image.png`
       }
     },
-    "datePublished": "2026-01-10",
-    "dateModified": "2026-01-10",
+    "datePublished": "2026-01-11",
+    "dateModified": "2026-01-11",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://tradesandbox.com/learn-trading-guide"
-    }
+      "@id": `${DOMAIN}/learn-trading-guide`
+    },
+    "image": `${DOMAIN}/og-image.png`
   };
 
   const howToSchema = {
@@ -48,6 +51,7 @@ const LearnTradingGuide = () => {
     "@type": "HowTo",
     "name": "How to Start Trading as a Beginner",
     "description": "A step-by-step guide to starting your trading journey from scratch.",
+    "image": `${DOMAIN}/og-image.png`,
     "step": [
       {
         "@type": "HowToStep",
@@ -62,7 +66,7 @@ const LearnTradingGuide = () => {
       {
         "@type": "HowToStep",
         "name": "Practice with a Simulator",
-        "text": "Use a trading simulator like TradeSandbox to practice strategies with virtual money before risking real capital."
+        "text": "Use a trading simulator like TradingHQ to practice strategies with virtual money before risking real capital."
       },
       {
         "@type": "HowToStep",
@@ -77,6 +81,32 @@ const LearnTradingGuide = () => {
     ]
   };
 
+  // BreadcrumbList Schema
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": DOMAIN
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Learn",
+        "item": `${DOMAIN}/learn`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Trading Guide for Beginners",
+        "item": `${DOMAIN}/learn-trading-guide`
+      }
+    ]
+  };
+
   return (
     <>
       <Helmet>
@@ -85,33 +115,36 @@ const LearnTradingGuide = () => {
           name="description" 
           content="Master trading basics with our free beginner guide. Learn stocks, forex, crypto, risk management & start trading confidently." 
         />
-        <link rel="canonical" href="https://tradesandbox.com/learn-trading-guide" />
+        <link rel="canonical" href={`${DOMAIN}/learn-trading-guide`} />
         
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="article" />
         <meta property="og:title" content="Master Trading in 2026: A Beginner's Guide" />
         <meta property="og:description" content="Learn to trade stocks, forex & crypto with confidence. Free step-by-step guide covering risk management, market types & proven strategies." />
-        <meta property="og:url" content="https://tradesandbox.com/learn-trading-guide" />
-        <meta property="og:site_name" content="TradeSandbox" />
-        <meta property="og:image" content="https://tradesandbox.com/og-trading-guide.png" />
+        <meta property="og:url" content={`${DOMAIN}/learn-trading-guide`} />
+        <meta property="og:site_name" content="TradingHQ" />
+        <meta property="og:image" content={`${DOMAIN}/og-image.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="TradeSandbox - Learn Trading for Beginners Guide" />
-        <meta property="article:published_time" content="2025-01-10T00:00:00Z" />
-        <meta property="article:author" content="TradeSandbox" />
+        <meta property="og:image:alt" content="TradingHQ - Learn Trading for Beginners Guide" />
+        <meta property="article:published_time" content="2026-01-11T00:00:00Z" />
+        <meta property="article:author" content="TradingHQ" />
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Master Trading in 2026: A Beginner's Guide" />
         <meta name="twitter:description" content="Learn to trade stocks, forex & crypto with confidence. Free step-by-step guide covering risk management & proven strategies." />
-        <meta name="twitter:image" content="https://tradesandbox.com/og-trading-guide.png" />
-        <meta name="twitter:image:alt" content="TradeSandbox - Learn Trading for Beginners Guide" />
+        <meta name="twitter:image" content={`${DOMAIN}/og-image.png`} />
+        <meta name="twitter:image:alt" content="TradingHQ - Learn Trading for Beginners Guide" />
         
         <script type="application/ld+json">
           {JSON.stringify(articleSchema)}
         </script>
         <script type="application/ld+json">
           {JSON.stringify(howToSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
         </script>
       </Helmet>
 
@@ -126,7 +159,7 @@ const LearnTradingGuide = () => {
           <div className="relative z-10 container mx-auto px-6">
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-card/50 border border-border backdrop-blur-sm">
-                <BookOpen className="w-4 h-4 text-primary" />
+                <BookOpen className="w-4 h-4 text-primary" aria-hidden="true" />
                 <span className="text-sm text-muted-foreground">Complete Beginner's Guide</span>
               </div>
               
@@ -145,7 +178,7 @@ const LearnTradingGuide = () => {
                 <Link to="/trade">
                   <Button size="lg" className="group text-lg px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground shadow-gold">
                     Practice Trading Free
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                   </Button>
                 </Link>
               </div>
@@ -161,25 +194,25 @@ const LearnTradingGuide = () => {
               <ul className="grid md:grid-cols-2 gap-4">
                 <li>
                   <a href="#what-is-trading" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <CheckCircle2 className="w-5 h-5 text-primary" aria-hidden="true" />
                     What is Trading?
                   </a>
                 </li>
                 <li>
                   <a href="#types-of-markets" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <CheckCircle2 className="w-5 h-5 text-primary" aria-hidden="true" />
                     Types of Markets
                   </a>
                 </li>
                 <li>
                   <a href="#risk-management" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <CheckCircle2 className="w-5 h-5 text-primary" aria-hidden="true" />
                     Risk Management Basics
                   </a>
                 </li>
                 <li>
                   <a href="#getting-started" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <CheckCircle2 className="w-5 h-5 text-primary" aria-hidden="true" />
                     Step-by-Step Getting Started
                   </a>
                 </li>
@@ -191,7 +224,7 @@ const LearnTradingGuide = () => {
           <section id="what-is-trading" className="max-w-4xl mx-auto mb-20 scroll-mt-24">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
-                <TrendingUp className="w-7 h-7 text-primary" />
+                <TrendingUp className="w-7 h-7 text-primary" aria-hidden="true" />
               </div>
               <h2 className="text-4xl font-bold">What is Trading?</h2>
             </div>
@@ -213,19 +246,19 @@ const LearnTradingGuide = () => {
                 <h3 className="text-xl font-semibold mb-4">Key Trading Concepts</h3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" aria-hidden="true" />
                     <span className="text-muted-foreground"><strong className="text-foreground">Buy Low, Sell High:</strong> The fundamental principle of profitable trading</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" aria-hidden="true" />
                     <span className="text-muted-foreground"><strong className="text-foreground">Market Orders:</strong> Buy or sell immediately at the current market price</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" aria-hidden="true" />
                     <span className="text-muted-foreground"><strong className="text-foreground">Limit Orders:</strong> Set a specific price at which you want to buy or sell</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" aria-hidden="true" />
                     <span className="text-muted-foreground"><strong className="text-foreground">Spread:</strong> The difference between the buying and selling price</span>
                   </li>
                 </ul>
@@ -237,7 +270,7 @@ const LearnTradingGuide = () => {
           <section id="types-of-markets" className="max-w-4xl mx-auto mb-20 scroll-mt-24">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
-                <BarChart3 className="w-7 h-7 text-primary" />
+                <BarChart3 className="w-7 h-7 text-primary" aria-hidden="true" />
               </div>
               <h2 className="text-4xl font-bold">Types of Markets</h2>
             </div>
@@ -252,7 +285,7 @@ const LearnTradingGuide = () => {
               <Card className="p-8 bg-card/50 border-border hover:border-primary/50 transition-colors">
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
-                    <BarChart3 className="w-6 h-6 text-primary" />
+                    <BarChart3 className="w-6 h-6 text-primary" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold mb-3">Stock Market</h3>
@@ -263,11 +296,11 @@ const LearnTradingGuide = () => {
                     </p>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-primary" aria-hidden="true" />
                         Trading Hours: Monday-Friday, 9:30 AM - 4:00 PM EST
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-primary" aria-hidden="true" />
                         Best For: Long-term growth, dividend income
                       </li>
                     </ul>
@@ -279,7 +312,7 @@ const LearnTradingGuide = () => {
               <Card className="p-8 bg-card/50 border-border hover:border-primary/50 transition-colors">
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
-                    <Globe className="w-6 h-6 text-primary" />
+                    <Globe className="w-6 h-6 text-primary" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold mb-3">Forex (Foreign Exchange)</h3>
@@ -290,11 +323,11 @@ const LearnTradingGuide = () => {
                     </p>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-primary" aria-hidden="true" />
                         Trading Hours: 24 hours, Sunday 5 PM - Friday 5 PM EST
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-primary" aria-hidden="true" />
                         Best For: Active traders, global economic analysis
                       </li>
                     </ul>
@@ -306,7 +339,7 @@ const LearnTradingGuide = () => {
               <Card className="p-8 bg-card/50 border-border hover:border-primary/50 transition-colors">
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
-                    <Coins className="w-6 h-6 text-primary" />
+                    <Coins className="w-6 h-6 text-primary" aria-hidden="true" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold mb-3">Cryptocurrency</h3>
@@ -317,11 +350,11 @@ const LearnTradingGuide = () => {
                     </p>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-primary" aria-hidden="true" />
                         Trading Hours: 24/7, 365 days a year
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-primary" aria-hidden="true" />
                         Best For: Risk-tolerant traders, technology enthusiasts
                       </li>
                     </ul>
@@ -335,7 +368,7 @@ const LearnTradingGuide = () => {
           <section id="risk-management" className="max-w-4xl mx-auto mb-20 scroll-mt-24">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
-                <Shield className="w-7 h-7 text-primary" />
+                <Shield className="w-7 h-7 text-primary" aria-hidden="true" />
               </div>
               <h2 className="text-4xl font-bold">Risk Management Basics</h2>
             </div>
@@ -347,7 +380,7 @@ const LearnTradingGuide = () => {
 
             <Card className="p-8 bg-destructive/10 border-destructive/30 mb-8">
               <div className="flex items-start gap-4">
-                <AlertTriangle className="w-6 h-6 text-destructive shrink-0 mt-1" />
+                <AlertTriangle className="w-6 h-6 text-destructive shrink-0 mt-1" aria-hidden="true" />
                 <div>
                   <h3 className="text-xl font-semibold mb-2">The #1 Rule of Trading</h3>
                   <p className="text-muted-foreground">
@@ -361,7 +394,7 @@ const LearnTradingGuide = () => {
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-card/50 border-border">
                 <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-primary" />
+                  <Target className="w-5 h-5 text-primary" aria-hidden="true" />
                   Stop-Loss Orders
                 </h3>
                 <p className="text-muted-foreground">
@@ -373,7 +406,7 @@ const LearnTradingGuide = () => {
 
               <Card className="p-6 bg-card/50 border-border">
                 <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-primary" />
+                  <Target className="w-5 h-5 text-primary" aria-hidden="true" />
                   Position Sizing
                 </h3>
                 <p className="text-muted-foreground">
@@ -385,7 +418,7 @@ const LearnTradingGuide = () => {
 
               <Card className="p-6 bg-card/50 border-border">
                 <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-primary" />
+                  <Target className="w-5 h-5 text-primary" aria-hidden="true" />
                   Diversification
                 </h3>
                 <p className="text-muted-foreground">
@@ -396,7 +429,7 @@ const LearnTradingGuide = () => {
 
               <Card className="p-6 bg-card/50 border-border">
                 <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-primary" />
+                  <Target className="w-5 h-5 text-primary" aria-hidden="true" />
                   Risk-Reward Ratio
                 </h3>
                 <p className="text-muted-foreground">
@@ -411,7 +444,7 @@ const LearnTradingGuide = () => {
           <section id="getting-started" className="max-w-4xl mx-auto mb-20 scroll-mt-24">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
-                <CheckCircle2 className="w-7 h-7 text-primary" />
+                <CheckCircle2 className="w-7 h-7 text-primary" aria-hidden="true" />
               </div>
               <h2 className="text-4xl font-bold">Step-by-Step Getting Started</h2>
             </div>
@@ -457,7 +490,7 @@ const LearnTradingGuide = () => {
                 <Card className="flex-1 p-6 bg-card/50 border-border">
                   <h3 className="text-xl font-semibold mb-2">Practice with a Trading Simulator</h3>
                   <p className="text-muted-foreground">
-                    Use a paper trading account or simulator like TradeSandbox to practice strategies 
+                    Use a paper trading account or simulator like TradingHQ to practice strategies 
                     without risking real money. This is where you develop your skills, test ideas, and 
                     build confidence before going live.
                   </p>
@@ -499,14 +532,14 @@ const LearnTradingGuide = () => {
             <Card className="p-12 bg-gradient-to-br from-primary/20 to-primary/5 border-primary/30 text-center">
               <h2 className="text-3xl font-bold mb-4">Ready to Start Your Trading Journey?</h2>
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Put your new knowledge into practice with TradeSandbox. Trade 150+ assets with $10,000 in 
+                Put your new knowledge into practice with TradingHQ. Trade 150+ assets with $10,000 in 
                 virtual money and master the markets risk-free.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/trade">
                   <Button size="lg" className="group text-lg px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground">
                     Start Trading Now
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                   </Button>
                 </Link>
                 <Link to="/learn">
@@ -525,10 +558,10 @@ const LearnTradingGuide = () => {
             <div className="grid md:grid-cols-4 gap-8">
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-gradient-gold rounded-lg flex items-center justify-center" role="img" aria-label="TradeSandbox Logo">
+                  <div className="w-8 h-8 bg-gradient-gold rounded-lg flex items-center justify-center" role="img" aria-label="TradingHQ Logo">
                     <TrendingUp className="w-5 h-5 text-primary-foreground" aria-hidden="true" />
                   </div>
-                  <span className="text-xl font-bold font-serif">TradeSandbox</span>
+                  <span className="text-xl font-bold font-serif">TradingHQ</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
                   Practice trading risk-free with real market simulations.
@@ -563,7 +596,7 @@ const LearnTradingGuide = () => {
             </div>
             
             <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-              © {new Date().getFullYear()} TradeSandbox. All rights reserved.
+              © {new Date().getFullYear()} TradingHQ. All rights reserved.
             </div>
           </div>
         </footer>
