@@ -1,9 +1,9 @@
 import { Asset, AssetType } from './types';
 import { supabase } from '@/integrations/supabase/client';
 
-const LAST_UPDATE_KEY = 'tradesandbox_last_update';
+const LAST_UPDATE_KEY = 'tradehq_last_update';
 const UPDATE_INTERVAL = 60 * 60 * 1000; // 1 hour in milliseconds
-const AI_PREDICTIONS_KEY = 'tradesandbox_ai_predictions';
+const AI_PREDICTIONS_KEY = 'tradehq_ai_predictions';
 const PREDICTIONS_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
 
 // Realistic volatility ranges per asset type (fallback)

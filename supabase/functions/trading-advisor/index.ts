@@ -25,7 +25,7 @@ serve(async (req) => {
       });
     }
 
-    const systemPrompt = `You are a friendly trading mentor for TradeSandbox.
+    const systemPrompt = `You are a friendly trading mentor for TradeHQ.
 
 CRITICAL RULES:
 - Keep answers SHORT. Maximum 2-3 short sentences per response.

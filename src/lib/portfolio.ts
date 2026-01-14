@@ -2,8 +2,8 @@ import { Portfolio, Trade, Position, Asset } from './types';
 import { INITIAL_CASH, ASSETS } from './assets';
 import { recordSnapshot } from './portfolioHistory';
 
-const STORAGE_KEY = 'tradesandbox_portfolio';
-const HISTORY_KEY = 'tradesandbox_history';
+const STORAGE_KEY = 'tradehq_portfolio';
+const HISTORY_KEY = 'tradehq_history';
 
 export function getPortfolio(): Portfolio {
   const stored = localStorage.getItem(STORAGE_KEY);

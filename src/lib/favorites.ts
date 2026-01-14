@@ -1,4 +1,4 @@
-const FAVORITES_KEY = 'tradesandbox_favorites';
+const FAVORITES_KEY = 'tradehq_favorites';
 
 export function getFavorites(): string[] {
   const stored = localStorage.getItem(FAVORITES_KEY);

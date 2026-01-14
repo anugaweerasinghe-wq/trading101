@@ -35,7 +35,7 @@ const LearnTradingGuide = () => {
   const financialServiceSchema = {
     "@context": "https://schema.org",
     "@type": "FinancialService",
-    "name": "TradingHQ",
+    "name": "TradeHQ",
     "description": "AI-powered financial education platform with risk-free trading simulator for beginners",
     "url": DOMAIN,
     "logo": `${DOMAIN}/og-image.png`,
@@ -43,7 +43,7 @@ const LearnTradingGuide = () => {
     "serviceType": ["Trading Education", "Investment Simulator", "Financial Literacy"],
     "provider": {
       "@type": "EducationalOrganization",
-      "name": "TradingHQ",
+      "name": "TradeHQ",
       "url": DOMAIN
     }
   };
@@ -52,13 +52,13 @@ const LearnTradingGuide = () => {
   const educationalOrgSchema = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
-    "name": "TradingHQ",
+    "name": "TradeHQ",
     "description": "Premier AI-powered trading education platform offering courses on stocks, crypto, forex, and risk management",
     "url": DOMAIN,
     "logo": `${DOMAIN}/og-image.png`,
     "sameAs": [
-      "https://twitter.com/tradinghq",
-      "https://linkedin.com/company/tradinghq"
+      "https://twitter.com/tradehq",
+      "https://linkedin.com/company/tradehq"
     ],
     "educationalCredentialAwarded": "Trading Proficiency Certificate",
     "hasCredential": {
@@ -75,12 +75,12 @@ const LearnTradingGuide = () => {
     "description": "Master trading in 2026 with our comprehensive guide. Learn AI-assisted trading, Bitcoin Layer 2 investing, tokenized securities, and practice risk-free with our $10K crypto simulator.",
     "author": {
       "@type": "Organization",
-      "name": "TradingHQ Editorial Team",
+      "name": "TradeHQ Editorial Team",
       "url": DOMAIN
     },
     "publisher": {
       "@type": "Organization",
-      "name": "TradingHQ",
+      "name": "TradeHQ",
       "logo": {
         "@type": "ImageObject",
         "url": `${DOMAIN}/og-image.png`
@@ -118,7 +118,7 @@ const LearnTradingGuide = () => {
       {
         "@type": "HowToStep",
         "name": "Practice with $10K Risk-Free Simulator",
-        "text": "Use TradingHQ's free trading simulator to practice strategies with virtual money across 150+ assets."
+        "text": "Use TradeHQ's free trading simulator to practice strategies with virtual money across 150+ assets."
       },
       {
         "@type": "HowToStep",
@@ -172,7 +172,7 @@ const LearnTradingGuide = () => {
         "name": "How can I practice trading without risking real money?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "TradingHQ offers a free trading simulator with $10,000 in virtual money. You can trade 150+ real assets including stocks, crypto, and ETFs with realistic price movements. This is the safest way to learn trading strategies, test AI trading bots, and build confidence before using real capital."
+          "text": "TradeHQ offers a free trading simulator with $10,000 in virtual money. You can trade 150+ real assets including stocks, crypto, and ETFs with realistic price movements. This is the safest way to learn trading strategies, test AI trading bots, and build confidence before using real capital."
         }
       },
       {
@@ -230,14 +230,14 @@ const LearnTradingGuide = () => {
         <meta property="og:title" content="AI-Assisted Trading for Beginners: Master the 2026 Markets Risk-Free" />
         <meta property="og:description" content="Learn AI trading, Bitcoin Layer 2, tokenized securities & trading psychology. Practice with $10K virtual money on 150+ assets. Free forever." />
         <meta property="og:url" content={`${DOMAIN}/learn-trading-guide`} />
-        <meta property="og:site_name" content="TradingHQ" />
+        <meta property="og:site_name" content="TradeHQ" />
         <meta property="og:image" content={`${DOMAIN}/og-image.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="TradingHQ - AI-Assisted Trading Guide for 2026" />
+        <meta property="og:image:alt" content="TradeHQ - AI-Assisted Trading Guide for 2026" />
         <meta property="article:published_time" content="2026-01-13T00:00:00Z" />
-        <meta property="article:modified_time" content="2026-01-13T00:00:00Z" />
-        <meta property="article:author" content="TradingHQ Editorial Team" />
+        <meta property="article:modified_time" content="2026-01-14T00:00:00Z" />
+        <meta property="article:author" content="TradeHQ Editorial Team" />
         <meta property="article:section" content="Trading Education" />
         <meta property="article:tag" content="AI Trading" />
         <meta property="article:tag" content="Bitcoin Layer 2" />
@@ -245,16 +245,16 @@ const LearnTradingGuide = () => {
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@tradinghq" />
-        <meta name="twitter:creator" content="@tradinghq" />
+        <meta name="twitter:site" content="@tradehq" />
+        <meta name="twitter:creator" content="@tradehq" />
         <meta name="twitter:title" content="AI-Assisted Trading for Beginners | Free $10K Simulator" />
         <meta name="twitter:description" content="Master 2026 trading: AI tools, Bitcoin L2, tokenized securities. Practice risk-free with $10K virtual money. Start now!" />
         <meta name="twitter:image" content={`${DOMAIN}/og-image.png`} />
-        <meta name="twitter:image:alt" content="TradingHQ - The AI-Powered Trading Education Hub" />
+        <meta name="twitter:image:alt" content="TradeHQ - The AI-Powered Trading Education Hub" />
         
         {/* Additional SEO Meta */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <meta name="author" content="TradingHQ Editorial Team" />
+        <meta name="author" content="TradeHQ Editorial Team" />
         <meta name="keywords" content="AI-assisted trading for beginners, Bitcoin Layer 2 investment guide, Risk-free $10k Crypto Simulator, Tokenized Securities 101, trading psychology, AI trading bot safety, learn trading 2026" />
         
         <script type="application/ld+json">
@@ -298,7 +298,7 @@ const LearnTradingGuide = () => {
                 </Badge>
                 <p className="text-lg font-medium leading-relaxed">
                   <strong>AI-assisted trading</strong> uses algorithms to analyze markets and suggest trades. 
-                  Beginners should start with a <strong>risk-free simulator</strong> (like TradingHQ's $10K demo) 
+                  Beginners should start with a <strong>risk-free simulator</strong> (like TradeHQ's $10K demo) 
                   to practice before using real money. In 2026, focus on <strong>Bitcoin Layer 2</strong>, 
                   <strong>tokenized securities</strong>, and always apply the <strong>1-2% risk rule</strong> per trade.
                 </p>
@@ -330,7 +330,7 @@ const LearnTradingGuide = () => {
               </div>
 
               <SocialShare 
-                title="I'm learning AI-assisted trading on TradingHQ! 🚀"
+                title="I'm learning AI-assisted trading on TradeHQ! 🚀"
                 description="Master 2026 trading with a free $10K simulator"
                 variant="compact"
               />
