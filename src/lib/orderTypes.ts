@@ -15,7 +15,7 @@ export interface Order {
   currentPrice?: number;
 }
 
-const ORDERS_KEY = 'tradesandbox_orders';
+const ORDERS_KEY = 'tradehq_orders';
 
 export function getOrders(): Order[] {
   const stored = localStorage.getItem(ORDERS_KEY);

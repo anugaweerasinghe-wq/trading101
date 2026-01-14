@@ -11,7 +11,7 @@ interface MilestoneState {
   };
 }
 
-const MILESTONE_KEY = 'tradesandbox_milestones';
+const MILESTONE_KEY = 'tradehq_milestones';
 
 export const MILESTONES = [
   { value: 10, label: '+10%', type: 'success' as const },
