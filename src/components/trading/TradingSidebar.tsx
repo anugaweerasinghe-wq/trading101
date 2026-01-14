@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { 
   TrendingUp, 
-  BarChart3, 
   Wallet, 
   GraduationCap, 
   Settings,
@@ -11,6 +10,7 @@ import {
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import tradehqLogo from "@/assets/tradehq-logo.png";
 
 const navItems = [
   { icon: LayoutGrid, label: "Dashboard", path: "/" },
@@ -27,8 +27,8 @@ export function TradingSidebar() {
     <aside className="fixed left-0 top-0 h-screen w-16 bg-gradient-sidebar border-r border-border flex flex-col items-center py-4 z-50">
       {/* Logo */}
       <div className="mb-8">
-        <Link to="/" className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors">
-          <BarChart3 className="w-6 h-6 text-primary" />
+        <Link to="/" className="flex items-center justify-center w-10 h-10 rounded-lg hover:opacity-80 transition-opacity">
+          <img src={tradehqLogo} alt="TradeHQ" className="w-8 h-8 object-contain" />
         </Link>
       </div>
 
