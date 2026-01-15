@@ -154,13 +154,14 @@ export function CredibilityFooter() {
           </div>
         </div>
 
-        {/* Compliance */}
+        {/* Compliance - 2026 Regulatory Disclaimer */}
         <div className="border-t border-border pt-8">
           <p className="text-xs text-muted-foreground text-center max-w-4xl mx-auto">
-            <strong>Disclaimer:</strong> TradingHQ is an educational platform providing simulated trading experiences. 
-            This is not financial advice. Trading involves substantial risk of loss and is not suitable for all investors. 
-            Past performance is not indicative of future results. Always do your own research and consider seeking advice 
-            from a licensed financial professional before making investment decisions.
+            <strong>Disclaimer:</strong> TradeHQ is a simulator for educational purposes only. No real money is at risk. 
+            Past performance in a simulation does not guarantee future real-world results. This platform does not provide 
+            financial, investment, or trading advice. Trading involves substantial risk of loss and is not suitable for 
+            all investors. Always conduct your own research and consult a licensed financial professional before making 
+            investment decisions. © {new Date().getFullYear()} TradeHQ.
           </p>
         </div>
       </div>
