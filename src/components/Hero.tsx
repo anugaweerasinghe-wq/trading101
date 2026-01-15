@@ -7,58 +7,58 @@ export function Hero() {
   return (
     <>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
-        {/* Pitch black background with neon gradients */}
-        <div className="absolute inset-0 bg-gradient-hero" />
+        {/* Deep charcoal background with subtle gradients */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/20" />
         
-        {/* Animated grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(180_100%_50%/0.03)_1px,transparent_1px),linear-gradient(to_bottom,hsl(180_100%_50%/0.03)_1px,transparent_1px)] bg-[size:24px_24px]" />
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(180_70%_50%/0.02)_1px,transparent_1px),linear-gradient(to_bottom,hsl(180_70%_50%/0.02)_1px,transparent_1px)] bg-[size:32px_32px]" />
         
-        {/* Subtle ambient glow */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[180px]" />
-        
-        {/* Secondary ambient glow */}
-        <div className="absolute bottom-1/4 left-1/4 w-72 h-72 bg-secondary/5 rounded-full blur-[150px]" />
+        {/* Very subtle ambient glow */}
+        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-primary/3 rounded-full blur-[200px]" />
         
         <div className="relative z-10 container mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full glass-card border-primary/30 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bento-card border-border/30">
             <BarChart3 className="w-4 h-4 text-primary" />
             <span className="text-sm text-muted-foreground">$10,000 Demo Cash • 150+ Real Assets • No Sign Up</span>
           </div>
           
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium mb-6 leading-tight tracking-tight">
             <span className="text-foreground">Master the Markets.</span>
             <br />
-            <span className="text-primary">Own the <span className="text-glow-cyan">Future</span>.</span>
+            <span className="text-foreground">Own the </span>
+            <span className="text-primary">Future</span>
+            <span className="text-foreground">.</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 font-normal">
             Experience real-time market simulation with 150+ stocks, cryptos, ETFs & commodities. 
-            <span className="text-secondary"> Master AI-assisted trading</span> with fake cash before risking real money.
+            Master <span className="text-primary">AI-assisted trading</span> with virtual cash before risking real money.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/trade">
-              <Button size="lg" className="group text-lg px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground transition-all hover:scale-105">
+              <Button size="lg" className="group text-base px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 rounded-xl">
                 Start Trading Now
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link to="/learn">
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-muted-foreground/30 hover:bg-muted/20 hover:border-primary/50 transition-all">
+              <Button size="lg" variant="outline" className="text-base px-8 py-6 border-border hover:bg-muted/30 hover:border-primary/30 transition-all duration-300 rounded-xl">
                 Learn Trading Basics
               </Button>
             </Link>
           </div>
           
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          {/* Bento Grid Stats */}
+          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {[
               { label: 'Trading Assets', value: '150+', highlight: true },
               { label: 'Starting Cash', value: '$10K', highlight: false },
               { label: 'Real-Time Data', value: 'Yes', highlight: true },
               { label: 'Weekly Bonus', value: '$10K', highlight: false },
             ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className={`text-3xl md:text-4xl font-bold mb-2 ${stat.highlight ? 'text-primary' : 'text-foreground'}`}>
+              <div key={stat.label} className="bento-card p-6 text-center">
+                <div className={`text-2xl md:text-3xl font-semibold mb-1 ${stat.highlight ? 'text-primary' : 'text-foreground'}`}>
                   {stat.value}
                 </div>
                 <div className="text-sm text-muted-foreground">{stat.label}</div>
@@ -71,40 +71,41 @@ export function Hero() {
       {/* Features Section */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-4">
+          <h2 className="text-3xl font-semibold text-center mb-4">
             Why <span className="text-primary">TradeHQ</span>?
           </h2>
           <p className="text-center text-muted-foreground mb-16 max-w-xl mx-auto">
-            The elite <span className="text-primary text-glow-cyan">AI-powered</span> trading simulator for 2026 and beyond
+            The professional <span className="text-primary">AI-powered</span> trading simulator for 2026 and beyond
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-8 text-center glass-card hover:border-primary/40 transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
-                <Shield className="w-8 h-8 text-primary" />
+          {/* Bento Grid Features */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="p-8 text-center bento-card hover:border-primary/20 transition-all duration-300">
+              <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <Shield className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">100% <span className="text-primary text-glow-cyan">Risk-Free</span></h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-xl font-semibold mb-4">100% <span className="text-primary">Risk-Free</span></h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 Trade with virtual money. Make mistakes, learn, and improve without risking a single dollar of real capital.
               </p>
             </Card>
 
-            <Card className="p-8 text-center glass-card hover:border-secondary/40 transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-secondary/10 flex items-center justify-center">
-                <Zap className="w-8 h-8 text-secondary" />
+            <Card className="p-8 text-center bento-card hover:border-secondary/20 transition-all duration-300">
+              <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                <Zap className="w-7 h-7 text-secondary" />
               </div>
-              <h3 className="text-2xl font-bold mb-4"><span className="text-secondary text-glow-purple">Real-Time</span> Markets</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-xl font-semibold mb-4"><span className="text-secondary">Real-Time</span> Markets</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 Experience realistic price movements with our advanced simulation engine. Practice day trading, swing trading, and long-term investing.
               </p>
             </Card>
 
-            <Card className="p-8 text-center glass-card hover:border-primary/40 transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
-                <GraduationCap className="w-8 h-8 text-primary" />
+            <Card className="p-8 text-center bento-card hover:border-primary/20 transition-all duration-300">
+              <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <GraduationCap className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold mb-4"><span className="text-primary text-glow-cyan">AI-Powered</span> Education</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-xl font-semibold mb-4"><span className="text-primary">AI-Powered</span> Education</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 Learn from comprehensive trading courses and get AI-powered advice. Build your skills from beginner to advanced trader.
               </p>
             </Card>

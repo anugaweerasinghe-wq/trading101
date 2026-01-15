@@ -2,81 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-/* TradeHQ Cyber-Dark Design System
-   Pitch-black base with Electric Cyan & Cyber Purple neon accents */
+/* TradeHQ Professional Fintech Design System
+   Deep Charcoal base with Subtle Cyan & Purple accents - Calm & Professional */
 
 @layer base {
   :root {
-    /* Pitch-Black Cyber Theme */
-    --background: 0 0% 0%;
-    --foreground: 180 100% 97%;
+    /* Deep Charcoal Professional Theme */
+    --background: 0 0% 4%;
+    --foreground: 210 20% 92%;
 
     --card: 0 0% 7%;
-    --card-foreground: 180 100% 97%;
+    --card-foreground: 210 20% 92%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 180 100% 97%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 210 20% 92%;
 
-    /* Electric Cyan primary */
-    --primary: 180 100% 50%;
+    /* Subtle Cyan primary - professional, not neon */
+    --primary: 180 70% 50%;
     --primary-foreground: 0 0% 0%;
 
-    /* Cyber Purple secondary */
-    --secondary: 285 100% 53%;
+    /* Muted Purple secondary */
+    --secondary: 280 60% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 180 20% 60%;
+    --muted: 220 10% 12%;
+    --muted-foreground: 210 15% 55%;
 
-    --accent: 285 100% 53%;
+    --accent: 280 60% 55%;
     --accent-foreground: 0 0% 100%;
 
-    /* Trading colors */
-    --success: 152 69% 45%;
+    /* Trading colors - professional greens and reds */
+    --success: 152 60% 42%;
     --success-foreground: 0 0% 0%;
     
-    --destructive: 0 72% 55%;
+    --destructive: 0 65% 50%;
     --destructive-foreground: 0 0% 100%;
 
     /* Trading-specific semantic colors */
-    --profit: 152 69% 45%;
-    --loss: 0 72% 55%;
-    --buy: 152 69% 45%;
-    --sell: 0 72% 55%;
-    --warning: 38 92% 50%;
+    --profit: 152 60% 42%;
+    --loss: 0 65% 50%;
+    --buy: 152 60% 42%;
+    --sell: 0 65% 50%;
+    --warning: 38 75% 50%;
 
-    --border: 180 50% 15%;
-    --input: 0 0% 10%;
-    --ring: 180 100% 50%;
+    --border: 220 10% 15%;
+    --input: 220 10% 10%;
+    --ring: 180 60% 45%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    /* Neon gradients */
-    --gradient-profit: linear-gradient(135deg, hsl(152 69% 45%) 0%, hsl(152 69% 35%) 100%);
-    --gradient-loss: linear-gradient(135deg, hsl(0 72% 55%) 0%, hsl(0 72% 45%) 100%);
+    /* Professional gradients */
+    --gradient-profit: linear-gradient(135deg, hsl(152 60% 42%) 0%, hsl(152 60% 35%) 100%);
+    --gradient-loss: linear-gradient(135deg, hsl(0 65% 50%) 0%, hsl(0 65% 42%) 100%);
     --gradient-card: linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 5%) 100%);
-    --gradient-sidebar: linear-gradient(180deg, hsl(0 0% 4%) 0%, hsl(0 0% 2%) 100%);
-    --gradient-neon-cyan: linear-gradient(135deg, hsl(180 100% 50%) 0%, hsl(200 100% 45%) 100%);
-    --gradient-neon-purple: linear-gradient(135deg, hsl(285 100% 53%) 0%, hsl(270 100% 45%) 100%);
-    --gradient-cyber: linear-gradient(135deg, hsl(180 100% 50%) 0%, hsl(285 100% 53%) 100%);
+    --gradient-sidebar: linear-gradient(180deg, hsl(0 0% 5%) 0%, hsl(0 0% 3%) 100%);
+    --gradient-subtle-cyan: linear-gradient(135deg, hsl(180 70% 50%) 0%, hsl(195 65% 45%) 100%);
+    --gradient-subtle-purple: linear-gradient(135deg, hsl(280 60% 55%) 0%, hsl(265 55% 48%) 100%);
+    --gradient-cyber: linear-gradient(135deg, hsl(180 70% 50%) 0%, hsl(280 60% 55%) 100%);
     
-    /* Subtle shadows - professional trading aesthetic */
-    --shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.8);
-    --shadow-glow-profit: 0 0 12px hsl(152 69% 45% / 0.15);
-    --shadow-glow-loss: 0 0 12px hsl(0 72% 55% / 0.15);
-    --shadow-glow-cyan: 0 0 15px hsl(180 100% 50% / 0.2);
-    --shadow-glow-purple: 0 0 15px hsl(285 100% 53% / 0.2);
+    /* Subtle shadows - professional fintech aesthetic */
+    --shadow-card: 0 4px 24px -6px hsl(0 0% 0% / 0.6);
+    --shadow-glow-profit: 0 0 20px hsl(152 60% 42% / 0.12);
+    --shadow-glow-loss: 0 0 20px hsl(0 65% 50% / 0.12);
+    --shadow-glow-cyan: 0 0 20px hsl(180 70% 50% / 0.15);
+    --shadow-glow-purple: 0 0 20px hsl(280 60% 55% / 0.15);
     
     /* Transitions */
     --transition-fast: all 0.15s ease;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Chart colors - neon palette */
-    --chart-1: 180 100% 50%;
-    --chart-2: 285 100% 53%;
-    --chart-3: 152 69% 45%;
-    --chart-4: 38 92% 50%;
-    --chart-5: 0 72% 55%;
+    /* Chart colors - professional palette */
+    --chart-1: 180 70% 50%;
+    --chart-2: 280 60% 55%;
+    --chart-3: 152 60% 42%;
+    --chart-4: 38 75% 50%;
+    --chart-5: 0 65% 50%;
   }
 
   .light {
@@ -190,21 +190,28 @@
     box-shadow: var(--shadow-glow-loss);
   }
 
-  /* Subtle glow effects - professional trading aesthetic */
+  /* Very subtle glow effects - professional fintech aesthetic */
   .glow-cyan {
-    box-shadow: 0 0 12px hsl(180 100% 50% / 0.15);
+    box-shadow: 0 0 8px hsl(180 70% 50% / 0.08);
   }
 
   .glow-purple {
-    box-shadow: 0 0 12px hsl(285 100% 53% / 0.15);
+    box-shadow: 0 0 8px hsl(280 60% 55% / 0.08);
   }
 
+  /* Subtle cyan glow - ONLY for balance and buy button */
   .text-glow-cyan {
-    text-shadow: 0 0 8px hsl(180 100% 50% / 0.4);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
   }
 
   .text-glow-purple {
-    text-shadow: 0 0 8px hsl(285 100% 53% / 0.4);
+    text-shadow: 0 0 8px hsl(280 60% 55% / 0.25);
+  }
+
+  /* Bento grid styling */
+  .bento-card {
+    @apply rounded-2xl border border-border/40 bg-card/80 backdrop-blur-sm;
+    box-shadow: var(--shadow-card);
   }
 
   /* Neon text gradients */
@@ -325,18 +332,7 @@
   animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-@keyframes neon-pulse {
-  0%, 100% { 
-    text-shadow: 0 0 6px hsl(180 100% 50% / 0.3);
-  }
-  50% { 
-    text-shadow: 0 0 10px hsl(180 100% 50% / 0.5);
-  }
-}
-
-.animate-neon-pulse {
-  animation: neon-pulse 3s ease-in-out infinite;
-}
+/* Removed aggressive neon pulse - keeping things professional */
 
 /* Trading terminal grid lines */
 .grid-lines {

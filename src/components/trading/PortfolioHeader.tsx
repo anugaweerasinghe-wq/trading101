@@ -55,14 +55,14 @@ export function PortfolioHeader({ portfolio }: PortfolioHeaderProps) {
   ];
 
   return (
-    <div className="flex items-center gap-1 bg-card border border-border rounded-lg p-1">
+    <div className="flex items-center gap-1 bento-card p-1">
       {stats.map((stat, index) => (
         <div 
           key={stat.label}
           className={cn(
-            "flex items-center gap-3 px-4 py-2 rounded-md transition-colors",
+            "flex items-center gap-3 px-4 py-2 rounded-xl transition-colors",
             stat.highlight && "bg-primary/10",
-            index !== stats.length - 1 && "border-r border-border"
+            index !== stats.length - 1 && "border-r border-border/30"
           )}
         >
           <stat.icon className={cn(
@@ -75,7 +75,8 @@ export function PortfolioHeader({ portfolio }: PortfolioHeaderProps) {
             <p className="text-xs text-muted-foreground">{stat.label}</p>
             <div className="flex items-center gap-2">
               <p className={cn(
-                "text-sm font-bold tabular-nums",
+                "text-sm font-semibold tabular-nums",
+                stat.highlight && "text-glow-cyan text-primary",
                 stat.isProfit !== undefined && (stat.isProfit ? "text-profit" : "text-loss")
               )}>
                 {stat.value}

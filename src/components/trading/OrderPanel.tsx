@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Asset } from "@/lib/types";
 import { formatPrice } from "@/lib/assets";
 import { cn } from "@/lib/utils";
@@ -6,9 +6,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
-import { AlertCircle, Percent, DollarSign } from "lucide-react";
+import { AlertCircle, DollarSign, Loader2 } from "lucide-react";
 
 interface OrderPanelProps {
   asset: Asset | null;
@@ -28,10 +28,15 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
   const [amount, setAmount] = useState("");
   const [limitPrice, setLimitPrice] = useState("");
   const [sliderValue, setSliderValue] = useState([0]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Debounce ref to prevent double-clicking
+  const lastSubmitTime = useRef<number>(0);
+  const DEBOUNCE_MS = 1000;
 
   if (!asset) {
     return (
-      <Card className="h-full flex items-center justify-center bg-card border-border p-6">
+      <Card className="h-full flex items-center justify-center bento-card p-6">
         <div className="text-center text-muted-foreground">
           <AlertCircle className="w-10 h-10 mx-auto mb-3 opacity-50" />
           <p className="text-sm">Select an asset to trade</p>
@@ -52,7 +57,7 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
   const handleSliderChange = (value: number[]) => {
     setSliderValue(value);
     const percentage = value[0] / 100;
-    const maxAmount = side === 'buy' ? maxBuyAmount : 0; // Would need position data for sell
+    const maxAmount = side === 'buy' ? maxBuyAmount : 0;
     setAmount((maxAmount * percentage).toFixed(4));
   };
 
@@ -62,36 +67,49 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
     setSliderValue([percentage * 100]);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(async () => {
     if (!quantity || quantity <= 0) return;
     
-    onTrade(
-      asset,
-      side,
-      quantity,
-      orderType,
-      orderType === 'limit' ? parseFloat(limitPrice) : undefined
-    );
+    // Debounce check to prevent race conditions
+    const now = Date.now();
+    if (now - lastSubmitTime.current < DEBOUNCE_MS) return;
+    lastSubmitTime.current = now;
+    
+    // Set loading state immediately
+    setIsSubmitting(true);
+    
+    try {
+      await onTrade(
+        asset,
+        side,
+        quantity,
+        orderType,
+        orderType === 'limit' ? parseFloat(limitPrice) : undefined
+      );
 
-    // Reset form
-    setAmount("");
-    setLimitPrice("");
-    setSliderValue([0]);
-  };
+      // Reset form
+      setAmount("");
+      setLimitPrice("");
+      setSliderValue([0]);
+    } finally {
+      // Small delay before re-enabling to prevent rapid clicks
+      setTimeout(() => setIsSubmitting(false), 300);
+    }
+  }, [asset, side, quantity, orderType, limitPrice, onTrade]);
 
-  const isValid = quantity > 0 && (side === 'buy' ? totalWithFee <= availableCash : true);
+  const isValid = quantity > 0 && (side === 'buy' ? totalWithFee <= availableCash : true) && !isSubmitting;
 
   return (
-    <Card className="h-full flex flex-col bg-card border-border overflow-hidden">
+    <Card className="h-full flex flex-col bento-card overflow-hidden">
       {/* Header */}
-      <div className="p-3 border-b border-border">
+      <div className="p-3 border-b border-border/30">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-semibold">{asset.symbol}</h3>
             <p className="text-xs text-muted-foreground">{asset.name}</p>
           </div>
           <div className="text-right">
-            <p className="font-bold tabular-nums">${formatPrice(asset.price, asset.type)}</p>
+            <p className="font-semibold tabular-nums">${formatPrice(asset.price, asset.type)}</p>
             <p className={cn(
               "text-xs tabular-nums",
               asset.changePercent >= 0 ? "text-profit" : "text-loss"
@@ -103,13 +121,13 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
       </div>
 
       {/* Buy/Sell Toggle */}
-      <div className="grid grid-cols-2 p-2 gap-1 bg-secondary/30">
+      <div className="grid grid-cols-2 p-2 gap-1 bg-muted/30">
         <Button
           variant="ghost"
           className={cn(
-            "h-9 font-semibold transition-all",
+            "h-9 font-semibold transition-all rounded-xl",
             side === 'buy' 
-              ? "bg-profit text-profit-foreground hover:bg-profit/90" 
+              ? "bg-profit text-profit-foreground hover:bg-profit/90 text-glow-cyan" 
               : "text-muted-foreground hover:text-foreground"
           )}
           onClick={() => setSide('buy')}
@@ -119,7 +137,7 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
         <Button
           variant="ghost"
           className={cn(
-            "h-9 font-semibold transition-all",
+            "h-9 font-semibold transition-all rounded-xl",
             side === 'sell' 
               ? "bg-loss text-white hover:bg-loss/90" 
               : "text-muted-foreground hover:text-foreground"
@@ -133,9 +151,9 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
       <div className="flex-1 overflow-auto p-4 space-y-4">
         {/* Order Type */}
         <Tabs value={orderType} onValueChange={(v) => setOrderType(v as 'market' | 'limit')}>
-          <TabsList className="grid w-full grid-cols-2 h-8">
-            <TabsTrigger value="market" className="text-xs">Market</TabsTrigger>
-            <TabsTrigger value="limit" className="text-xs">Limit</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 h-8 rounded-xl">
+            <TabsTrigger value="market" className="text-xs rounded-lg">Market</TabsTrigger>
+            <TabsTrigger value="limit" className="text-xs rounded-lg">Limit</TabsTrigger>
           </TabsList>
         </Tabs>
 
@@ -150,7 +168,7 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
                 placeholder={asset.price.toString()}
                 value={limitPrice}
                 onChange={(e) => setLimitPrice(e.target.value)}
-                className="pl-9 h-10 bg-secondary border-0 tabular-nums"
+                className="pl-9 h-10 bg-muted/50 border-0 tabular-nums rounded-xl"
               />
             </div>
           </div>
@@ -169,7 +187,7 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
             placeholder="0.00"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="h-10 bg-secondary border-0 tabular-nums"
+            className="h-10 bg-muted/50 border-0 tabular-nums rounded-xl"
           />
         </div>
 
@@ -180,7 +198,7 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
               key={pct}
               variant="outline"
               size="sm"
-              className="h-7 text-xs"
+              className="h-7 text-xs rounded-lg border-border/50"
               onClick={() => handleQuickAmount(pct / 100)}
             >
               {pct}%
@@ -205,7 +223,7 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
         </div>
 
         {/* Order Summary */}
-        <div className="space-y-2 py-3 border-t border-border">
+        <div className="space-y-2 py-3 border-t border-border/30">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Price</span>
             <span className="tabular-nums">${formatPrice(price, asset.type)}</span>
@@ -218,26 +236,33 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
             <span className="text-muted-foreground">Fee (0.1%)</span>
             <span className="tabular-nums">${fee.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between text-sm font-semibold pt-2 border-t border-border">
+          <div className="flex justify-between text-sm font-semibold pt-2 border-t border-border/30">
             <span>Total</span>
             <span className="tabular-nums">${totalWithFee.toFixed(2)}</span>
           </div>
         </div>
       </div>
 
-      {/* Submit Button */}
-      <div className="p-4 border-t border-border">
+      {/* Submit Button with loading state */}
+      <div className="p-4 border-t border-border/30">
         <Button
           className={cn(
-            "w-full h-11 font-semibold text-white",
+            "w-full h-11 font-semibold text-white rounded-xl transition-all",
             side === 'buy'
-              ? "bg-profit hover:bg-profit/90"
+              ? "bg-profit hover:bg-profit/90 text-glow-cyan"
               : "bg-loss hover:bg-loss/90"
           )}
           disabled={!isValid}
           onClick={handleSubmit}
         >
-          {side === 'buy' ? 'Buy' : 'Sell'} {asset.symbol}
+          {isSubmitting ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Processing...
+            </>
+          ) : (
+            <>{side === 'buy' ? 'Buy' : 'Sell'} {asset.symbol}</>
+          )}
         </Button>
       </div>
     </Card>
