@@ -1,10 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { Helmet } from "react-helmet-async";
 import { TradingSidebar } from "@/components/trading/TradingSidebar";
 import { CandlestickChart } from "@/components/trading/CandlestickChart";
 import { AssetTable } from "@/components/trading/AssetTable";
 import { OrderPanel } from "@/components/trading/OrderPanel";
 import { PortfolioHeader } from "@/components/trading/PortfolioHeader";
 import { AIMentor } from "@/components/trading/AIMentor";
+import { AssetTableSkeleton } from "@/components/trading/AssetTableSkeleton";
+import { ChartSkeleton } from "@/components/trading/ChartSkeleton";
+import { MobileOrderDrawer } from "@/components/trading/MobileOrderDrawer";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
@@ -14,9 +18,10 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function Trade() {
   const [portfolio, setPortfolio] = useState(getPortfolio());
-  const [assets, setAssets] = useState(ASSETS);
-  const [selectedAsset, setSelectedAsset] = useState<Asset | null>(ASSETS[0]);
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   
   // Ref to track if component is mounted for cleanup
@@ -24,6 +29,15 @@ export default function Trade() {
 
   useEffect(() => {
     isMounted.current = true;
+    
+    // Simulate initial loading with skeleton screens
+    const loadTimer = setTimeout(() => {
+      if (!isMounted.current) return;
+      setAssets(ASSETS);
+      setSelectedAsset(ASSETS[0]);
+      setIsLoading(false);
+    }, 800);
+
     const updated = updatePositionPrices(portfolio);
     setPortfolio(updated);
     setFavorites(getFavorites());
@@ -33,6 +47,7 @@ export default function Trade() {
       if (!isMounted.current) return;
       
       setAssets(prev => {
+        if (prev.length === 0) return prev;
         const updated = simulateAssetPrices(prev, 0.05);
         return updated;
       });
@@ -42,13 +57,14 @@ export default function Trade() {
     // Cleanup function to stop data stream when leaving page
     return () => {
       isMounted.current = false;
+      clearTimeout(loadTimer);
       clearInterval(priceInterval);
     };
   }, []);
 
   // Sync selected asset with latest prices
   useEffect(() => {
-    if (selectedAsset && isMounted.current) {
+    if (selectedAsset && isMounted.current && assets.length > 0) {
       const updated = assets.find(a => a.id === selectedAsset.id);
       if (updated) setSelectedAsset(updated);
     }
@@ -84,67 +100,111 @@ export default function Trade() {
   }, []);
 
   return (
-    <div className="h-screen bg-background flex overflow-hidden">
-      <TradingSidebar />
+    <>
+      <Helmet>
+        <title>Stock Trading Simulator | TradeHQ: Practice Crypto & Stocks</title>
+        <meta name="description" content="Practice stock trading and crypto with TradeHQ's free simulator. Experience real-time market liquidity, technical analysis indicators, and virtual capital allocation." />
+      </Helmet>
+      
+      <div className="h-screen bg-background flex overflow-hidden">
+        <TradingSidebar />
 
-      <div className="flex-1 ml-16 flex flex-col h-screen overflow-hidden animate-fade-in">
-        {/* Header */}
-        <header className="h-14 px-4 border-b border-border/30 bg-card/30 backdrop-blur-sm flex items-center shrink-0 transition-all duration-300">
-          <PortfolioHeader portfolio={portfolio} />
-        </header>
+        <div className="flex-1 ml-16 flex flex-col h-screen overflow-hidden animate-fade-in">
+          {/* Header */}
+          <header className="h-14 px-4 border-b border-border/30 bg-card/30 backdrop-blur-sm flex items-center shrink-0 transition-all duration-300">
+            <PortfolioHeader portfolio={portfolio} />
+          </header>
 
-        {/* Desktop Layout - Bento Grid */}
-        <div className="hidden lg:flex flex-1 overflow-hidden gap-3 p-3">
-          {/* Asset List */}
-          <aside className="w-56 bento-card overflow-hidden">
-            <AssetTable
-              assets={assets}
-              favorites={favorites}
-              selectedAsset={selectedAsset}
-              onSelectAsset={setSelectedAsset}
-              onToggleFavorite={handleToggleFavorite}
-            />
-          </aside>
+          {/* Desktop Layout - Bento Grid */}
+          <div className="hidden lg:flex flex-1 overflow-hidden gap-3 p-3">
+            {/* Asset List with Skeleton */}
+            <aside className="w-56 bento-card overflow-hidden">
+              {isLoading ? (
+                <AssetTableSkeleton />
+              ) : (
+                <AssetTable
+                  assets={assets}
+                  favorites={favorites}
+                  selectedAsset={selectedAsset}
+                  onSelectAsset={setSelectedAsset}
+                  onToggleFavorite={handleToggleFavorite}
+                />
+              )}
+            </aside>
 
-          {/* Main Chart Area */}
-          <main className="flex-1 flex flex-col overflow-hidden">
-            <div className="flex-1 min-h-0">
-              <div className="h-full bento-card overflow-hidden">
-                {selectedAsset && <CandlestickChart asset={selectedAsset} />}
-              </div>
-            </div>
-          </main>
-
-          {/* Order Panel */}
-          <aside className="w-72 overflow-hidden">
-            <OrderPanel
-              asset={selectedAsset}
-              availableCash={portfolio.cash}
-              onTrade={handleTrade}
-            />
-          </aside>
-        </div>
-
-        {/* Tablet Layout */}
-        <div className="hidden md:flex lg:hidden flex-1 overflow-hidden gap-2 p-2">
-          <aside className="w-48 bento-card overflow-hidden">
-            <AssetTable
-              assets={assets}
-              favorites={favorites}
-              selectedAsset={selectedAsset}
-              onSelectAsset={setSelectedAsset}
-              onToggleFavorite={handleToggleFavorite}
-            />
-          </aside>
-
-          <div className="flex-1 flex flex-col overflow-hidden gap-2">
-            <main className="flex-1 min-h-0">
-              <div className="h-full bento-card overflow-hidden">
-                {selectedAsset && <CandlestickChart asset={selectedAsset} />}
+            {/* Main Chart Area with Skeleton */}
+            <main className="flex-1 flex flex-col overflow-hidden">
+              <div className="flex-1 min-h-0">
+                <div className="h-full bento-card overflow-hidden">
+                  {isLoading ? (
+                    <ChartSkeleton />
+                  ) : (
+                    selectedAsset && <CandlestickChart asset={selectedAsset} />
+                  )}
+                </div>
               </div>
             </main>
-            <aside className="h-52 shrink-0">
+
+            {/* Order Panel */}
+            <aside className="w-72 overflow-hidden">
               <OrderPanel
+                asset={selectedAsset}
+                availableCash={portfolio.cash}
+                onTrade={handleTrade}
+              />
+            </aside>
+          </div>
+
+          {/* Tablet Layout */}
+          <div className="hidden md:flex lg:hidden flex-1 overflow-hidden gap-2 p-2">
+            <aside className="w-48 bento-card overflow-hidden">
+              {isLoading ? (
+                <AssetTableSkeleton />
+              ) : (
+                <AssetTable
+                  assets={assets}
+                  favorites={favorites}
+                  selectedAsset={selectedAsset}
+                  onSelectAsset={setSelectedAsset}
+                  onToggleFavorite={handleToggleFavorite}
+                />
+              )}
+            </aside>
+
+            <div className="flex-1 flex flex-col overflow-hidden gap-2">
+              <main className="flex-1 min-h-0">
+                <div className="h-full bento-card overflow-hidden">
+                  {isLoading ? (
+                    <ChartSkeleton />
+                  ) : (
+                    selectedAsset && <CandlestickChart asset={selectedAsset} />
+                  )}
+                </div>
+              </main>
+              <aside className="h-52 shrink-0">
+                <OrderPanel
+                  asset={selectedAsset}
+                  availableCash={portfolio.cash}
+                  onTrade={handleTrade}
+                />
+              </aside>
+            </div>
+          </div>
+
+          {/* Mobile Layout - Bottom Drawer for Order Panel */}
+          <div className="md:hidden flex flex-col flex-1 overflow-hidden gap-2 p-2">
+            <main className="flex-1 min-h-0">
+              <div className="h-full bento-card overflow-hidden">
+                {isLoading ? (
+                  <ChartSkeleton />
+                ) : (
+                  selectedAsset && <CandlestickChart asset={selectedAsset} />
+                )}
+              </div>
+            </main>
+            {/* Mobile Order Drawer - Thumb-friendly bottom drawer */}
+            <aside className="shrink-0 pb-2">
+              <MobileOrderDrawer
                 asset={selectedAsset}
                 availableCash={portfolio.cash}
                 onTrade={handleTrade}
@@ -153,28 +213,12 @@ export default function Trade() {
           </div>
         </div>
 
-        {/* Mobile Layout */}
-        <div className="md:hidden flex flex-col flex-1 overflow-hidden gap-2 p-2">
-          <main className="flex-1 min-h-0">
-            <div className="h-full bento-card overflow-hidden">
-              {selectedAsset && <CandlestickChart asset={selectedAsset} />}
-            </div>
-          </main>
-          <aside className="h-48 shrink-0">
-            <OrderPanel
-              asset={selectedAsset}
-              availableCash={portfolio.cash}
-              onTrade={handleTrade}
-            />
-          </aside>
-        </div>
+        <AIMentor 
+          portfolio={portfolio} 
+          assets={assets} 
+          selectedAsset={selectedAsset}
+        />
       </div>
-
-      <AIMentor 
-        portfolio={portfolio} 
-        assets={assets} 
-        selectedAsset={selectedAsset}
-      />
-    </div>
+    </>
   );
 }
