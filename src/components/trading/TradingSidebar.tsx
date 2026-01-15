@@ -24,10 +24,10 @@ export function TradingSidebar() {
   const location = useLocation();
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-16 bg-gradient-sidebar border-r border-border flex flex-col items-center py-4 z-50">
+    <aside className="fixed left-0 top-0 h-screen w-16 bg-gradient-sidebar border-r border-border/30 flex flex-col items-center py-4 z-50">
       {/* Logo */}
       <div className="mb-8">
-        <Link to="/" className="flex items-center justify-center w-10 h-10 rounded-lg hover:opacity-80 transition-opacity">
+        <Link to="/" className="flex items-center justify-center w-10 h-10 rounded-2xl hover:opacity-80 transition-opacity">
           <img src={tradehqLogo} alt="TradeHQ" className="w-8 h-8 object-contain" />
         </Link>
       </div>

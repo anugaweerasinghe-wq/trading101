@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { TradingSidebar } from "@/components/trading/TradingSidebar";
 import { CandlestickChart } from "@/components/trading/CandlestickChart";
 import { AssetTable } from "@/components/trading/AssetTable";
@@ -18,13 +18,20 @@ export default function Trade() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(ASSETS[0]);
   const [favorites, setFavorites] = useState<string[]>([]);
   const { toast } = useToast();
+  
+  // Ref to track if component is mounted for cleanup
+  const isMounted = useRef(true);
 
   useEffect(() => {
+    isMounted.current = true;
     const updated = updatePositionPrices(portfolio);
     setPortfolio(updated);
     setFavorites(getFavorites());
 
+    // Price simulation interval with cleanup to prevent memory leaks
     const priceInterval = setInterval(() => {
+      if (!isMounted.current) return;
+      
       setAssets(prev => {
         const updated = simulateAssetPrices(prev, 0.05);
         return updated;
@@ -32,17 +39,22 @@ export default function Trade() {
       setLastUpdateTime(new Date());
     }, 3000);
 
-    return () => clearInterval(priceInterval);
+    // Cleanup function to stop data stream when leaving page
+    return () => {
+      isMounted.current = false;
+      clearInterval(priceInterval);
+    };
   }, []);
 
+  // Sync selected asset with latest prices
   useEffect(() => {
-    if (selectedAsset) {
+    if (selectedAsset && isMounted.current) {
       const updated = assets.find(a => a.id === selectedAsset.id);
       if (updated) setSelectedAsset(updated);
     }
   }, [assets]);
 
-  const handleTrade = (
+  const handleTrade = useCallback((
     asset: Asset,
     type: 'buy' | 'sell',
     quantity: number,
@@ -64,12 +76,12 @@ export default function Trade() {
         variant: "destructive",
       });
     }
-  };
+  }, [portfolio, toast]);
 
-  const handleToggleFavorite = (assetId: string) => {
+  const handleToggleFavorite = useCallback((assetId: string) => {
     toggleFavorite(assetId);
     setFavorites(getFavorites());
-  };
+  }, []);
 
   return (
     <div className="h-screen bg-background flex overflow-hidden">
@@ -77,14 +89,14 @@ export default function Trade() {
 
       <div className="flex-1 ml-16 flex flex-col h-screen overflow-hidden animate-fade-in">
         {/* Header */}
-        <header className="h-14 px-4 border-b border-border/50 bg-card/50 backdrop-blur-sm flex items-center shrink-0 transition-all duration-300">
+        <header className="h-14 px-4 border-b border-border/30 bg-card/30 backdrop-blur-sm flex items-center shrink-0 transition-all duration-300">
           <PortfolioHeader portfolio={portfolio} />
         </header>
 
-        {/* Desktop Layout */}
-        <div className="hidden lg:flex flex-1 overflow-hidden">
+        {/* Desktop Layout - Bento Grid */}
+        <div className="hidden lg:flex flex-1 overflow-hidden gap-3 p-3">
           {/* Asset List */}
-          <aside className="w-56 border-r border-border/50 bg-card/30 overflow-hidden transition-all duration-300 hover:bg-card/40">
+          <aside className="w-56 bento-card overflow-hidden">
             <AssetTable
               assets={assets}
               favorites={favorites}
@@ -96,15 +108,15 @@ export default function Trade() {
 
           {/* Main Chart Area */}
           <main className="flex-1 flex flex-col overflow-hidden">
-            <div className="flex-1 min-h-0 p-3 transition-all duration-300">
-              <div className="h-full rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden shadow-lg transition-shadow duration-300 hover:shadow-xl">
+            <div className="flex-1 min-h-0">
+              <div className="h-full bento-card overflow-hidden">
                 {selectedAsset && <CandlestickChart asset={selectedAsset} />}
               </div>
             </div>
           </main>
 
           {/* Order Panel */}
-          <aside className="w-72 border-l border-border/50 bg-card/30 overflow-hidden transition-all duration-300 hover:bg-card/40">
+          <aside className="w-72 overflow-hidden">
             <OrderPanel
               asset={selectedAsset}
               availableCash={portfolio.cash}
@@ -114,8 +126,8 @@ export default function Trade() {
         </div>
 
         {/* Tablet Layout */}
-        <div className="hidden md:flex lg:hidden flex-1 overflow-hidden">
-          <aside className="w-48 border-r border-border/50 bg-card/30 overflow-hidden transition-all duration-300">
+        <div className="hidden md:flex lg:hidden flex-1 overflow-hidden gap-2 p-2">
+          <aside className="w-48 bento-card overflow-hidden">
             <AssetTable
               assets={assets}
               favorites={favorites}
@@ -125,13 +137,13 @@ export default function Trade() {
             />
           </aside>
 
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <main className="flex-1 min-h-0 p-2 transition-all duration-300">
-              <div className="h-full rounded-lg border border-border/50 bg-card/50 overflow-hidden transition-shadow duration-300">
+          <div className="flex-1 flex flex-col overflow-hidden gap-2">
+            <main className="flex-1 min-h-0">
+              <div className="h-full bento-card overflow-hidden">
                 {selectedAsset && <CandlestickChart asset={selectedAsset} />}
               </div>
             </main>
-            <aside className="h-52 shrink-0 border-t border-border/50 bg-card/30 transition-all duration-300">
+            <aside className="h-52 shrink-0">
               <OrderPanel
                 asset={selectedAsset}
                 availableCash={portfolio.cash}
@@ -142,13 +154,13 @@ export default function Trade() {
         </div>
 
         {/* Mobile Layout */}
-        <div className="md:hidden flex flex-col flex-1 overflow-hidden">
-          <main className="flex-1 min-h-0 p-2 transition-all duration-300">
-            <div className="h-full rounded-lg border border-border/50 bg-card/50 overflow-hidden transition-shadow duration-300">
+        <div className="md:hidden flex flex-col flex-1 overflow-hidden gap-2 p-2">
+          <main className="flex-1 min-h-0">
+            <div className="h-full bento-card overflow-hidden">
               {selectedAsset && <CandlestickChart asset={selectedAsset} />}
             </div>
           </main>
-          <aside className="h-48 shrink-0 border-t border-border/50 bg-card/30 transition-all duration-300">
+          <aside className="h-48 shrink-0">
             <OrderPanel
               asset={selectedAsset}
               availableCash={portfolio.cash}
