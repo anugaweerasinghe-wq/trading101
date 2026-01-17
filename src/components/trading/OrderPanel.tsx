@@ -34,41 +34,30 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
   const lastSubmitTime = useRef<number>(0);
   const DEBOUNCE_MS = 1000;
 
-  if (!asset) {
-    return (
-      <Card className="h-full flex items-center justify-center bento-card p-6">
-        <div className="text-center text-muted-foreground">
-          <AlertCircle className="w-10 h-10 mx-auto mb-3 opacity-50" />
-          <p className="text-sm">Select an asset to trade</p>
-        </div>
-      </Card>
-    );
-  }
-
-  const price = orderType === 'limit' && limitPrice ? parseFloat(limitPrice) : asset.price;
+  const price = asset ? (orderType === 'limit' && limitPrice ? parseFloat(limitPrice) : asset.price) : 0;
   const quantity = amount ? parseFloat(amount) : 0;
   const total = quantity * price;
   const fee = total * 0.001; // 0.1% fee
   const totalWithFee = side === 'buy' ? total + fee : total - fee;
 
-  const maxBuyQuantity = availableCash / (price * 1.001);
+  const maxBuyQuantity = price > 0 ? availableCash / (price * 1.001) : 0;
   const maxBuyAmount = Math.floor(maxBuyQuantity * 10000) / 10000;
 
-  const handleSliderChange = (value: number[]) => {
+  const handleSliderChange = useCallback((value: number[]) => {
     setSliderValue(value);
     const percentage = value[0] / 100;
     const maxAmount = side === 'buy' ? maxBuyAmount : 0;
     setAmount((maxAmount * percentage).toFixed(4));
-  };
+  }, [side, maxBuyAmount]);
 
-  const handleQuickAmount = (percentage: number) => {
+  const handleQuickAmount = useCallback((percentage: number) => {
     const maxAmount = side === 'buy' ? maxBuyAmount : 0;
     setAmount((maxAmount * percentage).toFixed(4));
     setSliderValue([percentage * 100]);
-  };
+  }, [side, maxBuyAmount]);
 
   const handleSubmit = useCallback(async () => {
-    if (!quantity || quantity <= 0) return;
+    if (!asset || !quantity || quantity <= 0) return;
     
     // Debounce check to prevent race conditions
     const now = Date.now();
@@ -97,7 +86,19 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
     }
   }, [asset, side, quantity, orderType, limitPrice, onTrade]);
 
-  const isValid = quantity > 0 && (side === 'buy' ? totalWithFee <= availableCash : true) && !isSubmitting;
+  const isValid = asset && quantity > 0 && (side === 'buy' ? totalWithFee <= availableCash : true) && !isSubmitting;
+
+  // Early return AFTER all hooks are called
+  if (!asset) {
+    return (
+      <Card className="h-full flex items-center justify-center bento-card p-6">
+        <div className="text-center text-muted-foreground">
+          <AlertCircle className="w-10 h-10 mx-auto mb-3 opacity-50" />
+          <p className="text-sm">Select an asset to trade</p>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card className="h-full flex flex-col bento-card overflow-hidden">

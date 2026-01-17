@@ -41,31 +41,29 @@ export function MobileOrderDrawer({ asset, availableCash, onTrade }: MobileOrder
   const lastSubmitTime = useRef<number>(0);
   const DEBOUNCE_MS = 1000;
 
-  if (!asset) return null;
-
-  const price = orderType === 'limit' && limitPrice ? parseFloat(limitPrice) : asset.price;
+  const price = asset ? (orderType === 'limit' && limitPrice ? parseFloat(limitPrice) : asset.price) : 0;
   const quantity = amount ? parseFloat(amount) : 0;
   const total = quantity * price;
   const fee = total * 0.001;
   const totalWithFee = side === 'buy' ? total + fee : total - fee;
-  const maxBuyQuantity = availableCash / (price * 1.001);
+  const maxBuyQuantity = price > 0 ? availableCash / (price * 1.001) : 0;
   const maxBuyAmount = Math.floor(maxBuyQuantity * 10000) / 10000;
 
-  const handleSliderChange = (value: number[]) => {
+  const handleSliderChange = useCallback((value: number[]) => {
     setSliderValue(value);
     const percentage = value[0] / 100;
     const maxAmount = side === 'buy' ? maxBuyAmount : 0;
     setAmount((maxAmount * percentage).toFixed(4));
-  };
+  }, [side, maxBuyAmount]);
 
-  const handleQuickAmount = (percentage: number) => {
+  const handleQuickAmount = useCallback((percentage: number) => {
     const maxAmount = side === 'buy' ? maxBuyAmount : 0;
     setAmount((maxAmount * percentage).toFixed(4));
     setSliderValue([percentage * 100]);
-  };
+  }, [side, maxBuyAmount]);
 
   const handleSubmit = useCallback(async () => {
-    if (!quantity || quantity <= 0) return;
+    if (!asset || !quantity || quantity <= 0) return;
     
     const now = Date.now();
     if (now - lastSubmitTime.current < DEBOUNCE_MS) return;
@@ -89,6 +87,9 @@ export function MobileOrderDrawer({ asset, availableCash, onTrade }: MobileOrder
       setTimeout(() => setIsSubmitting(false), 300);
     }
   }, [asset, side, quantity, orderType, limitPrice, onTrade]);
+
+  // Early return AFTER all hooks are called
+  if (!asset) return null;
 
   const isValid = quantity > 0 && (side === 'buy' ? totalWithFee <= availableCash : true) && !isSubmitting;
 
