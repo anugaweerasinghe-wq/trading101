@@ -9,6 +9,8 @@ import { AIMentor } from "@/components/trading/AIMentor";
 import { AssetTableSkeleton } from "@/components/trading/AssetTableSkeleton";
 import { ChartSkeleton } from "@/components/trading/ChartSkeleton";
 import { MobileOrderDrawer } from "@/components/trading/MobileOrderDrawer";
+import { LiveStatusIndicator } from "@/components/LiveStatusIndicator";
+import { TradingProfitCalculator } from "@/components/TradingProfitCalculator";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
@@ -102,19 +104,23 @@ export default function Trade() {
   return (
     <>
       <Helmet>
-        <title>Stock Trading Simulator | TradeHQ: Practice Crypto & Stocks</title>
-        <meta name="description" content="Practice stock trading and crypto with TradeHQ's free simulator. Experience real-time market liquidity, technical analysis indicators, and virtual capital allocation." />
+        <title>TradeHQ | #1 Stock Trading Simulator [2026 Edition] - Live Markets</title>
+        <meta name="description" content="Practice stock trading & crypto with TradeHQ's free simulator. Real-time market liquidity, Bitcoin L2, RWA & AI strategies. Start instant trading now." />
         <link rel="canonical" href="https://tradinghq.vercel.app/trade" />
       </Helmet>
       
-      <div className="h-screen bg-background flex overflow-hidden">
-        <TradingSidebar />
+      <div className="h-screen bg-background flex flex-col overflow-hidden">
+        {/* Live Status Indicator - Increases Dwell Time */}
+        <LiveStatusIndicator />
 
-        <div className="flex-1 ml-16 flex flex-col h-screen overflow-hidden animate-fade-in">
-          {/* Header */}
-          <header className="h-14 px-4 border-b border-border/30 bg-card/30 backdrop-blur-sm flex items-center shrink-0 transition-all duration-300">
-            <PortfolioHeader portfolio={portfolio} />
-          </header>
+        <div className="flex-1 flex overflow-hidden">
+          <TradingSidebar />
+
+          <div className="flex-1 ml-16 flex flex-col h-full overflow-hidden animate-fade-in">
+            {/* Header */}
+            <header className="h-14 px-4 border-b border-border/30 bg-card/30 backdrop-blur-sm flex items-center shrink-0 transition-all duration-300">
+              <PortfolioHeader portfolio={portfolio} />
+            </header>
 
           {/* Desktop Layout - Bento Grid */}
           <div className="hidden lg:flex flex-1 overflow-hidden gap-3 p-3">
@@ -146,13 +152,14 @@ export default function Trade() {
               </div>
             </main>
 
-            {/* Order Panel */}
-            <aside className="w-72 overflow-hidden">
+            {/* Order Panel + Profit Calculator Sidebar */}
+            <aside className="w-72 flex flex-col gap-3 overflow-y-auto">
               <OrderPanel
                 asset={selectedAsset}
                 availableCash={portfolio.cash}
                 onTrade={handleTrade}
               />
+              <TradingProfitCalculator />
             </aside>
           </div>
 
@@ -219,6 +226,7 @@ export default function Trade() {
           assets={assets} 
           selectedAsset={selectedAsset}
         />
+        </div>
       </div>
     </>
   );
