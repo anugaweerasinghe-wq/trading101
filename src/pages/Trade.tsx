@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Helmet } from "react-helmet-async";
+import { Navigation } from "@/components/Navigation";
 import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
@@ -102,6 +103,9 @@ export default function Trade() {
       </Helmet>
       
       <div className="min-h-screen bg-background flex flex-col">
+        {/* Navigation */}
+        <Navigation />
+        
         {/* Glow Status Bar */}
         <GlowStatusBar />
 
