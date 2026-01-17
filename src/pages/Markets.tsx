@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { TradingSidebar } from "@/components/trading/TradingSidebar";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
@@ -82,8 +83,14 @@ export default function Markets() {
   );
 
   return (
-    <div className="min-h-screen bg-background flex">
-      <TradingSidebar />
+    <>
+      <Helmet>
+        <title>Market Overview | TradeHQ: Real-Time Stock & Crypto Prices</title>
+        <meta name="description" content="Track real-time market prices for stocks, crypto, ETFs, forex & commodities. Analyze top gainers, losers & market trends with TradeHQ." />
+        <link rel="canonical" href="https://tradinghq.vercel.app/markets" />
+      </Helmet>
+      <div className="min-h-screen bg-background flex">
+        <TradingSidebar />
 
       <div className="flex-1 ml-16 p-3 md:p-6 animate-fade-in">
         <div className="max-w-7xl mx-auto space-y-4 md:space-y-6">
@@ -256,5 +263,6 @@ export default function Markets() {
         </div>
       </div>
     </div>
+    </>
   );
 }

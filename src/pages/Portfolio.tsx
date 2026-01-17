@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
 import { PortfolioChart } from "@/components/PortfolioChart";
@@ -129,9 +130,15 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <PriceTicker assets={assets} />
+    <>
+      <Helmet>
+        <title>Portfolio Dashboard | TradeHQ: Track Your Virtual Investments</title>
+        <meta name="description" content="Track your virtual portfolio performance, analyze P&L, manage risk and review your trade history with TradeHQ's comprehensive dashboard." />
+        <link rel="canonical" href="https://tradinghq.vercel.app/portfolio" />
+      </Helmet>
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <PriceTicker assets={assets} />
       
       <main className="pt-20 pb-12">
         <div className="container mx-auto px-6">
@@ -314,5 +321,6 @@ export default function Portfolio() {
 
       <AIAssistant portfolio={portfolio} assets={assets} />
     </div>
+    </>
   );
 }

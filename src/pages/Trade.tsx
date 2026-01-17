@@ -104,6 +104,7 @@ export default function Trade() {
       <Helmet>
         <title>Stock Trading Simulator | TradeHQ: Practice Crypto & Stocks</title>
         <meta name="description" content="Practice stock trading and crypto with TradeHQ's free simulator. Experience real-time market liquidity, technical analysis indicators, and virtual capital allocation." />
+        <link rel="canonical" href="https://tradinghq.vercel.app/trade" />
       </Helmet>
       
       <div className="h-screen bg-background flex overflow-hidden">

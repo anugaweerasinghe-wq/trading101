@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -101,10 +102,16 @@ export default function Learn() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <main className="pt-32 pb-20">
+    <>
+      <Helmet>
+        <title>Trading Education | TradeHQ: Learn Stock & Crypto Trading</title>
+        <meta name="description" content="Master trading fundamentals, risk management, technical analysis & portfolio diversification. Free courses for beginners to advanced traders." />
+        <link rel="canonical" href="https://tradinghq.vercel.app/learn" />
+      </Helmet>
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        
+        <main className="pt-32 pb-20">
         <div className="container mx-auto px-6 max-w-7xl">
           {/* Hero Section */}
           <div className="mb-20 text-center animate-fade-in">
@@ -223,5 +230,6 @@ export default function Learn() {
         </div>
       </main>
     </div>
+    </>
   );
 }
