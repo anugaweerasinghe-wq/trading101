@@ -26,7 +26,13 @@ interface LearningModule {
   locked: boolean;
 }
 
-const STORAGE_KEY = "tradinghq_learning_progress";
+type PersistedLearningModuleState = {
+  id: string;
+  completed: boolean;
+  locked: boolean;
+};
+
+const STORAGE_KEY = "tradinghq_learning_progress_v2";
 
 const defaultModules: LearningModule[] = [
   { id: "basics", title: "Trading Basics", description: "Learn what trading is", icon: <BookOpen className="w-5 h-5" />, xp: 100, completed: false, locked: false },
@@ -37,16 +43,23 @@ const defaultModules: LearningModule[] = [
   { id: "practice", title: "Simulator Practice", description: "Trade with $10K demo", icon: <Trophy className="w-5 h-5" />, xp: 500, completed: false, locked: true },
 ];
 
-export function LearningProgressTracker() {
-  const [modules, setModules] = useState<LearningModule[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : defaultModules;
-  });
-  const { toast } = useToast();
+function safeParseState(raw: string | null): PersistedLearningModuleState[] | null {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return null;
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(modules));
-  }, [modules]);
+    return parsed
+      .filter((x) => x && typeof x === "object" && typeof x.id === "string")
+      .map((x) => ({
+        id: String(x.id),
+        completed: Boolean(x.completed),
+        locked: Boolean(x.locked),
+      }));
+  } catch {
+    return null;
+  }
+}
 
   const completedCount = modules.filter(m => m.completed).length;
   const totalXP = modules.filter(m => m.completed).reduce((sum, m) => sum + m.xp, 0);
