@@ -153,8 +153,8 @@ export default function Learn() {
   return (
     <>
       <Helmet>
-        <title>Trading Education | TradeHQ: Learn Bitcoin L2, RWA & AI Trading [2026]</title>
-        <meta name="description" content="Master trading fundamentals, Bitcoin Layer 2, RWA tokenization & AI strategies. Free courses for 2026. Start learning now." />
+        <title>Learn Trading Free — Stocks, Crypto & Bitcoin L2 Courses | TradeHQ 2026</title>
+        <meta name="description" content="📚 Master trading in days, not years! Free courses on stocks, crypto, Bitcoin L2 & AI strategies. Interactive lessons + $10K practice simulator. Start learning →" />
         <link rel="canonical" href="https://tradinghq.vercel.app/learn" />
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}

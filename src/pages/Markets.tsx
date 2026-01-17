@@ -85,8 +85,8 @@ export default function Markets() {
   return (
     <>
       <Helmet>
-        <title>Market Overview | TradeHQ: Real-Time Stock & Crypto Prices</title>
-        <meta name="description" content="Track real-time market prices for stocks, crypto, ETFs, forex & commodities. Analyze top gainers, losers & market trends with TradeHQ." />
+        <title>Live Market Prices — Stocks, Crypto, ETFs & Forex | TradeHQ 2026</title>
+        <meta name="description" content="📈 Real-time prices for 150+ assets! Track stocks, Bitcoin, ETFs & forex. See top gainers, losers & trends. One-click trading. Free access →" />
         <link rel="canonical" href="https://tradinghq.vercel.app/markets" />
       </Helmet>
       <div className="min-h-screen bg-background flex">

@@ -22,7 +22,7 @@ import {
   ArrowUpDown,
   Sparkles
 } from "lucide-react";
-import { LineChart, Line, ResponsiveContainer } from "recharts";
+import { LineChart, Line } from "recharts";
 
 interface AssetTableProps {
   assets: Asset[];
@@ -56,17 +56,15 @@ function generateSparklineData(basePrice: number, isUp: boolean): { value: numbe
 
 function MiniSparkline({ data, isUp }: { data: { value: number }[]; isUp: boolean }) {
   return (
-    <ResponsiveContainer width={80} height={28}>
-      <LineChart data={data}>
-        <Line 
-          type="monotone" 
-          dataKey="value" 
-          stroke={isUp ? 'hsl(var(--profit))' : 'hsl(var(--loss))'} 
-          strokeWidth={1.5}
-          dot={false}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+    <LineChart width={80} height={28} data={data}>
+      <Line 
+        type="monotone" 
+        dataKey="value" 
+        stroke={isUp ? 'hsl(var(--profit))' : 'hsl(var(--loss))'} 
+        strokeWidth={1.5}
+        dot={false}
+      />
+    </LineChart>
   );
 }
 

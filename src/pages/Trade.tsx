@@ -104,8 +104,8 @@ export default function Trade() {
   return (
     <>
       <Helmet>
-        <title>TradeHQ | #1 Stock Trading Simulator [2026 Edition] - Live Markets</title>
-        <meta name="description" content="Practice stock trading & crypto with TradeHQ's free simulator. Real-time market liquidity, Bitcoin L2, RWA & AI strategies. Start instant trading now." />
+        <title>Trade Now — Free Stock & Crypto Simulator | TradeHQ 2026</title>
+        <meta name="description" content="🚀 Start trading in 5 seconds — no signup! Practice stocks, Bitcoin, ETFs & forex with $10K virtual cash. Real charts, real skills, zero risk. Try it free →" />
         <link rel="canonical" href="https://tradinghq.vercel.app/trade" />
       </Helmet>
       
@@ -116,16 +116,16 @@ export default function Trade() {
         <div className="flex-1 flex overflow-hidden">
           <TradingSidebar />
 
-          <div className="flex-1 ml-16 flex flex-col h-full overflow-hidden animate-fade-in">
+          <div className="flex-1 ml-16 flex flex-col h-full overflow-hidden">
             {/* Header */}
-            <header className="h-14 px-4 border-b border-border/30 bg-card/30 backdrop-blur-sm flex items-center shrink-0 transition-all duration-300">
+            <header className="h-14 px-4 border-b border-border/30 bg-card/30 backdrop-blur-sm flex items-center shrink-0">
               <PortfolioHeader portfolio={portfolio} />
             </header>
 
-          {/* Desktop Layout - Bento Grid */}
+          {/* Desktop Layout - Simplified */}
           <div className="hidden lg:flex flex-1 overflow-hidden gap-3 p-3">
-            {/* Asset List with Skeleton */}
-            <aside className="w-56 bento-card overflow-hidden">
+            {/* Asset List */}
+            <aside className="w-52 bento-card overflow-hidden">
               {isLoading ? (
                 <AssetTableSkeleton />
               ) : (
@@ -139,7 +139,7 @@ export default function Trade() {
               )}
             </aside>
 
-            {/* Main Chart Area with Skeleton */}
+            {/* Main Chart Area */}
             <main className="flex-1 flex flex-col overflow-hidden">
               <div className="flex-1 min-h-0">
                 <div className="h-full bento-card overflow-hidden">
@@ -152,14 +152,13 @@ export default function Trade() {
               </div>
             </main>
 
-            {/* Order Panel + Profit Calculator Sidebar */}
-            <aside className="w-72 flex flex-col gap-3 overflow-y-auto">
+            {/* Order Panel - Simplified sidebar */}
+            <aside className="w-64 overflow-y-auto">
               <OrderPanel
                 asset={selectedAsset}
                 availableCash={portfolio.cash}
                 onTrade={handleTrade}
               />
-              <TradingProfitCalculator />
             </aside>
           </div>
 
