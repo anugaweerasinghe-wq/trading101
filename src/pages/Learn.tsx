@@ -2,8 +2,9 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target, ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target, ArrowRight, Zap, Coins, Brain, ChevronRight, Home } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 import tradingBasics from "@/assets/course-trading-basics.jpg";
 import riskManagement from "@/assets/course-risk-management.jpg";
 import technicalAnalysis from "@/assets/course-technical-analysis.jpg";
@@ -98,32 +99,134 @@ const lessons = [
   },
 ];
 
+// 2026 Trending Topics
+const trendingTopics = [
+  {
+    id: "bitcoin-l2",
+    title: "Bitcoin Layer 2",
+    subtitle: "Lightning & Stacks",
+    description: "Master Bitcoin L2 solutions for faster, cheaper transactions. Learn to trade STX and Lightning-enabled assets.",
+    icon: Zap,
+    badge: "Hot 2026",
+  },
+  {
+    id: "rwa",
+    title: "Real World Assets",
+    subtitle: "Tokenized Securities",
+    description: "Explore tokenized treasuries, real estate, and commodities with 24/7 liquidity and fractional ownership.",
+    icon: Coins,
+    badge: "Trending",
+  },
+  {
+    id: "ai-trading",
+    title: "AI-Driven Trading",
+    subtitle: "Smart Strategies",
+    description: "Leverage AI algorithms for market analysis, automated strategies, and intelligent risk management.",
+    icon: Brain,
+    badge: "Innovation",
+  },
+];
+
 export default function Learn() {
   const navigate = useNavigate();
+
+  // Breadcrumb schema for this page
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "TradeHQ",
+        "item": "https://tradinghq.vercel.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Learning",
+        "item": "https://tradinghq.vercel.app/learn"
+      }
+    ]
+  };
 
   return (
     <>
       <Helmet>
-        <title>Trading Education | TradeHQ: Learn Stock & Crypto Trading</title>
-        <meta name="description" content="Master trading fundamentals, risk management, technical analysis & portfolio diversification. Free courses for beginners to advanced traders." />
+        <title>Trading Education | TradeHQ: Learn Bitcoin L2, RWA & AI Trading [2026]</title>
+        <meta name="description" content="Master trading fundamentals, Bitcoin Layer 2, RWA tokenization & AI strategies. Free courses for 2026. Start learning now." />
         <link rel="canonical" href="https://tradinghq.vercel.app/learn" />
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
       </Helmet>
       <div className="min-h-screen bg-background">
         <Navigation />
         
         <main className="pt-32 pb-20">
         <div className="container mx-auto px-6 max-w-7xl">
+          {/* Visual Breadcrumb */}
+          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8 animate-fade-in">
+            <Link to="/" className="flex items-center gap-1 hover:text-primary transition-colors">
+              <Home className="w-4 h-4" />
+              <span>TradeHQ</span>
+            </Link>
+            <ChevronRight className="w-4 h-4" />
+            <span className="text-foreground font-medium">Learning</span>
+          </nav>
+
           {/* Hero Section */}
           <div className="mb-20 text-center animate-fade-in">
+            <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary">
+              2026 Edition
+            </Badge>
             <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
               Trading Education
             </h1>
             <p className="text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Master the fundamentals and strategies to become a confident trader
+              Master Bitcoin L2, RWA tokenization, and AI-driven strategies for the 2026 markets
             </p>
           </div>
 
+          {/* 2026 Trending Topics */}
+          <div className="mb-20">
+            <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
+              <TrendingUp className="w-6 h-6 text-primary" />
+              2026 Market Trends
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {trendingTopics.map((topic, index) => {
+                const Icon = topic.icon;
+                return (
+                  <Card
+                    key={topic.id}
+                    onClick={() => navigate('/learn-trading-guide')}
+                    className="group cursor-pointer p-6 bento-card hover:border-primary/30 transition-all duration-300 animate-fade-in"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-xs">
+                        {topic.badge}
+                      </Badge>
+                    </div>
+                    <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
+                      {topic.title}
+                    </h3>
+                    <p className="text-sm text-primary mb-3">{topic.subtitle}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {topic.description}
+                    </p>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Course Grid */}
+          <h2 className="text-2xl font-bold mb-8">Core Courses</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
             {lessons.map((lesson, index) => {
               const Icon = lesson.icon;
@@ -196,13 +299,13 @@ export default function Learn() {
           {/* Bottom CTA Section */}
           <Card className="p-12 bg-gradient-to-br from-primary/5 via-background to-background border-primary/10 backdrop-blur-xl">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-4xl font-bold mb-6">Ready to Start Trading?</h2>
+              <h2 className="text-4xl font-bold mb-6">Ready to Start Instant Trading?</h2>
               <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
                 Practice these strategies in the simulator with your $10,000 demo cash. 
                 The best way to learn is by doing.
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                 <div className="space-y-3">
                   <div className="text-4xl mb-2">📊</div>
                   <h3 className="font-bold text-xl">Practice Trading</h3>
@@ -225,6 +328,13 @@ export default function Learn() {
                   </p>
                 </div>
               </div>
+
+              <Link to="/trade">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg rounded-xl min-h-[48px] font-semibold">
+                  Start Instant Trading
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
             </div>
           </Card>
         </div>

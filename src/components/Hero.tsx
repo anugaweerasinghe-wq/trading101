@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Shield, Zap, GraduationCap, BarChart3, TrendingUp, PieChart } from "lucide-react";
+import { ArrowRight, Shield, Zap, GraduationCap, BarChart3, TrendingUp, PieChart, Coins, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
+import { MarketTrends2026 } from "./MarketTrends2026";
 
 export function Hero() {
   return (
@@ -32,19 +33,19 @@ export function Hero() {
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 font-normal">
             Practice <span className="text-primary">stock market simulation</span> and <span className="text-primary">crypto trading</span> with 
-            real-time market liquidity. Master technical analysis indicators and virtual capital allocation before risking real money.
+            real-time market liquidity. Master Bitcoin L2, RWA tokenization & AI-driven strategies before risking real money.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/trade">
-              <Button size="lg" className="group text-base px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 rounded-xl min-h-[48px]">
-                Start Practicing Now
+              <Button size="lg" className="group text-base px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 rounded-xl min-h-[48px] font-semibold">
+                Start Instant Trading
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link to="/learn">
               <Button size="lg" variant="outline" className="text-base px-8 py-6 border-border hover:bg-muted/30 hover:border-primary/30 transition-all duration-300 rounded-xl min-h-[48px]">
-                Learn Trading Basics
+                Explore Free Courses
               </Button>
             </Link>
           </div>
@@ -76,7 +77,7 @@ export function Hero() {
             Why <span className="text-primary">TradeHQ</span>?
           </h2>
           <p className="text-center text-muted-foreground mb-16 max-w-xl mx-auto">
-            The professional <span className="text-primary">stock market simulator</span> for crypto trading practice and beyond
+            The #1 <span className="text-primary">stock market simulator</span> for crypto trading practice [2026 Edition]
           </p>
           
           {/* Bento Grid Features */}
@@ -110,6 +111,53 @@ export function Hero() {
                 Master asset class diversification and portfolio management. Build skills from beginner to advanced trader with AI guidance.
               </p>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* 2026 Market Trends Section */}
+      <MarketTrends2026 />
+
+      {/* FAQ Section for SEO */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <h2 className="text-3xl font-semibold text-center mb-4">
+            Frequently Asked <span className="text-primary">Questions</span>
+          </h2>
+          <p className="text-center text-muted-foreground mb-12">
+            Everything you need to know about TradeHQ
+          </p>
+
+          <div className="space-y-6">
+            <Card className="p-6 bento-card">
+              <h3 className="text-lg font-semibold mb-3">How does virtual trading work?</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Virtual trading on TradeHQ simulates real market conditions using $10,000 in demo cash. You can buy and sell 150+ assets including stocks, crypto, ETFs, and commodities with real-time price simulation. All trades are executed instantly with no real money at risk, allowing you to practice strategies and learn market dynamics before investing real capital.
+              </p>
+            </Card>
+
+            <Card className="p-6 bento-card">
+              <h3 className="text-lg font-semibold mb-3">What is Bitcoin L2?</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Bitcoin Layer 2 (L2) refers to secondary protocols built on top of the Bitcoin blockchain to enable faster, cheaper transactions. Popular L2 solutions include the Lightning Network for instant payments and Stacks (STX) for smart contracts. These solutions inherit Bitcoin's security while adding scalability and programmability, making them ideal for trading and DeFi applications.
+              </p>
+            </Card>
+
+            <Card className="p-6 bento-card">
+              <h3 className="text-lg font-semibold mb-3">Is TradeHQ free?</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Yes, TradeHQ is completely free to use. You get $10,000 in virtual capital to practice trading with no signup required. We also provide weekly $10K refills so you can continue learning indefinitely. There are no hidden fees, subscriptions, or premium tiers—all features including AI-powered education and real-time market simulation are available to everyone.
+              </p>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <Link to="/trade">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg rounded-xl min-h-[48px] font-semibold">
+                Start Free Trading Now
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
