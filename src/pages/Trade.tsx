@@ -1,16 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { TradingSidebar } from "@/components/trading/TradingSidebar";
-import { CandlestickChart } from "@/components/trading/CandlestickChart";
-import { AssetTable } from "@/components/trading/AssetTable";
-import { OrderPanel } from "@/components/trading/OrderPanel";
-import { PortfolioHeader } from "@/components/trading/PortfolioHeader";
+import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
+import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
+import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
+import { MinimalistOrderPanel } from "@/components/trading/MinimalistOrderPanel";
+import { MinimalistPortfolioBar } from "@/components/trading/MinimalistPortfolioBar";
 import { AIMentor } from "@/components/trading/AIMentor";
-import { AssetTableSkeleton } from "@/components/trading/AssetTableSkeleton";
 import { ChartSkeleton } from "@/components/trading/ChartSkeleton";
 import { MobileOrderDrawer } from "@/components/trading/MobileOrderDrawer";
-import { LiveStatusIndicator } from "@/components/LiveStatusIndicator";
-import { TradingProfitCalculator } from "@/components/TradingProfitCalculator";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
@@ -26,25 +23,22 @@ export default function Trade() {
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   
-  // Ref to track if component is mounted for cleanup
   const isMounted = useRef(true);
 
   useEffect(() => {
     isMounted.current = true;
     
-    // Simulate initial loading with skeleton screens
     const loadTimer = setTimeout(() => {
       if (!isMounted.current) return;
       setAssets(ASSETS);
       setSelectedAsset(ASSETS[0]);
       setIsLoading(false);
-    }, 800);
+    }, 600);
 
     const updated = updatePositionPrices(portfolio);
     setPortfolio(updated);
     setFavorites(getFavorites());
 
-    // Price simulation interval with cleanup to prevent memory leaks
     const priceInterval = setInterval(() => {
       if (!isMounted.current) return;
       
@@ -56,7 +50,6 @@ export default function Trade() {
       setLastUpdateTime(new Date());
     }, 3000);
 
-    // Cleanup function to stop data stream when leaving page
     return () => {
       isMounted.current = false;
       clearTimeout(loadTimer);
@@ -64,7 +57,6 @@ export default function Trade() {
     };
   }, []);
 
-  // Sync selected asset with latest prices
   useEffect(() => {
     if (selectedAsset && isMounted.current && assets.length > 0) {
       const updated = assets.find(a => a.id === selectedAsset.id);
@@ -105,127 +97,70 @@ export default function Trade() {
     <>
       <Helmet>
         <title>Trade Now — Free Stock & Crypto Simulator | TradeHQ 2026</title>
-        <meta name="description" content="🚀 Start trading in 5 seconds — no signup! Practice stocks, Bitcoin, ETFs & forex with $10K virtual cash. Real charts, real skills, zero risk. Try it free →" />
+        <meta name="description" content="🚀 Start trading in 5 seconds — no signup! Practice stocks, Bitcoin, ETFs & forex with $100K virtual cash. Real charts, real skills, zero risk. Try it free →" />
         <link rel="canonical" href="https://tradinghq.vercel.app/trade" />
       </Helmet>
       
-      <div className="h-screen bg-background flex flex-col overflow-hidden">
-        {/* Live Status Indicator - Increases Dwell Time */}
-        <LiveStatusIndicator />
+      <div className="min-h-screen bg-background flex flex-col">
+        {/* Glow Status Bar */}
+        <GlowStatusBar />
 
-        <div className="flex-1 flex overflow-hidden">
-          <TradingSidebar />
-
-          <div className="flex-1 ml-16 flex flex-col h-full overflow-hidden">
-            {/* Header */}
-            <header className="h-14 px-4 border-b border-border/30 bg-card/30 backdrop-blur-sm flex items-center shrink-0">
-              <PortfolioHeader portfolio={portfolio} />
-            </header>
-
-          {/* Desktop Layout - Simplified */}
-          <div className="hidden lg:flex flex-1 overflow-hidden gap-3 p-3">
-            {/* Asset List */}
-            <aside className="w-52 bento-card overflow-hidden">
-              {isLoading ? (
-                <AssetTableSkeleton />
-              ) : (
-                <AssetTable
-                  assets={assets}
-                  favorites={favorites}
-                  selectedAsset={selectedAsset}
-                  onSelectAsset={setSelectedAsset}
-                  onToggleFavorite={handleToggleFavorite}
-                />
-              )}
-            </aside>
-
-            {/* Main Chart Area */}
-            <main className="flex-1 flex flex-col overflow-hidden">
-              <div className="flex-1 min-h-0">
-                <div className="h-full bento-card overflow-hidden">
-                  {isLoading ? (
-                    <ChartSkeleton />
-                  ) : (
-                    selectedAsset && <CandlestickChart asset={selectedAsset} />
-                  )}
-                </div>
-              </div>
-            </main>
-
-            {/* Order Panel - Simplified sidebar */}
-            <aside className="w-64 overflow-y-auto">
-              <OrderPanel
-                asset={selectedAsset}
-                availableCash={portfolio.cash}
-                onTrade={handleTrade}
-              />
-            </aside>
-          </div>
-
-          {/* Tablet Layout */}
-          <div className="hidden md:flex lg:hidden flex-1 overflow-hidden gap-2 p-2">
-            <aside className="w-48 bento-card overflow-hidden">
-              {isLoading ? (
-                <AssetTableSkeleton />
-              ) : (
-                <AssetTable
-                  assets={assets}
-                  favorites={favorites}
-                  selectedAsset={selectedAsset}
-                  onSelectAsset={setSelectedAsset}
-                  onToggleFavorite={handleToggleFavorite}
-                />
-              )}
-            </aside>
-
-            <div className="flex-1 flex flex-col overflow-hidden gap-2">
-              <main className="flex-1 min-h-0">
-                <div className="h-full bento-card overflow-hidden">
-                  {isLoading ? (
-                    <ChartSkeleton />
-                  ) : (
-                    selectedAsset && <CandlestickChart asset={selectedAsset} />
-                  )}
-                </div>
-              </main>
-              <aside className="h-52 shrink-0">
-                <OrderPanel
-                  asset={selectedAsset}
-                  availableCash={portfolio.cash}
-                  onTrade={handleTrade}
-                />
-              </aside>
+        {/* Main Content */}
+        <div className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl">
+          {/* Section 1: Asset Search & Portfolio Bar */}
+          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+            <AssetSearchDropdown
+              assets={assets}
+              selectedAsset={selectedAsset}
+              favorites={favorites}
+              onSelectAsset={setSelectedAsset}
+              onToggleFavorite={handleToggleFavorite}
+            />
+            
+            <div className="w-full lg:w-auto lg:flex-1 lg:max-w-2xl">
+              <MinimalistPortfolioBar portfolio={portfolio} />
             </div>
           </div>
 
-          {/* Mobile Layout - Bottom Drawer for Order Panel */}
-          <div className="md:hidden flex flex-col flex-1 overflow-hidden gap-2 p-2">
-            <main className="flex-1 min-h-0">
-              <div className="h-full bento-card overflow-hidden">
+          {/* Section 2: Chart + Order Panel */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Chart - Takes 2 columns on desktop */}
+            <div className="lg:col-span-2">
+              <div className="glass-panel border border-white/10 rounded-2xl h-[500px] overflow-hidden">
                 {isLoading ? (
                   <ChartSkeleton />
                 ) : (
-                  selectedAsset && <CandlestickChart asset={selectedAsset} />
+                  selectedAsset && <MinimalistAreaChart asset={selectedAsset} />
                 )}
               </div>
-            </main>
-            {/* Mobile Order Drawer - Thumb-friendly bottom drawer */}
-            <aside className="shrink-0 pb-2">
-              <MobileOrderDrawer
+            </div>
+
+            {/* Order Panel - Hidden on mobile, shown on desktop */}
+            <div className="hidden lg:block">
+              <MinimalistOrderPanel
                 asset={selectedAsset}
                 availableCash={portfolio.cash}
                 onTrade={handleTrade}
               />
-            </aside>
+            </div>
+          </div>
+
+          {/* Mobile Order Drawer */}
+          <div className="lg:hidden">
+            <MobileOrderDrawer
+              asset={selectedAsset}
+              availableCash={portfolio.cash}
+              onTrade={handleTrade}
+            />
           </div>
         </div>
 
+        {/* AI Mentor */}
         <AIMentor 
           portfolio={portfolio} 
           assets={assets} 
           selectedAsset={selectedAsset}
         />
-        </div>
       </div>
     </>
   );
