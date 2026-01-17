@@ -18,12 +18,12 @@ export function Hero() {
         <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-primary/3 rounded-full blur-[200px]" />
         
         <div className="relative z-10 container mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bento-card border-border/30">
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bento-card border-border/30 animate-fade-in">
             <BarChart3 className="w-4 h-4 text-primary" />
             <span className="text-sm text-muted-foreground">$10,000 Virtual Capital • 150+ Assets • No Sign Up</span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium mb-6 leading-tight tracking-tight">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium mb-6 leading-tight tracking-tight animate-slide-up" style={{ animationDelay: "100ms" }}>
             <span className="text-foreground">Master the Markets.</span>
             <br />
             <span className="text-foreground">Own the </span>
@@ -31,21 +31,31 @@ export function Hero() {
             <span className="text-foreground">.</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 font-normal">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-normal animate-slide-up" style={{ animationDelay: "200ms" }}>
             Practice <span className="text-primary">stock market simulation</span> and <span className="text-primary">crypto trading</span> with 
             real-time market liquidity. Master Bitcoin L2, RWA tokenization & AI-driven strategies before risking real money.
           </p>
+
+          {/* Weekly Bonus Banner */}
+          <div className="inline-flex items-center gap-2 px-6 py-3 mb-8 rounded-2xl bg-gradient-to-r from-primary/20 via-primary/10 to-secondary/20 border border-primary/30 animate-pulse-glow animate-slide-up" style={{ animationDelay: "250ms" }}>
+            <Shield className="w-5 h-5 text-primary" />
+            <span className="text-sm font-medium">
+              <span className="text-primary font-bold">$10,000 Weekly Bonus</span>
+              <span className="text-muted-foreground"> — Refill your virtual capital every week!</span>
+            </span>
+          </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up" style={{ animationDelay: "300ms" }}>
             <Link to="/trade">
-              <Button size="lg" className="group text-base px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 rounded-xl min-h-[48px] font-semibold">
+              <Button size="lg" className="group text-base px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 rounded-xl min-h-[48px] font-semibold hover:scale-105">
                 Start Instant Trading
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Link to="/learn">
-              <Button size="lg" variant="outline" className="text-base px-8 py-6 border-border hover:bg-muted/30 hover:border-primary/30 transition-all duration-300 rounded-xl min-h-[48px]">
-                Explore Free Courses
+            <Link to="/ai-mentor">
+              <Button size="lg" variant="outline" className="text-base px-8 py-6 border-border hover:bg-muted/30 hover:border-primary/30 transition-all duration-300 rounded-xl min-h-[48px] hover:scale-105">
+                <Brain className="mr-2 w-5 h-5" />
+                Chat with AI Mentor
               </Button>
             </Link>
           </div>
@@ -57,8 +67,12 @@ export function Hero() {
               { label: 'Virtual Capital', value: '$10K', highlight: false, icon: TrendingUp },
               { label: 'Real-Time Liquidity', value: 'Yes', highlight: true, icon: BarChart3 },
               { label: 'Weekly Bonus', value: '$10K', highlight: false, icon: Shield },
-            ].map((stat) => (
-              <div key={stat.label} className="bento-card p-6 text-center">
+            ].map((stat, index) => (
+              <div 
+                key={stat.label} 
+                className="bento-card p-6 text-center hover:scale-105 transition-transform duration-300 animate-slide-up"
+                style={{ animationDelay: `${400 + index * 100}ms` }}
+              >
                 <stat.icon className={`w-5 h-5 mx-auto mb-2 ${stat.highlight ? 'text-primary' : 'text-muted-foreground'}`} />
                 <div className={`text-2xl md:text-3xl font-semibold mb-1 ${stat.highlight ? 'text-primary' : 'text-foreground'}`}>
                   {stat.value}
@@ -82,7 +96,7 @@ export function Hero() {
           
           {/* Bento Grid Features */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="p-8 text-center bento-card hover:border-primary/20 transition-all duration-300">
+            <Card className="p-8 text-center bento-card hover:border-primary/20 hover:scale-105 transition-all duration-300 animate-slide-up" style={{ animationDelay: "100ms" }}>
               <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center">
                 <Shield className="w-7 h-7 text-primary" />
               </div>
@@ -92,7 +106,7 @@ export function Hero() {
               </p>
             </Card>
 
-            <Card className="p-8 text-center bento-card hover:border-secondary/20 transition-all duration-300">
+            <Card className="p-8 text-center bento-card hover:border-secondary/20 hover:scale-105 transition-all duration-300 animate-slide-up" style={{ animationDelay: "200ms" }}>
               <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-secondary/10 flex items-center justify-center">
                 <Zap className="w-7 h-7 text-secondary" />
               </div>
@@ -102,7 +116,7 @@ export function Hero() {
               </p>
             </Card>
 
-            <Card className="p-8 text-center bento-card hover:border-primary/20 transition-all duration-300">
+            <Card className="p-8 text-center bento-card hover:border-primary/20 hover:scale-105 transition-all duration-300 animate-slide-up" style={{ animationDelay: "300ms" }}>
               <div className="w-14 h-14 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center">
                 <GraduationCap className="w-7 h-7 text-primary" />
               </div>
