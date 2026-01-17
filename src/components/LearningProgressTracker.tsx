@@ -61,10 +61,35 @@ function safeParseState(raw: string | null): PersistedLearningModuleState[] | nu
   }
 }
 
+export function LearningProgressTracker() {
+  const { toast } = useToast();
+  
+  const [modules, setModules] = useState<LearningModule[]>(() => {
+    const saved = safeParseState(localStorage.getItem(STORAGE_KEY));
+    if (!saved) return defaultModules;
+    
+    // Merge saved state with default modules to restore icons
+    return defaultModules.map(mod => {
+      const savedMod = saved.find(s => s.id === mod.id);
+      return savedMod 
+        ? { ...mod, completed: savedMod.completed, locked: savedMod.locked }
+        : mod;
+    });
+  });
+
+  useEffect(() => {
+    // Only persist serializable data
+    const toSave: PersistedLearningModuleState[] = modules.map(m => ({
+      id: m.id,
+      completed: m.completed,
+      locked: m.locked,
+    }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+  }, [modules]);
+
   const completedCount = modules.filter(m => m.completed).length;
   const totalXP = modules.filter(m => m.completed).reduce((sum, m) => sum + m.xp, 0);
   const maxXP = modules.reduce((sum, m) => sum + m.xp, 0);
-  const progressPercent = (completedCount / modules.length) * 100;
 
   const getLevel = (xp: number) => {
     if (xp >= 1000) return { level: 5, title: "Pro Trader" };
