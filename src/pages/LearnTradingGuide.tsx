@@ -138,7 +138,7 @@ const LearnTradingGuide = () => {
     ]
   };
 
-  // FAQ Schema for Rich Snippets
+  // FAQ Schema for Rich Snippets - Consolidated all 8 FAQs into single schema
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -181,6 +181,30 @@ const LearnTradingGuide = () => {
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "AI trading bots can be useful tools but carry risks. Many scam bots promise unrealistic returns. Safe use requires: 1) Only using reputable, regulated platforms, 2) Starting with paper trading, 3) Never investing more than you can afford to lose, 4) Understanding the bot's strategy, and 5) Maintaining human oversight of all trades."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does virtual trading work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Virtual trading on TradeHQ simulates real market conditions using $10,000 in demo cash. You can buy and sell 150+ assets including stocks, crypto, ETFs, and commodities with real-time price simulation. All trades are executed instantly with no real money at risk, allowing you to practice strategies and learn market dynamics before investing real capital."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Bitcoin L2?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bitcoin Layer 2 (L2) refers to secondary protocols built on top of the Bitcoin blockchain to enable faster, cheaper transactions. Popular L2 solutions include the Lightning Network for instant payments and Stacks (STX) for smart contracts. These solutions inherit Bitcoin's security while adding scalability and programmability, making them ideal for trading and DeFi applications."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is TradeHQ free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, TradeHQ is completely free to use. You get $10,000 in virtual capital to practice trading with no signup required. We also provide weekly $10K refills so you can continue learning indefinitely. There are no hidden fees, subscriptions, or premium tiers—all features including AI-powered education and real-time market simulation are available to everyone."
         }
       }
     ]
