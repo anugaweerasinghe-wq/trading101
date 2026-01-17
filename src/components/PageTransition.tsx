@@ -17,23 +17,26 @@ export function PageTransition({ children }: PageTransitionProps) {
     // After exit animation, swap children and start enter animation
     const timer = setTimeout(() => {
       setDisplayChildren(children);
-      setIsVisible(true);
-    }, 150);
+      requestAnimationFrame(() => {
+        setIsVisible(true);
+      });
+    }, 200);
 
     return () => clearTimeout(timer);
   }, [location.pathname, children]);
 
   // Initial mount
   useEffect(() => {
-    setIsVisible(true);
+    const timer = setTimeout(() => setIsVisible(true), 50);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <div
-      className={`transition-all duration-300 ease-out ${
+      className={`transition-all duration-500 ease-out ${
         isVisible 
-          ? "opacity-100 translate-y-0 scale-100" 
-          : "opacity-0 translate-y-2 scale-[0.99]"
+          ? "opacity-100 translate-y-0 scale-100 blur-0" 
+          : "opacity-0 translate-y-4 scale-[0.98] blur-[2px]"
       }`}
     >
       {displayChildren}

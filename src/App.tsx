@@ -12,6 +12,7 @@ import Portfolio from "./pages/Portfolio";
 import Learn from "./pages/Learn";
 import LessonDetail from "./pages/LessonDetail";
 import LearnTradingGuide from "./pages/LearnTradingGuide";
+import AIMentor from "./pages/AIMentor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ function AnimatedRoutes() {
         <Route path="/learn" element={<Learn />} />
         <Route path="/learn/:lessonId" element={<LessonDetail />} />
         <Route path="/learn-trading-guide" element={<LearnTradingGuide />} />
+        <Route path="/ai-mentor" element={<AIMentor />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Wallet, Home, GraduationCap, BookOpen, BarChart3 } from "lucide-react";
+import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import tradehqLogo from "@/assets/tradehq-logo.png";
@@ -83,6 +83,18 @@ export function Navigation() {
               >
                 <BookOpen className="w-4 h-4 mr-2" />
                 Guide
+              </Button>
+            </Link>
+            <Link to="/ai-mentor">
+              <Button
+                variant="ghost"
+                className={cn(
+                  "hover:bg-muted/50 hover:text-foreground transition-all rounded-xl gap-1.5",
+                  location.pathname === "/ai-mentor" && "bg-primary/20 text-primary"
+                )}
+              >
+                <Bot className="w-4 h-4" />
+                AI Mentor
               </Button>
             </Link>
             <ThemeToggle />
