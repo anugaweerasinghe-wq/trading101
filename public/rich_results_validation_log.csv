@@ -1,0 +1,16 @@
+URL,Schema Type,Validation Status,Last Checked,Notes
+https://tradinghq.vercel.app/,SoftwareApplication,Pending,2026-01-18,Contains app rating and features
+https://tradinghq.vercel.app/,EducationalOrganization,Pending,2026-01-18,Teaching subjects defined
+https://tradinghq.vercel.app/,BreadcrumbList,Pending,2026-01-18,5 items in navigation
+https://tradinghq.vercel.app/learn-trading-guide,FAQPage,Pending,2026-01-18,8 consolidated FAQ items
+https://tradinghq.vercel.app/learn-trading-guide,HowTo,Pending,2026-01-18,Step-by-step guide
+https://tradinghq.vercel.app/learn-trading-guide,Article,Pending,2026-01-18,Educational content
+https://tradinghq.vercel.app/trade/btc,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/eth,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/sol,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/aapl,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/msft,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/nvda,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/tsla,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/spy,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/xau,WebPage,Pending,2026-01-18,FinancialProduct entity

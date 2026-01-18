@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { PageTransition } from "@/components/PageTransition";
 import Index from "./pages/Index";
 import Trade from "./pages/Trade";
+import TradeAsset from "./pages/TradeAsset";
 import Markets from "./pages/Markets";
 import Portfolio from "./pages/Portfolio";
 import Learn from "./pages/Learn";
@@ -25,6 +26,7 @@ function AnimatedRoutes() {
       <Routes location={location}>
         <Route path="/" element={<Index />} />
         <Route path="/trade" element={<Trade />} />
+        <Route path="/trade/:symbol" element={<TradeAsset />} />
         <Route path="/markets" element={<Markets />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/learn" element={<Learn />} />
