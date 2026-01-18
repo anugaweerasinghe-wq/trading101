@@ -5,6 +5,7 @@ import { Navigation } from "@/components/Navigation";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { RelatedAssets } from "@/components/RelatedAssets";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
+import { AssetIntelligence } from "@/components/AssetIntelligence";
 import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
@@ -27,7 +28,7 @@ import {
   getAssetColor,
   getAssetFAQs
 } from "@/lib/assetContent";
-import { TrendingUp, BarChart3, Target, AlertTriangle } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 
 export default function TradeAsset() {
   const { symbol } = useParams<{ symbol: string }>();
@@ -322,69 +323,9 @@ export default function TradeAsset() {
             </div>
           </div>
 
-          {/* SEO Content Blocks - Only for seed assets */}
-          {showSeoBlocks && selectedAsset && assetContent && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-              {/* Block A: What is [AssetName]? */}
-              <div className="glass-panel border border-white/10 rounded-2xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
-                    <BarChart3 className="w-5 h-5 text-primary" />
-                  </div>
-                  <h2 className="text-lg font-semibold text-foreground">
-                    What is {selectedAsset.name}?
-                  </h2>
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {assetContent.whatIs}
-                </p>
-              </div>
-
-              {/* Block B: Simulator Strategy - Formatted for FAQ eligibility */}
-              <div className="glass-panel border border-white/10 rounded-2xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
-                    <Target className="w-5 h-5 text-accent" />
-                  </div>
-                  <h2 className="text-lg font-semibold text-foreground">
-                    How to Practice Trade {selectedAsset.symbol}
-                  </h2>
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {assetContent.strategy}
-                </p>
-              </div>
-
-              {/* Block C: Key Market Stats */}
-              <div className="glass-panel border border-white/10 rounded-2xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-secondary" />
-                  </div>
-                  <h2 className="text-lg font-semibold text-foreground">
-                    Key Market Stats
-                  </h2>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground text-sm">Price</span>
-                    <span className="text-foreground font-medium">
-                      ${selectedAsset.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground text-sm">24h Change</span>
-                    <span className={`font-medium ${selectedAsset.changePercent >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {selectedAsset.changePercent >= 0 ? '+' : ''}{selectedAsset.changePercent.toFixed(2)}%
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground text-sm">Type</span>
-                    <span className="text-foreground font-medium capitalize">{assetContent.category}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Asset Intelligence Section - Professional 3-column grid */}
+          {showSeoBlocks && selectedAsset && (
+            <AssetIntelligence asset={selectedAsset} />
           )}
 
           {/* FAQ Section - Accordion with Schema Markup */}
