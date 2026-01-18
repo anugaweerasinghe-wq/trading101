@@ -1,5 +1,24 @@
 {
+  "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Content-Type", "value": "application/xml" }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain" }
+      ]
+    }
+  ],
   "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/manifest.json", "destination": "/manifest.json" },
+    { "source": "/favicon.ico", "destination": "/favicon.ico" },
+    { "source": "/og-image.png", "destination": "/og-image.png" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
