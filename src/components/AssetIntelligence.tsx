@@ -1,6 +1,6 @@
 import { Asset } from "@/lib/types";
-import { getAssetContent } from "@/lib/assetContent";
-import { BookOpen, Target, BarChart3, AlertTriangle, Loader2 } from "lucide-react";
+import { getAssetContent, getCategoryIntro } from "@/lib/assetContent";
+import { BookOpen, Target, BarChart3, AlertTriangle, Loader2, Info } from "lucide-react";
 
 interface AssetIntelligenceProps {
   asset: Asset;
@@ -30,6 +30,7 @@ export function truncateMetaDescription(text: string, maxLength: number = 155): 
 
 export function AssetIntelligence({ asset, liveMarketCap }: AssetIntelligenceProps) {
   const content = getAssetContent(asset.id);
+  const categoryIntro = getCategoryIntro(asset.type);
   
   if (!content) return null;
 
@@ -41,10 +42,18 @@ export function AssetIntelligence({ asset, liveMarketCap }: AssetIntelligencePro
       className="mt-8"
       aria-label={`${asset.name} Asset Intelligence`}
     >
-      <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+      <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
         <BookOpen className="w-5 h-5 text-primary" />
         Asset Intelligence
       </h2>
+      
+      {/* Category Intro - SEO Multiplier */}
+      <div className="mb-6 p-4 rounded-xl bg-primary/5 border border-primary/10">
+        <p className="text-sm text-muted-foreground flex items-start gap-2">
+          <Info className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
+          <span>{categoryIntro}</span>
+        </p>
+      </div>
       
       <div 
         className="grid grid-cols-1 md:grid-cols-3 gap-6"
@@ -179,11 +188,66 @@ export function AssetIntelligence({ asset, liveMarketCap }: AssetIntelligencePro
               </div>
             )}
             
-            {/* Max Supply (for crypto) */}
-            {stats?.maxSupply && (
+            {/* Consensus (for crypto) */}
+            {stats?.consensus && (
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground text-sm">Max Supply</span>
-                <span className="text-foreground font-medium">{stats.maxSupply}</span>
+                <span className="text-muted-foreground text-sm">Consensus</span>
+                <span className="text-foreground font-medium">{stats.consensus}</span>
+              </div>
+            )}
+            
+            {/* TPS (for high-performance chains) */}
+            {stats?.TPS && (
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground text-sm">TPS</span>
+                <span className="text-foreground font-medium">{stats.TPS}</span>
+              </div>
+            )}
+            
+            {/* Avg Daily Volume (for forex) */}
+            {stats?.avgDailyVolume && (
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground text-sm">Avg Volume</span>
+                <span className="text-foreground font-medium">
+                  {stats.avgDailyVolume === "live_sourced_at_runtime" ? (
+                    <span className="flex items-center gap-1.5 text-muted-foreground">
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                      Loading...
+                    </span>
+                  ) : stats.avgDailyVolume}
+                </span>
+              </div>
+            )}
+            
+            {/* Pip Value (for forex) */}
+            {stats?.pipValue && (
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground text-sm">Pip Value</span>
+                <span className="text-foreground font-medium">{stats.pipValue}</span>
+              </div>
+            )}
+            
+            {/* Benchmark (for commodities) */}
+            {stats?.benchmark && (
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground text-sm">Benchmark</span>
+                <span className="text-foreground font-medium">{stats.benchmark}</span>
+              </div>
+            )}
+            
+            {/* Units (for commodities) */}
+            {stats?.units && (
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground text-sm">Units</span>
+                <span className="text-foreground font-medium">{stats.units}</span>
+              </div>
+            )}
+            
+            {/* Expense Ratio (for ETFs) */}
+            {stats?.expenseRatio && (
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground text-sm">Expense Ratio</span>
+                <span className="text-foreground font-medium">{stats.expenseRatio}</span>
               </div>
             )}
             
