@@ -6,11 +6,22 @@ interface AssetFAQ {
   answer: string;
 }
 
+interface AssetStats {
+  marketCap?: string;
+  maxSupply?: string;
+  assetClass?: string;
+  sector?: string;
+  primaryDriver?: string;
+  correlation?: string;
+  source?: string;
+}
+
 interface AssetContent {
   whatIs: string; // Block A: What is [AssetName]?
   strategy: string; // Block B: Simulator Strategy
   category: string;
   keywords: string[];
+  stats?: AssetStats; // Professional stats data
 }
 
 // FAQ data for Google PAA (People Also Ask) targeting
@@ -125,10 +136,16 @@ export const SEED_ASSET_IDS = [
 export const ASSET_CONTENT: Record<string, AssetContent> = {
   // Cryptocurrencies
   btc: {
-    whatIs: "Bitcoin (BTC) is the world's first and largest cryptocurrency, created in 2009 by the pseudonymous Satoshi Nakamoto. It operates on a decentralized blockchain network, enabling peer-to-peer transactions without intermediaries.",
-    strategy: "Practice dollar-cost averaging (DCA) by buying small amounts regularly. Bitcoin's volatility makes it ideal for learning support/resistance levels and understanding market cycles.",
+    whatIs: "Digital Gold. A decentralized store of value with a capped supply (21M). Widely used for long-term store-of-value strategies.",
+    strategy: "Educational example: simulate a HODL approach or test swing trades around long-term moving averages. (Educational purposes only — not financial advice.)",
     category: "Cryptocurrency",
-    keywords: ["Bitcoin trading", "BTC simulator", "crypto practice"]
+    keywords: ["Bitcoin trading", "BTC simulator", "crypto practice", "digital gold", "store of value"],
+    stats: {
+      marketCap: "live_sourced_at_runtime",
+      maxSupply: "21,000,000",
+      assetClass: "Cryptocurrency",
+      source: "CoinGecko"
+    }
   },
   eth: {
     whatIs: "Ethereum (ETH) is the second-largest cryptocurrency and the leading smart contract platform. It powers thousands of decentralized applications (dApps), DeFi protocols, and NFT marketplaces.",
@@ -223,10 +240,16 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
     keywords: ["Amazon stock trading", "AMZN practice", "e-commerce giant"]
   },
   nvda: {
-    whatIs: "NVIDIA Corporation (NVDA) designs GPUs that power gaming, AI, and data centers. The AI boom has made it one of the most valuable and volatile tech stocks.",
-    strategy: "NVDA is highly volatile—perfect for learning momentum trading. Practice identifying overbought/oversold conditions using RSI and MACD indicators.",
+    whatIs: "A leader in AI computing and GPUs powering data centers, gaming, and generative AI.",
+    strategy: "Educational example: practice trend-following with risk management and RSI-based pullback entries. (Educational purposes only — not financial advice.)",
     category: "Technology Stock",
-    keywords: ["NVIDIA stock trading", "NVDA simulator", "AI chips"]
+    keywords: ["NVIDIA stock trading", "NVDA simulator", "AI chips", "GPU", "data centers"],
+    stats: {
+      sector: "Semiconductors",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "AI",
+      source: "YahooFinance"
+    }
   },
   tsla: {
     whatIs: "Tesla Inc. (TSLA) is the world's most valuable automaker, leading in electric vehicles and energy storage. It's known for high volatility driven by CEO Elon Musk's public statements.",
@@ -357,10 +380,16 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   
   // Commodities
   gold: {
-    whatIs: "Gold (XAU) is a precious metal considered the ultimate safe-haven asset. It's used as a hedge against inflation, currency devaluation, and geopolitical uncertainty.",
-    strategy: "Gold moves inversely to real interest rates. Practice correlating gold with Treasury yields to understand macro hedging strategies.",
+    whatIs: "The ultimate safe-haven asset. Historically used to hedge against inflation and currency devaluation.",
+    strategy: "Educational example: Analyze gold price action during periods of high CPI data or stock market volatility. (Educational purposes only — not financial advice.)",
     category: "Commodity",
-    keywords: ["gold trading", "XAU practice", "precious metals"]
+    keywords: ["gold trading", "XAU practice", "precious metals", "safe haven", "inflation hedge"],
+    stats: {
+      assetClass: "Commodity",
+      marketCap: "live_sourced_at_runtime",
+      correlation: "Inverse to USD",
+      source: "OANDA"
+    }
   },
   silver: {
     whatIs: "Silver (XAG) is both a precious metal and industrial commodity. It's more volatile than gold and is used in electronics, solar panels, and as a store of value.",
@@ -394,16 +423,39 @@ export function generateAssetMetaTitle(asset: Asset): string {
   return title.length > 60 ? `Trade ${asset.symbol} | Free $10k Demo - TradeHQ` : title;
 }
 
-// Generate meta description (120-160 chars)
+// Truncate meta description safely at 155 chars (no mid-sentence cuts)
+export function truncateMetaDescription(text: string, maxLength: number = 155): string {
+  if (text.length <= maxLength) return text;
+  
+  const truncated = text.slice(0, maxLength);
+  const lastPeriod = truncated.lastIndexOf('.');
+  const lastQuestion = truncated.lastIndexOf('?');
+  const lastExclamation = truncated.lastIndexOf('!');
+  
+  const lastBoundary = Math.max(lastPeriod, lastQuestion, lastExclamation);
+  
+  if (lastBoundary > maxLength * 0.5) {
+    return text.slice(0, lastBoundary + 1);
+  }
+  
+  const lastSpace = truncated.lastIndexOf(' ');
+  return text.slice(0, lastSpace) + '...';
+}
+
+// Generate meta description (120-155 chars, safely truncated)
 export function generateAssetMetaDescription(asset: Asset): string {
   const content = ASSET_CONTENT[asset.id];
   const typeLabel = asset.type === 'crypto' ? 'cryptocurrency' : asset.type;
   
+  let description: string;
   if (content) {
-    return `🚀 Practice ${asset.symbol} trading risk-free! Learn ${typeLabel} strategies with $10K virtual cash. Real charts, zero risk. Start now →`;
+    // Use the whatIs description for richer meta tags
+    description = `Practice ${asset.symbol} trading risk-free. ${content.whatIs} Start with $10K virtual cash now.`;
+  } else {
+    description = `Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $10K demo cash, real-time charts, and AI mentoring. No signup needed!`;
   }
   
-  return `📈 Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $10K demo cash, real-time charts, and AI mentoring. No signup needed!`;
+  return truncateMetaDescription(description, 155);
 }
 
 // Get asset content or generate fallback
