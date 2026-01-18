@@ -1,0 +1,33 @@
+URL,Type,Priority,Status
+https://tradinghq.vercel.app/,Core Page,1.0,Active
+https://tradinghq.vercel.app/trade,Core Page,0.9,Active
+https://tradinghq.vercel.app/portfolio,Core Page,0.8,Active
+https://tradinghq.vercel.app/markets,Core Page,0.8,Active
+https://tradinghq.vercel.app/learn,Core Page,0.8,Active
+https://tradinghq.vercel.app/learn-trading-guide,Pillar Page,0.95,Active
+https://tradinghq.vercel.app/ai-mentor,Core Page,0.85,Active
+https://tradinghq.vercel.app/trade/btc,Asset Page - Crypto,0.85,Active
+https://tradinghq.vercel.app/trade/eth,Asset Page - Crypto,0.85,Active
+https://tradinghq.vercel.app/trade/sol,Asset Page - Crypto,0.8,Active
+https://tradinghq.vercel.app/trade/bnb,Asset Page - Crypto,0.8,Active
+https://tradinghq.vercel.app/trade/xrp,Asset Page - Crypto,0.8,Active
+https://tradinghq.vercel.app/trade/ada,Asset Page - Crypto,0.8,Active
+https://tradinghq.vercel.app/trade/doge,Asset Page - Crypto,0.8,Active
+https://tradinghq.vercel.app/trade/avax,Asset Page - Crypto,0.75,Active
+https://tradinghq.vercel.app/trade/dot,Asset Page - Crypto,0.75,Active
+https://tradinghq.vercel.app/trade/matic,Asset Page - Crypto,0.75,Active
+https://tradinghq.vercel.app/trade/link,Asset Page - Crypto,0.75,Active
+https://tradinghq.vercel.app/trade/ltc,Asset Page - Crypto,0.75,Active
+https://tradinghq.vercel.app/trade/aapl,Asset Page - Stock,0.85,Active
+https://tradinghq.vercel.app/trade/msft,Asset Page - Stock,0.85,Active
+https://tradinghq.vercel.app/trade/googl,Asset Page - Stock,0.85,Active
+https://tradinghq.vercel.app/trade/amzn,Asset Page - Stock,0.85,Active
+https://tradinghq.vercel.app/trade/nvda,Asset Page - Stock,0.85,Active
+https://tradinghq.vercel.app/trade/tsla,Asset Page - Stock,0.85,Active
+https://tradinghq.vercel.app/trade/meta,Asset Page - Stock,0.8,Active
+https://tradinghq.vercel.app/trade/spy,Asset Page - ETF,0.85,Active
+https://tradinghq.vercel.app/trade/qqq,Asset Page - ETF,0.85,Active
+https://tradinghq.vercel.app/trade/eur-usd,Asset Page - Forex,0.8,Active
+https://tradinghq.vercel.app/trade/gbp-usd,Asset Page - Forex,0.75,Active
+https://tradinghq.vercel.app/trade/xau,Asset Page - Commodity,0.85,Active
+https://tradinghq.vercel.app/trade/wti,Asset Page - Commodity,0.8,Active
