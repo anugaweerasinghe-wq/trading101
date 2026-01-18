@@ -14,6 +14,27 @@ interface AssetStats {
   primaryDriver?: string;
   correlation?: string;
   source?: string;
+  consensus?: string;
+  TPS?: string;
+  avgDailyVolume?: string;
+  pipValue?: string;
+  benchmark?: string;
+  units?: string;
+  expenseRatio?: string;
+}
+
+// Category intro text for SEO multiplier
+export const CATEGORY_INTROS: Record<string, string> = {
+  crypto: "Cryptocurrencies are decentralized digital assets known for 24/7 market cycles and high volatility.",
+  stock: "Equities represent ownership in public companies and are driven by earnings, macro trends, and sector performance.",
+  etf: "ETFs provide diversified exposure to baskets of securities, offering lower risk than individual stock picking.",
+  forex: "Global currencies reflect macroeconomic health and geopolitical shifts, trading 24/5 across global markets.",
+  commodity: "Commodities are raw materials and resources that reflect macroeconomic health and geopolitical shifts."
+};
+
+// Get category intro by asset type
+export function getCategoryIntro(assetType: string): string {
+  return CATEGORY_INTROS[assetType] || "Practice trading this asset class with virtual funds.";
 }
 
 interface AssetContent {
@@ -148,16 +169,28 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
     }
   },
   eth: {
-    whatIs: "Ethereum (ETH) is the second-largest cryptocurrency and the leading smart contract platform. It powers thousands of decentralized applications (dApps), DeFi protocols, and NFT marketplaces.",
-    strategy: "Monitor ETH's correlation with BTC while watching for independent catalysts like network upgrades. Practice trading ETH during high-volume periods for realistic spread simulation.",
+    whatIs: "The foundation for DeFi and smart contracts.",
+    strategy: "Practice trading ETH/BTC ratios or network upgrade cycles. (Educational simulation only — not financial advice.)",
     category: "Cryptocurrency",
-    keywords: ["Ethereum trading", "ETH simulator", "smart contracts"]
+    keywords: ["Ethereum trading", "ETH simulator", "smart contracts", "DeFi", "Web3"],
+    stats: {
+      assetClass: "Cryptocurrency",
+      marketCap: "live_sourced_at_runtime",
+      consensus: "Proof of Stake",
+      source: "CoinGecko"
+    }
   },
   sol: {
-    whatIs: "Solana (SOL) is a high-performance blockchain known for its fast transaction speeds and low fees. It has become a major platform for DeFi, NFTs, and gaming applications.",
-    strategy: "Solana is more volatile than BTC/ETH—perfect for practicing quick entries and exits. Set tight stop-losses and aim for 5-10% gains to build discipline.",
+    whatIs: "A high-performance blockchain for mass adoption.",
+    strategy: "Test entries during high-volatility sessions to understand network throughput. (Educational simulation only — not financial advice.)",
     category: "Cryptocurrency",
-    keywords: ["Solana trading", "SOL practice", "fast blockchain"]
+    keywords: ["Solana trading", "SOL practice", "fast blockchain", "high TPS"],
+    stats: {
+      assetClass: "Cryptocurrency",
+      marketCap: "live_sourced_at_runtime",
+      TPS: "50,000+",
+      source: "Solana"
+    }
   },
   bnb: {
     whatIs: "BNB is the native token of the Binance ecosystem, powering the Binance Smart Chain and providing trading fee discounts on the world's largest crypto exchange.",
@@ -222,22 +255,40 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
     keywords: ["Apple stock trading", "AAPL simulator", "tech stocks"]
   },
   msft: {
-    whatIs: "Microsoft Corporation (MSFT) is a technology giant leading in cloud computing (Azure), enterprise software, and AI. It's the second-largest company by market capitalization.",
-    strategy: "MSFT is less volatile than peers—ideal for practicing position sizing. Build confidence with smaller percentage moves before trading more volatile stocks.",
+    whatIs: "A technology giant leading in cloud computing (Azure), enterprise software, and AI development.",
+    strategy: "Practice position sizing with MSFT's lower volatility before trading high-beta stocks. (Educational simulation only — not financial advice.)",
     category: "Technology Stock",
-    keywords: ["Microsoft stock trading", "MSFT practice", "cloud computing"]
+    keywords: ["Microsoft stock trading", "MSFT practice", "cloud computing", "Azure", "enterprise"],
+    stats: {
+      sector: "Technology",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "Cloud & AI",
+      source: "YahooFinance"
+    }
   },
   googl: {
-    whatIs: "Alphabet Inc. (GOOGL) is the parent company of Google, dominating search, advertising, YouTube, and cloud services. It's also a major player in AI development.",
-    strategy: "GOOGL responds to AI and ad revenue narratives. Practice trading breakouts above resistance levels during positive analyst coverage or AI announcements.",
+    whatIs: "The parent company of Google, dominating search, advertising, YouTube, and cloud services.",
+    strategy: "Practice trading breakouts above resistance during positive AI announcements. (Educational simulation only — not financial advice.)",
     category: "Technology Stock",
-    keywords: ["Google stock trading", "GOOGL simulator", "search advertising"]
+    keywords: ["Google stock trading", "GOOGL simulator", "search advertising", "AI", "YouTube"],
+    stats: {
+      sector: "Technology",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "Advertising & AI",
+      source: "YahooFinance"
+    }
   },
   amzn: {
-    whatIs: "Amazon.com Inc. (AMZN) leads in e-commerce and cloud computing through AWS. It's constantly expanding into new sectors including healthcare, streaming, and logistics.",
-    strategy: "AMZN moves big on earnings and Prime Day announcements. Practice calculating risk-reward ratios and setting realistic profit targets around key events.",
+    whatIs: "The global leader in e-commerce and cloud computing (AWS), expanding into healthcare, streaming, and logistics.",
+    strategy: "Practice calculating risk-reward around earnings and Prime Day events. (Educational simulation only — not financial advice.)",
     category: "Technology Stock",
-    keywords: ["Amazon stock trading", "AMZN practice", "e-commerce giant"]
+    keywords: ["Amazon stock trading", "AMZN practice", "e-commerce giant", "AWS", "cloud"],
+    stats: {
+      sector: "Technology",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "E-commerce & Cloud",
+      source: "YahooFinance"
+    }
   },
   nvda: {
     whatIs: "A leader in AI computing and GPUs powering data centers, gaming, and generative AI.",
@@ -258,16 +309,28 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
     keywords: ["Tesla stock trading", "TSLA practice", "electric vehicles"]
   },
   meta: {
-    whatIs: "Meta Platforms Inc. (META) owns Facebook, Instagram, and WhatsApp, and is investing heavily in virtual reality and the metaverse. It generates most revenue from digital advertising.",
-    strategy: "META is sensitive to ad revenue and user growth metrics. Practice reading earnings transcripts and correlating specific metrics with price action.",
+    whatIs: "Owner of Facebook, Instagram, and WhatsApp, investing heavily in AI and the metaverse.",
+    strategy: "Practice correlating ad revenue metrics with price action during earnings. (Educational simulation only — not financial advice.)",
     category: "Technology Stock",
-    keywords: ["Meta stock trading", "META simulator", "social media"]
+    keywords: ["Meta stock trading", "META simulator", "social media", "VR", "advertising"],
+    stats: {
+      sector: "Technology",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "Advertising & AI",
+      source: "YahooFinance"
+    }
   },
   nflx: {
-    whatIs: "Netflix Inc. (NFLX) is the world's largest streaming entertainment service with over 200 million subscribers. It produces original content and competes with Disney+, HBO Max, and others.",
-    strategy: "NFLX has large post-earnings moves. Practice paper trading earnings plays—buy puts or calls before earnings to understand options-like risk without real money.",
+    whatIs: "The world's largest streaming entertainment service with 200M+ subscribers producing original content.",
+    strategy: "Practice earnings plays to understand volatility around subscriber growth reports. (Educational simulation only — not financial advice.)",
     category: "Technology Stock",
-    keywords: ["Netflix stock trading", "NFLX practice", "streaming"]
+    keywords: ["Netflix stock trading", "NFLX practice", "streaming", "entertainment"],
+    stats: {
+      sector: "Entertainment",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "Subscriber Growth",
+      source: "YahooFinance"
+    }
   },
   amd: {
     whatIs: "Advanced Micro Devices (AMD) designs CPUs and GPUs competing directly with Intel and NVIDIA. It's a key player in gaming, data centers, and AI acceleration.",
@@ -290,16 +353,28 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   
   // Financial Stocks
   jpm: {
-    whatIs: "JPMorgan Chase & Co. (JPM) is America's largest bank by assets. It operates in consumer banking, investment banking, and asset management worldwide.",
-    strategy: "JPM tracks interest rate expectations closely. Practice correlating Fed announcements with bank stock movements to understand macro trading.",
+    whatIs: "America's largest bank by assets, operating in consumer banking, investment banking, and asset management.",
+    strategy: "Practice correlating Fed announcements with bank stock movements to understand macro trading. (Educational simulation only — not financial advice.)",
     category: "Financial Stock",
-    keywords: ["JPMorgan stock trading", "JPM practice", "banking"]
+    keywords: ["JPMorgan stock trading", "JPM practice", "banking", "financial sector"],
+    stats: {
+      sector: "Financials",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "Interest Rates",
+      source: "YahooFinance"
+    }
   },
   v: {
-    whatIs: "Visa Inc. (V) operates the world's largest electronic payments network. It processes billions of transactions annually and benefits from the global shift to cashless payments.",
-    strategy: "Visa is a steady compounder—ideal for practicing long-term position building. Practice adding to winners instead of averaging down on losers.",
+    whatIs: "Operator of the world's largest electronic payments network, processing billions of transactions annually.",
+    strategy: "Practice long-term position building with this steady compounder. (Educational simulation only — not financial advice.)",
     category: "Financial Stock",
-    keywords: ["Visa stock trading", "V simulator", "payments"]
+    keywords: ["Visa stock trading", "V simulator", "payments", "fintech"],
+    stats: {
+      sector: "Financials",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "Digital Payments",
+      source: "YahooFinance"
+    }
   },
   ma: {
     whatIs: "Mastercard Incorporated (MA) is the second-largest payment processor globally. It operates in over 210 countries and continues growing with digital payment adoption.",
@@ -310,16 +385,30 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   
   // ETFs
   spy: {
-    whatIs: "SPDR S&P 500 ETF Trust (SPY) tracks the S&P 500 index, representing 500 of America's largest companies. It's the world's most traded ETF with massive liquidity.",
-    strategy: "SPY is the perfect starting point for beginners. Practice reading market sentiment through SPY before trading individual stocks—it teaches index-level thinking.",
+    whatIs: "The world's most traded ETF tracking the S&P 500 index—500 of America's largest companies.",
+    strategy: "Practice reading market sentiment through SPY before trading individual stocks. (Educational simulation only — not financial advice.)",
     category: "ETF",
-    keywords: ["SPY ETF trading", "S&P 500 practice", "index fund"]
+    keywords: ["SPY ETF trading", "S&P 500 practice", "index fund", "benchmark"],
+    stats: {
+      assetClass: "ETF",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "US Large-Cap",
+      expenseRatio: "0.09%",
+      source: "SPDR"
+    }
   },
   qqq: {
-    whatIs: "Invesco QQQ Trust (QQQ) tracks the Nasdaq-100 index, heavily weighted toward technology stocks. It's popular for tech sector exposure without individual stock risk.",
-    strategy: "QQQ is more volatile than SPY—perfect for practicing sector rotation. Compare QQQ vs SPY performance to gauge tech sentiment.",
+    whatIs: "Tracks the Nasdaq-100 index, heavily weighted toward technology stocks for concentrated tech exposure.",
+    strategy: "Compare QQQ vs SPY performance to gauge tech sentiment and sector rotation. (Educational simulation only — not financial advice.)",
     category: "ETF",
-    keywords: ["QQQ ETF trading", "Nasdaq practice", "tech ETF"]
+    keywords: ["QQQ ETF trading", "Nasdaq practice", "tech ETF", "growth stocks"],
+    stats: {
+      assetClass: "ETF",
+      marketCap: "live_sourced_at_runtime",
+      primaryDriver: "Tech & Growth",
+      expenseRatio: "0.20%",
+      source: "Invesco"
+    }
   },
   iwm: {
     whatIs: "iShares Russell 2000 ETF (IWM) tracks small-cap U.S. stocks. It's often used to gauge risk appetite and domestic economic health.",
@@ -354,16 +443,28 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
     keywords: ["EUR/USD trading", "forex practice", "currency pair"]
   },
   gbpusd: {
-    whatIs: "GBP/USD (Cable) is the exchange rate between the British Pound and US Dollar. It's the third most traded currency pair and is influenced by UK economic data and Brexit developments.",
-    strategy: "GBP/USD is volatile during London market hours. Practice trading the London-New York overlap (8 AM - 12 PM EST) for maximum liquidity.",
+    whatIs: "The 'Cable' pair, representing the exchange rate between the British Pound and US Dollar.",
+    strategy: "Simulate trading during the London/New York session overlap for maximum liquidity. (Educational simulation only — not financial advice.)",
     category: "Forex",
-    keywords: ["GBP/USD trading", "Cable practice", "British Pound"]
+    keywords: ["GBP/USD trading", "Cable practice", "British Pound", "forex major"],
+    stats: {
+      assetClass: "Forex",
+      avgDailyVolume: "live_sourced_at_runtime",
+      pipValue: "Variable",
+      source: "OANDA"
+    }
   },
   usdjpy: {
-    whatIs: "USD/JPY represents the US Dollar against the Japanese Yen. It's influenced by interest rate differentials between the Fed and Bank of Japan, and serves as a risk sentiment indicator.",
-    strategy: "USD/JPY is a carry trade indicator. Practice understanding how interest rate differentials drive currency flows over medium-term periods.",
+    whatIs: "The US Dollar against the Japanese Yen—a key carry trade indicator and risk sentiment gauge.",
+    strategy: "Practice understanding how interest rate differentials drive currency flows. (Educational simulation only — not financial advice.)",
     category: "Forex",
-    keywords: ["USD/JPY trading", "Yen practice", "carry trade"]
+    keywords: ["USD/JPY trading", "Yen practice", "carry trade", "BOJ"],
+    stats: {
+      assetClass: "Forex",
+      avgDailyVolume: "live_sourced_at_runtime",
+      pipValue: "Variable",
+      source: "OANDA"
+    }
   },
   usdchf: {
     whatIs: "USD/CHF is the exchange rate between the US Dollar and Swiss Franc. The Swiss Franc is considered a safe-haven currency during market turbulence.",
@@ -392,16 +493,28 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
     }
   },
   silver: {
-    whatIs: "Silver (XAG) is both a precious metal and industrial commodity. It's more volatile than gold and is used in electronics, solar panels, and as a store of value.",
-    strategy: "Silver has higher beta than gold. Practice trading the gold-silver ratio—when it's historically high, silver often outperforms.",
+    whatIs: "Both a precious metal and industrial commodity, used in electronics, solar panels, and as a store of value.",
+    strategy: "Practice trading the gold-silver ratio—when historically high, silver often outperforms. (Educational simulation only — not financial advice.)",
     category: "Commodity",
-    keywords: ["silver trading", "XAG practice", "precious metals"]
+    keywords: ["silver trading", "XAG practice", "precious metals", "industrial"],
+    stats: {
+      assetClass: "Commodity",
+      marketCap: "live_sourced_at_runtime",
+      correlation: "Follows Gold",
+      source: "COMEX"
+    }
   },
   oil: {
-    whatIs: "Crude Oil WTI (West Texas Intermediate) is the primary U.S. oil benchmark. Oil prices impact everything from transportation costs to inflation expectations.",
-    strategy: "Oil is geopolitically sensitive. Practice monitoring OPEC announcements and inventory reports to develop event-driven trading skills.",
+    whatIs: "Crude Oil (WTI), a primary energy commodity and global inflation indicator.",
+    strategy: "Analyze price action against OPEC news and inventory reports. (Educational simulation only — not financial advice.)",
     category: "Commodity",
-    keywords: ["oil trading", "WTI practice", "crude oil"]
+    keywords: ["oil trading", "WTI practice", "crude oil", "energy"],
+    stats: {
+      assetClass: "Commodity",
+      benchmark: "WTI",
+      units: "Barrels",
+      source: "NYMEX"
+    }
   },
   natgas: {
     whatIs: "Natural Gas (NG) is a major energy source for heating and electricity generation. Its price is highly seasonal and influenced by weather patterns.",

@@ -7,8 +7,8 @@ interface RelatedAssetsProps {
   currentAsset: Asset;
 }
 
-// Get related assets based on type
-function getRelatedAssets(currentAsset: Asset): Asset[] {
+// Get related assets based on type (3 for compare section)
+function getRelatedAssets(currentAsset: Asset, count: number = 3): Asset[] {
   // Filter assets of the same type, excluding current
   const sameType = ASSETS.filter(
     a => a.type === currentAsset.type && a.id !== currentAsset.id
@@ -17,8 +17,8 @@ function getRelatedAssets(currentAsset: Asset): Asset[] {
   // Sort by market cap proxy (higher price first for simplicity)
   const sorted = [...sameType].sort((a, b) => b.price - a.price);
   
-  // Return top 4
-  return sorted.slice(0, 4);
+  // Return top assets based on count
+  return sorted.slice(0, count);
 }
 
 // Get asset URL slug
@@ -30,35 +30,35 @@ function getAssetSlug(asset: Asset): string {
 function getRelatedTitle(type: Asset['type']): string {
   switch (type) {
     case 'crypto':
-      return 'Related Cryptocurrencies';
+      return 'Compare Cryptocurrencies';
     case 'stock':
-      return 'Related Stocks';
+      return 'Compare Stocks';
     case 'etf':
-      return 'Related ETFs';
+      return 'Compare ETFs';
     case 'forex':
-      return 'Related Currency Pairs';
+      return 'Compare Currency Pairs';
     case 'commodity':
-      return 'Related Commodities';
+      return 'Compare Commodities';
     default:
-      return 'Related Assets';
+      return 'Compare Related Assets';
   }
 }
 
 export function RelatedAssets({ currentAsset }: RelatedAssetsProps) {
-  const relatedAssets = getRelatedAssets(currentAsset);
+  const relatedAssets = getRelatedAssets(currentAsset, 3);
   
   if (relatedAssets.length === 0) return null;
 
   return (
-    <section className="mt-8">
+    <section className="mt-8" aria-label="Compare related assets">
       <div className="flex items-center gap-2 mb-4">
-        <TrendingUp className="w-5 h-5 text-primary" />
+        <TrendingUp className="w-5 h-5 text-primary" aria-hidden="true" />
         <h3 className="text-lg font-semibold text-foreground">
           {getRelatedTitle(currentAsset.type)}
         </h3>
       </div>
       
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {relatedAssets.map((asset) => (
           <Link
             key={asset.id}
