@@ -3,18 +3,32 @@
 
 User-agent: Googlebot
 Allow: /
+Allow: /assets/
+Allow: /og/
 
 User-agent: Bingbot
 Allow: /
+Allow: /assets/
+Allow: /og/
 
 User-agent: Twitterbot
 Allow: /
+Allow: /og/
 
 User-agent: facebookexternalhit
 Allow: /
+Allow: /og/
 
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /og/
+
+# Disallow non-essential paths
+Disallow: /api/
 
 # Sitemap location
 Sitemap: https://tradinghq.vercel.app/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
