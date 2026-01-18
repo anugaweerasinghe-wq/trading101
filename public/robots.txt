@@ -5,27 +5,49 @@ User-agent: Googlebot
 Allow: /
 Allow: /assets/
 Allow: /og/
+Allow: /api/og/
 
 User-agent: Bingbot
 Allow: /
 Allow: /assets/
 Allow: /og/
+Allow: /api/og/
 
 User-agent: Twitterbot
 Allow: /
 Allow: /og/
+Allow: /api/og/
 
 User-agent: facebookexternalhit
 Allow: /
 Allow: /og/
+Allow: /api/og/
+
+User-agent: Slackbot
+Allow: /
+Allow: /og/
+Allow: /api/og/
+
+User-agent: Discordbot
+Allow: /
+Allow: /og/
+Allow: /api/og/
+
+User-agent: LinkedInBot
+Allow: /
+Allow: /og/
+Allow: /api/og/
 
 User-agent: *
 Allow: /
 Allow: /assets/
 Allow: /og/
+Allow: /api/og/
 
 # Disallow non-essential paths
 Disallow: /api/
+# But allow OG image generation
+Allow: /api/og/
 
 # Sitemap location
 Sitemap: https://tradinghq.vercel.app/sitemap.xml

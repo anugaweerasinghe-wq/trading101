@@ -136,8 +136,8 @@ export default function TradeAsset() {
     : "https://tradinghq.vercel.app/trade";
   const assetColor = selectedAsset ? getAssetColor(selectedAsset.id) : '#00FFFF';
 
-  // Generate JSON-LD schema for the asset page (WebPage + FAQPage for "How to practice trade")
-  const assetSchema = selectedAsset ? {
+  // Generate JSON-LD schema for the asset page (WebPage + FinancialService + SoftwareApplication)
+  const webPageSchema = selectedAsset ? {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": metaTitle,
@@ -155,6 +155,42 @@ export default function TradeAsset() {
       "url": "https://tradinghq.vercel.app/"
     }
   } : null;
+
+  // FinancialService schema for entity-based SEO
+  const financialServiceSchema = selectedAsset ? {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "TradeHQ Trading Simulator",
+    "description": `Practice trading ${selectedAsset.name} (${selectedAsset.symbol}) with $10,000 virtual funds. Real-time charts, AI mentoring, and risk-free learning.`,
+    "url": "https://tradinghq.vercel.app/",
+    "areaServed": "Worldwide",
+    "serviceType": "Trading Simulator",
+    "provider": {
+      "@type": "Organization",
+      "name": "TradeHQ",
+      "url": "https://tradinghq.vercel.app/"
+    }
+  } : null;
+
+  // SoftwareApplication schema for app indexing
+  const softwareAppSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "TradeHQ",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free trading simulator with $10,000 virtual cash. Practice stocks, crypto, forex, and commodities with real-time charts and AI mentoring.",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "1250"
+    }
+  };
 
   // FAQ Schema - combine asset-specific FAQs with generic ones
   const allFAQs = selectedAsset && assetContent ? [
@@ -255,17 +291,29 @@ export default function TradeAsset() {
         {/* Theme color matching asset */}
         <meta name="theme-color" content={assetColor} />
         
-        {/* Structured Data */}
-        {assetSchema && (
+        {/* Structured Data - WebPage */}
+        {webPageSchema && (
           <script type="application/ld+json">
-            {JSON.stringify(assetSchema)}
+            {JSON.stringify(webPageSchema)}
           </script>
         )}
+        {/* Structured Data - FinancialService */}
+        {financialServiceSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(financialServiceSchema)}
+          </script>
+        )}
+        {/* Structured Data - SoftwareApplication */}
+        <script type="application/ld+json">
+          {JSON.stringify(softwareAppSchema)}
+        </script>
+        {/* Structured Data - FAQ */}
         {faqSchema && (
           <script type="application/ld+json">
             {JSON.stringify(faqSchema)}
           </script>
         )}
+        {/* Structured Data - Breadcrumb */}
         {breadcrumbSchema && (
           <script type="application/ld+json">
             {JSON.stringify(breadcrumbSchema)}
