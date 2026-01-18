@@ -1,11 +1,85 @@
 // Unique SEO content for each asset - Anti-thin content blocks
 import { Asset } from './types';
 
+interface AssetFAQ {
+  question: string;
+  answer: string;
+}
+
 interface AssetContent {
   whatIs: string; // Block A: What is [AssetName]?
   strategy: string; // Block B: Simulator Strategy
   category: string;
   keywords: string[];
+}
+
+// FAQ data for Google PAA (People Also Ask) targeting
+export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
+  btc: [
+    {
+      question: "How can I practice trading Bitcoin without losing money?",
+      answer: "Use a crypto simulator like TradeHQ. You get $10,000 in virtual funds to practice Bitcoin's price action in real-time without any financial risk."
+    }
+  ],
+  aapl: [
+    {
+      question: "Is Apple stock good for day trading practice?",
+      answer: "Yes, AAPL is a favorite for beginners due to its high liquidity and predictable reactions to tech sector news and earnings reports."
+    }
+  ],
+  eth: [
+    {
+      question: "What is the best way to learn Ethereum trading?",
+      answer: "Start by simulating trades on a platform that offers real-time charts. Focus on ETH/BTC correlation and gas fee trends before moving to real capital."
+    }
+  ],
+  tsla: [
+    {
+      question: "Why is Tesla stock so volatile in trading simulators?",
+      answer: "Tesla's price is heavily driven by sentiment and macro-news. It is the perfect asset for practicing emotional discipline and stop-loss management."
+    }
+  ],
+  nvda: [
+    {
+      question: "How do I trade the AI boom with a simulator?",
+      answer: "NVDA is the primary AI stock. Practice identifying momentum breakouts and RSI overbought levels using $10k demo cash to learn tech cycles."
+    }
+  ],
+  spy: [
+    {
+      question: "Should beginners start with SPY or individual stocks?",
+      answer: "Beginners should practice with SPY (S&P 500 ETF) first. It provides a 'market average' experience, making it easier to learn technical analysis basics."
+    }
+  ],
+  gold: [
+    {
+      question: "How does Gold react during market crashes?",
+      answer: "Gold often acts as a safe-haven. Use the TradeHQ simulator to watch how XAU/USD moves inversely to the stock market during high-volatility events."
+    }
+  ],
+  sol: [
+    {
+      question: "Is Solana trading harder than Bitcoin?",
+      answer: "Solana is faster and often more volatile. Practice your 'entry and exit' speed in the simulator to account for Solana's aggressive price swings."
+    }
+  ],
+  amzn: [
+    {
+      question: "When is the best time to trade Amazon stock?",
+      answer: "Amazon often shows high volatility during 'Prime Day' and quarterly earnings. Practice the 'Buy the Rumor' strategy on these specific dates."
+    }
+  ],
+  eurusd: [
+    {
+      question: "How do I learn Forex trading for free?",
+      answer: "Use a $10,000 demo account to trade the EUR/USD pair. Focus on the overlap of the London and New York sessions for the most realistic practice."
+    }
+  ]
+};
+
+// Get FAQs for an asset
+export function getAssetFAQs(assetId: string): AssetFAQ[] {
+  return ASSET_FAQS[assetId] || [];
 }
 
 // Asset brand colors for OG images

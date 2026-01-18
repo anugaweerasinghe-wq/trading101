@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { RelatedAssets } from "@/components/RelatedAssets";
+import { AssetFAQSection } from "@/components/AssetFAQSection";
 import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
@@ -23,7 +24,8 @@ import {
   generateAssetMetaTitle, 
   generateAssetMetaDescription,
   isInSeedSet,
-  getAssetColor
+  getAssetColor,
+  getAssetFAQs
 } from "@/lib/assetContent";
 import { TrendingUp, BarChart3, Target, AlertTriangle } from "lucide-react";
 
@@ -125,6 +127,7 @@ export default function TradeAsset() {
 
   // Get content for SEO blocks
   const assetContent = selectedAsset ? getAssetContent(selectedAsset.id) : null;
+  const assetFAQs = selectedAsset ? getAssetFAQs(selectedAsset.id) : [];
   const metaTitle = selectedAsset ? generateAssetMetaTitle(selectedAsset) : "Trade | TradeHQ";
   const metaDescription = selectedAsset ? generateAssetMetaDescription(selectedAsset) : "";
   const canonicalUrl = selectedAsset 
@@ -152,28 +155,40 @@ export default function TradeAsset() {
     }
   } : null;
 
-  // FAQ Schema for "How to practice trade [Asset]?" - eligible for People Also Ask
-  const faqSchema = selectedAsset && assetContent ? {
+  // FAQ Schema - combine asset-specific FAQs with generic ones
+  const allFAQs = selectedAsset && assetContent ? [
+    // Asset-specific FAQs from ASSET_FAQS
+    ...assetFAQs.map(faq => ({
+      "@type": "Question" as const,
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer" as const,
+        "text": faq.answer
+      }
+    })),
+    // Generic FAQs
+    {
+      "@type": "Question" as const,
+      "name": `How to practice trade ${selectedAsset.name}?`,
+      "acceptedAnswer": {
+        "@type": "Answer" as const,
+        "text": `${assetContent.strategy} TradeHQ provides $10,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Simply select ${selectedAsset.symbol} from the asset list, analyze the chart, and place your first trade.`
+      }
+    },
+    {
+      "@type": "Question" as const,
+      "name": `Is ${selectedAsset.symbol} trading risky for beginners?`,
+      "acceptedAnswer": {
+        "@type": "Answer" as const,
+        "text": `Yes, ${selectedAsset.type === 'crypto' ? 'cryptocurrency' : selectedAsset.type} trading carries risk. That's why we recommend practicing with a simulator like TradeHQ first. Learn to read charts, manage positions, and develop strategies without risking real money.`
+      }
+    }
+  ] : [];
+
+  const faqSchema = allFAQs.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": `How to practice trade ${selectedAsset.name}?`,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": `${assetContent.strategy} TradeHQ provides $10,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Simply select ${selectedAsset.symbol} from the asset list, analyze the chart, and place your first trade. Track your performance and learn from every trade.`
-        }
-      },
-      {
-        "@type": "Question",
-        "name": `Is ${selectedAsset.symbol} trading risky for beginners?`,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": `Yes, ${selectedAsset.type === 'crypto' ? 'cryptocurrency' : selectedAsset.type} trading carries risk. That's why we recommend practicing with a simulator like TradeHQ first. Learn to read charts, manage positions, and develop strategies without risking real money. ${assetContent.whatIs.split('.')[0]}.`
-        }
-      }
-    ]
+    "mainEntity": allFAQs
   } : null;
 
   // Breadcrumb schema
@@ -370,6 +385,15 @@ export default function TradeAsset() {
                 </div>
               </div>
             </div>
+          )}
+
+          {/* FAQ Section - Accordion with Schema Markup */}
+          {selectedAsset && assetFAQs.length > 0 && (
+            <AssetFAQSection 
+              assetName={selectedAsset.name}
+              assetSymbol={selectedAsset.symbol}
+              faqs={assetFAQs}
+            />
           )}
 
           {/* Related Assets Section - Internal Linking */}
