@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { RelatedAssets } from "@/components/RelatedAssets";
 import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
@@ -20,7 +22,8 @@ import {
   getAssetContent, 
   generateAssetMetaTitle, 
   generateAssetMetaDescription,
-  isInSeedSet
+  isInSeedSet,
+  getAssetColor
 } from "@/lib/assetContent";
 import { TrendingUp, BarChart3, Target, AlertTriangle } from "lucide-react";
 
@@ -127,8 +130,9 @@ export default function TradeAsset() {
   const canonicalUrl = selectedAsset 
     ? `https://tradinghq.vercel.app/trade/${selectedAsset.symbol.toLowerCase().replace('/', '-')}`
     : "https://tradinghq.vercel.app/trade";
+  const assetColor = selectedAsset ? getAssetColor(selectedAsset.id) : '#00FFFF';
 
-  // Generate JSON-LD schema for the asset page
+  // Generate JSON-LD schema for the asset page (WebPage + FAQPage for "How to practice trade")
   const assetSchema = selectedAsset ? {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -148,8 +152,64 @@ export default function TradeAsset() {
     }
   } : null;
 
+  // FAQ Schema for "How to practice trade [Asset]?" - eligible for People Also Ask
+  const faqSchema = selectedAsset && assetContent ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `How to practice trade ${selectedAsset.name}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `${assetContent.strategy} TradeHQ provides $10,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Simply select ${selectedAsset.symbol} from the asset list, analyze the chart, and place your first trade. Track your performance and learn from every trade.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `Is ${selectedAsset.symbol} trading risky for beginners?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `Yes, ${selectedAsset.type === 'crypto' ? 'cryptocurrency' : selectedAsset.type} trading carries risk. That's why we recommend practicing with a simulator like TradeHQ first. Learn to read charts, manage positions, and develop strategies without risking real money. ${assetContent.whatIs.split('.')[0]}.`
+        }
+      }
+    ]
+  } : null;
+
+  // Breadcrumb schema
+  const breadcrumbSchema = selectedAsset ? {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://tradinghq.vercel.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Trade",
+        "item": "https://tradinghq.vercel.app/trade"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": selectedAsset.name,
+        "item": canonicalUrl
+      }
+    ]
+  } : null;
+
   // Only render SEO content blocks for seed assets
   const showSeoBlocks = selectedAsset && isInSeedSet(selectedAsset.id);
+
+  // Breadcrumb items
+  const breadcrumbItems = selectedAsset ? [
+    { label: "Trade", href: "/trade" },
+    { label: selectedAsset.name }
+  ] : [];
 
   return (
     <>
@@ -157,15 +217,42 @@ export default function TradeAsset() {
         <title>{metaTitle}</title>
         <meta name="description" content={metaDescription} />
         <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
         <meta property="og:title" content={metaTitle} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content={`https://tradinghq.vercel.app/og/${selectedAsset?.symbol.toLowerCase().replace('/', '-') || 'default'}.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="TradeHQ" />
+        
+        {/* Twitter Card - summary_large_image */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@tradehq" />
+        <meta name="twitter:creator" content="@tradehq" />
         <meta name="twitter:title" content={metaTitle} />
         <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content={`https://tradinghq.vercel.app/og/${selectedAsset?.symbol.toLowerCase().replace('/', '-') || 'default'}.png`} />
+        
+        {/* Theme color matching asset */}
+        <meta name="theme-color" content={assetColor} />
+        
+        {/* Structured Data */}
         {assetSchema && (
           <script type="application/ld+json">
             {JSON.stringify(assetSchema)}
+          </script>
+        )}
+        {faqSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
+        {breadcrumbSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(breadcrumbSchema)}
           </script>
         )}
       </Helmet>
@@ -179,6 +266,9 @@ export default function TradeAsset() {
 
         {/* Main Content */}
         <div className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl">
+          {/* Breadcrumb Navigation */}
+          {selectedAsset && <Breadcrumb items={breadcrumbItems} />}
+          
           {/* Section 1: Asset Search & Portfolio Bar */}
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
             <AssetSearchDropdown
@@ -235,14 +325,14 @@ export default function TradeAsset() {
                 </p>
               </div>
 
-              {/* Block B: Simulator Strategy */}
+              {/* Block B: Simulator Strategy - Formatted for FAQ eligibility */}
               <div className="glass-panel border border-white/10 rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
                     <Target className="w-5 h-5 text-accent" />
                   </div>
                   <h2 className="text-lg font-semibold text-foreground">
-                    Simulator Strategy
+                    How to Practice Trade {selectedAsset.symbol}
                   </h2>
                 </div>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -281,6 +371,9 @@ export default function TradeAsset() {
               </div>
             </div>
           )}
+
+          {/* Related Assets Section - Internal Linking */}
+          {selectedAsset && <RelatedAssets currentAsset={selectedAsset} />}
 
           {/* Legal Disclaimer */}
           <div className="mt-8 p-4 rounded-xl bg-muted/30 border border-white/5">

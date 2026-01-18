@@ -4,6 +4,13 @@
 - Verified ownership of https://tradinghq.vercel.app/ in Google Search Console
 - Site verification code already added: `I9Z6Vo-t00zuqHRrR_RFgAZ14hsA5YzA0gHeK2POL-I`
 
+## New in v2.0
+- ✅ Breadcrumb navigation on all /trade/{symbol} pages
+- ✅ FAQPage schema for "How to practice trade [Asset]?" queries
+- ✅ Twitter Card (summary_large_image) metadata
+- ✅ Related Assets internal linking section
+- ✅ Asset-specific theme colors for OG previews
+
 ## Step 1: Submit Sitemap
 
 1. Go to [Google Search Console](https://search.google.com/search-console/)

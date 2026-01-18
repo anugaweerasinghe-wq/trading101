@@ -6,11 +6,40 @@ https://tradinghq.vercel.app/learn-trading-guide,FAQPage,Pending,2026-01-18,8 co
 https://tradinghq.vercel.app/learn-trading-guide,HowTo,Pending,2026-01-18,Step-by-step guide
 https://tradinghq.vercel.app/learn-trading-guide,Article,Pending,2026-01-18,Educational content
 https://tradinghq.vercel.app/trade/btc,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/btc,FAQPage,Pending,2026-01-18,"How to practice trade Bitcoin?" + risk question
+https://tradinghq.vercel.app/trade/btc,BreadcrumbList,Pending,2026-01-18,Home > Trade > Bitcoin
 https://tradinghq.vercel.app/trade/eth,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/eth,FAQPage,Pending,2026-01-18,"How to practice trade Ethereum?" + risk question
+https://tradinghq.vercel.app/trade/eth,BreadcrumbList,Pending,2026-01-18,Home > Trade > Ethereum
 https://tradinghq.vercel.app/trade/sol,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/sol,FAQPage,Pending,2026-01-18,"How to practice trade Solana?" + risk question
 https://tradinghq.vercel.app/trade/aapl,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/aapl,FAQPage,Pending,2026-01-18,"How to practice trade Apple?" + risk question
+https://tradinghq.vercel.app/trade/aapl,BreadcrumbList,Pending,2026-01-18,Home > Trade > Apple Inc.
 https://tradinghq.vercel.app/trade/msft,WebPage,Pending,2026-01-18,FinancialProduct entity
 https://tradinghq.vercel.app/trade/nvda,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/nvda,FAQPage,Pending,2026-01-18,"How to practice trade NVIDIA?" + risk question
 https://tradinghq.vercel.app/trade/tsla,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/tsla,FAQPage,Pending,2026-01-18,"How to practice trade Tesla?" + risk question
 https://tradinghq.vercel.app/trade/spy,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/spy,FAQPage,Pending,2026-01-18,"How to practice trade SPY?" + risk question
 https://tradinghq.vercel.app/trade/xau,WebPage,Pending,2026-01-18,FinancialProduct entity
+https://tradinghq.vercel.app/trade/xau,FAQPage,Pending,2026-01-18,"How to practice trade Gold?" + risk question
+
+VALIDATION INSTRUCTIONS:
+1. Use Google Rich Results Test: https://search.google.com/test/rich-results
+2. Enter each URL and verify schema detection
+3. Update "Validation Status" to "Valid" or "Error"
+4. For errors, add details to "Notes" column
+5. Re-validate after any schema changes
+
+EXPECTED RICH RESULTS:
+- FAQPage: Eligible for "People Also Ask" boxes
+- BreadcrumbList: Shows path in search results
+- WebPage + FinancialProduct: Enhanced listing appearance
+
+NEW ADDITIONS (v2):
+- Each asset page now includes FAQPage schema with "How to practice trade [Asset]?" question
+- BreadcrumbList schema added to all asset pages
+- Twitter Card (summary_large_image) metadata on all pages
+- Asset-specific theme-color meta tags using brand colors

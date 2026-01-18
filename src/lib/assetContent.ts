@@ -8,6 +8,37 @@ interface AssetContent {
   keywords: string[];
 }
 
+// Asset brand colors for OG images
+export const ASSET_COLORS: Record<string, string> = {
+  btc: '#F7931A',    // Bitcoin Orange
+  eth: '#627EEA',    // Ethereum Purple
+  sol: '#14F195',    // Solana Green
+  bnb: '#F3BA2F',    // BNB Yellow
+  xrp: '#23292F',    // XRP Dark
+  ada: '#0033AD',    // Cardano Blue
+  doge: '#C2A633',   // Doge Gold
+  avax: '#E84142',   // Avalanche Red
+  dot: '#E6007A',    // Polkadot Pink
+  matic: '#8247E5',  // Polygon Purple
+  link: '#2A5ADA',   // Chainlink Blue
+  ltc: '#345D9D',    // Litecoin Blue
+  aapl: '#A2AAAD',   // Apple Silver
+  msft: '#00A4EF',   // Microsoft Blue
+  googl: '#4285F4',  // Google Blue
+  amzn: '#FF9900',   // Amazon Orange
+  nvda: '#76B900',   // NVIDIA Green
+  tsla: '#CC0000',   // Tesla Red
+  meta: '#0668E1',   // Meta Blue
+  nflx: '#E50914',   // Netflix Red
+  amd: '#ED1C24',    // AMD Red
+  spy: '#00A651',    // SPY Green
+  qqq: '#00B4D8',    // QQQ Cyan
+  gold: '#FFD700',   // Gold
+  oil: '#1A1A1A',    // Oil Black
+  eurusd: '#003399', // EU Blue
+  gbpusd: '#00247D', // UK Blue
+};
+
 // Top 25 seed assets for initial rollout
 export const SEED_ASSET_IDS = [
   'btc', 'eth', 'sol', 'bnb', 'xrp', 'ada', 'doge', 'avax', 'dot', 'matic', 'link', 'ltc',
@@ -314,4 +345,9 @@ export function getAssetContent(assetId: string): AssetContent {
 // Check if asset is in seed set
 export function isInSeedSet(assetId: string): boolean {
   return SEED_ASSET_IDS.includes(assetId);
+}
+
+// Get asset brand color for OG images
+export function getAssetColor(assetId: string): string {
+  return ASSET_COLORS[assetId] || '#00FFFF'; // Default to cyan
 }
