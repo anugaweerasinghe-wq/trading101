@@ -44,48 +44,122 @@
     <priority>0.85</priority>
   </url>
 
-  <!-- Seed Asset Pages (Top 25) - Cryptocurrencies -->
+  <!-- PRIORITY 15 ASSETS - High Authority Pages -->
+  
+  <!-- Cryptocurrencies (5) -->
   <url>
     <loc>https://tradinghq.vercel.app/trade/btc</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://tradinghq.vercel.app/trade/eth</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://tradinghq.vercel.app/trade/sol</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/bnb</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://tradinghq.vercel.app/trade/xrp</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/bnb</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Technology Stocks (7) -->
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/nvda</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/aapl</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/msft</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/amzn</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/googl</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/meta</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/nflx</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- ETF (1) -->
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/spy</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- Commodity (1) -->
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/oil</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Forex (1) -->
+  <url>
+    <loc>https://tradinghq.vercel.app/trade/gbp-usd</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- ADDITIONAL SEED ASSETS -->
+  
+  <!-- Cryptocurrencies -->
   <url>
     <loc>https://tradinghq.vercel.app/trade/ada</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://tradinghq.vercel.app/trade/doge</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://tradinghq.vercel.app/trade/avax</loc>
@@ -118,57 +192,15 @@
     <priority>0.75</priority>
   </url>
 
-  <!-- Seed Asset Pages - Stocks -->
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/aapl</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/msft</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/googl</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/amzn</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/nvda</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
-  </url>
+  <!-- Stocks -->
   <url>
     <loc>https://tradinghq.vercel.app/trade/tsla</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/meta</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
 
-  <!-- Seed Asset Pages - ETFs -->
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/spy</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
-  </url>
+  <!-- ETFs -->
   <url>
     <loc>https://tradinghq.vercel.app/trade/qqq</loc>
     <lastmod>2026-01-18</lastmod>
@@ -176,31 +208,19 @@
     <priority>0.85</priority>
   </url>
 
-  <!-- Seed Asset Pages - Forex -->
+  <!-- Forex -->
   <url>
     <loc>https://tradinghq.vercel.app/trade/eur-usd</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/gbp-usd</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.75</priority>
+    <priority>0.80</priority>
   </url>
 
-  <!-- Seed Asset Pages - Commodities -->
+  <!-- Commodities -->
   <url>
-    <loc>https://tradinghq.vercel.app/trade/xau</loc>
+    <loc>https://tradinghq.vercel.app/trade/gold</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://tradinghq.vercel.app/trade/wti</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
   </url>
 </urlset>
