@@ -6,6 +6,8 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { RelatedAssets } from "@/components/RelatedAssets";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
 import { AssetIntelligence } from "@/components/AssetIntelligence";
+import { AIReadySummary } from "@/components/AIReadySummary";
+import { TradingStrengthMeter } from "@/components/TradingStrengthMeter";
 import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
@@ -333,6 +335,11 @@ export default function TradeAsset() {
           {/* Breadcrumb Navigation */}
           {selectedAsset && <Breadcrumb items={breadcrumbItems} />}
           
+          {/* AI-Ready Summary for GEO (Generative Engine Optimization) */}
+          {selectedAsset && showSeoBlocks && (
+            <AIReadySummary asset={selectedAsset} />
+          )}
+          
           {/* Section 1: Asset Search & Portfolio Bar */}
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
             <AssetSearchDropdown
@@ -348,7 +355,7 @@ export default function TradeAsset() {
             </div>
           </div>
 
-          {/* Section 2: Chart + Order Panel */}
+          {/* Section 2: Chart + Order Panel + Strength Meter */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Chart - Takes 2 columns on desktop */}
             <div className="lg:col-span-2">
@@ -361,13 +368,18 @@ export default function TradeAsset() {
               </div>
             </div>
 
-            {/* Order Panel - Hidden on mobile, shown on desktop */}
-            <div className="hidden lg:block">
+            {/* Order Panel + Strength Meter - Hidden on mobile, shown on desktop */}
+            <div className="hidden lg:flex lg:flex-col gap-4">
               <MinimalistOrderPanel
                 asset={selectedAsset}
                 availableCash={portfolio.cash}
                 onTrade={handleTrade}
               />
+              
+              {/* Trading Strength Meter */}
+              {selectedAsset && showSeoBlocks && (
+                <TradingStrengthMeter asset={selectedAsset} />
+              )}
             </div>
           </div>
 

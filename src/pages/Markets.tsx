@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { TradingSidebar } from "@/components/trading/TradingSidebar";
+import { MarketClusters } from "@/components/MarketClusters";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { simulateAssetPrices } from "@/lib/priceSimulation";
@@ -85,21 +86,21 @@ export default function Markets() {
   return (
     <>
       <Helmet>
-        <title>Live Market Prices — Stocks, Crypto, ETFs & Forex | TradeHQ 2026</title>
-        <meta name="description" content="📈 Real-time prices for 150+ assets! Track stocks, Bitcoin, ETFs & forex. See top gainers, losers & trends. One-click trading. Free access →" />
+        <title>2026 Market Strategy Guide | Stocks, Crypto, ETFs & Forex | TradeHQ</title>
+        <meta name="description" content="📈 2026 trading strategy for 150+ assets! AI Revolution stocks, Digital Gold crypto, Blue Chip giants. Practice professional positioning risk-free →" />
         <link rel="canonical" href="https://tradinghq.vercel.app/markets" />
       </Helmet>
       <div className="min-h-screen bg-background flex">
         <TradingSidebar />
 
       <div className="flex-1 ml-16 p-3 md:p-6 animate-fade-in">
-        <div className="max-w-7xl mx-auto space-y-4 md:space-y-6">
-          {/* Header */}
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Header with unique H1 */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 transition-all duration-300">
             <div>
-              <h1 className="text-xl md:text-3xl font-bold">Markets</h1>
+              <h1 className="text-xl md:text-3xl font-bold">2026 Market Strategy Hub</h1>
               <p className="text-muted-foreground text-xs md:text-sm">
-                Real-time market overview • {assets.length} assets
+                Practice professional positioning • {assets.length} assets • Real-time simulation
               </p>
             </div>
             <div className="relative w-full md:w-72 transition-all duration-300">
@@ -112,6 +113,9 @@ export default function Markets() {
               />
             </div>
           </div>
+
+          {/* Topical Clusters + State of the Market 2026 Intro */}
+          <MarketClusters assets={assets} />
 
           {/* Top Movers - Larger on mobile */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">

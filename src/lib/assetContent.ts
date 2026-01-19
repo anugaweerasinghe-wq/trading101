@@ -679,22 +679,42 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   }
 };
 
-// Custom CTR-optimized titles for priority assets (< 60 chars)
+// Custom CTR-optimized titles for priority assets (< 60 chars) - 2026 Strategy positioning
 const CUSTOM_META_TITLES: Record<string, string> = {
-  btc: "Practice Bitcoin Trading Like a Pro | $10K Free Demo 2026",
-  eth: "Trade Ethereum Risk-Free | Pro Simulator | No Signup",
-  nvda: "NVIDIA Stock Practice | AI Boom Training | $10K Demo",
-  aapl: "Apple Stock Simulator | Pro Trading Practice 2026",
-  sol: "Solana Trading Practice | High-Speed Crypto Demo"
+  btc: "Bitcoin 2026 Strategy | Practice Pro Trading | $10K Demo",
+  eth: "Ethereum 2026 Strategy | DeFi Simulator | No Signup",
+  nvda: "NVIDIA 2026 Strategy | AI Stock Practice | Free Demo",
+  aapl: "Apple 2026 Strategy | Stock Trading Practice | $10K",
+  sol: "Solana 2026 Strategy | Speed Trading Practice | Free",
+  msft: "Microsoft 2026 Strategy | Cloud Stock Practice | Demo",
+  googl: "Google 2026 Strategy | AI Search Stock Practice",
+  amzn: "Amazon 2026 Strategy | E-Commerce Stock Practice",
+  meta: "Meta 2026 Strategy | Social Media Stock Practice",
+  xrp: "XRP 2026 Strategy | Ripple Trading Practice | Free",
+  bnb: "BNB 2026 Strategy | Binance Coin Practice | $10K",
+  spy: "SPY 2026 Strategy | S&P 500 ETF Practice | Free",
+  gold: "Gold 2026 Strategy | Safe Haven Practice | Demo",
+  oil: "Oil 2026 Strategy | Commodity Trading Practice",
+  gbpusd: "GBP/USD 2026 Strategy | Forex Practice | Free Demo"
 };
 
 // Custom CTR-optimized descriptions for priority assets (120-155 chars)
 const CUSTOM_META_DESCRIPTIONS: Record<string, string> = {
-  btc: "🚀 Practice professional Bitcoin positioning with $10K virtual funds. Real charts, AI mentor, zero risk. Master BTC before going live. No signup!",
-  eth: "📈 Ethereum trading practice for serious traders. DeFi charts, gas analysis, pro tools. $10K demo cash—build confidence before real trades.",
-  nvda: "🤖 Master NVIDIA trades during the AI revolution. Practice professional positioning on NVDA with real-time data & $10K virtual cash. No signup!",
-  aapl: "🍎 Apple stock practice trading with pro-level tools. Earnings plays, trend analysis, $10K demo. Practice professional positioning risk-free!",
-  sol: "⚡ Solana's speed demands precision. Practice professional positioning on SOL with instant execution, $10K virtual funds & AI coaching. Free!"
+  btc: "🚀 Practice professional Bitcoin positioning with $10K virtual funds. 2026 strategy guide, real charts, AI mentor. Master BTC before going live!",
+  eth: "📈 Ethereum 2026 trading strategy for serious traders. DeFi charts, gas analysis, pro tools. $10K demo cash—build confidence before real trades.",
+  nvda: "🤖 Master NVIDIA's 2026 AI boom strategy. Practice professional positioning on NVDA with real-time data & $10K virtual cash. No signup needed!",
+  aapl: "🍎 Apple 2026 strategy practice with pro-level tools. Earnings plays, trend analysis, $10K demo. Practice professional positioning risk-free!",
+  sol: "⚡ Solana 2026 strategy demands precision. Practice professional positioning on SOL with instant execution, $10K virtual funds & AI coaching!",
+  msft: "☁️ Microsoft 2026 cloud strategy practice. Azure growth plays, AI integration trends. $10K virtual capital for risk-free professional training.",
+  googl: "🔍 Google 2026 AI strategy practice. Search dominance + Gemini integration plays. $10K demo for professional positioning without risk.",
+  amzn: "📦 Amazon 2026 strategy: AWS + retail dominance. Practice Prime Day plays, earnings timing with $10K virtual funds. Professional simulation!",
+  meta: "👓 Meta 2026 strategy: AI ads + Reality Labs. Practice professional positioning on META with $10K demo cash. No signup required!",
+  xrp: "💸 XRP 2026 cross-border strategy. Practice Ripple regulatory plays and institutional adoption with $10K virtual funds. Free simulator!",
+  bnb: "🔶 BNB 2026 exchange token strategy. Practice Binance ecosystem plays with $10K demo. Professional positioning, zero risk!",
+  spy: "📊 SPY 2026 strategy: S&P 500 index mastery. Practice market timing, sector rotation with $10K virtual capital. Professional ETF training!",
+  gold: "🥇 Gold 2026 safe-haven strategy. Practice inflation hedging, Fed policy plays with $10K demo. Professional commodity positioning!",
+  oil: "🛢️ Oil 2026 energy strategy. Practice OPEC plays, inventory trading with $10K virtual funds. Professional commodity simulation!",
+  gbpusd: "🇬🇧 GBP/USD 2026 forex strategy. Practice BOE vs Fed policy divergence with $10K demo. Professional currency positioning!"
 };
 
 // Generate meta title (< 60 chars) - Custom for top 5, fallback for others
