@@ -679,8 +679,32 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   }
 };
 
-// Generate meta title (< 60 chars)
+// Custom CTR-optimized titles for priority assets (< 60 chars)
+const CUSTOM_META_TITLES: Record<string, string> = {
+  btc: "Practice Bitcoin Trading Like a Pro | $10K Free Demo 2026",
+  eth: "Trade Ethereum Risk-Free | Pro Simulator | No Signup",
+  nvda: "NVIDIA Stock Practice | AI Boom Training | $10K Demo",
+  aapl: "Apple Stock Simulator | Pro Trading Practice 2026",
+  sol: "Solana Trading Practice | High-Speed Crypto Demo"
+};
+
+// Custom CTR-optimized descriptions for priority assets (120-155 chars)
+const CUSTOM_META_DESCRIPTIONS: Record<string, string> = {
+  btc: "🚀 Practice professional Bitcoin positioning with $10K virtual funds. Real charts, AI mentor, zero risk. Master BTC before going live. No signup!",
+  eth: "📈 Ethereum trading practice for serious traders. DeFi charts, gas analysis, pro tools. $10K demo cash—build confidence before real trades.",
+  nvda: "🤖 Master NVIDIA trades during the AI revolution. Practice professional positioning on NVDA with real-time data & $10K virtual cash. No signup!",
+  aapl: "🍎 Apple stock practice trading with pro-level tools. Earnings plays, trend analysis, $10K demo. Practice professional positioning risk-free!",
+  sol: "⚡ Solana's speed demands precision. Practice professional positioning on SOL with instant execution, $10K virtual funds & AI coaching. Free!"
+};
+
+// Generate meta title (< 60 chars) - Custom for top 5, fallback for others
 export function generateAssetMetaTitle(asset: Asset): string {
+  // Priority assets get custom CTR-optimized titles
+  if (CUSTOM_META_TITLES[asset.id]) {
+    return CUSTOM_META_TITLES[asset.id];
+  }
+  
+  // Fallback for other assets
   const title = `Practice Trading ${asset.name} (${asset.symbol}) | Free $10k Demo`;
   return title.length > 60 ? `Trade ${asset.symbol} | Free $10k Demo - TradeHQ` : title;
 }
@@ -704,14 +728,19 @@ export function truncateMetaDescription(text: string, maxLength: number = 155): 
   return text.slice(0, lastSpace) + '...';
 }
 
-// Generate meta description (120-155 chars, safely truncated)
+// Generate meta description (120-155 chars) - Custom for top 5, fallback for others
 export function generateAssetMetaDescription(asset: Asset): string {
+  // Priority assets get custom CTR-optimized descriptions
+  if (CUSTOM_META_DESCRIPTIONS[asset.id]) {
+    return CUSTOM_META_DESCRIPTIONS[asset.id];
+  }
+  
+  // Fallback for other assets
   const content = ASSET_CONTENT[asset.id];
   const typeLabel = asset.type === 'crypto' ? 'cryptocurrency' : asset.type;
   
   let description: string;
   if (content) {
-    // Use the whatIs description for richer meta tags
     description = `Practice ${asset.symbol} trading risk-free. ${content.whatIs} Start with $10K virtual cash now.`;
   } else {
     description = `Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $10K demo cash, real-time charts, and AI mentoring. No signup needed!`;
