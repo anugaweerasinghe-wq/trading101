@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
 import { PortfolioChart } from "@/components/PortfolioChart";
@@ -313,9 +314,49 @@ export default function Portfolio() {
           </div>
 
           {/* Trade History */}
-          <div>
+          <div className="mb-12">
             <TradeHistory trades={portfolio.trades} />
           </div>
+
+          {/* Internal Links Section for SEO */}
+          <Card className="p-6 bg-card/50 backdrop-blur-sm">
+            <h2 className="text-xl font-bold mb-4">🔥 Start Trading Top Assets</h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              Jump directly to our most popular trading simulations:
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to="/trade/btc"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                Bitcoin (BTC)
+              </Link>
+              <Link
+                to="/trade/eth"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                Ethereum (ETH)
+              </Link>
+              <Link
+                to="/trade/nvda"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                NVIDIA (NVDA)
+              </Link>
+              <Link
+                to="/trade/aapl"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                Apple (AAPL)
+              </Link>
+              <Link
+                to="/trade/sol"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                Solana (SOL)
+              </Link>
+            </div>
+          </Card>
         </div>
       </main>
 

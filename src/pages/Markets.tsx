@@ -260,6 +260,46 @@ export default function Markets() {
               </TabsContent>
             </Tabs>
           </div>
+
+          {/* Internal Links Section for SEO */}
+          <div className="bg-card rounded-xl border border-border p-4 md:p-6 mt-6">
+            <h2 className="font-semibold text-sm md:text-base mb-4">🔥 Most Traded Assets</h2>
+            <p className="text-xs text-muted-foreground mb-4">
+              Jump directly to our most popular trading simulations:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                to="/trade/btc"
+                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                Bitcoin (BTC)
+              </Link>
+              <Link
+                to="/trade/eth"
+                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                Ethereum (ETH)
+              </Link>
+              <Link
+                to="/trade/nvda"
+                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                NVIDIA (NVDA)
+              </Link>
+              <Link
+                to="/trade/aapl"
+                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                Apple (AAPL)
+              </Link>
+              <Link
+                to="/trade/sol"
+                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+              >
+                Solana (SOL)
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
