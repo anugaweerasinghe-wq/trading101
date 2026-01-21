@@ -1,10 +1,13 @@
 import { Asset } from "@/lib/types";
 import { getAssetContent, getCategoryIntro } from "@/lib/assetContent";
-import { BookOpen, Target, BarChart3, AlertTriangle, Loader2, Info } from "lucide-react";
+import { LiveMarketData } from "@/hooks/useLiveMarketData";
+import { BookOpen, Target, BarChart3, AlertTriangle, Loader2, Info, Wifi, WifiOff } from "lucide-react";
 
 interface AssetIntelligenceProps {
   asset: Asset;
   liveMarketCap?: string;
+  liveData?: LiveMarketData | null;
+  isLiveLoading?: boolean;
 }
 
 // Truncate meta description to 155 characters safely (no mid-sentence cuts)
@@ -28,24 +31,76 @@ export function truncateMetaDescription(text: string, maxLength: number = 155): 
   return text.slice(0, lastSpace) + '...';
 }
 
-export function AssetIntelligence({ asset, liveMarketCap }: AssetIntelligenceProps) {
+// Format large numbers for display
+function formatLargeNumber(num: number): string {
+  if (num >= 1e12) return `$${(num / 1e12).toFixed(2)}T`;
+  if (num >= 1e9) return `$${(num / 1e9).toFixed(2)}B`;
+  if (num >= 1e6) return `$${(num / 1e6).toFixed(2)}M`;
+  if (num >= 1e3) return `$${(num / 1e3).toFixed(2)}K`;
+  return `$${num.toFixed(2)}`;
+}
+
+// Format volume for display
+function formatVolume(num: number): string {
+  if (num >= 1e12) return `${(num / 1e12).toFixed(2)}T`;
+  if (num >= 1e9) return `${(num / 1e9).toFixed(2)}B`;
+  if (num >= 1e6) return `${(num / 1e6).toFixed(1)}M`;
+  if (num >= 1e3) return `${(num / 1e3).toFixed(1)}K`;
+  return num.toFixed(0);
+}
+
+export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoading }: AssetIntelligenceProps) {
   const content = getAssetContent(asset.id);
   const categoryIntro = getCategoryIntro(asset.type);
   
   if (!content) return null;
 
   const stats = content.stats;
-  const isLiveData = stats?.marketCap === "live_sourced_at_runtime";
+  const isLiveDataAvailable = liveData?.source === 'live';
+  
+  // Use live data if available, otherwise fall back to asset data
+  const displayPrice = liveData?.price ?? asset.price;
+  const displayChange = liveData?.changePercent24h ?? asset.changePercent;
+  const displayHigh24h = liveData?.high24h;
+  const displayLow24h = liveData?.low24h;
+  const displayVolume = liveData?.volume24h;
+  const displayMarketCap = liveData?.marketCap;
 
   return (
     <section 
       className="mt-8"
       aria-label={`${asset.name} Asset Intelligence`}
     >
-      <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-        <BookOpen className="w-5 h-5 text-primary" />
-        Asset Intelligence
-      </h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
+          <BookOpen className="w-5 h-5 text-primary" />
+          Asset Intelligence
+        </h2>
+        
+        {/* Live data indicator */}
+        <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+          isLiveDataAvailable 
+            ? 'bg-profit/20 text-profit' 
+            : 'bg-muted text-muted-foreground'
+        }`}>
+          {isLiveLoading ? (
+            <>
+              <Loader2 className="w-3 h-3 animate-spin" />
+              Updating...
+            </>
+          ) : isLiveDataAvailable ? (
+            <>
+              <Wifi className="w-3 h-3" />
+              Live Data
+            </>
+          ) : (
+            <>
+              <WifiOff className="w-3 h-3" />
+              Simulated
+            </>
+          )}
+        </div>
+      </div>
       
       {/* Category Intro - SEO Multiplier */}
       <div className="mb-6 p-4 rounded-xl bg-primary/5 border border-primary/10">
@@ -109,7 +164,7 @@ export function AssetIntelligence({ asset, liveMarketCap }: AssetIntelligencePro
           </div>
         </article>
 
-        {/* Column 3: Stats */}
+        {/* Column 3: Stats - Now with Live Data */}
         <article 
           className="glass-panel border border-white/10 rounded-2xl p-6"
           aria-labelledby={`stats-heading-${asset.id}`}
@@ -130,25 +185,71 @@ export function AssetIntelligence({ asset, liveMarketCap }: AssetIntelligencePro
             {/* Live Price */}
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground text-sm">Price</span>
-              <span className="text-foreground font-medium">
-                ${asset.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              <span className="text-foreground font-medium tabular-nums">
+                {isLiveLoading && !liveData ? (
+                  <span className="flex items-center gap-1.5 text-muted-foreground">
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  </span>
+                ) : (
+                  `$${displayPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                )}
               </span>
             </div>
             
             {/* 24h Change */}
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground text-sm">24h Change</span>
-              <span className={`font-medium ${asset.changePercent >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                {asset.changePercent >= 0 ? '+' : ''}{asset.changePercent.toFixed(2)}%
+              <span className={`font-medium tabular-nums ${displayChange >= 0 ? 'text-profit' : 'text-loss'}`}>
+                {isLiveLoading && !liveData ? (
+                  <span className="flex items-center gap-1.5 text-muted-foreground">
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  </span>
+                ) : (
+                  <>
+                    {displayChange >= 0 ? '+' : ''}{displayChange.toFixed(2)}%
+                  </>
+                )}
               </span>
             </div>
 
+            {/* 24h High - NEW LIVE DATA */}
+            {displayHigh24h && (
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground text-sm">24h High</span>
+                <span className="text-foreground font-medium tabular-nums">
+                  ${displayHigh24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
+              </div>
+            )}
+
+            {/* 24h Low - NEW LIVE DATA */}
+            {displayLow24h && (
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground text-sm">24h Low</span>
+                <span className="text-foreground font-medium tabular-nums">
+                  ${displayLow24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
+              </div>
+            )}
+
+            {/* 24h Volume - NEW LIVE DATA */}
+            {displayVolume && displayVolume > 0 && (
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground text-sm">24h Volume</span>
+                <span className="text-foreground font-medium tabular-nums">
+                  ${formatVolume(displayVolume)}
+                </span>
+              </div>
+            )}
+
             {/* Market Cap - Live or Static */}
-            {stats?.marketCap && (
+            {(displayMarketCap || stats?.marketCap) && (
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground text-sm">Market Cap</span>
-                <span className="text-foreground font-medium">
-                  {isLiveData ? (
+                <span className="text-foreground font-medium tabular-nums">
+                  {displayMarketCap ? (
+                    formatLargeNumber(displayMarketCap)
+                  ) : stats?.marketCap === "live_sourced_at_runtime" ? (
                     liveMarketCap ? (
                       liveMarketCap
                     ) : (
@@ -158,7 +259,7 @@ export function AssetIntelligence({ asset, liveMarketCap }: AssetIntelligencePro
                       </span>
                     )
                   ) : (
-                    stats.marketCap
+                    stats?.marketCap
                   )}
                 </span>
               </div>
@@ -204,18 +305,11 @@ export function AssetIntelligence({ asset, liveMarketCap }: AssetIntelligencePro
               </div>
             )}
             
-            {/* Avg Daily Volume (for forex) */}
-            {stats?.avgDailyVolume && (
+            {/* Avg Daily Volume (for forex) - fallback to static */}
+            {stats?.avgDailyVolume && stats.avgDailyVolume !== "live_sourced_at_runtime" && !displayVolume && (
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground text-sm">Avg Volume</span>
-                <span className="text-foreground font-medium">
-                  {stats.avgDailyVolume === "live_sourced_at_runtime" ? (
-                    <span className="flex items-center gap-1.5 text-muted-foreground">
-                      <Loader2 className="w-3 h-3 animate-spin" />
-                      Loading...
-                    </span>
-                  ) : stats.avgDailyVolume}
-                </span>
+                <span className="text-foreground font-medium">{stats.avgDailyVolume}</span>
               </div>
             )}
             
@@ -259,13 +353,17 @@ export function AssetIntelligence({ asset, liveMarketCap }: AssetIntelligencePro
               </div>
             )}
             
-            {/* Source */}
-            {stats?.source && (
-              <div className="flex justify-between items-center pt-2 border-t border-white/5">
-                <span className="text-muted-foreground/60 text-xs">Source</span>
-                <span className="text-muted-foreground/60 text-xs">{stats.source}</span>
-              </div>
-            )}
+            {/* Source & Last Updated */}
+            <div className="flex justify-between items-center pt-2 border-t border-white/5">
+              <span className="text-muted-foreground/60 text-xs">
+                {isLiveDataAvailable ? 'CoinGecko / Alpha Vantage' : stats?.source || 'Simulated'}
+              </span>
+              {liveData?.lastUpdated && (
+                <span className="text-muted-foreground/60 text-xs">
+                  {new Date(liveData.lastUpdated).toLocaleTimeString()}
+                </span>
+              )}
+            </div>
           </div>
         </article>
       </div>

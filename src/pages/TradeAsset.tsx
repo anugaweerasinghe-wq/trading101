@@ -22,6 +22,7 @@ import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfoli
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
 import { simulateAssetPrices, setLastUpdateTime } from "@/lib/priceSimulation";
 import { useToast } from "@/hooks/use-toast";
+import { useLiveMarketData } from "@/hooks/useLiveMarketData";
 import { 
   getAssetContent, 
   generateAssetMetaTitle, 
@@ -31,6 +32,12 @@ import {
   getAssetFAQs
 } from "@/lib/assetContent";
 import { AlertTriangle } from "lucide-react";
+
+// Wrapper component to provide live data to AssetIntelligence
+function AssetIntelligenceWithLiveData({ asset }: { asset: Asset }) {
+  const { liveData, isLoading } = useLiveMarketData(asset, { refreshInterval: 30000 });
+  return <AssetIntelligence asset={asset} liveData={liveData} isLiveLoading={isLoading} />;
+}
 
 export default function TradeAsset() {
   const { symbol } = useParams<{ symbol: string }>();
@@ -383,9 +390,9 @@ export default function TradeAsset() {
             </div>
           </div>
 
-          {/* Asset Intelligence Section - Professional 3-column grid */}
+          {/* Asset Intelligence Section - Now with Live Data */}
           {showSeoBlocks && selectedAsset && (
-            <AssetIntelligence asset={selectedAsset} />
+            <AssetIntelligenceWithLiveData asset={selectedAsset} />
           )}
 
           {/* FAQ Section - Accordion with Schema Markup */}
