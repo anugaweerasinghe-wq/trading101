@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.analyze-trading-psychology]
 verify_jwt = false
+
+[functions.live-market-data]
+verify_jwt = false

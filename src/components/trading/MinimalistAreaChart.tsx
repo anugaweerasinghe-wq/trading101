@@ -1,5 +1,6 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Asset } from "@/lib/types";
+import { useLiveMarketData, useLiveCandleData, CandleData } from "@/hooks/useLiveMarketData";
 import {
   AreaChart,
   Area,
@@ -8,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { Wifi, WifiOff, RefreshCw } from "lucide-react";
 
 interface MinimalistAreaChartProps {
   asset: Asset;
@@ -19,6 +21,16 @@ interface ChartDataPoint {
   timestamp: number;
 }
 
+// Convert candle data to chart points
+function candlesToChartData(candles: CandleData[]): ChartDataPoint[] {
+  return candles.map(candle => ({
+    time: new Date(candle.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    price: candle.close,
+    timestamp: new Date(candle.time).getTime(),
+  }));
+}
+
+// Generate fallback simulated data
 function generateChartData(basePrice: number, count: number = 50): ChartDataPoint[] {
   const data: ChartDataPoint[] = [];
   let price = basePrice * (0.95 + Math.random() * 0.1);
@@ -41,46 +53,80 @@ function generateChartData(basePrice: number, count: number = 50): ChartDataPoin
 }
 
 export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
-  const [data, setData] = useState<ChartDataPoint[]>(() => 
-    generateChartData(asset.price)
-  );
   const [timeframe, setTimeframe] = useState<'1H' | '4H' | '1D' | '1W'>('1H');
+  const [fallbackData, setFallbackData] = useState<ChartDataPoint[]>([]);
+  const simulationInterval = useRef<NodeJS.Timeout | null>(null);
+  
+  // Live market data hooks
+  const { liveData, isLive, refetch: refetchQuote } = useLiveMarketData(asset, {
+    refreshInterval: 30000, // 30 seconds
+    enabled: true,
+  });
+  
+  const { candles, isLoading: candlesLoading, refetch: refetchCandles } = useLiveCandleData(asset, {
+    refreshInterval: 60000, // 1 minute for candle updates
+    enabled: true,
+  });
 
-  // Update chart with new price data
+  // Generate initial fallback data
   useEffect(() => {
-    const interval = setInterval(() => {
-      setData(prev => {
-        const newData = [...prev.slice(1)];
-        const lastPrice = newData[newData.length - 1]?.price || asset.price;
-        const change = (Math.random() - 0.48) * (asset.price * 0.005);
-        const newPrice = Math.max(lastPrice + change, asset.price * 0.8);
-        const now = Date.now();
-        
-        newData.push({
-          time: new Date(now).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          price: Number(newPrice.toFixed(2)),
-          timestamp: now,
-        });
-        return newData;
-      });
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [asset.price]);
-
-  // Reset data when asset changes
-  useEffect(() => {
-    setData(generateChartData(asset.price));
+    setFallbackData(generateChartData(asset.price));
   }, [asset.id]);
 
-  const { minPrice, maxPrice, priceChange, priceChangePercent, isPositive } = useMemo(() => {
-    const prices = data.map(d => d.price);
+  // Real-time simulation when no live candles available
+  useEffect(() => {
+    if (candles.length === 0) {
+      simulationInterval.current = setInterval(() => {
+        setFallbackData(prev => {
+          const newData = [...prev.slice(1)];
+          const lastPrice = newData[newData.length - 1]?.price || asset.price;
+          const change = (Math.random() - 0.48) * (asset.price * 0.005);
+          const newPrice = Math.max(lastPrice + change, asset.price * 0.8);
+          const now = Date.now();
+          
+          newData.push({
+            time: new Date(now).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            price: Number(newPrice.toFixed(2)),
+            timestamp: now,
+          });
+          return newData;
+        });
+      }, 3000);
+
+      return () => {
+        if (simulationInterval.current) {
+          clearInterval(simulationInterval.current);
+        }
+      };
+    } else {
+      // Clear simulation when live data available
+      if (simulationInterval.current) {
+        clearInterval(simulationInterval.current);
+        simulationInterval.current = null;
+      }
+    }
+  }, [candles.length, asset.price]);
+
+  // Use live candles if available, otherwise fallback
+  const chartData = useMemo(() => {
+    if (candles.length > 0) {
+      return candlesToChartData(candles);
+    }
+    return fallbackData;
+  }, [candles, fallbackData]);
+
+  // Calculate price metrics
+  const { minPrice, maxPrice, priceChange, priceChangePercent, isPositive, currentPrice } = useMemo(() => {
+    const prices = chartData.map(d => d.price);
     const min = Math.min(...prices);
     const max = Math.max(...prices);
-    const first = data[0]?.price || 0;
-    const last = data[data.length - 1]?.price || 0;
-    const change = last - first;
-    const changePercent = first > 0 ? (change / first) * 100 : 0;
+    const first = chartData[0]?.price || 0;
+    const last = chartData[chartData.length - 1]?.price || 0;
+    
+    // Use live data if available, otherwise calculate from chart
+    const livePrice = liveData?.price || last;
+    const change = liveData?.change24h ?? (last - first);
+    const changePercent = liveData?.changePercent24h ?? (first > 0 ? (change / first) * 100 : 0);
     
     return {
       minPrice: min,
@@ -88,10 +134,16 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
       priceChange: change,
       priceChangePercent: changePercent,
       isPositive: change >= 0,
+      currentPrice: livePrice,
     };
-  }, [data]);
+  }, [chartData, liveData]);
 
   const padding = (maxPrice - minPrice) * 0.1 || 1;
+
+  const handleRefresh = () => {
+    refetchQuote();
+    refetchCandles();
+  };
 
   return (
     <div className="h-full flex flex-col">
@@ -102,18 +154,47 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
             <span className="text-lg font-bold text-primary">{asset.symbol.charAt(0)}</span>
           </div>
           <div>
-            <h2 className="text-xl font-semibold">{asset.symbol}</h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-semibold">{asset.symbol}</h2>
+              {/* Live indicator */}
+              <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                isLive 
+                  ? 'bg-profit/20 text-profit' 
+                  : 'bg-muted text-muted-foreground'
+              }`}>
+                {isLive ? (
+                  <>
+                    <Wifi className="w-3 h-3" />
+                    LIVE
+                  </>
+                ) : (
+                  <>
+                    <WifiOff className="w-3 h-3" />
+                    SIM
+                  </>
+                )}
+              </div>
+            </div>
             <p className="text-sm text-muted-foreground">{asset.name}</p>
           </div>
         </div>
         
-        <div className="text-right">
-          <p className="text-2xl font-bold tabular-nums">
-            ${data[data.length - 1]?.price.toLocaleString() || asset.price.toLocaleString()}
-          </p>
-          <p className={`text-sm font-medium tabular-nums ${isPositive ? 'text-profit' : 'text-loss'}`}>
-            {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({isPositive ? '+' : ''}{priceChangePercent.toFixed(2)}%)
-          </p>
+        <div className="text-right flex items-start gap-2">
+          <div>
+            <p className="text-2xl font-bold tabular-nums">
+              ${currentPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </p>
+            <p className={`text-sm font-medium tabular-nums ${isPositive ? 'text-profit' : 'text-loss'}`}>
+              {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({isPositive ? '+' : ''}{priceChangePercent.toFixed(2)}%)
+            </p>
+          </div>
+          <button
+            onClick={handleRefresh}
+            className="p-1.5 rounded-lg hover:bg-muted/50 transition-colors text-muted-foreground hover:text-foreground"
+            title="Refresh data"
+          >
+            <RefreshCw className={`w-4 h-4 ${candlesLoading ? 'animate-spin' : ''}`} />
+          </button>
         </div>
       </div>
 
@@ -137,11 +218,15 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
       {/* Chart */}
       <div className="flex-1 min-h-0 px-2">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+          <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="hsl(152, 60%, 42%)" stopOpacity={0.3} />
                 <stop offset="100%" stopColor="hsl(152, 60%, 42%)" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="priceGradientLoss" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="hsl(0, 70%, 50%)" stopOpacity={0.3} />
+                <stop offset="100%" stopColor="hsl(0, 70%, 50%)" stopOpacity={0} />
               </linearGradient>
             </defs>
             
@@ -169,25 +254,35 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
                 boxShadow: '0 4px 24px -6px hsl(0 0% 0% / 0.6)',
               }}
               labelStyle={{ color: 'hsl(210, 15%, 55%)' }}
-              itemStyle={{ color: 'hsl(152, 60%, 42%)' }}
+              itemStyle={{ color: isPositive ? 'hsl(152, 60%, 42%)' : 'hsl(0, 70%, 50%)' }}
               formatter={(value: number) => [`$${value.toLocaleString()}`, 'Price']}
             />
             <Area
               type="monotone"
               dataKey="price"
-              stroke="hsl(152, 60%, 50%)"
+              stroke={isPositive ? 'hsl(152, 60%, 50%)' : 'hsl(0, 70%, 55%)'}
               strokeWidth={2}
-              fill="url(#priceGradient)"
+              fill={isPositive ? 'url(#priceGradient)' : 'url(#priceGradientLoss)'}
               dot={false}
               activeDot={{
                 r: 4,
-                fill: 'hsl(152, 60%, 50%)',
+                fill: isPositive ? 'hsl(152, 60%, 50%)' : 'hsl(0, 70%, 55%)',
                 stroke: 'hsl(0, 0%, 7%)',
                 strokeWidth: 2,
               }}
             />
           </AreaChart>
         </ResponsiveContainer>
+      </div>
+
+      {/* Footer with data source info */}
+      <div className="px-4 pb-2 flex items-center justify-between text-[10px] text-muted-foreground">
+        <span>
+          {isLive ? 'Data: CoinGecko / Alpha Vantage' : 'Simulated market data'}
+        </span>
+        <span>
+          1-min intervals • Auto-refresh 30s
+        </span>
       </div>
     </div>
   );
