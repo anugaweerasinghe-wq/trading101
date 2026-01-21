@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Asset } from '@/lib/types';
-import { supabase } from '@/integrations/supabase/client';
 
 export interface LiveMarketData {
   price: number;
@@ -62,12 +61,7 @@ export function useLiveMarketData(
     setError(null);
 
     try {
-      const { data, error: fnError } = await supabase.functions.invoke('live-market-data', {
-        body: null,
-        headers: {},
-      });
-
-      // Use URL params approach for GET-like behavior
+      // Fetch live market data using URL params
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
         {
