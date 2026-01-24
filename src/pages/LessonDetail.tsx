@@ -1,4 +1,5 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -65,6 +66,12 @@ export default function LessonDetail() {
   }
 
   return (
+    <>
+      <Helmet>
+        <title>{lesson.title} — Free Trading Course | TradeHQ 2026</title>
+        <meta name="description" content={`Learn ${lesson.title.toLowerCase()}. ${lesson.description} Free interactive course with quiz.`} />
+        <link rel="canonical" href={`https://tradinghq.vercel.app/learn/${lessonId}`} />
+      </Helmet>
     <div className="min-h-screen bg-background">
       <Navigation />
 
@@ -237,7 +244,7 @@ export default function LessonDetail() {
         </Card>
 
           {/* Navigation Buttons */}
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-4 mb-12">
             <Button
               variant="outline"
               onClick={() => setCurrentSubtopic(Math.max(0, currentSubtopic - 1))}
@@ -256,8 +263,21 @@ export default function LessonDetail() {
               )}
             </Button>
           </div>
+
+          {/* Quick Links Footer for SEO */}
+          <nav aria-label="Quick navigation" className="border-t border-border/50 pt-8">
+            <h2 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">Quick Links</h2>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Home</Link>
+              <Link to="/markets" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Markets</Link>
+              <Link to="/portfolio" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Portfolio</Link>
+              <Link to="/learn" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">All Courses</Link>
+              <Link to="/trade" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all">Practice Trading</Link>
+            </div>
+          </nav>
         </div>
       </main>
     </div>
+    </>
   );
 }

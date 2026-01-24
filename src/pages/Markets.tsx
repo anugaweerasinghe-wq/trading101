@@ -95,12 +95,12 @@ export default function Markets() {
 
       <div className="flex-1 ml-16 p-3 md:p-6 animate-fade-in">
         <div className="max-w-7xl mx-auto space-y-6">
-          {/* Header with unique H1 */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 transition-all duration-300">
+          {/* Static H1 Header - Renders immediately for Google */}
+          <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 transition-all duration-300">
             <div>
               <h1 className="text-xl md:text-3xl font-bold">2026 Market Strategy Hub</h1>
               <p className="text-muted-foreground text-xs md:text-sm">
-                Practice professional positioning • {assets.length} assets • Real-time simulation
+                Practice professional positioning with real-time market simulation. Explore {assets.length}+ assets across crypto, stocks, ETFs, forex, and commodities.
               </p>
             </div>
             <div className="relative w-full md:w-72 transition-all duration-300">
@@ -112,7 +112,7 @@ export default function Markets() {
                 className="pl-10 h-9 md:h-10 transition-all duration-200 focus:ring-2 focus:ring-primary/20"
               />
             </div>
-          </div>
+          </header>
 
           {/* Topical Clusters + State of the Market 2026 Intro */}
           <MarketClusters assets={assets} />
@@ -304,6 +304,17 @@ export default function Markets() {
               </Link>
             </div>
           </div>
+
+          {/* Quick Links Footer for SEO */}
+          <nav aria-label="Quick navigation" className="mt-8 border-t border-border/50 pt-6">
+            <h2 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">Quick Links</h2>
+            <div className="flex flex-wrap gap-2">
+              <Link to="/" className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Home</Link>
+              <Link to="/portfolio" className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Portfolio</Link>
+              <Link to="/learn" className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Learn</Link>
+              <Link to="/ai-mentor" className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">AI Mentor</Link>
+            </div>
+          </nav>
         </div>
       </div>
     </div>

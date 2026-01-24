@@ -143,8 +143,12 @@ export default function Portfolio() {
       
       <main className="pt-20 pb-12">
         <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio</h1>
+          {/* Static H1 Header - Renders immediately for Google */}
+          <header className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio Dashboard</h1>
+              <p className="text-muted-foreground mt-2">Track your virtual investments, analyze performance, and manage risk in real-time.</p>
+            </div>
             <div className="flex items-center gap-3">
               <Button
                 onClick={handleToggleNotifications}
@@ -174,9 +178,7 @@ export default function Portfolio() {
                 {canClaim ? "Claim $10,000 Bonus" : `Next Bonus: ${getTimeUntilNextBonus()}`}
               </Button>
             </div>
-          </div>
-
-          {/* Performance Chart */}
+          </header>
           <div className="mb-12">
             <PortfolioChart />
           </div>
@@ -357,6 +359,18 @@ export default function Portfolio() {
               </Link>
             </div>
           </Card>
+
+          {/* Quick Links Footer for SEO */}
+          <nav aria-label="Quick navigation" className="mt-8 border-t border-border/50 pt-6">
+            <h2 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">Quick Links</h2>
+            <div className="flex flex-wrap gap-2">
+              <Link to="/" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Home</Link>
+              <Link to="/markets" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Markets Hub</Link>
+              <Link to="/trade" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Trade Simulator</Link>
+              <Link to="/learn" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Learning Center</Link>
+              <Link to="/ai-mentor" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">AI Mentor</Link>
+            </div>
+          </nav>
         </div>
       </main>
 
