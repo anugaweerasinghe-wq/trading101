@@ -337,6 +337,21 @@ export default function Learn() {
               </Link>
             </div>
           </Card>
+
+          {/* Quick Links Footer for SEO */}
+          <nav aria-label="Quick navigation" className="mt-12 border-t border-border/50 pt-8">
+            <h2 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">Quick Links</h2>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Home</Link>
+              <Link to="/markets" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Markets Hub</Link>
+              <Link to="/portfolio" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Portfolio</Link>
+              <Link to="/trade" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Trade Simulator</Link>
+              <Link to="/ai-mentor" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">AI Mentor</Link>
+              <Link to="/trade/btc" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all">Trade Bitcoin</Link>
+              <Link to="/trade/eth" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all">Trade Ethereum</Link>
+              <Link to="/trade/nvda" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all">Trade NVIDIA</Link>
+            </div>
+          </nav>
         </div>
       </main>
     </div>

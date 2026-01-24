@@ -3,6 +3,9 @@ import { Card } from "@/components/ui/card";
 import { ArrowRight, Shield, Zap, GraduationCap, BarChart3, TrendingUp, PieChart, Coins, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MarketTrends2026 } from "./MarketTrends2026";
+import { TopAssetsGrid } from "./TopAssetsGrid";
+import { QuickLinksFooter } from "./QuickLinksFooter";
+import { CredibilityFooter } from "./CredibilityFooter";
 
 export function Hero() {
   return (
@@ -129,6 +132,9 @@ export function Hero() {
         </div>
       </section>
 
+      {/* Top Assets Grid for SEO Internal Linking */}
+      <TopAssetsGrid />
+
       {/* 2026 Market Trends Section */}
       <MarketTrends2026 />
 
@@ -175,6 +181,12 @@ export function Hero() {
           </div>
         </div>
       </section>
+
+      {/* Quick Links Footer for SEO */}
+      <QuickLinksFooter />
+
+      {/* Credibility Footer */}
+      <CredibilityFooter />
     </>
   );
 }
