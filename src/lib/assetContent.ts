@@ -23,6 +23,18 @@ interface AssetStats {
   expenseRatio?: string;
 }
 
+// NEW: Executive Outlook for Google AI Overviews (50-60 words)
+interface ExecutiveOutlook {
+  summary: string;
+  lastUpdated: string;
+}
+
+// NEW: Institutional Drivers with Bull/Bear scenarios
+interface InstitutionalDrivers {
+  bull: string;
+  bear: string;
+}
+
 // Category intro text for SEO multiplier
 export const CATEGORY_INTROS: Record<string, string> = {
   crypto: "Cryptocurrencies are decentralized digital assets known for 24/7 market cycles and high volatility.",
@@ -43,6 +55,9 @@ interface AssetContent {
   category: string;
   keywords: string[];
   stats?: AssetStats; // Professional stats data
+  executiveOutlook?: ExecutiveOutlook; // NEW: For AI Overviews
+  institutionalDrivers?: InstitutionalDrivers; // NEW: Bull/Bear scenarios
+  sectorPillar?: string; // NEW: Topic cluster linking
 }
 
 // FAQ data for Google PAA (People Also Ask) targeting
@@ -167,7 +182,16 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       maxSupply: "21,000,000",
       consensus: "Proof of Work",
       source: "CoinGecko"
-    }
+    },
+    executiveOutlook: {
+      summary: "Bitcoin enters 2026 as the dominant digital asset with institutional adoption accelerating. ETF inflows, halving effects, and Layer 2 scaling (Lightning, Stacks) position BTC for potential new highs. Risk factors include regulatory uncertainty and macroeconomic headwinds.",
+      lastUpdated: "January 2026"
+    },
+    institutionalDrivers: {
+      bull: "Institutional ETF accumulation, post-halving supply shock, Lightning Network adoption, and sovereign nation treasury allocations drive bullish momentum.",
+      bear: "Fed rate decisions, regulatory crackdowns on self-custody, and potential ETF outflows during risk-off periods could pressure prices."
+    },
+    sectorPillar: "crypto-defi"
   },
   eth: {
     whatIs: "The foundation for DeFi and smart contracts. Ethereum powers thousands of decentralized applications, NFT marketplaces, and layer-2 scaling solutions. Its transition to Proof of Stake made it more energy-efficient.",
@@ -179,7 +203,16 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       marketCap: "live_sourced_at_runtime",
       consensus: "Proof of Stake",
       source: "CoinGecko"
-    }
+    },
+    executiveOutlook: {
+      summary: "Ethereum's 2026 outlook centers on Layer 2 ecosystem growth and institutional staking adoption. Proto-danksharding (EIP-4844) has reduced L2 costs dramatically, driving DeFi and NFT activity. Deflationary supply mechanics post-Merge continue to benefit long-term holders.",
+      lastUpdated: "January 2026"
+    },
+    institutionalDrivers: {
+      bull: "L2 scaling success, institutional staking yields, and growing RWA tokenization on Ethereum mainnet support price appreciation.",
+      bear: "Competition from Solana and alternative L1s, plus regulatory classification uncertainty, pose headwinds."
+    },
+    sectorPillar: "crypto-defi"
   },
   sol: {
     whatIs: "A high-performance blockchain built for mass adoption with sub-second finality and minimal transaction costs. Solana hosts a growing ecosystem of DeFi, NFTs, and consumer applications competing with Ethereum.",
@@ -679,23 +712,23 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   }
 };
 
-// Custom CTR-optimized titles for priority assets (< 60 chars) - 2026 Strategy positioning
+// Custom CTR-optimized titles for priority assets - Institutional Market Analysis pattern
 const CUSTOM_META_TITLES: Record<string, string> = {
-  btc: "Bitcoin 2026 Strategy | Practice Pro Trading | $10K Demo",
-  eth: "Ethereum 2026 Strategy | DeFi Simulator | No Signup",
-  nvda: "NVIDIA 2026 Strategy | AI Stock Practice | Free Demo",
-  aapl: "Apple 2026 Strategy | Stock Trading Practice | $10K",
-  sol: "Solana 2026 Strategy | Speed Trading Practice | Free",
-  msft: "Microsoft 2026 Strategy | Cloud Stock Practice | Demo",
-  googl: "Google 2026 Strategy | AI Search Stock Practice",
-  amzn: "Amazon 2026 Strategy | E-Commerce Stock Practice",
-  meta: "Meta 2026 Strategy | Social Media Stock Practice",
-  xrp: "XRP 2026 Strategy | Ripple Trading Practice | Free",
-  bnb: "BNB 2026 Strategy | Binance Coin Practice | $10K",
-  spy: "SPY 2026 Strategy | S&P 500 ETF Practice | Free",
-  gold: "Gold 2026 Strategy | Safe Haven Practice | Demo",
-  oil: "Oil 2026 Strategy | Commodity Trading Practice",
-  gbpusd: "GBP/USD 2026 Strategy | Forex Practice | Free Demo"
+  btc: "BTC — Institutional Market Analysis & 2026 Scenario Drivers",
+  eth: "ETH — Institutional Market Analysis & 2026 Scenario Drivers",
+  nvda: "NVDA — Institutional Market Analysis & 2026 Scenario Drivers",
+  aapl: "AAPL — Institutional Market Analysis & 2026 Scenario Drivers",
+  sol: "SOL — Institutional Market Analysis & 2026 Scenario Drivers",
+  msft: "MSFT — Institutional Market Analysis & 2026 Scenario Drivers",
+  googl: "GOOGL — Institutional Market Analysis & 2026 Scenario Drivers",
+  amzn: "AMZN — Institutional Market Analysis & 2026 Scenario Drivers",
+  meta: "META — Institutional Market Analysis & 2026 Scenario Drivers",
+  xrp: "XRP — Institutional Market Analysis & 2026 Scenario Drivers",
+  bnb: "BNB — Institutional Market Analysis & 2026 Scenario Drivers",
+  spy: "SPY — Institutional Market Analysis & 2026 Scenario Drivers",
+  gold: "Gold — Institutional Market Analysis & 2026 Scenario Drivers",
+  oil: "Oil — Institutional Market Analysis & 2026 Scenario Drivers",
+  gbpusd: "GBP/USD — Institutional Market Analysis & 2026 Drivers"
 };
 
 // Custom CTR-optimized descriptions for priority assets (120-155 chars)
@@ -717,16 +750,16 @@ const CUSTOM_META_DESCRIPTIONS: Record<string, string> = {
   gbpusd: "🇬🇧 GBP/USD 2026 forex strategy. Practice BOE vs Fed policy divergence with $10K demo. Professional currency positioning!"
 };
 
-// Generate meta title (< 60 chars) - Custom for top 5, fallback for others
+// Generate meta title - Institutional pattern for priority, fallback for others
 export function generateAssetMetaTitle(asset: Asset): string {
-  // Priority assets get custom CTR-optimized titles
+  // Priority assets get institutional-grade titles
   if (CUSTOM_META_TITLES[asset.id]) {
     return CUSTOM_META_TITLES[asset.id];
   }
   
-  // Fallback for other assets
-  const title = `Practice Trading ${asset.name} (${asset.symbol}) | Free $10k Demo`;
-  return title.length > 60 ? `Trade ${asset.symbol} | Free $10k Demo - TradeHQ` : title;
+  // Fallback pattern for other assets
+  const title = `${asset.symbol} — Market Analysis & 2026 Strategy | TradeHQ`;
+  return title.length > 60 ? `${asset.symbol} Analysis | TradeHQ` : title;
 }
 
 // Truncate meta description safely at 155 chars (no mid-sentence cuts)

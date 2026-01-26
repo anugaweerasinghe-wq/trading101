@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import { Shield, Zap, GraduationCap, Brain, BarChart3, Wallet } from "lucide-react";
 
 /**
@@ -64,27 +63,27 @@ export function PremiumFeatures() {
           </p>
         </div>
         
-        {/* Features grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {/* Features grid - Liquid Glass cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
           {features.map((feature, index) => (
-            <Card 
+            <div 
               key={feature.title}
-              className="group p-8 bg-card/30 border-border/30 hover:border-primary/20 transition-all duration-300 rounded-2xl backdrop-blur-sm animate-slide-up"
+              className="group p-6 glass-liquid-card animate-slide-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Icon */}
-              <div className={`w-14 h-14 mb-6 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className={`w-7 h-7 ${feature.iconColor}`} />
+              <div className={`w-12 h-12 mb-5 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
               </div>
               
               {/* Content */}
-              <h3 className="text-xl font-semibold mb-3 text-foreground">
+              <h3 className="text-lg font-semibold mb-2 text-foreground">
                 {feature.title}
               </h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 {feature.description}
               </p>
-            </Card>
+            </div>
           ))}
         </div>
       </div>

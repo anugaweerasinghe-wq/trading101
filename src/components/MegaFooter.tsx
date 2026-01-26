@@ -268,15 +268,32 @@ export function MegaFooter() {
         </div>
       </div>
 
-      {/* Bottom Bar - Copyright & Disclaimer */}
+      {/* Bottom Bar - Copyright, Legal Links & Institutional Disclaimer */}
       <div className="border-t border-border/30 bg-[hsl(0_0%_2%)]">
         <div className="container mx-auto px-6 py-6">
-          <p className="text-xs text-muted-foreground text-center max-w-4xl mx-auto leading-relaxed">
-            <strong>Disclaimer:</strong> TradeHQ is a trading simulator for educational purposes only. 
-            No real money is at risk. Past performance does not guarantee future results. 
-            This is not financial advice. Always consult a licensed professional before investing.
-            <br />
-            <span className="mt-2 block">© {new Date().getFullYear()} TradeHQ. All rights reserved.</span>
+          {/* Legal Links */}
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <Link to="/privacy" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-muted-foreground/30">|</span>
+            <Link to="/terms" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+              Terms of Service
+            </Link>
+          </div>
+          
+          {/* Institutional Disclaimer */}
+          <div className="p-4 rounded-xl bg-muted/20 border border-border/20 max-w-4xl mx-auto mb-4">
+            <p className="text-xs text-muted-foreground text-center leading-relaxed">
+              <strong className="text-foreground">Strict Institutional Disclaimer:</strong> TradeHQ is a market simulation platform. 
+              No real capital is at risk. Not financial advice. Data provided for educational purposes only. 
+              Past simulated performance does not guarantee future real-world results. 
+              Always consult a qualified financial advisor before making investment decisions.
+            </p>
+          </div>
+          
+          <p className="text-xs text-muted-foreground text-center">
+            © {new Date().getFullYear()} TradeHQ. All rights reserved.
           </p>
         </div>
       </div>

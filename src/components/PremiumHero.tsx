@@ -1,39 +1,45 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Brain, Sparkles, TrendingUp, Shield, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
+import { InstitutionalRating } from "@/components/InstitutionalRating";
 
 /**
- * PremiumHero - Institutional-grade hero section
- * Dark mode luxury aesthetic with Bloomberg Terminal meets Stripe design
+ * PremiumHero - Institutional-grade hero section with Liquid Glass design
+ * Bloomberg Terminal meets Stripe meets high-end Fintech aesthetic
  */
 export function PremiumHero() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Deep charcoal base with ultra-subtle grid */}
-      <div className="absolute inset-0 bg-[hsl(0_0%_4%)]" />
+      {/* Deep charcoal base with architectural pattern */}
+      <div className="absolute inset-0 bg-[hsl(0_0%_4%)] bg-architectural" />
       
       {/* Subtle premium grid pattern */}
       <div 
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage: `
             linear-gradient(to right, hsl(180 70% 50%) 1px, transparent 1px),
             linear-gradient(to bottom, hsl(180 70% 50%) 1px, transparent 1px)
           `,
-          backgroundSize: '60px 60px'
+          backgroundSize: '80px 80px'
         }}
       />
       
       {/* Premium ambient glow - ultra subtle */}
-      <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-primary/[0.03] rounded-full blur-[150px]" />
-      <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-secondary/[0.02] rounded-full blur-[120px]" />
+      <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-primary/[0.02] rounded-full blur-[200px]" />
+      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-secondary/[0.015] rounded-full blur-[150px]" />
       
       {/* Gradient overlay from top */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[hsl(0_0%_4%)]" />
 
       <div className="relative z-10 container mx-auto px-6 text-center max-w-5xl">
-        {/* Premium badge */}
-        <div className="inline-flex items-center gap-2 px-5 py-2.5 mb-10 rounded-full bg-card/40 backdrop-blur-sm border border-border/30 animate-fade-in">
+        {/* Institutional Rating Badge */}
+        <div className="mb-6 animate-fade-in">
+          <InstitutionalRating variant="compact" />
+        </div>
+        
+        {/* Premium badge - Liquid Glass style */}
+        <div className="inline-flex items-center gap-3 px-6 py-3 mb-10 rounded-2xl glass-liquid animate-fade-in" style={{ animationDelay: "50ms" }}>
           <Sparkles className="w-4 h-4 text-primary" />
           <span className="text-sm text-muted-foreground font-medium tracking-wide">
             $10,000 Virtual Capital • 150+ Assets • Zero Risk
@@ -42,7 +48,7 @@ export function PremiumHero() {
         
         {/* Massive headline - institutional style */}
         <h1 
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold mb-8 leading-[1.1] tracking-tight animate-slide-up"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold mb-8 leading-[1.05] tracking-tight animate-slide-up"
           style={{ animationDelay: "100ms" }}
         >
           <span className="text-foreground">Master the Markets.</span>
@@ -61,9 +67,9 @@ export function PremiumHero() {
           real-time market simulation. Build strategies before risking real capital.
         </p>
 
-        {/* Weekly Bonus - Premium pill */}
+        {/* Weekly Bonus - Liquid Glass pill */}
         <div 
-          className="inline-flex items-center gap-3 px-6 py-3 mb-10 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 animate-slide-up"
+          className="inline-flex items-center gap-3 px-6 py-3 mb-10 rounded-2xl glass-liquid-card animate-slide-up"
           style={{ animationDelay: "250ms" }}
         >
           <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
@@ -93,7 +99,7 @@ export function PremiumHero() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-base px-10 py-7 border-border/50 bg-card/30 backdrop-blur-sm hover:bg-card/60 hover:border-primary/30 transition-all duration-300 rounded-2xl min-h-[56px]"
+              className="text-base px-10 py-7 glass-liquid border-white/10 hover:bg-white/5 hover:border-primary/30 transition-all duration-300 rounded-2xl min-h-[56px]"
             >
               <Brain className="mr-2 w-5 h-5" />
               AI Mentor
@@ -101,9 +107,9 @@ export function PremiumHero() {
           </Link>
         </div>
         
-        {/* Premium stats row */}
+        {/* Premium stats row - Liquid Glass cards */}
         <div 
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto animate-slide-up"
+          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto animate-slide-up"
           style={{ animationDelay: "400ms" }}
         >
           {[
@@ -114,7 +120,7 @@ export function PremiumHero() {
           ].map((stat) => (
             <div 
               key={stat.label} 
-              className="group p-6 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/30 hover:border-primary/20 transition-all duration-300"
+              className="group p-5 rounded-2xl glass-liquid-card transition-all duration-300"
             >
               <stat.icon className="w-5 h-5 text-primary mb-3 mx-auto" />
               <div className="text-2xl md:text-3xl font-semibold text-foreground mb-1 tabular-nums">
