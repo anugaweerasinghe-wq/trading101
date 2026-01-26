@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { TradingSidebar } from "@/components/trading/TradingSidebar";
 import { MarketClusters } from "@/components/MarketClusters";
+import { MegaFooter } from "@/components/MegaFooter";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { simulateAssetPrices } from "@/lib/priceSimulation";
@@ -304,19 +305,11 @@ export default function Markets() {
               </Link>
             </div>
           </div>
-
-          {/* Quick Links Footer for SEO */}
-          <nav aria-label="Quick navigation" className="mt-8 border-t border-border/50 pt-6">
-            <h2 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">Quick Links</h2>
-            <div className="flex flex-wrap gap-2">
-              <Link to="/" className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Home</Link>
-              <Link to="/portfolio" className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Portfolio</Link>
-              <Link to="/learn" className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Learn</Link>
-              <Link to="/ai-mentor" className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">AI Mentor</Link>
-            </div>
-          </nav>
         </div>
       </div>
+
+      {/* Mega Footer */}
+      <MegaFooter />
     </div>
     </>
   );

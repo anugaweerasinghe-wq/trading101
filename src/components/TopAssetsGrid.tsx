@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Zap, Cpu } from "lucide-react";
+import { TrendingUp, Zap, Cpu, ArrowRight } from "lucide-react";
 
 interface TopAsset {
   id: string;
@@ -21,7 +21,7 @@ const TOP_ASSETS: TopAsset[] = [
     description: "The original cryptocurrency. Practice Bitcoin trading with real-time price action.",
     icon: Zap,
     badge: "Most Traded",
-    badgeColor: "bg-primary/20 text-primary border-primary/30",
+    badgeColor: "bg-primary/10 text-primary border-primary/20",
   },
   {
     id: "eth",
@@ -30,7 +30,7 @@ const TOP_ASSETS: TopAsset[] = [
     description: "Smart contract leader. Master ETH trading strategies in our simulator.",
     icon: TrendingUp,
     badge: "DeFi Leader",
-    badgeColor: "bg-secondary/20 text-secondary border-secondary/30",
+    badgeColor: "bg-secondary/10 text-secondary border-secondary/20",
   },
   {
     id: "nvda",
@@ -39,7 +39,7 @@ const TOP_ASSETS: TopAsset[] = [
     description: "AI chip powerhouse. Practice NVIDIA stock trading with $10K virtual capital.",
     icon: Cpu,
     badge: "AI Revolution",
-    badgeColor: "bg-profit/20 text-profit border-profit/30",
+    badgeColor: "bg-profit/10 text-profit border-profit/20",
   },
 ];
 
@@ -49,10 +49,10 @@ const TOP_ASSETS: TopAsset[] = [
  */
 export function TopAssetsGrid() {
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="py-24 bg-[hsl(0_0%_3%)]">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-semibold mb-3">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-semibold mb-4">
             Start Trading <span className="text-primary">Top Assets</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
@@ -65,17 +65,18 @@ export function TopAssetsGrid() {
             <Link
               key={asset.id}
               to={`/trade/${asset.id}`}
-              className="group block"
+              className="group block animate-slide-up"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <Card 
-                className="h-full p-6 bg-card hover:bg-card/80 border-border hover:border-primary/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+                className="h-full p-8 bg-card/30 backdrop-blur-sm border-border/30 hover:border-primary/30 transition-all duration-300 hover:shadow-glow-cyan rounded-2xl"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <asset.icon className="w-6 h-6 text-primary" />
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <asset.icon className="w-7 h-7 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+                    <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">
                       {asset.symbol}
                     </h3>
                     <p className="text-sm text-muted-foreground">{asset.name}</p>
@@ -84,17 +85,18 @@ export function TopAssetsGrid() {
                 
                 <Badge 
                   variant="outline" 
-                  className={`mb-3 ${asset.badgeColor}`}
+                  className={`mb-4 ${asset.badgeColor}`}
                 >
                   {asset.badge}
                 </Badge>
                 
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6">
                   {asset.description}
                 </p>
                 
-                <div className="mt-4 text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                  Start Trading {asset.symbol} →
+                <div className="flex items-center gap-2 text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span>Start Trading {asset.symbol}</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Card>
             </Link>
