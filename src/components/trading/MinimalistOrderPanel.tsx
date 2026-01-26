@@ -58,14 +58,14 @@ export function MinimalistOrderPanel({ asset, availableCash, onTrade }: Minimali
 
   if (!asset) {
     return (
-      <div className="glass-panel border border-white/10 rounded-2xl p-6 text-center">
+      <div className="glass-liquid rounded-2xl p-6 text-center">
         <p className="text-muted-foreground">Select an asset to trade</p>
       </div>
     );
   }
 
   return (
-    <div className="glass-panel border border-white/10 rounded-2xl p-5 space-y-5">
+    <div className="glass-liquid rounded-2xl p-5 space-y-5">
       {/* Buy/Sell Toggle */}
       <div className="flex p-1 bg-white/5 rounded-xl">
         <button

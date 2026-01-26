@@ -344,6 +344,111 @@
     mask-composite: exclude;
     opacity: 0.5;
   }
+
+  /* ========================================
+     LIQUID GLASS DESIGN SYSTEM
+     Institutional-Grade Premium Components
+     ======================================== */
+  
+  /* Liquid Glass - Primary variant */
+  .glass-liquid {
+    @apply relative;
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    background: linear-gradient(
+      135deg,
+      hsl(0 0% 100% / 0.05) 0%,
+      hsl(0 0% 100% / 0.02) 100%
+    );
+    border: 1px solid hsl(0 0% 100% / 0.1);
+    box-shadow: 
+      0 8px 32px -8px hsl(0 0% 0% / 0.4),
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.08);
+  }
+
+  .glass-liquid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      hsl(180 70% 50% / 0.03) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  /* Liquid Glass - Dark variant */
+  .glass-liquid-dark {
+    @apply relative;
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    background: linear-gradient(
+      180deg,
+      hsl(0 0% 6% / 0.9) 0%,
+      hsl(0 0% 4% / 0.95) 100%
+    );
+    border: 1px solid hsl(0 0% 100% / 0.06);
+    box-shadow: 
+      0 16px 48px -12px hsl(0 0% 0% / 0.5),
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.05);
+  }
+
+  /* Liquid Glass - Card variant */
+  .glass-liquid-card {
+    @apply glass-liquid rounded-2xl;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-liquid-card:hover {
+    border-color: hsl(180 70% 50% / 0.2);
+    box-shadow: 
+      0 12px 40px -8px hsl(0 0% 0% / 0.5),
+      0 0 20px hsl(180 70% 50% / 0.05),
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.1);
+  }
+
+  /* High-Density Grid utilities */
+  .grid-density-high {
+    @apply gap-3 p-3;
+  }
+
+  .grid-density-compact {
+    @apply gap-2 p-2;
+  }
+
+  /* Institutional data display */
+  .data-cell {
+    @apply py-2 px-3 text-sm tabular-nums font-medium;
+  }
+
+  .data-cell-compact {
+    @apply py-1.5 px-2 text-xs tabular-nums;
+  }
+
+  /* Premium borders */
+  .border-glass {
+    border: 1px solid hsl(0 0% 100% / 0.08);
+  }
+
+  .border-glass-hover:hover {
+    border-color: hsl(180 70% 50% / 0.3);
+  }
+
+  /* Architectural SVG background */
+  .bg-architectural {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300d4d4' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Mobile bottom nav safe area */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+
+  .bottom-safe {
+    bottom: env(safe-area-inset-bottom, 0);
+  }
 }
 
 /* Custom animations */

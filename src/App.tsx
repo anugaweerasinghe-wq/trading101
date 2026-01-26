@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { PageTransition } from "@/components/PageTransition";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 import Index from "./pages/Index";
 import Trade from "./pages/Trade";
 import TradeAsset from "./pages/TradeAsset";
@@ -14,6 +15,9 @@ import Learn from "./pages/Learn";
 import LessonDetail from "./pages/LessonDetail";
 import LearnTradingGuide from "./pages/LearnTradingGuide";
 import AIMentor from "./pages/AIMentor";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import SectorPillar from "./pages/SectorPillar";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +37,9 @@ function AnimatedRoutes() {
         <Route path="/learn/:lessonId" element={<LessonDetail />} />
         <Route path="/learn-trading-guide" element={<LearnTradingGuide />} />
         <Route path="/ai-mentor" element={<AIMentor />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/sectors/:sectorId" element={<SectorPillar />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -48,6 +55,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <AnimatedRoutes />
+          <MobileBottomNav />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
