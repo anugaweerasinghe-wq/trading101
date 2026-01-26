@@ -9,6 +9,7 @@ import { MinimalistPortfolioBar } from "@/components/trading/MinimalistPortfolio
 import { AIMentor } from "@/components/trading/AIMentor";
 import { ChartSkeleton } from "@/components/trading/ChartSkeleton";
 import { MobileOrderDrawer } from "@/components/trading/MobileOrderDrawer";
+import { MegaFooter } from "@/components/MegaFooter";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
@@ -158,18 +159,6 @@ export default function Trade() {
             />
           </div>
 
-          {/* Quick Links for SEO Internal Linking */}
-          <nav aria-label="Quick navigation" className="mt-8 border-t border-border/50 pt-6">
-            <h2 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">Explore More</h2>
-            <div className="flex flex-wrap gap-2">
-              <a href="/markets" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Markets Hub</a>
-              <a href="/portfolio" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Portfolio Tracker</a>
-              <a href="/learn" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Learning Center</a>
-              <a href="/trade/btc" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all">Trade Bitcoin</a>
-              <a href="/trade/eth" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all">Trade Ethereum</a>
-              <a href="/trade/nvda" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all">Trade NVIDIA</a>
-            </div>
-          </nav>
         </div>
 
         {/* AI Mentor */}
@@ -178,6 +167,9 @@ export default function Trade() {
           assets={assets} 
           selectedAsset={selectedAsset}
         />
+
+        {/* Mega Footer */}
+        <MegaFooter />
       </div>
     </>
   );

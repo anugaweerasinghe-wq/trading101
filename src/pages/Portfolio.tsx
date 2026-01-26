@@ -10,6 +10,7 @@ import { TradingJournal } from "@/components/TradingJournal";
 import { TradeHistory } from "@/components/TradeHistory";
 import { TradeAnalytics } from "@/components/TradeAnalytics";
 import { PriceTicker } from "@/components/PriceTicker";
+import { MegaFooter } from "@/components/MegaFooter";
 import { getPortfolio, updatePositionPrices, savePortfolio, canClaimWeeklyBonus, getTimeUntilNextBonus, claimWeeklyBonus } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
 import { ASSETS } from "@/lib/assets";
@@ -320,61 +321,13 @@ export default function Portfolio() {
             <TradeHistory trades={portfolio.trades} />
           </div>
 
-          {/* Internal Links Section for SEO */}
-          <Card className="p-6 bg-card/50 backdrop-blur-sm">
-            <h2 className="text-xl font-bold mb-4">🔥 Start Trading Top Assets</h2>
-            <p className="text-sm text-muted-foreground mb-4">
-              Jump directly to our most popular trading simulations:
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                to="/trade/btc"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                Bitcoin (BTC)
-              </Link>
-              <Link
-                to="/trade/eth"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                Ethereum (ETH)
-              </Link>
-              <Link
-                to="/trade/nvda"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                NVIDIA (NVDA)
-              </Link>
-              <Link
-                to="/trade/aapl"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                Apple (AAPL)
-              </Link>
-              <Link
-                to="/trade/sol"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                Solana (SOL)
-              </Link>
-            </div>
-          </Card>
-
-          {/* Quick Links Footer for SEO */}
-          <nav aria-label="Quick navigation" className="mt-8 border-t border-border/50 pt-6">
-            <h2 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">Quick Links</h2>
-            <div className="flex flex-wrap gap-2">
-              <Link to="/" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Home</Link>
-              <Link to="/markets" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Markets Hub</Link>
-              <Link to="/trade" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Trade Simulator</Link>
-              <Link to="/learn" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">Learning Center</Link>
-              <Link to="/ai-mentor" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-muted/50 hover:bg-primary/10 hover:text-primary transition-all">AI Mentor</Link>
-            </div>
-          </nav>
         </div>
       </main>
 
       <AIAssistant portfolio={portfolio} assets={assets} />
+      
+      {/* Mega Footer */}
+      <MegaFooter />
     </div>
     </>
   );
