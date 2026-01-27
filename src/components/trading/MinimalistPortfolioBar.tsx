@@ -10,12 +10,20 @@ interface MinimalistPortfolioBarProps {
 export function MinimalistPortfolioBar({ portfolio }: MinimalistPortfolioBarProps) {
   const [showDetails, setShowDetails] = useState(false);
 
-  const totalValue = portfolio.cash + portfolio.positions.reduce(
-    (sum, pos) => sum + pos.quantity * pos.asset.price,
+  // Safely calculate total value with defensive checks
+  const totalValue = (portfolio?.cash ?? 0) + (portfolio?.positions ?? []).reduce(
+    (sum, pos) => {
+      const price = typeof pos?.asset?.price === 'number' && !isNaN(pos.asset.price) ? pos.asset.price : 0;
+      const quantity = typeof pos?.quantity === 'number' ? pos.quantity : 0;
+      return sum + quantity * price;
+    },
     0
   );
 
-  const totalPnL = portfolio.positions.reduce((sum, pos) => sum + pos.profitLoss, 0);
+  const totalPnL = (portfolio?.positions ?? []).reduce((sum, pos) => {
+    const pnl = typeof pos?.profitLoss === 'number' ? pos.profitLoss : 0;
+    return sum + pnl;
+  }, 0);
   const totalPnLPercent = totalValue > 0 ? (totalPnL / (totalValue - totalPnL)) * 100 : 0;
   const isPositive = totalPnL >= 0;
 

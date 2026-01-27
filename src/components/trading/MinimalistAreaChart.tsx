@@ -57,31 +57,38 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
   const [fallbackData, setFallbackData] = useState<ChartDataPoint[]>([]);
   const simulationInterval = useRef<NodeJS.Timeout | null>(null);
   
+  // Safe price - ensure we have a valid number
+  const safePrice = typeof asset?.price === 'number' && !isNaN(asset.price) && asset.price > 0 
+    ? asset.price 
+    : 100;
+  
   // Live market data hooks
   const { liveData, isLive, refetch: refetchQuote } = useLiveMarketData(asset, {
     refreshInterval: 30000, // 30 seconds
-    enabled: true,
+    enabled: !!asset,
   });
   
   const { candles, isLoading: candlesLoading, refetch: refetchCandles } = useLiveCandleData(asset, {
     refreshInterval: 60000, // 1 minute for candle updates
-    enabled: true,
+    enabled: !!asset,
   });
 
   // Generate initial fallback data
   useEffect(() => {
-    setFallbackData(generateChartData(asset.price));
-  }, [asset.id]);
+    if (asset?.id) {
+      setFallbackData(generateChartData(safePrice));
+    }
+  }, [asset?.id, safePrice]);
 
   // Real-time simulation when no live candles available
   useEffect(() => {
-    if (candles.length === 0) {
+    if (candles.length === 0 && asset) {
       simulationInterval.current = setInterval(() => {
         setFallbackData(prev => {
           const newData = [...prev.slice(1)];
-          const lastPrice = newData[newData.length - 1]?.price || asset.price;
-          const change = (Math.random() - 0.48) * (asset.price * 0.005);
-          const newPrice = Math.max(lastPrice + change, asset.price * 0.8);
+          const lastPrice = newData[newData.length - 1]?.price || safePrice;
+          const change = (Math.random() - 0.48) * (safePrice * 0.005);
+          const newPrice = Math.max(lastPrice + change, safePrice * 0.8);
           const now = Date.now();
           
           newData.push({
@@ -105,7 +112,7 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
         simulationInterval.current = null;
       }
     }
-  }, [candles.length, asset.price]);
+  }, [candles.length, safePrice, asset]);
 
   // Use live candles if available, otherwise fallback
   const chartData = useMemo(() => {
@@ -117,26 +124,26 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
 
   // Calculate price metrics
   const { minPrice, maxPrice, priceChange, priceChangePercent, isPositive, currentPrice } = useMemo(() => {
-    const prices = chartData.map(d => d.price);
-    const min = Math.min(...prices);
-    const max = Math.max(...prices);
-    const first = chartData[0]?.price || 0;
-    const last = chartData[chartData.length - 1]?.price || 0;
+    const prices = chartData.map(d => d.price).filter(p => typeof p === 'number' && !isNaN(p));
+    const min = prices.length > 0 ? Math.min(...prices) : safePrice * 0.95;
+    const max = prices.length > 0 ? Math.max(...prices) : safePrice * 1.05;
+    const first = chartData[0]?.price || safePrice;
+    const last = chartData[chartData.length - 1]?.price || safePrice;
     
     // Use live data if available, otherwise calculate from chart
-    const livePrice = liveData?.price || last;
+    const livePrice = (liveData?.price && typeof liveData.price === 'number') ? liveData.price : last;
     const change = liveData?.change24h ?? (last - first);
     const changePercent = liveData?.changePercent24h ?? (first > 0 ? (change / first) * 100 : 0);
     
     return {
       minPrice: min,
       maxPrice: max,
-      priceChange: change,
-      priceChangePercent: changePercent,
+      priceChange: typeof change === 'number' ? change : 0,
+      priceChangePercent: typeof changePercent === 'number' ? changePercent : 0,
       isPositive: change >= 0,
       currentPrice: livePrice,
     };
-  }, [chartData, liveData]);
+  }, [chartData, liveData, safePrice]);
 
   const padding = (maxPrice - minPrice) * 0.1 || 1;
 
@@ -182,7 +189,9 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
         <div className="text-right flex items-start gap-2">
           <div>
             <p className="text-2xl font-bold tabular-nums">
-              ${currentPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              ${typeof currentPrice === 'number' && !isNaN(currentPrice) 
+                ? currentPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                : '—'}
             </p>
             <p className={`text-sm font-medium tabular-nums ${isPositive ? 'text-profit' : 'text-loss'}`}>
               {isPositive ? '+' : ''}{priceChange.toFixed(2)} ({isPositive ? '+' : ''}{priceChangePercent.toFixed(2)}%)
@@ -244,7 +253,7 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
               tickLine={false}
               tick={{ fill: 'hsl(210, 15%, 55%)', fontSize: 10 }}
               width={60}
-              tickFormatter={(value) => `$${value.toLocaleString()}`}
+              tickFormatter={(value) => typeof value === 'number' && !isNaN(value) ? `$${value.toLocaleString()}` : '$—'}
             />
             <Tooltip
               contentStyle={{
@@ -255,7 +264,7 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
               }}
               labelStyle={{ color: 'hsl(210, 15%, 55%)' }}
               itemStyle={{ color: isPositive ? 'hsl(152, 60%, 42%)' : 'hsl(0, 70%, 50%)' }}
-              formatter={(value: number) => [`$${value.toLocaleString()}`, 'Price']}
+              formatter={(value: number) => [typeof value === 'number' && !isNaN(value) ? `$${value.toLocaleString()}` : '$—', 'Price']}
             />
             <Area
               type="monotone"

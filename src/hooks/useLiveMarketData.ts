@@ -47,6 +47,12 @@ export function useLiveMarketData(
 
   const fetchLiveData = useCallback(async () => {
     if (!asset || !enabled || fetchInProgress.current) return;
+    
+    // Validate asset has a valid price
+    if (typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) {
+      console.log(`Skipping live fetch for ${asset.symbol}: invalid base price`);
+      return;
+    }
 
     // Check cache first
     const cacheKey = `${asset.id}-quote`;
@@ -79,12 +85,26 @@ export function useLiveMarketData(
       const result = await response.json();
 
       if (isMounted.current && result.success && result.data) {
-        const marketData = result.data as LiveMarketData;
-        setLiveData(marketData);
-        setLastFetch(new Date());
-        
-        // Update cache
-        marketDataCache.set(cacheKey, { data: marketData, timestamp: Date.now() });
+        const data = result.data;
+        // Validate that we got a valid price back
+        if (typeof data.price === 'number' && !isNaN(data.price) && data.price > 0) {
+          const marketData: LiveMarketData = {
+            price: data.price,
+            change24h: typeof data.change24h === 'number' ? data.change24h : 0,
+            changePercent24h: typeof data.changePercent24h === 'number' ? data.changePercent24h : 0,
+            high24h: typeof data.high24h === 'number' ? data.high24h : data.price * 1.02,
+            low24h: typeof data.low24h === 'number' ? data.low24h : data.price * 0.98,
+            volume24h: typeof data.volume24h === 'number' ? data.volume24h : 0,
+            marketCap: typeof data.marketCap === 'number' ? data.marketCap : undefined,
+            lastUpdated: data.lastUpdated || new Date().toISOString(),
+            source: data.source || 'simulated',
+          };
+          setLiveData(marketData);
+          setLastFetch(new Date());
+          
+          // Update cache
+          marketDataCache.set(cacheKey, { data: marketData, timestamp: Date.now() });
+        }
       }
     } catch (err) {
       console.error('Live market data fetch error:', err);
@@ -156,6 +176,12 @@ export function useLiveCandleData(
 
   const fetchCandles = useCallback(async () => {
     if (!asset || !enabled || fetchInProgress.current) return;
+    
+    // Validate asset has a valid price
+    if (typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) {
+      console.log(`Skipping candle fetch for ${asset.symbol}: invalid base price`);
+      return;
+    }
 
     fetchInProgress.current = true;
     setIsLoading(true);
