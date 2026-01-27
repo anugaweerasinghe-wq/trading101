@@ -31,6 +31,11 @@ export default function Trade() {
 
   // Function to fetch live data for an asset
   const fetchLivePrice = async (asset: Asset): Promise<Asset> => {
+    // Guard: skip if asset has no valid price
+    if (!asset || typeof asset.price !== 'number' || isNaN(asset.price)) {
+      return asset;
+    }
+    
     try {
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
@@ -44,18 +49,20 @@ export default function Trade() {
 
       if (response.ok) {
         const result = await response.json();
-        if (result.success && result.data) {
+        // Only update if we got a valid price number back
+        if (result.success && result.data && typeof result.data.price === 'number' && !isNaN(result.data.price)) {
           return {
             ...asset,
             price: result.data.price,
-            change: result.data.change24h,
-            changePercent: result.data.changePercent24h,
+            change: result.data.change24h ?? asset.change ?? 0,
+            changePercent: result.data.changePercent24h ?? asset.changePercent ?? 0,
           };
         }
       }
     } catch (err) {
       console.log(`Live fetch failed for ${asset.symbol}, using simulation`);
     }
+    // Return original asset unchanged if fetch fails or returns invalid data
     return asset;
   };
 
