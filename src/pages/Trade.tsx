@@ -15,7 +15,7 @@ import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
-import { simulateAssetPrices, setLastUpdateTime } from "@/lib/priceSimulation";
+import { setLastUpdateTime } from "@/lib/priceSimulation";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Trade() {
@@ -24,15 +24,21 @@ export default function Trade() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isLiveRefreshing, setIsLiveRefreshing] = useState(false);
   const { toast } = useToast();
   
   const isMounted = useRef(true);
+  const isRefreshing = useRef(false);
+  const assetsRef = useRef<Asset[]>([]);
 
-  // Function to fetch live data for an asset
+  // Keep assetsRef updated
+  useEffect(() => {
+    assetsRef.current = assets;
+  }, [assets]);
+
+  // Function to fetch live data for a single asset
   const fetchLivePrice = async (asset: Asset): Promise<Asset> => {
     // Guard: skip if asset has no valid price
-    if (!asset || typeof asset.price !== 'number' || isNaN(asset.price)) {
+    if (!asset || typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) {
       return asset;
     }
     
@@ -50,48 +56,66 @@ export default function Trade() {
       if (response.ok) {
         const result = await response.json();
         // Only update if we got a valid price number back
-        if (result.success && result.data && typeof result.data.price === 'number' && !isNaN(result.data.price)) {
+        if (result.success && result.data && typeof result.data.price === 'number' && !isNaN(result.data.price) && result.data.price > 0) {
           return {
             ...asset,
             price: result.data.price,
-            change: result.data.change24h ?? asset.change ?? 0,
-            changePercent: result.data.changePercent24h ?? asset.changePercent ?? 0,
+            change: typeof result.data.change24h === 'number' ? result.data.change24h : asset.change,
+            changePercent: typeof result.data.changePercent24h === 'number' ? result.data.changePercent24h : asset.changePercent,
           };
         }
       }
     } catch (err) {
-      console.log(`Live fetch failed for ${asset.symbol}, using simulation`);
+      // Silently fail, return original asset
     }
-    // Return original asset unchanged if fetch fails or returns invalid data
     return asset;
   };
 
-  // Batch refresh all assets with live data
-  const refreshAllAssets = useCallback(async () => {
-    if (!isMounted.current || assets.length === 0) return;
+  // Simulate price changes for assets not fetched via API
+  const simulatePrice = (asset: Asset): Asset => {
+    if (!asset || typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) {
+      return asset;
+    }
     
-    setIsLiveRefreshing(true);
+    const volatility = asset.type === 'crypto' ? 0.015 : 0.008;
+    const changePercent = (Math.random() * volatility * 2 - volatility) * 100;
+    const change = asset.price * (changePercent / 100);
+    
+    return {
+      ...asset,
+      price: Math.max(0.0001, asset.price + change * 0.1),
+      change: change,
+      changePercent: changePercent,
+    };
+  };
+
+  // Batch refresh all assets
+  const refreshAllAssets = useCallback(async () => {
+    if (!isMounted.current || isRefreshing.current) return;
+    
+    const currentAssets = assetsRef.current;
+    if (currentAssets.length === 0) return;
+    
+    isRefreshing.current = true;
     
     try {
-      // Fetch live data for top 20 assets in parallel (rate limit friendly)
-      const topAssets = assets.slice(0, 20);
-      const updatedTopAssets = await Promise.all(
-        topAssets.map(asset => fetchLivePrice(asset))
+      // Fetch live data for top 15 crypto assets in parallel
+      const cryptoAssets = currentAssets.filter(a => a.type === 'crypto').slice(0, 15);
+      const updatedCrypto = await Promise.all(
+        cryptoAssets.map(asset => fetchLivePrice(asset))
       );
       
-      // Simulate remaining assets with 2026 baseline
-      const remainingAssets = assets.slice(20).map(asset => {
-        const volatility = asset.type === 'crypto' ? 0.02 : 0.01;
-        const change = asset.price * (Math.random() * volatility * 2 - volatility);
-        return {
-          ...asset,
-          price: asset.price + change * 0.1,
-          change: change,
-          changePercent: (change / asset.price) * 100,
-        };
-      });
+      // Create a map for quick lookup
+      const updatedMap = new Map<string, Asset>();
+      updatedCrypto.forEach(a => updatedMap.set(a.id, a));
       
-      const allUpdated = [...updatedTopAssets, ...remainingAssets];
+      // Update all assets - use live data for fetched ones, simulate the rest
+      const allUpdated = currentAssets.map(asset => {
+        if (updatedMap.has(asset.id)) {
+          return updatedMap.get(asset.id)!;
+        }
+        return simulatePrice(asset);
+      });
       
       if (isMounted.current) {
         setAssets(allUpdated);
@@ -99,24 +123,31 @@ export default function Trade() {
       }
     } catch (err) {
       console.error('Batch refresh error:', err);
-      // Fallback to simulation
-      setAssets(prev => simulateAssetPrices(prev, 0.05));
     } finally {
-      if (isMounted.current) {
-        setIsLiveRefreshing(false);
-      }
+      isRefreshing.current = false;
     }
-  }, [assets]);
+  }, []); // Empty deps - uses refs instead
 
+  // Initialize assets
   useEffect(() => {
     isMounted.current = true;
     
+    // Validate and filter assets to ensure all have valid prices
+    const validAssets = ASSETS.filter(asset => 
+      asset && 
+      typeof asset.price === 'number' && 
+      !isNaN(asset.price) && 
+      asset.price > 0 &&
+      typeof asset.change === 'number' &&
+      typeof asset.changePercent === 'number'
+    );
+    
     const loadTimer = setTimeout(() => {
       if (!isMounted.current) return;
-      setAssets(ASSETS);
-      setSelectedAsset(ASSETS[0]);
+      setAssets(validAssets);
+      setSelectedAsset(validAssets[0] || null);
       setIsLoading(false);
-    }, 600);
+    }, 400);
 
     const updated = updatePositionPrices(portfolio);
     setPortfolio(updated);
@@ -128,15 +159,15 @@ export default function Trade() {
     };
   }, []);
 
-  // Auto-refresh every 30 seconds with live data
+  // Auto-refresh every 45 seconds with live data
   useEffect(() => {
     if (isLoading || assets.length === 0) return;
 
     // Initial refresh after load
-    const initialRefresh = setTimeout(refreshAllAssets, 1000);
+    const initialRefresh = setTimeout(refreshAllAssets, 2000);
     
-    // Set up 30-second interval
-    const refreshInterval = setInterval(refreshAllAssets, 30000);
+    // Set up 45-second interval for all assets
+    const refreshInterval = setInterval(refreshAllAssets, 45000);
 
     return () => {
       clearTimeout(initialRefresh);
@@ -144,12 +175,15 @@ export default function Trade() {
     };
   }, [isLoading, refreshAllAssets]);
 
+  // Update selected asset when assets change
   useEffect(() => {
     if (selectedAsset && isMounted.current && assets.length > 0) {
       const updated = assets.find(a => a.id === selectedAsset.id);
-      if (updated) setSelectedAsset(updated);
+      if (updated && updated.price !== selectedAsset.price) {
+        setSelectedAsset(updated);
+      }
     }
-  }, [assets]);
+  }, [assets, selectedAsset?.id]);
 
   const handleTrade = useCallback((
     asset: Asset,
@@ -162,9 +196,10 @@ export default function Trade() {
     
     if (result.success && result.portfolio) {
       setPortfolio(result.portfolio);
+      const priceStr = typeof asset.price === 'number' ? asset.price.toLocaleString() : 'N/A';
       toast({
         title: `${type === 'buy' ? '🟢' : '🔴'} Order Executed`,
-        description: `${type === 'buy' ? 'Bought' : 'Sold'} ${quantity.toFixed(4)} ${asset.symbol} at $${asset.price.toLocaleString()}`,
+        description: `${type === 'buy' ? 'Bought' : 'Sold'} ${quantity.toFixed(4)} ${asset.symbol} at $${priceStr}`,
       });
     } else {
       toast({
@@ -178,6 +213,10 @@ export default function Trade() {
   const handleToggleFavorite = useCallback((assetId: string) => {
     toggleFavorite(assetId);
     setFavorites(getFavorites());
+  }, []);
+
+  const handleAssetSelect = useCallback((asset: Asset) => {
+    setSelectedAsset(asset);
   }, []);
 
   return (
@@ -204,7 +243,7 @@ export default function Trade() {
                 assets={assets}
                 selectedAsset={selectedAsset}
                 favorites={favorites}
-                onSelectAsset={setSelectedAsset}
+                onSelectAsset={handleAssetSelect}
                 onToggleFavorite={handleToggleFavorite}
               />
               
@@ -212,8 +251,7 @@ export default function Trade() {
               <LiveDataToggle 
                 asset={selectedAsset}
                 onLiveDataReceived={(livePrice, isLive) => {
-                  if (isLive && selectedAsset) {
-                    // Update the selected asset with live price
+                  if (isLive && selectedAsset && typeof livePrice === 'number' && !isNaN(livePrice) && livePrice > 0) {
                     setAssets(prev => prev.map(a => 
                       a.id === selectedAsset.id 
                         ? { ...a, price: livePrice }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Wifi, WifiOff, RefreshCw, Clock } from "lucide-react";
@@ -16,16 +16,41 @@ export function LiveDataToggle({ asset, onLiveDataReceived }: LiveDataToggleProp
   const [isLoading, setIsLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
+  
+  // Use refs to avoid stale closures and infinite loops
+  const assetRef = useRef(asset);
+  const onLiveDataReceivedRef = useRef(onLiveDataReceived);
+  const isLiveModeRef = useRef(isLiveMode);
+  
+  // Keep refs updated
+  useEffect(() => {
+    assetRef.current = asset;
+  }, [asset]);
+  
+  useEffect(() => {
+    onLiveDataReceivedRef.current = onLiveDataReceived;
+  }, [onLiveDataReceived]);
+  
+  useEffect(() => {
+    isLiveModeRef.current = isLiveMode;
+  }, [isLiveMode]);
 
-  const fetchLiveData = useCallback(async () => {
-    if (!asset || !isLiveMode) return;
+  const fetchLiveData = async () => {
+    const currentAsset = assetRef.current;
+    if (!currentAsset || !isLiveModeRef.current) return;
+    
+    // Validate price before making request
+    if (typeof currentAsset.price !== 'number' || isNaN(currentAsset.price)) {
+      console.log(`Skipping live fetch for ${currentAsset.symbol}: invalid price`);
+      return;
+    }
 
     setIsLoading(true);
     setError(null);
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${currentAsset.id}&type=${currentAsset.type}&basePrice=${currentAsset.price}&dataType=quote`,
         {
           headers: {
             'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
@@ -40,13 +65,13 @@ export function LiveDataToggle({ asset, onLiveDataReceived }: LiveDataToggleProp
 
       const result = await response.json();
 
-      if (result.success && result.data) {
+      if (result.success && result.data && typeof result.data.price === 'number' && !isNaN(result.data.price)) {
         const isLive = result.data.source === 'live';
         setIsConnected(isLive);
         setLastUpdate(new Date());
         
-        if (onLiveDataReceived) {
-          onLiveDataReceived(result.data.price, isLive);
+        if (onLiveDataReceivedRef.current) {
+          onLiveDataReceivedRef.current(result.data.price, isLive);
         }
       } else {
         setIsConnected(false);
@@ -58,22 +83,28 @@ export function LiveDataToggle({ asset, onLiveDataReceived }: LiveDataToggleProp
     } finally {
       setIsLoading(false);
     }
-  }, [asset, isLiveMode, onLiveDataReceived]);
+  };
 
-  // Fetch on mount and when asset changes
+  // Fetch on mount and when asset ID changes (not the whole asset object)
   useEffect(() => {
-    if (isLiveMode && asset) {
-      fetchLiveData();
-      
-      // Refresh every 30 seconds when in live mode
-      const interval = setInterval(fetchLiveData, 30000);
-      return () => clearInterval(interval);
-    }
-  }, [asset?.id, isLiveMode, fetchLiveData]);
+    if (!isLiveMode || !asset?.id) return;
+    
+    // Initial fetch with small delay to prevent race conditions
+    const initialTimer = setTimeout(fetchLiveData, 500);
+    
+    // Refresh every 30 seconds when in live mode
+    const interval = setInterval(fetchLiveData, 30000);
+    
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(interval);
+    };
+  }, [asset?.id, isLiveMode]);
 
   const toggleLiveMode = () => {
-    setIsLiveMode(prev => !prev);
-    if (!isLiveMode) {
+    const newMode = !isLiveMode;
+    setIsLiveMode(newMode);
+    if (newMode) {
       // Turning on - trigger immediate fetch
       setTimeout(fetchLiveData, 100);
     } else {
@@ -89,6 +120,13 @@ export function LiveDataToggle({ asset, onLiveDataReceived }: LiveDataToggleProp
     const minutes = Math.floor(seconds / 60);
     return `${minutes}m ago`;
   };
+
+  // Update time display every 5 seconds
+  const [, forceUpdate] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => forceUpdate(n => n + 1), 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="flex items-center gap-3">
