@@ -24,9 +24,82 @@ export default function Trade() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLiveRefreshing, setIsLiveRefreshing] = useState(false);
   const { toast } = useToast();
   
   const isMounted = useRef(true);
+
+  // Function to fetch live data for an asset
+  const fetchLivePrice = async (asset: Asset): Promise<Asset> => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+        {
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.data) {
+          return {
+            ...asset,
+            price: result.data.price,
+            change: result.data.change24h,
+            changePercent: result.data.changePercent24h,
+          };
+        }
+      }
+    } catch (err) {
+      console.log(`Live fetch failed for ${asset.symbol}, using simulation`);
+    }
+    return asset;
+  };
+
+  // Batch refresh all assets with live data
+  const refreshAllAssets = useCallback(async () => {
+    if (!isMounted.current || assets.length === 0) return;
+    
+    setIsLiveRefreshing(true);
+    
+    try {
+      // Fetch live data for top 20 assets in parallel (rate limit friendly)
+      const topAssets = assets.slice(0, 20);
+      const updatedTopAssets = await Promise.all(
+        topAssets.map(asset => fetchLivePrice(asset))
+      );
+      
+      // Simulate remaining assets with 2026 baseline
+      const remainingAssets = assets.slice(20).map(asset => {
+        const volatility = asset.type === 'crypto' ? 0.02 : 0.01;
+        const change = asset.price * (Math.random() * volatility * 2 - volatility);
+        return {
+          ...asset,
+          price: asset.price + change * 0.1,
+          change: change,
+          changePercent: (change / asset.price) * 100,
+        };
+      });
+      
+      const allUpdated = [...updatedTopAssets, ...remainingAssets];
+      
+      if (isMounted.current) {
+        setAssets(allUpdated);
+        setLastUpdateTime(new Date());
+      }
+    } catch (err) {
+      console.error('Batch refresh error:', err);
+      // Fallback to simulation
+      setAssets(prev => simulateAssetPrices(prev, 0.05));
+    } finally {
+      if (isMounted.current) {
+        setIsLiveRefreshing(false);
+      }
+    }
+  }, [assets]);
 
   useEffect(() => {
     isMounted.current = true;
@@ -42,23 +115,27 @@ export default function Trade() {
     setPortfolio(updated);
     setFavorites(getFavorites());
 
-    const priceInterval = setInterval(() => {
-      if (!isMounted.current) return;
-      
-      setAssets(prev => {
-        if (prev.length === 0) return prev;
-        const updated = simulateAssetPrices(prev, 0.05);
-        return updated;
-      });
-      setLastUpdateTime(new Date());
-    }, 3000);
-
     return () => {
       isMounted.current = false;
       clearTimeout(loadTimer);
-      clearInterval(priceInterval);
     };
   }, []);
+
+  // Auto-refresh every 30 seconds with live data
+  useEffect(() => {
+    if (isLoading || assets.length === 0) return;
+
+    // Initial refresh after load
+    const initialRefresh = setTimeout(refreshAllAssets, 1000);
+    
+    // Set up 30-second interval
+    const refreshInterval = setInterval(refreshAllAssets, 30000);
+
+    return () => {
+      clearTimeout(initialRefresh);
+      clearInterval(refreshInterval);
+    };
+  }, [isLoading, refreshAllAssets]);
 
   useEffect(() => {
     if (selectedAsset && isMounted.current && assets.length > 0) {
