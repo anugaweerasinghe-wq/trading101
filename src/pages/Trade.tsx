@@ -9,6 +9,7 @@ import { MinimalistPortfolioBar } from "@/components/trading/MinimalistPortfolio
 import { AIMentor } from "@/components/trading/AIMentor";
 import { ChartSkeleton } from "@/components/trading/ChartSkeleton";
 import { MobileOrderDrawer } from "@/components/trading/MobileOrderDrawer";
+import { LiveDataToggle } from "@/components/trading/LiveDataToggle";
 import { MegaFooter } from "@/components/MegaFooter";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
@@ -112,15 +113,32 @@ export default function Trade() {
 
         {/* Main Content */}
         <div className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl">
-          {/* Section 1: Asset Search & Portfolio Bar */}
+          {/* Section 1: Asset Search, Live Toggle & Portfolio Bar */}
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-            <AssetSearchDropdown
-              assets={assets}
-              selectedAsset={selectedAsset}
-              favorites={favorites}
-              onSelectAsset={setSelectedAsset}
-              onToggleFavorite={handleToggleFavorite}
-            />
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+              <AssetSearchDropdown
+                assets={assets}
+                selectedAsset={selectedAsset}
+                favorites={favorites}
+                onSelectAsset={setSelectedAsset}
+                onToggleFavorite={handleToggleFavorite}
+              />
+              
+              {/* Live Data Toggle with WiFi indicator */}
+              <LiveDataToggle 
+                asset={selectedAsset}
+                onLiveDataReceived={(livePrice, isLive) => {
+                  if (isLive && selectedAsset) {
+                    // Update the selected asset with live price
+                    setAssets(prev => prev.map(a => 
+                      a.id === selectedAsset.id 
+                        ? { ...a, price: livePrice }
+                        : a
+                    ));
+                  }
+                }}
+              />
+            </div>
             
             <div className="w-full lg:w-auto lg:flex-1 lg:max-w-2xl">
               <MinimalistPortfolioBar portfolio={portfolio} />

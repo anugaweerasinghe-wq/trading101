@@ -303,9 +303,9 @@ export const ASSETS: Asset[] = [
     symbol: 'GOOGL',
     name: 'Alphabet Inc.',
     type: 'stock',
-    price: 141.80,
-    change: 1.95,
-    changePercent: 1.39,
+    price: 335.00, // 2026 Truth Sheet value
+    change: 4.25,
+    changePercent: 1.29,
   },
   {
     id: 'amzn',
