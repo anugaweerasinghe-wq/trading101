@@ -37,6 +37,15 @@ const SECTORS = {
     keywords: ["mega-cap stocks", "blue chip investing", "FAANG stocks", "big tech"],
     color: "text-profit"
   },
+  "tech-giants": {
+    name: "Tech Giants",
+    slug: "tech-giants",
+    description: "The technology sector titans shaping our digital future. From search and social media to cloud computing and e-commerce, these companies dominate the global technology landscape in 2026.",
+    icon: Building2,
+    assetIds: ["aapl", "msft", "googl", "amzn", "meta", "nflx", "orcl", "adbe", "crm", "csco"],
+    keywords: ["tech stocks", "big tech investing", "technology giants", "FAANG+"],
+    color: "text-primary"
+  },
   "forex-currencies": {
     name: "Forex & Currencies",
     slug: "forex-currencies",
