@@ -177,17 +177,19 @@ export function AssetSearchDropdown({
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium tabular-nums">${asset.price.toLocaleString()}</p>
+                    <p className="font-medium tabular-nums">
+                      ${typeof asset.price === 'number' ? asset.price.toLocaleString() : '—'}
+                    </p>
                     <p className={cn(
                       "text-xs tabular-nums flex items-center gap-1 justify-end",
-                      asset.changePercent >= 0 ? "text-profit" : "text-loss"
+                      (asset.changePercent ?? 0) >= 0 ? "text-profit" : "text-loss"
                     )}>
-                      {asset.changePercent >= 0 ? (
+                      {(asset.changePercent ?? 0) >= 0 ? (
                         <TrendingUp className="w-3 h-3" />
                       ) : (
                         <TrendingDown className="w-3 h-3" />
                       )}
-                      {asset.changePercent >= 0 ? '+' : ''}{asset.changePercent.toFixed(2)}%
+                      {(asset.changePercent ?? 0) >= 0 ? '+' : ''}{(asset.changePercent ?? 0).toFixed(2)}%
                     </p>
                   </div>
                 </button>
