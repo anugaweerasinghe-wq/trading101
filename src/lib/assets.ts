@@ -11,27 +11,27 @@ export const ASSETS: Asset[] = [
     symbol: 'BTC',
     name: 'Bitcoin',
     type: 'crypto',
-    price: 43250.00,
-    change: 1250.00,
-    changePercent: 2.98,
+    price: 105420.00, // 2026 estimate
+    change: 2850.00,
+    changePercent: 2.78,
   },
   {
     id: 'eth',
     symbol: 'ETH',
     name: 'Ethereum',
     type: 'crypto',
-    price: 2580.50,
-    change: 85.20,
-    changePercent: 3.41,
+    price: 3850.00, // 2026 estimate
+    change: 125.50,
+    changePercent: 3.37,
   },
   {
     id: 'sol',
     symbol: 'SOL',
     name: 'Solana',
     type: 'crypto',
-    price: 98.45,
-    change: 5.80,
-    changePercent: 6.26,
+    price: 248.50, // 2026 estimate
+    change: 14.80,
+    changePercent: 6.33,
   },
   {
     id: 'bnb',
@@ -321,9 +321,9 @@ export const ASSETS: Asset[] = [
     symbol: 'NVDA',
     name: 'NVIDIA Corporation',
     type: 'stock',
-    price: 495.22,
-    change: 12.80,
-    changePercent: 2.65,
+    price: 142.50, // 2026 estimate post-split adjusted
+    change: 3.85,
+    changePercent: 2.78,
   },
   {
     id: 'tsla',
