@@ -11,9 +11,9 @@ export const ASSETS: Asset[] = [
     symbol: 'BTC',
     name: 'Bitcoin',
     type: 'crypto',
-    price: 105420.00, // 2026 estimate
-    change: 2850.00,
-    changePercent: 2.78,
+    price: 95000.00, // Feb 1, 2026 Truth Sheet
+    change: 1850.00,
+    changePercent: 1.99,
   },
   {
     id: 'eth',
@@ -285,9 +285,9 @@ export const ASSETS: Asset[] = [
     symbol: 'AAPL',
     name: 'Apple Inc.',
     type: 'stock',
-    price: 185.92,
-    change: 2.45,
-    changePercent: 1.34,
+    price: 255.25, // Feb 1, 2026 Truth Sheet
+    change: 3.45,
+    changePercent: 1.37,
   },
   {
     id: 'msft',
@@ -303,9 +303,9 @@ export const ASSETS: Asset[] = [
     symbol: 'GOOGL',
     name: 'Alphabet Inc.',
     type: 'stock',
-    price: 335.00, // 2026 Truth Sheet value
-    change: 4.25,
-    changePercent: 1.29,
+    price: 338.58, // Feb 1, 2026 Truth Sheet
+    change: 4.58,
+    changePercent: 1.37,
   },
   {
     id: 'amzn',
@@ -321,9 +321,9 @@ export const ASSETS: Asset[] = [
     symbol: 'NVDA',
     name: 'NVIDIA Corporation',
     type: 'stock',
-    price: 142.50, // 2026 estimate post-split adjusted
-    change: 3.85,
-    changePercent: 2.78,
+    price: 190.20, // Feb 1, 2026 Truth Sheet
+    change: 5.20,
+    changePercent: 2.81,
   },
   {
     id: 'tsla',
@@ -1367,6 +1367,16 @@ export const ASSETS: Asset[] = [
     price: 2245.80,
     change: 18.50,
     changePercent: 0.83,
+  },
+  // Micro E-mini Nasdaq-100 (Futures)
+  {
+    id: 'mnq',
+    symbol: '/MNQ',
+    name: 'Micro E-mini Nasdaq-100',
+    type: 'etf',
+    price: 26160.00, // Feb 1, 2026 Truth Sheet
+    change: 185.50,
+    changePercent: 0.71,
   },
 ];
 
