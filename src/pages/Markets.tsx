@@ -299,7 +299,7 @@ export default function Markets() {
                       <Link 
                         key={asset.id} 
                         to={`/trade/${asset.id}`}
-                        className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full 
+                        className="inline-flex items-center min-h-[44px] px-4 py-2 text-xs font-medium rounded-full 
                           bg-white/5 backdrop-blur-xl border border-white/10 
                           text-foreground/80 hover:text-foreground
                           hover:bg-white/10 hover:border-white/20 
@@ -315,10 +315,10 @@ export default function Markets() {
           </div>
         </div>
       </div>
-
-      {/* Mega Footer */}
-      <MegaFooter />
     </div>
+
+    {/* Mega Footer - Outside the flex container */}
+    <MegaFooter />
     </>
   );
 }

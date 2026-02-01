@@ -444,7 +444,7 @@ export default function TradeAsset() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-foreground">Reviewed by TradeHQ Research Team</p>
-                    <p className="text-xs text-muted-foreground">Last Updated: January 2026 • Expert Verified</p>
+                    <p className="text-xs text-muted-foreground">Last Updated: February 1, 2026 • Expert Verified</p>
                   </div>
                 </div>
                 <div className="hidden sm:flex items-center gap-1 px-3 py-1 rounded-full bg-profit/10 text-profit text-xs font-medium">
