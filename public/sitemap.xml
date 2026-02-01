@@ -110,7 +110,7 @@
   <url><loc>https://tradinghq.vercel.app/trade/mcd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/nke</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
   
-  <!-- ETFs (21 - added MNQ) -->
+  <!-- ETFs (21 - includes MNQ) -->
   <url><loc>https://tradinghq.vercel.app/trade/spy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.90</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/qqq</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/mnq</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
@@ -133,30 +133,32 @@
   <url><loc>https://tradinghq.vercel.app/trade/botz</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/soxx</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
   
-  <!-- FOREX (15) -->
-  <url><loc>https://tradinghq.vercel.app/trade/eur-usd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/gbp-usd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/usd-jpy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/usd-chf</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.75</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/aud-usd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.75</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/usd-cad</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/eur-jpy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/eur-gbp</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/gbp-jpy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/nzd-usd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
+  <!-- FOREX (15) - Using asset IDs without hyphens to match assets.ts -->
+  <url><loc>https://tradinghq.vercel.app/trade/eurusd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/gbpusd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/usdjpy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/usdchf</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.75</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/audusd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.75</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/usdcad</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/eurjpy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/eurgbp</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/nzdusd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/gbpjpy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/audjpy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/euraud</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/eurchf</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/chfjpy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/cadjpy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
   
-  <!-- COMMODITIES (15) -->
+  <!-- COMMODITIES (10) -->
   <url><loc>https://tradinghq.vercel.app/trade/gold</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/silver</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/oil</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/silver</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/natgas</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.75</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/copper</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.75</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/platinum</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/wheat</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/corn</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/coffee</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/palladium</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/soybeans</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/sugar</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/palladium</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/copper</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/wheat</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
+  <url><loc>https://tradinghq.vercel.app/trade/corn</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/cotton</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
 </urlset>

@@ -68,9 +68,9 @@ export function MegaFooter() {
       title: "Forex Pairs",
       icon: Globe,
       assets: [
-        { symbol: "EUR/USD", name: "Euro/Dollar", path: "/trade/eur-usd" },
-        { symbol: "GBP/USD", name: "Pound/Dollar", path: "/trade/gbp-usd" },
-        { symbol: "USD/JPY", name: "Dollar/Yen", path: "/trade/usd-jpy" },
+        { symbol: "EUR/USD", name: "Euro/Dollar", path: "/trade/eurusd" },
+        { symbol: "GBP/USD", name: "Pound/Dollar", path: "/trade/gbpusd" },
+        { symbol: "USD/JPY", name: "Dollar/Yen", path: "/trade/usdjpy" },
       ]
     },
     commodities: {
