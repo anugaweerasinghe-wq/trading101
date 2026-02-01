@@ -27,6 +27,7 @@ import {
   getAssetContent, 
   generateAssetMetaTitle, 
   generateAssetMetaDescription,
+  generateMarketOutlook,
   isInSeedSet,
   getAssetColor,
   getAssetFAQs
@@ -141,7 +142,7 @@ export default function TradeAsset() {
   const metaTitle = selectedAsset ? generateAssetMetaTitle(selectedAsset) : "Trade | TradeHQ";
   const metaDescription = selectedAsset ? generateAssetMetaDescription(selectedAsset) : "";
   const canonicalUrl = selectedAsset 
-    ? `https://tradinghq.vercel.app/trade/${selectedAsset.symbol.toLowerCase().replace('/', '-')}`
+    ? `https://tradinghq.vercel.app/trade/${selectedAsset.id}`
     : "https://tradinghq.vercel.app/trade";
   const assetColor = selectedAsset ? getAssetColor(selectedAsset.id) : '#00FFFF';
 
@@ -161,6 +162,10 @@ export default function TradeAsset() {
     },
     "review": {
       "@type": "Review",
+      "itemReviewed": {
+        "@type": "FinancialProduct",
+        "name": `${selectedAsset.name} Trading Simulator`
+      },
       "reviewRating": {
         "@type": "Rating",
         "ratingValue": "4.9",
@@ -297,9 +302,9 @@ export default function TradeAsset() {
   // Only render SEO content blocks for seed assets
   const showSeoBlocks = selectedAsset && isInSeedSet(selectedAsset.id);
 
-  // Breadcrumb items
+  // Breadcrumb items - link back to Markets hub
   const breadcrumbItems = selectedAsset ? [
-    { label: "Trade", href: "/trade" },
+    { label: "Markets", href: "/markets" },
     { label: selectedAsset.name }
   ] : [];
 
@@ -370,6 +375,13 @@ export default function TradeAsset() {
         <div className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl">
           {/* Breadcrumb Navigation */}
           {selectedAsset && <Breadcrumb items={breadcrumbItems} />}
+          
+          {/* Dynamic H1 for SEO - Every asset page must have an H1 */}
+          {selectedAsset && (
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+              {selectedAsset.name} 2026 Live Market Analysis
+            </h1>
+          )}
           
           {/* AI-Ready Summary for GEO (Generative Engine Optimization) */}
           {selectedAsset && showSeoBlocks && (
@@ -442,13 +454,27 @@ export default function TradeAsset() {
             </>
           )}
 
-          {/* FAQ Section - Accordion with Schema Markup */}
+          {/* FAQ Section - Accordion (JSON-LD schema is in head) */}
           {selectedAsset && assetFAQs.length > 0 && (
             <AssetFAQSection 
               assetName={selectedAsset.name}
               assetSymbol={selectedAsset.symbol}
               faqs={assetFAQs}
             />
+          )}
+
+          {/* Market Strategic Outlook - 300+ words for every asset */}
+          {selectedAsset && (
+            <section className="mt-8 p-6 bg-card/30 backdrop-blur-xl rounded-2xl border border-border/30">
+              <h2 className="text-lg font-semibold text-foreground mb-4">
+                {selectedAsset.symbol} Market Strategic Outlook 2026
+              </h2>
+              <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                {generateMarketOutlook(selectedAsset).split('\n\n').map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
+            </section>
           )}
 
           {/* Related Assets Section - Internal Linking */}

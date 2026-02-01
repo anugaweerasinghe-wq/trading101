@@ -21,11 +21,7 @@ export function AssetFAQSection({ assetName, assetSymbol, faqs }: AssetFAQSectio
   if (faqs.length === 0) return null;
 
   return (
-    <section 
-      className="mt-8"
-      itemScope 
-      itemType="https://schema.org/FAQPage"
-    >
+    <section className="mt-8" aria-label="Frequently Asked Questions">
       <div className="flex items-center gap-2 mb-4">
         <HelpCircle className="w-5 h-5 text-primary" />
         <h3 className="text-lg font-semibold text-foreground">
@@ -40,28 +36,14 @@ export function AssetFAQSection({ assetName, assetSymbol, faqs }: AssetFAQSectio
               key={index} 
               value={`faq-${index}`}
               className="border-b border-white/5 last:border-b-0"
-              itemScope
-              itemProp="mainEntity"
-              itemType="https://schema.org/Question"
             >
               <AccordionTrigger className="px-6 py-4 text-left hover:no-underline hover:bg-white/5 transition-colors">
-                <span 
-                  className="text-sm font-medium text-foreground pr-4"
-                  itemProp="name"
-                >
+                <span className="text-sm font-medium text-foreground pr-4">
                   {faq.question}
                 </span>
               </AccordionTrigger>
-              <AccordionContent 
-                className="px-6 pb-4"
-                itemScope
-                itemProp="acceptedAnswer"
-                itemType="https://schema.org/Answer"
-              >
-                <p 
-                  className="text-sm text-muted-foreground leading-relaxed"
-                  itemProp="text"
-                >
+              <AccordionContent className="px-6 pb-4">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {faq.answer}
                 </p>
               </AccordionContent>
@@ -69,29 +51,6 @@ export function AssetFAQSection({ assetName, assetSymbol, faqs }: AssetFAQSectio
           ))}
         </Accordion>
       </div>
-      
-      {/* Hidden structured data for non-JS browsers */}
-      <noscript>
-        <div itemScope itemType="https://schema.org/FAQPage">
-          {faqs.map((faq, index) => (
-            <div 
-              key={index}
-              itemScope 
-              itemProp="mainEntity" 
-              itemType="https://schema.org/Question"
-            >
-              <h4 itemProp="name">{faq.question}</h4>
-              <div 
-                itemScope 
-                itemProp="acceptedAnswer" 
-                itemType="https://schema.org/Answer"
-              >
-                <p itemProp="text">{faq.answer}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </noscript>
     </section>
   );
 }

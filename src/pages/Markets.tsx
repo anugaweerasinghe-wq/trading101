@@ -129,7 +129,7 @@ export default function Markets() {
                 {gainers.map((asset, i) => (
                   <Link
                     key={asset.id}
-                    to="/trade"
+                    to={`/trade/${asset.id}`}
                     className="flex items-center justify-between p-2.5 md:p-2 rounded-lg hover:bg-accent/50 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
                   >
                     <div className="flex items-center gap-2 md:gap-3">
@@ -159,7 +159,7 @@ export default function Markets() {
                 {losers.map((asset, i) => (
                   <Link
                     key={asset.id}
-                    to="/trade"
+                    to={`/trade/${asset.id}`}
                     className="flex items-center justify-between p-2.5 md:p-2 rounded-lg hover:bg-accent/50 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
                   >
                     <div className="flex items-center gap-2 md:gap-3">
@@ -252,7 +252,7 @@ export default function Markets() {
 
                         <div className="col-span-2 md:col-span-1 mt-2 md:mt-0 flex items-center">
                           <Link
-                            to="/trade"
+                            to={`/trade/${asset.id}`}
                             className="inline-flex items-center justify-center w-full md:w-auto px-3 md:px-4 py-1.5 text-[10px] md:text-xs font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 hover:scale-105 active:scale-95"
                           >
                             Trade
@@ -266,44 +266,52 @@ export default function Markets() {
             </Tabs>
           </div>
 
-          {/* Internal Links Section for SEO */}
-          <div className="bg-card rounded-xl border border-border p-4 md:p-6 mt-6">
-            <h2 className="font-semibold text-sm md:text-base mb-4">🔥 Most Traded Assets</h2>
-            <p className="text-xs text-muted-foreground mb-4">
-              Jump directly to our most popular trading simulations:
+          {/* Complete Asset Directory for SEO Crawlability */}
+          <div className="bg-card/50 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6 mt-6">
+            <h2 className="font-semibold text-base md:text-lg mb-2">
+              📊 Complete Asset Directory
+            </h2>
+            <p className="text-xs text-muted-foreground mb-6">
+              Trade all {assets.length}+ assets with $10K virtual capital. 
+              Select any market below to start practicing:
             </p>
-            <div className="flex flex-wrap gap-2">
-              <Link
-                to="/trade/btc"
-                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                Bitcoin (BTC)
-              </Link>
-              <Link
-                to="/trade/eth"
-                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                Ethereum (ETH)
-              </Link>
-              <Link
-                to="/trade/nvda"
-                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                NVIDIA (NVDA)
-              </Link>
-              <Link
-                to="/trade/aapl"
-                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                Apple (AAPL)
-              </Link>
-              <Link
-                to="/trade/sol"
-                className="inline-flex items-center px-4 py-2 text-xs font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
-              >
-                Solana (SOL)
-              </Link>
-            </div>
+            
+            {/* Grouped by asset type */}
+            {(['crypto', 'stock', 'etf', 'forex', 'commodity'] as const).map(type => {
+              const typeAssets = assets.filter(a => a.type === type);
+              if (typeAssets.length === 0) return null;
+              
+              const typeLabels: Record<string, string> = {
+                crypto: '₿ Cryptocurrencies',
+                stock: '📈 Stocks',
+                etf: '📊 ETFs',
+                forex: '💱 Forex',
+                commodity: '🏆 Commodities'
+              };
+              
+              return (
+                <div key={type} className="mb-6 last:mb-0">
+                  <h3 className="text-sm font-medium text-foreground mb-3">
+                    {typeLabels[type]}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {typeAssets.map(asset => (
+                      <Link 
+                        key={asset.id} 
+                        to={`/trade/${asset.id}`}
+                        className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full 
+                          bg-white/5 backdrop-blur-xl border border-white/10 
+                          text-foreground/80 hover:text-foreground
+                          hover:bg-white/10 hover:border-white/20 
+                          transition-all duration-200 hover:scale-[1.02]"
+                      >
+                        {asset.symbol}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

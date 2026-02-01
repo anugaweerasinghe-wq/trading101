@@ -709,6 +709,18 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       units: "Pounds",
       source: "COMEX"
     }
+  },
+  // Micro E-mini Nasdaq-100 (Futures)
+  mnq: {
+    whatIs: "The Micro E-mini Nasdaq-100 (/MNQ) is a futures contract tracking the Nasdaq-100 index at 1/10th the size of the standard E-mini. It provides leveraged exposure to the 100 largest non-financial companies on Nasdaq, dominated by technology giants.",
+    strategy: "Practice futures trading with /MNQ to understand leverage, margin requirements, and contract rollovers. Monitor tech earnings season and Fed rate decisions as key drivers. (Educational simulation only — not financial advice.)",
+    category: "Futures",
+    keywords: ["MNQ trading", "micro futures", "Nasdaq-100 futures", "tech index"],
+    stats: {
+      assetClass: "Futures",
+      benchmark: "Nasdaq-100",
+      source: "CME Group"
+    }
   }
 };
 
@@ -783,9 +795,9 @@ export function truncateMetaDescription(text: string, maxLength: number = 155): 
 
 // Generate meta description (120-155 chars) - Custom for top 5, fallback for others
 export function generateAssetMetaDescription(asset: Asset): string {
-  // Priority assets get custom CTR-optimized descriptions
+  // Priority assets get custom CTR-optimized descriptions - ensure 155 char truncation
   if (CUSTOM_META_DESCRIPTIONS[asset.id]) {
-    return CUSTOM_META_DESCRIPTIONS[asset.id];
+    return truncateMetaDescription(CUSTOM_META_DESCRIPTIONS[asset.id], 155);
   }
   
   // Fallback for other assets
@@ -799,7 +811,41 @@ export function generateAssetMetaDescription(asset: Asset): string {
     description = `Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $10K demo cash, real-time charts, and AI mentoring. No signup needed!`;
   }
   
+  // ALWAYS enforce 155 character limit
   return truncateMetaDescription(description, 155);
+}
+
+// Generate 300+ word Market Strategic Outlook for SEO content
+export function generateMarketOutlook(asset: Asset): string {
+  const content = ASSET_CONTENT[asset.id];
+  const typeLabel = asset.type === 'crypto' ? 'cryptocurrency' 
+    : asset.type === 'etf' ? 'ETF' 
+    : asset.type === 'forex' ? 'currency pair'
+    : asset.type;
+  
+  // Introduction paragraph
+  const intro = `${asset.name} (${asset.symbol}) represents a ${content?.category || typeLabel} opportunity in the 2026 market environment. As global markets continue to evolve with technological advancement and shifting macroeconomic conditions, understanding ${asset.symbol}'s price dynamics becomes increasingly important for traders seeking to develop their skills.`;
+  
+  // Fundamentals paragraph
+  const fundamentals = content?.whatIs 
+    ? `${content.whatIs} This foundational understanding helps traders contextualize price movements and identify potential catalysts for volatility.`
+    : `${asset.name} is available for practice trading in the TradeHQ simulator. Understanding the fundamental drivers of this asset helps traders make more informed decisions about entry and exit points.`;
+  
+  // Strategy paragraph
+  const strategy = content?.strategy 
+    ? content.strategy
+    : `Develop your ${asset.symbol} trading strategy by analyzing chart patterns, support and resistance levels, and market sentiment indicators. Consider using multiple timeframes to confirm trends and identify optimal entry points. Technical analysis combined with awareness of broader market conditions can improve trading outcomes.`;
+  
+  // Risk management paragraph
+  const riskManagement = `Risk management is critical when trading ${asset.symbol}. Consider position sizing relative to your virtual portfolio, set appropriate stop-loss levels, and never risk more than 2% of capital on a single trade. Understanding volatility patterns specific to ${asset.symbol} helps set realistic profit targets and loss limits. Paper trading allows you to practice these risk management techniques without financial consequences.`;
+  
+  // Practice advice paragraph
+  const practiceAdvice = `TradeHQ provides $10,000 in virtual capital to practice ${asset.symbol} trading. Use this simulator to test strategies, learn technical analysis, and build confidence before committing real capital. Track your performance over time and refine your approach based on results. The ability to practice without financial risk accelerates the learning curve for new traders while helping experienced traders test new strategies.`;
+  
+  // Educational disclaimer paragraph
+  const disclaimer = `This analysis is for educational purposes only. Past simulated performance does not guarantee future results. Market conditions can change rapidly, and all trading involves risk of loss. Always conduct your own research and consult a qualified financial advisor before making investment decisions. TradeHQ is a practice simulator designed to help you develop skills in a risk-free environment.`;
+  
+  return `${intro}\n\n${fundamentals}\n\n${strategy}\n\n${riskManagement}\n\n${practiceAdvice}\n\n${disclaimer}`;
 }
 
 // Get asset content or generate fallback
