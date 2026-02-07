@@ -154,7 +154,7 @@ export function MegaFooter() {
               </span>
             </Link>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-              The #1 AI-powered trading simulator for 2026. Practice with $10K virtual capital 
+              An AI-powered trading simulator for 2026. Practice with $10K virtual capital 
               and master stocks, crypto, forex, and commodities risk-free.
             </p>
             
@@ -250,8 +250,8 @@ export function MegaFooter() {
                   <CheckCircle2 className="w-5 h-5 text-profit" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-foreground">Expert Reviewed</p>
-                  <p className="text-xs text-muted-foreground">Content verified by pros</p>
+                  <p className="text-sm font-medium text-foreground">Educational Simulator</p>
+                  <p className="text-xs text-muted-foreground">Practice trading skills</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -259,8 +259,8 @@ export function MegaFooter() {
                   <Award className="w-5 h-5 text-secondary" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-foreground">#1 Simulator 2026</p>
-                  <p className="text-xs text-muted-foreground">Trusted by 50K+ traders</p>
+                  <p className="text-sm font-medium text-foreground">150+ Assets</p>
+                  <p className="text-xs text-muted-foreground">Stocks, crypto, ETFs, forex</p>
                 </div>
               </div>
             </div>

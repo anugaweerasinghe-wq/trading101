@@ -100,7 +100,7 @@ export function AIReadySummary({ asset }: AIReadySummaryProps) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-2 flex-wrap">
             <h2 className="text-sm font-semibold text-foreground">
-              Should I Trade {asset.symbol} Today? — 2026 Strategy Snapshot
+              Practice Trading {asset.symbol} — Simulator Snapshot
             </h2>
             <span className={cn(
               "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium",
@@ -117,12 +117,7 @@ export function AIReadySummary({ asset }: AIReadySummaryProps) {
           </p>
           
           <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground/70">
-            <span className="flex items-center gap-1">
-              <span className="font-medium">Simulation Confidence:</span>
-              <span className={config.color}>{confidence}%</span>
-            </span>
-            <span>•</span>
-            <span>Updated: Just now</span>
+            <span>Simulated data — not real market conditions</span>
             <span>•</span>
             <span className="italic">Educational simulation only</span>
           </div>

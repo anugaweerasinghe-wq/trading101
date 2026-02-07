@@ -177,10 +177,7 @@ export default function TradeAsset() {
     "name": "TradeHQ",
     "url": "https://tradinghq.vercel.app/",
     "logo": "https://tradinghq.vercel.app/og-image.png",
-    "sameAs": [
-      "https://twitter.com/tradinghq",
-      "https://linkedin.com/company/tradinghq"
-    ]
+    
   };
 
   // FAQ Schema - only if real FAQs exist
@@ -198,7 +195,7 @@ export default function TradeAsset() {
       "name": `How can I practice trading ${selectedAsset.name}?`,
       "acceptedAnswer": {
         "@type": "Answer" as const,
-        "text": `TradeHQ provides $10,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with real-time charts and AI mentoring.`
+        "text": `TradeHQ provides $10,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and AI mentoring.`
       }
     }
   ] : [];
@@ -303,9 +300,14 @@ export default function TradeAsset() {
           {selectedAsset && <Breadcrumb items={breadcrumbItems} />}
           
           {selectedAsset && (
-            <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-              {selectedAsset.name} 2026 Live Market Analysis
-            </h1>
+            <>
+              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+                {selectedAsset.name} — Practice Trading Simulator 2026
+              </h1>
+              <p className="text-sm text-muted-foreground mb-4">
+                Use the TradeHQ simulator to practice {selectedAsset.symbol} trading with $10,000 in virtual capital. Learn to read charts, manage risk, and build strategies — all without risking real money.
+              </p>
+            </>
           )}
 
           {/* GEO Key Takeaways - machine-readable for AI Overviews */}
@@ -358,23 +360,7 @@ export default function TradeAsset() {
             <AssetIntelligenceWithLiveData asset={selectedAsset} />
           )}
 
-          {/* EEAT Byline - shown for ALL asset pages */}
-          {selectedAsset && (
-            <div className="flex items-center justify-between p-4 rounded-xl bg-card/30 border border-border/30">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-xs font-bold text-primary">TR</span>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">Reviewed by TradeHQ Research Team</p>
-                  <p className="text-xs text-muted-foreground">Last Updated: February 7, 2026 • Expert Verified</p>
-                </div>
-              </div>
-              <div className="hidden sm:flex items-center gap-1 px-3 py-1 rounded-full bg-profit/10 text-profit text-xs font-medium">
-                ✓ Editorial Oversight
-              </div>
-            </div>
-          )}
+          {/* Educational disclaimer - inline */}
 
           {selectedAsset && assetFAQs.length > 0 && (
             <AssetFAQSection 
@@ -388,7 +374,7 @@ export default function TradeAsset() {
           {selectedAsset && (
             <section className="mt-8 p-6 bg-card/30 backdrop-blur-xl rounded-2xl border border-border/30">
               <h2 className="text-lg font-semibold text-foreground mb-4">
-                {selectedAsset.symbol} Market Strategic Outlook 2026
+                {selectedAsset.symbol} Simulated Market Analysis — Educational Overview 2026
               </h2>
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                 {generateMarketOutlook(selectedAsset).split('\n\n').map((paragraph, index) => (

@@ -110,10 +110,9 @@
   <url><loc>https://tradinghq.vercel.app/trade/mcd</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/nke</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
   
-  <!-- ETFs (21 - includes MNQ) -->
+  <!-- ETFs (20) -->
   <url><loc>https://tradinghq.vercel.app/trade/spy</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.90</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/qqq</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
-  <url><loc>https://tradinghq.vercel.app/trade/mnq</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.85</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/iwm</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/dia</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/voo</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>

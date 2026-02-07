@@ -1,45 +1,44 @@
 URL,Schema Type,Validation Status,Last Checked,Notes
-https://tradinghq.vercel.app/,SoftwareApplication,Pending,2026-01-18,Contains app rating and features
-https://tradinghq.vercel.app/,EducationalOrganization,Pending,2026-01-18,Teaching subjects defined
-https://tradinghq.vercel.app/,BreadcrumbList,Pending,2026-01-18,5 items in navigation
-https://tradinghq.vercel.app/learn-trading-guide,FAQPage,Pending,2026-01-18,8 consolidated FAQ items
-https://tradinghq.vercel.app/learn-trading-guide,HowTo,Pending,2026-01-18,Step-by-step guide
-https://tradinghq.vercel.app/learn-trading-guide,Article,Pending,2026-01-18,Educational content
-https://tradinghq.vercel.app/trade/btc,WebPage,Pending,2026-01-18,FinancialProduct entity
-https://tradinghq.vercel.app/trade/btc,FAQPage,Pending,2026-01-18,"How to practice trade Bitcoin?" + risk question
-https://tradinghq.vercel.app/trade/btc,BreadcrumbList,Pending,2026-01-18,Home > Trade > Bitcoin
-https://tradinghq.vercel.app/trade/eth,WebPage,Pending,2026-01-18,FinancialProduct entity
-https://tradinghq.vercel.app/trade/eth,FAQPage,Pending,2026-01-18,"How to practice trade Ethereum?" + risk question
-https://tradinghq.vercel.app/trade/eth,BreadcrumbList,Pending,2026-01-18,Home > Trade > Ethereum
-https://tradinghq.vercel.app/trade/sol,WebPage,Pending,2026-01-18,FinancialProduct entity
-https://tradinghq.vercel.app/trade/sol,FAQPage,Pending,2026-01-18,"How to practice trade Solana?" + risk question
-https://tradinghq.vercel.app/trade/aapl,WebPage,Pending,2026-01-18,FinancialProduct entity
-https://tradinghq.vercel.app/trade/aapl,FAQPage,Pending,2026-01-18,"How to practice trade Apple?" + risk question
-https://tradinghq.vercel.app/trade/aapl,BreadcrumbList,Pending,2026-01-18,Home > Trade > Apple Inc.
-https://tradinghq.vercel.app/trade/msft,WebPage,Pending,2026-01-18,FinancialProduct entity
-https://tradinghq.vercel.app/trade/nvda,WebPage,Pending,2026-01-18,FinancialProduct entity
-https://tradinghq.vercel.app/trade/nvda,FAQPage,Pending,2026-01-18,"How to practice trade NVIDIA?" + risk question
-https://tradinghq.vercel.app/trade/tsla,WebPage,Pending,2026-01-18,FinancialProduct entity
-https://tradinghq.vercel.app/trade/tsla,FAQPage,Pending,2026-01-18,"How to practice trade Tesla?" + risk question
-https://tradinghq.vercel.app/trade/spy,WebPage,Pending,2026-01-18,FinancialProduct entity
-https://tradinghq.vercel.app/trade/spy,FAQPage,Pending,2026-01-18,"How to practice trade SPY?" + risk question
-https://tradinghq.vercel.app/trade/xau,WebPage,Pending,2026-01-18,FinancialProduct entity
-https://tradinghq.vercel.app/trade/xau,FAQPage,Pending,2026-01-18,"How to practice trade Gold?" + risk question
+https://tradinghq.vercel.app/,SoftwareApplication,Clean — no AggregateRating,2026-02-07,featureList updated: Real-time → Simulated
+https://tradinghq.vercel.app/,EducationalOrganization,Clean,2026-02-07,Teaching subjects defined
+https://tradinghq.vercel.app/,BreadcrumbList,Clean,2026-02-07,5 items in navigation
+https://tradinghq.vercel.app/learn-trading-guide,FAQPage,Clean,2026-02-07,8 consolidated FAQ items
+https://tradinghq.vercel.app/learn-trading-guide,HowTo,Clean,2026-02-07,Step-by-step guide
+https://tradinghq.vercel.app/learn-trading-guide,Article,Clean,2026-02-07,Educational content
+https://tradinghq.vercel.app/learn-trading-guide,EducationalOrganization,Clean — sameAs and credentials removed,2026-02-07,Unverified sameAs and credential claims removed
+https://tradinghq.vercel.app/trade/btc,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/btc,FAQPage,Clean,2026-02-07,real-time → simulated in FAQ answer
+https://tradinghq.vercel.app/trade/btc,BreadcrumbList,Clean,2026-02-07,Home > Markets > Bitcoin
+https://tradinghq.vercel.app/trade/eth,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/eth,FAQPage,Clean,2026-02-07,FAQ with practice question
+https://tradinghq.vercel.app/trade/eth,BreadcrumbList,Clean,2026-02-07,Home > Markets > Ethereum
+https://tradinghq.vercel.app/trade/nvda,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/nvda,FAQPage,Clean,2026-02-07,FAQ with practice question
+https://tradinghq.vercel.app/trade/aapl,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/aapl,FAQPage,Clean,2026-02-07,FAQ with practice question
+https://tradinghq.vercel.app/trade/sol,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/msft,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/googl,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/amzn,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/tsla,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/meta,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/xrp,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/bnb,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/spy,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/qqq,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/gold,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/oil,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/gbpusd,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
+https://tradinghq.vercel.app/trade/mnq,REMOVED,N/A,2026-02-07,MNQ reverted — removed from assets.ts + assetContent.ts + sitemap.xml
 
 VALIDATION INSTRUCTIONS:
 1. Use Google Rich Results Test: https://search.google.com/test/rich-results
 2. Enter each URL and verify schema detection
-3. Update "Validation Status" to "Valid" or "Error"
-4. For errors, add details to "Notes" column
-5. Re-validate after any schema changes
+3. Update Validation Status to Valid or Error after external testing
+4. For errors add details to Notes column
 
-EXPECTED RICH RESULTS:
-- FAQPage: Eligible for "People Also Ask" boxes
-- BreadcrumbList: Shows path in search results
-- WebPage + FinancialProduct: Enhanced listing appearance
-
-NEW ADDITIONS (v2):
-- Each asset page now includes FAQPage schema with "How to practice trade [Asset]?" question
-- BreadcrumbList schema added to all asset pages
-- Twitter Card (summary_large_image) metadata on all pages
-- Asset-specific theme-color meta tags using brand colors
+POST-REMEDIATION SCHEMA POLICY:
+- No AggregateRating or Review schema without real user review data
+- No sameAs links without verified ownership of social accounts
+- No educationalCredentialAwarded without an actual certification program
+- All FinancialProduct descriptions must reflect simulated/educational nature

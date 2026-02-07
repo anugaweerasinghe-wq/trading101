@@ -101,7 +101,7 @@ export default function Markets() {
             <div>
               <h1 className="text-xl md:text-3xl font-bold">2026 Market Strategy Hub</h1>
               <p className="text-muted-foreground text-xs md:text-sm">
-                Practice professional positioning with real-time market simulation. Explore {assets.length}+ assets across crypto, stocks, ETFs, forex, and commodities.
+                Practice professional positioning with simulated market data. Explore {assets.length}+ assets across crypto, stocks, ETFs, forex, and commodities.
               </p>
             </div>
             <div className="relative w-full md:w-72 transition-all duration-300">

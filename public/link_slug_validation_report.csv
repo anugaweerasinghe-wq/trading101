@@ -26,4 +26,4 @@ gold,/trade/gold,/trade/gold,YES,
 oil,/trade/oil,/trade/oil,YES,
 eurusd,/trade/eurusd,/trade/eurusd,YES,
 gbpusd,/trade/gbpusd,/trade/gbpusd,YES,
-mnq,/trade/mnq,/trade/mnq,YES,
+mnq,REMOVED,REMOVED,REVERTED,MNQ asset removed from catalog and sitemap

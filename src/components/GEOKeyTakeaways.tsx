@@ -82,5 +82,5 @@ function getInfluencersBullet(asset: Asset, content: ReturnType<typeof getAssetC
 }
 
 function getSimulatorBullet(asset: Asset): string {
-  return `TradeHQ lets you practice ${asset.symbol} trading with $10,000 virtual capital, real-time charts, and AI mentoring — no signup or real money required.`;
+  return `TradeHQ lets you practice ${asset.symbol} trading with $10,000 virtual capital, simulated charts, and AI mentoring — no signup or real money required.`;
 }

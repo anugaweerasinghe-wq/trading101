@@ -1368,16 +1368,6 @@ export const ASSETS: Asset[] = [
     change: 18.50,
     changePercent: 0.83,
   },
-  // Micro E-mini Nasdaq-100 (Futures)
-  {
-    id: 'mnq',
-    symbol: '/MNQ',
-    name: 'Micro E-mini Nasdaq-100',
-    type: 'etf',
-    price: 26160.00, // Feb 1, 2026 Truth Sheet
-    change: 185.50,
-    changePercent: 0.71,
-  },
 ];
 
 // Get asset icon based on type

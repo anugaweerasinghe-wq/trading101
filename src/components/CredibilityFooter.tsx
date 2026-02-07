@@ -1,9 +1,7 @@
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { 
   Shield, 
   Award, 
-  CheckCircle2, 
   Twitter, 
   Linkedin, 
   Github,
@@ -17,21 +15,21 @@ export function CredibilityFooter() {
   return (
     <footer className="border-t border-border bg-gradient-to-b from-background to-card/50">
       <div className="container mx-auto px-6 py-16">
-        {/* Trust Signals */}
+        {/* Feature Highlights */}
         <div className="grid md:grid-cols-4 gap-8 mb-12">
           <div className="text-center">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
               <Users className="w-8 h-8 text-primary" />
             </div>
-            <p className="text-3xl font-bold mb-1">50K+</p>
-            <p className="text-sm text-muted-foreground">Active Traders</p>
+            <p className="text-3xl font-bold mb-1">150+</p>
+            <p className="text-sm text-muted-foreground">Tradeable Assets</p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-profit/20 flex items-center justify-center">
               <Star className="w-8 h-8 text-profit" />
             </div>
-            <p className="text-3xl font-bold mb-1">4.9/5</p>
-            <p className="text-sm text-muted-foreground">User Rating</p>
+            <p className="text-3xl font-bold mb-1">$10K</p>
+            <p className="text-sm text-muted-foreground">Virtual Cash</p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
@@ -44,12 +42,12 @@ export function CredibilityFooter() {
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-profit/20 flex items-center justify-center">
               <Award className="w-8 h-8 text-profit" />
             </div>
-            <p className="text-3xl font-bold mb-1">#1</p>
-            <p className="text-sm text-muted-foreground">Trading Simulator 2026</p>
+            <p className="text-3xl font-bold mb-1">Free</p>
+            <p className="text-sm text-muted-foreground">Forever — No Signup</p>
           </div>
         </div>
 
-        {/* Expert Bio Section */}
+        {/* Team Section */}
         <Card className="p-8 bg-card/50 border-border mb-12">
           <div className="flex flex-col md:flex-row items-start gap-6">
             <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shrink-0">
@@ -57,20 +55,11 @@ export function CredibilityFooter() {
             </div>
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-3 mb-3">
-                <h3 className="text-2xl font-bold">TradingHQ Editorial Team</h3>
-                <Badge variant="secondary" className="gap-1">
-                  <CheckCircle2 className="w-3 h-3" />
-                  Expert Reviewed
-                </Badge>
-                <Badge variant="outline" className="gap-1 border-profit/30 text-profit">
-                  <Shield className="w-3 h-3" />
-                  Verified Content
-                </Badge>
+                <h3 className="text-2xl font-bold">TradeHQ Team</h3>
               </div>
               <p className="text-muted-foreground mb-4 leading-relaxed">
-                Our content is created and reviewed by a team of financial educators, certified market analysts, 
-                and experienced traders with over 25 years of combined market experience. We specialize in making 
-                complex trading concepts accessible to beginners while maintaining accuracy for advanced traders.
+                Our content covers stock trading, crypto, forex, and risk management strategies. 
+                All simulations use virtual capital — no real money is at risk. This platform is for educational purposes only.
               </p>
               <div className="flex flex-wrap items-center gap-4">
                 <span className="text-sm text-muted-foreground">Connect with us:</span>
@@ -116,8 +105,8 @@ export function CredibilityFooter() {
               <span className="text-2xl font-bold font-serif">TradingHQ</span>
             </Link>
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-              The AI-powered financial education hub for 2026 and beyond. Practice trading with our 
-              risk-free $10K simulator and master the markets with expert guidance.
+              An AI-powered financial education hub for 2026 and beyond. Practice trading with our 
+              risk-free $10K simulator and master the markets with guided learning.
             </p>
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} TradingHQ. All rights reserved.
@@ -129,7 +118,7 @@ export function CredibilityFooter() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/trade" className="hover:text-primary transition-colors">Trading Simulator</Link></li>
               <li><Link to="/portfolio" className="hover:text-primary transition-colors">Portfolio Tracker</Link></li>
-              <li><Link to="/markets" className="hover:text-primary transition-colors">Live Markets</Link></li>
+              <li><Link to="/markets" className="hover:text-primary transition-colors">Markets</Link></li>
             </ul>
           </div>
           
