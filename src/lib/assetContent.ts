@@ -77,7 +77,7 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   eth: [
     {
       question: "What is the best way to learn Ethereum trading?",
-      answer: "Start by simulating trades on a platform that offers real-time charts. Focus on ETH/BTC correlation and gas fee trends before moving to real capital."
+      answer: "Start by simulating trades on a platform that offers simulated charts. Focus on ETH/BTC correlation and gas fee trends before moving to real capital."
     }
   ],
   tsla: [
@@ -710,102 +710,90 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       source: "COMEX"
     }
   },
-  // Micro E-mini Nasdaq-100 (Futures)
-  mnq: {
-    whatIs: "The Micro E-mini Nasdaq-100 (/MNQ) is a futures contract tracking the Nasdaq-100 index at 1/10th the size of the standard E-mini. It provides leveraged exposure to the 100 largest non-financial companies on Nasdaq, dominated by technology giants.",
-    strategy: "Practice futures trading with /MNQ to understand leverage, margin requirements, and contract rollovers. Monitor tech earnings season and Fed rate decisions as key drivers. (Educational simulation only — not financial advice.)",
-    category: "Futures",
-    keywords: ["MNQ trading", "micro futures", "Nasdaq-100 futures", "tech index"],
-    stats: {
-      assetClass: "Futures",
-      benchmark: "Nasdaq-100",
-      source: "CME Group"
-    }
-  }
 };
 
-// CTR-optimized titles — Variant A (active): Benefit-first ("Practice ... Free")
+// CTR-optimized titles — Variant A (active): "Learn & Practice" benefit-first
 const CUSTOM_META_TITLES: Record<string, string> = {
-  btc: "Practice Bitcoin Trading Free — $10K Simulator | Live BTC Data 2026",
-  eth: "Practice Ethereum Trading Free — $10K Simulator | Live ETH Data 2026",
-  nvda: "Practice NVDA Trading Free — $10K Simulator | Live Data 2026",
-  aapl: "Practice Apple Stock Trading Free — $10K Simulator | 2026",
-  sol: "Practice Solana Trading Free — $10K Simulator | Live SOL Data 2026",
-  msft: "Practice MSFT Trading Free — $10K Simulator | Live Data 2026",
-  googl: "Practice GOOGL Trading Free — $10K Simulator | Live Data 2026",
-  amzn: "Practice AMZN Trading Free — $10K Simulator | Live Data 2026",
-  tsla: "Practice Tesla Trading Free — $10K Simulator | Live TSLA Data 2026",
-  meta: "Practice META Trading Free — $10K Simulator | Live Data 2026",
-  xrp: "Practice XRP Trading Free — $10K Simulator | Live Data 2026",
-  bnb: "Practice BNB Trading Free — $10K Simulator | Live Data 2026",
-  spy: "Practice SPY ETF Trading Free — $10K Simulator | Live Data 2026",
-  qqq: "Practice QQQ ETF Trading Free — $10K Simulator | Live Data 2026",
-  gold: "Practice Gold Trading Free — $10K Simulator | Live XAU Data 2026",
-  oil: "Practice Oil Trading Free — $10K Simulator | Live WTI Data 2026",
-  gbpusd: "Practice GBP/USD Forex Free — $10K Simulator | Live Data 2026"
+  btc: "Learn & Practice Bitcoin Trading Free — $10K Simulator | Simulated BTC Data 2026",
+  eth: "Learn & Practice Ethereum Trading Free — $10K Simulator | Simulated ETH Data 2026",
+  nvda: "Learn & Practice NVDA Trading Free — $10K Simulator | Simulated Data 2026",
+  aapl: "Learn & Practice Apple Stock Trading Free — $10K Simulator | 2026",
+  sol: "Learn & Practice Solana Trading Free — $10K Simulator | Simulated SOL Data 2026",
+  msft: "Learn & Practice MSFT Trading Free — $10K Simulator | Simulated Data 2026",
+  googl: "Learn & Practice GOOGL Trading Free — $10K Simulator | Simulated Data 2026",
+  amzn: "Learn & Practice AMZN Trading Free — $10K Simulator | Simulated Data 2026",
+  tsla: "Learn & Practice Tesla Trading Free — $10K Simulator | Simulated TSLA Data 2026",
+  meta: "Learn & Practice META Trading Free — $10K Simulator | Simulated Data 2026",
+  xrp: "Learn & Practice XRP Trading Free — $10K Simulator | Simulated Data 2026",
+  bnb: "Learn & Practice BNB Trading Free — $10K Simulator | Simulated Data 2026",
+  spy: "Learn & Practice SPY ETF Trading Free — $10K Simulator | Simulated Data 2026",
+  qqq: "Learn & Practice QQQ ETF Trading Free — $10K Simulator | Simulated Data 2026",
+  gold: "Learn & Practice Gold Trading Free — $10K Simulator | Simulated XAU Data 2026",
+  oil: "Learn & Practice Oil Trading Free — $10K Simulator | Simulated WTI Data 2026",
+  gbpusd: "Learn & Practice GBP/USD Forex Free — $10K Simulator | Simulated Data 2026"
 };
 
 // Variant B titles for A/B testing (stored, not yet active — swap in after 7-day test)
 export const META_TITLE_VARIANTS_B: Record<string, string> = {
-  btc: "BTC 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  eth: "ETH 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  nvda: "NVDA 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  aapl: "AAPL 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  sol: "SOL 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  msft: "MSFT 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  googl: "GOOGL 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  amzn: "AMZN 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  tsla: "TSLA 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  meta: "META 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  xrp: "XRP 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  bnb: "BNB 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  spy: "SPY 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  qqq: "QQQ 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  gold: "Gold 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  oil: "Oil 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ",
-  gbpusd: "GBP/USD 2026 Market Analysis — Free Forex Simulator | TradeHQ"
+  btc: "BTC 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  eth: "ETH 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  nvda: "NVDA 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  aapl: "AAPL 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  sol: "SOL 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  msft: "MSFT 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  googl: "GOOGL 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  amzn: "AMZN 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  tsla: "TSLA 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  meta: "META 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  xrp: "XRP 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  bnb: "BNB 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  spy: "SPY 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  qqq: "QQQ 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  gold: "Gold 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  oil: "Oil 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",
+  gbpusd: "GBP/USD 2026 Simulated Analysis — Free Forex Simulator | TradeHQ"
 };
 
-// Variant A descriptions (active): Benefit-first, ≤155 chars, no emoji for cleaner SERP
+// Variant A descriptions (active): "Learn & practice" + "risk-free" / "strategy builder" hooks, ≤155 chars
 const CUSTOM_META_DESCRIPTIONS: Record<string, string> = {
-  btc: "Practice Bitcoin trading with $10K virtual cash. Live BTC charts, AI mentor, no signup. Build your strategy risk-free.",
-  eth: "Practice Ethereum trading with $10K virtual cash. Live ETH charts, DeFi analysis, no signup. Master crypto risk-free.",
-  nvda: "Practice NVIDIA stock trading with $10K virtual cash. Live charts, AI sector analysis. No signup needed.",
-  aapl: "Practice Apple stock trading with $10K virtual cash. Earnings plays, trend analysis. No signup, no risk.",
-  sol: "Practice Solana trading with $10K virtual cash. Live SOL charts, instant execution. No signup required.",
-  msft: "Practice Microsoft stock trading with $10K demo. Azure growth analysis, live charts. Start free today.",
-  googl: "Practice Google stock trading with $10K demo cash. AI sector analysis, live GOOGL charts. No signup.",
-  amzn: "Practice Amazon stock trading with $10K demo cash. AWS analysis, earnings plays. No signup required.",
-  tsla: "Practice Tesla stock trading with $10K virtual cash. Live TSLA charts, volatility training. No signup.",
-  meta: "Practice META stock trading with $10K demo cash. AI advertising analysis, live charts. Start free.",
-  xrp: "Practice XRP trading with $10K virtual cash. Live charts, regulatory analysis tools. No signup needed.",
-  bnb: "Practice BNB trading with $10K demo cash. Exchange ecosystem analysis, live charts. Start free today.",
-  spy: "Practice S&P 500 ETF trading with $10K demo. Market timing, sector rotation. No signup required.",
-  qqq: "Practice Nasdaq-100 ETF trading with $10K demo. Tech sector analysis, live charts. Start free today.",
-  gold: "Practice gold trading with $10K virtual cash. Safe-haven analysis, inflation hedging. No signup needed.",
-  oil: "Practice crude oil trading with $10K demo cash. OPEC analysis, inventory data. No signup required.",
-  gbpusd: "Practice GBP/USD forex trading with $10K demo. Central bank analysis, live spreads. No signup."
+  btc: "Learn & practice Bitcoin trading risk-free with $10K virtual cash. Simulated BTC charts, AI strategy builder, no signup.",
+  eth: "Learn & practice Ethereum trading risk-free with $10K virtual cash. Simulated ETH charts, DeFi strategy builder. No signup.",
+  nvda: "Learn & practice NVIDIA stock trading risk-free with $10K virtual cash. Simulated charts, AI strategy builder. No signup.",
+  aapl: "Learn & practice Apple stock trading risk-free with $10K virtual cash. Earnings strategy builder, simulated charts. No signup.",
+  sol: "Learn & practice Solana trading risk-free with $10K virtual cash. Simulated SOL charts, strategy builder. No signup.",
+  msft: "Learn & practice Microsoft stock trading risk-free with $10K demo. Simulated charts, strategy builder. Start free today.",
+  googl: "Learn & practice Google stock trading risk-free with $10K demo cash. Simulated GOOGL charts, strategy builder. No signup.",
+  amzn: "Learn & practice Amazon stock trading risk-free with $10K demo cash. Simulated charts, strategy builder. No signup.",
+  tsla: "Learn & practice Tesla stock trading risk-free with $10K virtual cash. Simulated TSLA charts, strategy builder. No signup.",
+  meta: "Learn & practice META stock trading risk-free with $10K demo cash. Simulated charts, strategy builder. Start free.",
+  xrp: "Learn & practice XRP trading risk-free with $10K virtual cash. Simulated charts, strategy builder. No signup needed.",
+  bnb: "Learn & practice BNB trading risk-free with $10K demo cash. Simulated charts, strategy builder. Start free today.",
+  spy: "Learn & practice S&P 500 ETF trading risk-free with $10K demo. Simulated charts, strategy builder. No signup.",
+  qqq: "Learn & practice Nasdaq-100 ETF trading risk-free with $10K demo. Simulated charts, strategy builder. Start free.",
+  gold: "Learn & practice gold trading risk-free with $10K virtual cash. Simulated XAU charts, strategy builder. No signup.",
+  oil: "Learn & practice crude oil trading risk-free with $10K demo cash. Simulated WTI charts, strategy builder. No signup.",
+  gbpusd: "Learn & practice GBP/USD forex trading risk-free with $10K demo. Simulated charts, strategy builder. No signup."
 };
 
 // Variant B descriptions for A/B testing (CTA-first — swap in after 7-day test)
 export const META_DESC_VARIANTS_B: Record<string, string> = {
-  btc: "Start trading BTC now — $10K free virtual cash, live Bitcoin charts, AI mentor. No signup. Master crypto in 2026.",
-  eth: "Start trading ETH now — $10K free virtual cash, live Ethereum charts. No signup. Learn DeFi strategies free.",
-  nvda: "Start trading NVDA now — $10K free demo, live NVIDIA charts. No signup. Master AI stocks risk-free.",
-  aapl: "Start trading AAPL now — $10K free demo, live Apple charts. No signup. Practice earnings plays free.",
-  sol: "Start trading SOL now — $10K free demo, live Solana charts. No signup. Master fast crypto trading.",
-  msft: "Start trading MSFT now — $10K free demo, live charts. No signup. Practice cloud stock analysis.",
-  googl: "Start trading GOOGL now — $10K free demo, live charts. No signup. Practice AI stock analysis.",
-  amzn: "Start trading AMZN now — $10K free demo, live charts. No signup. Practice e-commerce stock plays.",
-  tsla: "Start trading TSLA now — $10K free demo, live Tesla charts. No signup. Master volatility trading.",
-  meta: "Start trading META now — $10K free demo, live charts. No signup. Practice social media stocks.",
-  xrp: "Start trading XRP now — $10K free demo, live charts. No signup. Practice crypto regulation plays.",
-  bnb: "Start trading BNB now — $10K free demo, live charts. No signup. Master exchange token trading.",
-  spy: "Start trading SPY now — $10K free demo, live S&P 500 charts. No signup. Practice index trading.",
-  qqq: "Start trading QQQ now — $10K free demo, live Nasdaq charts. No signup. Practice tech ETF trading.",
-  gold: "Start trading gold now — $10K free demo, live XAU charts. No signup. Practice safe-haven strategies.",
-  oil: "Start trading oil now — $10K free demo, live WTI charts. No signup. Practice energy trading.",
-  gbpusd: "Start forex trading now — $10K free demo, live GBP/USD charts. No signup. Practice currency pairs."
+  btc: "Start trading BTC now — $10K free virtual cash, simulated Bitcoin charts, AI mentor. No signup. Master crypto in 2026.",
+  eth: "Start trading ETH now — $10K free virtual cash, simulated Ethereum charts. No signup. Learn DeFi strategies free.",
+  nvda: "Start trading NVDA now — $10K free demo, simulated NVIDIA charts. No signup. Master AI stocks risk-free.",
+  aapl: "Start trading AAPL now — $10K free demo, simulated Apple charts. No signup. Practice earnings plays free.",
+  sol: "Start trading SOL now — $10K free demo, simulated Solana charts. No signup. Master fast crypto trading.",
+  msft: "Start trading MSFT now — $10K free demo, simulated charts. No signup. Practice cloud stock analysis.",
+  googl: "Start trading GOOGL now — $10K free demo, simulated charts. No signup. Practice AI stock analysis.",
+  amzn: "Start trading AMZN now — $10K free demo, simulated charts. No signup. Practice e-commerce stock plays.",
+  tsla: "Start trading TSLA now — $10K free demo, simulated Tesla charts. No signup. Master volatility trading.",
+  meta: "Start trading META now — $10K free demo, simulated charts. No signup. Practice social media stocks.",
+  xrp: "Start trading XRP now — $10K free demo, simulated charts. No signup. Practice crypto regulation plays.",
+  bnb: "Start trading BNB now — $10K free demo, simulated charts. No signup. Master exchange token trading.",
+  spy: "Start trading SPY now — $10K free demo, simulated S&P 500 charts. No signup. Practice index trading.",
+  qqq: "Start trading QQQ now — $10K free demo, simulated Nasdaq charts. No signup. Practice tech ETF trading.",
+  gold: "Start trading gold now — $10K free demo, simulated XAU charts. No signup. Practice safe-haven strategies.",
+  oil: "Start trading oil now — $10K free demo, simulated WTI charts. No signup. Practice energy trading.",
+  gbpusd: "Start forex trading now — $10K free demo, simulated GBP/USD charts. No signup. Practice currency pairs."
 };
 
 // Generate meta title - Institutional pattern for priority, fallback for others
@@ -854,7 +842,7 @@ export function generateAssetMetaDescription(asset: Asset): string {
   if (content) {
     description = `Practice ${asset.symbol} trading risk-free. ${content.whatIs} Start with $10K virtual cash now.`;
   } else {
-    description = `Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $10K demo cash, real-time charts, and AI mentoring. No signup needed!`;
+    description = `Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $10K demo cash, simulated charts, and AI mentoring. No signup needed!`;
   }
   
   // ALWAYS enforce 155 character limit

@@ -56,15 +56,7 @@ const LearnTradingGuide = () => {
     "description": "Premier AI-powered trading education platform offering courses on stocks, crypto, forex, and risk management",
     "url": DOMAIN,
     "logo": `${DOMAIN}/og-image.png`,
-    "sameAs": [
-      "https://twitter.com/tradehq",
-      "https://linkedin.com/company/tradehq"
-    ],
-    "educationalCredentialAwarded": "Trading Proficiency Certificate",
-    "hasCredential": {
-      "@type": "EducationalOccupationalCredential",
-      "credentialCategory": "Professional Development"
-    }
+    
   };
 
   // Article Schema optimized for 2026

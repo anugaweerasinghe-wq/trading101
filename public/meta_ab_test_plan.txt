@@ -1,0 +1,44 @@
+META A/B TEST PLAN — TradeHQ Seed Assets
+=========================================
+
+Test Start Date: 2026-02-07
+Test Duration: 14 days (review at Day 7 and Day 14)
+Review Dates: 2026-02-14 (interim), 2026-02-21 (final)
+
+CURRENTLY ACTIVE: Variant A (Learn & Practice — benefit-first)
+STORED FOR TEST:  Variant B (CTA-first — Start trading X now)
+
+ASSETS UNDER TEST (17 seed pages):
+  btc, eth, nvda, aapl, sol, msft, googl, amzn, tsla, meta,
+  xrp, bnb, spy, qqq, gold, oil, gbpusd
+
+KPIs TO MEASURE (via Google Search Console):
+  1. Impressions — total and per-asset
+  2. Clicks — total and per-asset
+  3. CTR (Click-Through Rate) — primary metric
+  4. Average Position — monitor for ranking impact
+
+MEASUREMENT PROTOCOL:
+  - Week 1 (Feb 7-14): Variant A runs. Collect baseline CTR data.
+  - Week 2 (Feb 14-21): If CTR is stable, consider swapping to Variant B on a subset.
+  - Alternatively, run full 14-day window on Variant A, then swap all to Variant B for another 14 days.
+  - Compare aggregate CTR and per-asset CTR between windows.
+
+ROLLBACK THRESHOLDS (automatic rollback if ANY triggered):
+  - Indexation ratio drops below 40% for seed assets for 7+ consecutive days
+  - CTR drops more than 50% vs. baseline on any seed asset for 7+ consecutive days
+  - Average position degrades by more than 10 positions on any seed asset
+
+VARIANT A PATTERN (active):
+  Title: "Learn & Practice [Asset] Trading Free — $10K Simulator | Simulated [Ticker] Data 2026"
+  Desc:  "Learn & practice [asset] trading risk-free with $10K virtual cash. Simulated [ticker] charts, [AI] strategy builder. No signup."
+
+VARIANT B PATTERN (saved):
+  Title: "[TICKER] 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ"
+  Desc:  "Start trading [TICKER] now — $10K free [virtual/demo] cash, simulated [asset] charts[, AI mentor]. No signup. [Benefit]."
+
+NOTES:
+  - All "Live" references have been replaced with "Simulated" in both variants.
+  - All descriptions include "risk-free" or "strategy builder" hooks per owner directive.
+  - No product logic, routes, or simulator behavior was changed.
+  - Full variant data is documented in public/meta_variants.csv.

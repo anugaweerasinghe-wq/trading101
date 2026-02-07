@@ -1,23 +1,35 @@
-change_id,file,change_type,description,category
-1,index.html,REMOVED,"Removed fake AggregateRating (4.9/50000) from SoftwareApplication schema — no real review data exists",Schema/EEAT
-2,src/pages/TradeAsset.tsx,REWRITTEN,"Replaced SoftwareApplication with FinancialProduct schema; removed fake AggregateRating and Review; removed twitter:creator duplicate",Schema/EEAT
-3,src/pages/TradeAsset.tsx,ADDED,"GEOKeyTakeaways component rendered on ALL asset pages (not just seed set)",GEO
-4,src/pages/TradeAsset.tsx,MOVED,"EEAT byline and Last Updated date now shown on ALL pages (was seed-only)",EEAT
-5,src/pages/TradeAsset.tsx,UPDATED,"OG image now uses reliable site-wide fallback instead of per-asset dynamic path",OG/Brand
-6,src/pages/TradeAsset.tsx,UPDATED,"Breadcrumb schema now uses Markets as parent (was Trade)",Schema
-7,src/pages/TradeAsset.tsx,UPDATED,"Standardized disclaimer uses exact mandated text",EEAT
-8,src/pages/TradeAsset.tsx,UPDATED,"Last Updated date set to February 7 2026 (current date)",Freshness
-9,src/components/GEOKeyTakeaways.tsx,CREATED,"New component: 3-bullet Key Takeaways for AI Overviews — definition / influencers / simulator value",GEO
-10,src/components/AIReadySummary.tsx,REMOVED,"Removed itemScope/itemType/itemProp microdata attributes to prevent conflicting schema signals",Schema
-11,src/components/RelatedAssets.tsx,FIXED,"Changed getAssetSlug to use asset.id instead of symbol-based slug — fixes broken internal links for forex pairs",Internal Linking
-12,src/pages/Markets.tsx,FIXED,"Changed TabsTrigger value from 'stocks' to 'stock' — fixes stocks not appearing when filtered",Bug Fix
-13,src/pages/Markets.tsx,FIXED,"Changed TabsTrigger value from 'commodities' to 'commodity' — fixes commodities not appearing when filtered",Bug Fix
-14,src/lib/assetContent.ts,UPDATED,"Meta titles rewritten with benefit-first CTR modifiers (Practice X Free — $10K Simulator | Live Data 2026)",CTR
-15,src/lib/assetContent.ts,UPDATED,"Meta descriptions rewritten without emoji for cleaner SERP display; all ≤155 chars",CTR
-16,src/lib/assetContent.ts,ADDED,"Variant B meta titles exported as META_TITLE_VARIANTS_B for A/B testing after 7-day window",CTR/AB Test
-17,src/lib/assetContent.ts,ADDED,"Variant B meta descriptions exported as META_DESC_VARIANTS_B for A/B testing",CTR/AB Test
-18,public/list_of_updated_urls.csv,CREATED,"Seed asset pages touched — deliverable artifact",Deliverable
-19,public/asset_keystatistics_report.json,CREATED,"Machine-readable summaries per seed asset — deliverable artifact",Deliverable
-20,public/rich_results_validation_log.csv,UPDATED,"Updated schema validation results after cleanup",Deliverable
-21,public/link_slug_validation_report.csv,CREATED,"Slug consistency report — all match",Deliverable
-22,public/og_image_status.csv,CREATED,"OG image validation — all using site-wide fallback",Deliverable
+change_id,file,change_type,description,before,after,category
+1,src/pages/TradeAsset.tsx,REMOVED,"Removed sameAs array from Organization schema — unverified social accounts","sameAs: [twitter.com/tradinghq, linkedin.com/company/tradinghq]","(removed entirely)",Schema/Compliance
+2,src/pages/TradeAsset.tsx,FIXED,"Fixed FAQ answer: real-time → simulated","real-time charts and AI mentoring","simulated charts and AI mentoring",Terminology
+3,src/pages/TradeAsset.tsx,REWRITTEN,"H1 changed from Live Market Analysis to Practice Trading Simulator","{name} 2026 Live Market Analysis","{name} — Practice Trading Simulator 2026",H1/Compliance
+4,src/pages/TradeAsset.tsx,ADDED,"Added 2-sentence educational context paragraph after H1","(none)","Use the TradeHQ simulator to practice {symbol} trading with $10000 in virtual capital...",EEAT/Educational
+5,src/pages/TradeAsset.tsx,REMOVED,"Removed fabricated EEAT byline block with Expert Verified badge and Editorial Oversight","Reviewed by TradeHQ Research Team / Expert Verified / Editorial Oversight","(removed entirely — disclaimer block already exists below)",EEAT/Compliance
+6,src/pages/TradeAsset.tsx,REWRITTEN,"H2 changed from Market Strategic Outlook to Simulated Market Analysis","{symbol} Market Strategic Outlook 2026","{symbol} Simulated Market Analysis — Educational Overview 2026",H2/Compliance
+7,src/lib/assetContent.ts,REMOVED,"Removed MNQ asset content entry — added without owner approval","mnq: { whatIs: Micro E-mini Nasdaq-100... }","(removed entirely)",Product Catalog Revert
+8,src/lib/assetContent.ts,REWRITTEN,"All 17 Variant A meta titles: Practice → Learn & Practice; Live → Simulated","Practice Bitcoin Trading Free — $10K Simulator | Live BTC Data 2026","Learn & Practice Bitcoin Trading Free — $10K Simulator | Simulated BTC Data 2026",Meta Titles/CTR
+9,src/lib/assetContent.ts,REWRITTEN,"All 17 Variant B meta titles: Market Analysis → Simulated Analysis","BTC 2026 Market Analysis — Free $10K Trading Simulator | TradeHQ","BTC 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ",Meta Titles/Compliance
+10,src/lib/assetContent.ts,REWRITTEN,"All 17 Variant A meta descriptions: Added risk-free + strategy builder hooks; removed Live","Practice Bitcoin trading with $10K virtual cash. Live BTC charts AI mentor no signup.","Learn & practice Bitcoin trading risk-free with $10K virtual cash. Simulated BTC charts AI strategy builder no signup.",Meta Descriptions/CTR
+11,src/lib/assetContent.ts,REWRITTEN,"All 17 Variant B descriptions: live → simulated throughout","Start trading BTC now — $10K free virtual cash live Bitcoin charts","Start trading BTC now — $10K free virtual cash simulated Bitcoin charts",Meta Descriptions/Compliance
+12,src/lib/assetContent.ts,FIXED,"Fallback meta description: real-time → simulated","real-time charts and AI mentoring","simulated charts and AI mentoring",Terminology
+13,src/lib/assets.ts,REMOVED,"Removed MNQ asset entry (id: mnq) — added without owner approval","{ id: mnq symbol: /MNQ name: Micro E-mini Nasdaq-100 type: etf price: 26160 }","(removed entirely)",Product Catalog Revert
+14,src/components/MegaFooter.tsx,REWRITTEN,"Replaced Expert Reviewed trust signal with Educational Simulator","Expert Reviewed / Content verified by pros","Educational Simulator / Practice trading skills",EEAT/Compliance
+15,src/components/MegaFooter.tsx,REWRITTEN,"Replaced #1 Simulator 2026 trust signal with 150+ Assets","#1 Simulator 2026 / Trusted by 50K+ traders","150+ Assets / Stocks crypto ETFs forex",EEAT/Compliance
+16,src/components/MegaFooter.tsx,FIXED,"Removed #1 ranking claim from brand description","The #1 AI-powered trading simulator for 2026","An AI-powered trading simulator for 2026",Compliance
+17,src/components/CredibilityFooter.tsx,REWRITTEN,"Replaced 50K+ Active Traders with 150+ Tradeable Assets","50K+ / Active Traders","150+ / Tradeable Assets",EEAT/Compliance
+18,src/components/CredibilityFooter.tsx,REWRITTEN,"Replaced 4.9/5 User Rating with $10K Virtual Cash","4.9/5 / User Rating","$10K / Virtual Cash",EEAT/Compliance
+19,src/components/CredibilityFooter.tsx,REWRITTEN,"Replaced #1 Trading Simulator 2026 with Free Forever","#1 / Trading Simulator 2026","Free / Forever — No Signup",EEAT/Compliance
+20,src/components/CredibilityFooter.tsx,REMOVED,"Removed Expert Reviewed and Verified Content badges","Expert Reviewed + Verified Content badges","(removed entirely)",EEAT/Compliance
+21,src/components/CredibilityFooter.tsx,REWRITTEN,"Replaced unverifiable expert bio with factual description","certified market analysts 25 years combined experience","Our content covers stock trading crypto forex... for educational purposes only",EEAT/Compliance
+22,src/components/CredibilityFooter.tsx,FIXED,"Changed Live Markets link label to Markets","Live Markets","Markets",Terminology
+23,src/components/AIReadySummary.tsx,REWRITTEN,"Changed advisory heading to neutral educational title","Should I Trade {symbol} Today? — 2026 Strategy Snapshot","Practice Trading {symbol} — Simulator Snapshot",Compliance
+24,src/components/AIReadySummary.tsx,REMOVED,"Removed fabricated Simulation Confidence percentage","Simulation Confidence: XX%","(removed entirely)",EEAT/Compliance
+25,src/components/AIReadySummary.tsx,FIXED,"Changed auto-updating timestamp to static disclaimer","Updated: Just now","Simulated data — not real market conditions",Freshness/Compliance
+26,src/components/GEOKeyTakeaways.tsx,FIXED,"Changed real-time charts to simulated charts","real-time charts","simulated charts",Terminology
+27,src/pages/Markets.tsx,FIXED,"Changed real-time market simulation to simulated market data","real-time market simulation","simulated market data",Terminology
+28,src/pages/LearnTradingGuide.tsx,REMOVED,"Removed sameAs from EducationalOrganization schema — unverified","sameAs: [twitter.com/tradehq linkedin.com/company/tradehq]","(removed entirely)",Schema/Compliance
+29,src/pages/LearnTradingGuide.tsx,REMOVED,"Removed educationalCredentialAwarded and hasCredential — no real credential exists","educationalCredentialAwarded: Trading Proficiency Certificate","(removed entirely)",Schema/Compliance
+30,index.html,FIXED,"Removed 50K+ traders claim and emojis from homepage meta description","50K+ traders trust TradeHQ","Learn to trade stocks and crypto risk-free... Start now.",Meta/Compliance
+31,index.html,FIXED,"Removed emojis and real charts claim from OG description","real charts","simulated charts",OG/Compliance
+32,index.html,FIXED,"Removed emojis from Twitter description","real charts","simulated charts",Twitter/Compliance
+33,index.html,FIXED,"Changed featureList from Real-time to Simulated","Real-time market liquidity simulation","Simulated market liquidity environment",Schema/Compliance
+34,public/sitemap.xml,REMOVED,"Removed MNQ URL entry and updated ETF count comment","ETFs (21 - includes MNQ) + /trade/mnq URL","ETFs (20) — MNQ URL removed",Sitemap/Product Revert
