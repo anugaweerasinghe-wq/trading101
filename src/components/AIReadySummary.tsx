@@ -88,9 +88,6 @@ export function AIReadySummary({ asset }: AIReadySummaryProps) {
         config.border
       )}
       aria-label="AI Trading Summary"
-      // Semantic markup for Google AI Overviews
-      itemScope
-      itemType="https://schema.org/Article"
     >
       <div className="flex items-start gap-3">
         <div className={cn(
@@ -102,10 +99,7 @@ export function AIReadySummary({ asset }: AIReadySummaryProps) {
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <h2 
-              className="text-sm font-semibold text-foreground"
-              itemProp="headline"
-            >
+            <h2 className="text-sm font-semibold text-foreground">
               Should I Trade {asset.symbol} Today? — 2026 Strategy Snapshot
             </h2>
             <span className={cn(
@@ -118,10 +112,7 @@ export function AIReadySummary({ asset }: AIReadySummaryProps) {
             </span>
           </div>
           
-          <p 
-            className="text-sm text-muted-foreground leading-relaxed"
-            itemProp="description"
-          >
+          <p className="text-sm text-muted-foreground leading-relaxed">
             {summary}
           </p>
           

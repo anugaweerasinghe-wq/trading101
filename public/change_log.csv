@@ -1,0 +1,23 @@
+change_id,file,change_type,description,category
+1,index.html,REMOVED,"Removed fake AggregateRating (4.9/50000) from SoftwareApplication schema — no real review data exists",Schema/EEAT
+2,src/pages/TradeAsset.tsx,REWRITTEN,"Replaced SoftwareApplication with FinancialProduct schema; removed fake AggregateRating and Review; removed twitter:creator duplicate",Schema/EEAT
+3,src/pages/TradeAsset.tsx,ADDED,"GEOKeyTakeaways component rendered on ALL asset pages (not just seed set)",GEO
+4,src/pages/TradeAsset.tsx,MOVED,"EEAT byline and Last Updated date now shown on ALL pages (was seed-only)",EEAT
+5,src/pages/TradeAsset.tsx,UPDATED,"OG image now uses reliable site-wide fallback instead of per-asset dynamic path",OG/Brand
+6,src/pages/TradeAsset.tsx,UPDATED,"Breadcrumb schema now uses Markets as parent (was Trade)",Schema
+7,src/pages/TradeAsset.tsx,UPDATED,"Standardized disclaimer uses exact mandated text",EEAT
+8,src/pages/TradeAsset.tsx,UPDATED,"Last Updated date set to February 7 2026 (current date)",Freshness
+9,src/components/GEOKeyTakeaways.tsx,CREATED,"New component: 3-bullet Key Takeaways for AI Overviews — definition / influencers / simulator value",GEO
+10,src/components/AIReadySummary.tsx,REMOVED,"Removed itemScope/itemType/itemProp microdata attributes to prevent conflicting schema signals",Schema
+11,src/components/RelatedAssets.tsx,FIXED,"Changed getAssetSlug to use asset.id instead of symbol-based slug — fixes broken internal links for forex pairs",Internal Linking
+12,src/pages/Markets.tsx,FIXED,"Changed TabsTrigger value from 'stocks' to 'stock' — fixes stocks not appearing when filtered",Bug Fix
+13,src/pages/Markets.tsx,FIXED,"Changed TabsTrigger value from 'commodities' to 'commodity' — fixes commodities not appearing when filtered",Bug Fix
+14,src/lib/assetContent.ts,UPDATED,"Meta titles rewritten with benefit-first CTR modifiers (Practice X Free — $10K Simulator | Live Data 2026)",CTR
+15,src/lib/assetContent.ts,UPDATED,"Meta descriptions rewritten without emoji for cleaner SERP display; all ≤155 chars",CTR
+16,src/lib/assetContent.ts,ADDED,"Variant B meta titles exported as META_TITLE_VARIANTS_B for A/B testing after 7-day window",CTR/AB Test
+17,src/lib/assetContent.ts,ADDED,"Variant B meta descriptions exported as META_DESC_VARIANTS_B for A/B testing",CTR/AB Test
+18,public/list_of_updated_urls.csv,CREATED,"Seed asset pages touched — deliverable artifact",Deliverable
+19,public/asset_keystatistics_report.json,CREATED,"Machine-readable summaries per seed asset — deliverable artifact",Deliverable
+20,public/rich_results_validation_log.csv,UPDATED,"Updated schema validation results after cleanup",Deliverable
+21,public/link_slug_validation_report.csv,CREATED,"Slug consistency report — all match",Deliverable
+22,public/og_image_status.csv,CREATED,"OG image validation — all using site-wide fallback",Deliverable

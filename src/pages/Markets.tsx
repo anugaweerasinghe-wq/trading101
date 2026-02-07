@@ -188,10 +188,10 @@ export default function Markets() {
                 <TabsList className="bg-muted/50 transition-all duration-200">
                   <TabsTrigger value="all" className="text-xs md:text-sm transition-all duration-200">All</TabsTrigger>
                   <TabsTrigger value="crypto" className="text-xs md:text-sm transition-all duration-200">Crypto</TabsTrigger>
-                  <TabsTrigger value="stocks" className="text-xs md:text-sm transition-all duration-200">Stocks</TabsTrigger>
+                  <TabsTrigger value="stock" className="text-xs md:text-sm transition-all duration-200">Stocks</TabsTrigger>
                   <TabsTrigger value="etf" className="text-xs md:text-sm transition-all duration-200">ETFs</TabsTrigger>
                   <TabsTrigger value="forex" className="text-xs md:text-sm transition-all duration-200">Forex</TabsTrigger>
-                  <TabsTrigger value="commodities" className="text-xs md:text-sm transition-all duration-200">Commodities</TabsTrigger>
+                  <TabsTrigger value="commodity" className="text-xs md:text-sm transition-all duration-200">Commodities</TabsTrigger>
                 </TabsList>
               </div>
 
