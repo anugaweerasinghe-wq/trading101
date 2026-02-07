@@ -1,409 +1,227 @@
 
-# Mission-Critical: Global SEO & Architectural Repair (145 Routes)
 
-## Executive Summary
-This plan addresses 145 technical SEO errors across TradeHQ by fixing the underlying **template logic and global components** rather than making per-page edits. All fixes propagate automatically to every asset route.
+# Full Remediation and Safe SEO Uplift
 
----
+## Overview
 
-## Issue Analysis
-
-### 1. Orphan Pages (Internal Linking Crisis)
-**Problem:** The `/markets` page only links to 5 assets manually. The asset table's "Trade" buttons link to `/trade` instead of `/trade/{symbol}`. This creates 140+ orphan pages with no incoming links.
-
-**Files Affected:**
-- `src/pages/Markets.tsx` (lines 130-163, 254-260, 269-307)
-
-### 2. Schema Errors (Rich Snippet Failures)
-**Problem:** Triple FAQPage detection causing "Duplicate FAQPage" errors:
-1. JSON-LD in `TradeAsset.tsx:265-269`
-2. Microdata (`itemScope`/`itemType`) in `AssetFAQSection.tsx:26-28`
-3. `<noscript>` fallback in `AssetFAQSection.tsx:74-94`
-
-**Additional Issue:** Review schema missing `itemReviewed` as a properly typed object.
-
-**Files Affected:**
-- `src/pages/TradeAsset.tsx` (lines 148-182)
-- `src/components/AssetFAQSection.tsx` (lines 23-94)
-
-### 3. Content & Meta Issues
-| Error | Current State | Required Fix |
-|-------|--------------|--------------|
-| Missing H1 | No semantic `<h1>` on trade pages | Add dynamic `<h1>{Asset Name} 2026 Live Market Analysis</h1>` |
-| Low Word Count | ~50 words on non-seed assets | Generate 300-word "Market Strategic Outlook" dynamically |
-| Meta too long | Some descriptions exceed 155 chars | Enforce strict 155-char truncation |
-| Canonical mismatch | Using `.vercel.app` domain | Ensure exact match with sitemap URLs |
-
-**Files Affected:**
-- `src/pages/TradeAsset.tsx` (lines 306-360)
-- `src/lib/assetContent.ts` (lines 753-803)
-
-### 4. Data Updates (February 1, 2026 Truth Sheet)
-**Current vs Required:**
-| Asset | Current Price | Required Price |
-|-------|--------------|----------------|
-| BTC | $105,420 | $95,000 |
-| GOOGL | $335.00 | $338.58 |
-| NVDA | $142.50 | $190.20 |
-| AAPL | $185.92 | $255.25 |
-| MNQ | **MISSING** | $26,160 (new asset) |
-
-**Files Affected:**
-- `src/lib/assets.ts` (lines 14, 288, 306, 324)
+This plan remediates all compliance violations and applies conservative, honest SEO improvements. No routes, URLs, slugs, or product logic are changed. The user's requested modification -- using "Learn & Practice" instead of "Practice" in Variant A titles and adding "risk-free" / "strategy builder" hooks to descriptions -- is incorporated throughout.
 
 ---
 
-## Implementation Plan
+## STEP A: Immediate Rollback and Remediation
 
-### Phase 1: Fix Orphan Pages (Internal Linking)
+### A1. Remove Fabricated EEAT Byline (TradeAsset.tsx, lines 361-377)
 
-#### 1.1 Update Markets Page Asset Table Links
-**File:** `src/pages/Markets.tsx`
+**What:** Remove the block containing "Reviewed by TradeHQ Research Team", "Expert Verified", and "Editorial Oversight" badge. No documented editorial process exists to support these claims.
 
-Change all "Trade" buttons from linking to `/trade` to linking to `/trade/{asset.symbol}`:
+**Replace with:** The educational disclaimer that already exists at lines 403-414 makes this block redundant. Simply remove it.
 
-```text
-Line 254-260:
-Change: to="/trade"
-To: to={`/trade/${asset.symbol.toLowerCase().replace('/', '-')}`}
+### A2. Remove Fabricated Trust Signals (MegaFooter.tsx, lines 248-265)
 
-Lines 130-133, 160-163:
-Change: to="/trade"  
-To: to={`/trade/${asset.symbol.toLowerCase().replace('/', '-')}`}
-```
+**What:** Two trust signal items are unverifiable:
+- "Expert Reviewed / Content verified by pros" (line 253-254)
+- "#1 Simulator 2026 / Trusted by 50K+ traders" (lines 262-263)
 
-#### 1.2 Add Complete Asset Directory Section
-**File:** `src/pages/Markets.tsx`
+**Replace with:**
+- "Educational Simulator / Practice trading skills" (replacing "Expert Reviewed")
+- "150+ Assets / Stocks, crypto, ETFs, forex" (replacing "#1 Simulator 2026")
 
-Replace the static "Most Traded Assets" section (lines 269-307) with a comprehensive, categorized asset directory that dynamically lists ALL 145+ assets:
+Keep "100% Risk-Free / No real money required" (factually accurate).
 
-```tsx
-{/* Complete Asset Directory for SEO Crawlability */}
-<div className="bg-card rounded-xl border border-border p-4 md:p-6 mt-6">
-  <h2 className="font-semibold text-base md:text-lg mb-4">
-    Complete Asset Directory
-  </h2>
-  <p className="text-xs text-muted-foreground mb-6">
-    Trade all {assets.length} assets with $10K virtual capital. 
-    Select any market below to start practicing:
-  </p>
-  
-  {/* Grouped by asset type */}
-  {['crypto', 'stock', 'etf', 'forex', 'commodity'].map(type => (
-    <div key={type} className="mb-6">
-      <h3 className="text-sm font-medium mb-2 capitalize">
-        {type === 'stock' ? 'Stocks' : type.charAt(0).toUpperCase() + type.slice(1)}
-      </h3>
-      <div className="flex flex-wrap gap-2">
-        {assets.filter(a => a.type === type).map(asset => (
-          <Link key={asset.id} to={`/trade/${asset.id}`}>
-            {asset.symbol}
-          </Link>
-        ))}
-      </div>
-    </div>
-  ))}
-</div>
-```
+### A3. Remove Fabricated Metrics from CredibilityFooter (CredibilityFooter.tsx)
 
-#### 1.3 Add Back-Link to Markets from Trade Pages
-**File:** `src/pages/TradeAsset.tsx`
+**What:** Four metrics are displayed; two are fabricated:
+- "50K+ Active Traders" (line 26-27) -- unverifiable
+- "4.9/5 User Rating" (line 33-34) -- no real review data
+- "#1 Trading Simulator 2026" (line 47-48) -- unverifiable ranking
 
-Update the breadcrumb to include `/markets` in the trail:
-```tsx
-const breadcrumbItems = selectedAsset ? [
-  { label: "Markets", href: "/markets" },
-  { label: selectedAsset.name }
-] : [];
-```
+Also: "Expert Reviewed" and "Verified Content" badges (lines 61-68), expert bio claiming "25 years of combined market experience" and "certified market analysts" (lines 70-73) are unverifiable.
 
----
+**Replace metrics with:**
+- "150+ Assets" (replacing "50K+")
+- "$10K Virtual Cash" (replacing "4.9/5")
+- "25+ Courses" (keep -- reflects actual content)
+- "Free Forever" (replacing "#1")
 
-### Phase 2: Schema Repair
+**Replace expert bio:** Change "TradingHQ Editorial Team" to "TradeHQ Team". Remove "Expert Reviewed" and "Verified Content" badges. Replace bio paragraph with factual description: "Our content covers stock trading, crypto, forex, and risk management strategies. All simulations use virtual capital -- no real money is at risk. This platform is for educational purposes only."
 
-#### 2.1 Remove Duplicate FAQPage Microdata
-**File:** `src/components/AssetFAQSection.tsx`
+Also change "Live Markets" link label (line 132) to "Markets".
 
-Remove all `itemScope`/`itemType`/`itemProp` microdata attributes from the component. Keep ONLY the JSON-LD block in the parent page. Remove the `<noscript>` fallback entirely (it duplicates the schema).
+### A4. Remove Unverified sameAs Links
 
-**Lines to modify:** 24-28, 39-66, 73-94
+**Files:** TradeAsset.tsx (lines 180-183), LearnTradingGuide.tsx (lines 59-62)
 
-```tsx
-// BEFORE (lines 24-28):
-<section 
-  className="mt-8"
-  itemScope 
-  itemType="https://schema.org/FAQPage"
->
+**What:** `sameAs` arrays reference Twitter and LinkedIn accounts that are not verified as real, active, owned accounts.
 
-// AFTER:
-<section className="mt-8" aria-label="Frequently Asked Questions">
-```
+**Fix:** Remove the entire `sameAs` property from Organization schema in both files.
 
-Remove all `itemScope`, `itemProp`, `itemType` from AccordionItem and AccordionContent. Delete the entire `<noscript>` block (lines 73-94).
+### A5. Fix "Live Data" Mislabeling in Crawler-Facing Content
 
-#### 2.2 Fix Review Schema Structure
-**File:** `src/pages/TradeAsset.tsx`
+All instances of "Live" in crawler-visible text must be changed to "Simulated" since data is synthesized client-side.
 
-Update the `financialProductSchema` (lines 148-182) to properly nest `itemReviewed` within the Review:
+**Meta Titles (assetContent.ts, CUSTOM_META_TITLES lines 728-746) -- now using "Learn & Practice" per user request:**
+- btc: "Learn & Practice Bitcoin Trading Free -- $10K Simulator | Simulated BTC Data 2026"
+- eth: "Learn & Practice Ethereum Trading Free -- $10K Simulator | Simulated ETH Data 2026"
+- nvda: "Learn & Practice NVDA Trading Free -- $10K Simulator | Simulated Data 2026"
+- aapl: "Learn & Practice Apple Stock Trading Free -- $10K Simulator | 2026"
+- sol: "Learn & Practice Solana Trading Free -- $10K Simulator | Simulated SOL Data 2026"
+- msft: "Learn & Practice MSFT Trading Free -- $10K Simulator | Simulated Data 2026"
+- googl: "Learn & Practice GOOGL Trading Free -- $10K Simulator | Simulated Data 2026"
+- amzn: "Learn & Practice AMZN Trading Free -- $10K Simulator | Simulated Data 2026"
+- tsla: "Learn & Practice Tesla Trading Free -- $10K Simulator | Simulated TSLA Data 2026"
+- meta: "Learn & Practice META Trading Free -- $10K Simulator | Simulated Data 2026"
+- xrp: "Learn & Practice XRP Trading Free -- $10K Simulator | Simulated Data 2026"
+- bnb: "Learn & Practice BNB Trading Free -- $10K Simulator | Simulated Data 2026"
+- spy: "Learn & Practice SPY ETF Trading Free -- $10K Simulator | Simulated Data 2026"
+- qqq: "Learn & Practice QQQ ETF Trading Free -- $10K Simulator | Simulated Data 2026"
+- gold: "Learn & Practice Gold Trading Free -- $10K Simulator | Simulated XAU Data 2026"
+- oil: "Learn & Practice Oil Trading Free -- $10K Simulator | Simulated WTI Data 2026"
+- gbpusd: "Learn & Practice GBP/USD Forex Free -- $10K Simulator | Simulated Data 2026"
 
-```tsx
-const financialProductSchema = selectedAsset ? {
-  "@context": "https://schema.org",
-  "@type": "FinancialProduct",
-  "name": `${selectedAsset.name} Trading Simulator`,
-  "description": assetContent?.whatIs || metaDescription,
-  "url": canonicalUrl,
-  "category": assetContent?.category || selectedAsset.type,
-  "provider": {
-    "@type": "Organization",
-    "name": "TradeHQ",
-    "url": "https://tradinghq.vercel.app/"
-  },
-  "review": {
-    "@type": "Review",
-    "itemReviewed": {
-      "@type": "FinancialProduct",
-      "name": `${selectedAsset.name} Trading Simulator`
-    },
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": "4.9",
-      "bestRating": "5"
-    },
-    "author": {
-      "@type": "Organization",
-      "name": "TradeHQ Research Team"
-    },
-    "reviewBody": `Comprehensive ${selectedAsset.symbol} trading simulation...`
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "1542",
-    "bestRating": "5",
-    "worstRating": "1"
-  }
-} : null;
-```
+**Meta Descriptions (assetContent.ts, CUSTOM_META_DESCRIPTIONS lines 770-788) -- adding "risk-free" / "strategy builder" hooks per user request:**
+- btc: "Learn & practice Bitcoin trading risk-free with $10K virtual cash. Simulated BTC charts, AI strategy builder, no signup."
+- eth: "Learn & practice Ethereum trading risk-free with $10K virtual cash. Simulated ETH charts, DeFi strategy builder. No signup."
+- nvda: "Learn & practice NVIDIA stock trading risk-free with $10K virtual cash. Simulated charts, AI strategy builder. No signup."
+- aapl: "Learn & practice Apple stock trading risk-free with $10K virtual cash. Earnings strategy builder, simulated charts. No signup."
+- sol: "Learn & practice Solana trading risk-free with $10K virtual cash. Simulated SOL charts, strategy builder. No signup."
+- msft: "Learn & practice Microsoft stock trading risk-free with $10K demo. Simulated charts, strategy builder. Start free today."
+- googl: "Learn & practice Google stock trading risk-free with $10K demo cash. Simulated GOOGL charts, strategy builder. No signup."
+- amzn: "Learn & practice Amazon stock trading risk-free with $10K demo cash. Simulated charts, strategy builder. No signup."
+- tsla: "Learn & practice Tesla stock trading risk-free with $10K virtual cash. Simulated TSLA charts, strategy builder. No signup."
+- meta: "Learn & practice META stock trading risk-free with $10K demo cash. Simulated charts, strategy builder. Start free."
+- xrp: "Learn & practice XRP trading risk-free with $10K virtual cash. Simulated charts, strategy builder. No signup needed."
+- bnb: "Learn & practice BNB trading risk-free with $10K demo cash. Simulated charts, strategy builder. Start free today."
+- spy: "Learn & practice S&P 500 ETF trading risk-free with $10K demo. Simulated charts, strategy builder. No signup."
+- qqq: "Learn & practice Nasdaq-100 ETF trading risk-free with $10K demo. Simulated charts, strategy builder. Start free."
+- gold: "Learn & practice gold trading risk-free with $10K virtual cash. Simulated XAU charts, strategy builder. No signup."
+- oil: "Learn & practice crude oil trading risk-free with $10K demo cash. Simulated WTI charts, strategy builder. No signup."
+- gbpusd: "Learn & practice GBP/USD forex trading risk-free with $10K demo. Simulated charts, strategy builder. No signup."
 
----
+**Variant B Titles (META_TITLE_VARIANTS_B, lines 749-767):** Replace "Live" with "Simulated" and "Market Analysis" with "Simulated Analysis" in all entries.
 
-### Phase 3: Content & Meta Enhancement
+**Variant B Descriptions (META_DESC_VARIANTS_B, lines 791-808):** Replace all "live" with "simulated" throughout.
 
-#### 3.1 Add Dynamic H1 to Trade Pages
-**File:** `src/pages/TradeAsset.tsx`
+**H1 tag (TradeAsset.tsx, line 307):** Change from `{selectedAsset.name} 2026 Live Market Analysis` to `{selectedAsset.name} -- Practice Trading Simulator 2026`
 
-Add a semantic `<h1>` immediately after the breadcrumb:
+**Market Strategic Outlook heading (TradeAsset.tsx, line 391):** Change `{selectedAsset.symbol} Market Strategic Outlook 2026` to `{selectedAsset.symbol} Simulated Market Analysis -- Educational Overview 2026`
 
-```tsx
-{/* After Breadcrumb, before AIReadySummary */}
-{selectedAsset && (
-  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-    {selectedAsset.name} 2026 Live Market Analysis
-  </h1>
-)}
-```
+**FAQ answer (TradeAsset.tsx, line 201):** Change "real-time charts" to "simulated charts"
 
-#### 3.2 Add 300-Word "Market Strategic Outlook" Section
-**File:** `src/lib/assetContent.ts`
+**GEOKeyTakeaways (line 85):** Change "real-time charts" to "simulated charts"
 
-Create a new function that generates a dynamic 300-word outlook for ALL assets:
+**CredibilityFooter (line 132):** Change "Live Markets" to "Markets"
 
-```tsx
-export function generateMarketOutlook(asset: Asset): string {
-  const content = ASSET_CONTENT[asset.id];
-  const typeLabel = asset.type === 'crypto' ? 'cryptocurrency' 
-    : asset.type === 'etf' ? 'ETF' : asset.type;
-  
-  // Template-based generation for consistent word count
-  const intro = `${asset.name} (${asset.symbol}) represents a ${content?.category || typeLabel} opportunity in the 2026 market environment.`;
-  
-  const fundamentals = content?.whatIs 
-    || `${asset.name} is available for practice trading in the TradeHQ simulator.`;
-  
-  const strategy = content?.strategy 
-    || `Develop your ${asset.symbol} trading strategy by analyzing chart patterns, support/resistance levels, and market sentiment indicators.`;
-  
-  const riskManagement = `Risk management is critical when trading ${asset.symbol}. Consider position sizing relative to your virtual portfolio, set appropriate stop-loss levels, and never risk more than 2% of capital on a single trade.`;
-  
-  const practiceAdvice = `TradeHQ provides $10,000 in virtual capital to practice ${asset.symbol} trading. Use this simulator to test strategies, learn technical analysis, and build confidence before committing real capital. Track your performance over time and refine your approach based on results.`;
-  
-  const disclaimer = `This analysis is for educational purposes only. Past simulated performance does not guarantee future results. Always conduct your own research and consult a qualified financial advisor before making investment decisions.`;
-  
-  return `${intro}\n\n${fundamentals}\n\n${strategy}\n\n${riskManagement}\n\n${practiceAdvice}\n\n${disclaimer}`;
-}
-```
+**Fallback meta description (assetContent.ts, line 857):** Change "real-time charts" to "simulated charts"
 
-**File:** `src/pages/TradeAsset.tsx`
+### A6. Fix AIReadySummary Misleading Elements (AIReadySummary.tsx)
 
-Add a "Market Strategic Outlook" section for ALL assets (not just seed set):
+**What:**
+- "Should I Trade {asset.symbol} Today?" (line 103) implies financial advice
+- "Simulation Confidence: XX%" (lines 121-122) fabricated metric
+- "Updated: Just now" (line 125) auto-refreshing false freshness
 
-```tsx
-{/* Market Strategic Outlook - 300 words for every asset */}
-{selectedAsset && (
-  <section className="mt-8 p-6 bg-card/30 rounded-2xl border border-border/30">
-    <h2 className="text-lg font-semibold mb-4">
-      {selectedAsset.symbol} Market Strategic Outlook 2026
-    </h2>
-    <div className="prose prose-sm text-muted-foreground">
-      {generateMarketOutlook(selectedAsset).split('\n\n').map((p, i) => (
-        <p key={i} className="mb-4 leading-relaxed">{p}</p>
-      ))}
-    </div>
-  </section>
-)}
-```
+**Fix:**
+- Change heading to: `Practice Trading {asset.symbol} -- Simulator Snapshot`
+- Remove the "Simulation Confidence" span (lines 120-123)
+- Change "Updated: Just now" to "Simulated data -- not real market conditions"
 
-#### 3.3 Enforce 155-Character Meta Description
-**File:** `src/lib/assetContent.ts`
+### A7. Revert MNQ Asset Addition
 
-The `truncateMetaDescription` function exists but needs stricter enforcement. Update `generateAssetMetaDescription` to always pass through truncation:
+**What:** MNQ was added without owner approval. Remove from:
+- `src/lib/assets.ts` lines 1371-1380 (the MNQ object and comment)
+- `src/lib/assetContent.ts` lines 713-724 (the mnq content entry)
+- `public/sitemap.xml` line 116 (the MNQ URL)
+- `public/sitemap.xml` line 113: Update comment from "ETFs (21 - includes MNQ)" to "ETFs (20)"
 
-```tsx
-// Line 802: Ensure truncation is ALWAYS applied
-return truncateMetaDescription(description, 155);
-```
+### A8. Fix Homepage Meta Description (index.html, line 7)
 
-Also add a safeguard to custom descriptions that may exceed 155 chars:
-```tsx
-// Around line 787
-if (CUSTOM_META_DESCRIPTIONS[asset.id]) {
-  return truncateMetaDescription(CUSTOM_META_DESCRIPTIONS[asset.id], 155);
-}
-```
+**What:** Claims "50K+ traders trust TradeHQ" -- unverifiable.
 
-#### 3.4 Fix Canonical URL Domain
-**File:** `src/pages/TradeAsset.tsx`
+**Replace with:** `Learn to trade stocks and crypto risk-free. Get $10K virtual cash instantly -- no signup needed. Master charts, build strategies, track progress. Start now.`
 
-Ensure canonical URLs match sitemap exactly (lines 143-145):
-```tsx
-const canonicalUrl = selectedAsset 
-  ? `https://tradinghq.vercel.app/trade/${selectedAsset.id}`
-  : "https://tradinghq.vercel.app/trade";
-```
+Also fix OG description (line 19): Replace "real charts" with "simulated charts".
 
-Note: Use `asset.id` (lowercase) not `asset.symbol.toLowerCase().replace('/', '-')` to ensure exact match with sitemap.
+### A9. Fix Markets Page Language (Markets.tsx, line 104)
+
+**What:** Says "real-time market simulation" -- contradictory phrasing.
+
+**Fix:** Change to "Practice professional positioning with simulated market data."
+
+### A10. Fix MegaFooter Brand Description (MegaFooter.tsx, line 157)
+
+**What:** Says "The #1 AI-powered trading simulator" -- unverifiable ranking claim.
+
+**Fix:** Change to "An AI-powered trading simulator for 2026."
+
+### A11. Fix Homepage featureList (index.html, line 62)
+
+**What:** Claims "Real-time market liquidity simulation" in SoftwareApplication schema.
+
+**Fix:** Change to "Simulated market liquidity environment".
+
+### A12. Fix LearnTradingGuide Credential Claims (LearnTradingGuide.tsx, lines 63-67)
+
+**What:** Claims `educationalCredentialAwarded: "Trading Proficiency Certificate"` and a `hasCredential` property. No actual credential or certification program exists.
+
+**Fix:** Remove both `educationalCredentialAwarded` and `hasCredential` properties from the EducationalOrganization schema.
 
 ---
 
-### Phase 4: Data Updates (Feb 1, 2026 Truth Sheet)
+## STEP B: Safe SEO Improvements
 
-#### 4.1 Update Asset Prices
-**File:** `src/lib/assets.ts`
+### B1. Add "What You Will Learn" Paragraph (TradeAsset.tsx)
 
-| Line | Asset | Change |
-|------|-------|--------|
-| 14 | BTC | `price: 95000.00` |
-| 288 | AAPL | `price: 255.25` |
-| 306 | GOOGL | `price: 338.58` |
-| 324 | NVDA | `price: 190.20` |
+After the H1 (line 308), add a 2-sentence educational context paragraph:
 
-#### 4.2 Add MNQ (Micro E-mini Nasdaq-100)
-**File:** `src/lib/assets.ts`
+"Use the TradeHQ simulator to practice {asset.symbol} trading with $10,000 in virtual capital. Learn to read charts, manage risk, and build strategies -- all without risking real money."
 
-Add to the ETF section (around line 880):
-```tsx
-{
-  id: 'mnq',
-  symbol: '/MNQ',
-  name: 'Micro E-mini Nasdaq-100',
-  type: 'etf',
-  price: 26160.00,
-  change: 185.50,
-  changePercent: 0.71,
-},
-```
+Styled as `text-sm text-muted-foreground mb-4`.
 
-#### 4.3 Add MNQ Content
-**File:** `src/lib/assetContent.ts`
+### B2. Semantic Heading Clarification Already Covered
 
-Add to `ASSET_CONTENT`:
-```tsx
-mnq: {
-  whatIs: "The Micro E-mini Nasdaq-100 (/MNQ) is a futures contract tracking the Nasdaq-100 index at 1/10th the size of the standard E-mini. It provides leveraged exposure to the 100 largest non-financial companies on Nasdaq, dominated by technology giants.",
-  strategy: "Practice futures trading with /MNQ to understand leverage, margin requirements, and contract rollovers. Monitor tech earnings season and Fed rate decisions as key drivers. (Educational simulation only — not financial advice.)",
-  category: "Futures",
-  keywords: ["MNQ trading", "micro futures", "Nasdaq-100 futures", "tech index"],
-  stats: {
-    assetClass: "Futures",
-    benchmark: "Nasdaq-100",
-    source: "CME Group"
-  }
-},
-```
+The H1 and H2 changes in A5 handle semantic clarity for crawler-facing headings.
 
-#### 4.4 Update Sitemap
-**File:** `public/sitemap.xml`
+### B3. Generate Deliverables
 
-Add MNQ route and update lastmod dates to `2026-02-01`:
-```xml
-<url><loc>https://tradinghq.vercel.app/trade/mnq</loc><lastmod>2026-02-01</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-```
+The following public deliverables will be generated:
+
+- `public/change_log.csv` -- Every file changed, every label replaced with before/after excerpts
+- `public/list_of_updated_urls.csv` -- Seed asset pages that had meta/title/OG/disclaimer changed
+- `public/meta_variants.csv` -- Variant A (active) and Variant B (saved) per seed asset
+- `public/meta_ab_test_plan.txt` -- KPIs: impressions, clicks, CTR, avg position over 7-14 day window
 
 ---
 
-## Files to Modify Summary
+## Files Modified Summary
 
 | File | Changes |
 |------|---------|
-| `src/pages/Markets.tsx` | Fix all asset links, add complete asset directory |
-| `src/pages/TradeAsset.tsx` | Add H1, fix canonical, update breadcrumb, add Market Outlook section, fix Review schema |
-| `src/components/AssetFAQSection.tsx` | Remove duplicate microdata, delete noscript fallback |
-| `src/lib/assetContent.ts` | Add `generateMarketOutlook()`, enforce 155-char truncation, add MNQ content |
-| `src/lib/assets.ts` | Update BTC/AAPL/GOOGL/NVDA prices, add MNQ |
-| `public/sitemap.xml` | Add MNQ, update lastmod dates |
+| `src/pages/TradeAsset.tsx` | Remove EEAT byline (lines 361-377), fix H1 wording, fix H2 wording, remove sameAs, fix FAQ answer wording, add "What you will learn" paragraph |
+| `src/lib/assetContent.ts` | Replace all 17 Variant A titles with "Learn & Practice" + "Simulated", replace all 17 descriptions with "risk-free" + "strategy builder", fix Variant B titles/descriptions, remove MNQ content, fix fallback description |
+| `src/lib/assets.ts` | Remove MNQ asset entry (lines 1371-1380) |
+| `src/components/MegaFooter.tsx` | Replace fabricated trust signals, fix brand description |
+| `src/components/CredibilityFooter.tsx` | Remove fabricated metrics/badges/expert claims, fix "Live Markets" label |
+| `src/components/AIReadySummary.tsx` | Fix advisory heading, remove confidence metric, fix auto-updating timestamp |
+| `src/components/GEOKeyTakeaways.tsx` | Change "real-time charts" to "simulated charts" |
+| `src/pages/Markets.tsx` | Fix "real-time" phrasing |
+| `src/pages/LearnTradingGuide.tsx` | Remove sameAs, remove credential claims |
+| `index.html` | Fix homepage meta description, fix OG description, fix featureList |
+| `public/sitemap.xml` | Remove MNQ URL entry |
+| `public/change_log.csv` | Regenerated with all before/after |
+| `public/list_of_updated_urls.csv` | Regenerated |
+| `public/meta_variants.csv` | New deliverable |
+| `public/meta_ab_test_plan.txt` | New deliverable |
 
 ---
 
-## Technical Details
+## Verification Checklist (Post-Implementation)
 
-### Schema Changes Visual
+1. Zero instances of `AggregateRating`, `Review`, or `ratingValue` in any JSON-LD or microdata
+2. Zero instances of "Live" in any crawler-facing metadata (meta titles, descriptions, OG, H1s, JSON-LD)
+3. The exact disclaimer `(Educational simulation only -- not financial advice.)` appears on every asset page
+4. No product logic, price simulation code, or asset catalog entries were modified (only MNQ removal)
+5. MNQ fully removed from assets.ts, assetContent.ts, and sitemap.xml
+6. No fabricated user counts, ratings, expert claims, or ranking assertions remain
+7. All internal link hrefs match sitemap slugs
+8. All meta descriptions are 155 characters or fewer
 
-```text
-BEFORE (3 FAQPage sources per page):
-┌─────────────────────────────────────────┐
-│ TradeAsset.tsx                          │
-│ ├── JSON-LD: FAQPage (lines 265-269)    │ ← Keep
-│ └── AssetFAQSection                     │
-│     ├── Microdata: FAQPage (line 27)    │ ← Remove
-│     └── <noscript>: FAQPage (line 75)   │ ← Remove
-└─────────────────────────────────────────┘
-
-AFTER (1 FAQPage source):
-┌─────────────────────────────────────────┐
-│ TradeAsset.tsx                          │
-│ └── JSON-LD: FAQPage (single source)    │ ← Only this
-└─────────────────────────────────────────┘
-```
-
-### Internal Linking Fix Visual
-
-```text
-BEFORE:
-/markets ──────────────────────── 5 manual links
-    └── /trade (generic, no asset)
-
-AFTER:
-/markets ──────────────────────── 145+ dynamic links
-    ├── /trade/btc
-    ├── /trade/eth
-    ├── /trade/nvda
-    ├── /trade/aapl
-    ├── /trade/mnq ← NEW
-    └── ... (all 145+ assets)
-```
-
----
-
-## Verification Checklist
-
-After implementation:
-1. Every `/trade/{symbol}` page has a clickable link from `/markets`
-2. Every trade page has `<h1>` with "[Asset Name] 2026 Live Market Analysis"
-3. Google Rich Results Test shows exactly 1 FAQPage per asset page
-4. All meta descriptions are ≤155 characters
-5. Canonical URLs match sitemap.xml exactly
-6. BTC=$95,000, GOOGL=$338.58, NVDA=$190.20, AAPL=$255.25, MNQ=$26,160
-
-For the Asset Directory in Phase 1.2, ensure the asset links are styled as 'Pill' buttons with a subtle 'Liquid Glass' blur effect. This ensures that even with 145 links, the page feels like a premium app rather than a 1990s web directory.
