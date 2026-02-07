@@ -21,9 +21,9 @@ function getRelatedAssets(currentAsset: Asset, count: number = 3): Asset[] {
   return sorted.slice(0, count);
 }
 
-// Get asset URL slug
+// Get asset URL slug - use asset.id for canonical parity with sitemap
 function getAssetSlug(asset: Asset): string {
-  return asset.symbol.toLowerCase().replace('/', '-');
+  return asset.id;
 }
 
 // Get type-specific title

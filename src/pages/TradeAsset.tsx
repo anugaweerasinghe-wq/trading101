@@ -7,6 +7,7 @@ import { RelatedAssets } from "@/components/RelatedAssets";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
 import { AssetIntelligence } from "@/components/AssetIntelligence";
 import { AIReadySummary } from "@/components/AIReadySummary";
+import { GEOKeyTakeaways } from "@/components/GEOKeyTakeaways";
 import { TradingStrengthMeter } from "@/components/TradingStrengthMeter";
 import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
@@ -146,52 +147,30 @@ export default function TradeAsset() {
     : "https://tradinghq.vercel.app/trade";
   const assetColor = selectedAsset ? getAssetColor(selectedAsset.id) : '#00FFFF';
 
-  // --- STRICT GOOGLE COMPLIANT SCHEMA ---
-  // We use "SoftwareApplication" as the primary type because Google guarantees Review Snippets for it.
-  // We nest the Review and AggregateRating strictly inside.
-  
-  const unifiedSchema = selectedAsset ? {
+  // --- CLEAN SCHEMA: No fake ratings, proper nesting ---
+  // FinancialProduct schema for asset pages (no AggregateRating without real reviews)
+  const financialProductSchema = selectedAsset ? {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": "FinancialProduct",
     "name": `${selectedAsset.name} Trading Simulator`,
-    "operatingSystem": "Web",
-    "applicationCategory": "FinanceApplication",
     "description": assetContent?.whatIs || metaDescription || `${selectedAsset.name} trading simulator`,
     "url": canonicalUrl,
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
+    "category": assetContent?.category || selectedAsset.type,
     "provider": {
       "@type": "Organization",
       "name": "TradeHQ",
       "url": "https://tradinghq.vercel.app/",
       "logo": "https://tradinghq.vercel.app/og-image.png"
     },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "1542",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "review": {
-      "@type": "Review",
-      "author": {
-        "@type": "Organization",
-        "name": "TradeHQ Research Team"
-      },
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      },
-      "reviewBody": `Comprehensive ${selectedAsset.symbol} trading simulation with real-time charts, AI mentoring, and $10K virtual capital.`
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
     }
   } : null;
 
-  // Organization schema - Kept separate as a global entity
+  // Organization schema
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -204,31 +183,22 @@ export default function TradeAsset() {
     ]
   };
 
-  // FAQ Schema
-  const allFAQs = selectedAsset && assetContent ? [
+  // FAQ Schema - only if real FAQs exist
+  const allFAQs = selectedAsset && assetFAQs.length > 0 ? [
     ...assetFAQs.map(faq => ({
       "@type": "Question" as const,
       "name": faq.question,
       "acceptedAnswer": {
         "@type": "Answer" as const,
-        "text": faq.answer || "Answer pending update." // Safety fallback
+        "text": faq.answer || "Answer pending update."
       }
     })),
-    // PAA-targeted FAQs
     {
       "@type": "Question" as const,
-      "name": `Is ${selectedAsset.symbol} a good buy for 2026?`,
+      "name": `How can I practice trading ${selectedAsset.name}?`,
       "acceptedAnswer": {
         "@type": "Answer" as const,
-        "text": `${selectedAsset.symbol} trading requires careful analysis of 2026 market conditions. Practice with TradeHQ's simulator using $10K virtual funds to test your thesis.`
-      }
-    },
-    {
-      "@type": "Question" as const,
-      "name": `How to practice trade ${selectedAsset.name}?`,
-      "acceptedAnswer": {
-        "@type": "Answer" as const,
-        "text": `TradeHQ provides $10,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Simply select ${selectedAsset.symbol} from the asset list.`
+        "text": `TradeHQ provides $10,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with real-time charts and AI mentoring.`
       }
     }
   ] : [];
@@ -253,8 +223,8 @@ export default function TradeAsset() {
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "Trade",
-        "item": "https://tradinghq.vercel.app/trade"
+        "name": "Markets",
+        "item": "https://tradinghq.vercel.app/markets"
       },
       {
         "@type": "ListItem",
@@ -284,7 +254,7 @@ export default function TradeAsset() {
         <meta property="og:title" content={metaTitle} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:image" content={`https://tradinghq.vercel.app/og/${selectedAsset?.symbol.toLowerCase().replace('/', '-') || 'default'}.png`} />
+        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
@@ -292,17 +262,16 @@ export default function TradeAsset() {
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@tradehq" />
-        <meta name="twitter:creator" content="@tradehq" />
         <meta name="twitter:title" content={metaTitle} />
         <meta name="twitter:description" content={metaDescription} />
-        <meta name="twitter:image" content={`https://tradinghq.vercel.app/og/${selectedAsset?.symbol.toLowerCase().replace('/', '-') || 'default'}.png`} />
+        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
         
         <meta name="theme-color" content={assetColor} />
         
-        {/* PRIMARY SCHEMA: SoftwareApplication with nested Review */}
-        {unifiedSchema && (
+        {/* FINANCIAL PRODUCT SCHEMA */}
+        {financialProductSchema && (
           <script type="application/ld+json">
-            {JSON.stringify(unifiedSchema)}
+            {JSON.stringify(financialProductSchema)}
           </script>
         )}
 
@@ -311,7 +280,7 @@ export default function TradeAsset() {
           {JSON.stringify(organizationSchema)}
         </script>
         
-        {/* FAQ SCHEMA */}
+        {/* FAQ SCHEMA - only when real Q&A exist */}
         {faqSchema && (
           <script type="application/ld+json">
             {JSON.stringify(faqSchema)}
@@ -338,6 +307,9 @@ export default function TradeAsset() {
               {selectedAsset.name} 2026 Live Market Analysis
             </h1>
           )}
+
+          {/* GEO Key Takeaways - machine-readable for AI Overviews */}
+          {selectedAsset && <GEOKeyTakeaways asset={selectedAsset} />}
           
           {selectedAsset && showSeoBlocks && (
             <AIReadySummary asset={selectedAsset} />
@@ -381,25 +353,27 @@ export default function TradeAsset() {
             </div>
           </div>
 
+          {/* Asset Intelligence - shown for seed assets */}
           {showSeoBlocks && selectedAsset && (
-            <>
-              <AssetIntelligenceWithLiveData asset={selectedAsset} />
-              
-              <div className="flex items-center justify-between p-4 rounded-xl bg-card/30 border border-border/30">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-xs font-bold text-primary">TR</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Reviewed by TradeHQ Research Team</p>
-                    <p className="text-xs text-muted-foreground">Last Updated: February 1, 2026 • Expert Verified</p>
-                  </div>
+            <AssetIntelligenceWithLiveData asset={selectedAsset} />
+          )}
+
+          {/* EEAT Byline - shown for ALL asset pages */}
+          {selectedAsset && (
+            <div className="flex items-center justify-between p-4 rounded-xl bg-card/30 border border-border/30">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span className="text-xs font-bold text-primary">TR</span>
                 </div>
-                <div className="hidden sm:flex items-center gap-1 px-3 py-1 rounded-full bg-profit/10 text-profit text-xs font-medium">
-                  ✓ Editorial Oversight
+                <div>
+                  <p className="text-sm font-medium text-foreground">Reviewed by TradeHQ Research Team</p>
+                  <p className="text-xs text-muted-foreground">Last Updated: February 7, 2026 • Expert Verified</p>
                 </div>
               </div>
-            </>
+              <div className="hidden sm:flex items-center gap-1 px-3 py-1 rounded-full bg-profit/10 text-profit text-xs font-medium">
+                ✓ Editorial Oversight
+              </div>
+            </div>
           )}
 
           {selectedAsset && assetFAQs.length > 0 && (
@@ -410,6 +384,7 @@ export default function TradeAsset() {
             />
           )}
 
+          {/* Market Strategic Outlook - shown for ALL asset pages */}
           {selectedAsset && (
             <section className="mt-8 p-6 bg-card/30 backdrop-blur-xl rounded-2xl border border-border/30">
               <h2 className="text-lg font-semibold text-foreground mb-4">
@@ -425,11 +400,13 @@ export default function TradeAsset() {
 
           {selectedAsset && <RelatedAssets currentAsset={selectedAsset} />}
 
+          {/* Standardized disclaimer - ALL pages */}
           <div className="mt-8 p-4 rounded-xl bg-muted/30 border border-white/5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
               <p className="text-xs text-muted-foreground leading-relaxed">
-                <strong>Not Financial Advice:</strong> TradeHQ is a simulator for educational purposes only. 
+                <strong>(Educational simulation only — not financial advice.)</strong>{' '}
+                TradeHQ is a simulator for educational purposes only. 
                 No real money is at risk. Past performance in a simulation does not guarantee future real-world results. 
                 Always consult a qualified financial advisor before making investment decisions.
               </p>
