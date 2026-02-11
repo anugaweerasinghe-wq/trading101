@@ -1,96 +1,86 @@
-# Google Search Console Submission Instructions
+# Google Search Console — Post-Deploy Actions
 
 ## Prerequisites
 - Verified ownership of https://tradinghq.vercel.app/ in Google Search Console
-- Site verification code already added: `I9Z6Vo-t00zuqHRrR_RFgAZ14hsA5YzA0gHeK2POL-I`
-
-## New in v2.0
-- ✅ Breadcrumb navigation on all /trade/{symbol} pages
-- ✅ FAQPage schema for "How to practice trade [Asset]?" queries
-- ✅ Twitter Card (summary_large_image) metadata
-- ✅ Related Assets internal linking section
-- ✅ Asset-specific theme colors for OG previews
+- Site verification code: `I9Z6Vo-t00zuqHRrR_RFgAZ14hsA5YzA0gHeK2POL-I`
 
 ## Step 1: Submit Sitemap
 
 1. Go to [Google Search Console](https://search.google.com/search-console/)
-2. Select your property: `https://tradinghq.vercel.app/`
-3. Navigate to **Sitemaps** in the left sidebar
-4. Enter sitemap URL: `sitemap.xml`
+2. Select property: `https://tradinghq.vercel.app/`
+3. Navigate to **Index → Sitemaps**
+4. Enter: `sitemap.xml`
 5. Click **Submit**
+6. Confirm status shows "Success" within 24 hours
 
-## Step 2: Request Indexing for Priority Pages
+## Step 2: Request Indexing for Seed Pages
 
-For faster indexing, manually request indexing for key pages:
+Use **URL Inspection** for each URL below — paste, press Enter, click **Request Indexing**:
 
-1. Go to **URL Inspection** in Search Console
-2. Enter each priority URL and click **Request Indexing**:
+### Priority 1 (Submit First)
+```
+https://tradinghq.vercel.app/
+https://tradinghq.vercel.app/trade
+https://tradinghq.vercel.app/learn-trading-guide
+```
 
-### High Priority (Submit First)
-- `https://tradinghq.vercel.app/`
-- `https://tradinghq.vercel.app/trade`
-- `https://tradinghq.vercel.app/learn-trading-guide`
+### Priority 2 (Seed Assets)
+```
+https://tradinghq.vercel.app/trade/btc
+https://tradinghq.vercel.app/trade/eth
+https://tradinghq.vercel.app/trade/nvda
+https://tradinghq.vercel.app/trade/aapl
+https://tradinghq.vercel.app/trade/msft
+https://tradinghq.vercel.app/trade/googl
+https://tradinghq.vercel.app/trade/amzn
+https://tradinghq.vercel.app/trade/tsla
+https://tradinghq.vercel.app/trade/spy
+https://tradinghq.vercel.app/trade/qqq
+https://tradinghq.vercel.app/trade/gold
+https://tradinghq.vercel.app/trade/oil
+https://tradinghq.vercel.app/trade/gbpusd
+https://tradinghq.vercel.app/trade/xrp
+https://tradinghq.vercel.app/trade/bnb
+https://tradinghq.vercel.app/trade/sol
+```
 
-### Medium Priority (Submit Next)
-- `https://tradinghq.vercel.app/trade/btc`
-- `https://tradinghq.vercel.app/trade/eth`
-- `https://tradinghq.vercel.app/trade/aapl`
-- `https://tradinghq.vercel.app/trade/nvda`
-- `https://tradinghq.vercel.app/trade/spy`
+## Step 3: A/B Meta Test (After 7-Day Baseline)
 
-## Step 3: Monitor Indexation
-
-### Daily Checks (First 7 Days)
-1. Go to **Coverage** report
-2. Monitor **Valid** vs **Excluded** pages
-3. Check for any **Errors** or **Warnings**
-
-### Key Metrics to Track
-- **Indexation Ratio**: Valid indexed pages / Total submitted pages
-  - Target: > 40% within 7 days
-  - If below 40%, pause new page generation
-
-- **Time on Page**: Monitor in Google Analytics
-  - If asset pages are 50% below site average, investigate content quality
+- **Days 1-7**: Variant A active (Learn & Practice titles with "risk-free" hooks)
+- **Day 8**: Review CTR + impressions in GSC Performance report
+- **Day 8-14**: Optionally swap to Variant B on a subset (see `meta_ab_test_plan.txt`)
+- **Day 15**: Compare aggregate CTR between windows
+- **Rollback** if CTR drops >50% or indexation drops below 40% for 7 consecutive days
 
 ## Step 4: Rich Results Testing
 
-Test structured data for each page type:
+1. Go to [Google Rich Results Test](https://search.google.com/test/rich-results)
+2. Test each seed URL
+3. Expected schemas per page type:
 
-1. Use [Rich Results Test](https://search.google.com/test/rich-results)
-2. Enter URLs to validate:
-   - Homepage: Check SoftwareApplication, EducationalOrganization
-   - Learn Trading Guide: Check FAQPage schema
-   - Asset pages: Check WebPage, FinancialProduct schema
-
-### Expected Rich Result Types
-| Page | Schema Types |
-|------|--------------|
+| Page | Expected Schemas |
+|------|-----------------|
 | Homepage | SoftwareApplication, EducationalOrganization, BreadcrumbList |
-| /learn-trading-guide | FAQPage, HowTo, Article |
-| /trade/{symbol} | WebPage, FinancialProduct |
+| /learn-trading-guide | FAQPage, HowTo, Article, EducationalOrganization |
+| /trade/{symbol} | DefinedTerm (GEOKeySummary), FinancialProduct, Organization, BreadcrumbList, FAQPage (if Q&A exist) |
 
-## Step 5: Post-Launch Guardrails
+4. Record results in `public/rich_results_validation_log.csv`
 
-If any of these conditions occur after 7 days, generate `diagnostic_report.txt`:
+## Step 5: Monitor (14 Days)
 
-1. **Indexation Ratio < 40%**: Too many pages excluded
-2. **Avg Time on Page 50% below site average**: Content quality issue
-3. **High bounce rate on asset pages**: User experience problem
+Check daily in GSC → Performance:
+- **Impressions** trend (should increase)
+- **Click** trend
+- **CTR** (maintain or increase from ~4% baseline)
+- **Average position**
 
-### Diagnostic Report Template
-```
-Date: [DATE]
-Issue: [DESCRIPTION]
-Affected URLs: [LIST]
-Recommended Action: [STEPS]
-```
+### Rollback Triggers (act immediately)
+- CTR drops >50% vs baseline on any seed asset for 7+ consecutive days
+- Indexation ratio drops below 40% for seed assets for 7+ consecutive days
+- Average position degrades by >10 positions on any seed asset
 
-## URL List Reference
-See `list_of_urls.csv` for complete URL inventory with priorities.
-
-## Notes
-- Total URLs in sitemap: 32 (7 core + 25 seed assets)
-- Sitemap size: Well under 50k limit (no index needed)
-- All pages include canonical URLs
-- OG images configured for social sharing
+## Reference Files
+- `public/meta_variants.csv` — Variant A (active) and B (stored)
+- `public/meta_ab_test_plan.txt` — Full test protocol
+- `public/change_log.csv` — All changes with before/after
+- `public/link_slug_validation_report.csv` — Sitemap vs code slug check

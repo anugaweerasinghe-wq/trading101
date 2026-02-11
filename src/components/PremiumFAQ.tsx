@@ -11,7 +11,7 @@ export function PremiumFAQ() {
   const faqs = [
     {
       question: "How does virtual trading work?",
-      answer: "Virtual trading on TradeHQ simulates real market conditions using $10,000 in demo cash. You can buy and sell 150+ assets including stocks, crypto, ETFs, and commodities with real-time price simulation. All trades are executed instantly with no real money at risk."
+      answer: "Virtual trading on TradeHQ simulates market conditions using $10,000 in demo cash. You can buy and sell 150+ assets including stocks, crypto, ETFs, and commodities with simulated price data. All trades are executed instantly with no real money at risk."
     },
     {
       question: "What is Bitcoin L2?",

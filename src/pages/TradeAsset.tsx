@@ -148,6 +148,30 @@ export default function TradeAsset() {
   const assetColor = selectedAsset ? getAssetColor(selectedAsset.id) : '#00FFFF';
 
   // --- CLEAN SCHEMA: No fake ratings, proper nesting ---
+  // GEOKeySummary - neutral, factual, machine-readable for AI Overviews
+  const geoKeySummarySchema = selectedAsset && assetContent ? {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": `${selectedAsset.name} (${selectedAsset.symbol})`,
+    "description": assetContent.whatIs.split('. ')[0] + '.',
+    "inDefinedTermSet": {
+      "@type": "DefinedTermSet",
+      "name": "TradeHQ Asset Directory"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "primaryInfluencers",
+        "value": assetContent.stats?.primaryDriver || (selectedAsset.type === 'crypto' ? 'Network adoption, regulatory developments, digital asset sentiment' : 'Macroeconomic conditions, sector catalysts, earnings')
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "simulatorScope",
+        "value": `Practice ${selectedAsset.symbol} trading with $10K virtual capital, simulated charts, and AI mentoring — educational only.`
+      }
+    ]
+  } : null;
+
   // FinancialProduct schema for asset pages (no AggregateRating without real reviews)
   const financialProductSchema = selectedAsset ? {
     "@context": "https://schema.org",
@@ -265,6 +289,13 @@ export default function TradeAsset() {
         
         <meta name="theme-color" content={assetColor} />
         
+        {/* GEO KEY SUMMARY SCHEMA */}
+        {geoKeySummarySchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(geoKeySummarySchema)}
+          </script>
+        )}
+
         {/* FINANCIAL PRODUCT SCHEMA */}
         {financialProductSchema && (
           <script type="application/ld+json">
@@ -296,18 +327,18 @@ export default function TradeAsset() {
         <Navigation />
         <GlowStatusBar />
 
-        <div className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl">
+        <main className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl">
           {selectedAsset && <Breadcrumb items={breadcrumbItems} />}
           
           {selectedAsset && (
-            <>
+            <header>
               <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
                 {selectedAsset.name} — Practice Trading Simulator 2026
               </h1>
               <p className="text-sm text-muted-foreground mb-4">
                 Use the TradeHQ simulator to practice {selectedAsset.symbol} trading with $10,000 in virtual capital. Learn to read charts, manage risk, and build strategies — all without risking real money.
               </p>
-            </>
+            </header>
           )}
 
           {/* GEO Key Takeaways - machine-readable for AI Overviews */}
@@ -406,7 +437,7 @@ export default function TradeAsset() {
               onTrade={handleTrade}
             />
           </div>
-        </div>
+        </main>
 
         <AIMentor 
           portfolio={portfolio} 

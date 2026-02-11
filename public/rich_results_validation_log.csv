@@ -1,44 +1,35 @@
 URL,Schema Type,Validation Status,Last Checked,Notes
-https://tradinghq.vercel.app/,SoftwareApplication,Clean — no AggregateRating,2026-02-07,featureList updated: Real-time → Simulated
-https://tradinghq.vercel.app/,EducationalOrganization,Clean,2026-02-07,Teaching subjects defined
-https://tradinghq.vercel.app/,BreadcrumbList,Clean,2026-02-07,5 items in navigation
-https://tradinghq.vercel.app/learn-trading-guide,FAQPage,Clean,2026-02-07,8 consolidated FAQ items
-https://tradinghq.vercel.app/learn-trading-guide,HowTo,Clean,2026-02-07,Step-by-step guide
-https://tradinghq.vercel.app/learn-trading-guide,Article,Clean,2026-02-07,Educational content
-https://tradinghq.vercel.app/learn-trading-guide,EducationalOrganization,Clean — sameAs and credentials removed,2026-02-07,Unverified sameAs and credential claims removed
-https://tradinghq.vercel.app/trade/btc,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/btc,FAQPage,Clean,2026-02-07,real-time → simulated in FAQ answer
-https://tradinghq.vercel.app/trade/btc,BreadcrumbList,Clean,2026-02-07,Home > Markets > Bitcoin
-https://tradinghq.vercel.app/trade/eth,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/eth,FAQPage,Clean,2026-02-07,FAQ with practice question
-https://tradinghq.vercel.app/trade/eth,BreadcrumbList,Clean,2026-02-07,Home > Markets > Ethereum
-https://tradinghq.vercel.app/trade/nvda,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/nvda,FAQPage,Clean,2026-02-07,FAQ with practice question
-https://tradinghq.vercel.app/trade/aapl,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/aapl,FAQPage,Clean,2026-02-07,FAQ with practice question
-https://tradinghq.vercel.app/trade/sol,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/msft,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/googl,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/amzn,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/tsla,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/meta,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/xrp,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/bnb,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/spy,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/qqq,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/gold,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/oil,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/gbpusd,FinancialProduct,Clean — no AggregateRating/Review,2026-02-07,Organization sameAs removed
-https://tradinghq.vercel.app/trade/mnq,REMOVED,N/A,2026-02-07,MNQ reverted — removed from assets.ts + assetContent.ts + sitemap.xml
+https://tradinghq.vercel.app/,SoftwareApplication,Clean — no AggregateRating,2026-02-11,featureList: Simulated market liquidity environment
+https://tradinghq.vercel.app/,EducationalOrganization,Clean,2026-02-11,Teaching subjects defined
+https://tradinghq.vercel.app/,BreadcrumbList,Clean,2026-02-11,5 items in navigation
+https://tradinghq.vercel.app/learn-trading-guide,FAQPage,Clean,2026-02-11,"8 consolidated FAQ items; all answers reference simulated data"
+https://tradinghq.vercel.app/learn-trading-guide,HowTo,Clean,2026-02-11,Step-by-step guide
+https://tradinghq.vercel.app/learn-trading-guide,Article,Clean,2026-02-11,Educational content
+https://tradinghq.vercel.app/learn-trading-guide,EducationalOrganization,Clean — sameAs and credentials removed,2026-02-11,Unverified sameAs and credential claims removed
+https://tradinghq.vercel.app/trade/btc,"DefinedTerm, FinancialProduct, Organization, FAQPage, BreadcrumbList",Clean — no AggregateRating/Review,2026-02-11,GEOKeySummary added; sameAs removed
+https://tradinghq.vercel.app/trade/eth,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/nvda,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/aapl,"DefinedTerm, FinancialProduct, Organization, FAQPage, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/sol,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/msft,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/googl,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/amzn,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/tsla,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/meta,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/xrp,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/bnb,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/spy,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/qqq,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/gold,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/oil,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
+https://tradinghq.vercel.app/trade/gbpusd,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-11,GEOKeySummary added
 
 VALIDATION INSTRUCTIONS:
-1. Use Google Rich Results Test: https://search.google.com/test/rich-results
-2. Enter each URL and verify schema detection
-3. Update Validation Status to Valid or Error after external testing
-4. For errors add details to Notes column
+Run Google Rich Results Test (https://search.google.com/test/rich-results) on each URL above after deploy.
+Update Validation Status column with external test results.
 
-POST-REMEDIATION SCHEMA POLICY:
+SCHEMA POLICY:
 - No AggregateRating or Review schema without real user review data
 - No sameAs links without verified ownership of social accounts
-- No educationalCredentialAwarded without an actual certification program
-- All FinancialProduct descriptions must reflect simulated/educational nature
+- All FinancialProduct descriptions reflect simulated/educational nature
+- GEOKeySummary (DefinedTerm) contains only neutral factual fields

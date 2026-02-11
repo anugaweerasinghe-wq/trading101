@@ -1,0 +1,27 @@
+OWNER APPROVAL REQUEST — TradeHQ
+==================================
+
+The following changes require explicit owner sign-off before implementation:
+
+1. LIVE MARKET DATA API
+   Change: Enable real-time price feeds from CoinGecko/Alpha Vantage/Polygon
+   Risk: API rate limits, costs, and potential downtime. Pages would show "Live (via Vendor)" instead of "Simulated"
+   Required: API keys, budget approval, rate-limit handling strategy
+   Status: NOT IMPLEMENTED — awaiting approval
+
+2. SOCIAL ACCOUNT VERIFICATION (sameAs schema)
+   Change: Re-add sameAs links to Organization schema for SEO benefit
+   Risk: If accounts don't exist, Google may flag structured data as misleading
+   Required: Confirm ownership of:
+     - https://twitter.com/tradinghq
+     - https://linkedin.com/company/tradinghq
+     - https://github.com/tradinghq
+   Status: REMOVED — awaiting verification
+
+3. NEW ASSET ADDITIONS
+   Change: Any new trading assets beyond current 150+ catalog
+   Risk: Each new asset creates a new indexed URL; must have content and FAQ support
+   Required: Owner approval per asset with content brief
+   Status: MNQ was removed (added without approval)
+
+To approve any item, respond with the item number and "APPROVED" along with any required credentials or keys.

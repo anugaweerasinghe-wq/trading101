@@ -33,3 +33,17 @@ change_id,file,change_type,description,before,after,category
 32,index.html,FIXED,"Removed emojis from Twitter description","real charts","simulated charts",Twitter/Compliance
 33,index.html,FIXED,"Changed featureList from Real-time to Simulated","Real-time market liquidity simulation","Simulated market liquidity environment",Schema/Compliance
 34,public/sitemap.xml,REMOVED,"Removed MNQ URL entry and updated ETF count comment","ETFs (21 - includes MNQ) + /trade/mnq URL","ETFs (20) — MNQ URL removed",Sitemap/Product Revert
+35,src/lib/assetContent.ts,FIXED,"BTC FAQ: real-time → simulated charts","practice Bitcoin's price action in real-time","practice Bitcoin's price action with simulated charts",Terminology
+36,src/components/PremiumFeatures.tsx,FIXED,"Real-Time Markets → Simulated Markets; live → simulation","Real-Time Markets / Experience live market simulation","Simulated Markets / Experience market simulation",Terminology
+37,src/components/PremiumFeatures.tsx,FIXED,"AI education: real-time → instantly","market analysis in real-time","market analysis instantly",Terminology
+38,src/components/PremiumHero.tsx,FIXED,"Hero subtitle: real-time → simulated","real-time market simulation","simulated market data",Terminology
+39,src/components/PremiumHero.tsx,FIXED,"Stats card: Real-Time Data → Simulated Data","Real-Time Data","Simulated Data",Terminology
+40,src/components/PremiumFAQ.tsx,FIXED,"FAQ: real-time price simulation → simulated price data","real-time price simulation","simulated price data",Terminology
+41,src/pages/SectorPillar.tsx,FIXED,"Sector subtitle: Real-time simulation → Simulated data","Real-time simulation","Simulated data",Terminology
+42,src/components/TopAssetsGrid.tsx,FIXED,"BTC description: real-time → simulated","real-time price action","simulated price action",Terminology
+43,src/components/trading/GlowStatusBar.tsx,FIXED,"Status bar: Real-Time Simulation → Simulated Market Data","Real-Time Simulation","Simulated Market Data",Terminology
+44,src/components/LiveStatusIndicator.tsx,FIXED,"Indicator: Real-Time Simulation → Simulated Market Data","Real-Time Simulation","Simulated Market Data",Terminology
+45,src/pages/LearnTradingGuide.tsx,FIXED,"FAQ #6: real-time price simulation → simulated price data","real-time price simulation","simulated price data",Terminology
+46,src/pages/LearnTradingGuide.tsx,FIXED,"FAQ #8: real-time market simulation → simulated market data","real-time market simulation","simulated market data",Terminology
+47,src/pages/TradeAsset.tsx,ADDED,"GEOKeySummary JSON-LD (DefinedTerm schema) with neutral factual fields","(none)","DefinedTerm schema with primaryInfluencers + simulatorScope",GEO/Schema
+48,src/pages/TradeAsset.tsx,FIXED,"Semantic HTML: div → main element; added header wrapper","<div> container","<main> + <header> semantic elements",Semantic HTML
