@@ -15,15 +15,15 @@ export function PremiumFeatures() {
     },
     {
       icon: Zap,
-      title: "Real-Time Markets",
-      description: "Experience live market simulation with instant execution. Practice day trading and swing trading strategies.",
+      title: "Simulated Markets",
+      description: "Experience market simulation with instant execution. Practice day trading and swing trading strategies.",
       gradient: "from-secondary/20 to-secondary/5",
       iconColor: "text-secondary"
     },
     {
       icon: Brain,
       title: "AI-Powered Education",
-      description: "Learn from our AI mentor. Get personalized insights, strategy feedback, and market analysis in real-time.",
+      description: "Learn from our AI mentor. Get personalized insights, strategy feedback, and market analysis instantly.",
       gradient: "from-primary/20 to-primary/5",
       iconColor: "text-primary"
     },

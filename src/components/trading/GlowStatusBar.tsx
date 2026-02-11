@@ -53,7 +53,7 @@ export function GlowStatusBar() {
         <div className="hidden sm:flex items-center gap-1.5 text-xs">
           <div className="h-3 w-px bg-white/10 mr-4" />
           <Zap className="w-3.5 h-3.5 text-primary" />
-          <span className="text-muted-foreground">Real-Time Simulation</span>
+          <span className="text-muted-foreground">Simulated Market Data</span>
         </div>
       </div>
     </div>

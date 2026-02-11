@@ -1,0 +1,39 @@
+Subject: TradeHQ SEO Remediation Complete — Action Required
+
+Hi Team,
+
+The SEO remediation and GEO optimization for TradeHQ is complete. Here's what changed and what to monitor:
+
+WHAT WAS FIXED:
+- Removed all fabricated authority signals (fake ratings, expert badges, unverifiable claims)
+- Replaced all "Live Data" / "Real-Time" labels with "Simulated" across meta, schema, and UI
+- Removed unauthorized MNQ asset addition
+- Removed unverified sameAs social links from structured data
+- Added GEOKeySummary JSON-LD for AI Overview readiness on all trade pages
+- Updated all 17 seed asset meta titles/descriptions (Variant A active)
+- Wrapped trade pages in semantic HTML (<main>, <header>)
+- Added standardized educational disclaimer to all trade pages
+
+WHAT TO MONITOR (next 14 days):
+1. Google Search Console → Performance → Impressions, Clicks, CTR
+2. Google Search Console → Coverage → Indexed pages count
+3. Watch for crawl errors in GSC → Coverage → Errors
+
+ROLLBACK TRIGGERS (act immediately if any):
+- CTR drops >50% vs baseline on any seed asset for 7+ days
+- Indexation ratio drops below 40% for seed assets
+- Average position degrades by >10 positions on any seed asset
+
+OWNER ACTIONS NEEDED:
+1. Submit sitemap.xml in Google Search Console
+2. Request indexing for seed pages (see search_console_instructions.md)
+3. Verify @tradinghq Twitter and LinkedIn accounts exist
+4. After 7 days, review baseline CTR and consider A/B test with Variant B
+
+All deliverables are in /public:
+- change_log.csv, meta_variants.csv, meta_ab_test_plan.txt
+- rich_results_validation_log.csv, link_slug_validation_report.csv
+- final_qa_report.txt, search_console_instructions.md
+
+Best,
+TradeHQ Engineering

@@ -64,7 +64,7 @@ export function PremiumHero() {
           style={{ animationDelay: "200ms" }}
         >
           Practice trading stocks, crypto, forex, and commodities with 
-          real-time market simulation. Build strategies before risking real capital.
+          simulated market data. Build strategies before risking real capital.
         </p>
 
         {/* Weekly Bonus - Liquid Glass pill */}
@@ -115,7 +115,7 @@ export function PremiumHero() {
           {[
             { label: 'Tradeable Assets', value: '150+', icon: TrendingUp },
             { label: 'Virtual Capital', value: '$10K', icon: Shield },
-            { label: 'Real-Time Data', value: 'Yes', icon: Zap },
+            { label: 'Simulated Data', value: 'Yes', icon: Zap },
             { label: 'Weekly Refill', value: '$10K', icon: Sparkles },
           ].map((stat) => (
             <div 

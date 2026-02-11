@@ -18,7 +18,7 @@ const TOP_ASSETS: TopAsset[] = [
     id: "btc",
     symbol: "BTC",
     name: "Bitcoin",
-    description: "The original cryptocurrency. Practice Bitcoin trading with real-time price action.",
+    description: "The original cryptocurrency. Practice Bitcoin trading with simulated price action.",
     icon: Zap,
     badge: "Most Traded",
     badgeColor: "bg-primary/10 text-primary border-primary/20",

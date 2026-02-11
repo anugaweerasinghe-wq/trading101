@@ -52,7 +52,7 @@ export function LiveStatusIndicator() {
             {/* Market Status */}
             <div className="hidden md:flex items-center gap-2 text-sm">
               <Zap className="w-4 h-4 text-primary" />
-              <span className="text-muted-foreground">Real-Time Simulation</span>
+              <span className="text-muted-foreground">Simulated Market Data</span>
             </div>
 
             {/* Session Indicator */}

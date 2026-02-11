@@ -65,7 +65,7 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   btc: [
     {
       question: "How can I practice trading Bitcoin without losing money?",
-      answer: "Use a crypto simulator like TradeHQ. You get $10,000 in virtual funds to practice Bitcoin's price action in real-time without any financial risk."
+      answer: "Use a crypto simulator like TradeHQ. You get $10,000 in virtual funds to practice Bitcoin's price action with simulated charts — no financial risk."
     }
   ],
   aapl: [

@@ -147,7 +147,7 @@ export default function SectorPillar() {
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold">{sector.name}</h1>
                 <p className="text-muted-foreground mt-1">
-                  {sectorAssets.length} tradeable assets • Real-time simulation
+                  {sectorAssets.length} tradeable assets • Simulated data
                 </p>
               </div>
             </div>
