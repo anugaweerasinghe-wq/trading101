@@ -1,19 +1,29 @@
 FINAL QA REPORT — TradeHQ SEO Remediation & GEO Uplift
 ======================================================
-Date: 2026-02-11
+Date: 2026-02-13 (updated)
 
 COMPLIANCE CHECKS (all must pass):
 
 [PASS] No AggregateRating, Review, or ratingValue in any JSON-LD or microdata
   - Verified: TradeAsset.tsx, LearnTradingGuide.tsx, index.html — zero instances
+  - Comment in TradeAsset.tsx line 175 explicitly notes "no AggregateRating without real reviews"
 
 [PASS] No "Expert Verified", "Expert Reviewed", or similar badges remain
   - Verified: CredibilityFooter, MegaFooter, InstitutionalRating — all cleaned
+  - Global search: zero matches
 
 [PASS] No crawler-facing text claims "Live" unless owner-approved and API-backed
   - Fixed: PremiumFeatures, PremiumHero, PremiumFAQ, SectorPillar, TopAssetsGrid,
-    GlowStatusBar, LiveStatusIndicator, LearnTradingGuide FAQs, assetContent FAQs
+    GlowStatusBar, LiveStatusIndicator, LearnTradingGuide FAQs, assetContent FAQs,
+    Portfolio.tsx subtitle, index.html keywords
   - All now use "Simulated" / "Simulated Market Data"
+  - Note: Internal code comments (marketData.ts, MinimalistAreaChart.tsx, lessonData.ts)
+    use "real-time" to describe simulation logic — these are NOT crawler-facing
+
+[PASS] No fabricated user counts or ranking claims remain
+  - "50K+ traders" removed from LearnTradingGuide.tsx CTA section
+  - "#1 trading simulator" removed from PremiumFeatures.tsx
+  - All replaced with factual copy
 
 [PASS] Sitemap entries match asset IDs exactly
   - Verified: 150+ entries in sitemap.xml match ASSETS array IDs
@@ -25,7 +35,7 @@ COMPLIANCE CHECKS (all must pass):
 
 [PASS] Organization sameAs removed (unverified social accounts)
   - Removed from TradeAsset.tsx and LearnTradingGuide.tsx
-  - Social links remain in UI footer (non-schema) — owner should verify accounts
+  - Zero instances of sameAs in src/ codebase
 
 [PASS] No fabricated user counts, ratings, or ranking claims
   - "50K+ traders", "4.9/5", "#1 Simulator" all removed
@@ -48,7 +58,24 @@ BUILD STATUS:
 
 REMAINING ITEMS REQUIRING OWNER ACTION:
   1. Verify Twitter (@tradinghq) and LinkedIn accounts exist — if yes, re-add sameAs
-  2. Submit sitemap.xml to Google Search Console (see search_console_instructions.txt)
-  3. Request indexing for seed pages (see search_console_instructions.txt)
-  4. Monitor CTR and impressions for 14 days post-deploy
+  2. Submit sitemap.xml to Google Search Console (see search_console_submission_instructions.md)
+  3. Request indexing for seed pages (see search_console_submission_instructions.md)
+  4. Monitor CTR and impressions for 14 days post-deploy (see 14_day_report.md)
   5. If live data API is desired, submit owner_approval_request.txt
+  6. If programmatic pages (compare/glossary) are desired, approve item #4 in owner_approval_request.txt
+  7. Review monitoring_plan.csv for daily/weekly check cadence
+
+DELIVERABLES PRODUCED (all in /public):
+  - change_log.csv (48 entries)
+  - list_of_updated_urls.csv
+  - rich_results_validation_log.csv
+  - meta_variants.csv (Variant A active, Variant B staged)
+  - meta_ab_test_plan.txt (14-day test plan with rollback thresholds)
+  - link_slug_validation_report.csv
+  - monitoring_plan.csv (daily/weekly metric checks)
+  - 14_day_report.md (template for post-deploy tracking)
+  - owner_approval_request.txt (5 items requiring sign-off)
+  - search_console_submission_instructions.md
+  - notify_team.txt
+  - sitemap.xml (regenerated, MNQ removed)
+  - final_qa_report.txt (this file)

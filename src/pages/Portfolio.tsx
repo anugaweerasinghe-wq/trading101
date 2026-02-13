@@ -148,7 +148,7 @@ export default function Portfolio() {
           <header className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio Dashboard</h1>
-              <p className="text-muted-foreground mt-2">Track your virtual investments, analyze performance, and manage risk in real-time.</p>
+              <p className="text-muted-foreground mt-2">Track your virtual investments, analyze performance, and manage simulated risk.</p>
             </div>
             <div className="flex items-center gap-3">
               <Button

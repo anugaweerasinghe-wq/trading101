@@ -1,0 +1,11 @@
+metric,tool,frequency,baseline_source,alert_threshold,action_if_triggered
+Total Impressions,Google Search Console,Daily,Day 0-3 average,Drop >30% for 3 consecutive days,Check Coverage report for deindexed pages; revert recent meta changes
+Total Clicks,Google Search Console,Daily,Day 0-3 average,Drop >40% for 3 consecutive days,Revert meta to Variant A from meta_variants.csv
+CTR (Click-Through Rate),Google Search Console,Daily,Day 0-3 average,Drop >50% on any seed asset for 7 days,Revert that asset's meta title/description immediately
+Average Position,Google Search Console,Daily,Day 0-3 average,Degrades >10 positions on any seed asset for 7 days,Pause A/B test; revert to Variant A
+Indexation Ratio (seed pages),Google Search Console > Coverage,Every 3 days,All 15 seed pages indexed,Any seed page drops from index for >5 days,Request re-indexing via URL Inspection tool
+Rich Results Eligibility,Google Rich Results Test,Weekly,Baseline test on deploy day,Any seed page fails validation,Fix schema immediately; re-test
+Core Web Vitals (CWV),Google Search Console > CWV report,Weekly,Baseline Lighthouse scores,LCP >2.5s or CLS >0.1 on mobile,Optimize images/layout; lazy-load offenders
+Crawl Errors,Google Search Console > Coverage,Every 3 days,Zero 404s for existing slugs,Any new 404 on /trade/* pages,Check sitemap vs routes; fix broken links
+Mobile Usability,Google Search Console > Mobile Usability,Weekly,Zero issues,Any new issue flagged,Fix touch targets or viewport issues
+Sitemap Status,Google Search Console > Sitemaps,Weekly,Submitted and accepted,Status changes to "Has errors",Re-validate sitemap.xml; resubmit
