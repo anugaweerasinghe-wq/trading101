@@ -168,6 +168,11 @@ export default function TradeAsset() {
         "@type": "PropertyValue",
         "name": "simulatorScope",
         "value": `Practice ${selectedAsset.symbol} trading with $10K virtual capital, simulated charts, and AI mentoring — educational only.`
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "studentPerspective",
+        "value": `Students can practice ${selectedAsset.symbol} trading as beginners — build skills risk-free before committing real capital.`
       }
     ]
   } : null;
@@ -420,7 +425,7 @@ export default function TradeAsset() {
           {/* Standardized disclaimer - ALL pages */}
           <div className="mt-8 p-4 rounded-xl bg-muted/30 border border-white/5">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+              <AlertTriangle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
               <p className="text-xs text-muted-foreground leading-relaxed">
                 <strong>(Educational simulation only — not financial advice.)</strong>{' '}
                 TradeHQ is a simulator for educational purposes only. 
