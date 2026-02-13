@@ -47,3 +47,7 @@ change_id,file,change_type,description,before,after,category
 46,src/pages/LearnTradingGuide.tsx,FIXED,"FAQ #8: real-time market simulation → simulated market data","real-time market simulation","simulated market data",Terminology
 47,src/pages/TradeAsset.tsx,ADDED,"GEOKeySummary JSON-LD (DefinedTerm schema) with neutral factual fields","(none)","DefinedTerm schema with primaryInfluencers + simulatorScope",GEO/Schema
 48,src/pages/TradeAsset.tsx,FIXED,"Semantic HTML: div → main element; added header wrapper","<div> container","<main> + <header> semantic elements",Semantic HTML
+49,src/pages/Portfolio.tsx,FIXED,"Portfolio subtitle: real-time → simulated risk","manage risk in real-time","manage simulated risk",Terminology
+50,src/pages/LearnTradingGuide.tsx,FIXED,"Removed 50000+ traders claim from CTA section","Join 50000+ traders practicing on TradingHQ","Practice trading with $10000 in virtual cash across 150+ assets",EEAT/Compliance
+51,src/components/PremiumFeatures.tsx,FIXED,"Removed #1 claim from subtitle","The #1 trading simulator for 2026","A powerful trading simulator for 2026",EEAT/Compliance
+52,index.html,FIXED,"Keywords meta: real-time markets → simulated markets","real-time markets","simulated markets",Terminology

@@ -937,8 +937,7 @@ const LearnTradingGuide = () => {
               </Badge>
               <h2 className="text-3xl font-bold mb-4">Ready to Start Your Risk-Free Trading Journey?</h2>
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join 50,000+ traders practicing on TradingHQ. Get $10,000 in virtual money to trade 
-                150+ real assets. Master AI-assisted trading, Bitcoin Layer 2, and tokenized securities—risk-free.
+                Practice trading with $10,000 in virtual cash across 150+ assets. Master AI-assisted trading, Bitcoin Layer 2, and tokenized securities — all risk-free.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <Link to="/trade">

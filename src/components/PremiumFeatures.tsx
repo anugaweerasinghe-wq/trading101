@@ -59,7 +59,7 @@ export function PremiumFeatures() {
             Why <span className="text-primary">TradeHQ</span>?
           </h2>
           <p className="text-muted-foreground text-lg">
-            The #1 trading simulator for 2026. Built for beginners and experts alike.
+            A powerful trading simulator for 2026. Built for beginners and experts alike.
           </p>
         </div>
         

@@ -24,4 +24,21 @@ The following changes require explicit owner sign-off before implementation:
    Required: Owner approval per asset with content brief
    Status: MNQ was removed (added without approval)
 
+4. PROGRAMMATIC SEO PAGES (Section C of prompt)
+   Change: Create 200+ new pages including:
+     - /compare/:assetA-vs-:assetB (comparison pages)
+     - /glossary/:term (glossary definitions)
+     - 50 Sri Lanka-focused long-tail pages
+   Risk: New routes violate the "no new slugs without approval" constraint.
+         Mass-generated content requires quality review to avoid thin-content penalties.
+   Required: Owner approval for new route patterns, content review of 10-page sample
+   Estimated effort: 2-3 days implementation + 1 day QA
+   Status: NOT IMPLEMENTED — awaiting approval
+
+5. DYNAMIC OG IMAGE ENDPOINT
+   Change: Create /api/og?assetId= server endpoint for dynamic OG images
+   Risk: Requires edge function deployment; adds server cost
+   Required: Owner approval for edge function usage
+   Status: NOT IMPLEMENTED — static OG images currently in use
+
 To approve any item, respond with the item number and "APPROVED" along with any required credentials or keys.
