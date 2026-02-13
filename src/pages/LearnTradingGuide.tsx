@@ -331,9 +331,12 @@ const LearnTradingGuide = () => {
                 <span className="text-gradient-gold">Your Risk-Free $10K Simulator Guide</span>
               </h1>
               
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
                 Master Bitcoin Layer 2 investing, tokenized securities, and AI trading bot safety. 
-                Practice with 150+ real assets using our free simulator—no risk, real skills.
+                Practice with 150+ assets using our free simulator — no risk, real skills.
+              </p>
+              <p className="text-sm text-muted-foreground/80 max-w-2xl mx-auto mb-8 italic">
+                Students in Sri Lanka can practice real market strategies with $10K virtual cash on TradeHQ — fully educational and risk-free.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">

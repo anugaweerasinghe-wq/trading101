@@ -1,0 +1,35 @@
+URL,Schema Type,Validation Status,Last Checked,Notes
+https://tradinghq.vercel.app/,SoftwareApplication,Clean — no AggregateRating,2026-02-13,featureList: Simulated market liquidity environment
+https://tradinghq.vercel.app/,EducationalOrganization,Clean,2026-02-13,Teaching subjects defined
+https://tradinghq.vercel.app/,BreadcrumbList,Clean,2026-02-13,5 items in navigation
+https://tradinghq.vercel.app/learn-trading-guide,FAQPage,Clean,2026-02-13,"8 consolidated FAQ items; all answers reference simulated data"
+https://tradinghq.vercel.app/learn-trading-guide,HowTo,Clean,2026-02-13,Step-by-step guide
+https://tradinghq.vercel.app/learn-trading-guide,Article,Clean,2026-02-13,Educational content with Sri Lanka student perspective
+https://tradinghq.vercel.app/learn-trading-guide,EducationalOrganization,Clean — sameAs and credentials removed,2026-02-13,Unverified sameAs and credential claims removed
+https://tradinghq.vercel.app/trade/btc,"DefinedTerm, FinancialProduct, Organization, FAQPage, BreadcrumbList",Clean — studentPerspective added,2026-02-13,GEOKeySummary with studentPerspective field
+https://tradinghq.vercel.app/trade/eth,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/nvda,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/aapl,"DefinedTerm, FinancialProduct, Organization, FAQPage, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/sol,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/msft,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/googl,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/amzn,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/tsla,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/meta,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/xrp,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/bnb,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/spy,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/qqq,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/gold,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/oil,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+https://tradinghq.vercel.app/trade/gbpusd,"DefinedTerm, FinancialProduct, Organization, BreadcrumbList",Clean,2026-02-13,GEOKeySummary with studentPerspective
+
+VALIDATION INSTRUCTIONS:
+Run Google Rich Results Test (https://search.google.com/test/rich-results) on each URL above after deploy.
+Update Validation Status column with external test results.
+
+SCHEMA POLICY:
+- No AggregateRating or Review schema without real user review data
+- No sameAs links without verified ownership of social accounts
+- All FinancialProduct descriptions reflect simulated/educational nature
+- GEOKeySummary (DefinedTerm) contains only neutral factual fields + studentPerspective

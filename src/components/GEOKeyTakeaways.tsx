@@ -14,12 +14,10 @@ interface GEOKeyTakeawaysProps {
 export function GEOKeyTakeaways({ asset }: GEOKeyTakeawaysProps) {
   const content = getAssetContent(asset.id);
 
-  // Bullet 1: Asset Definition (factual)
   const definition = getDefinitionBullet(asset, content);
-  // Bullet 2: Primary Market Influencers (factual)
   const influencers = getInfluencersBullet(asset, content);
-  // Bullet 3: What the simulator teaches (educational)
   const simulatorValue = getSimulatorBullet(asset);
+  const studentPerspective = getStudentPerspective(asset);
 
   return (
     <section
@@ -48,7 +46,11 @@ export function GEOKeyTakeaways({ asset }: GEOKeyTakeawaysProps) {
         </li>
       </ul>
 
-      <p className="text-[10px] text-muted-foreground/50 mt-3 italic">
+      <p className="text-xs text-muted-foreground/70 mt-3 italic">
+        {studentPerspective}
+      </p>
+
+      <p className="text-[10px] text-muted-foreground/50 mt-2 italic">
         (Educational simulation only — not financial advice.)
       </p>
     </section>
@@ -56,7 +58,6 @@ export function GEOKeyTakeaways({ asset }: GEOKeyTakeawaysProps) {
 }
 
 function getDefinitionBullet(asset: Asset, content: ReturnType<typeof getAssetContent>): string {
-  // Extract first sentence of whatIs for a tight factual definition
   const firstSentence = content.whatIs.split('. ')[0];
   return `${asset.name} (${asset.symbol}) — ${firstSentence}.`;
 }
@@ -83,4 +84,9 @@ function getInfluencersBullet(asset: Asset, content: ReturnType<typeof getAssetC
 
 function getSimulatorBullet(asset: Asset): string {
   return `TradeHQ lets you practice ${asset.symbol} trading with $10,000 virtual capital, simulated charts, and AI mentoring — no signup or real money required.`;
+}
+
+function getStudentPerspective(asset: Asset): string {
+  const assetLabel = asset.type === 'crypto' ? 'crypto' : asset.type === 'forex' ? 'forex' : 'stock';
+  return `Student perspective: Practice ${asset.symbol} ${assetLabel} trading as a beginner in Colombo or anywhere — build skills risk-free before committing real capital.`;
 }
