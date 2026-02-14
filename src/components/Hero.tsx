@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { PremiumHero } from "@/components/PremiumHero";
 import { PremiumFeatures } from "@/components/PremiumFeatures";
 import { TopAssetsGrid } from "@/components/TopAssetsGrid";
+import { WhatIsTradeHQ } from "@/components/WhatIsTradeHQ";
 import { MarketTrends2026 } from "@/components/MarketTrends2026";
 import { PremiumFAQ } from "@/components/PremiumFAQ";
 import { MegaFooter } from "@/components/MegaFooter";
@@ -12,6 +13,9 @@ export function Hero() {
     <>
       {/* Premium Hero Section */}
       <PremiumHero />
+
+      {/* What is TradeHQ? - AI Overview answerable section */}
+      <WhatIsTradeHQ />
 
       {/* Why TradeHQ - Features */}
       <PremiumFeatures />

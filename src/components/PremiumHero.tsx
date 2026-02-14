@@ -51,11 +51,10 @@ export function PremiumHero() {
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold mb-8 leading-[1.05] tracking-tight animate-slide-up"
           style={{ animationDelay: "100ms" }}
         >
-          <span className="text-foreground">Master the Markets.</span>
+          <span className="text-foreground">Free Trading</span>
           <br />
-          <span className="text-foreground">Own the </span>
-          <span className="text-primary">Future</span>
-          <span className="text-foreground">.</span>
+          <span className="text-foreground">Simulator </span>
+          <span className="text-primary">2026</span>
         </h1>
         
         {/* Refined subtitle */}

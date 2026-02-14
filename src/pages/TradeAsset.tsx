@@ -29,6 +29,7 @@ import {
   generateAssetMetaTitle, 
   generateAssetMetaDescription,
   generateMarketOutlook,
+  generateStudentUseSection,
   isInSeedSet,
   getAssetColor,
   getAssetFAQs
@@ -404,6 +405,21 @@ export default function TradeAsset() {
               assetSymbol={selectedAsset.symbol}
               faqs={assetFAQs}
             />
+          )}
+
+          {/* How Students Use This Simulator */}
+          {selectedAsset && (
+            <section className="mt-8 p-6 bg-card/30 backdrop-blur-xl rounded-2xl border border-border/30">
+              <h2 className="text-lg font-semibold text-foreground mb-4">
+                How Students Practice {selectedAsset.symbol} Trading
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {generateStudentUseSection(selectedAsset)}
+              </p>
+              <p className="text-xs text-muted-foreground/60 mt-3 italic">
+                Student perspective: Practice {selectedAsset.symbol} trading as a beginner in Colombo or anywhere — build skills risk-free.
+              </p>
+            </section>
           )}
 
           {/* Market Strategic Outlook - shown for ALL asset pages */}
