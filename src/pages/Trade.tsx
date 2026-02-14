@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
@@ -20,7 +20,7 @@ import { setLastUpdateTime } from "@/lib/priceSimulation";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Trade() {
-  const { symbol } = useParams(); // Dynamic routing param
+  const { symbol } = useParams();
   const [portfolio, setPortfolio] = useState(getPortfolio());
   const [assets, setAssets] = useState<Asset[]>([]);
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
@@ -31,14 +31,10 @@ export default function Trade() {
   const isRefreshing = useRef(false);
   const assetsRef = useRef<Asset[]>([]);
 
-  useEffect(() => {
-    assetsRef.current = assets;
-  }, [assets]);
+  useEffect(() => { assetsRef.current = assets; }, [assets]);
 
-  // Fetch live price for an asset
   const fetchLivePrice = async (asset: Asset): Promise<Asset> => {
     if (!asset || typeof asset.price !== "number" || isNaN(asset.price) || asset.price <= 0) return asset;
-
     try {
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
@@ -64,61 +60,42 @@ export default function Trade() {
     return asset;
   };
 
-  // Simulate price changes
   const simulatePrice = (asset: Asset): Asset => {
     const volatility = asset.type === "crypto" ? 0.015 : 0.008;
     const changePercent = (Math.random() * volatility * 2 - volatility) * 100;
     const change = asset.price * (changePercent / 100);
-    return {
-      ...asset,
-      price: Math.max(0.0001, asset.price + change * 0.1),
-      change,
-      changePercent,
-    };
+    return { ...asset, price: Math.max(0.0001, asset.price + change * 0.1), change, changePercent };
   };
 
-  // Refresh all assets
   const refreshAllAssets = useCallback(async () => {
     if (!isMounted.current || isRefreshing.current) return;
     const currentAssets = assetsRef.current;
     if (currentAssets.length === 0) return;
     isRefreshing.current = true;
-
     try {
       const cryptoAssets = currentAssets.filter(a => a.type === "crypto").slice(0, 15);
       const updatedCrypto = await Promise.all(cryptoAssets.map(fetchLivePrice));
       const updatedMap = new Map<string, Asset>();
       updatedCrypto.forEach(a => updatedMap.set(a.id, a));
       const allUpdated = currentAssets.map(asset => updatedMap.get(asset.id) || simulatePrice(asset));
-      if (isMounted.current) {
-        setAssets(allUpdated);
-        setLastUpdateTime(new Date());
-      }
-    } catch (err) {
-      console.error("Batch refresh error:", err);
-    } finally {
-      isRefreshing.current = false;
-    }
+      if (isMounted.current) { setAssets(allUpdated); setLastUpdateTime(new Date()); }
+    } catch (err) { console.error("Batch refresh error:", err); }
+    finally { isRefreshing.current = false; }
   }, []);
 
-  // Initialize assets
   useEffect(() => {
     isMounted.current = true;
     const validAssets = ASSETS.filter(asset =>
       asset && typeof asset.price === "number" && !isNaN(asset.price) && asset.price > 0 &&
       typeof asset.change === "number" && typeof asset.changePercent === "number"
     );
-
     setTimeout(() => {
       if (!isMounted.current) return;
       setAssets(validAssets);
-      // Set selected asset based on URL
       if (symbol) {
         const match = validAssets.find(a => a.symbol.toUpperCase() === symbol.toUpperCase());
         setSelectedAsset(match || validAssets[0] || null);
-      } else {
-        setSelectedAsset(validAssets[0] || null);
-      }
+      } else setSelectedAsset(validAssets[0] || null);
       setIsLoading(false);
     }, 400);
 
@@ -128,7 +105,6 @@ export default function Trade() {
     return () => { isMounted.current = false; };
   }, [symbol]);
 
-  // Auto-refresh
   useEffect(() => {
     if (isLoading || assets.length === 0) return;
     const initialRefresh = setTimeout(refreshAllAssets, 2000);
@@ -136,7 +112,6 @@ export default function Trade() {
     return () => { clearTimeout(initialRefresh); clearInterval(interval); };
   }, [isLoading, refreshAllAssets]);
 
-  // Update selected asset if assets change
   useEffect(() => {
     if (selectedAsset && isMounted.current && assets.length > 0) {
       const updated = assets.find(a => a.id === selectedAsset.id);
@@ -149,13 +124,8 @@ export default function Trade() {
     if (result.success && result.portfolio) {
       setPortfolio(result.portfolio);
       const priceStr = typeof asset.price === "number" ? asset.price.toLocaleString() : "N/A";
-      toast({
-        title: `${type === "buy" ? "🟢" : "🔴"} Order Executed`,
-        description: `${type === "buy" ? "Bought" : "Sold"} ${quantity.toFixed(4)} ${asset.symbol} at $${priceStr}`,
-      });
-    } else {
-      toast({ title: "Order Failed", description: result.message, variant: "destructive" });
-    }
+      toast({ title: `${type === "buy" ? "🟢" : "🔴"} Order Executed`, description: `${type === "buy" ? "Bought" : "Sold"} ${quantity.toFixed(4)} ${asset.symbol} at $${priceStr}` });
+    } else { toast({ title: "Order Failed", description: result.message, variant: "destructive" }); }
   }, [portfolio, toast]);
 
   const handleToggleFavorite = useCallback((assetId: string) => { toggleFavorite(assetId); setFavorites(getFavorites()); }, []);
@@ -212,17 +182,18 @@ export default function Trade() {
             <MobileOrderDrawer asset={selectedAsset} availableCash={portfolio.cash} onTrade={handleTrade} />
           </div>
 
-          {/* --- Related Assets / Internal Linking for SEO --- */}
+          {/* --- Related Assets / Old design cards for visual --- */}
           {assets.length > 1 && (
             <div className="glass-panel p-6 rounded-2xl mt-8 border border-white/10">
               <h3 className="text-xl font-bold mb-4">Other Assets You Can Practice</h3>
-              <ul className="flex flex-wrap gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 {assets.filter(a => a.id !== selectedAsset?.id).map(asset => (
-                  <li key={asset.id}>
-                    <Link to={`/trade/${asset.symbol}`} className="text-emerald-400 hover:underline">{asset.name} ({asset.symbol})</Link>
-                  </li>
+                  <div key={asset.id} className="p-3 bg-black/40 rounded-xl border border-white/5 text-center">
+                    <span className="font-bold text-gray-300">{asset.symbol}</span>
+                    <div className="text-xs text-gray-500">{asset.name}</div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
         </div>
