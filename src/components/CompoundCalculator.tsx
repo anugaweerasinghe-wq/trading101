@@ -69,102 +69,95 @@ export function CompoundCalculator() {
   };
 
   return (
-    <Card className="p-4 md:p-6 bg-black/40 border-white/10 backdrop-blur-md rounded-2xl">
-      {/* Header - Scaled Down */}
-      <div className="flex items-center gap-2 mb-6">
+    <Card className="p-4 md:p-5 bg-[#05080a] border-white/10 rounded-xl shadow-2xl">
+      {/* Header - Scaled Down Significantly */}
+      <div className="flex items-center gap-2 mb-4 border-b border-white/5 pb-3">
         <Calculator className="w-4 h-4 text-emerald-500" />
-        <h3 className="text-sm font-bold text-white uppercase tracking-tight">Strategy Calculator</h3>
+        <h3 className="text-[11px] font-black text-white uppercase tracking-widest">Growth Analytics</h3>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Left Side: Inputs */}
-        <div className="space-y-4">
-          <div className="space-y-1.5">
-            <Label className="text-[10px] uppercase font-bold text-slate-500">Initial Investment</Label>
-            <div className="relative">
-              <DollarSign className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-500" />
-              <Input
-                type="number"
-                value={initialInvestment}
-                onChange={(e) => setInitialInvestment(Number(e.target.value))}
-                className="pl-8 h-9 bg-white/5 border-white/10 text-sm"
-              />
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Left: Inputs */}
+        <div className="space-y-3">
+          <div className="space-y-1">
+            <Label className="text-[9px] uppercase font-bold text-slate-500 flex items-center gap-1.5">
+              <DollarSign className="w-3 h-3 text-emerald-500" /> Initial
+            </Label>
+            <Input
+              type="number"
+              value={initialInvestment}
+              onChange={(e) => setInitialInvestment(Number(e.target.value))}
+              className="h-8 bg-white/5 border-white/10 text-xs font-bold"
+            />
           </div>
 
-          <div className="space-y-1.5">
-            <Label className="text-[10px] uppercase font-bold text-slate-500">Monthly Contribution</Label>
-            <div className="relative">
-              <TrendingUp className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-500" />
-              <Input
-                type="number"
-                value={monthlyContribution}
-                onChange={(e) => setMonthlyContribution(Number(e.target.value))}
-                className="pl-8 h-9 bg-white/5 border-white/10 text-sm"
-              />
-            </div>
+          <div className="space-y-1">
+            <Label className="text-[9px] uppercase font-bold text-slate-500 flex items-center gap-1.5">
+              <TrendingUp className="w-3 h-3 text-emerald-500" /> Monthly
+            </Label>
+            <Input
+              type="number"
+              value={monthlyContribution}
+              onChange={(e) => setMonthlyContribution(Number(e.target.value))}
+              className="h-8 bg-white/5 border-white/10 text-xs font-bold"
+            />
           </div>
 
-          <div className="space-y-3 pt-2">
-            <div className="flex justify-between text-[10px] font-bold uppercase text-slate-400">
+          {/* Sliders */}
+          <div className="space-y-2 pt-1">
+            <div className="flex justify-between text-[9px] font-bold text-slate-400 uppercase">
               <span>Return: {annualReturn}%</span>
               <span>Fee: {tradingFeePct}%</span>
             </div>
-            <Slider
-              value={[annualReturn]}
-              onValueChange={([v]) => setAnnualReturn(v)}
-              max={30}
-              className="py-1"
-            />
-            <Slider
-              value={[tradingFeePct]}
-              onValueChange={([v]) => setTradingFeePct(v)}
-              max={1}
-              step={0.01}
-              className="py-1"
-            />
+            <Slider value={[annualReturn]} onValueChange={([v]) => setAnnualReturn(v)} max={30} className="py-1" />
+            <Slider value={[tradingFeePct]} onValueChange={([v]) => setTradingFeePct(v)} max={1} step={0.01} className="py-1" />
           </div>
         </div>
 
-        {/* Right Side: Results - RESIZED FOR OVERFLOW FIX */}
-        <div className="flex flex-col gap-3">
+        {/* Right: Results - REDUCED FONT SIZES TO PREVENT OVERFLOW */}
+        <div className="flex flex-col gap-2">
           <div className="grid grid-cols-2 gap-2">
-            {/* Final Portfolio Value */}
-            <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl overflow-hidden">
-              <p className="text-[9px] leading-tight text-slate-400 uppercase font-bold mb-1">Final Value</p>
-              <p className="text-base md:text-lg font-black text-emerald-400 truncate">
+            {/* Final Value Card */}
+            <div className="p-2.5 bg-emerald-500/5 border border-emerald-500/10 rounded-lg">
+              <p className="text-[8px] uppercase font-bold text-slate-500 mb-0.5">Final Value</p>
+              {/* Reduced from 2xl/3xl to text-sm/base */}
+              <p className="text-sm md:text-base font-black text-emerald-400 tracking-tighter truncate">
                 {formatCurrency(result.finalValue)}
               </p>
             </div>
 
-            {/* Total Profit */}
-            <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl overflow-hidden">
-              <p className="text-[9px] leading-tight text-slate-400 uppercase font-bold mb-1">Total Profit</p>
-              <p className="text-base md:text-lg font-black text-emerald-500 truncate">
+            {/* Total Profit Card */}
+            <div className="p-2.5 bg-emerald-500/5 border border-emerald-500/10 rounded-lg">
+              <p className="text-[8px] uppercase font-bold text-slate-500 mb-0.5">Total Profit</p>
+              {/* Reduced from 2xl/3xl to text-sm/base */}
+              <p className="text-sm md:text-base font-black text-emerald-500 tracking-tighter truncate">
                 +{formatCurrency(result.netProfit)}
               </p>
             </div>
           </div>
 
-          {/* Fees Section */}
-          <div className="p-3 bg-red-500/5 border border-red-500/10 rounded-xl">
-            <p className="text-[9px] uppercase font-bold text-slate-500 mb-1">Trading Fees</p>
-            <p className="text-sm font-bold text-red-400">-{formatCurrency(result.totalFees)}</p>
+          {/* Fees Card */}
+          <div className="p-2.5 bg-red-500/5 border border-red-500/10 rounded-lg">
+            <p className="text-[8px] uppercase font-bold text-slate-500 mb-0.5">Trading Fees</p>
+            <p className="text-xs font-bold text-red-400">-{formatCurrency(result.totalFees)}</p>
           </div>
 
           {/* Mini Graph */}
-          <div className="h-16 flex items-end gap-0.5 mt-2">
+          <div className="h-12 flex items-end gap-0.5 mt-1">
             {result.yearlyBreakdown.map((data, i) => (
               <div
                 key={i}
-                className="flex-1 bg-emerald-500/30 rounded-t-[1px]"
+                className="flex-1 bg-emerald-500/20 rounded-t-[1px]"
                 style={{ height: `${(data.value / result.finalValue) * 100}%` }}
               />
             ))}
           </div>
 
-          {/* Practice Button - FIXED WIDTH */}
-          <Button className="w-full mt-2 h-9 text-[10px] font-black uppercase tracking-widest bg-emerald-500 hover:bg-emerald-400 text-black" asChild>
+          {/* Practice Button - Resized Text */}
+          <Button 
+            className="w-full h-8 text-[9px] font-black uppercase tracking-widest bg-emerald-500 hover:bg-emerald-400 text-black mt-1" 
+            asChild
+          >
             <a href="/trade">Practice Risk-Free</a>
           </Button>
         </div>
