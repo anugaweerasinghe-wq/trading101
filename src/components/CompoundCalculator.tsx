@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Calculator, TrendingUp, DollarSign, Percent, Clock } from "lucide-center";
+import { Calculator, TrendingUp, DollarSign, Percent, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CalculatorResult {
@@ -69,101 +69,102 @@ export function CompoundCalculator() {
   };
 
   return (
-    <Card className="p-5 md:p-6 bg-[#05080a] border-white/5 rounded-2xl shadow-2xl">
+    <Card className="p-4 md:p-6 bg-black/40 border-white/10 backdrop-blur-md rounded-2xl">
       {/* Header - Scaled Down */}
       <div className="flex items-center gap-2 mb-6">
         <Calculator className="w-4 h-4 text-emerald-500" />
-        <h3 className="text-xs font-black text-white uppercase tracking-[0.15em]">Growth Projection</h3>
+        <h3 className="text-sm font-bold text-white uppercase tracking-tight">Strategy Calculator</h3>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Left: Tightened Inputs */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left Side: Inputs */}
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <Label className="text-[10px] uppercase tracking-widest font-bold text-slate-500 flex items-center gap-1.5">
-              <DollarSign className="w-3 h-3 text-emerald-500" /> Initial Capital
-            </Label>
-            <Input
-              type="number"
-              value={initialInvestment}
-              onChange={(e) => setInitialInvestment(Number(e.target.value))}
-              className="h-9 bg-white/[0.03] border-white/10 text-white text-sm font-bold rounded-lg focus:ring-emerald-500/20"
-            />
+            <Label className="text-[10px] uppercase font-bold text-slate-500">Initial Investment</Label>
+            <div className="relative">
+              <DollarSign className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-500" />
+              <Input
+                type="number"
+                value={initialInvestment}
+                onChange={(e) => setInitialInvestment(Number(e.target.value))}
+                className="pl-8 h-9 bg-white/5 border-white/10 text-sm"
+              />
+            </div>
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-[10px] uppercase tracking-widest font-bold text-slate-500 flex items-center gap-1.5">
-              <TrendingUp className="w-3 h-3 text-emerald-500" /> Monthly Add
-            </Label>
-            <Input
-              type="number"
-              value={monthlyContribution}
-              onChange={(e) => setMonthlyContribution(Number(e.target.value))}
-              className="h-9 bg-white/[0.03] border-white/10 text-white text-sm font-bold rounded-lg focus:ring-emerald-500/20"
-            />
-          </div>
-
-          {/* Sliders - Minimalist Scale */}
-          {[
-            { label: "Annual Return", val: `${annualReturn}%`, state: annualReturn, set: setAnnualReturn, max: 30 },
-            { label: "Broker Fee", val: `${tradingFeePct}%`, state: tradingFeePct, set: setTradingFeePct, max: 1, step: 0.01 },
-            { label: "Duration", val: `${years}Y`, state: years, set: setYears, max: 30 }
-          ].map((s, idx) => (
-            <div key={idx} className="space-y-2">
-              <div className="flex justify-between items-center">
-                <Label className="text-[10px] uppercase tracking-widest font-bold text-slate-400">{s.label}</Label>
-                <span className="text-[10px] font-black text-emerald-400">{s.val}</span>
-              </div>
-              <Slider
-                value={[s.state]}
-                onValueChange={([v]) => s.set(v)}
-                min={0}
-                max={s.max}
-                step={s.step || 1}
-                className="py-1"
+            <Label className="text-[10px] uppercase font-bold text-slate-500">Monthly Contribution</Label>
+            <div className="relative">
+              <TrendingUp className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-500" />
+              <Input
+                type="number"
+                value={monthlyContribution}
+                onChange={(e) => setMonthlyContribution(Number(e.target.value))}
+                className="pl-8 h-9 bg-white/5 border-white/10 text-sm"
               />
             </div>
-          ))}
+          </div>
+
+          <div className="space-y-3 pt-2">
+            <div className="flex justify-between text-[10px] font-bold uppercase text-slate-400">
+              <span>Return: {annualReturn}%</span>
+              <span>Fee: {tradingFeePct}%</span>
+            </div>
+            <Slider
+              value={[annualReturn]}
+              onValueChange={([v]) => setAnnualReturn(v)}
+              max={30}
+              className="py-1"
+            />
+            <Slider
+              value={[tradingFeePct]}
+              onValueChange={([v]) => setTradingFeePct(v)}
+              max={1}
+              step={0.01}
+              className="py-1"
+            />
+          </div>
         </div>
 
-        {/* Right: Results - RESIZED TO BE APPROPRIATE */}
-        <div className="flex flex-col h-full space-y-4">
-          <div className="grid grid-cols-1 gap-3">
-            {/* Final Value Card */}
-            <div className="p-3 bg-emerald-500/5 border border-emerald-500/10 rounded-xl">
-              <p className="text-[9px] uppercase tracking-widest font-bold text-slate-500 mb-1">Portfolio Value</p>
-              <p className="text-xl font-black text-emerald-400 tracking-tight">
+        {/* Right Side: Results - RESIZED FOR OVERFLOW FIX */}
+        <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-2 gap-2">
+            {/* Final Portfolio Value */}
+            <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl overflow-hidden">
+              <p className="text-[9px] leading-tight text-slate-400 uppercase font-bold mb-1">Final Value</p>
+              <p className="text-base md:text-lg font-black text-emerald-400 truncate">
                 {formatCurrency(result.finalValue)}
               </p>
             </div>
 
-            {/* Profit Card */}
-            <div className="p-3 bg-white/[0.02] border border-white/5 rounded-xl">
-              <p className="text-[9px] uppercase tracking-widest font-bold text-slate-500 mb-1">Net Profit</p>
-              <p className={cn("text-xl font-black tracking-tight", result.netProfit >= 0 ? "text-white" : "text-red-400")}>
-                {result.netProfit >= 0 ? "+" : ""}{formatCurrency(result.netProfit)}
+            {/* Total Profit */}
+            <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl overflow-hidden">
+              <p className="text-[9px] leading-tight text-slate-400 uppercase font-bold mb-1">Total Profit</p>
+              <p className="text-base md:text-lg font-black text-emerald-500 truncate">
+                +{formatCurrency(result.netProfit)}
               </p>
             </div>
           </div>
 
-          {/* Fees: Small & Out of the way */}
-          <div className="px-1 flex justify-between items-center">
-            <span className="text-[9px] uppercase font-bold text-slate-600 tracking-tight">Est. Fees Paid:</span>
-            <span className="text-[10px] font-bold text-red-500/70">-{formatCurrency(result.totalFees)}</span>
+          {/* Fees Section */}
+          <div className="p-3 bg-red-500/5 border border-red-500/10 rounded-xl">
+            <p className="text-[9px] uppercase font-bold text-slate-500 mb-1">Trading Fees</p>
+            <p className="text-sm font-bold text-red-400">-{formatCurrency(result.totalFees)}</p>
           </div>
 
-          {/* Mini Chart - Extremely Minimal */}
-          <div className="h-16 flex items-end gap-1 px-1">
+          {/* Mini Graph */}
+          <div className="h-16 flex items-end gap-0.5 mt-2">
             {result.yearlyBreakdown.map((data, i) => (
               <div
-                key={data.year}
-                className="flex-1 bg-emerald-500/20 rounded-t-[1px] border-t border-emerald-500/30"
+                key={i}
+                className="flex-1 bg-emerald-500/30 rounded-t-[1px]"
                 style={{ height: `${(data.value / result.finalValue) * 100}%` }}
               />
             ))}
           </div>
 
-          <Button className="w-full h-10 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] uppercase tracking-widest rounded-lg" asChild>
+          {/* Practice Button - FIXED WIDTH */}
+          <Button className="w-full mt-2 h-9 text-[10px] font-black uppercase tracking-widest bg-emerald-500 hover:bg-emerald-400 text-black" asChild>
             <a href="/trade">Practice Risk-Free</a>
           </Button>
         </div>
