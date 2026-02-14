@@ -134,8 +134,18 @@ export default function Trade() {
   return (
     <>
       <Helmet>
-        <title>{selectedAsset ? `${selectedAsset.name} Trading Simulator | TradeHQ 2026` : "Trade Now — Free Simulator"}</title>
-        <meta name="description" content={selectedAsset ? `Practice ${selectedAsset.name} trading with $100K virtual cash. Learn technical analysis, risk management & real-time charts.` : "Start trading stocks, crypto & forex for free with TradeHQ. Real charts, zero risk."} />
+        {/* SEO title for Google */}
+        <title>{selectedAsset 
+          ? `${selectedAsset.name} Trading Simulator – Learn, Practice & Profit | TradeHQ 2026` 
+          : "TradeHQ – Free Stock, Crypto & Forex Simulator | Learn, Practice & Profit"
+        }</title>
+
+        {/* Visible short title for the website tab */}
+        <meta name="title" content={selectedAsset ? `${selectedAsset.name} Simulator | TradeHQ` : "TradeHQ Simulator"} />
+        <meta
+          name="description"
+          content={selectedAsset ? `Practice ${selectedAsset.name} trading with $100K virtual cash. Learn technical analysis, risk management & real-time charts.` : "Start trading stocks, crypto & forex for free with TradeHQ. Real charts, zero risk."}
+        />
         <link rel="canonical" href={`https://tradinghq.vercel.app/trade/${selectedAsset?.symbol || ""}`} />
       </Helmet>
 
