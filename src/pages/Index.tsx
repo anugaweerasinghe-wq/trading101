@@ -6,17 +6,15 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Trade Stocks, Crypto & Forex for Free | Real-Time Trading Simulator — Practice, Learn & Master Trading</title>
+        <title>TradeHQ — Free Stock, Crypto & Forex Simulator</title>
         <meta
           name="description"
-          content="Start trading stocks, crypto, and forex for free with TradeHQ. Real-time charts, zero risk, and learn technical analysis, risk management & strategies."
+          content="Practice trading stocks, crypto, and forex with $100K virtual cash. Real charts, zero risk, learn technical analysis & risk management."
         />
         <link rel="canonical" href="https://tradinghq.vercel.app/" />
       </Helmet>
-
       <div className="min-h-screen bg-background">
         <Navigation />
-        {/* Hero component will display the short homepage title visually */}
         <Hero />
       </div>
     </>
