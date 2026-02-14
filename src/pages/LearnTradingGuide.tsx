@@ -8,16 +8,14 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { 
-  Shield, Globe, CheckCircle2, ArrowRight,
-  Target, Sparkles, LineChart, Zap
-} from "lucide-react";
+import { Shield, Globe, CheckCircle2, ArrowRight, Target, Sparkles, LineChart, Zap } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 
 const DOMAIN = "https://tradinghq.vercel.app";
 
 const LearnTradingGuide = () => {
+  // --- HIGH-LEVEL SEO SCHEMAS (DO NOT REMOVE) ---
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
@@ -28,158 +26,146 @@ const LearnTradingGuide = () => {
     "image": `${DOMAIN}/og-image.jpg`
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I start trading with no money?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The best way is to use a trading simulator like TradeHQ which provides $10,000 in virtual capital to practice risk-free."
+        }
+      }
+    ]
+  };
+
   return (
     <>
       <Helmet>
-        <title>Learn AI Trading 2026 | Free $10K Simulator</title>
+        <title>Learn AI Trading 2026 | Free $10K Risk-Free Simulator Guide</title>
         <meta name="description" content="Master AI-assisted trading in 2026. Learn Bitcoin Layer 2, tokenized securities & trading psychology. Practice with our free $10K crypto simulator." />
         <link rel="canonical" href={`${DOMAIN}/learn-trading-guide`} />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
 
-      <div className="min-h-screen bg-[#030708] text-foreground relative overflow-hidden">
-        {/* $10k Dev Team Glow Effects */}
-        <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-emerald-500/10 blur-[140px] rounded-full pointer-events-none" />
-        
+      <div className="min-h-screen bg-[#020405] text-slate-300 selection:bg-emerald-500/30 font-sans">
         <MarketSentimentTicker />
-        <div className="pt-6 relative z-10"><Navigation /></div>
+        <div className="pt-4"><Navigation /></div>
 
-        {/* --- Hero Section --- */}
-        <header className="relative pt-20 pb-16">
-          <div className="relative z-10 container mx-auto px-6 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 mb-8 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase"
-            >
-              <Sparkles className="w-3.5 h-3.5" /> 2026 Pro Edition
+        {/* --- Optimized Hero: Balanced Typography --- */}
+        <header className="relative pt-16 pb-12">
+          <div className="container mx-auto px-6 text-center relative z-10">
+            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+              <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-bold mb-6">
+                Institutional Grade Education
+              </Badge>
             </motion.div>
             
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-[1.1]"
-            >
-              PRACTICE WITH <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-emerald-500">
-                $10K RISK-FREE
-              </span>
-            </motion.h1>
+            <h1 className="text-3xl md:text-5xl font-black mb-6 tracking-tight text-white leading-tight uppercase italic">
+              Practice with <span className="text-emerald-500">$10K Risk-Free</span>
+            </h1>
 
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
-            >
-              Master 2026 market dynamics with our institutional-grade simulator. 
-              No deposits. No risk. Just pure skill building.
-            </motion.p>
+            <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+              Master the 2026 financial landscape. Learn AI-assisted strategies and Bitcoin Layer 2 dynamics 
+              using our high-fidelity simulator. No capital required.
+            </p>
 
-            <div className="flex justify-center">
-               <Link to="/trade/BTC">
-                  <Button size="lg" className="h-14 bg-emerald-600 hover:bg-emerald-500 text-white font-black px-10 rounded-2xl shadow-[0_0_40px_rgba(16,185,129,0.2)] transition-all hover:scale-[1.02] active:scale-[0.98]">
-                    START TRADING NOW <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-               </Link>
-            </div>
+            <Link to="/trade/BTC">
+              <Button size="lg" className="h-12 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-10 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                LAUNCH TERMINAL <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
           </div>
         </header>
 
-        <main className="container mx-auto px-6 py-12 relative z-10">
+        <main className="container mx-auto px-6 py-8">
           
-          {/* --- The Balanced Grid: Concepts & Calculator --- */}
-          <section className="max-w-7xl mx-auto mb-32">
-            <div className="grid lg:grid-cols-2 gap-8 items-stretch">
-              
-              {/* Left Column: Core Concepts */}
-              <motion.div 
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="flex flex-col"
-              >
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="p-2 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-                    <Target className="text-emerald-400 w-5 h-5" />
-                  </div>
-                  <h2 className="text-2xl font-bold tracking-tight text-white">Mastery Roadmap</h2>
+          {/* --- Grid Layout: SEO Content + Functional Tools --- */}
+          <div className="grid lg:grid-cols-12 gap-8 items-start max-w-7xl mx-auto">
+            
+            {/* Left: SEO Narrative & Progress (40%) */}
+            <section className="lg:col-span-5 space-y-8">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Target className="text-emerald-500 w-4 h-4" />
+                  <h2 className="text-xs uppercase tracking-widest font-black text-slate-500">Curriculum</h2>
                 </div>
-                
-                <div className="flex-1 p-8 md:p-10 bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl flex flex-col justify-center">
-                  <ul className="space-y-10">
-                    <li className="flex items-start gap-5">
-                      <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 shadow-lg">
-                        <Zap className="w-5 h-5 text-emerald-400" />
-                      </div>
-                      <div>
-                        <span className="text-lg font-bold text-white block mb-1">AI Bot Assistance</span>
-                        <p className="text-gray-400 leading-relaxed text-sm md:text-base">
-                          Deploy neural-network based indicators to identify high-probability setups in real-time.
-                        </p>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-5">
-                      <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 shadow-lg">
-                        <Shield className="w-5 h-5 text-emerald-400" />
-                      </div>
-                      <div>
-                        <span className="text-lg font-bold text-white block mb-1">Capital Protection</span>
-                        <p className="text-gray-400 leading-relaxed text-sm md:text-base">
-                          Learn the strict 1% risk management rule used by top-tier proprietary trading firms.
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </motion.div>
-
-              {/* Right Column: Calculator */}
-              <motion.div 
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="flex flex-col"
-              >
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="p-2 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-                    <LineChart className="text-emerald-400 w-5 h-5" />
-                  </div>
-                  <h3 className="text-2xl font-bold tracking-tight text-white">Compound Strategy</h3>
-                </div>
-                
-                {/* Visual Frame for the Calculator */}
-                <div className="p-1 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-[2.5rem]">
-                  <div className="bg-[#050a0b] rounded-[2.4rem] overflow-hidden shadow-2xl p-2 md:p-4">
-                    <CompoundCalculator />
-                  </div>
-                </div>
-              </motion.div>
-              
-            </div>
-          </section>
-
-          {/* --- Global Features Section --- */}
-          <section className="relative py-24 px-6 -mx-6 bg-emerald-950/5 border-y border-white/5">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  { icon: Globe, title: "Global Assets", desc: "Trade US Equities, Crypto, and FX pairs from one terminal." },
-                  { icon: Shield, title: "Zero Risk", desc: "100% simulated environment. No real money required." },
-                  { icon: Zap, title: "Instant Execution", desc: "Experience zero-lag order matching on live market feeds." }
-                ].map((f, i) => (
-                  <div key={i} className="group p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all duration-300">
-                    <f.icon className="text-emerald-500 w-8 h-8 mb-6 group-hover:scale-110 transition-transform" />
-                    <h4 className="font-bold text-xl text-white mb-3">{f.title}</h4>
-                    <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
-                  </div>
-                ))}
+                <h3 className="text-xl font-bold text-white tracking-tight">AI-Assisted Trading Foundations</h3>
               </div>
+
+              <Card className="p-6 bg-white/[0.02] border-white/5 rounded-2xl backdrop-blur-md shadow-2xl">
+                <div className="space-y-8">
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-500/20">
+                      <Zap className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-black text-white uppercase tracking-tight mb-1">Algorithmic Edge</h4>
+                      <p className="text-xs text-slate-400 leading-relaxed">Analyze market sentiment and price action using AI models to filter noise from actual opportunities.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-500/20">
+                      <Shield className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-black text-white uppercase tracking-tight mb-1">Risk Architecture</h4>
+                      <p className="text-xs text-slate-400 leading-relaxed">Master the 1% risk rule. Protect your virtual $10K balance as if it were your last dollar.</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              <div className="bg-white/[0.01] border border-white/5 rounded-2xl p-4">
+                <LearningProgressTracker />
+              </div>
+            </section>
+
+            {/* Right: Compound Calculator Tool (60%) */}
+            <section className="lg:col-span-7">
+              <div className="space-y-2 mb-6">
+                <div className="flex items-center gap-2">
+                  <LineChart className="text-emerald-500 w-4 h-4" />
+                  <h2 className="text-xs uppercase tracking-widest font-black text-slate-500">Strategy Projections</h2>
+                </div>
+                <h3 className="text-xl font-bold text-white tracking-tight">Compound Growth Simulator</h3>
+              </div>
+              
+              <div className="p-1 rounded-[2rem] bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent border border-white/5 shadow-2xl">
+                <div className="bg-[#010203] rounded-[1.8rem] overflow-hidden p-2 md:p-6">
+                  <CompoundCalculator />
+                </div>
+              </div>
+            </section>
+          </div>
+
+          {/* --- Global Trust Features --- */}
+          <section className="mt-24 py-16 border-t border-white/5 relative">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-20" />
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+              {[
+                { icon: Globe, title: "150+ Assets", desc: "Equities, Crypto & Tokenized Securities." },
+                { icon: Shield, title: "No Financial Risk", desc: "Pure educational environment." },
+                { icon: Zap, title: "2026 Ready", desc: "Optimized for Bitcoin L2 & AI Bots." }
+              ].map((f, i) => (
+                <div key={i} className="text-center group">
+                  <div className="w-10 h-10 mx-auto mb-4 bg-emerald-500/5 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-all">
+                    <f.icon className="w-4 h-4 text-emerald-500" />
+                  </div>
+                  <h4 className="text-[11px] uppercase tracking-[0.2em] font-black text-white mb-2">{f.title}</h4>
+                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-tight">{f.desc}</p>
+                </div>
+              ))}
             </div>
           </section>
 
-          <div className="text-center py-20">
-            <SocialShare title="I'm practicing on TradeHQ! 🚀" description="Mastering 2026 trading risk-free." variant="compact" />
+          <div className="mt-16 pt-8 border-t border-white/5 text-center">
+            <SocialShare title="I'm learning AI-assisted trading on TradeHQ! 🚀" description="Mastering 2026 trading with a free $10K simulator" variant="compact" />
           </div>
         </main>
 
