@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
@@ -182,16 +182,20 @@ export default function Trade() {
             <MobileOrderDrawer asset={selectedAsset} availableCash={portfolio.cash} onTrade={handleTrade} />
           </div>
 
-          {/* --- Related Assets / Old design cards for visual --- */}
+          {/* --- Related Assets / Old design with clickable links --- */}
           {assets.length > 1 && (
             <div className="glass-panel p-6 rounded-2xl mt-8 border border-white/10">
               <h3 className="text-xl font-bold mb-4">Other Assets You Can Practice</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 {assets.filter(a => a.id !== selectedAsset?.id).map(asset => (
-                  <div key={asset.id} className="p-3 bg-black/40 rounded-xl border border-white/5 text-center">
+                  <Link
+                    key={asset.id}
+                    to={`/trade/${asset.symbol}`}
+                    className="p-3 bg-black/40 rounded-xl border border-white/5 text-center hover:bg-black/60 transition"
+                  >
                     <span className="font-bold text-gray-300">{asset.symbol}</span>
                     <div className="text-xs text-gray-500">{asset.name}</div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -204,4 +208,5 @@ export default function Trade() {
     </>
   );
 }
+
 
