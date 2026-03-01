@@ -1,21 +1,19 @@
 import { Link } from "react-router-dom";
-import { 
-  TrendingUp, 
-  BarChart3, 
-  Wallet, 
-  GraduationCap, 
-  BookOpen, 
+import {
+  TrendingUp,
+  BarChart3,
+  Wallet,
+  GraduationCap,
+  BookOpen,
   Bot,
   Cpu,
   Coins,
   LineChart,
-  Building2,
   Globe,
   Gem,
   Twitter,
   Linkedin,
   Github,
-  Mail,
   Shield,
   Award,
   CheckCircle2
@@ -24,11 +22,8 @@ import tradehqLogo from "@/assets/tradehq-logo.png";
 
 /**
  * MegaFooter - Premium Multi-Column SEO Footer
- * Provides comprehensive internal linking for all asset categories
- * and key pages to maximize crawl budget and link equity.
  */
 export function MegaFooter() {
-  // Categorized asset links for maximum SEO value
   const assetCategories = {
     crypto: {
       title: "Top Crypto",
@@ -97,21 +92,20 @@ export function MegaFooter() {
   ];
 
   return (
-    <footer className="border-t border-border/30 bg-[hsl(0_0%_3%)]">
-      {/* Main Footer Content */}
+    <footer className="border-t border-white/[0.04] bg-[hsl(0_0%_2%)]">
       <div className="container mx-auto px-6 py-16">
         {/* Asset Categories Grid */}
         <div className="mb-16">
-          <h2 className="text-lg font-semibold text-foreground mb-8 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-foreground mb-8 flex items-center gap-2">
             <BarChart3 className="w-5 h-5 text-primary" />
             Trade All Markets
           </h2>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {Object.entries(assetCategories).map(([key, category]) => (
               <div key={key}>
-                <h3 className="text-sm font-semibold text-muted-foreground mb-4 flex items-center gap-2 uppercase tracking-wider">
-                  <category.icon className="w-4 h-4 text-primary" />
+                <h3 className="text-xs font-bold text-muted-foreground mb-4 flex items-center gap-2 uppercase tracking-[0.15em]">
+                  <category.icon className="w-3.5 h-3.5 text-primary" />
                   {category.title}
                 </h3>
                 <ul className="space-y-2">
@@ -119,9 +113,9 @@ export function MegaFooter() {
                     <li key={asset.symbol}>
                       <Link
                         to={asset.path}
-                        className="text-sm text-foreground/70 hover:text-primary transition-colors flex items-center gap-2 group"
+                        className="text-sm text-foreground/60 hover:text-primary transition-colors duration-200 flex items-center gap-2 group"
                       >
-                        <span className="font-mono text-xs text-primary/70 group-hover:text-primary">
+                        <span className="font-mono text-xs text-primary/60 group-hover:text-primary">
                           {asset.symbol}
                         </span>
                         <span className="hidden lg:inline text-muted-foreground group-hover:text-foreground">
@@ -136,72 +130,49 @@ export function MegaFooter() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-border/30 mb-12" />
+        <div className="border-t border-white/[0.04] mb-12" />
 
-        {/* Bottom Section - Brand, Platform, Learn, Trust */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-3 mb-4 group">
-              <img 
-                src={tradehqLogo} 
-                alt="TradeHQ" 
-                className="h-10 w-auto object-contain"
-              />
-              <span className="text-xl font-semibold">
+              <img src={tradehqLogo} alt="TradeHQ" className="h-10 w-auto object-contain" />
+              <span className="text-xl font-bold">
                 Trade<span className="text-primary">HQ</span>
               </span>
             </Link>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-              An AI-powered trading simulator for 2026. Practice with $10K virtual capital 
+              An AI-powered trading simulator for 2026. Practice with $10K virtual capital
               and master stocks, crypto, forex, and commodities risk-free.
             </p>
-            
-            {/* Social Links */}
+
             <div className="flex items-center gap-3">
-              <a 
-                href="https://twitter.com/tradinghq" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-card/80 border border-border/30 flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-4 h-4 text-muted-foreground" />
-              </a>
-              <a 
-                href="https://linkedin.com/company/tradinghq" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-card/80 border border-border/30 flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-4 h-4 text-muted-foreground" />
-              </a>
-              <a 
-                href="https://github.com/tradinghq" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-card/80 border border-border/30 flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all"
-                aria-label="GitHub"
-              >
-                <Github className="w-4 h-4 text-muted-foreground" />
-              </a>
+              {[
+                { href: "https://twitter.com/tradinghq", icon: Twitter, label: "Twitter" },
+                { href: "https://linkedin.com/company/tradinghq", icon: Linkedin, label: "LinkedIn" },
+                { href: "https://github.com/tradinghq", icon: Github, label: "GitHub" },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center hover:bg-primary/10 hover:border-primary/20 transition-all duration-300"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-4 h-4 text-muted-foreground" />
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Platform Links */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
-              Platform
-            </h3>
+            <h3 className="text-xs font-bold text-foreground mb-4 uppercase tracking-[0.15em]">Platform</h3>
             <ul className="space-y-3">
               {platformLinks.map((link) => (
                 <li key={link.to}>
-                  <Link
-                    to={link.to}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-                  >
+                  <Link to={link.to} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 flex items-center gap-2">
                     <link.icon className="w-4 h-4" />
                     {link.label}
                   </Link>
@@ -212,16 +183,11 @@ export function MegaFooter() {
 
           {/* Learn Links */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
-              Learn
-            </h3>
+            <h3 className="text-xs font-bold text-foreground mb-4 uppercase tracking-[0.15em]">Learn</h3>
             <ul className="space-y-3">
               {learnLinks.map((link) => (
                 <li key={link.to}>
-                  <Link
-                    to={link.to}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-                  >
+                  <Link to={link.to} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 flex items-center gap-2">
                     <link.icon className="w-4 h-4" />
                     {link.label}
                   </Link>
@@ -232,67 +198,47 @@ export function MegaFooter() {
 
           {/* Trust Signals */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
-              Trust & Security
-            </h3>
+            <h3 className="text-xs font-bold text-foreground mb-4 uppercase tracking-[0.15em]">Trust & Security</h3>
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Shield className="w-5 h-5 text-primary" />
+              {[
+                { icon: Shield, color: "text-primary", bg: "bg-primary/10", title: "100% Risk-Free", sub: "No real money required" },
+                { icon: CheckCircle2, color: "text-profit", bg: "bg-profit/10", title: "Educational Simulator", sub: "Practice trading skills" },
+                { icon: Award, color: "text-secondary", bg: "bg-secondary/10", title: "150+ Assets", sub: "Stocks, crypto, ETFs, forex" },
+              ].map((item) => (
+                <div key={item.title} className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-lg ${item.bg} flex items-center justify-center`}>
+                    <item.icon className={`w-5 h-5 ${item.color}`} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{item.title}</p>
+                    <p className="text-xs text-muted-foreground">{item.sub}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">100% Risk-Free</p>
-                  <p className="text-xs text-muted-foreground">No real money required</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-profit/10 flex items-center justify-center">
-                  <CheckCircle2 className="w-5 h-5 text-profit" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">Educational Simulator</p>
-                  <p className="text-xs text-muted-foreground">Practice trading skills</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
-                  <Award className="w-5 h-5 text-secondary" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">150+ Assets</p>
-                  <p className="text-xs text-muted-foreground">Stocks, crypto, ETFs, forex</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar - Copyright, Legal Links & Institutional Disclaimer */}
-      <div className="border-t border-border/30 bg-[hsl(0_0%_2%)]">
+      {/* Bottom Bar */}
+      <div className="border-t border-white/[0.04] bg-[hsl(0_0%_1.5%)]">
         <div className="container mx-auto px-6 py-6">
-          {/* Legal Links */}
           <div className="flex items-center justify-center gap-4 mb-4">
-            <Link to="/privacy" className="text-xs text-muted-foreground hover:text-primary transition-colors">
-              Privacy Policy
-            </Link>
-            <span className="text-muted-foreground/30">|</span>
-            <Link to="/terms" className="text-xs text-muted-foreground hover:text-primary transition-colors">
-              Terms of Service
-            </Link>
+            <Link to="/privacy" className="text-xs text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
+            <span className="text-muted-foreground/20">|</span>
+            <Link to="/terms" className="text-xs text-muted-foreground hover:text-primary transition-colors">Terms of Service</Link>
           </div>
-          
-          {/* Institutional Disclaimer */}
-          <div className="p-4 rounded-xl bg-muted/20 border border-border/20 max-w-4xl mx-auto mb-4">
+
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] max-w-4xl mx-auto mb-4">
             <p className="text-xs text-muted-foreground text-center leading-relaxed">
-              <strong className="text-foreground">Strict Institutional Disclaimer:</strong> TradeHQ is a market simulation platform. 
-              No real capital is at risk. Not financial advice. Data provided for educational purposes only. 
-              Past simulated performance does not guarantee future real-world results. 
+              <strong className="text-foreground">Disclaimer:</strong> TradeHQ is a market simulation platform.
+              No real capital is at risk. Not financial advice. Data provided for educational purposes only.
+              Past simulated performance does not guarantee future real-world results.
               Always consult a qualified financial advisor before making investment decisions.
             </p>
           </div>
-          
-          <p className="text-xs text-muted-foreground text-center">
+
+          <p className="text-xs text-muted-foreground/50 text-center">
             © {new Date().getFullYear()} TradeHQ. All rights reserved.
           </p>
         </div>

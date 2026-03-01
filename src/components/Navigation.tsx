@@ -3,12 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import tradehqLogo from "@/assets/tradehq-logo.png";
 
 export function Navigation() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { to: "/", label: "Home", icon: Home },
@@ -20,17 +27,22 @@ export function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[hsl(0_0%_4%)/95] backdrop-blur-xl border-b border-border/20">
+    <nav className={cn(
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+      scrolled
+        ? "bg-[hsl(0_0%_2%)/90] backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_4px_30px_-10px_hsl(0_0%_0%/0.5)]"
+        : "bg-transparent border-b border-transparent"
+    )}>
       <div className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <img 
-              src={tradehqLogo} 
-              alt="TradeHQ" 
+            <img
+              src={tradehqLogo}
+              alt="TradeHQ"
               className="h-9 w-auto object-contain"
             />
-            <span className="text-xl font-semibold tracking-tight">
+            <span className="text-xl font-bold tracking-tight">
               Trade<span className="text-primary">HQ</span>
             </span>
           </Link>
@@ -43,10 +55,10 @@ export function Navigation() {
                   variant="ghost"
                   size="sm"
                   className={cn(
-                    "h-9 px-4 text-sm font-medium rounded-xl transition-all duration-200",
-                    location.pathname === item.to 
-                      ? "bg-primary/10 text-primary" 
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+                    "h-9 px-4 text-sm font-medium rounded-xl transition-all duration-300",
+                    location.pathname === item.to
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-white/[0.05]"
                   )}
                 >
                   <item.icon className="w-4 h-4 mr-2" />
@@ -54,7 +66,7 @@ export function Navigation() {
                 </Button>
               </Link>
             ))}
-            <div className="ml-2 pl-2 border-l border-border/30">
+            <div className="ml-2 pl-2 border-l border-white/[0.06]">
               <ThemeToggle />
             </div>
           </div>
@@ -75,11 +87,11 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden pt-4 pb-2 border-t border-border/20 mt-3 animate-fade-in">
+          <div className="md:hidden pt-4 pb-2 border-t border-white/[0.06] mt-3 animate-fade-in">
             <div className="flex flex-col gap-1">
               {navItems.map((item) => (
-                <Link 
-                  key={item.to} 
+                <Link
+                  key={item.to}
                   to={item.to}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -87,9 +99,9 @@ export function Navigation() {
                     variant="ghost"
                     className={cn(
                       "w-full justify-start h-11 px-4 text-sm font-medium rounded-xl transition-all",
-                      location.pathname === item.to 
-                        ? "bg-primary/10 text-primary" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+                      location.pathname === item.to
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:text-foreground hover:bg-white/[0.05]"
                     )}
                   >
                     <item.icon className="w-4 h-4 mr-3" />

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Zap, TrendingUp, Cpu, DollarSign, BarChart3 } from "lucide-react";
+import { motion } from "framer-motion";
 
 /**
  * WhatIsTradeHQ - AI Overview answerable section for homepage.
@@ -7,38 +8,59 @@ import { Zap, TrendingUp, Cpu, DollarSign, BarChart3 } from "lucide-react";
  */
 export function WhatIsTradeHQ() {
   return (
-    <section className="py-20 bg-[hsl(0_0%_3.5%)]">
+    <section className="py-24 bg-[hsl(0_0%_3%)] relative overflow-hidden">
+      {/* Top divider glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+
       <div className="container mx-auto px-6 max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-center">
-          What is <span className="text-primary">TradeHQ</span>?
-        </h2>
-        <p className="text-muted-foreground text-center max-w-3xl mx-auto mb-12 leading-relaxed">
-          TradeHQ is a free trading simulator that gives you $10,000 in virtual capital to practice 
-          trading stocks, cryptocurrencies, ETFs, forex, and commodities — all without risking real money. 
-          Built for students and beginners, it features simulated market charts, AI-powered mentoring, 
-          and 150+ tradeable assets. No signup, no credit card, no hidden fees. Start practicing 
-          market strategies in seconds and build confidence before committing real capital.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-14"
+        >
+          <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4">
+            About the Platform
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            What is <span className="text-primary">TradeHQ</span>?
+          </h2>
+          <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed text-base">
+            TradeHQ is a free trading simulator that gives you $10,000 in virtual capital to practice
+            trading stocks, cryptocurrencies, ETFs, forex, and commodities — all without risking real money.
+            Built for students and beginners, it features simulated market charts, AI-powered mentoring,
+            and 150+ tradeable assets. No signup, no credit card, no hidden fees. Start practicing
+            market strategies in seconds and build confidence before committing real capital.
+          </p>
+        </motion.div>
 
         {/* Asset Categories - crawlable links grouped by type */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {ASSET_CATEGORIES.map((cat) => (
-            <div key={cat.label} className="p-5 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/20">
-              <cat.icon className="w-5 h-5 text-primary mb-3" />
-              <h3 className="text-sm font-semibold text-foreground mb-2">{cat.label}</h3>
-              <ul className="space-y-1">
+          {ASSET_CATEGORIES.map((cat, index) => (
+            <motion.div
+              key={cat.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
+              className="p-5 rounded-2xl bg-white/[0.02] backdrop-blur-sm border border-white/[0.06] hover:border-primary/20 transition-all duration-400 group"
+            >
+              <cat.icon className="w-5 h-5 text-primary mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-sm font-semibold text-foreground mb-3">{cat.label}</h3>
+              <ul className="space-y-1.5">
                 {cat.assets.map((a) => (
                   <li key={a.id}>
                     <Link
                       to={`/trade/${a.id}`}
-                      className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                      className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200"
                     >
                       {a.text}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
