@@ -1,89 +1,114 @@
 import { Shield, Zap, GraduationCap, Brain, BarChart3, Wallet } from "lucide-react";
+import { motion } from "framer-motion";
 
 /**
- * PremiumFeatures - Institutional-grade features section
- * Clean, professional layout with premium styling
+ * PremiumFeatures - Breathtaking features grid with glassmorphism
  */
 export function PremiumFeatures() {
   const features = [
     {
       icon: Shield,
-      title: "100% Risk-Free",
-      description: "Practice with virtual capital. Make mistakes, learn strategies, and improve without risking real money.",
+      title: "100% Risk-Free Practice",
+      description: "Trade with $10K virtual cash. Make bold moves, learn from mistakes, and master strategies without risking a single dollar.",
       gradient: "from-primary/20 to-primary/5",
-      iconColor: "text-primary"
+      iconColor: "text-primary",
+      borderGlow: "hover:border-primary/30",
     },
     {
       icon: Zap,
-      title: "Simulated Markets",
-      description: "Experience market simulation with instant execution. Practice day trading and swing trading strategies.",
-      gradient: "from-secondary/20 to-secondary/5",
-      iconColor: "text-secondary"
+      title: "Instant Market Simulation",
+      description: "Execute trades instantly on 150+ assets. Experience the thrill of real market action with simulated price feeds and charts.",
+      gradient: "from-profit/20 to-profit/5",
+      iconColor: "text-profit",
+      borderGlow: "hover:border-profit/30",
     },
     {
       icon: Brain,
-      title: "AI-Powered Education",
-      description: "Learn from our AI mentor. Get personalized insights, strategy feedback, and market analysis instantly.",
-      gradient: "from-primary/20 to-primary/5",
-      iconColor: "text-primary"
+      title: "AI-Powered Mentor",
+      description: "Get personalized strategy feedback, market analysis, and trading psychology insights from your AI mentor — available 24/7.",
+      gradient: "from-secondary/20 to-secondary/5",
+      iconColor: "text-secondary",
+      borderGlow: "hover:border-secondary/30",
     },
     {
       icon: BarChart3,
-      title: "Advanced Analytics",
-      description: "Track your performance with professional-grade analytics. Sharpe ratio, max drawdown, and win/loss metrics.",
-      gradient: "from-profit/20 to-profit/5",
-      iconColor: "text-profit"
+      title: "Professional Analytics",
+      description: "Track Sharpe ratio, max drawdown, win rate, and P&L — the same metrics used by institutional traders worldwide.",
+      gradient: "from-primary/20 to-primary/5",
+      iconColor: "text-primary",
+      borderGlow: "hover:border-primary/30",
     },
     {
       icon: Wallet,
-      title: "Portfolio Management",
-      description: "Build and manage diversified portfolios across stocks, crypto, forex, and commodities all in one place.",
-      gradient: "from-secondary/20 to-secondary/5",
-      iconColor: "text-secondary"
+      title: "Multi-Asset Portfolio",
+      description: "Build diversified portfolios spanning stocks, crypto, forex, ETFs, and commodities — all from one powerful dashboard.",
+      gradient: "from-warning/20 to-warning/5",
+      iconColor: "text-warning",
+      borderGlow: "hover:border-warning/30",
     },
     {
       icon: GraduationCap,
-      title: "Expert Courses",
-      description: "Master trading fundamentals with our curated courses covering technical analysis, risk management, and more.",
-      gradient: "from-primary/20 to-primary/5",
-      iconColor: "text-primary"
+      title: "Structured Courses",
+      description: "Master technical analysis, risk management, and trading psychology through our expert-curated learning paths.",
+      gradient: "from-secondary/20 to-secondary/5",
+      iconColor: "text-secondary",
+      borderGlow: "hover:border-secondary/30",
     },
   ];
 
   return (
-    <section className="py-24 bg-[hsl(0_0%_4%)]">
+    <section className="py-28 bg-[hsl(0_0%_2%)] relative overflow-hidden">
+      {/* Subtle ambient glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
       <div className="container mx-auto px-6">
         {/* Section header */}
-        <div className="text-center mb-16 max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-semibold mb-4">
-            Why <span className="text-primary">TradeHQ</span>?
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            A powerful trading simulator for 2026. Built for beginners and experts alike.
-          </p>
+        <div className="text-center mb-20 max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4">
+              Why Traders Choose Us
+            </span>
+            <h2 className="text-3xl md:text-5xl font-bold mb-5 tracking-tight">
+              Everything You Need to{' '}
+              <span className="text-transparent bg-clip-text" style={{
+                backgroundImage: 'linear-gradient(135deg, hsl(180 70% 50%), hsl(152 60% 50%))'
+              }}>
+                Trade Like a Pro
+              </span>
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              Professional-grade tools, zero financial risk. The fastest way to go from beginner to confident trader.
+            </p>
+          </motion.div>
         </div>
-        
-        {/* Features grid - Liquid Glass cards */}
+
+        {/* Features grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
           {features.map((feature, index) => (
-            <div 
+            <motion.div
               key={feature.title}
-              className="group p-6 glass-liquid-card animate-slide-up"
-              style={{ animationDelay: `${index * 100}ms` }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className={`group p-7 rounded-2xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-sm ${feature.borderGlow} transition-all duration-500 hover:bg-white/[0.04]`}
+              style={{ boxShadow: '0 8px 32px -12px hsl(0 0% 0% / 0.4)' }}
             >
-              {/* Icon */}
-              <div className={`w-12 h-12 mb-5 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+              <div className={`w-12 h-12 mb-6 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
                 <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
               </div>
-              
-              {/* Content */}
-              <h3 className="text-lg font-semibold mb-2 text-foreground">
+              <h3 className="text-lg font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300">
                 {feature.title}
               </h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 {feature.description}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

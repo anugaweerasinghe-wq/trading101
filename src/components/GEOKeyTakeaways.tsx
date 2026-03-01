@@ -1,15 +1,13 @@
 import { Asset } from "@/lib/types";
 import { getAssetContent } from "@/lib/assetContent";
-import { Lightbulb } from "lucide-react";
+import { Lightbulb, Zap } from "lucide-react";
 
 interface GEOKeyTakeawaysProps {
   asset: Asset;
 }
 
 /**
- * GEO (Generative Engine Optimization) Key Takeaways block.
- * Provides concise, factual, 3-bullet summaries for AI Overviews / LLM crawlers.
- * Neutral language, no advice, clearly labeled as educational.
+ * GEO Key Takeaways - Premium glassmorphism card for AI Overviews.
  */
 export function GEOKeyTakeaways({ asset }: GEOKeyTakeawaysProps) {
   const content = getAssetContent(asset.id);
@@ -21,36 +19,33 @@ export function GEOKeyTakeaways({ asset }: GEOKeyTakeawaysProps) {
 
   return (
     <section
-      className="rounded-xl border border-border/40 bg-card/30 backdrop-blur-xl p-4 mb-4"
+      className="rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-xl p-5 mb-4"
+      style={{ boxShadow: '0 8px 32px -8px hsl(0 0% 0% / 0.3)' }}
       aria-label={`Key takeaways about ${asset.name}`}
     >
-      <div className="flex items-center gap-2 mb-3">
-        <Lightbulb className="w-4 h-4 text-primary" aria-hidden="true" />
-        <h2 className="text-sm font-semibold text-foreground">
+      <div className="flex items-center gap-2.5 mb-4">
+        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+          <Lightbulb className="w-4 h-4 text-primary" aria-hidden="true" />
+        </div>
+        <h2 className="text-sm font-bold text-foreground tracking-tight">
           Key Takeaways — {asset.symbol}
         </h2>
       </div>
 
-      <ul className="space-y-2 text-sm text-muted-foreground leading-relaxed list-none">
-        <li className="flex items-start gap-2">
-          <span className="text-primary font-bold mt-0.5" aria-hidden="true">•</span>
-          <span>{definition}</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary font-bold mt-0.5" aria-hidden="true">•</span>
-          <span>{influencers}</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary font-bold mt-0.5" aria-hidden="true">•</span>
-          <span>{simulatorValue}</span>
-        </li>
+      <ul className="space-y-3 text-sm text-muted-foreground leading-relaxed list-none">
+        {[definition, influencers, simulatorValue].map((text, i) => (
+          <li key={i} className="flex items-start gap-2.5">
+            <Zap className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
+            <span>{text}</span>
+          </li>
+        ))}
       </ul>
 
-      <p className="text-xs text-muted-foreground/70 mt-3 italic">
+      <p className="text-xs text-muted-foreground/70 mt-4 italic pl-6">
         {studentPerspective}
       </p>
 
-      <p className="text-[10px] text-muted-foreground/50 mt-2 italic">
+      <p className="text-[10px] text-muted-foreground/40 mt-2 italic pl-6">
         (Educational simulation only — not financial advice.)
       </p>
     </section>
@@ -65,13 +60,9 @@ function getDefinitionBullet(asset: Asset, content: ReturnType<typeof getAssetCo
 function getInfluencersBullet(asset: Asset, content: ReturnType<typeof getAssetContent>): string {
   const driver = content.stats?.primaryDriver;
   const sector = content.stats?.sector;
-  const benchmark = content.stats?.benchmark;
 
   if (driver) {
     return `Primary market driver: ${driver}. ${sector ? `Sector: ${sector}.` : ''} Price influenced by macroeconomic conditions and sector-specific catalysts.`;
-  }
-  if (benchmark) {
-    return `Benchmark: ${benchmark}. Price driven by supply-demand dynamics and macroeconomic conditions.`;
   }
   if (asset.type === 'crypto') {
     return `Cryptocurrency influenced by network adoption, regulatory developments, and broader digital asset sentiment.`;

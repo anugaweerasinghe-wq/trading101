@@ -329,20 +329,20 @@ export default function TradeAsset() {
         )}
       </Helmet>
       
-      <div className="min-h-screen bg-background flex flex-col">
+      <div className="min-h-screen bg-[hsl(0_0%_2%)] flex flex-col">
         <Navigation />
         <GlowStatusBar />
 
-        <main className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl">
+        <main className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl pt-20">
           {selectedAsset && <Breadcrumb items={breadcrumbItems} />}
           
           {selectedAsset && (
-            <header>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+            <header className="pb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2 tracking-tight">
                 {selectedAsset.name} — Practice Trading Simulator 2026
               </h1>
-              <p className="text-sm text-muted-foreground mb-4">
-                Use the TradeHQ simulator to practice {selectedAsset.symbol} trading with $10,000 in virtual capital. Learn to read charts, manage risk, and build strategies — all without risking real money.
+              <p className="text-sm text-muted-foreground mb-4 max-w-3xl">
+                Master {selectedAsset.symbol} trading with $10,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
               </p>
             </header>
           )}
@@ -354,6 +354,7 @@ export default function TradeAsset() {
             <AIReadySummary asset={selectedAsset} />
           )}
           
+          {/* Command Center: Search + Portfolio Bar */}
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
             <AssetSearchDropdown
               assets={assets}
@@ -368,9 +369,10 @@ export default function TradeAsset() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Trading Terminal Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="lg:col-span-2">
-              <div className="glass-liquid border border-white/10 rounded-2xl h-[500px] overflow-hidden">
+              <div className="bg-white/[0.02] border border-white/[0.08] backdrop-blur-xl rounded-2xl h-[520px] overflow-hidden" style={{ boxShadow: '0 8px 40px -12px hsl(0 0% 0% / 0.5)' }}>
                 {isLoading ? (
                   <ChartSkeleton />
                 ) : (
@@ -397,8 +399,6 @@ export default function TradeAsset() {
             <AssetIntelligenceWithLiveData asset={selectedAsset} />
           )}
 
-          {/* Educational disclaimer - inline */}
-
           {selectedAsset && assetFAQs.length > 0 && (
             <AssetFAQSection 
               assetName={selectedAsset.name}
@@ -409,8 +409,8 @@ export default function TradeAsset() {
 
           {/* How Students Use This Simulator */}
           {selectedAsset && (
-            <section className="mt-8 p-6 bg-card/30 backdrop-blur-xl rounded-2xl border border-border/30">
-              <h2 className="text-lg font-semibold text-foreground mb-4">
+            <section className="mt-8 p-6 bg-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/[0.06]">
+              <h2 className="text-lg font-bold text-foreground mb-4 tracking-tight">
                 How Students Practice {selectedAsset.symbol} Trading
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -422,10 +422,10 @@ export default function TradeAsset() {
             </section>
           )}
 
-          {/* Market Strategic Outlook - shown for ALL asset pages */}
+          {/* Market Strategic Outlook */}
           {selectedAsset && (
-            <section className="mt-8 p-6 bg-card/30 backdrop-blur-xl rounded-2xl border border-border/30">
-              <h2 className="text-lg font-semibold text-foreground mb-4">
+            <section className="mt-8 p-6 bg-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/[0.06]">
+              <h2 className="text-lg font-bold text-foreground mb-4 tracking-tight">
                 {selectedAsset.symbol} Simulated Market Analysis — Educational Overview 2026
               </h2>
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
@@ -438,8 +438,8 @@ export default function TradeAsset() {
 
           {selectedAsset && <RelatedAssets currentAsset={selectedAsset} />}
 
-          {/* Standardized disclaimer - ALL pages */}
-          <div className="mt-8 p-4 rounded-xl bg-muted/30 border border-white/5">
+          {/* Disclaimer */}
+          <div className="mt-8 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04]">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
               <p className="text-xs text-muted-foreground leading-relaxed">
