@@ -20,9 +20,9 @@ export function PriceTicker({ assets }: PriceTickerProps) {
   }, [topAssets.length]);
 
   return (
-    <div className="bg-card/50 backdrop-blur-sm border-b border-border overflow-hidden">
+    <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-xl overflow-hidden">
       <div 
-        className="flex gap-8 py-3 px-6"
+        className="flex gap-8 py-2.5 px-6"
         style={{
           transform: `translateX(-${offset}px)`,
           transition: 'transform 0.05s linear',

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
-import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
+
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
 import { MinimalistOrderPanel } from "@/components/trading/MinimalistOrderPanel";
@@ -151,7 +151,7 @@ export default function Trade() {
 
       <div className="min-h-screen bg-background flex flex-col">
         <Navigation />
-        <GlowStatusBar />
+        
 
         <div className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl">
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
@@ -192,23 +192,39 @@ export default function Trade() {
             <MobileOrderDrawer asset={selectedAsset} availableCash={portfolio.cash} onTrade={handleTrade} />
           </div>
 
-          {/* --- Related Assets / Fixed clickable cards --- */}
+          {/* --- Explore More Assets --- */}
           {assets.length > 1 && (
-            <div className="glass-panel p-6 rounded-2xl mt-8 border border-white/10">
-              <h3 className="text-xl font-bold mb-6">Other Assets You Can Practice</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {assets.filter(a => a.id !== selectedAsset?.id).map(asset => (
-                  <Link
-                    key={asset.id}
-                    to={`/trade/${asset.symbol}`}
-                    className="flex flex-col justify-center items-center p-4 bg-black/40 rounded-xl border border-white/5 text-center hover:bg-black/60 transition cursor-pointer"
-                  >
-                    <span className="font-bold text-gray-300 text-lg">{asset.symbol}</span>
-                    <div className="text-xs text-gray-500 mt-1">{asset.name}</div>
-                  </Link>
-                ))}
+            <section className="mt-10">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-bold tracking-tight">Explore Markets</h3>
+                <Link to="/markets" className="text-xs text-primary hover:underline flex items-center gap-1">
+                  View All <span aria-hidden>→</span>
+                </Link>
               </div>
-            </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {assets.filter(a => a.id !== selectedAsset?.id).slice(0, 12).map(asset => {
+                  const isUp = asset.changePercent >= 0;
+                  return (
+                    <Link
+                      key={asset.id}
+                      to={`/trade/${asset.symbol}`}
+                      className="group relative glass-panel rounded-xl p-4 border border-white/5 hover:border-primary/30 transition-all duration-200 hover:scale-[1.03]"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">{asset.symbol}</span>
+                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${isUp ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
+                          {isUp ? '+' : ''}{asset.changePercent.toFixed(1)}%
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-muted-foreground truncate">{asset.name}</p>
+                      <p className="text-xs font-medium mt-1 text-foreground/80">
+                        ${asset.price < 1 ? asset.price.toFixed(4) : asset.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                      </p>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
           )}
         </div>
 

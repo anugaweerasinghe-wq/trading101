@@ -9,7 +9,7 @@ import { AssetIntelligence } from "@/components/AssetIntelligence";
 import { AIReadySummary } from "@/components/AIReadySummary";
 import { GEOKeyTakeaways } from "@/components/GEOKeyTakeaways";
 import { TradingStrengthMeter } from "@/components/TradingStrengthMeter";
-import { GlowStatusBar } from "@/components/trading/GlowStatusBar";
+
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
 import { MinimalistOrderPanel } from "@/components/trading/MinimalistOrderPanel";
@@ -331,7 +331,7 @@ export default function TradeAsset() {
       
       <div className="min-h-screen bg-[hsl(0_0%_2%)] flex flex-col">
         <Navigation />
-        <GlowStatusBar />
+        
 
         <main className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl pt-20">
           {selectedAsset && <Breadcrumb items={breadcrumbItems} />}
