@@ -1,5 +1,5 @@
 import { Navigation } from "@/components/Navigation";
-import { MarketSentimentTicker } from "@/components/MarketSentimentTicker";
+
 import { CompoundCalculator } from "@/components/CompoundCalculator";
 import { LearningProgressTracker } from "@/components/LearningProgressTracker";
 import { CredibilityFooter } from "@/components/CredibilityFooter";
@@ -53,10 +53,9 @@ const LearnTradingGuide = () => {
 
       <div className="min-h-screen bg-[#020405] text-slate-300 selection:bg-emerald-500/30 font-sans">
         <Navigation />
-        <MarketSentimentTicker />
 
-        {/* --- Optimized Hero: Balanced Typography --- */}
-        <header className="relative pt-8 pb-12">
+        {/* --- Hero --- */}
+        <header className="relative pt-24 pb-10">
           <div className="container mx-auto px-6 text-center relative z-10">
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
               <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-bold mb-6">
@@ -81,8 +80,7 @@ const LearnTradingGuide = () => {
           </div>
         </header>
 
-        <main className="container mx-auto px-6 py-8">
-          
+        <main className="container mx-auto px-6 py-6">
           {/* --- Grid Layout: SEO Content + Functional Tools --- */}
           <div className="grid lg:grid-cols-12 gap-6 items-start max-w-7xl mx-auto">
             
@@ -144,7 +142,7 @@ const LearnTradingGuide = () => {
           </div>
 
           {/* --- Global Trust Features --- */}
-          <section className="mt-24 py-16 border-t border-white/5 relative">
+          <section className="mt-12 py-10 border-t border-white/5 relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-20" />
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
@@ -164,7 +162,7 @@ const LearnTradingGuide = () => {
             </div>
           </section>
 
-          <div className="mt-16 pt-8 border-t border-white/5 text-center">
+          <div className="mt-10 pt-6 border-t border-white/5 text-center">
             <SocialShare title="I'm learning AI-assisted trading on TradeHQ! 🚀" description="Mastering 2026 trading with a free $10K simulator" variant="compact" />
           </div>
         </main>

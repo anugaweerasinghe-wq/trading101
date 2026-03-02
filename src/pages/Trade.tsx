@@ -151,30 +151,28 @@ export default function Trade() {
 
       <div className="min-h-screen bg-background flex flex-col">
         <Navigation />
-        
 
-        <div className="flex-1 container mx-auto px-4 py-6 space-y-6 max-w-7xl">
-          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-              <AssetSearchDropdown
-                assets={assets}
-                selectedAsset={selectedAsset}
-                favorites={favorites}
-                onSelectAsset={handleAssetSelect}
-                onToggleFavorite={handleToggleFavorite}
-              />
-              <LiveDataToggle
-                asset={selectedAsset}
-                onLiveDataReceived={(livePrice, isLive) => {
-                  if (isLive && selectedAsset && typeof livePrice === "number" && livePrice > 0) {
-                    setAssets(prev => prev.map(a => a.id === selectedAsset.id ? { ...a, price: livePrice } : a));
-                  }
-                }}
-              />
-            </div>
-            <div className="w-full lg:w-auto lg:flex-1 lg:max-w-2xl">
-              <MinimalistPortfolioBar portfolio={portfolio} />
-            </div>
+        <div className="flex-1 container mx-auto px-4 pt-20 pb-6 space-y-4 max-w-7xl">
+          {/* Portfolio Summary Bar - full width, no overlap */}
+          <MinimalistPortfolioBar portfolio={portfolio} />
+
+          {/* Asset Controls Row */}
+          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+            <AssetSearchDropdown
+              assets={assets}
+              selectedAsset={selectedAsset}
+              favorites={favorites}
+              onSelectAsset={handleAssetSelect}
+              onToggleFavorite={handleToggleFavorite}
+            />
+            <LiveDataToggle
+              asset={selectedAsset}
+              onLiveDataReceived={(livePrice, isLive) => {
+                if (isLive && selectedAsset && typeof livePrice === "number" && livePrice > 0) {
+                  setAssets(prev => prev.map(a => a.id === selectedAsset.id ? { ...a, price: livePrice } : a));
+                }
+              }}
+            />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
