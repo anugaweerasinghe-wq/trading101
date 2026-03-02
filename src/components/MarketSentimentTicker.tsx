@@ -44,7 +44,7 @@ export function MarketSentimentTicker() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-card via-card/95 to-card border-b border-border/50 backdrop-blur-xl">
+    <div className="relative z-[40] bg-gradient-to-r from-card via-card/95 to-card border-b border-border/50 backdrop-blur-xl">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-10 overflow-hidden">
           {/* Sentiment Index */}

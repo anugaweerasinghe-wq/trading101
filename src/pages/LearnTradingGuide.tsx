@@ -52,11 +52,11 @@ const LearnTradingGuide = () => {
       </Helmet>
 
       <div className="min-h-screen bg-[#020405] text-slate-300 selection:bg-emerald-500/30 font-sans">
+        <Navigation />
         <MarketSentimentTicker />
-        <div className="pt-4"><Navigation /></div>
 
         {/* --- Optimized Hero: Balanced Typography --- */}
-        <header className="relative pt-16 pb-12">
+        <header className="relative pt-8 pb-12">
           <div className="container mx-auto px-6 text-center relative z-10">
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
               <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-bold mb-6">
@@ -84,10 +84,10 @@ const LearnTradingGuide = () => {
         <main className="container mx-auto px-6 py-8">
           
           {/* --- Grid Layout: SEO Content + Functional Tools --- */}
-          <div className="grid lg:grid-cols-12 gap-8 items-start max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-12 gap-6 items-start max-w-7xl mx-auto">
             
             {/* Left: SEO Narrative & Progress (40%) */}
-            <section className="lg:col-span-5 space-y-8">
+            <section className="lg:col-span-5 space-y-6">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Target className="text-emerald-500 w-4 h-4" />
@@ -135,8 +135,8 @@ const LearnTradingGuide = () => {
                 <h3 className="text-xl font-bold text-white tracking-tight">Compound Growth Simulator</h3>
               </div>
               
-              <div className="p-1 rounded-[2rem] bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent border border-white/5 shadow-2xl">
-                <div className="bg-[#010203] rounded-[1.8rem] overflow-hidden p-2 md:p-6">
+              <div className="p-1 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent border border-white/5 shadow-2xl">
+                <div className="bg-[#010203] rounded-xl overflow-hidden p-2 md:p-5">
                   <CompoundCalculator />
                 </div>
               </div>

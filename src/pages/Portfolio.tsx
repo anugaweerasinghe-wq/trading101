@@ -140,9 +140,11 @@ export default function Portfolio() {
       </Helmet>
       <div className="min-h-screen bg-background">
         <Navigation />
-        <PriceTicker assets={assets} />
       
       <main className="pt-20 pb-12">
+        <div className="container mx-auto px-6 mb-6">
+          <PriceTicker assets={assets} />
+        </div>
         <div className="container mx-auto px-6">
           {/* Static H1 Header - Renders immediately for Google */}
           <header className="flex items-center justify-between mb-8">
