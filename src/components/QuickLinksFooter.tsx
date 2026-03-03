@@ -15,6 +15,7 @@ export function QuickLinksFooter() {
     { to: "/learn", label: "Learning Center", icon: GraduationCap },
     { to: "/learn-trading-guide", label: "Trading Guide", icon: BookOpen },
     { to: "/ai-mentor", label: "AI Mentor", icon: Bot },
+    { to: "/wiki/short-squeeze", label: "Trading Glossary", icon: BookOpen },
   ];
 
   return (

@@ -1,5 +1,5 @@
+import { useState, useMemo } from "react";
 import { Navigation } from "@/components/Navigation";
-
 import { CompoundCalculator } from "@/components/CompoundCalculator";
 import { LearningProgressTracker } from "@/components/LearningProgressTracker";
 import { CredibilityFooter } from "@/components/CredibilityFooter";
@@ -8,14 +8,61 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Shield, Globe, CheckCircle2, ArrowRight, Target, Sparkles, LineChart, Zap } from "lucide-react";
+import { Shield, Globe, CheckCircle2, ArrowRight, Target, Sparkles, LineChart, Zap, TrendingUp, BarChart3, BookOpen } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import { tradingGlossary } from "@/lib/tradingGlossary";
 
 const DOMAIN = "https://tradinghq.vercel.app";
 
+// Seeded random for daily consistency
+function seededRandom(seed: string) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) {
+    h = Math.imul(31, h) + seed.charCodeAt(i) | 0;
+  }
+  return ((h >>> 0) % 100) / 100;
+}
+
+const DAILY_CHALLENGES = [
+  {
+    pattern: "Double Bottom",
+    description: "Price drops to $42,100, bounces to $43,800, drops again to $42,150, then breaks above $43,800 with increasing volume.",
+    options: ["Head and Shoulders", "Double Bottom", "Bull Flag"],
+    correct: 1,
+  },
+  {
+    pattern: "Golden Cross",
+    description: "The 50-day moving average crosses above the 200-day moving average while price trades above both lines with rising volume.",
+    options: ["Death Cross", "Bollinger Squeeze", "Golden Cross"],
+    correct: 2,
+  },
+  {
+    pattern: "Bear Trap",
+    description: "Price briefly breaks below key support at $2,800, triggering stop losses, then reverses sharply to close at $2,950 within the same candle.",
+    options: ["Bear Trap", "Liquidation Cascade", "Short Squeeze"],
+    correct: 0,
+  },
+];
+
 const LearnTradingGuide = () => {
-  // --- HIGH-LEVEL SEO SCHEMAS (DO NOT REMOVE) ---
+  const today = new Date().toDateString();
+  const dayIndex = new Date().getDay();
+  const challenge = DAILY_CHALLENGES[dayIndex % DAILY_CHALLENGES.length];
+  const sentimentValue = Math.round(seededRandom(today) * 100);
+  const sentimentLabel = sentimentValue < 25 ? "Extreme Fear" : sentimentValue < 45 ? "Fear" : sentimentValue < 55 ? "Neutral" : sentimentValue < 75 ? "Greed" : "Extreme Greed";
+  const sentimentColor = sentimentValue < 30 ? "bg-red-500" : sentimentValue < 50 ? "bg-amber-500" : sentimentValue < 70 ? "bg-emerald-500" : "bg-emerald-400";
+
+  const [challengeAnswer, setChallengeAnswer] = useState<number | null>(null);
+  const isCorrect = challengeAnswer === challenge.correct;
+
+  // Pick 3 spotlight terms seeded by date
+  const spotlightTerms = useMemo(() => {
+    const seed = seededRandom(today + "wiki");
+    const startIdx = Math.floor(seed * (tradingGlossary.length - 3));
+    return tradingGlossary.slice(startIdx, startIdx + 3);
+  }, [today]);
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
@@ -55,7 +102,7 @@ const LearnTradingGuide = () => {
         <Navigation />
 
         {/* --- Hero --- */}
-        <header className="relative pt-24 pb-10">
+        <header className="relative pt-24 pb-8">
           <div className="container mx-auto px-6 text-center relative z-10">
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
               <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-bold mb-6">
@@ -67,7 +114,7 @@ const LearnTradingGuide = () => {
               Practice with <span className="text-emerald-500">$10K Risk-Free</span>
             </h1>
 
-            <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
               Master the 2026 financial landscape. Learn AI-assisted strategies and Bitcoin Layer 2 dynamics 
               using our high-fidelity simulator. No capital required.
             </p>
@@ -80,7 +127,44 @@ const LearnTradingGuide = () => {
           </div>
         </header>
 
-        <main className="container mx-auto px-6 py-6">
+        <main className="container mx-auto px-6 pb-6">
+          {/* --- Ticker Tape --- */}
+          <div className="overflow-hidden rounded-xl border border-white/5 bg-white/[0.01] mb-6">
+            <div className="ticker-tape-container flex whitespace-nowrap py-2.5" style={{ willChange: "transform" }}>
+              {[...Array(2)].map((_, dupeIdx) => (
+                <div key={dupeIdx} className="ticker-scroll flex gap-8 px-4 animate-ticker">
+                  {[
+                    { sym: "BTC", price: "$67,842", change: "+2.4%", up: true },
+                    { sym: "ETH", price: "$3,891", change: "+1.8%", up: true },
+                    { sym: "SOL", price: "$187.50", change: "-0.6%", up: false },
+                    { sym: "NVDA", price: "$924.12", change: "+3.1%", up: true },
+                    { sym: "SPY", price: "$521.30", change: "+0.4%", up: true },
+                    { sym: "GOLD", price: "$2,178", change: "+0.9%", up: true },
+                    { sym: "EUR/USD", price: "1.0842", change: "-0.2%", up: false },
+                  ].map((t) => (
+                    <span key={`${dupeIdx}-${t.sym}`} className="inline-flex items-center gap-2 text-xs font-mono">
+                      <span className="font-bold text-white">{t.sym}</span>
+                      <span className="text-slate-400">{t.price}</span>
+                      <span className={t.up ? "text-emerald-400" : "text-red-400"}>{t.change}</span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <style>{`
+              @keyframes tickerScroll {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+              }
+              .ticker-tape-container {
+                will-change: transform;
+              }
+              .animate-ticker {
+                animation: tickerScroll 25s linear infinite;
+              }
+            `}</style>
+          </div>
+
           {/* --- Grid Layout: SEO Content + Functional Tools --- */}
           <div className="grid lg:grid-cols-12 gap-6 items-start max-w-7xl mx-auto">
             
@@ -141,8 +225,116 @@ const LearnTradingGuide = () => {
             </section>
           </div>
 
+          {/* --- Command Center --- */}
+          <section className="mt-8 max-w-7xl mx-auto">
+            <div className="flex items-center gap-2 mb-4">
+              <BarChart3 className="text-emerald-500 w-4 h-4" />
+              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-slate-500">Command Center</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Daily Challenge */}
+              <Card className="p-5 bg-white/[0.02] border-white/5 rounded-2xl md:col-span-2">
+                <div className="flex items-center gap-2 mb-3">
+                  <Sparkles className="w-4 h-4 text-emerald-500" />
+                  <h3 className="text-xs uppercase tracking-[0.15em] font-black text-white">Daily Challenge</h3>
+                </div>
+                <p className="text-xs text-slate-500 mb-2 font-bold uppercase tracking-tight">Identify This Pattern:</p>
+                <p className="text-sm text-slate-300 mb-4 leading-relaxed bg-white/[0.02] border border-white/5 rounded-xl p-3 font-mono">
+                  {challenge.description}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {challenge.options.map((opt, i) => (
+                    <Button
+                      key={i}
+                      size="sm"
+                      variant={challengeAnswer === i ? (i === challenge.correct ? "default" : "destructive") : "outline"}
+                      className={`text-xs rounded-lg transition-all ${
+                        challengeAnswer === null
+                          ? "border-white/10 text-slate-300 hover:border-emerald-500/40 hover:text-emerald-400"
+                          : i === challenge.correct
+                          ? "bg-emerald-600 text-white border-emerald-500"
+                          : challengeAnswer === i
+                          ? "bg-red-600/20 text-red-400 border-red-500/30"
+                          : "border-white/5 text-slate-500"
+                      }`}
+                      onClick={() => setChallengeAnswer(i)}
+                      disabled={challengeAnswer !== null}
+                    >
+                      {opt}
+                    </Button>
+                  ))}
+                </div>
+                {challengeAnswer !== null && (
+                  <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="mt-3">
+                    <p className={`text-xs font-bold ${isCorrect ? "text-emerald-400" : "text-red-400"}`}>
+                      {isCorrect ? "🎉 Correct! You identified the pattern." : `❌ The correct answer was: ${challenge.pattern}`}
+                    </p>
+                    {isCorrect && (
+                      <div className="mt-2 flex gap-1">
+                        {["🎊", "✨", "🎉", "⭐", "💫"].map((e, i) => (
+                          <motion.span
+                            key={i}
+                            initial={{ opacity: 0, y: 10, scale: 0 }}
+                            animate={{ opacity: 1, y: -10 * (i + 1), scale: 1 }}
+                            transition={{ delay: i * 0.1, duration: 0.5 }}
+                            className="text-lg"
+                          >
+                            {e}
+                          </motion.span>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </Card>
+
+              {/* Sentiment Gauge */}
+              <Card className="p-5 bg-white/[0.02] border-white/5 rounded-2xl flex flex-col">
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp className="w-4 h-4 text-emerald-500" />
+                  <h3 className="text-xs uppercase tracking-[0.15em] font-black text-white">Market Sentiment</h3>
+                </div>
+                <div className="flex-1 flex flex-col items-center justify-center gap-3">
+                  <div className="relative w-8 h-32 bg-white/5 rounded-full overflow-hidden border border-white/10">
+                    <motion.div
+                      className={`absolute bottom-0 left-0 right-0 ${sentimentColor} rounded-full`}
+                      initial={{ height: 0 }}
+                      animate={{ height: `${sentimentValue}%` }}
+                      transition={{ duration: 1.2, ease: "easeOut" }}
+                    />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-black text-white">{sentimentValue}</p>
+                    <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-slate-500">{sentimentLabel}</p>
+                  </div>
+                </div>
+                <p className="text-[9px] text-slate-600 text-center mt-2">Visual indicator only · Not financial advice</p>
+              </Card>
+            </div>
+
+            {/* Wiki Spotlight */}
+            <div className="mt-4">
+              <div className="flex items-center gap-2 mb-3">
+                <BookOpen className="w-4 h-4 text-emerald-500" />
+                <h3 className="text-xs uppercase tracking-[0.15em] font-black text-slate-500">Wiki Spotlight</h3>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {spotlightTerms.map((term) => (
+                  <Link key={term.slug} to={`/wiki/${term.slug}`}>
+                    <Card className="p-4 bg-white/[0.02] border-white/5 hover:border-emerald-500/30 transition-all rounded-xl group">
+                      <p className="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">{term.term}</p>
+                      <p className="text-[10px] text-slate-500 mt-1">{term.difficulty} · {term.readTime}</p>
+                      <p className="text-xs text-slate-400 mt-2 line-clamp-2">{term.definition.slice(0, 100)}…</p>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* --- Global Trust Features --- */}
-          <section className="mt-12 py-10 border-t border-white/5 relative">
+          <section className="mt-10 py-8 border-t border-white/5 relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-20" />
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
@@ -162,7 +354,7 @@ const LearnTradingGuide = () => {
             </div>
           </section>
 
-          <div className="mt-10 pt-6 border-t border-white/5 text-center">
+          <div className="mt-6 pt-4 border-t border-white/5 text-center">
             <SocialShare title="I'm learning AI-assisted trading on TradeHQ! 🚀" description="Mastering 2026 trading with a free $10K simulator" variant="compact" />
           </div>
         </main>
