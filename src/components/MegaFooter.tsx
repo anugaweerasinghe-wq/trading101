@@ -19,6 +19,7 @@ import {
   CheckCircle2
 } from "lucide-react";
 import tradehqLogo from "@/assets/tradehq-logo.png";
+import { tradingGlossary } from "@/lib/tradingGlossary";
 
 /**
  * MegaFooter - Premium Multi-Column SEO Footer
@@ -126,6 +127,25 @@ export function MegaFooter() {
                   ))}
                 </ul>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Trading Glossary Links */}
+        <div className="mb-12">
+          <h2 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
+            <Globe className="w-5 h-5 text-primary" />
+            Trading Glossary
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {tradingGlossary.map((term) => (
+              <Link
+                key={term.slug}
+                to={`/wiki/${term.slug}`}
+                className="text-xs text-foreground/50 hover:text-primary bg-white/[0.02] border border-white/[0.04] px-3 py-1.5 rounded-lg transition-colors duration-200"
+              >
+                {term.term}
+              </Link>
             ))}
           </div>
         </div>

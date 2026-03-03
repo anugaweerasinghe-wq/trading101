@@ -18,6 +18,7 @@ import AIMentor from "./pages/AIMentor";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import SectorPillar from "./pages/SectorPillar";
+import WikiTerm from "./pages/WikiTerm";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ function AnimatedRoutes() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/sectors/:sectorId" element={<SectorPillar />} />
+        <Route path="/wiki/:slug" element={<WikiTerm />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
