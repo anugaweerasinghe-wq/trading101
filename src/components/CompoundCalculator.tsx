@@ -69,14 +69,14 @@ export function CompoundCalculator() {
   };
 
   return (
-    <Card className="p-4 bg-[#030506] border-white/10 rounded-xl shadow-2xl overflow-hidden">
+    <Card className="p-4 bg-[#030506] border-white/10 rounded-xl shadow-2xl overflow-hidden h-full flex flex-col">
       {/* Header - Micro Size */}
       <div className="flex items-center gap-2 mb-6 border-b border-white/5 pb-2">
         <Calculator className="w-3.5 h-3.5 text-emerald-500" />
         <h3 className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Live Projection</h3>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
         {/* Inputs */}
         <div className="space-y-4">
           <div className="space-y-1">
