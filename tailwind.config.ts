@@ -61,6 +61,10 @@ export default {
         buy: "hsl(var(--buy))",
         sell: "hsl(var(--sell))",
         warning: "hsl(var(--warning))",
+        // Cyber accent colors
+        coral: "hsl(var(--coral))",
+        neon: "hsl(var(--neon))",
+        silver: "hsl(var(--silver))",
         chart: {
           1: "hsl(var(--chart-1))",
           2: "hsl(var(--chart-2))",
@@ -74,10 +78,11 @@ export default {
         "gradient-loss": "var(--gradient-loss)",
         "gradient-card": "var(--gradient-card)",
         "gradient-sidebar": "var(--gradient-sidebar)",
-        "gradient-neon-cyan": "var(--gradient-neon-cyan)",
-        "gradient-neon-purple": "var(--gradient-neon-purple)",
+        "gradient-neon-cyan": "var(--gradient-subtle-cyan)",
+        "gradient-neon-purple": "var(--gradient-subtle-purple)",
         "gradient-cyber": "var(--gradient-cyber)",
-        "gradient-hero": "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(180 100% 50% / 0.15), transparent), radial-gradient(ellipse 60% 40% at 80% 50%, hsl(285 100% 53% / 0.1), transparent)",
+        "gradient-holographic": "var(--gradient-holographic)",
+        "gradient-hero": "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(168 100% 50% / 0.15), transparent), radial-gradient(ellipse 60% 40% at 80% 50%, hsl(12 90% 62% / 0.1), transparent)",
       },
       boxShadow: {
         "card": "var(--shadow-card)",
@@ -85,6 +90,7 @@ export default {
         "glow-loss": "var(--shadow-glow-loss)",
         "glow-cyan": "var(--shadow-glow-cyan)",
         "glow-purple": "var(--shadow-glow-purple)",
+        "chrome": "var(--shadow-chrome)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -96,6 +102,10 @@ export default {
       },
       spacing: {
         "18": "4.5rem",
+        "88": "22rem",
+      },
+      letterSpacing: {
+        "tight-cyber": "-0.02em",
         "88": "22rem",
       },
       keyframes: {
