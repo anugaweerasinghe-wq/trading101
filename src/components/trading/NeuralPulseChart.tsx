@@ -51,24 +51,24 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
     const chart = createChart(containerRef.current, {
       height,
       layout: {
-        background: { type: ColorType.Solid, color: 'transparent' },
-        textColor: 'hsl(220, 12%, 50%)',
+        background: { type: ColorType.Solid, color: '#0A0A0A' },
+        textColor: '#737A87',
         fontFamily: 'Inter, SF Pro Display, sans-serif',
         fontSize: 11,
       },
       grid: {
-        vertLines: { color: 'hsl(220, 8%, 14%)' },
-        horzLines: { color: 'hsl(220, 8%, 14%)' },
+        vertLines: { color: '#1E2028' },
+        horzLines: { color: '#1E2028' },
       },
       crosshair: {
-        vertLine: { color: 'hsl(168, 100%, 50%)', width: 1, style: LineStyle.Dashed },
-        horzLine: { color: 'hsl(168, 100%, 50%)', width: 1, style: LineStyle.Dashed },
+        vertLine: { color: '#00FFCC', width: 1, style: LineStyle.Dashed },
+        horzLine: { color: '#00FFCC', width: 1, style: LineStyle.Dashed },
       },
       rightPriceScale: {
-        borderColor: 'hsl(220, 8%, 14%)',
+        borderColor: '#1E2028',
       },
       timeScale: {
-        borderColor: 'hsl(220, 8%, 14%)',
+        borderColor: '#1E2028',
       },
     });
 
