@@ -9,11 +9,11 @@ import {
   Send, 
   X, 
   Sparkles, 
-  ChevronRight,
-  GraduationCap,
   TrendingUp,
   Shield,
-  Lightbulb
+  Lightbulb,
+  Wallet,
+  BarChart3
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Message, Portfolio, Asset } from "@/lib/types";
@@ -25,10 +25,11 @@ interface AIMentorProps {
 }
 
 const quickPrompts = [
-  { icon: TrendingUp, text: "Analyze this asset", prompt: "Analyze the current market conditions for this asset" },
-  { icon: Shield, text: "Risk assessment", prompt: "What's the risk level of my current portfolio?" },
-  { icon: GraduationCap, text: "Trading basics", prompt: "Explain the difference between market and limit orders" },
-  { icon: Lightbulb, text: "Strategy tips", prompt: "What are some beginner-friendly trading strategies?" },
+  { icon: Wallet, text: "My portfolio", prompt: "Show me a full analysis of my portfolio — positions, P&L, and suggestions for improvement." },
+  { icon: TrendingUp, text: "Analyze this asset", prompt: "Analyze the current market conditions for the asset I'm viewing right now." },
+  { icon: Shield, text: "Risk assessment", prompt: "What's the risk level of my current portfolio? Am I overexposed anywhere?" },
+  { icon: BarChart3, text: "Trade history", prompt: "Review my recent trade history and tell me what patterns you see." },
+  { icon: Lightbulb, text: "What should I do?", prompt: "Based on my portfolio and current market conditions, what action should I consider next?" },
 ];
 
 export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
@@ -37,7 +38,7 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
     {
       id: '1',
       role: 'assistant',
-      content: "Hello! I'm your AI Trading Mentor. I'm here to help you learn about trading, analyze markets, and develop your investment skills. Remember, I provide educational insights, not financial advice. What would you like to learn about today?",
+      content: "Hey! I'm your Neural Trading Mentor. I have full access to your portfolio — ask me about your positions, P&L, win rate, or any trading question. What do you need?",
       timestamp: new Date(),
     },
   ]);
@@ -50,6 +51,16 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Compute portfolio stats for display
+  const totalTrades = portfolio.trades.length;
+  const sellTrades = portfolio.trades.filter(t => t.type === 'sell');
+  const wins = sellTrades.filter((t, _i) => {
+    const buys = portfolio.trades.filter(bt => bt.assetId === t.assetId && bt.type === 'buy' && bt.timestamp < t.timestamp);
+    if (buys.length === 0) return false;
+    return t.price > buys[buys.length - 1].price;
+  });
+  const winRate = sellTrades.length > 0 ? ((wins.length / sellTrades.length) * 100).toFixed(0) : '—';
 
   const sendMessage = async (customMessage?: string) => {
     const messageText = customMessage || input;
@@ -77,9 +88,27 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
           },
           body: JSON.stringify({
             message: messageText,
-            portfolio,
-            assets,
-            selectedAsset,
+            portfolio: {
+              cash: portfolio.cash,
+              totalValue: portfolio.totalValue,
+              positions: portfolio.positions.map(p => ({
+                asset: { id: p.asset.id, symbol: p.asset.symbol, name: p.asset.name, price: p.asset.price },
+                quantity: p.quantity,
+                averagePrice: p.averagePrice,
+                profitLoss: p.profitLoss,
+                profitLossPercent: p.profitLossPercent,
+              })),
+              trades: portfolio.trades.slice(0, 20).map(t => ({
+                type: t.type,
+                assetId: t.assetId,
+                quantity: t.quantity,
+                price: t.price,
+                timestamp: t.timestamp,
+                journal: t.journal,
+              })),
+            },
+            assets: assets.slice(0, 10).map(a => ({ id: a.id, symbol: a.symbol, price: a.price, changePercent: a.changePercent })),
+            selectedAsset: selectedAsset ? { id: selectedAsset.id, symbol: selectedAsset.symbol, name: selectedAsset.name, price: selectedAsset.price, changePercent: selectedAsset.changePercent } : null,
           }),
         }
       );
@@ -176,10 +205,10 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
               </div>
               <div>
                 <h3 className="font-semibold flex items-center gap-2">
-                  AI Mentor
+                  Neural Mentor
                   <Badge variant="outline" className="text-2xs">PRO</Badge>
                 </h3>
-                <p className="text-xs text-muted-foreground">Your trading coach</p>
+                <p className="text-xs text-muted-foreground">Full portfolio access</p>
               </div>
             </div>
             <Button
@@ -193,32 +222,23 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
           </div>
 
           {/* Portfolio Intelligence Bar */}
-          <div className="px-4 py-2.5 border-b border-border bg-secondary/20 space-y-1.5">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Balance</span>
-              <span className="font-medium tabular-nums text-foreground">${portfolio.totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+          <div className="px-4 py-2.5 border-b border-border bg-secondary/20 grid grid-cols-4 gap-2 text-center">
+            <div>
+              <p className="text-[9px] text-muted-foreground uppercase">Balance</p>
+              <p className="text-[11px] font-bold tabular-nums text-foreground">${(portfolio.totalValue / 1000).toFixed(1)}k</p>
             </div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Trades</span>
-              <span className="font-medium tabular-nums text-foreground">{portfolio.trades.length}</span>
+            <div>
+              <p className="text-[9px] text-muted-foreground uppercase">Cash</p>
+              <p className="text-[11px] font-bold tabular-nums text-foreground">${(portfolio.cash / 1000).toFixed(1)}k</p>
             </div>
-            {portfolio.trades.length > 0 && (() => {
-              const wins = portfolio.trades.filter((t, i, arr) => {
-                if (t.type !== 'sell') return false;
-                const buyTrades = arr.filter(bt => bt.assetId === t.assetId && bt.type === 'buy' && bt.timestamp < t.timestamp);
-                if (buyTrades.length === 0) return false;
-                const lastBuy = buyTrades[buyTrades.length - 1];
-                return t.price > lastBuy.price;
-              });
-              const sells = portfolio.trades.filter(t => t.type === 'sell');
-              const winRate = sells.length > 0 ? ((wins.length / sells.length) * 100).toFixed(0) : '—';
-              return (
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">Win Rate</span>
-                  <span className="font-medium tabular-nums text-foreground">{winRate}%</span>
-                </div>
-              );
-            })()}
+            <div>
+              <p className="text-[9px] text-muted-foreground uppercase">Trades</p>
+              <p className="text-[11px] font-bold tabular-nums text-foreground">{totalTrades}</p>
+            </div>
+            <div>
+              <p className="text-[9px] text-muted-foreground uppercase">Win Rate</p>
+              <p className="text-[11px] font-bold tabular-nums text-foreground">{winRate}{winRate !== '—' ? '%' : ''}</p>
+            </div>
           </div>
 
           {/* Context Bar */}
@@ -228,6 +248,9 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
               <Badge variant="secondary" className="text-xs">
                 {selectedAsset.symbol}
               </Badge>
+              <span className={cn("text-xs font-medium", selectedAsset.changePercent >= 0 ? "text-profit" : "text-loss")}>
+                {selectedAsset.changePercent >= 0 ? '+' : ''}{selectedAsset.changePercent.toFixed(2)}%
+              </span>
             </div>
           )}
 
@@ -282,18 +305,18 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
           {/* Quick Prompts */}
           {messages.length <= 2 && !isLoading && (
             <div className="px-4 pb-2">
-              <p className="text-xs text-muted-foreground mb-2">Quick questions:</p>
-              <div className="grid grid-cols-2 gap-2">
+              <p className="text-xs text-muted-foreground mb-2">Ask me:</p>
+              <div className="flex flex-wrap gap-1.5">
                 {quickPrompts.map((prompt, i) => (
                   <Button
                     key={i}
                     variant="outline"
                     size="sm"
-                    className="h-auto py-2 px-3 justify-start text-left"
+                    className="h-auto py-1.5 px-3 text-left"
                     onClick={() => sendMessage(prompt.prompt)}
                   >
-                    <prompt.icon className="w-3 h-3 mr-2 flex-shrink-0" />
-                    <span className="text-xs truncate">{prompt.text}</span>
+                    <prompt.icon className="w-3 h-3 mr-1.5 flex-shrink-0" />
+                    <span className="text-xs">{prompt.text}</span>
                   </Button>
                 ))}
               </div>
@@ -312,7 +335,7 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about trading..."
+                placeholder="Ask about your portfolio..."
                 disabled={isLoading}
                 className="flex-1 bg-secondary border-0"
               />
