@@ -192,6 +192,35 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
             </Button>
           </div>
 
+          {/* Portfolio Intelligence Bar */}
+          <div className="px-4 py-2.5 border-b border-border bg-secondary/20 space-y-1.5">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-muted-foreground">Balance</span>
+              <span className="font-medium tabular-nums text-foreground">${portfolio.totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-muted-foreground">Trades</span>
+              <span className="font-medium tabular-nums text-foreground">{portfolio.trades.length}</span>
+            </div>
+            {portfolio.trades.length > 0 && (() => {
+              const wins = portfolio.trades.filter((t, i, arr) => {
+                if (t.type !== 'sell') return false;
+                const buyTrades = arr.filter(bt => bt.assetId === t.assetId && bt.type === 'buy' && bt.timestamp < t.timestamp);
+                if (buyTrades.length === 0) return false;
+                const lastBuy = buyTrades[buyTrades.length - 1];
+                return t.price > lastBuy.price;
+              });
+              const sells = portfolio.trades.filter(t => t.type === 'sell');
+              const winRate = sells.length > 0 ? ((wins.length / sells.length) * 100).toFixed(0) : '—';
+              return (
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-muted-foreground">Win Rate</span>
+                  <span className="font-medium tabular-nums text-foreground">{winRate}%</span>
+                </div>
+              );
+            })()}
+          </div>
+
           {/* Context Bar */}
           {selectedAsset && (
             <div className="px-4 py-2 border-b border-border bg-secondary/30 flex items-center gap-2">
