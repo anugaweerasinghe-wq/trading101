@@ -65,7 +65,7 @@ export function MinimalistOrderPanel({ asset, availableCash, onTrade }: Minimali
   }
 
   return (
-    <div className="glass-liquid rounded-2xl p-5 space-y-5">
+    <div className="glass-tactile rounded-2xl p-5 space-y-5 border-chrome">
       {/* Buy/Sell Toggle */}
       <div className="flex p-1 bg-white/5 rounded-xl">
         <button
@@ -148,10 +148,10 @@ export function MinimalistOrderPanel({ asset, availableCash, onTrade }: Minimali
         onClick={handleSubmit}
         disabled={!isValid}
         className={cn(
-          "w-full py-4 rounded-xl font-semibold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed",
+          "w-full py-4 rounded-xl font-semibold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed btn-squeeze",
           side === 'buy'
-            ? "bg-profit hover:bg-profit/90 shadow-lg shadow-profit/20"
-            : "bg-loss hover:bg-loss/90 shadow-lg shadow-loss/20"
+            ? "bg-profit hover:bg-profit/90 shadow-lg shadow-glow-profit"
+            : "bg-loss hover:bg-loss/90 shadow-lg shadow-glow-loss"
         )}
       >
         {isSubmitting ? (
