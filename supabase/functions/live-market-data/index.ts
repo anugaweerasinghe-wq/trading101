@@ -341,8 +341,9 @@ serve(async (req) => {
     const url = new URL(req.url);
     const assetId = url.searchParams.get('assetId')?.toLowerCase();
     const assetType = url.searchParams.get('type')?.toLowerCase();
-    const dataType = url.searchParams.get('dataType') || 'quote'; // 'quote' or 'candles'
+    const dataType = url.searchParams.get('dataType') || 'quote';
     const basePrice = parseFloat(url.searchParams.get('basePrice') || '0');
+    const days = parseInt(url.searchParams.get('days') || '1', 10);
 
     if (!assetId) {
       return new Response(
@@ -351,19 +352,20 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Fetching ${dataType} for ${assetId} (type: ${assetType})`);
+    console.log(`Fetching ${dataType} for ${assetId} (type: ${assetType}, days: ${days})`);
 
     let data: MarketData | CandleData[] | null = null;
 
     if (dataType === 'candles') {
-      // Fetch candle data
+      // Fetch candle data with configurable days
       if (assetType === 'crypto' && CRYPTO_ID_MAP[assetId]) {
-        data = await fetchCryptoCandles(assetId, 1);
+        data = await fetchCryptoCandles(assetId, days);
       }
       
       // Fallback to simulated candles if no live data
       if (!data || (Array.isArray(data) && data.length === 0)) {
-        data = generateSimulatedCandles(basePrice || 100);
+        const candleCount = Math.min(days * 4, 500); // scale candles with days
+        data = generateSimulatedCandles(basePrice || 100, candleCount);
       }
     } else {
       // Fetch quote data
