@@ -88,56 +88,62 @@
   }
 
   .light {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 8%;
+    --background: 0 0% 97%;
+    --foreground: 0 0% 6%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 8%;
+    --card-foreground: 0 0% 6%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 8%;
+    --popover-foreground: 0 0% 6%;
 
-    --primary: 180 100% 35%;
+    --primary: 168 100% 32%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 285 100% 45%;
+    --secondary: 12 85% 52%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 220 14% 93%;
     --muted-foreground: 220 9% 46%;
 
-    --accent: 285 100% 45%;
+    --accent: 240 8% 60%;
     --accent-foreground: 0 0% 100%;
 
     --success: 152 69% 35%;
     --success-foreground: 0 0% 100%;
     
-    --destructive: 0 72% 51%;
+    --destructive: 0 75% 50%;
     --destructive-foreground: 0 0% 100%;
 
     --profit: 152 69% 35%;
-    --loss: 0 72% 51%;
+    --loss: 0 75% 50%;
     --buy: 152 69% 35%;
-    --sell: 0 72% 51%;
+    --sell: 0 75% 50%;
     --warning: 38 92% 45%;
+
+    --coral: 12 85% 52%;
+    --neon: 168 100% 32%;
+    --silver: 240 8% 60%;
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 180 100% 35%;
+    --ring: 168 100% 32%;
 
     --gradient-profit: linear-gradient(135deg, hsl(152 69% 35%) 0%, hsl(152 69% 28%) 100%);
-    --gradient-loss: linear-gradient(135deg, hsl(0 72% 51%) 0%, hsl(0 72% 42%) 100%);
+    --gradient-loss: linear-gradient(135deg, hsl(0 75% 50%) 0%, hsl(0 75% 42%) 100%);
     --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
     --gradient-sidebar: linear-gradient(180deg, hsl(220 14% 98%) 0%, hsl(220 14% 96%) 100%);
-    --gradient-neon-cyan: linear-gradient(135deg, hsl(180 100% 35%) 0%, hsl(200 100% 30%) 100%);
-    --gradient-neon-purple: linear-gradient(135deg, hsl(285 100% 45%) 0%, hsl(270 100% 40%) 100%);
-    --gradient-cyber: linear-gradient(135deg, hsl(180 100% 35%) 0%, hsl(285 100% 45%) 100%);
+    --gradient-neon-cyan: linear-gradient(135deg, hsl(168 100% 32%) 0%, hsl(180 90% 28%) 100%);
+    --gradient-neon-purple: linear-gradient(135deg, hsl(12 85% 52%) 0%, hsl(350 80% 48%) 100%);
+    --gradient-cyber: linear-gradient(135deg, hsl(168 100% 32%) 0%, hsl(12 85% 52%) 100%);
+    --gradient-holographic: linear-gradient(135deg, hsl(240 8% 60% / 0.15) 0%, hsl(168 100% 32% / 0.1) 50%, hsl(12 85% 52% / 0.1) 100%);
     
     --shadow-card: 0 4px 20px -4px hsl(220 13% 70% / 0.3);
     --shadow-glow-profit: 0 0 20px hsl(152 69% 35% / 0.15);
-    --shadow-glow-loss: 0 0 20px hsl(0 72% 51% / 0.15);
-    --shadow-glow-cyan: 0 0 20px hsl(180 100% 35% / 0.2);
-    --shadow-glow-purple: 0 0 20px hsl(285 100% 45% / 0.2);
+    --shadow-glow-loss: 0 0 20px hsl(0 75% 50% / 0.15);
+    --shadow-glow-cyan: 0 0 20px hsl(168 100% 32% / 0.2);
+    --shadow-glow-purple: 0 0 20px hsl(12 85% 52% / 0.2);
+    --shadow-chrome: inset 0 1px 0 0 hsl(0 0% 100% / 0.6), 0 1px 3px hsl(0 0% 0% / 0.1);
   }
 }
 
@@ -459,6 +465,68 @@
   }
 }
 
+/* ========================================
+   TACTILE MAXIMALISM ANIMATIONS
+   ======================================== */
+
+/* Squeeze animation for buttons */
+@keyframes squeeze {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+.btn-squeeze:active {
+  animation: squeeze 0.25s ease-out;
+}
+
+/* Kinetic PnL — Radiance (profit glow) */
+@keyframes radiance {
+  0%, 100% { text-shadow: 0 0 8px hsl(152 72% 46% / 0.3); }
+  50% { text-shadow: 0 0 18px hsl(152 72% 46% / 0.6), 0 0 32px hsl(152 72% 46% / 0.2); }
+}
+
+.pnl-radiance {
+  animation: radiance 2s ease-in-out infinite;
+}
+
+/* Kinetic PnL — Bleed (loss diffused red shadow) */
+@keyframes bleed {
+  0%, 100% { text-shadow: 0 0 8px hsl(0 80% 55% / 0.3); }
+  50% { text-shadow: 0 0 18px hsl(0 80% 55% / 0.5), 0 0 32px hsl(0 80% 55% / 0.15); }
+}
+
+.pnl-bleed {
+  animation: bleed 2.5s ease-in-out infinite;
+}
+
+/* Chrome border — 1px holographic highlight */
+.border-chrome {
+  border: 1px solid hsl(0 0% 100% / 0.12);
+  box-shadow: var(--shadow-chrome);
+}
+
+/* Glassmorphism 2.0 — High-diffusion 30px+ */
+.glass-tactile {
+  @apply relative;
+  backdrop-filter: blur(36px) saturate(200%);
+  -webkit-backdrop-filter: blur(36px) saturate(200%);
+  background: linear-gradient(
+    135deg,
+    hsl(0 0% 100% / 0.06) 0%,
+    hsl(0 0% 100% / 0.02) 100%
+  );
+  border: 1px solid hsl(0 0% 100% / 0.12);
+  box-shadow: 
+    0 8px 40px -10px hsl(0 0% 0% / 0.5),
+    inset 0 1px 0 0 hsl(0 0% 100% / 0.1);
+}
+
+/* Holographic mesh background */
+.bg-holographic-mesh {
+  background-image: var(--gradient-holographic);
+}
+
 /* Custom animations */
 @keyframes pulse-slow {
   0%, 100% { opacity: 1; }
@@ -468,8 +536,6 @@
 .animate-pulse-slow {
   animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
-
-/* Removed aggressive neon pulse - keeping things professional */
 
 /* Trading terminal grid lines */
 .grid-lines {
@@ -481,6 +547,6 @@
 
 /* Hero gradient for cyber-dark theme */
 .bg-gradient-hero {
-  background: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(180 100% 50% / 0.15), transparent),
-              radial-gradient(ellipse 60% 40% at 80% 50%, hsl(285 100% 53% / 0.1), transparent);
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(168 100% 50% / 0.15), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 50%, hsl(12 90% 62% / 0.1), transparent);
 }
