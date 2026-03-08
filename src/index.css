@@ -2,81 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
-/* TradeHQ Professional Fintech Design System
-   Deep Charcoal base with Subtle Cyan & Purple accents - Calm & Professional */
+/* TradeHQ OBSIDIAN Terminal — Tactile Maximalism Design System
+   Deep-Space Charcoal base with Cyber accents: Sunset Coral, Electric Neon, Holographic Silver */
 
 @layer base {
   :root {
-    /* Deep Charcoal Professional Theme */
+    /* Deep-Space Charcoal base */
     --background: 0 0% 4%;
-    --foreground: 210 20% 92%;
+    --foreground: 220 15% 93%;
 
-    --card: 0 0% 7%;
-    --card-foreground: 210 20% 92%;
+    --card: 0 0% 6.5%;
+    --card-foreground: 220 15% 93%;
 
-    --popover: 0 0% 6%;
-    --popover-foreground: 210 20% 92%;
+    --popover: 0 0% 5.5%;
+    --popover-foreground: 220 15% 93%;
 
-    /* Subtle Cyan primary - professional, not neon */
-    --primary: 180 70% 50%;
+    /* Electric Neon primary */
+    --primary: 168 100% 50%;
     --primary-foreground: 0 0% 0%;
 
-    /* Muted Purple secondary */
-    --secondary: 280 60% 55%;
+    /* Sunset Coral secondary */
+    --secondary: 12 90% 62%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 10% 12%;
-    --muted-foreground: 210 15% 55%;
+    --muted: 220 8% 11%;
+    --muted-foreground: 220 12% 50%;
 
-    --accent: 280 60% 55%;
-    --accent-foreground: 0 0% 100%;
+    /* Holographic Silver accent */
+    --accent: 240 10% 72%;
+    --accent-foreground: 0 0% 0%;
 
-    /* Trading colors - professional greens and reds */
-    --success: 152 60% 42%;
+    /* Trading colors — vivid neon */
+    --success: 152 72% 46%;
     --success-foreground: 0 0% 0%;
     
-    --destructive: 0 65% 50%;
+    --destructive: 0 80% 55%;
     --destructive-foreground: 0 0% 100%;
 
     /* Trading-specific semantic colors */
-    --profit: 152 60% 42%;
-    --loss: 0 65% 50%;
-    --buy: 152 60% 42%;
-    --sell: 0 65% 50%;
-    --warning: 38 75% 50%;
+    --profit: 152 72% 46%;
+    --loss: 0 80% 55%;
+    --buy: 152 72% 46%;
+    --sell: 0 80% 55%;
+    --warning: 38 90% 55%;
 
-    --border: 220 10% 15%;
-    --input: 220 10% 10%;
-    --ring: 180 60% 45%;
+    /* Cyber accent tokens */
+    --coral: 12 90% 62%;
+    --neon: 168 100% 50%;
+    --silver: 240 10% 72%;
+
+    --border: 220 8% 14%;
+    --input: 220 8% 9%;
+    --ring: 168 100% 45%;
 
     --radius: 1rem;
 
-    /* Professional gradients */
-    --gradient-profit: linear-gradient(135deg, hsl(152 60% 42%) 0%, hsl(152 60% 35%) 100%);
-    --gradient-loss: linear-gradient(135deg, hsl(0 65% 50%) 0%, hsl(0 65% 42%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 5%) 100%);
-    --gradient-sidebar: linear-gradient(180deg, hsl(0 0% 5%) 0%, hsl(0 0% 3%) 100%);
-    --gradient-subtle-cyan: linear-gradient(135deg, hsl(180 70% 50%) 0%, hsl(195 65% 45%) 100%);
-    --gradient-subtle-purple: linear-gradient(135deg, hsl(280 60% 55%) 0%, hsl(265 55% 48%) 100%);
-    --gradient-cyber: linear-gradient(135deg, hsl(180 70% 50%) 0%, hsl(280 60% 55%) 100%);
+    /* Tactile gradients */
+    --gradient-profit: linear-gradient(135deg, hsl(152 72% 46%) 0%, hsl(152 72% 36%) 100%);
+    --gradient-loss: linear-gradient(135deg, hsl(0 80% 55%) 0%, hsl(0 80% 42%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 7.5%) 0%, hsl(0 0% 4.5%) 100%);
+    --gradient-sidebar: linear-gradient(180deg, hsl(0 0% 5%) 0%, hsl(0 0% 2.5%) 100%);
+    --gradient-subtle-cyan: linear-gradient(135deg, hsl(168 100% 50%) 0%, hsl(180 80% 42%) 100%);
+    --gradient-subtle-purple: linear-gradient(135deg, hsl(12 90% 62%) 0%, hsl(350 85% 55%) 100%);
+    --gradient-cyber: linear-gradient(135deg, hsl(168 100% 50%) 0%, hsl(12 90% 62%) 100%);
+    --gradient-holographic: linear-gradient(135deg, hsl(240 10% 72% / 0.2) 0%, hsl(168 100% 50% / 0.1) 50%, hsl(12 90% 62% / 0.15) 100%);
     
-    /* Subtle shadows - professional fintech aesthetic */
-    --shadow-card: 0 4px 24px -6px hsl(0 0% 0% / 0.6);
-    --shadow-glow-profit: 0 0 20px hsl(152 60% 42% / 0.12);
-    --shadow-glow-loss: 0 0 20px hsl(0 65% 50% / 0.12);
-    --shadow-glow-cyan: 0 0 20px hsl(180 70% 50% / 0.15);
-    --shadow-glow-purple: 0 0 20px hsl(280 60% 55% / 0.15);
+    /* Tactile shadows */
+    --shadow-card: 0 4px 24px -6px hsl(0 0% 0% / 0.7);
+    --shadow-glow-profit: 0 0 24px hsl(152 72% 46% / 0.18);
+    --shadow-glow-loss: 0 0 24px hsl(0 80% 55% / 0.18);
+    --shadow-glow-cyan: 0 0 24px hsl(168 100% 50% / 0.2);
+    --shadow-glow-purple: 0 0 24px hsl(12 90% 62% / 0.2);
+    --shadow-chrome: inset 0 1px 0 0 hsl(0 0% 100% / 0.1), 0 1px 3px hsl(0 0% 0% / 0.5);
     
     /* Transitions */
     --transition-fast: all 0.15s ease;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Chart colors - professional palette */
-    --chart-1: 180 70% 50%;
-    --chart-2: 280 60% 55%;
-    --chart-3: 152 60% 42%;
-    --chart-4: 38 75% 50%;
-    --chart-5: 0 65% 50%;
+    /* Chart colors */
+    --chart-1: 168 100% 50%;
+    --chart-2: 12 90% 62%;
+    --chart-3: 152 72% 46%;
+    --chart-4: 38 90% 55%;
+    --chart-5: 0 80% 55%;
   }
 
   .light {
