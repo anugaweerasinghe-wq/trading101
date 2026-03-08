@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message, portfolio, assets, selectedAsset } = await req.json();
+    const { message, portfolio, assets, selectedAsset, conversationHistory } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     
     if (!LOVABLE_API_KEY) {
@@ -33,58 +33,80 @@ serve(async (req) => {
     
     // Calculate win/loss stats
     const sellTrades = trades.filter((t: any) => t.type === 'sell');
-    const wins = sellTrades.filter((t: any, _i: number, arr: any[]) => {
+    const wins = sellTrades.filter((t: any) => {
       const buys = trades.filter((bt: any) => bt.assetId === t.assetId && bt.type === 'buy' && bt.timestamp < t.timestamp);
       if (buys.length === 0) return false;
       return t.price > buys[buys.length - 1].price;
     });
     const winRate = sellTrades.length > 0 ? ((wins.length / sellTrades.length) * 100).toFixed(1) : 'N/A';
     
-    // Recent trades summary (last 10)
-    const recentTrades = trades.slice(0, 10).map((t: any) => 
-      `${t.type.toUpperCase()} ${t.quantity?.toFixed(4) || '?'} ${t.assetId?.toUpperCase() || '?'} @ $${t.price?.toFixed(2) || '?'}`
-    ).join('; ');
+    // Detailed trades with entry/exit context
+    const recentTrades = trades.slice(0, 20).map((t: any) => {
+      const parts = [
+        `${t.type.toUpperCase()} ${t.quantity?.toFixed(4) || '?'} ${t.assetId?.toUpperCase() || '?'}`,
+        `@ $${t.price?.toFixed(2) || '?'}`,
+        t.timestamp ? `on ${new Date(t.timestamp).toLocaleDateString()}` : '',
+      ];
+      if (t.journal?.reasoning) parts.push(`(Rationale: "${t.journal.reasoning}")`);
+      return parts.filter(Boolean).join(' ');
+    }).join('\n');
 
-    // Positions summary
+    // Positions with ENTRY PRICE clearly labeled
     const positionsSummary = positions.map((p: any) => {
       const pnl = p.profitLoss ?? 0;
       const pnlPct = p.profitLossPercent ?? 0;
-      return `${p.asset?.symbol || '?'}: ${p.quantity?.toFixed(4) || '?'} units, avg $${p.averagePrice?.toFixed(2) || '?'}, P&L ${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)} (${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%)`;
-    }).join('; ');
+      const currentPrice = p.asset?.price?.toFixed(2) || '?';
+      const entryPrice = p.averagePrice?.toFixed(2) || '?';
+      return `${p.asset?.symbol || '?'}: ${p.quantity?.toFixed(4) || '?'} units | ENTRY PRICE: $${entryPrice} | CURRENT PRICE: $${currentPrice} | P&L: ${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)} (${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(1)}%)`;
+    }).join('\n');
 
     // Currently viewing asset
     const viewingAsset = selectedAsset 
-      ? `Currently viewing: ${selectedAsset.symbol} at $${selectedAsset.price?.toFixed(2)}, 24h change: ${selectedAsset.changePercent?.toFixed(2)}%`
+      ? `Currently viewing: ${selectedAsset.symbol} (${selectedAsset.name}) at $${selectedAsset.price?.toFixed(2)}, 24h change: ${selectedAsset.changePercent?.toFixed(2)}%`
       : '';
 
-    const systemPrompt = `You are TradeHQ's Neural AI Trading Mentor with FULL access to the user's portfolio data. You can answer any question about their portfolio, positions, trades, and performance.
+    const systemPrompt = `You are TradeHQ's Neural AI Trading Mentor with FULL, LIVE access to the user's personal portfolio data below. You MUST reference this real data when answering portfolio questions. Never say you don't have access to their data.
 
-USER PORTFOLIO SNAPSHOT:
-- Total Value: $${totalValue.toFixed(2)}
-- Available Cash: $${cash.toFixed(2)}
-- Open Positions: ${positions.length}
-- Total Trades: ${trades.length}
-- Win Rate: ${winRate}${winRate !== 'N/A' ? '%' : ''} (${wins.length} wins / ${sellTrades.length} sells)
-${positionsSummary ? `\nPOSITIONS:\n${positionsSummary}` : '\nNo open positions.'}
-${recentTrades ? `\nRECENT TRADES:\n${recentTrades}` : '\nNo trade history.'}
-${viewingAsset ? `\n${viewingAsset}` : ''}
+═══ USER'S LIVE PORTFOLIO ═══
+Total Portfolio Value: $${totalValue.toFixed(2)}
+Available Cash: $${cash.toFixed(2)}
+Invested Amount: $${(totalValue - cash).toFixed(2)}
+Open Positions: ${positions.length}
+Total Trades Executed: ${trades.length}
+Win Rate: ${winRate}${winRate !== 'N/A' ? '%' : ''} (${wins.length} wins / ${sellTrades.length} closed trades)
 
-RESPONSE RULES:
-1. Keep answers SHORT: 2-4 sentences max for simple questions, up to 6 for complex portfolio analysis
-2. Never use markdown formatting (no bold, italics, bullets, headers)
-3. Sound like a knowledgeable trading coach, not a textbook
-4. When asked about their portfolio, reference REAL data from above
-5. Provide actionable insights based on their actual positions and performance
-6. If win rate is low, gently suggest risk management improvements
-7. If portfolio is concentrated, suggest diversification
+${positions.length > 0 ? `═══ OPEN POSITIONS (with Entry Prices) ═══\n${positionsSummary}` : '═══ NO OPEN POSITIONS ═══\nThe user has not bought any assets yet.'}
+
+${trades.length > 0 ? `═══ TRADE HISTORY (most recent first) ═══\n${recentTrades}` : '═══ NO TRADE HISTORY ═══\nThe user has not made any trades yet.'}
+
+${viewingAsset ? `═══ CURRENTLY VIEWING ═══\n${viewingAsset}` : ''}
+
+═══ RESPONSE RULES ═══
+1. When asked about portfolio, positions, entry price, P&L, trades — ALWAYS quote the EXACT numbers from above
+2. If asked "what's my entry price for X?" — look up the ENTRY PRICE field for that asset above
+3. Keep answers 2-6 sentences. Be concise and actionable.
+4. No markdown formatting (no bold, italics, bullets, headers)
+5. Sound like a knowledgeable trading coach, not a textbook
+6. If portfolio is empty, encourage the user to make their first trade
+7. Provide risk management insights based on actual position sizes
 8. Always remind this is a simulator for educational purposes
-9. ONLY discuss trading/investing topics. Redirect off-topic questions politely.
+9. ONLY discuss trading/investing topics. Redirect off-topic questions politely.`;
 
-PORTFOLIO ANALYSIS CAPABILITIES:
-- You can calculate and discuss their best/worst performing positions
-- You can analyze their trading patterns and suggest improvements
-- You can assess portfolio diversification and risk exposure
-- You can review their trade history and identify behavioral patterns`;
+    // Build message array with conversation history for context
+    const aiMessages: { role: string; content: string }[] = [
+      { role: 'system', content: systemPrompt },
+    ];
+
+    // Add conversation history if provided (last 10 messages for context)
+    if (conversationHistory && Array.isArray(conversationHistory)) {
+      const recent = conversationHistory.slice(-10);
+      for (const msg of recent) {
+        aiMessages.push({ role: msg.role, content: msg.content });
+      }
+    }
+
+    // Add current message
+    aiMessages.push({ role: 'user', content: message });
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -94,12 +116,9 @@ PORTFOLIO ANALYSIS CAPABILITIES:
       },
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: message }
-        ],
+        messages: aiMessages,
         stream: true,
-        max_tokens: 300,
+        max_tokens: 500,
       }),
     });
 

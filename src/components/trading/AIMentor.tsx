@@ -86,7 +86,7 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
           },
-          body: JSON.stringify({
+      body: JSON.stringify({
             message: messageText,
             portfolio: {
               cash: portfolio.cash,
@@ -101,14 +101,17 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
               trades: portfolio.trades.slice(0, 20).map(t => ({
                 type: t.type,
                 assetId: t.assetId,
+                symbol: t.symbol,
                 quantity: t.quantity,
                 price: t.price,
+                total: t.total,
                 timestamp: t.timestamp,
                 journal: t.journal,
               })),
             },
             assets: assets.slice(0, 10).map(a => ({ id: a.id, symbol: a.symbol, price: a.price, changePercent: a.changePercent })),
             selectedAsset: selectedAsset ? { id: selectedAsset.id, symbol: selectedAsset.symbol, name: selectedAsset.name, price: selectedAsset.price, changePercent: selectedAsset.changePercent } : null,
+            conversationHistory: messages.filter(m => m.id !== '1').map(m => ({ role: m.role, content: m.content })),
           }),
         }
       );
