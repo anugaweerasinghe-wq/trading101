@@ -6,6 +6,7 @@ import { Navigation } from "@/components/Navigation";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
 import { MinimalistOrderPanel } from "@/components/trading/MinimalistOrderPanel";
+import { NeuralPulseChart } from "@/components/trading/NeuralPulseChart";
 import { MinimalistPortfolioBar } from "@/components/trading/MinimalistPortfolioBar";
 import { AIMentor } from "@/components/trading/AIMentor";
 import { ChartSkeleton } from "@/components/trading/ChartSkeleton";
@@ -176,10 +177,14 @@ export default function Trade() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <div className="glass-panel border border-white/10 rounded-2xl h-[500px] overflow-hidden">
+            <div className="lg:col-span-2 space-y-4">
+              <div className="glass-tactile border-chrome rounded-2xl h-[500px] overflow-hidden">
                 {isLoading ? <ChartSkeleton /> : selectedAsset && <MinimalistAreaChart asset={selectedAsset} />}
               </div>
+              {/* Neural Pulse Chart — TradingView Lightweight Charts */}
+              {selectedAsset && !isLoading && (
+                <NeuralPulseChart asset={selectedAsset} height={360} />
+              )}
             </div>
             <div className="hidden lg:block">
               <MinimalistOrderPanel asset={selectedAsset} availableCash={portfolio.cash} onTrade={handleTrade} />
@@ -206,11 +211,11 @@ export default function Trade() {
                     <Link
                       key={asset.id}
                       to={`/trade/${asset.symbol}`}
-                      className="group relative glass-panel rounded-xl p-4 border border-white/5 hover:border-primary/30 transition-all duration-200 hover:scale-[1.03]"
+                      className="group relative glass-tactile rounded-xl p-4 border-chrome hover:border-primary/30 transition-all duration-200 hover:scale-[1.03]"
                     >
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">{asset.symbol}</span>
-                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${isUp ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
+                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${isUp ? 'bg-profit/10 text-profit' : 'bg-loss/10 text-loss'}`}>
                           {isUp ? '+' : ''}{asset.changePercent.toFixed(1)}%
                         </span>
                       </div>
