@@ -87,8 +87,8 @@ Users may not copy, modify, distribute, or create derivative works without expli
   return (
     <>
       <Helmet>
-        <title>Terms of Service | TradeHQ — Trading Simulator</title>
-        <meta name="description" content="TradeHQ Terms of Service. Understand the rules and disclaimers for using our free trading simulation platform." />
+        <title>Privacy Policy & Terms of Service | TradingHQ Transparency</title>
+        <meta name="description" content="Read the official terms and privacy guidelines for TradingHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice." />
         <link rel="canonical" href="https://tradinghq.vercel.app/terms" />
         <meta name="robots" content="index, follow" />
       </Helmet>

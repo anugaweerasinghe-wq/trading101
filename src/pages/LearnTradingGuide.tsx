@@ -91,8 +91,8 @@ const LearnTradingGuide = () => {
   return (
     <>
       <Helmet>
-        <title>Learn AI Trading 2026 | Free $10K Risk-Free Simulator Guide</title>
-        <meta name="description" content="Master AI-assisted trading in 2026. Learn Bitcoin Layer 2, tokenized securities & trading psychology. Practice with our free $10K crypto simulator." />
+        <title>Learn Trading Strategy | Free Educational Guide for Beginners</title>
+        <meta name="description" content="From Pips to Portfolio management, master the art of trading. Our structured guides cover technical analysis, success psychology, and market mechanics for future-proof traders." />
         <link rel="canonical" href={`${DOMAIN}/learn-trading-guide`} />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
@@ -217,8 +217,8 @@ const LearnTradingGuide = () => {
                 <h3 className="text-xl font-bold text-white tracking-tight">Compound Growth Simulator</h3>
               </div>
               
-              <div className="p-1 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent border border-white/5 shadow-2xl">
-                <div className="bg-[#010203] rounded-xl overflow-hidden p-2 md:p-5">
+              <div className="p-1 rounded-2xl bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent border border-white/5 shadow-2xl h-full">
+                <div className="bg-[#010203] rounded-xl overflow-hidden p-2 md:p-5 h-full">
                   <CompoundCalculator />
                 </div>
               </div>

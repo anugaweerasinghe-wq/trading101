@@ -56,8 +56,8 @@ For users in the European Economic Area (EEA), we comply with GDPR requirements.
   return (
     <>
       <Helmet>
-        <title>Privacy Policy | TradeHQ — Trading Simulator</title>
-        <meta name="description" content="TradeHQ Privacy Policy. Learn how we protect your data and privacy while using our free trading simulator." />
+        <title>Privacy Policy & Terms of Service | TradingHQ Transparency</title>
+        <meta name="description" content="Read the official terms and privacy guidelines for TradingHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice." />
         <link rel="canonical" href="https://tradinghq.vercel.app/privacy" />
         <meta name="robots" content="index, follow" />
       </Helmet>

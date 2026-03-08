@@ -137,8 +137,8 @@ export default function AIMentor() {
   return (
     <>
       <Helmet>
-        <title>AI Trading Mentor — Learn Trading with AI | TradeHQ</title>
-        <meta name="description" content="Chat with our AI trading mentor to learn stocks, crypto, and trading strategies. Get instant answers to your trading questions. Free, no signup required." />
+        <title>Neural AI Trading Mentor | Personalized Behavioral Analyst</title>
+        <meta name="description" content="Meet your personal trading coach. Our AI analyzes your portfolio to provide trend predictions, risk management warnings, and psychological support to improve your win rate." />
         <link rel="canonical" href="https://tradinghq.vercel.app/ai-mentor" />
       </Helmet>
 

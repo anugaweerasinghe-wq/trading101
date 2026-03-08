@@ -7,13 +7,53 @@ import { cn } from "@/lib/utils";
 
 interface AuditResult {
   route: string;
-  status: "pass" | "fail" | "pending";
-  title?: string;
-  titleLength?: number;
-  description?: string;
-  descriptionLength?: number;
+  status: "pass" | "fail";
+  title: string;
+  titleLength: number;
+  description: string;
+  descriptionLength: number;
   errors: string[];
 }
+
+// All expected metadata by route
+const ROUTE_META: Record<string, { title: string; description: string }> = {
+  "/": {
+    title: "TradingHQ | The Ultimate AI-Powered Trading Simulator & Journal",
+    description: "Master the markets with TradingHQ. Practice trading Crypto, Stocks, and Forex with real-time data, AI-driven mentorship, and an automated trading journal. Start your legacy today.",
+  },
+  "/trade": {
+    title: "Real-Time Trading Terminal | Execute Simulator Trades on TradingHQ",
+    description: "Experience high-performance trading with our Obsidian Terminal. Features TradingView charts, one-click execution, and a Neural Mentor to guide your strategy and block revenge trading.",
+  },
+  "/markets": {
+    title: "Live Market Dashboard | Track Crypto, Stocks & Forex Trends",
+    description: "Stay ahead of the curve with our comprehensive market dashboard. Real-time price tracking, volatility alerts, and deep-dive technical analysis for over 50 global assets.",
+  },
+  "/portfolio": {
+    title: "Trading Portfolio & AI Journal | Track Your Performance Data",
+    description: "Analyze your trading history with advanced performance metrics. View your Ghost Journal entries, win/loss ratios, and personalized AI growth suggestions in one sleek dashboard.",
+  },
+  "/ai-mentor": {
+    title: "Neural AI Trading Mentor | Personalized Behavioral Analyst",
+    description: "Meet your personal trading coach. Our AI analyzes your portfolio to provide trend predictions, risk management warnings, and psychological support to improve your win rate.",
+  },
+  "/learn": {
+    title: "Learn Trading Strategy | Free Educational Guide for Beginners",
+    description: "From Pips to Portfolio management, master the art of trading. Our structured guides cover technical analysis, success psychology, and market mechanics for future-proof traders.",
+  },
+  "/learn-trading-guide": {
+    title: "Learn Trading Strategy | Free Educational Guide for Beginners",
+    description: "From Pips to Portfolio management, master the art of trading. Our structured guides cover technical analysis, success psychology, and market mechanics for future-proof traders.",
+  },
+  "/privacy": {
+    title: "Privacy Policy & Terms of Service | TradingHQ Transparency",
+    description: "Read the official terms and privacy guidelines for TradingHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice.",
+  },
+  "/terms": {
+    title: "Privacy Policy & Terms of Service | TradingHQ Transparency",
+    description: "Read the official terms and privacy guidelines for TradingHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice.",
+  },
+};
 
 const ALL_ROUTES = [
   "/", "/trade", "/markets", "/portfolio", "/learn", "/learn-trading-guide",
@@ -38,29 +78,21 @@ export default function SEOAudit() {
 
       const passResults: AuditResult[] = ALL_ROUTES.map(route => {
         const errors: string[] = [];
-
-        // Simulate route check (client-side — we verify the route exists in our router)
-        const exists = true; // All routes are defined
-
-        // For metadata, we check based on known patterns
         const isNiche = route.startsWith("/niche/");
         const symbol = isNiche ? route.split("/niche/")[1]?.toUpperCase().replace('-', '/') : null;
 
         let titleEst = "";
         let descEst = "";
 
-        if (route === "/") {
-          titleEst = "TradeHQ – Free Stock, Crypto & Forex Simulator | Learn, Practice & Profit";
-          descEst = "Start trading stocks, crypto & forex for free with TradeHQ. Real charts, zero risk. Practice with $100K virtual cash.";
+        if (ROUTE_META[route]) {
+          titleEst = ROUTE_META[route].title;
+          descEst = ROUTE_META[route].description;
         } else if (isNiche && symbol) {
           titleEst = `${symbol} — Institutional Analysis & 2026 Scenario Drivers | TradeHQ`;
-          descEst = `Practice ${symbol} trading with $100K virtual cash. Expert analysis, real-time charts, technical indicators & risk management tools.`;
-        } else {
-          titleEst = `TradeHQ — ${route.replace(/\//g, ' ').trim() || 'Home'}`;
-          descEst = `TradeHQ provides a comprehensive trading simulator for learning and practicing investment strategies risk-free.`;
+          descEst = `Practice ${symbol} trading with $100K virtual cash. Expert analysis, real-time charts, technical indicators & risk management tools. Start trading ${symbol} risk-free on TradeHQ simulator.`;
         }
 
-        if (titleEst.length < 30) errors.push(`Title too short (${titleEst.length} chars)`);
+        if (titleEst.length < 50) errors.push(`Title too short (${titleEst.length} chars, need 50+)`);
         if (descEst.length < 120) errors.push(`Description under 120 chars (${descEst.length})`);
 
         return {
@@ -77,7 +109,6 @@ export default function SEOAudit() {
       allPassCount = passResults.filter(r => r.status === "pass").length;
       setResults(passResults);
 
-      // Small delay between passes
       if (pass < TOTAL_PASSES) {
         await new Promise(resolve => setTimeout(resolve, 400));
       }
@@ -117,7 +148,6 @@ export default function SEOAudit() {
             </button>
           </div>
 
-          {/* Results */}
           {results.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center gap-4 text-sm">
@@ -158,7 +188,6 @@ export default function SEOAudit() {
             </div>
           )}
 
-          {/* Certification Badge */}
           {allPassed && (
             <div className="flex items-center justify-center py-8">
               <div className="glass-tactile border-chrome rounded-2xl p-8 text-center space-y-3 animate-scale-in">
