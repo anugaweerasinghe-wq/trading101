@@ -19,6 +19,8 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import SectorPillar from "./pages/SectorPillar";
 import WikiTerm from "./pages/WikiTerm";
+import NicheAsset from "./pages/NicheAsset";
+import SEOAudit from "./pages/SEOAudit";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +44,8 @@ function AnimatedRoutes() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/sectors/:sectorId" element={<SectorPillar />} />
         <Route path="/wiki/:slug" element={<WikiTerm />} />
+        <Route path="/niche/:symbol" element={<NicheAsset />} />
+        <Route path="/admin/seo-audit" element={<SEOAudit />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
