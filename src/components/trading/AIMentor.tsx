@@ -94,7 +94,7 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
               positions: portfolio.positions.map(p => ({
                 asset: { id: p.asset.id, symbol: p.asset.symbol, name: p.asset.name, price: p.asset.price },
                 quantity: p.quantity,
-                averagePrice: p.averagePrice,
+                averagePrice: p.avgPrice,
                 profitLoss: p.profitLoss,
                 profitLossPercent: p.profitLossPercent,
               })),
