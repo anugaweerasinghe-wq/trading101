@@ -73,12 +73,12 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
     });
 
     const series = chart.addCandlestickSeries({
-      upColor: 'hsl(152, 72%, 46%)',
-      downColor: 'hsl(0, 80%, 55%)',
-      borderUpColor: 'hsl(152, 72%, 46%)',
-      borderDownColor: 'hsl(0, 80%, 55%)',
-      wickUpColor: 'hsl(152, 72%, 50%)',
-      wickDownColor: 'hsl(0, 80%, 60%)',
+      upColor: '#22C55E',
+      downColor: '#EF4444',
+      borderUpColor: '#22C55E',
+      borderDownColor: '#EF4444',
+      wickUpColor: '#2DD46B',
+      wickDownColor: '#F06060',
     });
 
     series.setData(data as any);
