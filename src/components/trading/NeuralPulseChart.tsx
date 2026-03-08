@@ -99,7 +99,7 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
 
     series.createPriceLine({
       price: resistanceZone,
-      color: 'hsl(12, 90%, 62%)',
+      color: '#FF6B4A',
       lineWidth: 2,
       lineStyle: LineStyle.Dashed,
       axisLabelVisible: true,
