@@ -106,7 +106,6 @@ export default {
       },
       letterSpacing: {
         "tight-cyber": "-0.02em",
-        "88": "22rem",
       },
       keyframes: {
         "accordion-down": {
@@ -157,6 +156,11 @@ export default {
           from: { backgroundPosition: "200% 0" },
           to: { backgroundPosition: "-200% 0" },
         },
+        "squeeze": {
+          "0%": { transform: "scale(1)" },
+          "40%": { transform: "scale(0.97)" },
+          "100%": { transform: "scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -171,6 +175,7 @@ export default {
         "float": "float 3s ease-in-out infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
         "shimmer": "shimmer 3s linear infinite",
+        "squeeze": "squeeze 0.25s ease-out",
       },
     },
   },

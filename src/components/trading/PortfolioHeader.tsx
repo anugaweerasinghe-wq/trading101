@@ -45,6 +45,7 @@ export function PortfolioHeader({ portfolio }: PortfolioHeaderProps) {
       icon: isProfit ? TrendingUp : TrendingDown,
       change: `${isProfit ? '+' : ''}${pnlPercent.toFixed(2)}%`,
       isProfit,
+      isPnL: true,
     },
     {
       label: "Open Positions",
@@ -55,7 +56,7 @@ export function PortfolioHeader({ portfolio }: PortfolioHeaderProps) {
   ];
 
   return (
-    <div className="flex items-center gap-1 bento-card p-1">
+    <div className="flex items-center gap-1 glass-tactile rounded-2xl p-1">
       {stats.map((stat, index) => (
         <div 
           key={stat.label}
@@ -72,12 +73,13 @@ export function PortfolioHeader({ portfolio }: PortfolioHeaderProps) {
               : "text-muted-foreground"
           )} />
           <div>
-            <p className="text-xs text-muted-foreground">{stat.label}</p>
+            <p className="text-xs text-muted-foreground tracking-tight-cyber">{stat.label}</p>
             <div className="flex items-center gap-2">
               <p className={cn(
-                "text-sm font-semibold tabular-nums",
+                "text-sm font-semibold tabular-nums tracking-tight-cyber",
                 stat.highlight && "text-glow-cyan text-primary",
-                stat.isProfit !== undefined && (stat.isProfit ? "text-profit" : "text-loss")
+                stat.isPnL && (stat.isProfit ? "pnl-radiance text-profit" : "pnl-bleed text-loss"),
+                stat.isProfit !== undefined && !stat.isPnL && (stat.isProfit ? "text-profit" : "text-loss")
               )}>
                 {stat.value}
               </p>
