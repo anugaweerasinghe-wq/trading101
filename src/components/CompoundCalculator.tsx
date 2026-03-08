@@ -76,9 +76,9 @@ export function CompoundCalculator() {
         <h3 className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Live Projection</h3>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
-        {/* Inputs */}
-        <div className="space-y-4">
+      <div className="flex flex-col gap-5 flex-1">
+        {/* Inputs - stacked vertically */}
+        <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
             <Label className="text-[9px] uppercase font-bold text-slate-500">Initial Capital</Label>
             <Input
@@ -88,7 +88,6 @@ export function CompoundCalculator() {
               className="h-8 bg-white/5 border-white/10 text-[11px] font-bold text-white"
             />
           </div>
-
           <div className="space-y-1">
             <Label className="text-[9px] uppercase font-bold text-slate-500">Monthly Add</Label>
             <Input
@@ -98,62 +97,56 @@ export function CompoundCalculator() {
               className="h-8 bg-white/5 border-white/10 text-[11px] font-bold text-white"
             />
           </div>
+        </div>
 
-          <div className="space-y-4 pt-2">
-            <div className="flex justify-between text-[9px] font-black text-emerald-500/80 uppercase">
-              <span>Return: {annualReturn}%</span>
-              <span>Fees: {tradingFeePct}%</span>
-            </div>
-            <Slider value={[annualReturn]} onValueChange={([v]) => setAnnualReturn(v)} max={30} step={0.5} className="py-1" />
-            <Slider value={[tradingFeePct]} onValueChange={([v]) => setTradingFeePct(v)} max={1} step={0.01} className="py-1" />
+        <div className="space-y-3">
+          <div className="flex justify-between text-[9px] font-black text-emerald-500/80 uppercase">
+            <span>Return: {annualReturn}%</span>
+            <span>Fees: {tradingFeePct}%</span>
+          </div>
+          <Slider value={[annualReturn]} onValueChange={([v]) => setAnnualReturn(v)} max={30} step={0.5} className="py-1" />
+          <Slider value={[tradingFeePct]} onValueChange={([v]) => setTradingFeePct(v)} max={1} step={0.01} className="py-1" />
+        </div>
+
+        {/* Results */}
+        <div className="grid grid-cols-2 gap-2">
+          <div className="p-2.5 bg-emerald-500/5 border border-emerald-500/20 rounded-lg">
+            <p className="text-[8px] uppercase font-bold text-slate-500 mb-1">Final Value</p>
+            <p className="text-[13px] font-black text-emerald-400 tabular-nums tracking-tighter truncate">
+              {formatCurrency(result.finalValue)}
+            </p>
+          </div>
+          <div className="p-2.5 bg-emerald-500/5 border border-emerald-500/20 rounded-lg">
+            <p className="text-[8px] uppercase font-bold text-slate-500 mb-1">Total Profit</p>
+            <p className="text-[13px] font-black text-emerald-500 tabular-nums tracking-tighter truncate">
+              +{formatCurrency(result.netProfit)}
+            </p>
           </div>
         </div>
 
-        {/* Results - THE FIX IS HERE */}
-        <div className="flex flex-col gap-2">
-          <div className="grid grid-cols-2 gap-2">
-            {/* Box 1: Value */}
-            <div className="p-2.5 bg-emerald-500/5 border border-emerald-500/20 rounded-lg">
-              <p className="text-[8px] uppercase font-bold text-slate-500 mb-1">Final Value</p>
-              {/* Force small font and tabular spacing */}
-              <p className="text-[13px] font-black text-emerald-400 tabular-nums tracking-tighter truncate">
-                {formatCurrency(result.finalValue)}
-              </p>
-            </div>
-
-            {/* Box 2: Profit */}
-            <div className="p-2.5 bg-emerald-500/5 border border-emerald-500/20 rounded-lg">
-              <p className="text-[8px] uppercase font-bold text-slate-500 mb-1">Total Profit</p>
-              <p className="text-[13px] font-black text-emerald-500 tabular-nums tracking-tighter truncate">
-                +{formatCurrency(result.netProfit)}
-              </p>
-            </div>
-          </div>
-
-          {/* Broker Fees */}
-          <div className="px-2.5 py-1.5 bg-red-500/5 border border-red-500/10 rounded-lg flex justify-between items-center">
-            <span className="text-[8px] uppercase font-bold text-slate-500">Broker Fees:</span>
-            <span className="text-[10px] font-black text-red-400">-{formatCurrency(result.totalFees)}</span>
-          </div>
-
-          {/* Mini Chart */}
-          <div className="h-14 flex items-end gap-[1px] mt-2 px-1">
-            {result.yearlyBreakdown.map((data, i) => (
-              <div
-                key={i}
-                className="flex-1 bg-emerald-500/20 rounded-t-[1px]"
-                style={{ height: `${(data.value / result.finalValue) * 100}%` }}
-              />
-            ))}
-          </div>
-
-          <Button 
-            className="w-full h-8 mt-1 bg-emerald-500 hover:bg-emerald-400 text-black text-[9px] font-black uppercase tracking-[0.15em]" 
-            asChild
-          >
-            <a href="/trade">START SIMULATOR</a>
-          </Button>
+        {/* Broker Fees */}
+        <div className="px-2.5 py-1.5 bg-red-500/5 border border-red-500/10 rounded-lg flex justify-between items-center">
+          <span className="text-[8px] uppercase font-bold text-slate-500">Broker Fees:</span>
+          <span className="text-[10px] font-black text-red-400">-{formatCurrency(result.totalFees)}</span>
         </div>
+
+        {/* Growth Chart - expands to fill remaining space */}
+        <div className="flex-1 min-h-[80px] flex items-end gap-[1px] px-1">
+          {result.yearlyBreakdown.map((data, i) => (
+            <div
+              key={i}
+              className="flex-1 bg-emerald-500/20 rounded-t-[1px]"
+              style={{ height: `${(data.value / result.finalValue) * 100}%` }}
+            />
+          ))}
+        </div>
+
+        <Button 
+          className="w-full h-8 bg-emerald-500 hover:bg-emerald-400 text-black text-[9px] font-black uppercase tracking-[0.15em]" 
+          asChild
+        >
+          <a href="/trade">START SIMULATOR</a>
+        </Button>
       </div>
     </Card>
   );
