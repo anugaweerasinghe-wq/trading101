@@ -215,7 +215,7 @@ export default function Trade() {
                     >
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">{asset.symbol}</span>
-                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${isUp ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
+                        <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${isUp ? 'bg-profit/10 text-profit' : 'bg-loss/10 text-loss'}`}>
                           {isUp ? '+' : ''}{asset.changePercent.toFixed(1)}%
                         </span>
                       </div>
