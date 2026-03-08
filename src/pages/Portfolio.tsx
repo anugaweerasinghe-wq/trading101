@@ -134,8 +134,8 @@ export default function Portfolio() {
   return (
     <>
       <Helmet>
-        <title>Portfolio Dashboard | TradeHQ: Track Your Virtual Investments</title>
-        <meta name="description" content="Track your virtual portfolio performance, analyze P&L, manage risk and review your trade history with TradeHQ's comprehensive dashboard." />
+        <title>Trading Portfolio & AI Journal | Track Your Performance Data</title>
+        <meta name="description" content="Analyze your trading history with advanced performance metrics. View your Ghost Journal entries, win/loss ratios, and personalized AI growth suggestions in one sleek dashboard." />
         <link rel="canonical" href="https://tradinghq.vercel.app/portfolio" />
       </Helmet>
       <div className="min-h-screen bg-background">

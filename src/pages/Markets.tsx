@@ -87,8 +87,8 @@ export default function Markets() {
   return (
     <>
       <Helmet>
-        <title>2026 Market Strategy Guide | Stocks, Crypto, ETFs & Forex | TradeHQ</title>
-        <meta name="description" content="📈 2026 trading strategy for 150+ assets! AI Revolution stocks, Digital Gold crypto, Blue Chip giants. Practice professional positioning risk-free →" />
+        <title>Live Market Dashboard | Track Crypto, Stocks & Forex Trends</title>
+        <meta name="description" content="Stay ahead of the curve with our comprehensive market dashboard. Real-time price tracking, volatility alerts, and deep-dive technical analysis for over 50 global assets." />
         <link rel="canonical" href="https://tradinghq.vercel.app/markets" />
       </Helmet>
       <div className="min-h-screen bg-background flex">
