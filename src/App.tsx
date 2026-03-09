@@ -21,6 +21,7 @@ import SectorPillar from "./pages/SectorPillar";
 import WikiTerm from "./pages/WikiTerm";
 import NicheAsset from "./pages/NicheAsset";
 import SEOAudit from "./pages/SEOAudit";
+import AdminValidator from "./pages/AdminValidator";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
