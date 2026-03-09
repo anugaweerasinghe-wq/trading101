@@ -460,7 +460,7 @@ export default function TradeAsset() {
             </section>
           )}
 
-          {selectedAsset && <RelatMarkssets currentAsset={selectedAsset} />}
+          {selectedAsset && <RelatedMarkets currentAsset={selectedAsset} />}
 
           {/* Disclaimer */}
           <div className="mt-8 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04]">
