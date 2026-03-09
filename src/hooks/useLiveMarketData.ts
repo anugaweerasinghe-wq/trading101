@@ -27,15 +27,36 @@ interface UseLiveMarketDataOptions {
   enabled?: boolean;
 }
 
-// Cache for market data to prevent excessive API calls
-const marketDataCache = new Map<string, { data: LiveMarketData; timestamp: number }>();
-const CACHE_TTL = 15000; // 15 seconds cache
+// Cache for market data with localStorage persistence
+const CACHE_TTL = 120000; // 120 seconds (CoinGecko-friendly interval)
+const LS_CACHE_KEY = 'tradehq_market_cache';
+
+function getLocalStorageCache(): Map<string, { data: LiveMarketData; timestamp: number }> {
+  try {
+    const stored = localStorage.getItem(LS_CACHE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return new Map(Object.entries(parsed));
+    }
+  } catch { /* ignore */ }
+  return new Map();
+}
+
+function setLocalStorageCache(cache: Map<string, { data: LiveMarketData; timestamp: number }>) {
+  try {
+    const obj: Record<string, any> = {};
+    cache.forEach((v, k) => { obj[k] = v; });
+    localStorage.setItem(LS_CACHE_KEY, JSON.stringify(obj));
+  } catch { /* ignore */ }
+}
+
+const marketDataCache = getLocalStorageCache();
 
 export function useLiveMarketData(
   asset: Asset | null,
   options: UseLiveMarketDataOptions = {}
 ) {
-  const { refreshInterval = 30000, enabled = true } = options;
+  const { refreshInterval = 120000, enabled = true } = options; // 120s default (CoinGecko-friendly)
   
   const [liveData, setLiveData] = useState<LiveMarketData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -102,8 +123,9 @@ export function useLiveMarketData(
           setLiveData(marketData);
           setLastFetch(new Date());
           
-          // Update cache
+          // Update cache (memory + localStorage)
           marketDataCache.set(cacheKey, { data: marketData, timestamp: Date.now() });
+          setLocalStorageCache(marketDataCache);
         }
       }
     } catch (err) {

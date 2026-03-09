@@ -3,7 +3,7 @@ import { useParams, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Breadcrumb } from "@/components/Breadcrumb";
-import { RelatedAssets } from "@/components/RelatedAssets";
+import { RelatedMarkets } from "@/components/RelatedMarkets";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
 import { AssetIntelligence } from "@/components/AssetIntelligence";
 import { AIReadySummary } from "@/components/AIReadySummary";
@@ -178,27 +178,51 @@ export default function TradeAsset() {
     ]
   } : null;
 
-  // FinancialProduct schema for asset pages (no AggregateRating without real reviews)
-  const financialProductSchema = selectedAsset ? {
-    "@context": "https://schema.org",
-    "@type": "FinancialProduct",
-    "name": `${selectedAsset.name} Trading Simulator`,
-    "description": assetContent?.whatIs || metaDescription || `${selectedAsset.name} trading simulator`,
-    "url": canonicalUrl,
-    "category": assetContent?.category || selectedAsset.type,
-    "provider": {
-      "@type": "Organization",
-      "name": "TradeHQ",
-      "url": "https://tradinghq.vercel.app/",
-      "logo": "https://tradinghq.vercel.app/og-image.png"
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock"
-    }
-  } : null;
+  // Schema varies by asset type: Crypto=FinancialProduct, Stocks/ETFs=SoftwareApplication(Simulation)
+  const assetSchema = selectedAsset ? (
+    selectedAsset.type === 'crypto' || selectedAsset.type === 'commodity' || selectedAsset.type === 'forex'
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FinancialProduct",
+          "name": `${selectedAsset.name} Trading Simulator`,
+          "description": assetContent?.whatIs || metaDescription || `${selectedAsset.name} trading simulator`,
+          "url": canonicalUrl,
+          "category": selectedAsset.type === 'crypto' ? 'Cryptocurrency' : selectedAsset.type === 'commodity' ? 'Commodity' : 'Currency',
+          "provider": {
+            "@type": "Organization",
+            "name": "TradeHQ",
+            "url": "https://tradinghq.vercel.app/",
+            "logo": "https://tradinghq.vercel.app/og-image.png"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": `${selectedAsset.name} Trading Simulator`,
+          "description": assetContent?.whatIs || metaDescription || `Practice ${selectedAsset.name} trading with simulated data`,
+          "url": canonicalUrl,
+          "applicationCategory": "FinanceApplication",
+          "applicationSubCategory": "Trading Simulator (Educational)",
+          "operatingSystem": "Web Browser",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          },
+          "provider": {
+            "@type": "Organization",
+            "name": "TradeHQ",
+            "url": "https://tradinghq.vercel.app/"
+          }
+        }
+  ) : null;
 
   // Organization schema
   const organizationSchema = {
@@ -302,10 +326,10 @@ export default function TradeAsset() {
           </script>
         )}
 
-        {/* FINANCIAL PRODUCT SCHEMA */}
-        {financialProductSchema && (
+        {/* ASSET SCHEMA (FinancialProduct for crypto, SoftwareApplication for stocks) */}
+        {assetSchema && (
           <script type="application/ld+json">
-            {JSON.stringify(financialProductSchema)}
+            {JSON.stringify(assetSchema)}
           </script>
         )}
 
@@ -372,7 +396,7 @@ export default function TradeAsset() {
           {/* Trading Terminal Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="lg:col-span-2">
-              <div className="bg-white/[0.02] border border-white/[0.08] backdrop-blur-xl rounded-2xl h-[520px] overflow-hidden" style={{ boxShadow: '0 8px 40px -12px hsl(0 0% 0% / 0.5)' }}>
+              <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl h-[520px] overflow-hidden" style={{ backdropFilter: 'blur(12px)', boxShadow: '0 8px 40px -12px hsl(0 0% 0% / 0.5)' }}>
                 {isLoading ? (
                   <ChartSkeleton />
                 ) : (
@@ -436,7 +460,7 @@ export default function TradeAsset() {
             </section>
           )}
 
-          {selectedAsset && <RelatedAssets currentAsset={selectedAsset} />}
+          {selectedAsset && <RelatedMarkets currentAsset={selectedAsset} />}
 
           {/* Disclaimer */}
           <div className="mt-8 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04]">

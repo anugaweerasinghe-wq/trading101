@@ -32,18 +32,18 @@
     --accent: 240 10% 72%;
     --accent-foreground: 0 0% 0%;
 
-    /* Trading colors — vivid neon */
-    --success: 152 72% 46%;
+    /* Bloomberg Trading Colors — Emerald & Rose */
+    --success: 157 100% 44%;
     --success-foreground: 0 0% 0%;
     
-    --destructive: 0 80% 55%;
+    --destructive: 354 100% 64%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Trading-specific semantic colors */
-    --profit: 152 72% 46%;
-    --loss: 0 80% 55%;
-    --buy: 152 72% 46%;
-    --sell: 0 80% 55%;
+    /* Trading-specific semantic colors (Bloomberg) */
+    --profit: 157 100% 44%;
+    --loss: 354 100% 64%;
+    --buy: 157 100% 44%;
+    --sell: 354 100% 64%;
     --warning: 38 90% 55%;
 
     /* Cyber accent tokens */

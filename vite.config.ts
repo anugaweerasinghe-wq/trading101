@@ -15,4 +15,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  esbuild: {
+    // Strip console.error from production builds for clean inspector
+    drop: mode === 'production' ? ['debugger'] : [],
+    pure: mode === 'production' ? ['console.error', 'console.warn'] : [],
+  },
 }));
