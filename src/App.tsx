@@ -47,6 +47,7 @@ function AnimatedRoutes() {
         <Route path="/wiki/:slug" element={<WikiTerm />} />
         <Route path="/niche/:symbol" element={<NicheAsset />} />
         <Route path="/admin/seo-audit" element={<SEOAudit />} />
+        <Route path="/admin/validator" element={<AdminValidator />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
