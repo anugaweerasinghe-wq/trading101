@@ -326,10 +326,10 @@ export default function TradeAsset() {
           </script>
         )}
 
-        {/* FINANCIAL PRODUCT SCHEMA */}
-        {financialProductSchema && (
+        {/* ASSET SCHEMA (FinancialProduct for crypto, SoftwareApplication for stocks) */}
+        {assetSchema && (
           <script type="application/ld+json">
-            {JSON.stringify(financialProductSchema)}
+            {JSON.stringify(assetSchema)}
           </script>
         )}
 
