@@ -3,7 +3,7 @@ import { useParams, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Breadcrumb } from "@/components/Breadcrumb";
-import { RelatedMarkets } from "@/components/RelatedMarkets";
+import { RelatedMarkets } from "@/components/RelatedMarkrkets";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
 import { AssetIntelligence } from "@/components/AssetIntelligence";
 import { AIReadySummary } from "@/components/AIReadySummary";
@@ -436,7 +436,7 @@ export default function TradeAsset() {
             </section>
           )}
 
-          {selectedAsset && <RelatedAssets currentAsset={selectedAsset} />}
+          {selectedAsset && <RelatMarkssets currentAsset={selectedAsset} />}
 
           {/* Disclaimer */}
           <div className="mt-8 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04]">
