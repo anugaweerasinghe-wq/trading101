@@ -178,27 +178,51 @@ export default function TradeAsset() {
     ]
   } : null;
 
-  // FinancialProduct schema for asset pages (no AggregateRating without real reviews)
-  const financialProductSchema = selectedAsset ? {
-    "@context": "https://schema.org",
-    "@type": "FinancialProduct",
-    "name": `${selectedAsset.name} Trading Simulator`,
-    "description": assetContent?.whatIs || metaDescription || `${selectedAsset.name} trading simulator`,
-    "url": canonicalUrl,
-    "category": assetContent?.category || selectedAsset.type,
-    "provider": {
-      "@type": "Organization",
-      "name": "TradeHQ",
-      "url": "https://tradinghq.vercel.app/",
-      "logo": "https://tradinghq.vercel.app/og-image.png"
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock"
-    }
-  } : null;
+  // Schema varies by asset type: Crypto=FinancialProduct, Stocks/ETFs=SoftwareApplication(Simulation)
+  const assetSchema = selectedAsset ? (
+    selectedAsset.type === 'crypto' || selectedAsset.type === 'commodity' || selectedAsset.type === 'forex'
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FinancialProduct",
+          "name": `${selectedAsset.name} Trading Simulator`,
+          "description": assetContent?.whatIs || metaDescription || `${selectedAsset.name} trading simulator`,
+          "url": canonicalUrl,
+          "category": selectedAsset.type === 'crypto' ? 'Cryptocurrency' : selectedAsset.type === 'commodity' ? 'Commodity' : 'Currency',
+          "provider": {
+            "@type": "Organization",
+            "name": "TradeHQ",
+            "url": "https://tradinghq.vercel.app/",
+            "logo": "https://tradinghq.vercel.app/og-image.png"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": `${selectedAsset.name} Trading Simulator`,
+          "description": assetContent?.whatIs || metaDescription || `Practice ${selectedAsset.name} trading with simulated data`,
+          "url": canonicalUrl,
+          "applicationCategory": "FinanceApplication",
+          "applicationSubCategory": "Trading Simulator (Educational)",
+          "operatingSystem": "Web Browser",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          },
+          "provider": {
+            "@type": "Organization",
+            "name": "TradeHQ",
+            "url": "https://tradinghq.vercel.app/"
+          }
+        }
+  ) : null;
 
   // Organization schema
   const organizationSchema = {
