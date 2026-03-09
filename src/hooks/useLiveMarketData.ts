@@ -123,8 +123,9 @@ export function useLiveMarketData(
           setLiveData(marketData);
           setLastFetch(new Date());
           
-          // Update cache
+          // Update cache (memory + localStorage)
           marketDataCache.set(cacheKey, { data: marketData, timestamp: Date.now() });
+          setLocalStorageCache(marketDataCache);
         }
       }
     } catch (err) {
