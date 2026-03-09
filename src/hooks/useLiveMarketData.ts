@@ -56,7 +56,7 @@ export function useLiveMarketData(
   asset: Asset | null,
   options: UseLiveMarketDataOptions = {}
 ) {
-  const { refreshInterval = 30000, enabled = true } = options;
+  const { refreshInterval = 120000, enabled = true } = options; // 120s default (CoinGecko-friendly)
   
   const [liveData, setLiveData] = useState<LiveMarketData | null>(null);
   const [isLoading, setIsLoading] = useState(false);

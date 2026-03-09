@@ -396,7 +396,7 @@ export default function TradeAsset() {
           {/* Trading Terminal Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="lg:col-span-2">
-              <div className="bg-white/[0.02] border border-white/[0.08] backdrop-blur-xl rounded-2xl h-[520px] overflow-hidden" style={{ boxShadow: '0 8px 40px -12px hsl(0 0% 0% / 0.5)' }}>
+              <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl h-[520px] overflow-hidden" style={{ backdropFilter: 'blur(12px)', boxShadow: '0 8px 40px -12px hsl(0 0% 0% / 0.5)' }}>
                 {isLoading ? (
                   <ChartSkeleton />
                 ) : (
