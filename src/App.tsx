@@ -49,6 +49,7 @@ function AnimatedRoutes() {
         <Route path="/niche/:symbol" element={<NicheAsset />} />
         <Route path="/admin/seo-audit" element={<SEOAudit />} />
         <Route path="/admin/validator" element={<AdminValidator />} />
+        <Route path="/admin/editor" element={<AdminEditor />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
