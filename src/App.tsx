@@ -22,6 +22,7 @@ import WikiTerm from "./pages/WikiTerm";
 import NicheAsset from "./pages/NicheAsset";
 import SEOAudit from "./pages/SEOAudit";
 import AdminValidator from "./pages/AdminValidator";
+import AdminEditor from "./pages/AdminEditor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
