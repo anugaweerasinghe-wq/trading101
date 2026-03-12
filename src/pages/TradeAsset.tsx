@@ -461,6 +461,7 @@ export default function TradeAsset() {
             </section>
           )}
 
+          {selectedAsset && <RecentAnalysis focusAsset={selectedAsset.id} />}
           {selectedAsset && <RelatedMarkets currentAsset={selectedAsset} />}
 
           {/* Disclaimer */}
