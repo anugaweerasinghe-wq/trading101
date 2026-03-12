@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import {
   TrendingUp,
   BarChart3,
