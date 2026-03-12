@@ -241,7 +241,14 @@ export function MegaFooter() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
+      {/* Newsletter + Bottom Bar */}
+      <div className="border-t border-white/[0.04]">
+        <div className="container mx-auto px-6 py-8">
+          <div className="max-w-md mx-auto mb-8">
+            <NewsletterSignup />
+          </div>
+        </div>
+      </div>
       <div className="border-t border-white/[0.04] bg-[hsl(0_0%_1.5%)]">
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-center gap-4 mb-4">
