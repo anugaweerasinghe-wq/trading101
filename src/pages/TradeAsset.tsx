@@ -5,6 +5,7 @@ import { Navigation } from "@/components/Navigation";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { RelatedMarkets } from "@/components/RelatedMarkets";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
+import { RecentAnalysis } from "@/components/RecentAnalysis";
 import { AssetIntelligence } from "@/components/AssetIntelligence";
 import { AIReadySummary } from "@/components/AIReadySummary";
 import { GEOKeyTakeaways } from "@/components/GEOKeyTakeaways";
@@ -460,6 +461,7 @@ export default function TradeAsset() {
             </section>
           )}
 
+          {selectedAsset && <RecentAnalysis focusAsset={selectedAsset.id} />}
           {selectedAsset && <RelatedMarkets currentAsset={selectedAsset} />}
 
           {/* Disclaimer */}

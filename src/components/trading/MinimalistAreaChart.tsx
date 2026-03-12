@@ -55,7 +55,7 @@ function generateChartData(basePrice: number, count: number = 50): ChartDataPoin
 export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
   const [timeframe, setTimeframe] = useState<'1H' | '4H' | '1D' | '1W'>('1H');
   const [fallbackData, setFallbackData] = useState<ChartDataPoint[]>([]);
-  const simulationInterval = useRef<NodeJS.Timeout | null>(null);
+  const simulationInterval = useRef<ReturnType<typeof setInterval> | null>(null);
   
   // Safe price - ensure we have a valid number
   const safePrice = typeof asset?.price === 'number' && !isNaN(asset.price) && asset.price > 0 

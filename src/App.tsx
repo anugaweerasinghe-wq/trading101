@@ -22,6 +22,7 @@ import WikiTerm from "./pages/WikiTerm";
 import NicheAsset from "./pages/NicheAsset";
 import SEOAudit from "./pages/SEOAudit";
 import AdminValidator from "./pages/AdminValidator";
+import AdminEditor from "./pages/AdminEditor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ function AnimatedRoutes() {
         <Route path="/niche/:symbol" element={<NicheAsset />} />
         <Route path="/admin/seo-audit" element={<SEOAudit />} />
         <Route path="/admin/validator" element={<AdminValidator />} />
+        <Route path="/admin/editor" element={<AdminEditor />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
