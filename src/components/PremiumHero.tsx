@@ -95,8 +95,7 @@ export function PremiumHero() {
           transition={{ duration: 0.7, delay: 0.25 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 font-normal leading-relaxed"
         >
-          Trade stocks, crypto, forex & commodities with <span className="text-foreground font-medium">$10,000 virtual capital</span>. 
-          Real charts. Zero risk. Build strategies that work — before you invest a single dollar.
+          The free paper trading simulator for stocks, ETFs, and crypto. <span className="text-foreground font-medium">No signup. No risk. Just results.</span>
         </motion.p>
 
         {/* CTA buttons */}
