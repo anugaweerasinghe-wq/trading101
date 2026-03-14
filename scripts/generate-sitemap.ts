@@ -40,6 +40,15 @@ function generateSitemap(): string {
   const glossarySlugs = extractGlossarySlugs();
   const nicheSymbols = extractNicheSymbols();
 
+  const articleSlugs = [
+    'what-is-paper-trading',
+    'how-to-read-stock-charts',
+    'crypto-vs-stocks',
+    'trading-strategies-for-beginners',
+    'stock-market-index-etfs',
+    'how-to-build-a-portfolio',
+  ];
+
   const corePages = [
     { loc: '/', priority: '1.0', freq: 'daily' },
     { loc: '/trade', priority: '0.9', freq: 'daily' },
@@ -47,6 +56,7 @@ function generateSitemap(): string {
     { loc: '/portfolio', priority: '0.8', freq: 'daily' },
     { loc: '/learn', priority: '0.8', freq: 'weekly' },
     { loc: '/learn-trading-guide', priority: '0.9', freq: 'weekly' },
+    { loc: '/leaderboard', priority: '0.8', freq: 'daily' },
     { loc: '/ai-mentor', priority: '0.7', freq: 'weekly' },
     { loc: '/privacy', priority: '0.3', freq: 'monthly' },
     { loc: '/terms', priority: '0.3', freq: 'monthly' },
@@ -54,22 +64,22 @@ function generateSitemap(): string {
 
   const urls: string[] = [];
 
-  // Core pages
   for (const page of corePages) {
     urls.push(`  <url><loc>${DOMAIN}${page.loc}</loc><lastmod>${TODAY}</lastmod><changefreq>${page.freq}</changefreq><priority>${page.priority}</priority></url>`);
   }
 
-  // Asset pages
   for (const id of assetIds) {
     urls.push(`  <url><loc>${DOMAIN}/trade/${id}</loc><lastmod>${TODAY}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>`);
   }
 
-  // Wiki glossary pages
+  for (const slug of articleSlugs) {
+    urls.push(`  <url><loc>${DOMAIN}/learn/article/${slug}</loc><lastmod>${TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
+  }
+
   for (const slug of glossarySlugs) {
     urls.push(`  <url><loc>${DOMAIN}/wiki/${slug}</loc><lastmod>${TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>`);
   }
 
-  // Niche asset pages
   for (const sym of nicheSymbols) {
     urls.push(`  <url><loc>${DOMAIN}/niche/${sym}</loc><lastmod>${TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>`);
   }

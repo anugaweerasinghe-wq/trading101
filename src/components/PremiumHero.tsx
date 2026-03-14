@@ -79,12 +79,12 @@ export function PremiumHero() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold mb-8 leading-[1.05] tracking-[-0.03em]"
         >
-          <span className="text-foreground">Master the Markets.</span>
+          <span className="text-foreground">Practice Trading. Risk-Free.</span>
           <br />
           <span className="text-transparent bg-clip-text" style={{
             backgroundImage: 'linear-gradient(135deg, hsl(180 70% 50%) 0%, hsl(152 60% 50%) 50%, hsl(280 60% 55%) 100%)'
           }}>
-            Own the Future.
+            Start with $10,000 Virtual Cash.
           </span>
         </motion.h1>
 
@@ -95,8 +95,7 @@ export function PremiumHero() {
           transition={{ duration: 0.7, delay: 0.25 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 font-normal leading-relaxed"
         >
-          Trade stocks, crypto, forex & commodities with <span className="text-foreground font-medium">$10,000 virtual capital</span>. 
-          Real charts. Zero risk. Build strategies that work — before you invest a single dollar.
+          The free paper trading simulator for stocks, ETFs, and crypto. <span className="text-foreground font-medium">No signup. No risk. Just results.</span>
         </motion.p>
 
         {/* CTA buttons */}
@@ -113,19 +112,18 @@ export function PremiumHero() {
               style={{ boxShadow: '0 0 40px hsl(180 70% 50% / 0.2), 0 0 80px hsl(180 70% 50% / 0.1)' }}
             >
               <span className="relative z-10 flex items-center">
-                Start Trading — It's Free
+                Start Trading Free →
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
               </span>
             </Button>
           </Link>
-          <Link to="/ai-mentor">
+          <Link to="/leaderboard">
             <Button
               size="lg"
               variant="outline"
               className="text-base px-10 py-7 bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.06] hover:border-primary/30 transition-all duration-300 rounded-2xl min-h-[60px] backdrop-blur-xl"
             >
-              <Brain className="mr-2 w-5 h-5" />
-              AI Trading Mentor
+              View Leaderboard
             </Button>
           </Link>
         </motion.div>

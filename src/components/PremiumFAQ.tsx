@@ -13,24 +13,36 @@ export function PremiumFAQ() {
 
   const faqs = [
     {
-      question: "How does virtual trading work?",
-      answer: "Virtual trading on TradeHQ simulates market conditions using $10,000 in demo cash. You can buy and sell 150+ assets including stocks, crypto, ETFs, and commodities with simulated price data. All trades are executed instantly with no real money at risk."
-    },
-    {
-      question: "What is Bitcoin L2?",
-      answer: "Bitcoin Layer 2 (L2) refers to secondary protocols built on top of the Bitcoin blockchain to enable faster, cheaper transactions. Popular L2 solutions include the Lightning Network for instant payments and Stacks (STX) for smart contracts."
+      question: "What is TradeHQ?",
+      answer: "TradeHQ is a free paper trading simulator where you can practice trading stocks, crypto, ETFs, forex, and commodities with $10,000 in virtual cash. No signup or credit card required — just open the app and start trading."
     },
     {
       question: "Is TradeHQ completely free?",
       answer: "Yes, TradeHQ is 100% free to use. You get $10,000 in virtual capital to practice trading with no signup required. We also provide weekly $10K refills so you can continue learning indefinitely. No hidden fees or premium tiers."
     },
     {
-      question: "Can I practice trading without any experience?",
-      answer: "Absolutely. TradeHQ is designed for complete beginners. Our AI mentor guides you through your first trades, explains chart patterns, and teaches risk management — all in plain language. Start practicing in seconds."
+      question: "What is paper trading?",
+      answer: "Paper trading is simulated trading using virtual money instead of real capital. It lets you practice buying and selling financial instruments risk-free to build skills and test strategies before investing real money."
     },
     {
-      question: "What markets can I trade on TradeHQ?",
+      question: "How do I start trading on TradeHQ?",
+      answer: "Just click 'Start Trading Free' — you'll instantly receive $10,000 in virtual cash to trade 150+ assets. No signup, no email, no account creation needed."
+    },
+    {
+      question: "What stocks and crypto can I trade?",
       answer: "You can practice trading across 150+ assets including major cryptocurrencies (BTC, ETH, SOL), tech stocks (NVDA, AAPL, TSLA), ETFs (SPY, QQQ), forex pairs (EUR/USD, GBP/USD), and commodities (Gold, Oil)."
+    },
+    {
+      question: "Is there a leaderboard or competition?",
+      answer: "Yes! TradeHQ features a leaderboard ranking virtual traders by portfolio performance. Start with $10,000 and compete to reach the top. Visit the Leaderboard page to see the current rankings."
+    },
+    {
+      question: "Do I need to create an account?",
+      answer: "No. TradeHQ requires no signup, no email, and no account creation. Your portfolio is stored locally in your browser so you can start trading instantly and come back anytime."
+    },
+    {
+      question: "What is the best free trading simulator in 2026?",
+      answer: "TradeHQ is widely considered one of the best free trading simulators in 2026, offering 150+ real assets, AI-powered mentoring, a public leaderboard, and instant access with zero signup requirements."
     },
   ];
 
