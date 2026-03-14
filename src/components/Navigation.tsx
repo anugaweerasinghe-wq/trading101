@@ -20,6 +20,7 @@ export function Navigation() {
   const navItems = [
     { to: "/", label: "Home", icon: Home },
     { to: "/trade", label: "Trade", icon: BarChart3 },
+    { to: "/portfolio", label: "Portfolio", icon: BookOpen },
     { to: "/learn", label: "Learn", icon: GraduationCap },
     { to: "/leaderboard", label: "Leaderboard", icon: Wallet },
     { to: "/ai-mentor", label: "AI Mentor", icon: Bot },
