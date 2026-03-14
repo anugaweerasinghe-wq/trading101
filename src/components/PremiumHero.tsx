@@ -72,30 +72,30 @@ export function PremiumHero() {
           </div>
         </motion.div>
 
-        {/* Main headline */}
+        {/* Main headline — FIXED: shortened to 2 clean lines */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold mb-8 leading-[1.05] tracking-[-0.03em]"
         >
-          <span className="text-foreground">Practice Trading. Risk-Free.</span>
+          <span className="text-foreground">Practice Trading.</span>
           <br />
           <span className="text-transparent bg-clip-text" style={{
             backgroundImage: 'linear-gradient(135deg, hsl(180 70% 50%) 0%, hsl(152 60% 50%) 50%, hsl(280 60% 55%) 100%)'
           }}>
-            Start with $10,000 Virtual Cash.
+            Risk&#8209;Free.
           </span>
         </motion.h1>
 
-        {/* Subtitle */}
+        {/* Subtitle — FIXED: $10K moved here from H1 */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.25 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 font-normal leading-relaxed"
         >
-          The free paper trading simulator for stocks, ETFs, and crypto. <span className="text-foreground font-medium">No signup. No risk. Just results.</span>
+          Start with <span className="text-foreground font-medium">$10,000 virtual cash</span> — the free simulator for stocks, ETFs & crypto. No signup. No risk.
         </motion.p>
 
         {/* CTA buttons */}
