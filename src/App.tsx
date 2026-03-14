@@ -24,6 +24,8 @@ import SEOAudit from "./pages/SEOAudit";
 import AdminValidator from "./pages/AdminValidator";
 import AdminEditor from "./pages/AdminEditor";
 import NotFound from "./pages/NotFound";
+import Leaderboard from "./pages/Leaderboard";
+import LearnArticle from "./pages/LearnArticle";
 
 const queryClient = new QueryClient();
 
@@ -39,8 +41,10 @@ function AnimatedRoutes() {
         <Route path="/markets" element={<Markets />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/learn" element={<Learn />} />
+        <Route path="/learn/article/:slug" element={<LearnArticle />} />
         <Route path="/learn/:lessonId" element={<LessonDetail />} />
         <Route path="/learn-trading-guide" element={<LearnTradingGuide />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/ai-mentor" element={<AIMentor />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
