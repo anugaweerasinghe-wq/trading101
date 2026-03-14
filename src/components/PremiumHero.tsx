@@ -112,19 +112,18 @@ export function PremiumHero() {
               style={{ boxShadow: '0 0 40px hsl(180 70% 50% / 0.2), 0 0 80px hsl(180 70% 50% / 0.1)' }}
             >
               <span className="relative z-10 flex items-center">
-                Start Trading — It's Free
+                Start Trading Free →
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
               </span>
             </Button>
           </Link>
-          <Link to="/ai-mentor">
+          <Link to="/leaderboard">
             <Button
               size="lg"
               variant="outline"
               className="text-base px-10 py-7 bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.06] hover:border-primary/30 transition-all duration-300 rounded-2xl min-h-[60px] backdrop-blur-xl"
             >
-              <Brain className="mr-2 w-5 h-5" />
-              AI Trading Mentor
+              View Leaderboard
             </Button>
           </Link>
         </motion.div>
