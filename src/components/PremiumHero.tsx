@@ -79,12 +79,12 @@ export function PremiumHero() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold mb-8 leading-[1.05] tracking-[-0.03em]"
         >
-          <span className="text-foreground">Master the Markets.</span>
+          <span className="text-foreground">Practice Trading. Risk-Free.</span>
           <br />
           <span className="text-transparent bg-clip-text" style={{
             backgroundImage: 'linear-gradient(135deg, hsl(180 70% 50%) 0%, hsl(152 60% 50%) 50%, hsl(280 60% 55%) 100%)'
           }}>
-            Own the Future.
+            Start with $10,000 Virtual Cash.
           </span>
         </motion.h1>
 
