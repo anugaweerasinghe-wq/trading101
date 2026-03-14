@@ -313,7 +313,6 @@ export default function Learn() {
     </>
   );
 }
-    "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
       {
