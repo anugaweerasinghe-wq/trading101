@@ -313,10 +313,6 @@ export default function Learn() {
     </>
   );
 }
-  const navigate = useNavigate();
-
-  // Breadcrumb schema for this page
-  const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
