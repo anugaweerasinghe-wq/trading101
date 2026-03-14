@@ -144,10 +144,19 @@ export default function Trade() {
   return (
     <>
       <Helmet>
-        <title>Real-Time Trading Terminal | Execute Simulator Trades on TradingHQ</title>
-        <meta name="title" content="Real-Time Trading Terminal | Execute Simulator Trades on TradingHQ" />
-        <meta name="description" content="Experience high-performance trading with our Obsidian Terminal. Features TradingView charts, one-click execution, and a Neural Mentor to guide your strategy and block revenge trading." />
-        <link rel="canonical" href={`https://tradinghq.vercel.app/trade/${selectedAsset?.symbol || ""}`} />
+        <title>Free Trading Simulator — Buy Stocks, ETFs & Crypto with $10K Virtual Cash | TradeHQ</title>
+        <meta name="description" content="Use our free trading simulator to buy stocks, ETFs, and crypto with $10K virtual money. Real-time practice, zero risk. No signup required — TradeHQ." />
+        <link rel="canonical" href="https://tradinghq.vercel.app/trade" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Free Trading Simulator — Practice with $10K Virtual Cash" />
+        <meta property="og:description" content="Use our free trading simulator to buy stocks, ETFs, and crypto with $10K virtual money. Real-time practice, zero risk." />
+        <meta property="og:url" content="https://tradinghq.vercel.app/trade" />
+        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:site_name" content="TradeHQ" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Free Trading Simulator — Practice with $10K Virtual Cash" />
+        <meta name="twitter:description" content="Buy stocks, ETFs, and crypto with $10K virtual money. Zero risk." />
+        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
       </Helmet>
 
       <div className="min-h-screen bg-background flex flex-col">

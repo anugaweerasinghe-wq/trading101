@@ -87,9 +87,19 @@ export default function Markets() {
   return (
     <>
       <Helmet>
-        <title>Live Market Dashboard | Track Crypto, Stocks & Forex Trends</title>
-        <meta name="description" content="Stay ahead of the curve with our comprehensive market dashboard. Real-time price tracking, volatility alerts, and deep-dive technical analysis for over 50 global assets." />
+        <title>Live Market Dashboard — Track 150+ Stocks, Crypto & Forex | TradeHQ</title>
+        <meta name="description" content="Track 150+ assets including stocks, crypto, ETFs, forex, and commodities. Real-time prices, top gainers and losers. Free market dashboard — TradeHQ." />
         <link rel="canonical" href="https://tradinghq.vercel.app/markets" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Live Market Dashboard — 150+ Assets | TradeHQ" />
+        <meta property="og:description" content="Track stocks, crypto, ETFs, forex, and commodities. Real-time prices, top gainers and losers." />
+        <meta property="og:url" content="https://tradinghq.vercel.app/markets" />
+        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:site_name" content="TradeHQ" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Live Market Dashboard — 150+ Assets | TradeHQ" />
+        <meta name="twitter:description" content="Track stocks, crypto, ETFs, forex, and commodities. Free market dashboard." />
+        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
       </Helmet>
       <div className="min-h-screen bg-background flex">
         <TradingSidebar />
