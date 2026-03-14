@@ -72,23 +72,23 @@ export function PremiumHero() {
           </div>
         </motion.div>
 
-        {/* Main headline — FIXED: shortened to 2 clean lines */}
+        {/* Main headline */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold mb-8 leading-[1.05] tracking-[-0.03em]"
         >
-          <span className="text-foreground">Practice Trading.</span>
+          <span className="text-foreground">Free Paper Trading.</span>
           <br />
           <span className="text-transparent bg-clip-text" style={{
             backgroundImage: 'linear-gradient(135deg, hsl(180 70% 50%) 0%, hsl(152 60% 50%) 50%, hsl(280 60% 55%) 100%)'
           }}>
-            Risk&#8209;Free.
+            Start Risk&#8209;Free.
           </span>
         </motion.h1>
 
-        {/* Subtitle — FIXED: $10K moved here from H1 */}
+        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
