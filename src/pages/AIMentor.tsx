@@ -76,7 +76,6 @@ export default function AIMentor() {
       const decoder = new TextDecoder();
       let buffer = "";
 
-      // Add empty assistant message to update progressively
       setMessages(prev => [...prev, { role: "assistant", content: "" }]);
 
       while (true) {
@@ -120,7 +119,6 @@ export default function AIMentor() {
         description: error instanceof Error ? error.message : "Failed to get response",
         variant: "destructive",
       });
-      // Remove the empty assistant message if there was an error
       if (!assistantContent) {
         setMessages(prev => prev.slice(0, -1));
       }
@@ -137,9 +135,21 @@ export default function AIMentor() {
   return (
     <>
       <Helmet>
-        <title>Neural AI Trading Mentor | Personalized Behavioral Analyst</title>
-        <meta name="description" content="Meet your personal trading coach. Our AI analyzes your portfolio to provide trend predictions, risk management warnings, and psychological support to improve your win rate." />
+        <title>AI Trading Mentor — Personalized Trading Coach & Behavioral Analyst | TradeHQ</title>
+        <meta name="description" content="Chat with your personal AI trading mentor. Get real-time strategy advice, risk warnings, portfolio analysis, and psychological support to improve your trading." />
         <link rel="canonical" href="https://tradinghq.vercel.app/ai-mentor" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="AI Trading Mentor — Your Personal Trading Coach | TradeHQ" />
+        <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Powered by advanced AI. Free on TradeHQ." />
+        <meta property="og:url" content="https://tradinghq.vercel.app/ai-mentor" />
+        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="TradeHQ" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="AI Trading Mentor — Your Personal Trading Coach | TradeHQ" />
+        <meta name="twitter:description" content="Ask anything about trading, risk, psychology, or markets. Powered by advanced AI." />
+        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
       </Helmet>
 
       <div className="min-h-screen bg-background flex flex-col">
