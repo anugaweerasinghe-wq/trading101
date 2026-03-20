@@ -26,8 +26,8 @@ const WikiTerm = () => {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": `What is ${term.term}? | TradingHQ Guide`,
-    "description": term.definition,
+    "headline": `What is ${term.term}? | Complete Trading Guide 2026 | TradeHQ`,
+    "description": `Master ${term.term} in under ${term.readTime}. ${term.definition}`,
     "author": { "@type": "Organization", "name": "TradeHQ" },
     "publisher": {
       "@type": "Organization",
@@ -65,12 +65,22 @@ const WikiTerm = () => {
   return (
     <>
       <Helmet>
-        <title>What is {term.term}? | TradingHQ Guide</title>
+        <title>What is {term.term}? | Complete Trading Guide 2026 | TradeHQ</title>
         <meta
           name="description"
-          content={`Master ${term.term}. Rated ${term.difficulty}. ${term.readTime} read. ${term.definition}`}
+          content={`Master ${term.term} in under ${term.readTime}. ${term.definition.substring(0, 140)}... Expert definition, pro tips & simulator practice.`}
         />
         <link rel="canonical" href={`${DOMAIN}/wiki/${term.slug}`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`What is ${term.term}? | Complete Trading Guide 2026 | TradeHQ`} />
+        <meta property="og:description" content={term.definition} />
+        <meta property="og:url" content={`${DOMAIN}/wiki/${term.slug}`} />
+        <meta property="og:image" content={`${DOMAIN}/og-image.png`} />
+        <meta property="og:site_name" content="TradeHQ" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`What is ${term.term}? | TradeHQ`} />
+        <meta name="twitter:description" content={term.definition} />
+        <meta name="twitter:image" content={`${DOMAIN}/og-image.png`} />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
       </Helmet>
