@@ -551,3 +551,33 @@
   background: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(168 100% 50% / 0.15), transparent),
               radial-gradient(ellipse 60% 40% at 80% 50%, hsl(12 90% 62% / 0.1), transparent);
 }
+
+/* ==================== OPTIMIZATIONS (2026) ==================== */
+
+/* Accessibility + SEO render boost */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 3px;
+}
+
+/* Respect reduced motion (Lighthouse + Googlebot friendly) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Performance hint — only on actively animating elements */
+.price-up,
+.price-down,
+.pnl-radiance,
+.pnl-bleed {
+  will-change: transform, text-shadow;
+}
