@@ -39,33 +39,25 @@ export default function Portfolio() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Initialize portfolio with AI-driven price updates
     const initPortfolio = async () => {
-      // First, simulate price changes over time since last visit with AI predictions
       let updated = await updatePortfolioOverTime(portfolio);
-      // Then update with current market prices
       updated = updatePositionPrices(updated);
       setPortfolio(updated);
       savePortfolio(updated);
-      
-      // Initialize milestone tracking
       initializeMilestones(updated.totalValue);
     };
 
     initPortfolio();
 
-    // Simulate price updates every 5 seconds
     const priceInterval = setInterval(() => {
       if (shouldUpdatePrices()) {
         const updatedAssets = simulateAssetPrices(assets, 0.01);
         setAssets(updatedAssets);
         setLastUpdateTime(new Date());
         
-        // Update portfolio with new prices
         const updatedPortfolio = updatePositionPrices(getPortfolio());
         setPortfolio(updatedPortfolio);
         
-        // Check for milestone achievements
         checkMilestones(updatedPortfolio.totalValue, (milestone, label, type) => {
           const state = getMilestoneState();
           const profit = updatedPortfolio.totalValue - state.initialValue;
@@ -134,203 +126,214 @@ export default function Portfolio() {
   return (
     <>
       <Helmet>
-        <title>Trading Portfolio & AI Journal | Track Your Performance Data</title>
-        <meta name="description" content="Analyze your trading history with advanced performance metrics. View your Ghost Journal entries, win/loss ratios, and personalized AI growth suggestions in one sleek dashboard." />
+        <title>Portfolio Dashboard — Track Your $10K Virtual Trading Performance | TradeHQ</title>
+        <meta name="description" content="Real-time portfolio tracker with AI analytics, trading journal, performance charts, and milestone alerts. See your P&L, positions, and risk metrics instantly." />
         <link rel="canonical" href="https://tradinghq.vercel.app/portfolio" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Portfolio Dashboard — Track Your Virtual Trading Performance | TradeHQ" />
+        <meta property="og:description" content="Live P&L, AI insights, journal, and risk management for your $10K practice portfolio." />
+        <meta property="og:url" content="https://tradinghq.vercel.app/portfolio" />
+        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="TradeHQ" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Portfolio Dashboard — TradeHQ" />
+        <meta name="twitter:description" content="Track your virtual trading performance with AI analytics & journal." />
+        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
       </Helmet>
+
       <div className="min-h-screen bg-background">
         <Navigation />
       
-      <main className="pt-20 pb-12">
-        <div className="container mx-auto px-6 mb-6">
-          <PriceTicker assets={assets} />
-        </div>
-        <div className="container mx-auto px-6">
-          {/* Static H1 Header - Renders immediately for Google */}
-          <header className="flex items-center justify-between mb-8">
-            <div>
-              <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio Dashboard</h1>
-              <p className="text-muted-foreground mt-2">Track your virtual investments, analyze performance, and manage simulated risk.</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Button
-                onClick={handleToggleNotifications}
-                size="lg"
-                variant="outline"
-                className="gap-2"
-              >
-                {notificationsEnabled ? (
-                  <>
-                    <Bell className="w-5 h-5" />
-                    Notifications On
-                  </>
-                ) : (
-                  <>
-                    <BellOff className="w-5 h-5" />
-                    Enable Notifications
-                  </>
-                )}
-              </Button>
-              <Button
-                onClick={handleClaimBonus}
-                disabled={!canClaim}
-                size="lg"
-                className="gap-2"
-              >
-                <Gift className="w-5 h-5" />
-                {canClaim ? "Claim $10,000 Bonus" : `Next Bonus: ${getTimeUntilNextBonus()}`}
-              </Button>
-            </div>
-          </header>
-          <div className="mb-12">
-            <PortfolioChart />
+        <main className="pt-20 pb-12">
+          <div className="container mx-auto px-6 mb-6">
+            <PriceTicker assets={assets} />
           </div>
-
-          {/* Portfolio Analytics */}
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-12">
-            <div className="xl:col-span-2">
-              <PortfolioAnalytics portfolio={portfolio} />
-            </div>
-            <div className="xl:col-span-1">
-              <RiskManagement portfolio={portfolio} />
-            </div>
-          </div>
-
-          {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <Card className="p-6 bg-card/50 backdrop-blur-sm">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                  <Wallet className="w-5 h-5 text-primary" />
-                </div>
-                <span className="text-sm text-muted-foreground">Total Value</span>
+          <div className="container mx-auto px-6">
+            {/* Static H1 Header - Renders immediately for Google */}
+            <header className="flex items-center justify-between mb-8">
+              <div>
+                <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio Dashboard</h1>
+                <p className="text-muted-foreground mt-2">Track your virtual investments, analyze performance, and manage simulated risk.</p>
               </div>
-              <p className="text-3xl font-bold">${portfolio.totalValue.toFixed(2)}</p>
-            </Card>
-
-            <Card className="p-6 bg-card/50 backdrop-blur-sm">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-success/20 flex items-center justify-center">
-                  <DollarSign className="w-5 h-5 text-success" />
-                </div>
-                <span className="text-sm text-muted-foreground">Cash</span>
-              </div>
-              <p className="text-3xl font-bold">${portfolio.cash.toFixed(2)}</p>
-            </Card>
-
-            <Card className="p-6 bg-card/50 backdrop-blur-sm">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                  <PieChart className="w-5 h-5 text-primary" />
-                </div>
-                <span className="text-sm text-muted-foreground">Positions</span>
-              </div>
-              <p className="text-3xl font-bold">${totalPositionValue.toFixed(2)}</p>
-            </Card>
-
-            <Card className="p-6 bg-card/50 backdrop-blur-sm">
-              <div className="flex items-center gap-3 mb-2">
-                <div className={cn(
-                  "w-10 h-10 rounded-lg flex items-center justify-center",
-                  totalProfitLoss >= 0 ? "bg-success/20" : "bg-destructive/20"
-                )}>
-                  {totalProfitLoss >= 0 ? (
-                    <TrendingUp className="w-5 h-5 text-success" />
+              <div className="flex items-center gap-3">
+                <Button
+                  onClick={handleToggleNotifications}
+                  size="lg"
+                  variant="outline"
+                  className="gap-2"
+                >
+                  {notificationsEnabled ? (
+                    <>
+                      <Bell className="w-5 h-5" />
+                      Notifications On
+                    </>
                   ) : (
-                    <TrendingDown className="w-5 h-5 text-destructive" />
+                    <>
+                      <BellOff className="w-5 h-5" />
+                      Enable Notifications
+                    </>
                   )}
-                </div>
-                <span className="text-sm text-muted-foreground">P&L</span>
+                </Button>
+                <Button
+                  onClick={handleClaimBonus}
+                  disabled={!canClaim}
+                  size="lg"
+                  className="gap-2"
+                >
+                  <Gift className="w-5 h-5" />
+                  {canClaim ? "Claim $10,000 Bonus" : `Next Bonus: ${getTimeUntilNextBonus()}`}
+                </Button>
               </div>
-              <p className={cn(
-                "text-3xl font-bold",
-                totalProfitLoss >= 0 ? "text-success" : "text-destructive"
-              )}>
-                {totalProfitLoss >= 0 ? '+' : ''}${totalProfitLoss.toFixed(2)}
-              </p>
-              <p className={cn(
-                "text-sm",
-                totalProfitLoss >= 0 ? "text-success" : "text-destructive"
-              )}>
-                {totalProfitLoss >= 0 ? '+' : ''}{totalProfitLossPercent.toFixed(2)}%
-              </p>
-            </Card>
-          </div>
+            </header>
 
-          {/* Positions */}
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold mb-6">Positions</h2>
-            {portfolio.positions.length === 0 ? (
-              <Card className="p-12 text-center">
-                <p className="text-xl text-muted-foreground">No positions yet. Start trading to build your portfolio!</p>
+            <div className="mb-12">
+              <PortfolioChart />
+            </div>
+
+            {/* Portfolio Analytics */}
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-12">
+              <div className="xl:col-span-2">
+                <PortfolioAnalytics portfolio={portfolio} />
+              </div>
+              <div className="xl:col-span-1">
+                <RiskManagement portfolio={portfolio} />
+              </div>
+            </div>
+
+            {/* Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <Wallet className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-sm text-muted-foreground">Total Value</span>
+                </div>
+                <p className="text-3xl font-bold">${portfolio.totalValue.toFixed(2)}</p>
               </Card>
-            ) : (
-              <div className="grid gap-4">
-                {portfolio.positions.map((position) => (
-                  <Card key={position.asset.id} className="p-6 bg-card/50 backdrop-blur-sm">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div>
-                          <div className="flex items-center gap-3 mb-1">
-                            <h3 className="text-2xl font-bold">{position.asset.symbol}</h3>
-                            <Badge variant="outline" className="capitalize">
-                              {position.asset.type}
-                            </Badge>
+
+              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-success/20 flex items-center justify-center">
+                    <DollarSign className="w-5 h-5 text-success" />
+                  </div>
+                  <span className="text-sm text-muted-foreground">Cash</span>
+                </div>
+                <p className="text-3xl font-bold">${portfolio.cash.toFixed(2)}</p>
+              </Card>
+
+              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <PieChart className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-sm text-muted-foreground">Positions</span>
+                </div>
+                <p className="text-3xl font-bold">${totalPositionValue.toFixed(2)}</p>
+              </Card>
+
+              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className={cn(
+                    "w-10 h-10 rounded-lg flex items-center justify-center",
+                    totalProfitLoss >= 0 ? "bg-success/20" : "bg-destructive/20"
+                  )}>
+                    {totalProfitLoss >= 0 ? (
+                      <TrendingUp className="w-5 h-5 text-success" />
+                    ) : (
+                      <TrendingDown className="w-5 h-5 text-destructive" />
+                    )}
+                  </div>
+                  <span className="text-sm text-muted-foreground">P&L</span>
+                </div>
+                <p className={cn(
+                  "text-3xl font-bold",
+                  totalProfitLoss >= 0 ? "text-success" : "text-destructive"
+                )}>
+                  {totalProfitLoss >= 0 ? '+' : ''}${totalProfitLoss.toFixed(2)}
+                </p>
+                <p className={cn(
+                  "text-sm",
+                  totalProfitLoss >= 0 ? "text-success" : "text-destructive"
+                )}>
+                  {totalProfitLoss >= 0 ? '+' : ''}{totalProfitLossPercent.toFixed(2)}%
+                </p>
+              </Card>
+            </div>
+
+            {/* Positions */}
+            <div className="mb-12">
+              <h2 className="text-3xl font-bold mb-6">Positions</h2>
+              {portfolio.positions.length === 0 ? (
+                <Card className="p-12 text-center">
+                  <p className="text-xl text-muted-foreground">No positions yet. Start trading to build your portfolio!</p>
+                </Card>
+              ) : (
+                <div className="grid gap-4">
+                  {portfolio.positions.map((position) => (
+                    <Card key={position.asset.id} className="p-6 bg-card/50 backdrop-blur-sm">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div>
+                            <div className="flex items-center gap-3 mb-1">
+                              <h3 className="text-2xl font-bold">{position.asset.symbol}</h3>
+                              <Badge variant="outline" className="capitalize">
+                                {position.asset.type}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground">{position.asset.name}</p>
                           </div>
-                          <p className="text-sm text-muted-foreground">{position.asset.name}</p>
+                        </div>
+
+                        <div className="text-right">
+                          <p className="text-sm text-muted-foreground mb-1">
+                            {position.quantity} shares @ ${position.avgPrice.toFixed(2)}
+                          </p>
+                          <p className="text-2xl font-bold mb-1">
+                            ${position.currentValue.toFixed(2)}
+                          </p>
+                          <p className={cn(
+                            "text-sm font-medium flex items-center justify-end gap-1",
+                            position.profitLoss >= 0 ? "text-success" : "text-destructive"
+                          )}>
+                            {position.profitLoss >= 0 ? (
+                              <TrendingUp className="w-4 h-4" />
+                            ) : (
+                              <TrendingDown className="w-4 h-4" />
+                            )}
+                            {position.profitLoss >= 0 ? '+' : ''}${position.profitLoss.toFixed(2)} ({position.profitLoss >= 0 ? '+' : ''}{position.profitLossPercent.toFixed(2)}%)
+                          </p>
                         </div>
                       </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </div>
 
-                      <div className="text-right">
-                        <p className="text-sm text-muted-foreground mb-1">
-                          {position.quantity} shares @ ${position.avgPrice.toFixed(2)}
-                        </p>
-                        <p className="text-2xl font-bold mb-1">
-                          ${position.currentValue.toFixed(2)}
-                        </p>
-                        <p className={cn(
-                          "text-sm font-medium flex items-center justify-end gap-1",
-                          position.profitLoss >= 0 ? "text-success" : "text-destructive"
-                        )}>
-                          {position.profitLoss >= 0 ? (
-                            <TrendingUp className="w-4 h-4" />
-                          ) : (
-                            <TrendingDown className="w-4 h-4" />
-                          )}
-                          {position.profitLoss >= 0 ? '+' : ''}${position.profitLoss.toFixed(2)} ({position.profitLoss >= 0 ? '+' : ''}{position.profitLossPercent.toFixed(2)}%)
-                        </p>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            )}
+            {/* Trade Performance Analytics */}
+            <div className="mb-12">
+              <h2 className="text-3xl font-bold mb-6">Trade Performance</h2>
+              <TradeAnalytics portfolio={portfolio} />
+            </div>
+
+            {/* Trading Journal */}
+            <div className="mb-12">
+              <TradingJournal trades={portfolio.trades} />
+            </div>
+
+            {/* Trade History */}
+            <div className="mb-12">
+              <TradeHistory trades={portfolio.trades} />
+            </div>
           </div>
+        </main>
 
-          {/* Trade Performance Analytics */}
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold mb-6">Trade Performance</h2>
-            <TradeAnalytics portfolio={portfolio} />
-          </div>
-
-          {/* Trading Journal */}
-          <div className="mb-12">
-            <TradingJournal trades={portfolio.trades} />
-          </div>
-
-          {/* Trade History */}
-          <div className="mb-12">
-            <TradeHistory trades={portfolio.trades} />
-          </div>
-
-        </div>
-      </main>
-
-      <AIAssistant portfolio={portfolio} assets={assets} />
-      
-      {/* Mega Footer */}
-      <MegaFooter />
-    </div>
+        <AIAssistant portfolio={portfolio} assets={assets} />
+        <MegaFooter />
+      </div>
     </>
   );
 }
