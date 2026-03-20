@@ -111,7 +111,6 @@ export default function Trade() {
   const handleTrade = useCallback((asset: Asset, type: "buy" | "sell", quantity: number, _orderType?: string, _limitPrice?: number, rationale?: string) => {
     const result = executeTrade(portfolio, asset, type, quantity);
     if (result.success && result.portfolio) {
-      // If rationale provided (Ghost Journal), attach journal entry to the trade
       if (rationale && result.portfolio.trades.length > 0) {
         const journalEntry: JournalEntry = {
           notes: "",
@@ -122,7 +121,6 @@ export default function Trade() {
         savePortfolio(result.portfolio);
       }
 
-      // Track losses for revenge trading detection
       if (type === "sell") {
         const position = portfolio.positions.find(p => p.asset.id === asset.id);
         if (position && position.profitLoss < 0) {
@@ -141,21 +139,32 @@ export default function Trade() {
   const handleToggleFavorite = useCallback((assetId: string) => { toggleFavorite(assetId); setFavorites(getFavorites()); }, []);
   const handleAssetSelect = useCallback((asset: Asset) => { setSelectedAsset(asset); }, []);
 
+  // Dynamic per-symbol SEO (Grok improvement — helps index individual asset pages)
+  const pageTitle = symbol
+    ? `Trade ${symbol.toUpperCase()} — Free Simulator with $10K Virtual Cash | TradeHQ`
+    : "Free Trading Simulator — Buy Stocks, ETFs & Crypto with $10K | TradeHQ";
+
+  const pageDescription = symbol
+    ? `Practice trading ${symbol.toUpperCase()} with $10,000 virtual cash. Real-time charts, AI mentor & zero risk. No signup required — TradeHQ 2026.`
+    : "Use our free trading simulator to buy stocks, ETFs, and crypto with $10K virtual money. Real-time practice, zero risk. No signup required.";
+
+  const pageUrl = `https://tradinghq.vercel.app/trade${symbol ? `/${symbol.toUpperCase()}` : ""}`;
+
   return (
     <>
       <Helmet>
-        <title>Free Trading Simulator — Buy Stocks, ETFs & Crypto with $10K Virtual Cash | TradeHQ</title>
-        <meta name="description" content="Use our free trading simulator to buy stocks, ETFs, and crypto with $10K virtual money. Real-time practice, zero risk. No signup required — TradeHQ." />
-        <link rel="canonical" href="https://tradinghq.vercel.app/trade" />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={pageUrl} />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Free Trading Simulator — Practice with $10K Virtual Cash" />
-        <meta property="og:description" content="Use our free trading simulator to buy stocks, ETFs, and crypto with $10K virtual money. Real-time practice, zero risk." />
-        <meta property="og:url" content="https://tradinghq.vercel.app/trade" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:url" content={pageUrl} />
         <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Free Trading Simulator — Practice with $10K Virtual Cash" />
-        <meta name="twitter:description" content="Buy stocks, ETFs, and crypto with $10K virtual money. Zero risk." />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
         <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
       </Helmet>
 
@@ -184,7 +193,6 @@ export default function Trade() {
             </div>
           </div>
 
-          {/* Neural Pulse Chart — full width */}
           {selectedAsset && !isLoading && (
             <NeuralPulseChart asset={selectedAsset} height={360} />
           )}
@@ -193,7 +201,6 @@ export default function Trade() {
             <MobileOrderDrawer asset={selectedAsset} availableCash={portfolio.cash} portfolio={portfolio} onTrade={handleTrade} />
           </div>
 
-          {/* Explore More Assets */}
           {assets.length > 1 && (
             <section className="mt-10">
               <div className="flex items-center justify-between mb-6">
