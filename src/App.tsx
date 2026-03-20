@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { PageTransition } from "@/components/PageTransition";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+
 import Index from "./pages/Index";
 import Trade from "./pages/Trade";
 import TradeAsset from "./pages/TradeAsset";
@@ -27,7 +28,9 @@ import NotFound from "./pages/NotFound";
 import Leaderboard from "./pages/Leaderboard";
 import LearnArticle from "./pages/LearnArticle";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
+});
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -51,10 +54,13 @@ function AnimatedRoutes() {
         <Route path="/sectors/:sectorId" element={<SectorPillar />} />
         <Route path="/wiki/:slug" element={<WikiTerm />} />
         <Route path="/niche/:symbol" element={<NicheAsset />} />
+
+        {/* ADMIN ROUTES — kept exactly as original */}
         <Route path="/admin/seo-audit" element={<SEOAudit />} />
         <Route path="/admin/validator" element={<AdminValidator />} />
         <Route path="/admin/editor" element={<AdminEditor />} />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+
+        {/* CATCH-ALL */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </PageTransition>
@@ -66,7 +72,7 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Sonner />
+        <Sonner position="top-center" richColors closeButton />
         <BrowserRouter>
           <AnimatedRoutes />
           <MobileBottomNav />
