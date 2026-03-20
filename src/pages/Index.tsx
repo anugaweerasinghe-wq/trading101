@@ -55,38 +55,38 @@ const orgSchema = {
   name: "TradeHQ",
   url: "https://tradinghq.vercel.app/",
   logo: "https://tradinghq.vercel.app/og-image.png",
-  sameAs: ["https://tradinghq.vercel.app/"],
+  sameAs: ["https://x.com/tradehq"],
 };
 
 const webAppSchema = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "TradeHQ — Free Trading Simulator",
+  name: "TradeHQ — Free Paper Trading Simulator",
   url: "https://tradinghq.vercel.app/",
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web Browser",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  description: "Practice stock & crypto trading free with $10,000 virtual cash. No signup needed.",
+  description: "Practice stock & crypto trading free with $10,000 virtual cash. No signup needed. 150+ assets, AI mentor, leaderboard.",
 };
 
 const Index = () => {
   return (
     <>
       <Helmet>
-        <title>TradeHQ — Free Stock & Crypto Trading Simulator | Practice with $10K Virtual Cash</title>
-        <meta name="description" content="Practice stock & crypto trading free with $10,000 virtual cash. No signup needed. 150+ real assets, AI mentoring, and a leaderboard. Start trading in seconds — TradeHQ 2026." />
+        <title>TradeHQ — Free Paper Trading Simulator 2026 | $10K Virtual Cash (No Signup)</title>
+        <meta name="description" content="Practice stocks, crypto, ETFs & forex with $10,000 virtual cash. Zero signup. AI mentor, live charts, leaderboard & 150+ assets. Best free trading simulator in 2026." />
         <link rel="canonical" href="https://tradinghq.vercel.app/" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="TradeHQ — Free Stock & Crypto Trading Simulator" />
-        <meta property="og:description" content="Practice stock & crypto trading free with $10,000 virtual cash. No signup needed. Start trading in seconds." />
+        <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator 2026 | $10K Virtual Cash (No Signup)" />
+        <meta property="og:description" content="Practice real trading risk-free with $10K virtual money. AI mentor + live charts. No signup needed. Start in seconds." />
         <meta property="og:url" content="https://tradinghq.vercel.app/" />
         <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="TradeHQ — Free Stock & Crypto Trading Simulator" />
-        <meta name="twitter:description" content="Practice trading free with $10,000 virtual cash. No signup needed. 150+ assets." />
+        <meta name="twitter:title" content="TradeHQ — Free Paper Trading Simulator 2026" />
+        <meta name="twitter:description" content="Practice stocks & crypto with $10K virtual cash. No signup. AI mentor included." />
         <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(homeFaqSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
