@@ -17,6 +17,40 @@ import { cn } from "@/lib/utils";
 type SortField = 'name' | 'price' | 'change' | 'volume';
 type SortOrder = 'asc' | 'desc';
 
+// NEW: sector + wiki data for internal linking
+const SECTORS = [
+  { id: "ai-tech", label: "AI & Tech", description: "Artificial intelligence, semiconductors & software" },
+  { id: "crypto-defi", label: "Crypto & DeFi", description: "Bitcoin, Ethereum & DeFi tokens" },
+  { id: "mega-cap", label: "Mega Cap", description: "World's largest companies by market cap" },
+  { id: "etf-indices", label: "ETFs & Indices", description: "Diversified funds tracking markets" },
+  { id: "forex-currencies", label: "Forex & Currencies", description: "Major and minor currency pairs" },
+  { id: "commodities", label: "Commodities", description: "Gold, oil, silver & agricultural markets" },
+];
+
+const WIKI_TERMS = [
+  { slug: "bear-trap", label: "Bear Trap" },
+  { slug: "bull-trap", label: "Bull Trap" },
+  { slug: "candlestick-patterns", label: "Candlestick Patterns" },
+  { slug: "death-cross", label: "Death Cross" },
+  { slug: "double-bottom", label: "Double Bottom" },
+  { slug: "fibonacci-retracement", label: "Fibonacci Retracement" },
+  { slug: "fomo", label: "FOMO" },
+  { slug: "fud", label: "FUD" },
+  { slug: "head-and-shoulders", label: "Head & Shoulders" },
+  { slug: "hodl-strategy", label: "HODL Strategy" },
+  { slug: "leverage-trading", label: "Leverage Trading" },
+  { slug: "limit-order-vs-market-order", label: "Limit vs Market Order" },
+  { slug: "macd", label: "MACD" },
+  { slug: "macd-histogram", label: "MACD Histogram" },
+  { slug: "order-block", label: "Order Block" },
+  { slug: "rsi-divergence", label: "RSI Divergence" },
+  { slug: "satoshi-nakamoto", label: "Satoshi Nakamoto" },
+  { slug: "short-squeeze", label: "Short Squeeze" },
+  { slug: "stop-loss-hunting", label: "Stop Loss Hunting" },
+  { slug: "support-and-resistance", label: "Support & Resistance" },
+  { slug: "whale-manipulation", label: "Whale Manipulation" },
+];
+
 export default function Markets() {
   const [assets, setAssets] = useState(ASSETS);
   const [search, setSearch] = useState("");
@@ -40,6 +74,7 @@ export default function Markets() {
     }
   };
 
+  // Calculate simulated volume based on price and change
   const getVolume = (asset: Asset) => Math.abs(asset.price * (100 + asset.change) * 10000);
 
   const filteredAssets = assets
@@ -108,6 +143,7 @@ export default function Markets() {
 
         <div className="flex-1 ml-16 p-3 md:p-6 animate-fade-in">
           <div className="max-w-7xl mx-auto space-y-6">
+
             {/* Static H1 Header - Renders immediately for Google */}
             <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 transition-all duration-300">
               <div>
@@ -130,7 +166,24 @@ export default function Markets() {
             {/* Topical Clusters + State of the Market 2026 Intro */}
             <MarketClusters assets={assets} />
 
-            {/* Top Movers */}
+            {/* ── NEW: Sector Directory for internal linking ── */}
+            <section aria-label="Market Sectors">
+              <h2 className="font-semibold text-base md:text-lg mb-3">Browse by Sector</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                {SECTORS.map(sector => (
+                  <Link
+                    key={sector.id}
+                    to={`/sectors/${sector.id}`}
+                    className="flex flex-col gap-1 p-4 rounded-xl bg-card border border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-200"
+                  >
+                    <span className="font-semibold text-sm text-foreground">{sector.label}</span>
+                    <span className="text-[10px] text-muted-foreground leading-snug">{sector.description}</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            {/* Top Movers - ORIGINAL links preserved using asset.id */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
               <div className="bg-card rounded-xl border border-border p-3 md:p-4 transition-all duration-300 hover:shadow-lg hover:border-primary/20">
                 <div className="flex items-center gap-2 mb-3 md:mb-4">
@@ -193,7 +246,7 @@ export default function Markets() {
               </div>
             </div>
 
-            {/* All Assets Table */}
+            {/* All Assets Table - ORIGINAL links preserved using asset.id */}
             <div className="bg-card rounded-xl border border-border overflow-hidden transition-all duration-300 hover:shadow-lg">
               <Tabs value={category} onValueChange={setCategory}>
                 <div className="p-2 md:p-4 border-b border-border overflow-x-auto">
@@ -278,7 +331,7 @@ export default function Markets() {
               </Tabs>
             </div>
 
-            {/* Complete Asset Directory for SEO Crawlability */}
+            {/* Complete Asset Directory - ORIGINAL uses asset.id, kept exactly */}
             <div className="bg-card/50 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6 mt-6">
               <h2 className="font-semibold text-base md:text-lg mb-2">
                 📊 Complete Asset Directory
@@ -324,6 +377,26 @@ export default function Markets() {
                 );
               })}
             </div>
+
+            {/* ── NEW: Trading Glossary for internal linking ── */}
+            <section aria-label="Trading Glossary" className="bg-card/50 backdrop-blur-xl rounded-2xl border border-white/10 p-4 md:p-6">
+              <h2 className="font-semibold text-base md:text-lg mb-2">📖 Trading Glossary</h2>
+              <p className="text-xs text-muted-foreground mb-4">
+                Master essential trading concepts before you trade:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {WIKI_TERMS.map(term => (
+                  <Link
+                    key={term.slug}
+                    to={`/wiki/${term.slug}`}
+                    className="inline-flex items-center min-h-[36px] px-3 py-1.5 text-xs font-medium rounded-full bg-primary/5 border border-primary/15 text-primary/80 hover:text-primary hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
+                  >
+                    {term.label}
+                  </Link>
+                ))}
+              </div>
+            </section>
+
           </div>
         </div>
       </div>
