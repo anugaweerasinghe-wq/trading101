@@ -29,6 +29,40 @@ const trendingTopics = [
   { id: "ai-trading", title: "AI-Driven Trading", subtitle: "Smart Strategies", description: "Leverage AI algorithms for market analysis and automated strategies.", icon: Brain, badge: "Innovation" },
 ];
 
+// NEW: for internal linking
+const WIKI_TERMS = [
+  { slug: "bear-trap", label: "Bear Trap" },
+  { slug: "bull-trap", label: "Bull Trap" },
+  { slug: "candlestick-patterns", label: "Candlestick Patterns" },
+  { slug: "death-cross", label: "Death Cross" },
+  { slug: "double-bottom", label: "Double Bottom" },
+  { slug: "fibonacci-retracement", label: "Fibonacci Retracement" },
+  { slug: "fomo", label: "FOMO" },
+  { slug: "fud", label: "FUD" },
+  { slug: "head-and-shoulders", label: "Head & Shoulders" },
+  { slug: "hodl-strategy", label: "HODL Strategy" },
+  { slug: "leverage-trading", label: "Leverage Trading" },
+  { slug: "limit-order-vs-market-order", label: "Limit vs Market Order" },
+  { slug: "macd", label: "MACD" },
+  { slug: "macd-histogram", label: "MACD Histogram" },
+  { slug: "order-block", label: "Order Block" },
+  { slug: "rsi-divergence", label: "RSI Divergence" },
+  { slug: "satoshi-nakamoto", label: "Satoshi Nakamoto" },
+  { slug: "short-squeeze", label: "Short Squeeze" },
+  { slug: "stop-loss-hunting", label: "Stop Loss Hunting" },
+  { slug: "support-and-resistance", label: "Support & Resistance" },
+  { slug: "whale-manipulation", label: "Whale Manipulation" },
+];
+
+const SECTORS = [
+  { id: "ai-tech", label: "AI & Tech" },
+  { id: "crypto-defi", label: "Crypto & DeFi" },
+  { id: "mega-cap", label: "Mega Cap" },
+  { id: "etf-indices", label: "ETFs & Indices" },
+  { id: "forex-currencies", label: "Forex & Currencies" },
+  { id: "commodities", label: "Commodities" },
+];
+
 export default function Learn() {
   const navigate = useNavigate();
 
@@ -59,18 +93,20 @@ export default function Learn() {
         <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
       </Helmet>
+
       <div className="min-h-screen bg-background">
         <Navigation />
         <main className="pt-32 pb-20">
           <div className="container mx-auto px-6 max-w-7xl">
-            {/* Breadcrumb */}
+
+            {/* Breadcrumb — ORIGINAL */}
             <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8 animate-fade-in" aria-label="Breadcrumb">
               <Link to="/" className="flex items-center gap-1 hover:text-primary transition-colors"><Home className="w-4 h-4" /><span>TradeHQ</span></Link>
               <ChevronRight className="w-4 h-4" />
               <span className="text-foreground font-medium">Learning</span>
             </nav>
 
-            {/* Hero */}
+            {/* Hero — ORIGINAL */}
             <div className="mb-16 text-center animate-fade-in">
               <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary">2026 Edition</Badge>
               <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
@@ -81,7 +117,7 @@ export default function Learn() {
               </p>
             </div>
 
-            {/* Article Cards */}
+            {/* Article Cards — ORIGINAL */}
             <div className="mb-20">
               <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                 <BookOpen className="w-6 h-6 text-primary" /> Featured Guides
@@ -101,7 +137,7 @@ export default function Learn() {
               </div>
             </div>
 
-            {/* Trending Topics */}
+            {/* Trending Topics — ORIGINAL */}
             <div className="mb-20">
               <h2 className="text-2xl font-bold mb-8 flex items-center gap-3"><TrendingUp className="w-6 h-6 text-primary" /> 2026 Market Trends</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -122,7 +158,7 @@ export default function Learn() {
               </div>
             </div>
 
-            {/* Course Grid */}
+            {/* Course Grid — ORIGINAL */}
             <h2 className="text-2xl font-bold mb-8">Core Courses</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
               {lessons.map((lesson, index) => {
@@ -157,7 +193,46 @@ export default function Learn() {
               })}
             </div>
 
-            {/* CTA */}
+            {/* ── NEW: Trading Wiki Glossary (internal linking for 21 wiki pages) ── */}
+            <section aria-label="Trading Wiki Glossary" className="mb-20">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                <BookOpen className="w-6 h-6 text-primary" /> Trading Wiki — Key Concepts
+              </h2>
+              <p className="text-muted-foreground mb-6">
+                Deep-dive guides on the most important trading terms and strategies:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {WIKI_TERMS.map(term => (
+                  <Link
+                    key={term.slug}
+                    to={`/wiki/${term.slug}`}
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-full bg-primary/5 border border-primary/15 text-primary/80 hover:text-primary hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
+                  >
+                    {term.label}
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            {/* ── NEW: Sector links (internal linking for 6 sector pages) ── */}
+            <section aria-label="Market Sectors" className="mb-20">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                <TrendingUp className="w-6 h-6 text-primary" /> Explore by Market Sector
+              </h2>
+              <div className="flex flex-wrap gap-3">
+                {SECTORS.map(sector => (
+                  <Link
+                    key={sector.id}
+                    to={`/sectors/${sector.id}`}
+                    className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-200"
+                  >
+                    {sector.label} →
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            {/* CTA — ORIGINAL */}
             <Card className="p-12 bg-gradient-to-br from-primary/5 via-background to-background border-primary/10 backdrop-blur-xl">
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-4xl font-bold mb-6">Ready to Start Trading?</h2>
@@ -169,6 +244,7 @@ export default function Learn() {
                 </Link>
               </div>
             </Card>
+
           </div>
         </main>
         <MegaFooter />
