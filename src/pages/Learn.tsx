@@ -86,6 +86,8 @@ export default function Learn() {
         <meta property="og:description" content="Master trading with free beginner-to-advanced lessons. Practice instantly with $10K virtual cash. No signup required." />
         <meta property="og:url" content="https://tradinghq.vercel.app/learn" />
         <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Learn Trading 2026 — Free Beginner to Advanced Guides" />
