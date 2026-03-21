@@ -139,7 +139,7 @@ export default function Trade() {
   const handleToggleFavorite = useCallback((assetId: string) => { toggleFavorite(assetId); setFavorites(getFavorites()); }, []);
   const handleAssetSelect = useCallback((asset: Asset) => { setSelectedAsset(asset); }, []);
 
-  // Dynamic per-symbol SEO (Grok improvement — helps index individual asset pages)
+  // Dynamic SEO — unique title/description per asset page, lowercase canonical matches GSC URLs
   const pageTitle = symbol
     ? `Trade ${symbol.toUpperCase()} — Free Simulator with $10K Virtual Cash | TradeHQ`
     : "Free Trading Simulator — Buy Stocks, ETFs & Crypto with $10K | TradeHQ";
@@ -148,7 +148,7 @@ export default function Trade() {
     ? `Practice trading ${symbol.toUpperCase()} with $10,000 virtual cash. Real-time charts, AI mentor & zero risk. No signup required — TradeHQ 2026.`
     : "Use our free trading simulator to buy stocks, ETFs, and crypto with $10K virtual money. Real-time practice, zero risk. No signup required.";
 
-  const pageUrl = `https://tradinghq.vercel.app/trade${symbol ? `/${symbol.toUpperCase()}` : ""}`;
+  const pageUrl = `https://tradinghq.vercel.app/trade${symbol ? `/${symbol.toLowerCase()}` : ""}`;
 
   return (
     <>
@@ -161,6 +161,8 @@ export default function Trade() {
         <meta property="og:description" content={pageDescription} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
@@ -211,7 +213,7 @@ export default function Trade() {
                 {assets.filter(a => a.id !== selectedAsset?.id).slice(0, 12).map(asset => {
                   const isUp = asset.changePercent >= 0;
                   return (
-                    <Link key={asset.id} to={`/trade/${asset.symbol}`} className="group relative glass-tactile rounded-xl p-4 border-chrome hover:border-primary/30 transition-all duration-200 hover:scale-[1.03]">
+                    <Link key={asset.id} to={`/trade/${asset.symbol.toLowerCase()}`} className="group relative glass-tactile rounded-xl p-4 border-chrome hover:border-primary/30 transition-all duration-200 hover:scale-[1.03]">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">{asset.symbol}</span>
                         <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${isUp ? 'bg-profit/10 text-profit' : 'bg-loss/10 text-loss'}`}>{isUp ? '+' : ''}{asset.changePercent.toFixed(1)}%</span>
