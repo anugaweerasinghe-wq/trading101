@@ -1,60 +1,90 @@
 import { Link } from "react-router-dom";
 import { Position } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PositionsTableProps {
   positions: Position[];
 }
 
-function fmtPrice(n: number): string {
-  return n < 1 ? `$${n.toFixed(4)}` : `$${n.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+function formatMoney(value: number) {
+  if (Math.abs(value) < 1) return `$${value.toFixed(4)}`;
+  return `$${value.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 }
 
 function PnlBar({ percent }: { percent: number }) {
-  const capped = Math.min(Math.abs(percent), 50); // cap visual width
-  const width = Math.max(capped * 2, 4); // minimum 4px visible
+  const capped = Math.min(Math.abs(percent), 50);
+  const width = Math.max(capped * 2, 4);
+
   return (
-    <div className="w-16 h-1.5 rounded-full bg-muted overflow-hidden">
+    <div className="h-1.5 w-16 overflow-hidden rounded-full bg-muted">
       <div
-        className={cn("h-full rounded-full transition-all", percent >= 0 ? "bg-profit" : "bg-loss")}
+        className={cn(
+          "h-full rounded-full transition-all",
+          percent >= 0 ? "bg-profit" : "bg-loss",
+        )}
         style={{ width: `${width}%` }}
       />
     </div>
   );
 }
 
-/* Desktop table row */
+function TypeBadge({ type }: { type: string }) {
+  return (
+    <Badge
+      variant="outline"
+      className="border-white/10 bg-white/5 text-[10px] uppercase tracking-wide text-muted-foreground"
+    >
+      {type}
+    </Badge>
+  );
+}
+
 function DesktopRow({ position }: { position: Position }) {
   const isUp = position.profitLoss >= 0;
+
   return (
-    <tr className={cn(
-      "border-b border-border/30 transition-colors hover:bg-muted/30",
-      isUp ? "hover:bg-profit/[0.03]" : "hover:bg-loss/[0.03]"
-    )}>
-      <td className="py-3.5 pr-3">
-        <Link to={`/trade/${position.asset.symbol.toLowerCase()}`} className="flex items-center gap-2.5 group">
-          <div>
-            <span className="font-semibold text-sm group-hover:text-primary transition-colors">{position.asset.symbol}</span>
-            <span className="block text-2xs text-muted-foreground truncate max-w-[120px]">{position.asset.name}</span>
+    <tr
+      className={cn(
+        "border-b border-border/30 transition-colors hover:bg-muted/30",
+        isUp ? "hover:bg-profit/[0.03]" : "hover:bg-loss/[0.03]",
+      )}
+    >
+      <td className="px-4 py-4">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold">{position.asset.symbol}</span>
+            <TypeBadge type={position.asset.type} />
           </div>
-          <Badge variant="outline" className="text-2xs uppercase tracking-wider border-border/40 hidden sm:inline-flex">
-            {position.asset.type}
-          </Badge>
-        </Link>
+          <span className="text-sm text-muted-foreground">
+            {position.asset.name}
+          </span>
+        </div>
       </td>
-      <td className="py-3.5 text-right tabular-nums text-sm text-muted-foreground">{fmtPrice(position.avgPrice)}</td>
-      <td className="py-3.5 text-right tabular-nums text-sm font-medium">{fmtPrice(position.asset.price)}</td>
-      <td className="py-3.5 text-right tabular-nums text-sm text-muted-foreground">{position.quantity.toFixed(4)}</td>
-      <td className="py-3.5 text-right tabular-nums text-sm font-medium">{fmtPrice(position.currentValue)}</td>
-      <td className={cn("py-3.5 text-right tabular-nums text-sm font-semibold", isUp ? "text-profit" : "text-loss")}>
-        {isUp ? "+" : ""}${position.profitLoss.toFixed(2)}
+      <td className="px-4 py-4 tabular-nums">{formatMoney(position.avgPrice)}</td>
+      <td className="px-4 py-4 tabular-nums">{formatMoney(position.asset.price)}</td>
+      <td className="px-4 py-4 tabular-nums">{position.quantity.toFixed(4)}</td>
+      <td className="px-4 py-4 tabular-nums">{formatMoney(position.currentValue)}</td>
+      <td
+        className={cn(
+          "px-4 py-4 tabular-nums font-medium",
+          isUp ? "text-profit" : "text-loss",
+        )}
+      >
+        {isUp ? "+" : ""}
+        {formatMoney(position.profitLoss).replace("$", "$")}
       </td>
-      <td className="py-3.5 text-right">
-        <div className="flex items-center justify-end gap-2">
-          <span className={cn("text-sm tabular-nums font-medium", isUp ? "text-profit" : "text-loss")}>
-            {isUp ? "+" : ""}{position.profitLossPercent.toFixed(2)}%
+      <td className="px-4 py-4">
+        <div className="flex items-center justify-end gap-3">
+          <span
+            className={cn(
+              "tabular-nums text-sm font-medium",
+              isUp ? "text-profit" : "text-loss",
+            )}
+          >
+            {isUp ? "+" : ""}
+            {position.profitLossPercent.toFixed(2)}%
           </span>
           <PnlBar percent={position.profitLossPercent} />
         </div>
@@ -63,65 +93,85 @@ function DesktopRow({ position }: { position: Position }) {
   );
 }
 
-/* Mobile card */
 function MobileCard({ position }: { position: Position }) {
   const isUp = position.profitLoss >= 0;
+
   return (
-    <Link
-      to={`/trade/${position.asset.symbol.toLowerCase()}`}
-      className={cn(
-        "block glass-tactile border-chrome rounded-xl p-4 transition-all hover:border-primary/30",
-        isUp ? "hover:bg-profit/[0.03]" : "hover:bg-loss/[0.03]"
-      )}
-    >
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-base">{position.asset.symbol}</span>
-          <Badge variant="outline" className="text-2xs uppercase border-border/40">{position.asset.type}</Badge>
-        </div>
-        <div className="flex items-center gap-1">
-          {isUp ? <TrendingUp className="w-3.5 h-3.5 text-profit" /> : <TrendingDown className="w-3.5 h-3.5 text-loss" />}
-          <span className={cn("text-sm font-semibold tabular-nums", isUp ? "text-profit" : "text-loss")}>
-            {isUp ? "+" : ""}{position.profitLossPercent.toFixed(2)}%
-          </span>
-        </div>
-      </div>
-      <div className="grid grid-cols-2 gap-y-2 text-sm">
+    <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4">
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <span className="text-2xs text-muted-foreground uppercase">Entry</span>
-          <p className="tabular-nums text-muted-foreground">{fmtPrice(position.avgPrice)}</p>
-        </div>
-        <div className="text-right">
-          <span className="text-2xs text-muted-foreground uppercase">Current</span>
-          <p className="tabular-nums font-medium">{fmtPrice(position.asset.price)}</p>
-        </div>
-        <div>
-          <span className="text-2xs text-muted-foreground uppercase">Qty</span>
-          <p className="tabular-nums text-muted-foreground">{position.quantity.toFixed(4)}</p>
-        </div>
-        <div className="text-right">
-          <span className="text-2xs text-muted-foreground uppercase">P&L</span>
-          <p className={cn("tabular-nums font-semibold", isUp ? "text-profit" : "text-loss")}>
-            {isUp ? "+" : ""}${position.profitLoss.toFixed(2)}
+          <div className="flex items-center gap-2">
+            <h3 className="font-semibold">{position.asset.symbol}</h3>
+            <TypeBadge type={position.asset.type} />
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {position.asset.name}
           </p>
         </div>
+
+        <div
+          className={cn(
+            "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold",
+            isUp
+              ? "bg-profit/10 text-profit"
+              : "bg-loss/10 text-loss",
+          )}
+        >
+          {isUp ? <TrendingUp className="h-3.5 w-3.5" /> : <TrendingDown className="h-3.5 w-3.5" />}
+          {isUp ? "+" : ""}
+          {position.profitLossPercent.toFixed(2)}%
+        </div>
       </div>
-      <div className="mt-2.5">
+
+      <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+        <div>
+          <p className="text-muted-foreground">Entry</p>
+          <p className="mt-1 font-medium tabular-nums">{formatMoney(position.avgPrice)}</p>
+        </div>
+        <div>
+          <p className="text-muted-foreground">Current</p>
+          <p className="mt-1 font-medium tabular-nums">{formatMoney(position.asset.price)}</p>
+        </div>
+        <div>
+          <p className="text-muted-foreground">Qty</p>
+          <p className="mt-1 font-medium tabular-nums">{position.quantity.toFixed(4)}</p>
+        </div>
+        <div>
+          <p className="text-muted-foreground">Value</p>
+          <p className="mt-1 font-medium tabular-nums">{formatMoney(position.currentValue)}</p>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center justify-between">
+        <div>
+          <p className="text-muted-foreground text-sm">P&amp;L</p>
+          <p
+            className={cn(
+              "mt-1 font-semibold tabular-nums",
+              isUp ? "text-profit" : "text-loss",
+            )}
+          >
+            {isUp ? "+" : ""}
+            {formatMoney(position.profitLoss).replace("$", "$")}
+          </p>
+        </div>
         <PnlBar percent={position.profitLossPercent} />
       </div>
-    </Link>
+    </div>
   );
 }
 
 export function PositionsTable({ positions }: PositionsTableProps) {
   if (positions.length === 0) {
     return (
-      <div className="glass-tactile border-chrome rounded-2xl p-12 text-center space-y-3">
-        <p className="text-lg text-muted-foreground">No positions yet</p>
-        <p className="text-sm text-muted-foreground">Start trading to build your portfolio and track performance.</p>
+      <div className="glass-tactile border-chrome rounded-2xl p-8 text-center">
+        <h3 className="text-xl font-semibold">No positions yet</h3>
+        <p className="mt-2 text-muted-foreground">
+          Start trading to build your portfolio and track performance.
+        </p>
         <Link
           to="/trade"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors btn-squeeze"
+          className="mt-5 inline-flex rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
         >
           Start Trading →
         </Link>
@@ -129,37 +179,42 @@ export function PositionsTable({ positions }: PositionsTableProps) {
     );
   }
 
-  // Sort: biggest P&L% first
-  const sorted = [...positions].sort((a, b) => b.profitLossPercent - a.profitLossPercent);
+  const sorted = [...positions].sort(
+    (a, b) => b.profitLossPercent - a.profitLossPercent,
+  );
 
   return (
     <>
-      {/* Desktop table */}
-      <div className="hidden md:block glass-tactile border-chrome rounded-2xl overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-border/40">
-              <th className="text-left py-3 px-4 text-2xs uppercase tracking-wider text-muted-foreground font-medium">Asset</th>
-              <th className="text-right py-3 px-4 text-2xs uppercase tracking-wider text-muted-foreground font-medium">Entry</th>
-              <th className="text-right py-3 px-4 text-2xs uppercase tracking-wider text-muted-foreground font-medium">Current</th>
-              <th className="text-right py-3 px-4 text-2xs uppercase tracking-wider text-muted-foreground font-medium">Qty</th>
-              <th className="text-right py-3 px-4 text-2xs uppercase tracking-wider text-muted-foreground font-medium">Value</th>
-              <th className="text-right py-3 px-4 text-2xs uppercase tracking-wider text-muted-foreground font-medium">P&L</th>
-              <th className="text-right py-3 px-4 text-2xs uppercase tracking-wider text-muted-foreground font-medium">Return</th>
+      <div className="hidden overflow-hidden rounded-2xl border border-white/8 md:block">
+        <table className="w-full">
+          <thead className="bg-white/[0.03] text-left text-xs uppercase tracking-wide text-muted-foreground">
+            <tr>
+              <th className="px-4 py-3">Asset</th>
+              <th className="px-4 py-3">Entry</th>
+              <th className="px-4 py-3">Current</th>
+              <th className="px-4 py-3">Qty</th>
+              <th className="px-4 py-3">Value</th>
+              <th className="px-4 py-3">P&amp;L</th>
+              <th className="px-4 py-3 text-right">Return</th>
             </tr>
           </thead>
-          <tbody className="px-4">
-            {sorted.map((p) => (
-              <DesktopRow key={p.asset.id} position={p} />
+          <tbody>
+            {sorted.map((position) => (
+              <DesktopRow
+                key={`${position.asset.id}-${position.quantity}-${position.avgPrice}`}
+                position={position}
+              />
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* Mobile cards */}
-      <div className="md:hidden grid gap-3">
-        {sorted.map((p) => (
-          <MobileCard key={p.asset.id} position={p} />
+      <div className="space-y-3 md:hidden">
+        {sorted.map((position) => (
+          <MobileCard
+            key={`${position.asset.id}-${position.quantity}-${position.avgPrice}`}
+            position={position}
+          />
         ))}
       </div>
     </>
