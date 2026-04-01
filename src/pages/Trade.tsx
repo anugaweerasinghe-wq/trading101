@@ -5,6 +5,8 @@ import { Navigation } from "@/components/Navigation";
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
 import { MinimalistOrderPanel } from "@/components/trading/MinimalistOrderPanel";
+import { AssetContextCard } from "@/components/trading/AssetContextCard";
+import { MarketInsightPanel } from "@/components/trading/MarketInsightPanel";
 import { NeuralPulseChart } from "@/components/trading/NeuralPulseChart";
 import { MinimalistPortfolioBar } from "@/components/trading/MinimalistPortfolioBar";
 import { AIMentor } from "@/components/trading/AIMentor";
