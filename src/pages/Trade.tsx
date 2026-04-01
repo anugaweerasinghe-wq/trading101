@@ -186,11 +186,14 @@ export default function Trade() {
             }} />
           </div>
 
+          {selectedAsset && !isLoading && <AssetContextCard asset={selectedAsset} />}
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-4">
               <div className="glass-tactile border-chrome rounded-2xl h-[500px] overflow-hidden">
                 {isLoading ? <ChartSkeleton /> : selectedAsset && <MinimalistAreaChart asset={selectedAsset} />}
               </div>
+              {selectedAsset && !isLoading && <MarketInsightPanel asset={selectedAsset} />}
             </div>
             <div className="hidden lg:block">
               <MinimalistOrderPanel asset={selectedAsset} availableCash={portfolio.cash} portfolio={portfolio} onTrade={handleTrade} />

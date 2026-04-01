@@ -261,54 +261,15 @@ export default function Portfolio() {
               </Card>
             </div>
 
+            {/* AI Insight Summary */}
+            <div className="mb-8">
+              <AIInsightSummary portfolio={portfolio} />
+            </div>
+
             {/* Positions */}
             <div className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Positions</h2>
-              {portfolio.positions.length === 0 ? (
-                <Card className="p-12 text-center">
-                  <p className="text-xl text-muted-foreground">No positions yet. Start trading to build your portfolio!</p>
-                </Card>
-              ) : (
-                <div className="grid gap-4">
-                  {portfolio.positions.map((position) => (
-                    <Card key={position.asset.id} className="p-6 bg-card/50 backdrop-blur-sm">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div>
-                            <div className="flex items-center gap-3 mb-1">
-                              <h3 className="text-2xl font-bold">{position.asset.symbol}</h3>
-                              <Badge variant="outline" className="capitalize">
-                                {position.asset.type}
-                              </Badge>
-                            </div>
-                            <p className="text-sm text-muted-foreground">{position.asset.name}</p>
-                          </div>
-                        </div>
-
-                        <div className="text-right">
-                          <p className="text-sm text-muted-foreground mb-1">
-                            {position.quantity} shares @ ${position.avgPrice.toFixed(2)}
-                          </p>
-                          <p className="text-2xl font-bold mb-1">
-                            ${position.currentValue.toFixed(2)}
-                          </p>
-                          <p className={cn(
-                            "text-sm font-medium flex items-center justify-end gap-1",
-                            position.profitLoss >= 0 ? "text-success" : "text-destructive"
-                          )}>
-                            {position.profitLoss >= 0 ? (
-                              <TrendingUp className="w-4 h-4" />
-                            ) : (
-                              <TrendingDown className="w-4 h-4" />
-                            )}
-                            {position.profitLoss >= 0 ? '+' : ''}${position.profitLoss.toFixed(2)} ({position.profitLoss >= 0 ? '+' : ''}{position.profitLossPercent.toFixed(2)}%)
-                          </p>
-                        </div>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              )}
+              <h2 className="text-2xl font-bold mb-5">Positions</h2>
+              <PositionsTable positions={portfolio.positions} />
             </div>
 
             {/* Trade Performance Analytics */}
