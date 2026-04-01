@@ -170,7 +170,19 @@ export function MinimalistOrderPanel({ asset, availableCash, portfolio, onTrade 
             <span>Total</span>
             <span className="tabular-nums">${totalWithFee.toFixed(2)}</span>
           </div>
+          {quantity > 0 && (
+            <p className="text-2xs text-muted-foreground pt-1">
+              Est. position after trade: ${(quantity * price).toFixed(2)}
+            </p>
+          )}
         </div>
+
+        {/* Order confirmation hint */}
+        {quantity > 0 && (
+          <p className="text-2xs text-muted-foreground text-center -mt-2">
+            You are placing a market {side} for {quantity.toFixed(4)} {asset.symbol} at ~${formatPrice(price, asset.type)}
+          </p>
+        )}
 
         {/* Submit Button */}
         <button

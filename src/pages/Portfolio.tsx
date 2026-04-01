@@ -20,6 +20,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart, Gift, Bell, BellOff } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AIInsightSummary } from "@/components/portfolio/AIInsightSummary";
+import { PositionsTable } from "@/components/portfolio/PositionsTable";
 import { useToast } from "@/hooks/use-toast";
 import { 
   requestNotificationPermission, 
@@ -152,39 +154,32 @@ export default function Portfolio() {
           </div>
           <div className="container mx-auto px-6">
             {/* Static H1 Header - Renders immediately for Google */}
-            <header className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio Dashboard</h1>
-                <p className="text-muted-foreground mt-2">Track your virtual investments, analyze performance, and manage simulated risk.</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <Button
-                  onClick={handleToggleNotifications}
-                  size="lg"
-                  variant="outline"
-                  className="gap-2"
-                >
-                  {notificationsEnabled ? (
-                    <>
-                      <Bell className="w-5 h-5" />
-                      Notifications On
-                    </>
-                  ) : (
-                    <>
-                      <BellOff className="w-5 h-5" />
-                      Enable Notifications
-                    </>
-                  )}
-                </Button>
-                <Button
-                  onClick={handleClaimBonus}
-                  disabled={!canClaim}
-                  size="lg"
-                  className="gap-2"
-                >
-                  <Gift className="w-5 h-5" />
-                  {canClaim ? "Claim $10,000 Bonus" : `Next Bonus: ${getTimeUntilNextBonus()}`}
-                </Button>
+            <header className="mb-8">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio Dashboard</h1>
+                  <p className="text-sm text-muted-foreground mt-1.5">Track your virtual investments, analyze performance, and manage simulated risk.</p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Button
+                    onClick={handleToggleNotifications}
+                    size="sm"
+                    variant="outline"
+                    className="gap-1.5 text-xs"
+                  >
+                    {notificationsEnabled ? <Bell className="w-4 h-4" /> : <BellOff className="w-4 h-4" />}
+                    {notificationsEnabled ? "Alerts On" : "Alerts"}
+                  </Button>
+                  <Button
+                    onClick={handleClaimBonus}
+                    disabled={!canClaim}
+                    size="sm"
+                    className="gap-1.5 text-xs"
+                  >
+                    <Gift className="w-4 h-4" />
+                    {canClaim ? "Claim Bonus" : `${getTimeUntilNextBonus()}`}
+                  </Button>
+                </div>
               </div>
             </header>
 
@@ -204,113 +199,77 @@ export default function Portfolio() {
 
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-5 bg-card/50 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <Wallet className="w-5 h-5 text-primary" />
+                  <div className="w-9 h-9 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <Wallet className="w-4 h-4 text-primary" />
                   </div>
-                  <span className="text-sm text-muted-foreground">Total Value</span>
+                  <span className="text-xs text-muted-foreground">Total Value</span>
                 </div>
-                <p className="text-3xl font-bold">${portfolio.totalValue.toFixed(2)}</p>
+                <p className="text-2xl font-bold tabular-nums">${portfolio.totalValue.toFixed(2)}</p>
+                <p className="text-2xs text-muted-foreground mt-0.5">Cash + Positions</p>
               </Card>
 
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-5 bg-card/50 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-success/20 flex items-center justify-center">
-                    <DollarSign className="w-5 h-5 text-success" />
+                  <div className="w-9 h-9 rounded-lg bg-success/20 flex items-center justify-center">
+                    <DollarSign className="w-4 h-4 text-success" />
                   </div>
-                  <span className="text-sm text-muted-foreground">Cash</span>
+                  <span className="text-xs text-muted-foreground">Available Cash</span>
                 </div>
-                <p className="text-3xl font-bold">${portfolio.cash.toFixed(2)}</p>
+                <p className="text-2xl font-bold tabular-nums">${portfolio.cash.toFixed(2)}</p>
+                <p className="text-2xs text-muted-foreground mt-0.5">Ready to deploy</p>
               </Card>
 
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-5 bg-card/50 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <PieChart className="w-5 h-5 text-primary" />
+                  <div className="w-9 h-9 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <PieChart className="w-4 h-4 text-primary" />
                   </div>
-                  <span className="text-sm text-muted-foreground">Positions</span>
+                  <span className="text-xs text-muted-foreground">Invested</span>
                 </div>
-                <p className="text-3xl font-bold">${totalPositionValue.toFixed(2)}</p>
+                <p className="text-2xl font-bold tabular-nums">${totalPositionValue.toFixed(2)}</p>
+                <p className="text-2xs text-muted-foreground mt-0.5">{portfolio.positions.length} position{portfolio.positions.length !== 1 ? "s" : ""}</p>
               </Card>
 
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-5 bg-card/50 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-2">
                   <div className={cn(
-                    "w-10 h-10 rounded-lg flex items-center justify-center",
+                    "w-9 h-9 rounded-lg flex items-center justify-center",
                     totalProfitLoss >= 0 ? "bg-success/20" : "bg-destructive/20"
                   )}>
                     {totalProfitLoss >= 0 ? (
-                      <TrendingUp className="w-5 h-5 text-success" />
+                      <TrendingUp className="w-4 h-4 text-success" />
                     ) : (
-                      <TrendingDown className="w-5 h-5 text-destructive" />
+                      <TrendingDown className="w-4 h-4 text-destructive" />
                     )}
                   </div>
-                  <span className="text-sm text-muted-foreground">P&L</span>
+                  <span className="text-xs text-muted-foreground">Unrealized P&L</span>
                 </div>
                 <p className={cn(
-                  "text-3xl font-bold",
+                  "text-2xl font-bold tabular-nums",
                   totalProfitLoss >= 0 ? "text-success" : "text-destructive"
                 )}>
                   {totalProfitLoss >= 0 ? '+' : ''}${totalProfitLoss.toFixed(2)}
                 </p>
                 <p className={cn(
-                  "text-sm",
+                  "text-2xs mt-0.5",
                   totalProfitLoss >= 0 ? "text-success" : "text-destructive"
                 )}>
-                  {totalProfitLoss >= 0 ? '+' : ''}{totalProfitLossPercent.toFixed(2)}%
+                  {totalProfitLoss >= 0 ? '+' : ''}{totalProfitLossPercent.toFixed(2)}% overall
                 </p>
               </Card>
             </div>
 
+            {/* AI Insight Summary */}
+            <div className="mb-8">
+              <AIInsightSummary portfolio={portfolio} />
+            </div>
+
             {/* Positions */}
             <div className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Positions</h2>
-              {portfolio.positions.length === 0 ? (
-                <Card className="p-12 text-center">
-                  <p className="text-xl text-muted-foreground">No positions yet. Start trading to build your portfolio!</p>
-                </Card>
-              ) : (
-                <div className="grid gap-4">
-                  {portfolio.positions.map((position) => (
-                    <Card key={position.asset.id} className="p-6 bg-card/50 backdrop-blur-sm">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div>
-                            <div className="flex items-center gap-3 mb-1">
-                              <h3 className="text-2xl font-bold">{position.asset.symbol}</h3>
-                              <Badge variant="outline" className="capitalize">
-                                {position.asset.type}
-                              </Badge>
-                            </div>
-                            <p className="text-sm text-muted-foreground">{position.asset.name}</p>
-                          </div>
-                        </div>
-
-                        <div className="text-right">
-                          <p className="text-sm text-muted-foreground mb-1">
-                            {position.quantity} shares @ ${position.avgPrice.toFixed(2)}
-                          </p>
-                          <p className="text-2xl font-bold mb-1">
-                            ${position.currentValue.toFixed(2)}
-                          </p>
-                          <p className={cn(
-                            "text-sm font-medium flex items-center justify-end gap-1",
-                            position.profitLoss >= 0 ? "text-success" : "text-destructive"
-                          )}>
-                            {position.profitLoss >= 0 ? (
-                              <TrendingUp className="w-4 h-4" />
-                            ) : (
-                              <TrendingDown className="w-4 h-4" />
-                            )}
-                            {position.profitLoss >= 0 ? '+' : ''}${position.profitLoss.toFixed(2)} ({position.profitLoss >= 0 ? '+' : ''}{position.profitLossPercent.toFixed(2)}%)
-                          </p>
-                        </div>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              )}
+              <h2 className="text-2xl font-bold mb-5">Positions</h2>
+              <PositionsTable positions={portfolio.positions} />
             </div>
 
             {/* Trade Performance Analytics */}
