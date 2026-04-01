@@ -154,39 +154,32 @@ export default function Portfolio() {
           </div>
           <div className="container mx-auto px-6">
             {/* Static H1 Header - Renders immediately for Google */}
-            <header className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio Dashboard</h1>
-                <p className="text-muted-foreground mt-2">Track your virtual investments, analyze performance, and manage simulated risk.</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <Button
-                  onClick={handleToggleNotifications}
-                  size="lg"
-                  variant="outline"
-                  className="gap-2"
-                >
-                  {notificationsEnabled ? (
-                    <>
-                      <Bell className="w-5 h-5" />
-                      Notifications On
-                    </>
-                  ) : (
-                    <>
-                      <BellOff className="w-5 h-5" />
-                      Enable Notifications
-                    </>
-                  )}
-                </Button>
-                <Button
-                  onClick={handleClaimBonus}
-                  disabled={!canClaim}
-                  size="lg"
-                  className="gap-2"
-                >
-                  <Gift className="w-5 h-5" />
-                  {canClaim ? "Claim $10,000 Bonus" : `Next Bonus: ${getTimeUntilNextBonus()}`}
-                </Button>
+            <header className="mb-8">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">Portfolio Dashboard</h1>
+                  <p className="text-sm text-muted-foreground mt-1.5">Track your virtual investments, analyze performance, and manage simulated risk.</p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Button
+                    onClick={handleToggleNotifications}
+                    size="sm"
+                    variant="outline"
+                    className="gap-1.5 text-xs"
+                  >
+                    {notificationsEnabled ? <Bell className="w-4 h-4" /> : <BellOff className="w-4 h-4" />}
+                    {notificationsEnabled ? "Alerts On" : "Alerts"}
+                  </Button>
+                  <Button
+                    onClick={handleClaimBonus}
+                    disabled={!canClaim}
+                    size="sm"
+                    className="gap-1.5 text-xs"
+                  >
+                    <Gift className="w-4 h-4" />
+                    {canClaim ? "Claim Bonus" : `${getTimeUntilNextBonus()}`}
+                  </Button>
+                </div>
               </div>
             </header>
 
