@@ -1,10 +1,13 @@
-import { useState, useCallback, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { Loader2 } from "lucide-react";
 import { Asset, Portfolio } from "@/lib/types";
 import { formatPrice } from "@/lib/assets";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
 import { GhostJournalToggle } from "./GhostJournalToggle";
-import { RevengeTradingBlocker, isRevengeTrade } from "./RevengeTradingBlocker";
+import {
+  RevengeTradingBlocker,
+  isRevengeTrade,
+} from "./RevengeTradingBlocker";
 
 interface MinimalistOrderPanelProps {
   asset: Asset | null;
@@ -12,48 +15,72 @@ interface MinimalistOrderPanelProps {
   portfolio?: Portfolio;
   onTrade: (
     asset: Asset,
-    type: 'buy' | 'sell',
+    type: "buy" | "sell",
     quantity: number,
-    orderType?: 'market' | 'limit',
+    orderType?: "market" | "limit",
     limitPrice?: number,
-    rationale?: string
+    rationale?: string,
   ) => void;
 }
 
-export function MinimalistOrderPanel({ asset, availableCash, portfolio, onTrade }: MinimalistOrderPanelProps) {
-  const [side, setSide] = useState<'buy' | 'sell'>('buy');
+export function MinimalistOrderPanel({
+  asset,
+  availableCash,
+  portfolio,
+  onTrade,
+}: MinimalistOrderPanelProps) {
+  const [side, setSide] = useState<"buy" | "sell">("buy");
   const [amount, setAmount] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [journalEnabled, setJournalEnabled] = useState(false);
   const [rationale, setRationale] = useState("");
   const [showRevengeBlocker, setShowRevengeBlocker] = useState(false);
 
-  const lastSubmitTime = useRef<number>(0);
+  const lastSubmitTime = useRef(0);
   const DEBOUNCE_MS = 1000;
 
-  const price = asset?.price || 0;
+  const price = asset?.price ?? 0;
   const quantity = amount ? parseFloat(amount) : 0;
   const total = quantity * price;
   const fee = total * 0.001;
-  const totalWithFee = side === 'buy' ? total + fee : total - fee;
-  const maxBuyQuantity = price > 0 ? availableCash / (price * 1.001) : 0;
+  const totalWithFee = side === "buy" ? total + fee : total - fee;
 
-  const handleQuickAmount = useCallback((percentage: number) => {
-    const maxAmount = side === 'buy' ? maxBuyQuantity : 0;
-    setAmount((maxAmount * percentage).toFixed(4));
-  }, [side, maxBuyQuantity]);
+  const currentPosition = useMemo(() => {
+    if (!asset || !portfolio) return undefined;
+    return portfolio.positions.find((position) => position.asset.id === asset.id);
+  }, [asset, portfolio]);
+
+  const maxBuyQuantity = price > 0 ? availableCash / (price * 1.001) : 0;
+  const maxSellQuantity = currentPosition?.quantity ?? 0;
+  const maxActionQuantity = side === "buy" ? maxBuyQuantity : maxSellQuantity;
+
+  const handleQuickAmount = useCallback(
+    (percentage: number) => {
+      if (maxActionQuantity <= 0) return;
+      setAmount((maxActionQuantity * percentage).toFixed(4));
+    },
+    [maxActionQuantity],
+  );
 
   const executeTrade = useCallback(async () => {
     if (!asset || !quantity || quantity <= 0) return;
+
     setIsSubmitting(true);
     try {
-      await onTrade(asset, side, quantity, 'market', undefined, journalEnabled ? rationale : undefined);
+      await onTrade(
+        asset,
+        side,
+        quantity,
+        "market",
+        undefined,
+        journalEnabled ? rationale : undefined,
+      );
       setAmount("");
       setRationale("");
     } finally {
       setTimeout(() => setIsSubmitting(false), 300);
     }
-  }, [asset, side, quantity, onTrade, journalEnabled, rationale]);
+  }, [asset, quantity, onTrade, journalEnabled, rationale, side]);
 
   const handleSubmit = useCallback(async () => {
     if (!asset || !quantity || quantity <= 0) return;
@@ -64,7 +91,6 @@ export function MinimalistOrderPanel({ asset, availableCash, portfolio, onTrade 
 
     if (journalEnabled && !rationale.trim()) return;
 
-    // Revenge trading detection
     const balance = portfolio?.totalValue || availableCash;
     if (isRevengeTrade(total, balance)) {
       setShowRevengeBlocker(true);
@@ -72,83 +98,104 @@ export function MinimalistOrderPanel({ asset, availableCash, portfolio, onTrade 
     }
 
     await executeTrade();
-  }, [asset, quantity, journalEnabled, rationale, portfolio, availableCash, total, executeTrade]);
+  }, [
+    asset,
+    quantity,
+    journalEnabled,
+    rationale,
+    portfolio,
+    availableCash,
+    total,
+    executeTrade,
+  ]);
 
-  const isValid = asset && quantity > 0 && (side === 'buy' ? totalWithFee <= availableCash : true) && !isSubmitting && (!journalEnabled || rationale.trim().length > 0);
+  const hasEnoughCash = side === "buy" ? totalWithFee <= availableCash : true;
+  const hasEnoughToSell = side === "sell" ? quantity <= maxSellQuantity : true;
+
+  const isValid =
+    !!asset &&
+    quantity > 0 &&
+    hasEnoughCash &&
+    hasEnoughToSell &&
+    !isSubmitting &&
+    (!journalEnabled || rationale.trim().length > 0);
 
   if (!asset) {
     return (
-      <div className="glass-liquid rounded-2xl p-6 text-center">
-        <p className="text-muted-foreground">Select an asset to trade</p>
+      <div className="glass-tactile border-chrome rounded-2xl p-6 text-center text-muted-foreground">
+        Select an asset to trade
       </div>
     );
   }
 
   return (
     <>
-      <div className="glass-tactile rounded-2xl p-5 space-y-5 border-chrome">
-        {/* Buy/Sell Toggle */}
-        <div className="flex p-1 bg-white/5 rounded-xl">
+      <div className="glass-tactile border-chrome rounded-2xl p-5 space-y-5">
+        <div className="rounded-xl bg-white/[0.03] p-1.5 flex">
           <button
-            onClick={() => setSide('buy')}
+            type="button"
+            onClick={() => setSide("buy")}
             className={cn(
-              "flex-1 py-2.5 rounded-lg font-semibold text-sm transition-all",
-              side === 'buy'
+              "flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all",
+              side === "buy"
                 ? "bg-profit text-white shadow-lg"
-                : "text-muted-foreground hover:text-foreground"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             Buy
           </button>
           <button
-            onClick={() => setSide('sell')}
+            type="button"
+            onClick={() => setSide("sell")}
             className={cn(
-              "flex-1 py-2.5 rounded-lg font-semibold text-sm transition-all",
-              side === 'sell'
+              "flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all",
+              side === "sell"
                 ? "bg-loss text-white shadow-lg"
-                : "text-muted-foreground hover:text-foreground"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             Sell
           </button>
         </div>
 
-        {/* Amount Input */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Amount</span>
-            <span className="text-muted-foreground">
-              Max: <span className="text-foreground font-medium">{maxBuyQuantity.toFixed(4)}</span>
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>Amount</span>
+            <span>
+              Max: {maxActionQuantity.toFixed(4)} {asset.symbol}
             </span>
           </div>
-          <div className="relative">
+
+          <div className="flex items-center rounded-xl border border-white/10 bg-white/5 px-4 py-4">
             <input
               type="number"
-              placeholder="0.0000"
+              inputMode="decimal"
+              min="0"
+              step="any"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-lg font-medium tabular-nums placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
+              placeholder="0.0000"
+              className="w-full bg-transparent text-lg font-medium tabular-nums outline-none placeholder:text-muted-foreground"
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-muted-foreground">
+            <span className="ml-3 text-sm font-medium text-muted-foreground">
               {asset.symbol}
             </span>
           </div>
         </div>
 
-        {/* Quick Amount Pills */}
         <div className="flex gap-2">
           {[25, 50, 75, 100].map((pct) => (
             <button
               key={pct}
+              type="button"
               onClick={() => handleQuickAmount(pct / 100)}
-              className="flex-1 py-2 rounded-lg text-xs font-medium bg-white/5 border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all"
+              className="flex-1 rounded-lg border border-white/10 bg-white/5 py-2 text-xs font-medium transition-all hover:border-primary/30 hover:bg-white/10"
             >
               {pct}%
             </button>
           ))}
         </div>
 
-        {/* Ghost Journal Toggle */}
         <GhostJournalToggle
           journalEnabled={journalEnabled}
           onToggle={setJournalEnabled}
@@ -156,52 +203,77 @@ export function MinimalistOrderPanel({ asset, availableCash, portfolio, onTrade 
           onRationaleChange={setRationale}
         />
 
-        {/* Order Summary */}
-        <div className="space-y-2 py-3 border-t border-white/5">
-          <div className="flex justify-between text-sm">
+        <div className="space-y-3 rounded-xl border border-white/8 bg-white/[0.02] p-4">
+          <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Price</span>
-            <span className="font-medium tabular-nums">${formatPrice(price, asset.type)}</span>
+            <span className="font-medium tabular-nums">
+              ${formatPrice(price, asset.type)}
+            </span>
           </div>
-          <div className="flex justify-between text-sm">
+
+          <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Fee (0.1%)</span>
-            <span className="tabular-nums">${fee.toFixed(2)}</span>
+            <span className="font-medium tabular-nums">${fee.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between text-base font-semibold pt-2 border-t border-white/5">
-            <span>Total</span>
-            <span className="tabular-nums">${totalWithFee.toFixed(2)}</span>
+
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-muted-foreground">Total</span>
+            <span className="font-semibold tabular-nums">
+              ${totalWithFee.toFixed(2)}
+            </span>
           </div>
-          {quantity > 0 && (
-            <p className="text-2xs text-muted-foreground pt-1">
-              Est. position after trade: ${(quantity * price).toFixed(2)}
-            </p>
-          )}
+
+          {quantity > 0 ? (
+            <>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">Est. position value</span>
+                <span className="font-medium tabular-nums">
+                  ${(quantity * price).toFixed(2)}
+                </span>
+              </div>
+
+              <div className="rounded-lg border border-white/8 bg-white/[0.02] px-3 py-2 text-xs text-muted-foreground">
+                You are placing a market {side} for {quantity.toFixed(4)}{" "}
+                {asset.symbol} at approximately ${formatPrice(price, asset.type)}.
+              </div>
+            </>
+          ) : null}
         </div>
 
-        {/* Order confirmation hint */}
-        {quantity > 0 && (
-          <p className="text-2xs text-muted-foreground text-center -mt-2">
-            You are placing a market {side} for {quantity.toFixed(4)} {asset.symbol} at ~${formatPrice(price, asset.type)}
+        {!hasEnoughCash && side === "buy" ? (
+          <p className="text-xs text-loss">
+            You do not have enough cash for this order including fees.
           </p>
-        )}
+        ) : null}
 
-        {/* Submit Button */}
+        {!hasEnoughToSell && side === "sell" ? (
+          <p className="text-xs text-loss">
+            You cannot sell more than your current position in this simulator.
+          </p>
+        ) : null}
+
         <button
-          onClick={handleSubmit}
+          type="button"
           disabled={!isValid}
+          onClick={handleSubmit}
           className={cn(
-            "w-full py-4 rounded-xl font-semibold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed btn-squeeze",
-            side === 'buy'
-              ? "bg-profit hover:bg-profit/90 shadow-lg shadow-glow-profit"
-              : "bg-loss hover:bg-loss/90 shadow-lg shadow-glow-loss"
+            "w-full rounded-xl py-3 text-sm font-semibold transition-all",
+            isValid
+              ? side === "buy"
+                ? "bg-profit text-white shadow-lg hover:opacity-90"
+                : "bg-loss text-white shadow-lg hover:opacity-90"
+              : "cursor-not-allowed bg-white/5 text-muted-foreground/50",
           )}
         >
           {isSubmitting ? (
-            <span className="flex items-center justify-center gap-2">
-              <Loader2 className="w-4 h-4 animate-spin" />
+            <span className="inline-flex items-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
               Processing...
             </span>
           ) : (
-            <span>{side === 'buy' ? 'Buy' : 'Sell'} {asset.symbol}</span>
+            <>
+              {side === "buy" ? "Buy" : "Sell"} {asset.symbol}
+            </>
           )}
         </button>
       </div>
