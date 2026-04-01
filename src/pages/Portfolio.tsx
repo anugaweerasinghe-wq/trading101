@@ -20,6 +20,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart, Gift, Bell, BellOff } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AIInsightSummary } from "@/components/portfolio/AIInsightSummary";
+import { PositionsTable } from "@/components/portfolio/PositionsTable";
 import { useToast } from "@/hooks/use-toast";
 import { 
   requestNotificationPermission, 
