@@ -199,61 +199,64 @@ export default function Portfolio() {
 
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-5 bg-card/50 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <Wallet className="w-5 h-5 text-primary" />
+                  <div className="w-9 h-9 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <Wallet className="w-4 h-4 text-primary" />
                   </div>
-                  <span className="text-sm text-muted-foreground">Total Value</span>
+                  <span className="text-xs text-muted-foreground">Total Value</span>
                 </div>
-                <p className="text-3xl font-bold">${portfolio.totalValue.toFixed(2)}</p>
+                <p className="text-2xl font-bold tabular-nums">${portfolio.totalValue.toFixed(2)}</p>
+                <p className="text-2xs text-muted-foreground mt-0.5">Cash + Positions</p>
               </Card>
 
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-5 bg-card/50 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-success/20 flex items-center justify-center">
-                    <DollarSign className="w-5 h-5 text-success" />
+                  <div className="w-9 h-9 rounded-lg bg-success/20 flex items-center justify-center">
+                    <DollarSign className="w-4 h-4 text-success" />
                   </div>
-                  <span className="text-sm text-muted-foreground">Cash</span>
+                  <span className="text-xs text-muted-foreground">Available Cash</span>
                 </div>
-                <p className="text-3xl font-bold">${portfolio.cash.toFixed(2)}</p>
+                <p className="text-2xl font-bold tabular-nums">${portfolio.cash.toFixed(2)}</p>
+                <p className="text-2xs text-muted-foreground mt-0.5">Ready to deploy</p>
               </Card>
 
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-5 bg-card/50 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                    <PieChart className="w-5 h-5 text-primary" />
+                  <div className="w-9 h-9 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <PieChart className="w-4 h-4 text-primary" />
                   </div>
-                  <span className="text-sm text-muted-foreground">Positions</span>
+                  <span className="text-xs text-muted-foreground">Invested</span>
                 </div>
-                <p className="text-3xl font-bold">${totalPositionValue.toFixed(2)}</p>
+                <p className="text-2xl font-bold tabular-nums">${totalPositionValue.toFixed(2)}</p>
+                <p className="text-2xs text-muted-foreground mt-0.5">{portfolio.positions.length} position{portfolio.positions.length !== 1 ? "s" : ""}</p>
               </Card>
 
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-5 bg-card/50 backdrop-blur-sm">
                 <div className="flex items-center gap-3 mb-2">
                   <div className={cn(
-                    "w-10 h-10 rounded-lg flex items-center justify-center",
+                    "w-9 h-9 rounded-lg flex items-center justify-center",
                     totalProfitLoss >= 0 ? "bg-success/20" : "bg-destructive/20"
                   )}>
                     {totalProfitLoss >= 0 ? (
-                      <TrendingUp className="w-5 h-5 text-success" />
+                      <TrendingUp className="w-4 h-4 text-success" />
                     ) : (
-                      <TrendingDown className="w-5 h-5 text-destructive" />
+                      <TrendingDown className="w-4 h-4 text-destructive" />
                     )}
                   </div>
-                  <span className="text-sm text-muted-foreground">P&L</span>
+                  <span className="text-xs text-muted-foreground">Unrealized P&L</span>
                 </div>
                 <p className={cn(
-                  "text-3xl font-bold",
+                  "text-2xl font-bold tabular-nums",
                   totalProfitLoss >= 0 ? "text-success" : "text-destructive"
                 )}>
                   {totalProfitLoss >= 0 ? '+' : ''}${totalProfitLoss.toFixed(2)}
                 </p>
                 <p className={cn(
-                  "text-sm",
+                  "text-2xs mt-0.5",
                   totalProfitLoss >= 0 ? "text-success" : "text-destructive"
                 )}>
-                  {totalProfitLoss >= 0 ? '+' : ''}{totalProfitLossPercent.toFixed(2)}%
+                  {totalProfitLoss >= 0 ? '+' : ''}{totalProfitLossPercent.toFixed(2)}% overall
                 </p>
               </Card>
             </div>
