@@ -206,16 +206,16 @@ const Index = () => {
           </div>
 
           {/* Quick nav to all main pages */}
-          <div>
+          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]" style={{ backdropFilter: "blur(12px)" }}>
             <h2 className="text-lg font-bold mb-4 text-foreground">Explore TradeHQ</h2>
             <div className="flex flex-wrap gap-3">
               <Link to="/trade" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all">Trade Now</Link>
-              <Link to="/markets" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 transition-all">Markets</Link>
-              <Link to="/learn" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 transition-all">Learn Trading</Link>
-              <Link to="/portfolio" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 transition-all">Portfolio</Link>
-              <Link to="/leaderboard" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 transition-all">Leaderboard</Link>
-              <Link to="/ai-mentor" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 transition-all">AI Mentor</Link>
-              <Link to="/learn-trading-guide" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 transition-all">Trading Guide</Link>
+              <Link to="/markets" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Markets</Link>
+              <Link to="/learn" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Learn Trading</Link>
+              <Link to="/portfolio" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Portfolio</Link>
+              <Link to="/leaderboard" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Leaderboard</Link>
+              <Link to="/ai-mentor" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">AI Mentor</Link>
+              <Link to="/learn-trading-guide" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Trading Guide</Link>
             </div>
           </div>
 
