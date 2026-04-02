@@ -174,14 +174,14 @@ const Index = () => {
           </div>
 
           {/* Sectors */}
-          <div className="mb-10">
+          <div className="mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]" style={{ backdropFilter: "blur(12px)" }}>
             <h2 className="text-lg font-bold mb-4 text-foreground">Browse by Market Sector</h2>
             <div className="flex flex-wrap gap-3">
               {SECTORS.map(sector => (
                 <Link
                   key={sector.id}
                   to={`/sectors/${sector.id}`}
-                  className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-200"
+                  className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 hover:bg-primary/5 transition-all duration-200"
                 >
                   {sector.label}
                 </Link>
