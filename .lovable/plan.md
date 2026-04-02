@@ -1,124 +1,213 @@
-# Trade & Portfolio Page Upgrade Plan
+# Phase 3–6 Plan: Learn Page + Homepage Polish + Consistency
 
 ## A. AUDIT — What to Preserve
 
-- **Trade page (`Trade.tsx`)**: Live price fetching, MinimalistAreaChart, MinimalistOrderPanel with Ghost Journal & Revenge Trading Blocker, NeuralPulseChart, AI Mentor, portfolio bar, asset search, mobile order drawer — all strong, keep intact
-- **TradeAsset page (`TradeAsset.tsx`)**: Full SEO infrastructure (Helmet, JSON-LD, breadcrumbs, FAQ, Related Markets) — preserve entirely
-- **Portfolio page (`Portfolio.tsx`)**: PortfolioChart with stop-loss, PortfolioAnalytics (Sharpe, allocation pie), RiskManagement, TradeAnalytics (win rate, best/worst trades), TradeHistory, TradingJournal, milestone notifications, weekly bonus — all keep
-- **Dark premium aesthetic, glassmorphism, Bloomberg palette** — preserve exactly
+- **Homepage** `Index.tsx`, `Hero.tsx`, `PremiumHero.tsx`, `WhatIsTradeHQ.tsx`, `PremiumFeatures.tsx`, `TopAssetsGrid.tsx`, `MarketTrends2026.tsx`, `PremiumFAQ.tsx`, `SocialProofTicker.tsx`, `HowItWorks.tsx`, `MegaFooter.tsx`): Strong structure, premium aesthetic, good SEO schemas. Preserve the overall structure and design language.
+
+- **Trade page** `Trade.tsx`, `TradeAsset.tsx`, all `trading/*` components): Phase 1–2 work. Do not touch unless a tiny shared consistency fix is absolutely required.
+
+- **Portfolio page** `Portfolio.tsx`, `portfolio/*` components): Phase 1–2 work. Do not touch unless a tiny shared consistency fix is absolutely required.
+
+- **Leaderboard, AI Mentor, WikiTerm, NicheAsset, SectorPillar pages**: Do not touch in this phase.
+
+- **All routing** in `App.tsx`: Stable. Keep exactly as-is. No route changes.
+
+- **MegaFooter, Navigation, MobileBottomNav**: Working well. Only tiny adjustments if required for homepage/Learn consistency.
+
+- **SEO infrastructure**: Helmet, JSON-LD schemas, canonical tags, sitemap generation, Open Graph setup — preserve and refine only where needed.
+
+- **LearnArticle.tsx + learnArticles.ts**: Existing long-form article content is valuable. Keep content intact.
+
+- **LearnTradingGuide.tsx**: Interactive and useful. Preserve.
+
+- **LessonDetail.tsx + lessonData.ts**: Strong educational depth. Preserve content structure and lesson routing.
 
 ## B. AUDIT — Problems Found
 
-### Trade Page
+### Learn Page `Learn.tsx`)
 
-1. **No educational market insight panel** — beginners see a chart and order panel but no context on what's happening (trend, volatility, momentum, support/resistance)
-2. **Asset context is minimal** — no quick-glance info card showing market cap, 24h volume, asset type badge, or "what you're trading"
-3. **Order panel lacks beginner guidance** — no explanation of what buy/sell means, no "estimated position after trade" preview
-4. **"Explore Markets" grid at bottom is plain** — lacks visual hierarchy and engagement hooks
+1. **Flat information hierarchy**: The page does not clearly communicate a guided beginner → intermediate → advanced learning path.
 
-### Portfolio Page
+2. **Core Courses cards are oversized**: Visual depth is too large for 6 cards, creating unnecessary scroll fatigue.
 
-1. **No AI Insight Summary** — no automated analysis of strongest/weakest holdings, concentration risk, or suggestions
-2. **Positions section is flat** — no visual profit/loss color coding beyond text, no sparklines or mini indicators
-3. **Summary cards are basic** — large `text-3xl` numbers without context labels like "since start" or "unrealized"
-4. **No per-asset P&L breakdown table** — positions exist but aren't structured as a scannable dashboard
-5. **Header area is cluttered** — notification + bonus buttons compete with the H1 on smaller viewports
-6. **No "empty state" guidance** — when portfolio has no trades, there's no CTA to start trading
+3. **Lesson cards lack clarity**: The cards do not immediately communicate that they lead to detailed lesson pages.
 
-## C. Files to Change
+4. **Wiki and Sector sections feel under-explained**: They need framing so users understand why they matter.
 
-### New Components (Create)
+5. **Learning path is implied, not explicit**: There is no strong “start here / next step / advanced” journey.
 
-1. `src/components/trading/MarketInsightPanel.tsx` — educational insight block for Trade page (trend, volatility, momentum, support/resistance, beginner tips)
-2. `src/components/trading/AssetContextCard.tsx` — compact asset info card (type badge, current price, 24h change, simulated volume)
-3. `src/components/portfolio/AIInsightSummary.tsx` — AI-generated portfolio analysis summary (strongest/weakest, concentration, suggestions)
-4. `src/components/portfolio/PositionsTable.tsx` — enhanced positions display with color-coded P&L bars, entry vs current price columns
+6. **Some section copy can be more distinct**: Important sections should feel more unique and less templated.
 
-### Modified Files
+7. **LearnArticle breadcrumb/schema path needs checking**: Canonical/breadcrumb consistency should match the real route structure exactly.
 
-5. `src/pages/Trade.tsx` — integrate MarketInsightPanel and AssetContextCard
-6. `src/pages/Portfolio.tsx` — integrate AIInsightSummary, replace flat positions list with PositionsTable, improve header layout, add empty-state CTA
-7. `src/components/trading/MinimalistOrderPanel.tsx` — add beginner tooltip hints ("You're buying X shares at market price"), show estimated position value after trade
+### Homepage
 
-## D. Implementation Plan
+8. **Homepage is already strong**: Only high-confidence polish should be made.
 
-### Trade Page Upgrades
+9. **Bottom internal link hub can be more premium**: It should visually match the rest of the page better.
 
-**1. AssetContextCard** — placed between the search bar and chart
+10. **Any unverifiable social-proof numbers should be removed or softened**: Keep trust high without fabricated counts.
 
-- Shows: asset name, symbol, type badge (Stock/Crypto/ETF), current price (large), 24h change with color, simulated market cap & volume
-- Compact single row on desktop, stacked on mobile
-- Uses existing asset data, no new API calls
+### Site-wide
 
-**2. MarketInsightPanel** — placed below the chart, above NeuralPulseChart
+11. **Internal linking consistency can be improved**: Homepage ↔ Learn ↔ important educational destinations should be more intentional.
 
-- 5 insight tiles in a horizontal grid:
-  - **Trend**: "Short-term Uptrend" / "Sideways" / "Downtrend" — derived from price change data
-  - **Volatility**: "Low" / "Moderate" / "High" — based on asset type and change magnitude
-  - **Momentum**: "Bullish" / "Neutral" / "Bearish" — derived from changePercent
-  - **Key Levels**: simulated support/resistance based on current price ± percentage
-  - **Beginner Tip**: contextual one-liner like "Consider starting with a small position to test your thesis"
-- All framed as "Educational Estimate" with a small disclaimer
-- Dark glassmorphic cards matching existing style
+12. **Metadata/schema consistency should be checked, not blindly rewritten**: Only fix real inconsistencies.
 
-**3. Order Panel Enhancement** — subtle additions only
+## C. Files to Touch
 
-- Add a one-line helper text above the submit button: "You are placing a market order for {quantity} {symbol} at ~${price}"
-- Show "Est. position after trade: ${value}" below the total line
-- No structural changes to the panel
+### Phase 4 — Learn Page
 
-### Portfolio Page Upgrades
+1. *`src/pages/Learn.tsx`** — Restructure the page hierarchy, strengthen learning path clarity, reduce oversized visual blocks, improve section intros, improve lesson card clarity, improve wiki/sector presentation.
 
-**4. Header Cleanup**
+2. *`src/pages/LearnArticle.tsx`** — Verify and fix breadcrumb/schema/canonical path only if it truly mismatches the real route.
 
-- Move notification/bonus buttons into a compact row below the H1
-- Tighten spacing, reduce H1 from `text-5xl` to `text-4xl`
+### Phase 5 — Homepage Polish
 
-**5. AIInsightSummary Component**
+3. *`src/pages/Index.tsx`** — Light polish only: improve bottom internal link hub styling, tighten copy where beneficial, improve consistency with Learn and other premium sections.
 
-- Placed between the summary cards and the positions section
-- Deterministic logic (no API call needed):
-  - Identify top performer (highest P&L%) and weakest (lowest P&L%)
-  - Flag concentration risk if any single position > 30% of portfolio
-  - Flag asset type concentration if > 60% in one type
-  - Suggest "Monitor closely" for volatile holdings
-  - Suggest diversification if < 3 positions
-- Professional card with icon, clean typography
-- Framed as "Portfolio Insight — Educational Analysis"
+4. *`src/components/SocialProofTicker.tsx`** — Replace unverifiable user-count language with accurate, non-fabricated trust language if needed.
 
-**6. Enhanced Positions Display**
+### Shared / SEO / Consistency (Only If Necessary)
 
-- Replace the flat card list with a proper table/grid:
-  - Columns: Asset (symbol + name + type badge), Entry Price, Current Price, Quantity, Market Value, P&L ($), P&L (%), visual bar
-  - Green/red background tint per row based on P&L direction
-  - Sortable by P&L if feasible
-- Empty state: "No positions yet. Start trading to build your portfolio!" with a Link to /trade
+5. **Any small shared metadata or internal-linking helper files already used by Learn/Homepage** — touch only if genuinely required to fix a real consistency or SEO issue.
 
-**7. Summary Cards Polish**
+## D. Files Explicitly NOT Touching
 
-- Add subtitle context: "Total Value" → subtext "Cash + Positions"
-- P&L card: add "Unrealized" label explicitly
-- Slightly reduce card text size for better proportion
+- `src/pages/Trade.tsx`, `src/pages/TradeAsset.tsx`, all `trading/*` components
 
-### Design Consistency
+- `src/pages/Portfolio.tsx`, all `portfolio/*` components
 
-- All new components use existing `glass-tactile`, `border-chrome`, `bg-white/[0.02]` patterns
-- Colors: `text-profit` / `text-loss` (emerald/rose)
-- Typography: existing font stack, `tabular-nums` for numbers
-- No new dependencies required — all using existing Recharts, Lucide, and UI primitives
+- `src/pages/Leaderboard.tsx`, `src/pages/AIMentor.tsx`
 
-### What Will NOT Change
+- `src/pages/WikiTerm.tsx`, `src/pages/NicheAsset.tsx`, `src/pages/SectorPillar.tsx`
 
-- Homepage, Learn, Leaderboard, AI Mentor page — untouched
-- All existing trade engine logic (`lib/portfolio.ts`) — untouched
-- All SEO infrastructure — untouched
-- TradeAsset.tsx (individual asset pages) — untouched
-- No new API calls, no new database tables
-- No fake users, no misleading copy  
-  
-Before implementation, keep 3 guardrails:  
-1. Do not fabricate market cap, volume, or similar metrics unless they already exist in the current data layer or are clearly labeled as simulated/estimated.  
-2. Make sure the new positions table remains excellent on mobile; use a responsive stacked-card fallback if needed.  
-3. Prioritize correctness, polish, and clarity over extra complexity like advanced sorting if it increases break risk.  
-  
-Proceed with implementation, then run a full self-review of all changed files, check for errors, and confirm the scope stayed limited to Trade and Portfolio only.
+- `src/components/PremiumHero.tsx`, `src/components/PremiumFeatures.tsx`, `src/components/PremiumFAQ.tsx`
+
+- `src/components/WhatIsTradeHQ.tsx`, `src/components/TopAssetsGrid.tsx`, `src/components/MarketTrends2026.tsx` unless a very small copy-only or styling-only consistency fix is required
+
+- `src/components/MegaFooter.tsx`, `src/components/Navigation.tsx` unless a tiny consistency adjustment is required
+
+- `src/components/Hero.tsx`, `src/components/HowItWorks.tsx`
+
+- `src/App.tsx` — no route changes needed
+
+- `src/lib/learnArticles.ts`, `src/lib/lessonData.ts` — preserve content unless a route/path reference truly requires correction
+
+- `src/pages/LearnTradingGuide.tsx` — preserve as-is
+
+## E. Implementation Plan
+
+### Phase 3: Audit First
+
+- Inspect the actual current codebase before making changes
+
+- Confirm exact Learn page structure, real route paths, actual schema/canonical implementation, and homepage section composition
+
+- Identify exactly which files need edits and which should remain untouched
+
+- Do not implement speculative changes before verifying the codebase
+
+### Phase 4: Learn Page
+
+**Learn.tsx restructure:**
+
+- Add a clearer **Learning Path** section near the top that makes progression obvious without turning the page into a school-style dashboard
+
+- Group or frame the content as a progression such as:
+
+  - **Foundations**
+
+  - **Strategy & Analysis**
+
+  - **Advanced Practice**
+
+- Reduce oversized course-card visual height so the page feels tighter and more premium
+
+- Add lesson clarity signals such as:
+
+  - lesson label
+
+  - difficulty badge
+
+  - estimated read/study time
+
+- Add stronger, distinct intro copy for the main sections so they do not feel repetitive
+
+- Improve Wiki / Sector section framing with a short explanation of why users should explore them
+
+- Add a stronger “Start Here” CTA linking to the best beginner entry point
+
+- Keep the current dark premium style intact
+
+- Do not add spammy filler cards or duplicate content
+
+**LearnArticle.tsx check/fix:**
+
+- Verify the actual article route
+
+- Fix breadcrumb/schema/canonical path only if it truly mismatches the real route
+
+- Do not rewrite article content
+
+### Phase 5: Homepage Polish
+
+**Index.tsx:**
+
+- Keep the homepage structure intact
+
+- Only make high-confidence, low-risk polish changes
+
+- Upgrade the bottom internal link hub to better match the premium visual language already used elsewhere
+
+- Tighten copy only where it clearly improves clarity, trust, or CTA quality
+
+- Improve alignment between Homepage and Learn page tone/styling where useful
+
+- Do not redesign the hero
+
+- Do not add random new sections
+
+- Do not change core positioning
+
+**SocialProofTicker.tsx:**
+
+- Remove or soften any unverifiable numeric social-proof claims
+
+- Replace them with truthful, non-fabricated trust signals such as:
+
+  - "Free paper trading"
+
+  - "No signup required"
+
+  - "Stocks, ETFs & crypto"
+
+  - "AI trading mentor"
+
+  - "Built for beginners"
+
+### Phase 6: QA
+
+- Verify all imports resolve
+
+- Verify Learn page renders correctly
+
+- Verify homepage renders correctly
+
+- Verify internal links are valid
+
+- Verify no broken routes
+
+- Verify breadcrumb/schema/canonical fixes are accurate
+
+- Verify responsive layout at mobile and desktop widths
+
+- Verify no placeholder text or duplicated copy was introduced
+
+- Verify Trade and Portfolio pages remain untouched
+
+- Run build / lint / typecheck if available
+
+- Fix any errors found before finishing
+
+- Return exact files touched and exact checks performed
