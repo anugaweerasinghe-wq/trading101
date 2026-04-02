@@ -12,18 +12,22 @@ const items = [
 ];
 
 export function SocialProofTicker() {
+  const loopItems = [...items, ...items];
+
   return (
-    <div className="w-full overflow-hidden bg-white/[0.02] border-y border-white/[0.04] py-3">
+    <div className="relative overflow-hidden border-y border-white/[0.08] bg-white/[0.02] py-3">
       <motion.div
-        className="flex gap-8 whitespace-nowrap"
+        className="flex w-max items-center gap-3"
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 24, ease: "linear", repeat: Infinity }}
       >
-        {[...items, ...items].map((item, i) => (
-          <span key={i} className="text-sm text-muted-foreground flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary/60" aria-hidden="true" />
+        {loopItems.map((item, index) => (
+          <div
+            key={`${item}-${index}`}
+            className="shrink-0 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 text-sm text-foreground/90"
+          >
             {item}
-          </span>
+          </div>
         ))}
       </motion.div>
     </div>
