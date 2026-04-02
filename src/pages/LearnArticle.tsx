@@ -2,23 +2,35 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
-import { Button } from "@/components/ui/button";
 import { ArrowRight, Home, ChevronRight, Clock, BookOpen } from "lucide-react";
-import { LEARN_ARTICLES, type LearnArticle as ArticleType } from "@/lib/learnArticles";
+import { LEARN_ARTICLES } from "@/lib/learnArticles";
+
+const DOMAIN = "https://tradinghq.vercel.app";
+
+function normalizeLearnHref(href: string) {
+  if (!href.startsWith("/learn/")) return href;
+  if (href.startsWith("/learn/article/")) return href;
+  const slug = href.replace("/learn/", "").trim();
+  return `/learn/article/${slug}`;
+}
 
 export default function LearnArticle() {
   const { slug } = useParams<{ slug: string }>();
   const article = LEARN_ARTICLES.find((a) => a.slug === slug);
 
-  if (!article) return <Navigate to="/learn" replace />;
+  if (!article) {
+    return <Navigate to="/learn" replace />;
+  }
+
+  const articleUrl = `${DOMAIN}/learn/article/${article.slug}`;
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://tradinghq.vercel.app/" },
-      { "@type": "ListItem", position: 2, name: "Learn", item: "https://tradinghq.vercel.app/learn" },
-      { "@type": "ListItem", position: 3, name: article.title, item: `https://tradinghq.vercel.app/learn/article/${article.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
+      { "@type": "ListItem", position: 2, name: "Learn", item: `${DOMAIN}/learn` },
+      { "@type": "ListItem", position: 3, name: article.title, item: articleUrl },
     ],
   };
 
@@ -27,15 +39,15 @@ export default function LearnArticle() {
     "@type": "Article",
     headline: article.title,
     description: article.metaDescription,
-    url: `https://tradinghq.vercel.app/learn/${article.slug}`,
+    url: articleUrl,
     datePublished: "2026-03-01",
-    dateModified: "2026-03-14",
+    dateModified: "2026-04-02",
     author: { "@type": "Organization", name: "TradeHQ" },
     publisher: {
       "@type": "Organization",
       name: "TradeHQ",
-      url: "https://tradinghq.vercel.app/",
-      logo: { "@type": "ImageObject", url: "https://tradinghq.vercel.app/og-image.png" },
+      url: `${DOMAIN}/`,
+      logo: { "@type": "ImageObject", url: `${DOMAIN}/og-image.png` },
     },
   };
 
@@ -44,85 +56,78 @@ export default function LearnArticle() {
       <Helmet>
         <title>{article.title} | TradeHQ Learn</title>
         <meta name="description" content={article.metaDescription} />
-        <link rel="canonical" href={`https://tradinghq.vercel.app/learn/${article.slug}`} />
+        <link rel="canonical" href={articleUrl} />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={article.title} />
+        <meta property="og:title" content={`${article.title} | TradeHQ Learn`} />
         <meta property="og:description" content={article.metaDescription} />
-        <meta property="og:url" content={`https://tradinghq.vercel.app/learn/${article.slug}`} />
-        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
-        <meta property="og:site_name" content="TradeHQ" />
+        <meta property="og:url" content={articleUrl} />
+        <meta property="og:image" content={`${DOMAIN}/og-image.png`} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.title} />
+        <meta name="twitter:title" content={`${article.title} | TradeHQ Learn`} />
         <meta name="twitter:description" content={article.metaDescription} />
-        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta name="twitter:image" content={`${DOMAIN}/og-image.png`} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">
         <Navigation />
-        <main className="pt-28 pb-20">
-          <article className="container mx-auto px-6 max-w-3xl">
-            {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8 flex-wrap" aria-label="Breadcrumb">
-              <Link to="/" className="flex items-center gap-1 hover:text-primary transition-colors">
-                <Home className="w-4 h-4" /><span>Home</span>
+        <main className="pt-20 pb-16">
+          <div className="container mx-auto px-6 max-w-4xl">
+            <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
+              <Link to="/" className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
+                <Home className="w-4 h-4" />Home
               </Link>
               <ChevronRight className="w-4 h-4" />
-              <Link to="/learn" className="hover:text-primary transition-colors">Learn</Link>
+              <Link to="/learn" className="hover:text-foreground transition-colors">Learn</Link>
               <ChevronRight className="w-4 h-4" />
-              <span className="text-foreground font-medium line-clamp-1">{article.title}</span>
+              <span className="text-foreground truncate">{article.title}</span>
             </nav>
 
-            <header className="mb-10">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Clock className="w-3.5 h-3.5" /> {article.readTime}
-                </span>
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <BookOpen className="w-3.5 h-3.5" /> Beginner Guide
-                </span>
+            <article className="rounded-3xl border border-white/[0.08] bg-white/[0.02] p-8 md:p-10 backdrop-blur-xl">
+              <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                <span className="inline-flex items-center gap-1.5"><Clock className="w-4 h-4" />{article.readTime}</span>
+                <span className="inline-flex items-center gap-1.5"><BookOpen className="w-4 h-4" />Beginner Guide</span>
               </div>
+
               <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">{article.title}</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">{article.summary}</p>
-            </header>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8">{article.summary}</p>
 
-            {/* Article body */}
-            <div className="prose prose-invert max-w-none space-y-6">
-              {article.sections.map((section, i) => (
-                <section key={i}>
-                  <h2 className="text-xl font-bold text-foreground mt-8 mb-3">{section.heading}</h2>
-                  {section.paragraphs.map((p, j) => (
-                    <p key={j} className="text-sm text-muted-foreground leading-relaxed mb-4">{p}</p>
-                  ))}
-                </section>
-              ))}
-            </div>
-
-            {/* Internal links */}
-            <div className="mt-10 p-6 bg-white/[0.02] border border-white/[0.06] rounded-2xl" style={{ backdropFilter: "blur(12px)" }}>
-              <h3 className="font-bold text-foreground mb-3">Related Resources</h3>
-              <ul className="space-y-2">
-                {article.relatedLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link to={link.href} className="text-sm text-primary hover:underline flex items-center gap-2">
-                      <ArrowRight className="w-3.5 h-3.5" /> {link.label}
-                    </Link>
-                  </li>
+              <div className="space-y-10">
+                {article.sections.map((section, sectionIndex) => (
+                  <section key={`${section.heading}-${sectionIndex}`}>
+                    <h2 className="text-2xl font-semibold mb-4">{section.heading}</h2>
+                    <div className="space-y-4">
+                      {section.paragraphs.map((paragraph, paragraphIndex) => (
+                        <p key={`${section.heading}-${paragraphIndex}`} className="text-base leading-8 text-foreground/90">{paragraph}</p>
+                      ))}
+                    </div>
+                  </section>
                 ))}
-              </ul>
-            </div>
+              </div>
 
-            {/* CTA */}
-            <div className="text-center mt-12">
-              <p className="text-muted-foreground mb-4">Ready to practice?</p>
-              <Link to="/trade">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-base rounded-2xl font-semibold">
-                  Start Trading Free <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-          </article>
+              {article.relatedLinks.length > 0 && (
+                <section className="mt-12 border-t border-white/[0.08] pt-8">
+                  <h3 className="text-xl font-semibold mb-4">Related Resources</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {article.relatedLinks.map((link) => (
+                      <Link key={link.href} to={normalizeLearnHref(link.href)} className="rounded-2xl border border-white/[0.08] bg-card/40 px-4 py-3 text-sm font-medium text-foreground transition-all hover:border-primary/30 hover:text-primary">
+                        <span className="inline-flex items-center gap-2">{link.label}<ArrowRight className="w-4 h-4" /></span>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              <section className="mt-12 rounded-2xl border border-primary/15 bg-primary/[0.04] p-6">
+                <h3 className="text-xl font-semibold mb-2">Ready to practice?</h3>
+                <p className="text-muted-foreground mb-4">Test what you learned with $10,000 in virtual cash and zero real risk.</p>
+                <Link to="/trade" className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90">
+                  Start Trading Free <ArrowRight className="w-4 h-4" />
+                </Link>
+              </section>
+            </article>
+          </div>
         </main>
         <MegaFooter />
       </div>
