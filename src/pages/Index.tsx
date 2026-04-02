@@ -152,14 +152,14 @@ const Index = () => {
           className="container mx-auto px-6 max-w-7xl py-16 border-t border-white/[0.04]"
         >
           {/* Popular assets */}
-          <div className="mb-10">
+          <div className="mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]" style={{ backdropFilter: "blur(12px)" }}>
             <h2 className="text-lg font-bold mb-4 text-foreground">Popular Assets to Trade</h2>
             <div className="flex flex-wrap gap-2">
               {TOP_ASSETS.map(asset => (
                 <Link
                   key={asset.symbol}
                   to={`/trade/${asset.symbol}`}
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-full bg-card border border-border hover:border-primary/30 hover:text-primary transition-all duration-200"
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-full bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 hover:text-primary transition-all duration-200"
                 >
                   {asset.label}
                 </Link>
