@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target, ArrowRight, Zap, Coins, Brain, ChevronRight, Home, Clock, GraduationCap } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LEARN_ARTICLES } from "@/lib/learnArticles";
 import tradingBasics from "@/assets/course-trading-basics.jpg";
 import riskManagement from "@/assets/course-risk-management.jpg";
@@ -24,9 +24,9 @@ const lessons = [
 ];
 
 const trendingTopics = [
-  { id: "bitcoin-l2", title: "Bitcoin Layer 2", subtitle: "Lightning & Stacks", description: "Master Bitcoin L2 solutions for faster, cheaper transactions.", icon: Zap, badge: "Hot 2026" },
-  { id: "rwa", title: "Real World Assets", subtitle: "Tokenized Securities", description: "Explore tokenized treasuries, real estate, and commodities.", icon: Coins, badge: "Trending" },
-  { id: "ai-trading", title: "AI-Driven Trading", subtitle: "Smart Strategies", description: "Leverage AI algorithms for market analysis and automated strategies.", icon: Brain, badge: "Innovation" },
+  { id: "bitcoin-l2", title: "Bitcoin Layer 2", subtitle: "Lightning & Stacks", description: "Master Bitcoin L2 solutions for faster, cheaper transactions.", icon: Zap, badge: "Hot 2026", href: "/trade/btc" },
+  { id: "rwa", title: "Real World Assets", subtitle: "Tokenized Securities", description: "Explore tokenized treasuries, real estate, and commodities.", icon: Coins, badge: "Trending", href: "/learn/article/stock-market-index-etfs" },
+  { id: "ai-trading", title: "AI-Driven Trading", subtitle: "Smart Strategies", description: "Leverage AI algorithms for market analysis and automated strategies.", icon: Brain, badge: "Innovation", href: "/ai-mentor" },
 ];
 
 const WIKI_TERMS = [
@@ -63,30 +63,9 @@ const SECTORS = [
 ];
 
 const LEARNING_PATH = [
-  {
-    tier: "foundations" as const,
-    label: "Foundations",
-    tagline: "Start here — understand markets, terminology, and your first trade.",
-    color: "text-emerald-400",
-    borderColor: "border-emerald-500/20",
-    bgColor: "bg-emerald-500/5",
-  },
-  {
-    tier: "strategy" as const,
-    label: "Strategy & Analysis",
-    tagline: "Build your edge — risk management, technical analysis, and market patterns.",
-    color: "text-blue-400",
-    borderColor: "border-blue-500/20",
-    bgColor: "bg-blue-500/5",
-  },
-  {
-    tier: "advanced" as const,
-    label: "Advanced Practice",
-    tagline: "Refine your approach — portfolio construction, diversification, and real-world application.",
-    color: "text-amber-400",
-    borderColor: "border-amber-500/20",
-    bgColor: "bg-amber-500/5",
-  },
+  { tier: "foundations" as const, label: "Foundations", tagline: "Start here — understand markets, terminology, and your first trade.", color: "text-emerald-400", borderColor: "border-emerald-500/20", bgColor: "bg-emerald-500/5" },
+  { tier: "strategy" as const, label: "Strategy & Analysis", tagline: "Build your edge — risk management, technical analysis, and market patterns.", color: "text-blue-400", borderColor: "border-blue-500/20", bgColor: "bg-blue-500/5" },
+  { tier: "advanced" as const, label: "Advanced Practice", tagline: "Refine your approach — portfolio construction, diversification, and real-world application.", color: "text-amber-400", borderColor: "border-amber-500/20", bgColor: "bg-amber-500/5" },
 ];
 
 const difficultyColors: Record<string, string> = {
@@ -96,8 +75,6 @@ const difficultyColors: Record<string, string> = {
 };
 
 export default function Learn() {
-  const navigate = useNavigate();
-
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -151,7 +128,7 @@ export default function Learn() {
               </p>
             </div>
 
-            {/* ── Learning Path Overview ── */}
+            {/* Learning Path Overview */}
             <section className="mb-16" aria-label="Learning path">
               <div className="flex items-center gap-3 mb-6">
                 <GraduationCap className="w-6 h-6 text-primary" />
@@ -159,26 +136,19 @@ export default function Learn() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 {LEARNING_PATH.map((step, i) => (
-                  <div
-                    key={step.tier}
-                    className={`relative p-5 rounded-2xl border ${step.borderColor} ${step.bgColor} backdrop-blur-sm`}
-                  >
+                  <div key={step.tier} className={`relative p-5 rounded-2xl border ${step.borderColor} ${step.bgColor} backdrop-blur-sm`}>
                     <div className="flex items-center gap-2 mb-2">
-                      <span className={`text-xs font-bold uppercase tracking-wider ${step.color}`}>
-                        Step {i + 1}
-                      </span>
+                      <span className={`text-xs font-bold uppercase tracking-wider ${step.color}`}>Step {i + 1}</span>
                       <span className={`text-sm font-semibold ${step.color}`}>{step.label}</span>
                     </div>
                     <p className="text-sm text-muted-foreground leading-relaxed">{step.tagline}</p>
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-muted-foreground">
-                Follow the path below or jump to any lesson that fits your level.
-              </p>
+              <p className="text-xs text-muted-foreground">Follow the path below or jump to any lesson that fits your level.</p>
             </section>
 
-            {/* ── Start Here CTA ── */}
+            {/* Start Here CTA */}
             <div className="mb-16 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col sm:flex-row items-center gap-4" style={{ backdropFilter: "blur(12px)" }}>
               <div className="flex-1">
                 <h3 className="text-lg font-bold mb-1">New to trading?</h3>
@@ -191,7 +161,7 @@ export default function Learn() {
               </Link>
             </div>
 
-            {/* ── Featured Guides (articles) ── */}
+            {/* Featured Guides */}
             <div className="mb-20">
               <h2 className="text-2xl font-bold mb-3 flex items-center gap-3">
                 <BookOpen className="w-6 h-6 text-primary" /> Featured Guides
@@ -212,7 +182,7 @@ export default function Learn() {
               </div>
             </div>
 
-            {/* ── 2026 Market Trends ── */}
+            {/* 2026 Market Trends — FIXED: onClick replaced with Link */}
             <div className="mb-20">
               <h2 className="text-2xl font-bold mb-3 flex items-center gap-3"><TrendingUp className="w-6 h-6 text-primary" /> 2026 Market Trends</h2>
               <p className="text-sm text-muted-foreground mb-6">Emerging themes shaping markets this year — explore the trends driving new opportunities.</p>
@@ -220,21 +190,23 @@ export default function Learn() {
                 {trendingTopics.map((topic, index) => {
                   const Icon = topic.icon;
                   return (
-                    <Card key={topic.id} onClick={() => navigate('/learn-trading-guide')} className="group cursor-pointer p-6 bento-card hover:border-primary/30 transition-all duration-300" style={{ animationDelay: `${index * 100}ms` }}>
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center"><Icon className="w-6 h-6 text-primary" /></div>
-                        <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-xs">{topic.badge}</Badge>
-                      </div>
-                      <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">{topic.title}</h3>
-                      <p className="text-sm text-primary mb-3">{topic.subtitle}</p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{topic.description}</p>
-                    </Card>
+                    <Link key={topic.id} to={topic.href} className="block" style={{ animationDelay: `${index * 100}ms` }}>
+                      <Card className="group h-full cursor-pointer p-6 bento-card hover:border-primary/30 transition-all duration-300">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center"><Icon className="w-6 h-6 text-primary" /></div>
+                          <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-xs">{topic.badge}</Badge>
+                        </div>
+                        <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">{topic.title}</h3>
+                        <p className="text-sm text-primary mb-3">{topic.subtitle}</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{topic.description}</p>
+                      </Card>
+                    </Link>
                   );
                 })}
               </div>
             </div>
 
-            {/* ── Core Courses — grouped by learning path tier ── */}
+            {/* Core Courses — FIXED: onClick replaced with Link */}
             {LEARNING_PATH.map((pathStep) => {
               const tierLessons = lessons.filter((l) => l.tier === pathStep.tier);
               if (tierLessons.length === 0) return null;
@@ -248,41 +220,39 @@ export default function Learn() {
                     {tierLessons.map((lesson) => {
                       const Icon = lesson.icon;
                       return (
-                        <Card
-                          key={lesson.id}
-                          onClick={() => navigate(`/learn/${lesson.id}`)}
-                          className="group cursor-pointer overflow-hidden border-0 bg-card/50 backdrop-blur-xl hover:shadow-2xl transition-all duration-500"
-                        >
-                          <div className="relative h-48 overflow-hidden">
-                            <img src={lesson.image} alt={`${lesson.title} course - TradeHQ`} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-                            <div className="absolute top-4 left-4 flex items-center gap-2">
-                              <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm border-0 text-xs px-3 py-1">{lesson.category}</Badge>
-                              <Badge variant="outline" className={`text-xs px-2 py-0.5 ${difficultyColors[lesson.difficulty]}`}>{lesson.difficulty}</Badge>
-                            </div>
-                          </div>
-                          <div className="p-6">
-                            <div className="flex items-center gap-3 mb-3">
-                              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"><Icon className="w-5 h-5 text-primary" /></div>
-                              <div className="flex-1 min-w-0">
-                                <h3 className="text-lg font-bold group-hover:text-primary transition-colors truncate">{lesson.title}</h3>
-                                <span className="text-xs text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" /> {lesson.readTime}</span>
+                        <Link key={lesson.id} to={`/learn/${lesson.id}`} className="block">
+                          <Card className="group cursor-pointer overflow-hidden border-0 bg-card/50 backdrop-blur-xl hover:shadow-2xl transition-all duration-500 h-full">
+                            <div className="relative h-48 overflow-hidden">
+                              <img src={lesson.image} alt={`${lesson.title} course - TradeHQ`} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+                              <div className="absolute top-4 left-4 flex items-center gap-2">
+                                <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm border-0 text-xs px-3 py-1">{lesson.category}</Badge>
+                                <Badge variant="outline" className={`text-xs px-2 py-0.5 ${difficultyColors[lesson.difficulty]}`}>{lesson.difficulty}</Badge>
                               </div>
                             </div>
-                            <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{lesson.description}</p>
-                            <ul className="space-y-2 mb-4">
-                              {lesson.content.slice(0, 3).map((item, i) => (
-                                <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                                  <div className="w-1 h-1 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                            <div className="flex items-center gap-2 text-primary text-sm font-semibold group-hover:gap-3 transition-all">
-                              <span>Start Lesson</span><ArrowRight className="w-4 h-4" />
+                            <div className="p-6">
+                              <div className="flex items-center gap-3 mb-3">
+                                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"><Icon className="w-5 h-5 text-primary" /></div>
+                                <div className="flex-1 min-w-0">
+                                  <h3 className="text-lg font-bold group-hover:text-primary transition-colors truncate">{lesson.title}</h3>
+                                  <span className="text-xs text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" /> {lesson.readTime}</span>
+                                </div>
+                              </div>
+                              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{lesson.description}</p>
+                              <ul className="space-y-2 mb-4">
+                                {lesson.content.slice(0, 3).map((item, i) => (
+                                  <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                    <div className="w-1 h-1 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                              <div className="flex items-center gap-2 text-primary text-sm font-semibold group-hover:gap-3 transition-all">
+                                <span>Start Lesson</span><ArrowRight className="w-4 h-4" />
+                              </div>
                             </div>
-                          </div>
-                        </Card>
+                          </Card>
+                        </Link>
                       );
                     })}
                   </div>
@@ -290,42 +260,30 @@ export default function Learn() {
               );
             })}
 
-            {/* ── Trading Wiki Glossary ── */}
+            {/* Trading Wiki */}
             <section aria-label="Trading Wiki Glossary" className="mb-20">
               <h2 className="text-2xl font-bold mb-3 flex items-center gap-3">
                 <BookOpen className="w-6 h-6 text-primary" /> Trading Wiki — Key Concepts
               </h2>
-              <p className="text-sm text-muted-foreground mb-6">
-                Understand the terms that matter. Each entry explains a concept with examples and context so you can recognize it in real markets.
-              </p>
+              <p className="text-sm text-muted-foreground mb-6">Understand the terms that matter. Each entry explains a concept with examples and context so you can recognize it in real markets.</p>
               <div className="flex flex-wrap gap-2">
                 {WIKI_TERMS.map(term => (
-                  <Link
-                    key={term.slug}
-                    to={`/wiki/${term.slug}`}
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-full bg-primary/5 border border-primary/15 text-primary/80 hover:text-primary hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                  >
+                  <Link key={term.slug} to={`/wiki/${term.slug}`} className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-full bg-primary/5 border border-primary/15 text-primary/80 hover:text-primary hover:bg-primary/10 hover:border-primary/30 transition-all duration-200">
                     {term.label}
                   </Link>
                 ))}
               </div>
             </section>
 
-            {/* ── Market Sectors ── */}
+            {/* Market Sectors */}
             <section aria-label="Market Sectors" className="mb-20">
               <h2 className="text-2xl font-bold mb-3 flex items-center gap-3">
                 <TrendingUp className="w-6 h-6 text-primary" /> Explore by Market Sector
               </h2>
-              <p className="text-sm text-muted-foreground mb-6">
-                Browse assets grouped by sector to spot opportunities and understand how different parts of the market move.
-              </p>
+              <p className="text-sm text-muted-foreground mb-6">Browse assets grouped by sector to spot opportunities and understand how different parts of the market move.</p>
               <div className="flex flex-wrap gap-3">
                 {SECTORS.map(sector => (
-                  <Link
-                    key={sector.id}
-                    to={`/sectors/${sector.id}`}
-                    className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-200"
-                  >
+                  <Link key={sector.id} to={`/sectors/${sector.id}`} className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-card border border-border hover:border-primary/30 hover:bg-primary/5 transition-all duration-200">
                     {sector.label} →
                   </Link>
                 ))}
