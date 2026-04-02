@@ -18,7 +18,7 @@ export default function LearnArticle() {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://tradinghq.vercel.app/" },
       { "@type": "ListItem", position: 2, name: "Learn", item: "https://tradinghq.vercel.app/learn" },
-      { "@type": "ListItem", position: 3, name: article.title, item: `https://tradinghq.vercel.app/learn/${article.slug}` },
+      { "@type": "ListItem", position: 3, name: article.title, item: `https://tradinghq.vercel.app/learn/article/${article.slug}` },
     ],
   };
 
