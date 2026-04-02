@@ -149,7 +149,7 @@ const Index = () => {
         {/* ── NEW: Internal link hub (below fold, Googlebot crawls this) ── */}
         <section
           aria-label="Explore TradeHQ"
-          className="container mx-auto px-6 max-w-7xl py-16 border-t border-border/30"
+          className="container mx-auto px-6 max-w-7xl py-16 border-t border-white/[0.04]"
         >
           {/* Popular assets */}
           <div className="mb-10">

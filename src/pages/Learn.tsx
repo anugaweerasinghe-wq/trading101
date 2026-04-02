@@ -4,7 +4,7 @@ import { MegaFooter } from "@/components/MegaFooter";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target, ArrowRight, Zap, Coins, Brain, ChevronRight, Home, Clock } from "lucide-react";
+import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target, ArrowRight, Zap, Coins, Brain, ChevronRight, Home, Clock, GraduationCap } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { LEARN_ARTICLES } from "@/lib/learnArticles";
 import tradingBasics from "@/assets/course-trading-basics.jpg";
@@ -15,12 +15,12 @@ import goals from "@/assets/course-goals.jpg";
 import marketTrends from "@/assets/course-market-trends.jpg";
 
 const lessons = [
-  { id: 1, title: "Getting Started with Trading", category: "Basics", icon: BookOpen, image: tradingBasics, description: "Learn the fundamentals of trading, key terminology, and how markets work.", content: ["Understanding stocks, ETFs, and other securities", "How to read stock quotes and charts", "Market orders vs. limit orders", "Trading hours and market sessions"] },
-  { id: 2, title: "Risk Management", category: "Strategy", icon: Shield, image: riskManagement, description: "Essential strategies to protect your capital and manage trading risk.", content: ["Position sizing and the 2% rule", "Stop-loss orders and take-profit targets", "Understanding risk-reward ratios", "Diversification strategies"] },
-  { id: 3, title: "Technical Analysis Basics", category: "Analysis", icon: LineChart, image: technicalAnalysis, description: "Learn to read charts and identify trading opportunities using technical indicators.", content: ["Candlestick patterns and what they mean", "Support and resistance levels", "Moving averages (SMA and EMA)", "RSI and MACD indicators"] },
-  { id: 4, title: "Portfolio Diversification", category: "Strategy", icon: PieChart, image: diversification, description: "Build a balanced portfolio across different asset classes and sectors.", content: ["Asset allocation strategies", "Balancing stocks, ETFs, and crypto", "Sector diversification", "Rebalancing your portfolio"] },
-  { id: 5, title: "Setting Trading Goals", category: "Basics", icon: Target, image: goals, description: "Define clear objectives and develop a trading plan that works for you.", content: ["Short-term vs. long-term strategies", "Setting realistic profit targets", "Creating a trading journal", "Evaluating your performance"] },
-  { id: 6, title: "Market Trends & Patterns", category: "Analysis", icon: TrendingUp, image: marketTrends, description: "Identify market trends and learn how to trade with momentum.", content: ["Bull markets vs. bear markets", "Identifying trend reversals", "Volume analysis", "Market sentiment indicators"] },
+  { id: 1, title: "Getting Started with Trading", category: "Basics", icon: BookOpen, image: tradingBasics, description: "Learn the fundamentals of trading, key terminology, and how markets work.", difficulty: "Beginner", readTime: "15 min", tier: "foundations" as const, content: ["Understanding stocks, ETFs, and other securities", "How to read stock quotes and charts", "Market orders vs. limit orders", "Trading hours and market sessions"] },
+  { id: 5, title: "Setting Trading Goals", category: "Basics", icon: Target, image: goals, description: "Define clear objectives and develop a trading plan that works for you.", difficulty: "Beginner", readTime: "12 min", tier: "foundations" as const, content: ["Short-term vs. long-term strategies", "Setting realistic profit targets", "Creating a trading journal", "Evaluating your performance"] },
+  { id: 2, title: "Risk Management", category: "Strategy", icon: Shield, image: riskManagement, description: "Essential strategies to protect your capital and manage trading risk.", difficulty: "Intermediate", readTime: "18 min", tier: "strategy" as const, content: ["Position sizing and the 2% rule", "Stop-loss orders and take-profit targets", "Understanding risk-reward ratios", "Diversification strategies"] },
+  { id: 3, title: "Technical Analysis Basics", category: "Analysis", icon: LineChart, image: technicalAnalysis, description: "Learn to read charts and identify trading opportunities using technical indicators.", difficulty: "Intermediate", readTime: "20 min", tier: "strategy" as const, content: ["Candlestick patterns and what they mean", "Support and resistance levels", "Moving averages (SMA and EMA)", "RSI and MACD indicators"] },
+  { id: 6, title: "Market Trends & Patterns", category: "Analysis", icon: TrendingUp, image: marketTrends, description: "Identify market trends and learn how to trade with momentum.", difficulty: "Intermediate", readTime: "18 min", tier: "strategy" as const, content: ["Bull markets vs. bear markets", "Identifying trend reversals", "Volume analysis", "Market sentiment indicators"] },
+  { id: 4, title: "Portfolio Diversification", category: "Strategy", icon: PieChart, image: diversification, description: "Build a balanced portfolio across different asset classes and sectors.", difficulty: "Advanced", readTime: "22 min", tier: "advanced" as const, content: ["Asset allocation strategies", "Balancing stocks, ETFs, and crypto", "Sector diversification", "Rebalancing your portfolio"] },
 ];
 
 const trendingTopics = [
@@ -29,7 +29,6 @@ const trendingTopics = [
   { id: "ai-trading", title: "AI-Driven Trading", subtitle: "Smart Strategies", description: "Leverage AI algorithms for market analysis and automated strategies.", icon: Brain, badge: "Innovation" },
 ];
 
-// NEW: for internal linking
 const WIKI_TERMS = [
   { slug: "bear-trap", label: "Bear Trap" },
   { slug: "bull-trap", label: "Bull Trap" },
@@ -62,6 +61,39 @@ const SECTORS = [
   { id: "forex-currencies", label: "Forex & Currencies" },
   { id: "commodities", label: "Commodities" },
 ];
+
+const LEARNING_PATH = [
+  {
+    tier: "foundations" as const,
+    label: "Foundations",
+    tagline: "Start here — understand markets, terminology, and your first trade.",
+    color: "text-emerald-400",
+    borderColor: "border-emerald-500/20",
+    bgColor: "bg-emerald-500/5",
+  },
+  {
+    tier: "strategy" as const,
+    label: "Strategy & Analysis",
+    tagline: "Build your edge — risk management, technical analysis, and market patterns.",
+    color: "text-blue-400",
+    borderColor: "border-blue-500/20",
+    bgColor: "bg-blue-500/5",
+  },
+  {
+    tier: "advanced" as const,
+    label: "Advanced Practice",
+    tagline: "Refine your approach — portfolio construction, diversification, and real-world application.",
+    color: "text-amber-400",
+    borderColor: "border-amber-500/20",
+    bgColor: "bg-amber-500/5",
+  },
+];
+
+const difficultyColors: Record<string, string> = {
+  Beginner: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  Intermediate: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  Advanced: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+};
 
 export default function Learn() {
   const navigate = useNavigate();
@@ -101,29 +133,70 @@ export default function Learn() {
         <main className="pt-32 pb-20">
           <div className="container mx-auto px-6 max-w-7xl">
 
-            {/* Breadcrumb — ORIGINAL */}
+            {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8 animate-fade-in" aria-label="Breadcrumb">
               <Link to="/" className="flex items-center gap-1 hover:text-primary transition-colors"><Home className="w-4 h-4" /><span>TradeHQ</span></Link>
               <ChevronRight className="w-4 h-4" />
               <span className="text-foreground font-medium">Learning</span>
             </nav>
 
-            {/* Hero — ORIGINAL */}
+            {/* Hero */}
             <div className="mb-16 text-center animate-fade-in">
               <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary">2026 Edition</Badge>
               <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
                 Learn Trading — Free Beginner to Advanced Guides
               </h1>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Master stocks, crypto, and market analysis with free guides. No experience needed.
+                Master stocks, crypto, and market analysis with structured lessons. No experience needed.
               </p>
             </div>
 
-            {/* Article Cards — ORIGINAL */}
+            {/* ── Learning Path Overview ── */}
+            <section className="mb-16" aria-label="Learning path">
+              <div className="flex items-center gap-3 mb-6">
+                <GraduationCap className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-bold">Your Learning Path</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                {LEARNING_PATH.map((step, i) => (
+                  <div
+                    key={step.tier}
+                    className={`relative p-5 rounded-2xl border ${step.borderColor} ${step.bgColor} backdrop-blur-sm`}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`text-xs font-bold uppercase tracking-wider ${step.color}`}>
+                        Step {i + 1}
+                      </span>
+                      <span className={`text-sm font-semibold ${step.color}`}>{step.label}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{step.tagline}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Follow the path below or jump to any lesson that fits your level.
+              </p>
+            </section>
+
+            {/* ── Start Here CTA ── */}
+            <div className="mb-16 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col sm:flex-row items-center gap-4" style={{ backdropFilter: "blur(12px)" }}>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold mb-1">New to trading?</h3>
+                <p className="text-sm text-muted-foreground">Start with Lesson 1 — it covers everything you need to place your first simulated trade.</p>
+              </div>
+              <Link to="/learn/1">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-xl font-semibold whitespace-nowrap">
+                  Start Lesson 1 <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+
+            {/* ── Featured Guides (articles) ── */}
             <div className="mb-20">
-              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
+              <h2 className="text-2xl font-bold mb-3 flex items-center gap-3">
                 <BookOpen className="w-6 h-6 text-primary" /> Featured Guides
               </h2>
+              <p className="text-sm text-muted-foreground mb-6">In-depth articles on essential trading topics — read at your own pace.</p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {LEARN_ARTICLES.map((article) => (
                   <Link key={article.slug} to={`/learn/article/${article.slug}`} className="group bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 hover:scale-[1.02]" style={{ backdropFilter: "blur(12px)" }}>
@@ -139,9 +212,10 @@ export default function Learn() {
               </div>
             </div>
 
-            {/* Trending Topics — ORIGINAL */}
+            {/* ── 2026 Market Trends ── */}
             <div className="mb-20">
-              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3"><TrendingUp className="w-6 h-6 text-primary" /> 2026 Market Trends</h2>
+              <h2 className="text-2xl font-bold mb-3 flex items-center gap-3"><TrendingUp className="w-6 h-6 text-primary" /> 2026 Market Trends</h2>
+              <p className="text-sm text-muted-foreground mb-6">Emerging themes shaping markets this year — explore the trends driving new opportunities.</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {trendingTopics.map((topic, index) => {
                   const Icon = topic.icon;
@@ -160,48 +234,69 @@ export default function Learn() {
               </div>
             </div>
 
-            {/* Course Grid — ORIGINAL */}
-            <h2 className="text-2xl font-bold mb-8">Core Courses</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-              {lessons.map((lesson, index) => {
-                const Icon = lesson.icon;
-                return (
-                  <Card key={lesson.id} onClick={() => navigate(`/learn/${lesson.id}`)} className="group cursor-pointer overflow-hidden border-0 bg-card/50 backdrop-blur-xl hover:shadow-2xl transition-all duration-500" style={{ animationDelay: `${index * 100}ms` }}>
-                    <div className="relative h-80 overflow-hidden">
-                      <img src={lesson.image} alt={`${lesson.title} course - TradeHQ`} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-                      <Badge variant="secondary" className="absolute top-6 left-6 bg-background/80 backdrop-blur-sm border-0 text-sm px-4 py-1.5">{lesson.category}</Badge>
-                    </div>
-                    <div className="p-8">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center"><Icon className="w-7 h-7 text-primary" /></div>
-                        <h3 className="text-3xl font-bold group-hover:text-primary transition-colors">{lesson.title}</h3>
-                      </div>
-                      <p className="text-lg text-muted-foreground mb-6 leading-relaxed">{lesson.description}</p>
-                      <ul className="space-y-3 mb-6">
-                        {lesson.content.slice(0, 3).map((item, i) => (
-                          <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all">
-                        <span>Start Learning</span><ArrowRight className="w-5 h-5" />
-                      </div>
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
+            {/* ── Core Courses — grouped by learning path tier ── */}
+            {LEARNING_PATH.map((pathStep) => {
+              const tierLessons = lessons.filter((l) => l.tier === pathStep.tier);
+              if (tierLessons.length === 0) return null;
+              return (
+                <section key={pathStep.tier} className="mb-16" aria-label={`${pathStep.label} courses`}>
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className={`text-xs font-bold uppercase tracking-wider ${pathStep.color}`}>{pathStep.label}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-6">{pathStep.tagline}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {tierLessons.map((lesson) => {
+                      const Icon = lesson.icon;
+                      return (
+                        <Card
+                          key={lesson.id}
+                          onClick={() => navigate(`/learn/${lesson.id}`)}
+                          className="group cursor-pointer overflow-hidden border-0 bg-card/50 backdrop-blur-xl hover:shadow-2xl transition-all duration-500"
+                        >
+                          <div className="relative h-48 overflow-hidden">
+                            <img src={lesson.image} alt={`${lesson.title} course - TradeHQ`} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+                            <div className="absolute top-4 left-4 flex items-center gap-2">
+                              <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm border-0 text-xs px-3 py-1">{lesson.category}</Badge>
+                              <Badge variant="outline" className={`text-xs px-2 py-0.5 ${difficultyColors[lesson.difficulty]}`}>{lesson.difficulty}</Badge>
+                            </div>
+                          </div>
+                          <div className="p-6">
+                            <div className="flex items-center gap-3 mb-3">
+                              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"><Icon className="w-5 h-5 text-primary" /></div>
+                              <div className="flex-1 min-w-0">
+                                <h3 className="text-lg font-bold group-hover:text-primary transition-colors truncate">{lesson.title}</h3>
+                                <span className="text-xs text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" /> {lesson.readTime}</span>
+                              </div>
+                            </div>
+                            <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{lesson.description}</p>
+                            <ul className="space-y-2 mb-4">
+                              {lesson.content.slice(0, 3).map((item, i) => (
+                                <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                  <div className="w-1 h-1 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="flex items-center gap-2 text-primary text-sm font-semibold group-hover:gap-3 transition-all">
+                              <span>Start Lesson</span><ArrowRight className="w-4 h-4" />
+                            </div>
+                          </div>
+                        </Card>
+                      );
+                    })}
+                  </div>
+                </section>
+              );
+            })}
 
-            {/* ── NEW: Trading Wiki Glossary (internal linking for 21 wiki pages) ── */}
+            {/* ── Trading Wiki Glossary ── */}
             <section aria-label="Trading Wiki Glossary" className="mb-20">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
+              <h2 className="text-2xl font-bold mb-3 flex items-center gap-3">
                 <BookOpen className="w-6 h-6 text-primary" /> Trading Wiki — Key Concepts
               </h2>
-              <p className="text-muted-foreground mb-6">
-                Deep-dive guides on the most important trading terms and strategies:
+              <p className="text-sm text-muted-foreground mb-6">
+                Understand the terms that matter. Each entry explains a concept with examples and context so you can recognize it in real markets.
               </p>
               <div className="flex flex-wrap gap-2">
                 {WIKI_TERMS.map(term => (
@@ -216,11 +311,14 @@ export default function Learn() {
               </div>
             </section>
 
-            {/* ── NEW: Sector links (internal linking for 6 sector pages) ── */}
+            {/* ── Market Sectors ── */}
             <section aria-label="Market Sectors" className="mb-20">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
+              <h2 className="text-2xl font-bold mb-3 flex items-center gap-3">
                 <TrendingUp className="w-6 h-6 text-primary" /> Explore by Market Sector
               </h2>
+              <p className="text-sm text-muted-foreground mb-6">
+                Browse assets grouped by sector to spot opportunities and understand how different parts of the market move.
+              </p>
               <div className="flex flex-wrap gap-3">
                 {SECTORS.map(sector => (
                   <Link
@@ -234,7 +332,7 @@ export default function Learn() {
               </div>
             </section>
 
-            {/* CTA — ORIGINAL */}
+            {/* CTA */}
             <Card className="p-12 bg-gradient-to-br from-primary/5 via-background to-background border-primary/10 backdrop-blur-xl">
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-4xl font-bold mb-6">Ready to Start Trading?</h2>

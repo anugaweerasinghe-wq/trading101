@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 
 const items = [
-  "Join 5,000+ learners",
-  "154 assets available",
+  "150+ assets available",
   "100% free",
   "No signup required",
-  "Real market data",
+  "Real market simulation",
   "$10K virtual cash",
-  "AI mentoring included",
+  "AI mentor included",
+  "Stocks, ETFs & crypto",
+  "Built for beginners",
 ];
 
 export function SocialProofTicker() {
