@@ -190,7 +190,7 @@ const Index = () => {
           </div>
 
           {/* Wiki */}
-          <div className="mb-10">
+          <div className="mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]" style={{ backdropFilter: "blur(12px)" }}>
             <h2 className="text-lg font-bold mb-4 text-foreground">Trading Wiki — Learn Key Concepts</h2>
             <div className="flex flex-wrap gap-2">
               {WIKI_TERMS.map(term => (
