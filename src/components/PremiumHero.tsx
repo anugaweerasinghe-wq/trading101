@@ -117,13 +117,13 @@ export function PremiumHero() {
               </span>
             </Button>
           </Link>
-          <Link to="/leaderboard">
+          <Link to="/learn">
             <Button
               size="lg"
               variant="outline"
               className="text-base px-10 py-7 bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.06] hover:border-primary/30 transition-all duration-300 rounded-2xl min-h-[60px] backdrop-blur-xl"
             >
-              View Leaderboard
+              Learn Trading
             </Button>
           </Link>
         </motion.div>

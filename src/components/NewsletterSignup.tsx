@@ -78,11 +78,12 @@ export function NewsletterSignup() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your@email.com"
           required
+          autoComplete="email"
           className="flex-1 h-9 px-3 rounded-lg text-sm bg-[hsl(var(--input))] border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[hsl(var(--ring))]"
         />
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !email.trim()}
           className="h-9 px-4 rounded-lg bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center gap-1"
         >
           {isSubmitting ? '...' : <><ArrowRight className="w-3.5 h-3.5" /> Join</>}
