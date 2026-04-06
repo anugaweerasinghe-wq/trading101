@@ -83,7 +83,7 @@ export function NewsletterSignup() {
         />
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !email.trim()}
           className="h-9 px-4 rounded-lg bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center gap-1"
         >
           {isSubmitting ? '...' : <><ArrowRight className="w-3.5 h-3.5" /> Join</>}
