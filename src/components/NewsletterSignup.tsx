@@ -78,6 +78,7 @@ export function NewsletterSignup() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your@email.com"
           required
+          autoComplete="email"
           className="flex-1 h-9 px-3 rounded-lg text-sm bg-[hsl(var(--input))] border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-[hsl(var(--ring))]"
         />
         <button
