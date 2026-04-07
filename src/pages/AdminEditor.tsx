@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { Lock, Save, Plus, FileText } from "lucide-react";
 
 type Sentiment = "Bullish" | "Bearish" | "Neutral";
@@ -11,27 +12,9 @@ interface Article {
   slug: string;
   content: string;
   focus_asset: string;
-  sentiment: Sentiment;
+  sentiment: string;
   created_at: string;
-  updated_at?: string | null;
 }
-
-interface VerifyResponse {
-  valid: boolean;
-}
-
-interface AdminArticlesResponse {
-  articles?: Article[];
-  error?: string;
-}
-
-interface SaveArticleResponse {
-  article?: Article;
-  error?: string;
-}
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 function normalizeSlug(value: string) {
   return value
@@ -41,34 +24,10 @@ function normalizeSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-async function callAdminFunction<T>(
-  path: string,
-  masterKey: string,
-  body?: Record<string, unknown>,
-  method: "GET" | "POST" | "PUT" | "DELETE" = "POST"
-): Promise<T> {
-  const response = await fetch(`${SUPABASE_URL}/functions/v1/${path}`, {
-    method,
-    headers: {
-      Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-      "Content-Type": "application/json",
-      "x-admin-key": masterKey,
-    },
-    body: method === "GET" ? undefined : JSON.stringify(body ?? {}),
-  });
-
-  const data = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    throw new Error(data?.error || `Request failed: ${response.status}`);
-  }
-
-  return data as T;
-}
-
 export default function AdminEditor() {
-  const { toast } = useToast();
-
+  // Simple client-side gate — not a security boundary.
+  // The old flow called a verify-admin-key edge function; this keeps the UX
+  // but moves CRUD to direct Supabase client calls (RLS handles access).
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [masterKey, setMasterKey] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
@@ -86,6 +45,7 @@ export default function AdminEditor() {
 
   const isEditing = useMemo(() => Boolean(editingId), [editingId]);
 
+  // Auto-generate slug from title when creating a new article
   useEffect(() => {
     if (!isEditing) {
       setSlug(normalizeSlug(title));
@@ -101,29 +61,19 @@ export default function AdminEditor() {
     setSentiment("Neutral");
   };
 
-  const loadArticles = async (keyOverride?: string) => {
-    const keyToUse = keyOverride ?? masterKey;
-    if (!keyToUse) return;
-
+  const loadArticles = async () => {
     setIsLoadingArticles(true);
-    try {
-      const result = await callAdminFunction<AdminArticlesResponse>(
-        "admin-market-articles-list",
-        keyToUse,
-        {},
-        "POST"
-      );
+    const { data, error } = await supabase
+      .from("market_articles")
+      .select("id, title, slug, content, focus_asset, sentiment, created_at")
+      .order("created_at", { ascending: false });
 
-      setArticles(result.articles ?? []);
-    } catch (error: any) {
-      toast({
-        title: "Failed to load articles",
-        description: error.message || "Could not fetch articles.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoadingArticles(false);
+    if (error) {
+      toast.error("Failed to load articles", { description: error.message });
+    } else {
+      setArticles(data ?? []);
     }
+    setIsLoadingArticles(false);
   };
 
   const verifyKey = async (e: React.FormEvent) => {
@@ -131,39 +81,41 @@ export default function AdminEditor() {
     setIsVerifying(true);
 
     try {
-      const result = await callAdminFunction<VerifyResponse>(
-        "verify-admin-key",
-        masterKey,
-        { key: masterKey },
-        "POST"
-      );
+      const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+      const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-      if (!result.valid) {
-        toast({
-          title: "Access denied",
-          description: "Invalid master key.",
-          variant: "destructive",
-        });
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/verify-admin-key`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+          "Content-Type": "application/json",
+          "x-admin-key": masterKey,
+        },
+        body: JSON.stringify({ key: masterKey }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || !result.valid) {
+        toast.error("Access denied", { description: "Invalid master key." });
         return;
       }
 
       setIsUnlocked(true);
-      await loadArticles(masterKey);
-
-      toast({
-        title: "Access granted",
-        description: "CMS unlocked successfully.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Verification failed",
-        description: error.message || "Unable to verify master key.",
-        variant: "destructive",
-      });
+      toast.success("CMS unlocked successfully");
+    } catch (err: any) {
+      toast.error("Verification failed", { description: err.message });
     } finally {
       setIsVerifying(false);
     }
   };
+
+  // Load articles once unlocked
+  useEffect(() => {
+    if (isUnlocked) {
+      loadArticles();
+    }
+  }, [isUnlocked]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,53 +126,50 @@ export default function AdminEditor() {
     const cleanAsset = focusAsset.trim().toLowerCase();
 
     if (!cleanTitle || !cleanSlug || !cleanContent || !cleanAsset) {
-      toast({
-        title: "Missing fields",
+      toast.error("Missing fields", {
         description: "Title, slug, content, and focus asset are required.",
-        variant: "destructive",
       });
       return;
     }
 
     setIsSaving(true);
 
-    try {
-      const result = await callAdminFunction<SaveArticleResponse>(
-        isEditing ? "admin-market-articles-update" : "admin-market-articles-create",
-        masterKey,
-        {
-          id: editingId,
-          title: cleanTitle,
-          slug: cleanSlug,
-          content: cleanContent,
-          focus_asset: cleanAsset,
-          sentiment,
-        },
-        "POST"
-      );
+    const payload = {
+      title: cleanTitle,
+      slug: cleanSlug,
+      content: cleanContent,
+      focus_asset: cleanAsset,
+      sentiment,
+    };
 
-      toast({
-        title: isEditing ? "Article updated" : "Article published",
-        description: isEditing
-          ? "Your article was updated successfully."
-          : "Your article was published successfully.",
-      });
+    if (isEditing && editingId) {
+      const { error } = await supabase
+        .from("market_articles")
+        .update(payload)
+        .eq("id", editingId);
 
-      resetForm();
-      await loadArticles();
-
-      if (result.article) {
-        console.log("Saved article:", result.article);
+      if (error) {
+        toast.error("Update failed", { description: error.message });
+      } else {
+        toast.success("Article updated");
+        resetForm();
+        await loadArticles();
       }
-    } catch (error: any) {
-      toast({
-        title: "Save failed",
-        description: error.message || "Unable to save article.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSaving(false);
+    } else {
+      const { error } = await supabase
+        .from("market_articles")
+        .insert([payload]);
+
+      if (error) {
+        toast.error("Publish failed", { description: error.message });
+      } else {
+        toast.success("Article published");
+        resetForm();
+        await loadArticles();
+      }
     }
+
+    setIsSaving(false);
   };
 
   const editArticle = (article: Article) => {
@@ -229,9 +178,10 @@ export default function AdminEditor() {
     setSlug(article.slug);
     setContent(article.content);
     setFocusAsset(article.focus_asset);
-    setSentiment(article.sentiment);
+    setSentiment(article.sentiment as Sentiment);
   };
 
+  /* ── Lock Screen ── */
   if (!isUnlocked) {
     return (
       <>
@@ -272,6 +222,7 @@ export default function AdminEditor() {
     );
   }
 
+  /* ── CMS Editor ── */
   return (
     <>
       <Helmet>
