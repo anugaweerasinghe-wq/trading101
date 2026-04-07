@@ -81,22 +81,11 @@ export default function AdminEditor() {
     setIsVerifying(true);
 
     try {
-      const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-      const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-
-      const response = await fetch(`${SUPABASE_URL}/functions/v1/verify-admin-key`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-          "Content-Type": "application/json",
-          "x-admin-key": masterKey,
-        },
-        body: JSON.stringify({ key: masterKey }),
+      const { data, error } = await supabase.functions.invoke("verify-admin-key", {
+        body: { key: masterKey },
       });
 
-      const result = await response.json().catch(() => ({}));
-
-      if (!response.ok || !result.valid) {
+      if (error || !data?.valid) {
         toast.error("Access denied", { description: "Invalid master key." });
         return;
       }
