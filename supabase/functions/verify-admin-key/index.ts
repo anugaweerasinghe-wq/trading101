@@ -14,6 +14,10 @@ serve(async (req) => {
     const { key } = await req.json();
     const masterKey = Deno.env.get('ADMIN_MASTER_KEY');
 
+    console.log("masterKey exists:", !!masterKey, "length:", masterKey?.length);
+    console.log("provided key length:", key?.length);
+    console.log("match:", key === masterKey);
+
     if (!masterKey) {
       return new Response(
         JSON.stringify({ valid: false, error: 'Admin key not configured' }),
