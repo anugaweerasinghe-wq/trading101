@@ -180,4 +180,15 @@
   <url><loc>https://tradinghq.vercel.app/trade/corn</loc><lastmod>2026-04-08</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
   <url><loc>https://tradinghq.vercel.app/trade/cotton</loc><lastmod>2026-04-08</lastmod><changefreq>daily</changefreq><priority>0.65</priority></url>
 
+
+  <!-- ==================== LEARN ARTICLES ==================== -->
+  <url><loc>https://tradinghq.vercel.app/learn/what-is-paper-trading</loc><lastmod>2026-04-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/learn/how-to-read-stock-charts</loc><lastmod>2026-04-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/learn/crypto-vs-stocks</loc><lastmod>2026-04-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/learn/trading-strategies-for-beginners</loc><lastmod>2026-04-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/learn/stock-market-index-etfs</loc><lastmod>2026-04-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/learn/how-to-build-a-portfolio</loc><lastmod>2026-04-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/learn/risk-management-in-trading</loc><lastmod>2026-04-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/learn/market-orders-vs-limit-orders</loc><lastmod>2026-04-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/learn/technical-indicators-rsi-macd-moving-averages</loc><lastmod>2026-04-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
