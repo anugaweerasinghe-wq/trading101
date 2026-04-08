@@ -42,6 +42,7 @@ export default function Leaderboard() {
         <title>Leaderboard — Top Virtual Traders 2026 | TradeHQ Simulator Rankings</title>
         <meta name="description" content="See who's crushing it with $10K virtual cash. Real-time leaderboard of the best paper traders on TradeHQ. Can you beat the top 10?" />
         <link rel="canonical" href="https://tradinghq.vercel.app/leaderboard" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ Leaderboard — Top Virtual Traders 2026" />
         <meta property="og:description" content="Live rankings of the best paper traders. Start with $10K and climb the leaderboard." />

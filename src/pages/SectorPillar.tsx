@@ -117,6 +117,7 @@ export default function SectorPillar() {
         <title>{sector.name} Trading Simulator | 2026 Strategy & Analysis | TradeHQ</title>
         <meta name="description" content={`Practice trading ${sector.name.toLowerCase()} assets with $10K virtual funds. ${sector.description.slice(0, 100)}...`} />
         <link rel="canonical" href={canonicalUrl} />
+        <meta name="robots" content="index, follow" />
         <meta property="og:title" content={`${sector.name} Trading Simulator | TradeHQ`} />
         <meta property="og:description" content={sector.description} />
         <meta property="og:url" content={canonicalUrl} />

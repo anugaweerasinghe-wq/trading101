@@ -91,6 +91,10 @@ Users may not copy, modify, distribute, or create derivative works without expli
         <meta name="description" content="Read the official terms and privacy guidelines for TradingHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice." />
         <link rel="canonical" href="https://tradinghq.vercel.app/terms" />
         <meta name="robots" content="index, follow" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Privacy Policy & Terms of Service | TradeHQ" />
+        <meta property="og:description" content="Read the official terms and privacy guidelines for TradeHQ. Safe, simulated environment for financial education." />
+        <meta property="og:url" content="https://tradinghq.vercel.app/terms" />
       </Helmet>
 
       <div className="min-h-screen bg-background">
