@@ -318,6 +318,7 @@ export default function TradeAsset() {
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
         
+        <meta name="robots" content="index, follow" />
         <meta name="theme-color" content={assetColor} />
         
         {/* GEO KEY SUMMARY SCHEMA */}
