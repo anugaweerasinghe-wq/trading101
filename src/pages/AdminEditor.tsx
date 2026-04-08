@@ -155,6 +155,18 @@ export default function AdminEditor() {
         toast.success("Article published");
         resetForm();
         await loadArticles();
+
+        // Notify subscribers
+        try {
+          const { data: nlData, error: nlError } = await supabase.functions.invoke("send-newsletter");
+          if (nlError) {
+            toast.error("Newsletter failed", { description: nlError.message });
+          } else {
+            toast.success(`Newsletter sent to ${nlData?.sent ?? 0} subscriber(s)`);
+          }
+        } catch {
+          toast.error("Failed to send newsletter");
+        }
       }
     }
 
