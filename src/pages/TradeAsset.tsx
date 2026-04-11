@@ -22,9 +22,9 @@ import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
-import { simulateAssetPrices, setLastUpdateTime } from "@/lib/priceSimulation";
 import { useToast } from "@/hooks/use-toast";
 import { useLiveMarketData } from "@/hooks/useLiveMarketData";
+import { generatePriceMovement } from "@/lib/priceMovement";
 import { 
   getAssetContent, 
   generateAssetMetaTitle, 
