@@ -433,9 +433,28 @@ export default function TradeAsset() {
               <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2 tracking-tight">
                 {selectedAsset.name} — Practice Trading Simulator 2026
               </h1>
-              <p className="text-sm text-muted-foreground mb-4 max-w-3xl">
+              <p className="text-sm text-muted-foreground mb-2 max-w-3xl">
                 Master {selectedAsset.symbol} trading with $10,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
               </p>
+              {/* Data trust signal */}
+              <div className="flex items-center gap-3 text-xs">
+                <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-medium ${
+                  dataSource === 'live' 
+                    ? 'bg-green-500/10 text-green-500 border border-green-500/20' 
+                    : dataSource === 'cached'
+                    ? 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20'
+                    : 'bg-muted/50 text-muted-foreground border border-muted-foreground/20'
+                }`}>
+                  {dataSource === 'live' ? <Wifi className="w-3 h-3" /> : <WifiOff className="w-3 h-3" />}
+                  {dataSource === 'live' ? 'Live Data' : dataSource === 'cached' ? 'Cached' : 'Simulated'}
+                </span>
+                {lastUpdated && (
+                  <span className="inline-flex items-center gap-1 text-muted-foreground">
+                    <Clock className="w-3 h-3" />
+                    Updated {Math.floor((Date.now() - lastUpdated.getTime()) / 1000)}s ago
+                  </span>
+                )}
+              </div>
             </header>
           )}
 
