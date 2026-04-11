@@ -23,9 +23,10 @@ import {
   savePortfolio,
 } from "@/lib/portfolio";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
-import { setLastUpdateTime } from "@/lib/priceSimulation";
 import { recordLoss } from "@/components/trading/RevengeTradingBlocker";
 import { useToast } from "@/hooks/use-toast";
+import { persistPrice, getPersistedPrices } from "@/lib/pricePersistence";
+import { generatePriceMovement } from "@/lib/priceMovement";
 
 export default function Trade() {
   const { symbol } = useParams();
