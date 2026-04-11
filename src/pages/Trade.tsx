@@ -198,7 +198,7 @@ export default function Trade() {
     if (isLoading || assets.length === 0) return;
 
     const initialRefresh = setTimeout(refreshAllAssets, 2000);
-    const interval = setInterval(refreshAllAssets, 45000);
+    const interval = setInterval(refreshAllAssets, 60000);
 
     return () => {
       clearTimeout(initialRefresh);
