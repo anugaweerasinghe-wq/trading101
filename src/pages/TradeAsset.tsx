@@ -25,6 +25,7 @@ import { getFavorites, toggleFavorite } from "@/lib/favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useLiveMarketData } from "@/hooks/useLiveMarketData";
 import { generatePriceMovement } from "@/lib/priceMovement";
+import { persistPrice, getPersistedPrices } from "@/lib/pricePersistence";
 import { 
   getAssetContent, 
   generateAssetMetaTitle, 
