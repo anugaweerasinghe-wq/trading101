@@ -51,6 +51,8 @@ export default function TradeAsset() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [dataSource, setDataSource] = useState<'live' | 'cached' | 'simulated'>('simulated');
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const { toast } = useToast();
    
   const isMounted = useRef(true);
