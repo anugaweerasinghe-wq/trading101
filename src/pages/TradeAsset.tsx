@@ -132,6 +132,7 @@ export default function TradeAsset() {
       if (!selectedAsset || !isMounted.current) return;
       const updated = await fetchLivePrice(selectedAsset);
       if (isMounted.current && updated.price !== selectedAsset.price) {
+        persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'live');
         setAssets(prev => prev.map(a => a.id === updated.id ? updated : a));
       }
     };
