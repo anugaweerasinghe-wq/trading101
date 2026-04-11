@@ -454,14 +454,23 @@ export default function Trade() {
                           {asset.name}
                         </p>
 
-                        <p className="text-xs font-medium mt-1 text-foreground/80">
-                          $
-                          {asset.price < 1
-                            ? asset.price.toFixed(4)
-                            : asset.price.toLocaleString(undefined, {
-                                maximumFractionDigits: 2,
-                              })}
-                        </p>
+                        <div className="flex items-center justify-between mt-1">
+                          <p className="text-xs font-medium text-foreground/80">
+                            $
+                            {asset.price < 1
+                              ? asset.price.toFixed(4)
+                              : asset.price.toLocaleString(undefined, {
+                                  maximumFractionDigits: 2,
+                                })}
+                          </p>
+                          <span className={`text-[8px] font-medium px-1 py-0.5 rounded ${
+                            liveAssetIds.has(asset.id)
+                              ? 'bg-green-500/10 text-green-500'
+                              : 'bg-muted/50 text-muted-foreground'
+                          }`}>
+                            {liveAssetIds.has(asset.id) ? 'LIVE' : 'SIM'}
+                          </span>
+                        </div>
                       </Link>
                     );
                   })}
