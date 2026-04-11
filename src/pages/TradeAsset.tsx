@@ -36,7 +36,7 @@ import {
   getAssetColor,
   getAssetFAQs
 } from "@/lib/assetContent";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Wifi, WifiOff, Clock } from "lucide-react";
 
 // Wrapper component to provide live data to AssetIntelligence
 function AssetIntelligenceWithLiveData({ asset }: { asset: Asset }) {
@@ -51,6 +51,8 @@ export default function TradeAsset() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [dataSource, setDataSource] = useState<'live' | 'cached' | 'simulated'>('simulated');
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const { toast } = useToast();
    
   const isMounted = useRef(true);
@@ -102,8 +104,14 @@ export default function TradeAsset() {
     
     const loadTimer = setTimeout(() => {
       if (!isMounted.current) return;
-      setAssets(ASSETS);
-      setSelectedAsset(targetAsset);
+      // Hydrate from persisted prices before displaying
+      const cached = getPersistedPrices();
+      const hydratedAssets = ASSETS.map(a => {
+        const p = cached[a.id];
+        return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
+      });
+      setAssets(hydratedAssets);
+      setSelectedAsset(targetAsset ? (cached[targetAsset.id] ? { ...targetAsset, price: cached[targetAsset.id].price, change: cached[targetAsset.id].change, changePercent: cached[targetAsset.id].changePercent } : targetAsset) : null);
       setIsLoading(false);
     }, 600);
 
@@ -125,8 +133,13 @@ export default function TradeAsset() {
     const fetchSelected = async () => {
       if (!selectedAsset || !isMounted.current) return;
       const updated = await fetchLivePrice(selectedAsset);
-      if (isMounted.current && updated.price !== selectedAsset.price) {
-        setAssets(prev => prev.map(a => a.id === updated.id ? updated : a));
+      if (isMounted.current) {
+        if (updated.price !== selectedAsset.price) {
+          persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'live');
+          setAssets(prev => prev.map(a => a.id === updated.id ? updated : a));
+          setDataSource('live');
+        }
+        setLastUpdated(new Date());
       }
     };
 
@@ -420,9 +433,28 @@ export default function TradeAsset() {
               <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2 tracking-tight">
                 {selectedAsset.name} — Practice Trading Simulator 2026
               </h1>
-              <p className="text-sm text-muted-foreground mb-4 max-w-3xl">
+              <p className="text-sm text-muted-foreground mb-2 max-w-3xl">
                 Master {selectedAsset.symbol} trading with $10,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
               </p>
+              {/* Data trust signal */}
+              <div className="flex items-center gap-3 text-xs">
+                <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-medium ${
+                  dataSource === 'live' 
+                    ? 'bg-green-500/10 text-green-500 border border-green-500/20' 
+                    : dataSource === 'cached'
+                    ? 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20'
+                    : 'bg-muted/50 text-muted-foreground border border-muted-foreground/20'
+                }`}>
+                  {dataSource === 'live' ? <Wifi className="w-3 h-3" /> : <WifiOff className="w-3 h-3" />}
+                  {dataSource === 'live' ? 'Live Data' : dataSource === 'cached' ? 'Cached' : 'Simulated'}
+                </span>
+                {lastUpdated && (
+                  <span className="inline-flex items-center gap-1 text-muted-foreground">
+                    <Clock className="w-3 h-3" />
+                    Updated {Math.floor((Date.now() - lastUpdated.getTime()) / 1000)}s ago
+                  </span>
+                )}
+              </div>
             </header>
           )}
 

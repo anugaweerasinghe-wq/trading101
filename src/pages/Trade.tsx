@@ -23,9 +23,10 @@ import {
   savePortfolio,
 } from "@/lib/portfolio";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
-import { setLastUpdateTime } from "@/lib/priceSimulation";
 import { recordLoss } from "@/components/trading/RevengeTradingBlocker";
 import { useToast } from "@/hooks/use-toast";
+import { persistPrice, getPersistedPrices } from "@/lib/pricePersistence";
+import { generatePriceMovement } from "@/lib/priceMovement";
 
 export default function Trade() {
   const { symbol } = useParams();
@@ -38,6 +39,7 @@ export default function Trade() {
   const isMounted = useRef(true);
   const isRefreshing = useRef(false);
   const assetsRef = useRef<Asset[]>([]);
+  const [liveAssetIds, setLiveAssetIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     assetsRef.current = assets;
@@ -93,17 +95,8 @@ export default function Trade() {
   };
 
   const simulatePrice = (asset: Asset): Asset => {
-    const volatility = asset.type === "crypto" ? 0.015 : 0.008;
-    const changePercent =
-      (Math.random() * volatility * 2 - volatility) * 100;
-    const change = asset.price * (changePercent / 100);
-
-    return {
-      ...asset,
-      price: Math.max(0.0001, asset.price + change * 0.1),
-      change,
-      changePercent,
-    };
+    const movement = generatePriceMovement(asset.price);
+    return { ...asset, price: movement.price, change: movement.change, changePercent: movement.changePercent };
   };
 
   const refreshAllAssets = useCallback(async () => {
@@ -115,24 +108,48 @@ export default function Trade() {
     isRefreshing.current = true;
 
     try {
-      const cryptoAssets = currentAssets
-        .filter((a) => a.type === "crypto")
-        .slice(0, 15);
+      // Fetch in staggered batches of 5 with 1s delay between batches
+      const batchSize = 5;
+      const updatedMap = new Map<string, { asset: Asset; gotLive: boolean }>();
 
-      const updatedCrypto = await Promise.all(
-        cryptoAssets.map(fetchLivePrice),
-      );
+      for (let i = 0; i < currentAssets.length; i += batchSize) {
+        if (!isMounted.current) break;
+        const batch = currentAssets.slice(i, i + batchSize);
 
-      const updatedMap = new Map<string, Asset>();
-      updatedCrypto.forEach((a) => updatedMap.set(a.id, a));
+        const results = await Promise.allSettled(
+          batch.map(async (asset) => {
+            const updated = await fetchLivePrice(asset);
+            const gotLive = updated.price !== asset.price;
+            if (gotLive) {
+              persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'live');
+            }
+            return { asset: updated, gotLive };
+          })
+        );
 
-      const allUpdated = currentAssets.map(
-        (asset) => updatedMap.get(asset.id) || simulatePrice(asset),
-      );
+        results.forEach((r) => {
+          if (r.status === 'fulfilled') updatedMap.set(r.value.asset.id, r.value);
+        });
+
+        // 1s delay between batches to respect rate limits
+        if (i + batchSize < currentAssets.length) {
+          await new Promise((r) => setTimeout(r, 1000));
+        }
+      }
+
+      const newLiveIds = new Set<string>();
+      const allUpdated = currentAssets.map((asset) => {
+        const entry = updatedMap.get(asset.id);
+        if (entry) {
+          if (entry.gotLive) newLiveIds.add(asset.id);
+          return entry.asset;
+        }
+        return simulatePrice(asset);
+      });
 
       if (isMounted.current) {
         setAssets(allUpdated);
-        setLastUpdateTime(new Date());
+        setLiveAssetIds(newLiveIds);
       }
     } catch (err) {
       console.error("Batch refresh error:", err);
@@ -154,18 +171,25 @@ export default function Trade() {
         typeof asset.changePercent === "number",
     );
 
+    // Hydrate from persisted prices
+    const cached = getPersistedPrices();
+    const hydratedAssets = validAssets.map(a => {
+      const p = cached[a.id];
+      return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
+    });
+
     setTimeout(() => {
       if (!isMounted.current) return;
 
-      setAssets(validAssets);
+      setAssets(hydratedAssets);
 
       if (symbol) {
-        const match = validAssets.find(
+        const match = hydratedAssets.find(
           (a) => a.symbol.toUpperCase() === symbol.toUpperCase(),
         );
-        setSelectedAsset(match || validAssets[0] || null);
+        setSelectedAsset(match || hydratedAssets[0] || null);
       } else {
-        setSelectedAsset(validAssets[0] || null);
+        setSelectedAsset(hydratedAssets[0] || null);
       }
 
       setIsLoading(false);
@@ -183,7 +207,7 @@ export default function Trade() {
     if (isLoading || assets.length === 0) return;
 
     const initialRefresh = setTimeout(refreshAllAssets, 2000);
-    const interval = setInterval(refreshAllAssets, 45000);
+    const interval = setInterval(refreshAllAssets, 60000);
 
     return () => {
       clearTimeout(initialRefresh);
@@ -430,14 +454,23 @@ export default function Trade() {
                           {asset.name}
                         </p>
 
-                        <p className="text-xs font-medium mt-1 text-foreground/80">
-                          $
-                          {asset.price < 1
-                            ? asset.price.toFixed(4)
-                            : asset.price.toLocaleString(undefined, {
-                                maximumFractionDigits: 2,
-                              })}
-                        </p>
+                        <div className="flex items-center justify-between mt-1">
+                          <p className="text-xs font-medium text-foreground/80">
+                            $
+                            {asset.price < 1
+                              ? asset.price.toFixed(4)
+                              : asset.price.toLocaleString(undefined, {
+                                  maximumFractionDigits: 2,
+                                })}
+                          </p>
+                          <span className={`text-[8px] font-medium px-1 py-0.5 rounded ${
+                            liveAssetIds.has(asset.id)
+                              ? 'bg-green-500/10 text-green-500'
+                              : 'bg-muted/50 text-muted-foreground'
+                          }`}>
+                            {liveAssetIds.has(asset.id) ? 'LIVE' : 'SIM'}
+                          </span>
+                        </div>
                       </Link>
                     );
                   })}
