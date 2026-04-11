@@ -36,7 +36,7 @@ import {
   getAssetColor,
   getAssetFAQs
 } from "@/lib/assetContent";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Wifi, WifiOff, Clock } from "lucide-react";
 
 // Wrapper component to provide live data to AssetIntelligence
 function AssetIntelligenceWithLiveData({ asset }: { asset: Asset }) {
