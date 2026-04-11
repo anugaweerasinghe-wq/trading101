@@ -110,7 +110,7 @@ export default function Trade() {
     try {
       // Fetch in staggered batches of 5 with 1s delay between batches
       const batchSize = 5;
-      const updatedMap = new Map<string, Asset>();
+      const updatedMap = new Map<string, { asset: Asset; gotLive: boolean }>();
 
       for (let i = 0; i < currentAssets.length; i += batchSize) {
         if (!isMounted.current) break;
