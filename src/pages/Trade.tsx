@@ -119,15 +119,16 @@ export default function Trade() {
         const results = await Promise.allSettled(
           batch.map(async (asset) => {
             const updated = await fetchLivePrice(asset);
-            if (updated.price !== asset.price) {
+            const gotLive = updated.price !== asset.price;
+            if (gotLive) {
               persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'live');
             }
-            return updated;
+            return { asset: updated, gotLive };
           })
         );
 
         results.forEach((r) => {
-          if (r.status === 'fulfilled') updatedMap.set(r.value.id, r.value);
+          if (r.status === 'fulfilled') updatedMap.set(r.value.asset.id, r.value);
         });
 
         // 1s delay between batches to respect rate limits
@@ -136,12 +137,19 @@ export default function Trade() {
         }
       }
 
-      const allUpdated = currentAssets.map(
-        (asset) => updatedMap.get(asset.id) || simulatePrice(asset),
-      );
+      const newLiveIds = new Set<string>();
+      const allUpdated = currentAssets.map((asset) => {
+        const entry = updatedMap.get(asset.id);
+        if (entry) {
+          if (entry.gotLive) newLiveIds.add(asset.id);
+          return entry.asset;
+        }
+        return simulatePrice(asset);
+      });
 
       if (isMounted.current) {
         setAssets(allUpdated);
+        setLiveAssetIds(newLiveIds);
       }
     } catch (err) {
       console.error("Batch refresh error:", err);
