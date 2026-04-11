@@ -102,8 +102,14 @@ export default function TradeAsset() {
     
     const loadTimer = setTimeout(() => {
       if (!isMounted.current) return;
-      setAssets(ASSETS);
-      setSelectedAsset(targetAsset);
+      // Hydrate from persisted prices before displaying
+      const cached = getPersistedPrices();
+      const hydratedAssets = ASSETS.map(a => {
+        const p = cached[a.id];
+        return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
+      });
+      setAssets(hydratedAssets);
+      setSelectedAsset(targetAsset ? (cached[targetAsset.id] ? { ...targetAsset, price: cached[targetAsset.id].price, change: cached[targetAsset.id].change, changePercent: cached[targetAsset.id].changePercent } : targetAsset) : null);
       setIsLoading(false);
     }, 600);
 
