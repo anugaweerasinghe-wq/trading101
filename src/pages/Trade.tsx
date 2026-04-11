@@ -94,17 +94,8 @@ export default function Trade() {
   };
 
   const simulatePrice = (asset: Asset): Asset => {
-    const volatility = asset.type === "crypto" ? 0.015 : 0.008;
-    const changePercent =
-      (Math.random() * volatility * 2 - volatility) * 100;
-    const change = asset.price * (changePercent / 100);
-
-    return {
-      ...asset,
-      price: Math.max(0.0001, asset.price + change * 0.1),
-      change,
-      changePercent,
-    };
+    const movement = generatePriceMovement(asset.price);
+    return { ...asset, price: movement.price, change: movement.change, changePercent: movement.changePercent };
   };
 
   const refreshAllAssets = useCallback(async () => {
@@ -116,16 +107,33 @@ export default function Trade() {
     isRefreshing.current = true;
 
     try {
-      const cryptoAssets = currentAssets
-        .filter((a) => a.type === "crypto")
-        .slice(0, 15);
-
-      const updatedCrypto = await Promise.all(
-        cryptoAssets.map(fetchLivePrice),
-      );
-
+      // Fetch in staggered batches of 5 with 1s delay between batches
+      const batchSize = 5;
       const updatedMap = new Map<string, Asset>();
-      updatedCrypto.forEach((a) => updatedMap.set(a.id, a));
+
+      for (let i = 0; i < currentAssets.length; i += batchSize) {
+        if (!isMounted.current) break;
+        const batch = currentAssets.slice(i, i + batchSize);
+
+        const results = await Promise.allSettled(
+          batch.map(async (asset) => {
+            const updated = await fetchLivePrice(asset);
+            if (updated.price !== asset.price) {
+              persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'live');
+            }
+            return updated;
+          })
+        );
+
+        results.forEach((r) => {
+          if (r.status === 'fulfilled') updatedMap.set(r.value.id, r.value);
+        });
+
+        // 1s delay between batches to respect rate limits
+        if (i + batchSize < currentAssets.length) {
+          await new Promise((r) => setTimeout(r, 1000));
+        }
+      }
 
       const allUpdated = currentAssets.map(
         (asset) => updatedMap.get(asset.id) || simulatePrice(asset),
@@ -133,7 +141,6 @@ export default function Trade() {
 
       if (isMounted.current) {
         setAssets(allUpdated);
-        setLastUpdateTime(new Date());
       }
     } catch (err) {
       console.error("Batch refresh error:", err);
