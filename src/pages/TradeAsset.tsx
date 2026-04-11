@@ -22,9 +22,10 @@ import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfolio";
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
-import { simulateAssetPrices, setLastUpdateTime } from "@/lib/priceSimulation";
 import { useToast } from "@/hooks/use-toast";
 import { useLiveMarketData } from "@/hooks/useLiveMarketData";
+import { generatePriceMovement } from "@/lib/priceMovement";
+import { persistPrice, getPersistedPrices } from "@/lib/pricePersistence";
 import { 
   getAssetContent, 
   generateAssetMetaTitle, 
@@ -63,6 +64,36 @@ export default function TradeAsset() {
     ) || null;
   }, []);
 
+  // Fetch live price for a single asset via edge function
+  const fetchLivePrice = useCallback(async (asset: Asset): Promise<Asset> => {
+    if (!asset || typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) return asset;
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+        {
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.data && typeof result.data.price === 'number' && result.data.price > 0) {
+          return {
+            ...asset,
+            price: result.data.price,
+            change: typeof result.data.change24h === 'number' ? result.data.change24h : asset.change,
+            changePercent: typeof result.data.changePercent24h === 'number' ? result.data.changePercent24h : asset.changePercent,
+          };
+        }
+      }
+    } catch (_err) {
+      // silently fall back
+    }
+    return asset;
+  }, []);
+
   useEffect(() => {
     isMounted.current = true;
     
@@ -80,23 +111,45 @@ export default function TradeAsset() {
     setPortfolio(updated);
     setFavorites(getFavorites());
 
-    const priceInterval = setInterval(() => {
-      if (!isMounted.current) return;
-      
-      setAssets(prev => {
-        if (prev.length === 0) return prev;
-        const updated = simulateAssetPrices(prev, 0.05);
-        return updated;
-      });
-      setLastUpdateTime(new Date());
-    }, 3000);
-
     return () => {
       isMounted.current = false;
       clearTimeout(loadTimer);
-      clearInterval(priceInterval);
     };
   }, [symbol, findAssetBySymbol]);
+
+  // Hybrid data: fetch real prices on mount + every 60s, micro-fluctuate every 3s
+  useEffect(() => {
+    if (isLoading || assets.length === 0) return;
+
+    // Fetch real price for selected asset
+    const fetchSelected = async () => {
+      if (!selectedAsset || !isMounted.current) return;
+      const updated = await fetchLivePrice(selectedAsset);
+      if (isMounted.current && updated.price !== selectedAsset.price) {
+        setAssets(prev => prev.map(a => a.id === updated.id ? updated : a));
+      }
+    };
+
+    // Initial fetch
+    const initialTimer = setTimeout(fetchSelected, 800);
+    // Periodic refresh every 60s
+    const refreshInterval = setInterval(fetchSelected, 60000);
+
+    // Micro-fluctuation: ±0.01% anchored to current price (visual liveness only)
+    const microInterval = setInterval(() => {
+      if (!isMounted.current) return;
+      setAssets(prev => prev.map(asset => {
+        const movement = generatePriceMovement(asset.price);
+        return { ...asset, price: movement.price };
+      }));
+    }, 3000);
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(refreshInterval);
+      clearInterval(microInterval);
+    };
+  }, [isLoading, selectedAsset?.id, fetchLivePrice]);
 
   useEffect(() => {
     if (selectedAsset && isMounted.current && assets.length > 0) {
