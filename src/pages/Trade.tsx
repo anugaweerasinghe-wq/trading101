@@ -162,18 +162,25 @@ export default function Trade() {
         typeof asset.changePercent === "number",
     );
 
+    // Hydrate from persisted prices
+    const cached = getPersistedPrices();
+    const hydratedAssets = validAssets.map(a => {
+      const p = cached[a.id];
+      return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
+    });
+
     setTimeout(() => {
       if (!isMounted.current) return;
 
-      setAssets(validAssets);
+      setAssets(hydratedAssets);
 
       if (symbol) {
-        const match = validAssets.find(
+        const match = hydratedAssets.find(
           (a) => a.symbol.toUpperCase() === symbol.toUpperCase(),
         );
-        setSelectedAsset(match || validAssets[0] || null);
+        setSelectedAsset(match || hydratedAssets[0] || null);
       } else {
-        setSelectedAsset(validAssets[0] || null);
+        setSelectedAsset(hydratedAssets[0] || null);
       }
 
       setIsLoading(false);
