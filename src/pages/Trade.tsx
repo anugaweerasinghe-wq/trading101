@@ -39,6 +39,7 @@ export default function Trade() {
   const isMounted = useRef(true);
   const isRefreshing = useRef(false);
   const assetsRef = useRef<Asset[]>([]);
+  const [liveAssetIds, setLiveAssetIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     assetsRef.current = assets;
