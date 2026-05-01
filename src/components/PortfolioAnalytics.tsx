@@ -3,7 +3,8 @@ import { Portfolio } from "@/lib/types";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { TrendingUp, Target, Shield, Award } from "lucide-react";
+import { TrendingUp, Target, Shield, Award, TrendingDown } from "lucide-react";
+import { calculateMaxDrawdown, calculateRealizedPnL } from "@/lib/portfolio";
 
 interface PortfolioAnalyticsProps {
   portfolio: Portfolio;
@@ -49,6 +50,9 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
       (portfolio.positions.length * 5) // Number of positions
     );
 
+    const maxDrawdown = calculateMaxDrawdown();
+    const realizedPnL = calculateRealizedPnL(portfolio);
+
     return {
       totalInvested,
       currentValue,
@@ -59,7 +63,9 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
       winners,
       losers,
       allocationData,
-      diversificationScore
+      diversificationScore,
+      maxDrawdown,
+      realizedPnL,
     };
   }, [portfolio]);
 
@@ -90,6 +96,24 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
             <span className="text-muted-foreground">Winners / Losers</span>
             <span className="font-medium">
               <span className="text-success">{analytics.winners}</span> / <span className="text-destructive">{analytics.losers}</span>
+            </span>
+          </div>
+          <div className="flex justify-between items-center pt-2 border-t border-border">
+            <span className="text-muted-foreground flex items-center gap-1.5">
+              <TrendingDown className="w-3.5 h-3.5" /> Max Drawdown
+            </span>
+            <span className="text-base font-semibold text-destructive tabular-nums">
+              -{analytics.maxDrawdown.toFixed(2)}%
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground">Realized P&amp;L (Lifetime)</span>
+            <span
+              className={`text-base font-semibold tabular-nums ${
+                analytics.realizedPnL >= 0 ? "text-success" : "text-destructive"
+              }`}
+            >
+              {analytics.realizedPnL >= 0 ? "+" : ""}${analytics.realizedPnL.toFixed(2)}
             </span>
           </div>
         </div>

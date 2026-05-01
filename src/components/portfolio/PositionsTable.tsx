@@ -65,6 +65,9 @@ function DesktopRow({ position }: { position: Position }) {
       <td className="px-4 py-4 tabular-nums">{formatMoney(position.avgPrice)}</td>
       <td className="px-4 py-4 tabular-nums">{formatMoney(position.asset.price)}</td>
       <td className="px-4 py-4 tabular-nums">{position.quantity.toFixed(4)}</td>
+      <td className="px-4 py-4 tabular-nums text-muted-foreground">
+        {formatMoney(position.avgPrice * position.quantity)}
+      </td>
       <td className="px-4 py-4 tabular-nums">{formatMoney(position.currentValue)}</td>
       <td
         className={cn(
@@ -193,6 +196,7 @@ export function PositionsTable({ positions }: PositionsTableProps) {
               <th className="px-4 py-3">Entry</th>
               <th className="px-4 py-3">Current</th>
               <th className="px-4 py-3">Qty</th>
+              <th className="px-4 py-3">Cost Basis</th>
               <th className="px-4 py-3">Value</th>
               <th className="px-4 py-3">P&amp;L</th>
               <th className="px-4 py-3 text-right">Return</th>

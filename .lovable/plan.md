@@ -1,73 +1,67 @@
+# Plan: Real Portfolio Stats + Real Logo + Realism Upgrades
 
+## Part 1 — Real-time portfolio statistics
 
-# Plan: Remove Email Newsletter + Add Articles + Fix Indexing
+Today the Portfolio page only refreshes via `simulateAssetPrices` (random drift) every 5s, then recomputes positions from `ASSETS` — which means P&L, Sharpe, win rate, allocation are all based on **simulated** numbers, not the same live-data engine the Trade pages use.
 
-## Part 1: Remove Email Newsletter
+Fixes in `src/pages/Portfolio.tsx`:
+- Replace the `simulateAssetPrices` interval with the **same hybrid engine** as Trade.tsx:
+  - On mount: hydrate prices from `getPersistedPrices()` (localStorage, 24h TTL) so refresh feels continuous.
+  - Fetch real prices for **only the user's held assets** via `supabase.functions.invoke('live-market-data', ...)` — staggered batches of 5, 1s apart, then every 60s.
+  - Between fetches: apply ±0.05% micro-fluctuation every 3s (anchored to last real price), matching the Trade page.
+  - After each refresh: call `updatePositionPrices(portfolio)` and `recordSnapshot()` so the chart reflects real movement.
+- Add a small **data-status badge** ("Live" / "Cached" / "Simulated") + "Updated Xs ago" timestamp at the top of the Portfolio header, identical visual language to TradeAsset.
 
-Remove the `send-newsletter` invocation from `AdminEditor.tsx` (lines 159-169). Keep the subscriber table and signup form (useful for future use), but stop trying to send emails on publish. Replace the newsletter toast with a simple "Article published successfully" confirmation.
+Stats recomputed live (already wired, will now use real prices):
+- Total Value, Available Cash, Invested, Unrealized P&L
+- Sharpe Ratio, Win Rate, Winners/Losers
+- Asset Allocation pie + Diversification Score
+- Cash Reserve / Volatility bars
 
-**Files changed:** `src/pages/AdminEditor.tsx`
+Add **two new real metrics** in `PortfolioAnalytics.tsx` that a real broker shows:
+- **Max Drawdown** — computed from `getPortfolioHistory()` snapshots (peak-to-trough %).
+- **Day Change** — diff between current totalValue and the snapshot ≥ 24h ago, in $ and %.
 
-## Part 2: Add 3 New Trading Articles
+## Part 2 — Real logo across the site
 
-Add three new articles to `src/lib/learnArticles.ts`:
+The logo asset already exists at `src/assets/tradehq-logo.png` and is used in Navigation, MegaFooter, TradingSidebar. The **favicon, apple-touch-icon, manifest icons, and OG fallback** still point at `/favicon.ico` and `/og-image.png` (placeholders).
 
-1. **"What Is Risk Management in Trading"** — covering position sizing, stop-losses, risk-reward ratios, the 2% rule
-2. **"Understanding Market Orders vs Limit Orders"** — practical guide on order types, slippage, when to use each
-3. **"How to Use Technical Indicators: RSI, MACD, and Moving Averages"** — deeper dive into the three most popular indicators
+Fixes:
+- Copy `src/assets/tradehq-logo.png` to `public/logo.png` (and generate a 512px square version if needed via the script).
+- Update `index.html`:
+  - `<link rel="icon" href="/logo.png" type="image/png" />`
+  - `<link rel="apple-touch-icon" href="/logo.png" />`
+  - JSON-LD `"logo"` field → `https://tradinghq.vercel.app/logo.png`
+- Update `public/manifest.json` icons array with proper 192/512 PNG entries pointing at `/logo.png`.
+- Audit and replace any other `placeholder.svg` / `og-image.png` logo references across pages with the real logo (Helmet `og:image` stays as the OG banner, but `og:logo` and structured data use `/logo.png`).
 
-Each article follows the existing format: slug, title, summary, metaDescription (120+ chars), readTime, 3 sections with 3 paragraphs each, and 4 relatedLinks pointing to internal pages.
+## Part 3 — Realism upgrades (suggestions, implemented)
 
-Also add these articles to the Learn page listing and the sitemap.
+Small additions that make the simulator feel like a real broker without breaking anything:
 
-**Files changed:** `src/lib/learnArticles.ts`, `public/sitemap.xml`
+1. **Day Change badge** in the header card (+/- $ and % vs. yesterday's snapshot).
+2. **Realistic order fees already exist** (0.1%) — surface them in the trade confirmation toast ("Filled at $X — fee $Y").
+3. **Market open/closed indicator** in the Portfolio header for stock positions (simple US-market clock: 9:30–16:00 ET Mon–Fri → "Markets Open" green dot, else "After Hours" amber). Crypto stays 24/7.
+4. **Cost basis & total return columns** in `PositionsTable` (Entry × Qty = Cost Basis) — already computable, just expose it.
+5. **Realized P&L lifetime stat** — sum of (sell.price − avgPriceAtSale) × qty across all sell trades, shown alongside Unrealized P&L.
+6. **Last trade timestamp** on each position row ("Held 3d 4h").
 
-## Part 3: Fix 155 Not-Indexed Pages
+No new dependencies, no SEO/route/layout removals.
 
-Google has discovered these pages but is choosing not to index them. The fixes (no content removal, pure upgrades):
-
-### 3a. Update sitemap.xml
-- Update ALL `lastmod` dates from `2026-03-21` to `2026-04-08` (today) — signals fresh content to Googlebot
-- Remove the duplicate `trade/hbar` entry (line 76 is a duplicate of line 73)
-- Add the 3 new learn article URLs
-
-### 3b. Improve TradeAsset page SEO signals
-The `/trade/*` pages are the bulk of the not-indexed URLs. Enhance their Helmet metadata to be more unique per asset:
-- Ensure every trade page has a unique, keyword-rich `<title>` and `<meta description>` (already done via `generateAssetMetaTitle`/`generateAssetMetaDescription` in assetContent.ts — verify these produce 50+ char titles and 120+ char descriptions)
-- Add `<link rel="canonical">` to each trade page pointing to its own URL to avoid duplicate-content signals
-- Add `<meta name="robots" content="index, follow">` explicitly on every trade page
-
-**Files changed:** `src/pages/TradeAsset.tsx`
-
-### 3c. Add canonical tags to sector pages and other not-indexed pages
-Add explicit `<link rel="canonical">` and `<meta name="robots" content="index, follow">` to:
-- `src/pages/SectorPillar.tsx` (for `/sectors/*`)
-- `src/pages/Leaderboard.tsx`
-- `src/pages/Terms.tsx`
-
-**Files changed:** `src/pages/SectorPillar.tsx`, `src/pages/Leaderboard.tsx`, `src/pages/Terms.tsx`
-
-### 3d. Boost internal linking to not-indexed pages
-Add more internal links from high-authority pages to help Google prioritize crawling:
-- In `QuickLinksFooter.tsx`, add links to `/leaderboard` and `/sectors/crypto-defi`
-- In `src/pages/Index.tsx`, ensure sector pillar links are present (they likely already are via navigation)
-
-**Files changed:** `src/components/QuickLinksFooter.tsx`
-
-## Summary of All Files Changed
+## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/pages/AdminEditor.tsx` | Remove newsletter send logic |
-| `src/lib/learnArticles.ts` | Add 3 new articles |
-| `public/sitemap.xml` | Update lastmod dates, fix duplicate, add new article URLs |
-| `src/pages/TradeAsset.tsx` | Add canonical + robots meta tags |
-| `src/pages/SectorPillar.tsx` | Add canonical + robots meta tags |
-| `src/pages/Leaderboard.tsx` | Add canonical + robots meta tags |
-| `src/pages/Terms.tsx` | Add canonical + robots meta tags |
-| `src/components/QuickLinksFooter.tsx` | Add leaderboard + sector links |
+| `src/pages/Portfolio.tsx` | Replace sim interval with hybrid live-data engine + status badge |
+| `src/components/PortfolioAnalytics.tsx` | Add Max Drawdown + Day Change metrics |
+| `src/components/portfolio/PositionsTable.tsx` | Add Cost Basis column + held-duration |
+| `src/lib/portfolio.ts` | Add `calculateRealizedPnL()` + `calculateMaxDrawdown()` helpers |
+| `index.html` | Real favicon + apple-touch-icon + JSON-LD logo URL |
+| `public/manifest.json` | Real PWA icons |
+| `public/logo.png` (new) | Copy of real TradeHQ logo |
 
-## Important Note on Indexing
+## Limitations (honest)
 
-The "discovered but not indexed" status in Google Search Console is common for large sites with many similar pages. These code changes will help, but full indexing may take 2-4 weeks as Google recrawls. After deployment, you should request indexing for the most important URLs via Google Search Console's URL Inspection tool.
-
+- "Real-time" stock prices remain bottlenecked by the Alpha Vantage free tier (~5 req/min). Held positions get priority; the rest fall back to cached/simulated with a clear badge.
+- Day Change requires ≥1 day of snapshot history; first-time users will see "—" until 24h elapses.
+- Max Drawdown is computed from local snapshots only (not server-side), so clearing browser data resets it.

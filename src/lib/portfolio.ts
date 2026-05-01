@@ -1,6 +1,6 @@
 import { Portfolio, Trade, Position, Asset } from './types';
 import { INITIAL_CASH, ASSETS } from './assets';
-import { recordSnapshot } from './portfolioHistory';
+import { recordSnapshot, getPortfolioHistory } from './portfolioHistory';
 
 const STORAGE_KEY = 'tradehq_portfolio';
 const HISTORY_KEY = 'tradehq_history';
@@ -227,4 +227,79 @@ export function claimWeeklyBonus(portfolio: Portfolio): { success: boolean; mess
     message: `Claimed $${WEEKLY_BONUS_AMOUNT.toLocaleString()} weekly bonus!`,
     portfolio: newPortfolio,
   };
+}
+
+/**
+ * Lifetime realized P&L: for each SELL trade, value gained relative to
+ * the average cost basis at the time. We approximate using current avgPrice
+ * of remaining position when available, else the sell price itself (0 P&L).
+ * To keep it simple and correct, we walk trades chronologically per asset.
+ */
+export function calculateRealizedPnL(portfolio: Portfolio): number {
+  const byAsset = new Map<string, Trade[]>();
+  // Sort ascending
+  const trades = [...portfolio.trades].sort(
+    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
+  );
+  for (const t of trades) {
+    if (!byAsset.has(t.assetId)) byAsset.set(t.assetId, []);
+    byAsset.get(t.assetId)!.push(t);
+  }
+
+  let realized = 0;
+  for (const [, list] of byAsset) {
+    let qty = 0;
+    let avgCost = 0;
+    for (const t of list) {
+      if (t.type === 'buy') {
+        const newQty = qty + t.quantity;
+        avgCost = newQty > 0 ? (avgCost * qty + t.price * t.quantity) / newQty : 0;
+        qty = newQty;
+      } else {
+        realized += (t.price - avgCost) * t.quantity;
+        qty = Math.max(0, qty - t.quantity);
+      }
+    }
+  }
+  return realized;
+}
+
+/**
+ * Max drawdown from local snapshot history (peak-to-trough %).
+ */
+export function calculateMaxDrawdown(): number {
+  const history = getPortfolioHistory();
+  if (history.length < 2) return 0;
+  let peak = history[0].totalValue;
+  let maxDd = 0;
+  for (const snap of history) {
+    if (snap.totalValue > peak) peak = snap.totalValue;
+    if (peak > 0) {
+      const dd = ((peak - snap.totalValue) / peak) * 100;
+      if (dd > maxDd) maxDd = dd;
+    }
+  }
+  return maxDd;
+}
+
+/**
+ * Day change: total value now vs ~24h ago snapshot. Returns null if no snapshot ≥ 20h old.
+ */
+export function calculateDayChange(currentValue: number): { dollars: number; percent: number } | null {
+  const history = getPortfolioHistory();
+  if (history.length === 0) return null;
+  const cutoff = Date.now() - 20 * 60 * 60 * 1000;
+  // Find oldest snapshot newer than cutoff... actually we want the snapshot closest to 24h ago
+  const dayAgoTarget = Date.now() - 24 * 60 * 60 * 1000;
+  let candidate = history[0];
+  for (const s of history) {
+    const t = new Date(s.timestamp).getTime();
+    if (t <= cutoff) candidate = s;
+    else break;
+  }
+  const candTime = new Date(candidate.timestamp).getTime();
+  if (candTime > cutoff) return null; // no 20h+ old snapshot yet
+  const dollars = currentValue - candidate.totalValue;
+  const percent = candidate.totalValue > 0 ? (dollars / candidate.totalValue) * 100 : 0;
+  return { dollars, percent };
 }

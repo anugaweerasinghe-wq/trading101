@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
@@ -20,11 +20,10 @@ import {
 } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
 import { ASSETS } from "@/lib/assets";
-import {
-  simulateAssetPrices,
-  shouldUpdatePrices,
-  setLastUpdateTime,
-} from "@/lib/priceSimulation";
+import { persistPrice, getPersistedPrices } from "@/lib/pricePersistence";
+import { generatePriceMovement } from "@/lib/priceMovement";
+import { recordSnapshot } from "@/lib/portfolioHistory";
+import { calculateDayChange } from "@/lib/portfolio";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,6 +35,8 @@ import {
   Gift,
   Bell,
   BellOff,
+  Activity,
+  Clock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AIInsightSummary } from "@/components/portfolio/AIInsightSummary";
@@ -50,7 +51,19 @@ import {
 
 export default function Portfolio() {
   const [portfolio, setPortfolio] = useState(getPortfolio());
-  const [assets, setAssets] = useState(ASSETS);
+  const [assets, setAssets] = useState(() => {
+    // Hydrate from persisted prices for continuity
+    const cached = getPersistedPrices();
+    return ASSETS.map((a) => {
+      const p = cached[a.id];
+      return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
+    });
+  });
+  const [dataStatus, setDataStatus] = useState<"live" | "cached" | "simulated">("cached");
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const [secondsAgo, setSecondsAgo] = useState(0);
+  const assetsRef = useRef(assets);
+  const isMounted = useRef(true);
   const [canClaim, setCanClaim] = useState(canClaimWeeklyBonus());
   const [notificationsEnabled, setNotificationsEnabled] = useState(
     typeof Notification !== "undefined" &&
@@ -59,6 +72,90 @@ export default function Portfolio() {
   const { toast } = useToast();
 
   useEffect(() => {
+    assetsRef.current = assets;
+  }, [assets]);
+
+  // Fetch real price for a single held asset
+  const fetchLivePrice = async (asset: typeof ASSETS[number]) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+        {
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.data && typeof result.data.price === "number" && result.data.price > 0) {
+          return {
+            ...asset,
+            price: result.data.price,
+            change: typeof result.data.change24h === "number" ? result.data.change24h : asset.change,
+            changePercent: typeof result.data.changePercent24h === "number" ? result.data.changePercent24h : asset.changePercent,
+            _live: true as const,
+          };
+        }
+      }
+    } catch (_err) {}
+    return { ...asset, _live: false as const };
+  };
+
+  // Refresh held positions in staggered batches of 5
+  const refreshHeldAssets = async () => {
+    const heldIds = new Set(getPortfolio().positions.map((p) => p.asset.id));
+    if (heldIds.size === 0) return;
+    const heldAssets = assetsRef.current.filter((a) => heldIds.has(a.id));
+    const batchSize = 5;
+    let anyLive = false;
+    const updates = new Map<string, typeof ASSETS[number]>();
+
+    for (let i = 0; i < heldAssets.length; i += batchSize) {
+      if (!isMounted.current) break;
+      const batch = heldAssets.slice(i, i + batchSize);
+      const results = await Promise.allSettled(batch.map(fetchLivePrice));
+      results.forEach((r) => {
+        if (r.status === "fulfilled") {
+          const u = r.value;
+          if (u._live) {
+            anyLive = true;
+            persistPrice(u.id, u.price, u.change, u.changePercent, "live");
+          }
+          const { _live, ...clean } = u;
+          updates.set(u.id, clean as typeof ASSETS[number]);
+        }
+      });
+      if (i + batchSize < heldAssets.length) await new Promise((r) => setTimeout(r, 1000));
+    }
+
+    if (!isMounted.current) return;
+    const newAssets = assetsRef.current.map((a) => updates.get(a.id) ?? a);
+    setAssets(newAssets);
+    setDataStatus(anyLive ? "live" : "cached");
+    setLastUpdated(new Date());
+
+    // Recompute portfolio with fresh prices
+    const fresh = updatePositionPrices(getPortfolio());
+    setPortfolio(fresh);
+    savePortfolio(fresh);
+    const positionsValue = fresh.positions.reduce((s, p) => s + p.currentValue, 0);
+    recordSnapshot(fresh.cash, positionsValue);
+
+    checkMilestones(fresh.totalValue, (_m, label, type) => {
+      const state = getMilestoneState();
+      const profit = fresh.totalValue - state.initialValue;
+      toast({
+        title: `🎯 Milestone Reached: ${label}!`,
+        description: `Your portfolio is now worth $${fresh.totalValue.toFixed(2)} (${profit >= 0 ? "+" : ""}$${profit.toFixed(2)})`,
+        variant: type === "danger" ? "destructive" : "default",
+      });
+    });
+  };
+
+  useEffect(() => {
+    isMounted.current = true;
     const initPortfolio = async () => {
       let updated = await updatePortfolioOverTime(portfolio);
       updated = updatePositionPrices(updated);
@@ -68,33 +165,38 @@ export default function Portfolio() {
     };
 
     initPortfolio();
+    refreshHeldAssets();
 
-    const priceInterval = setInterval(() => {
-      if (shouldUpdatePrices()) {
-        const updatedAssets = simulateAssetPrices(assets, 0.01);
-        setAssets(updatedAssets);
-        setLastUpdateTime(new Date());
+    // Real-data refresh every 60s
+    const liveInterval = setInterval(refreshHeldAssets, 60000);
 
-        const updatedPortfolio = updatePositionPrices(getPortfolio());
-        setPortfolio(updatedPortfolio);
+    // Visual micro-fluctuation every 3s for liveness, anchored to last real price
+    const microInterval = setInterval(() => {
+      setAssets((prev) =>
+        prev.map((a) => {
+          const m = generatePriceMovement(a.price);
+          return { ...a, price: m.price, change: m.change, changePercent: m.changePercent };
+        }),
+      );
+      setPortfolio((prev) => updatePositionPrices(prev));
+    }, 3000);
 
-        checkMilestones(updatedPortfolio.totalValue, (_milestone, label, type) => {
-          const state = getMilestoneState();
-          const profit = updatedPortfolio.totalValue - state.initialValue;
+    // "Updated Xs ago" ticker
+    const tickInterval = setInterval(() => {
+      setSecondsAgo(Math.floor((Date.now() - lastUpdated.getTime()) / 1000));
+    }, 1000);
 
-          toast({
-            title: `🎯 Milestone Reached: ${label}!`,
-            description: `Your portfolio is now worth $${updatedPortfolio.totalValue.toFixed(
-              2,
-            )} (${profit >= 0 ? "+" : ""}$${profit.toFixed(2)})`,
-            variant: type === "danger" ? "destructive" : "default",
-          });
-        });
-      }
-    }, 5000);
-
-    return () => clearInterval(priceInterval);
+    return () => {
+      isMounted.current = false;
+      clearInterval(liveInterval);
+      clearInterval(microInterval);
+      clearInterval(tickInterval);
+    };
   }, []);
+
+  useEffect(() => {
+    setSecondsAgo(Math.floor((Date.now() - lastUpdated.getTime()) / 1000));
+  }, [lastUpdated]);
 
   const totalPositionValue = portfolio.positions.reduce(
     (sum, p) => sum + p.currentValue,
@@ -108,6 +210,18 @@ export default function Portfolio() {
     totalPositionValue > 0
       ? (totalProfitLoss / (totalPositionValue - totalProfitLoss)) * 100
       : 0;
+
+  const dayChange = calculateDayChange(portfolio.totalValue);
+
+  // US market hours indicator (9:30 - 16:00 ET, Mon-Fri)
+  const isMarketOpen = (() => {
+    const now = new Date();
+    const et = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
+    const day = et.getDay();
+    if (day === 0 || day === 6) return false;
+    const minutes = et.getHours() * 60 + et.getMinutes();
+    return minutes >= 570 && minutes < 960;
+  })();
 
   const handleClaimBonus = () => {
     const result = claimWeeklyBonus(portfolio);
@@ -213,6 +327,41 @@ export default function Portfolio() {
                   <p className="text-sm text-muted-foreground mt-1.5">
                     Track your virtual investments, analyze performance, and manage simulated risk.
                   </p>
+                  <div className="flex items-center gap-3 mt-3 flex-wrap">
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-2xs font-medium border",
+                        dataStatus === "live"
+                          ? "bg-success/10 text-success border-success/30"
+                          : dataStatus === "cached"
+                          ? "bg-primary/10 text-primary border-primary/30"
+                          : "bg-muted text-muted-foreground border-border",
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "w-1.5 h-1.5 rounded-full",
+                          dataStatus === "live" ? "bg-success animate-pulse" : "bg-current",
+                        )}
+                      />
+                      {dataStatus === "live" ? "Live Data" : dataStatus === "cached" ? "Cached" : "Simulated"}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-2xs text-muted-foreground">
+                      <Clock className="w-3 h-3" />
+                      Updated {secondsAgo}s ago
+                    </span>
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-2xs font-medium border",
+                        isMarketOpen
+                          ? "bg-success/10 text-success border-success/30"
+                          : "bg-warning/10 text-warning border-warning/30",
+                      )}
+                    >
+                      <Activity className="w-3 h-3" />
+                      {isMarketOpen ? "US Markets Open" : "After Hours"}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
@@ -267,9 +416,20 @@ export default function Portfolio() {
                 <p className="text-2xl font-bold tabular-nums">
                   ${portfolio.totalValue.toFixed(2)}
                 </p>
-                <p className="text-2xs text-muted-foreground mt-0.5">
-                  Cash + Positions
-                </p>
+                {dayChange ? (
+                  <p
+                    className={cn(
+                      "text-2xs mt-0.5 tabular-nums",
+                      dayChange.dollars >= 0 ? "text-success" : "text-destructive",
+                    )}
+                  >
+                    {dayChange.dollars >= 0 ? "+" : ""}${dayChange.dollars.toFixed(2)} (
+                    {dayChange.percent >= 0 ? "+" : ""}
+                    {dayChange.percent.toFixed(2)}%) today
+                  </p>
+                ) : (
+                  <p className="text-2xs text-muted-foreground mt-0.5">Cash + Positions</p>
+                )}
               </Card>
 
               <Card className="p-5 bg-card/50 backdrop-blur-sm">
