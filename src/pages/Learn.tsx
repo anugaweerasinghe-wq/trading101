@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target, ArrowRight, Zap, Coins, Brain, ChevronRight, Home, Clock, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LEARN_ARTICLES } from "@/lib/learnArticles";
+import { SEOSection } from "@/components/SEOSection";
 import tradingBasics from "@/assets/course-trading-basics.jpg";
 import riskManagement from "@/assets/course-risk-management.jpg";
 import technicalAnalysis from "@/assets/course-technical-analysis.jpg";
@@ -90,6 +91,7 @@ export default function Learn() {
         <title>Learn Trading 2026 — Free Beginner to Advanced Guides | TradeHQ</title>
         <meta name="description" content="Free trading education 2026: stocks, crypto, technical analysis & risk management. Practice everything with $10K virtual cash. No signup required — TradeHQ." />
         <link rel="canonical" href="https://tradinghq.vercel.app/learn" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Learn Trading 2026 — Free Beginner to Advanced Guides" />
         <meta property="og:description" content="Master trading with free beginner-to-advanced lessons. Practice instantly with $10K virtual cash. No signup required." />
@@ -302,6 +304,35 @@ export default function Learn() {
                 </Link>
               </div>
             </Card>
+
+            <SEOSection
+              path="/learn"
+              faqHeading="Learning Center"
+              breadcrumbs={[{ label: "Learn" }]}
+              hideVisibleBreadcrumb
+              faqs={[
+                {
+                  question: "What can I learn on TradeHQ?",
+                  answer:
+                    "Structured beginner-to-intermediate guides on technical analysis, risk management, trading psychology, candlestick patterns, market mechanics and asset-specific strategies for stocks, crypto, ETFs, forex and commodities.",
+                },
+                {
+                  question: "Is the TradeHQ Learning Center free?",
+                  answer:
+                    "Yes — every article, glossary entry and lesson is 100% free with no signup required. (Educational simulation only — not financial advice.)",
+                },
+                {
+                  question: "What's the difference between an article and a lesson?",
+                  answer:
+                    "Articles are quick 5–8 minute reads on a single concept (e.g. paper trading). Lessons are interactive, multi-step modules that include quizzes and link to the trading simulator so you can practice instantly.",
+                },
+                {
+                  question: "Where should a complete beginner start?",
+                  answer:
+                    "Start with 'What Is Paper Trading' and 'How to Read a Stock Chart', then explore the Trading Glossary above before opening your $100K virtual portfolio on the simulator.",
+                },
+              ]}
+            />
 
           </div>
         </main>

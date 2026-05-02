@@ -3,6 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { FileText, AlertTriangle, Scale, Shield, Ban, RefreshCw } from "lucide-react";
+import { SEOSection } from "@/components/SEOSection";
 
 export default function Terms() {
   const sections = [
@@ -182,6 +183,34 @@ Users may not copy, modify, distribute, or create derivative works without expli
               </p>
             </div>
           </section>
+
+          <SEOSection
+            path="/terms"
+            faqHeading="Terms"
+            breadcrumbs={[{ label: "Terms of Service" }]}
+            faqs={[
+              {
+                question: "Is TradeHQ real trading or a simulator?",
+                answer:
+                  "TradeHQ is a 100% simulator. Every trade uses virtual currency only — no real money is ever at risk and no actual securities transactions occur. (Educational simulation only — not financial advice.)",
+              },
+              {
+                question: "Does TradeHQ provide financial advice?",
+                answer:
+                  "No. Nothing on TradeHQ — including AI Mentor responses, market analysis or sector commentary — constitutes financial, investment, legal or tax advice. Always consult a qualified advisor for real-money decisions.",
+              },
+              {
+                question: "Can I use TradeHQ commercially?",
+                answer:
+                  "No, not without prior written permission. The service is licensed for personal, educational use only. Scraping, reverse engineering and bot use are prohibited.",
+              },
+              {
+                question: "Who is TradeHQ for?",
+                answer:
+                  "Beginners and students who want to learn how markets work without risking real capital. Especially designed with Sri Lankan students and South Asian beginner traders in mind.",
+              },
+            ]}
+          />
         </main>
 
         <MegaFooter />

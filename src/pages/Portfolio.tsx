@@ -10,6 +10,7 @@ import { TradeHistory } from "@/components/TradeHistory";
 import { TradeAnalytics } from "@/components/TradeAnalytics";
 import { PriceTicker } from "@/components/PriceTicker";
 import { MegaFooter } from "@/components/MegaFooter";
+import { SEOSection } from "@/components/SEOSection";
 import {
   getPortfolio,
   updatePositionPrices,
@@ -280,6 +281,7 @@ export default function Portfolio() {
           content="Real-time portfolio tracker with AI analytics, trading journal, performance charts, and milestone alerts. See your P&L, positions, and risk metrics instantly."
         />
         <link rel="canonical" href="https://tradinghq.vercel.app/portfolio" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
@@ -525,6 +527,34 @@ export default function Portfolio() {
             <div className="mb-12">
               <TradeHistory trades={portfolio.trades} />
             </div>
+
+            <SEOSection
+              path="/portfolio"
+              faqHeading="Portfolio"
+              breadcrumbs={[{ label: "Portfolio" }]}
+              faqs={[
+                {
+                  question: "What does the TradeHQ portfolio tracker show?",
+                  answer:
+                    "It tracks every simulated position, realized and unrealized P&L, day change, max drawdown, Sharpe ratio and an AI-generated growth summary — based on real-time price data for the assets you hold.",
+                },
+                {
+                  question: "Are the portfolio statistics based on real prices?",
+                  answer:
+                    "Yes. Held assets refresh from the live market data feed every 60 seconds, with status badges showing LIVE / CACHED / SIM coverage. (Educational simulation only — not financial advice.)",
+                },
+                {
+                  question: "How do I reset my virtual portfolio?",
+                  answer:
+                    "Your portfolio is stored locally in your browser. Clear your browser's site data for tradinghq.lovable.app to reset back to the default $100,000 starting balance.",
+                },
+                {
+                  question: "What is the weekly bonus?",
+                  answer:
+                    "Once every 7 days you can claim a virtual cash top-up to keep practicing different strategies without running out of capital. Purely educational — no real money involved.",
+                },
+              ]}
+            />
           </div>
         </main>
 

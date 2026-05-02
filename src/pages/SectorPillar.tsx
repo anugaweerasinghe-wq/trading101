@@ -4,6 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { SEOSection } from "@/components/SEOSection";
 import { ASSETS } from "@/lib/assets";
 import { TrendingUp, TrendingDown, ArrowRight, Cpu, Coins, Building2, Globe, Gem, LineChart } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -245,6 +246,34 @@ export default function SectorPillar() {
                 ))}
             </div>
           </section>
+
+          <SEOSection
+            path={`/sectors/${sectorId}`}
+            faqHeading={sector.name}
+            breadcrumbs={[
+              { label: "Markets", href: "/markets" },
+              { label: sector.name },
+            ]}
+            hideVisibleBreadcrumb
+            faqs={[
+              {
+                question: `What assets are in the ${sector.name} sector?`,
+                answer: `${sector.name} on TradeHQ covers ${sector.assetIds.length} simulator-tradable assets. Click any asset above to open the trading terminal with $100,000 of virtual cash.`,
+              },
+              {
+                question: `Can I trade ${sector.name} assets risk-free?`,
+                answer: `Yes — every TradeHQ trade is fully simulated. Practice ${sector.name} strategies with virtual funds and zero real risk. (Educational simulation only — not financial advice.)`,
+              },
+              {
+                question: `How do I research ${sector.name} before trading?`,
+                answer: `Click an asset to see live price data, technical indicators, AI-mentor analysis and a per-asset FAQ. Combine this with the Learning Center articles and Trading Glossary linked above.`,
+              },
+              {
+                question: `Are ${sector.name} prices live on TradeHQ?`,
+                answer: `The most-liquid ${sector.name} assets refresh every 60 seconds from public market APIs and are tagged LIVE. Less-liquid tickers fall back to cached prices with small micro-fluctuations and are tagged SIM.`,
+              },
+            ]}
+          />
         </main>
 
         <MegaFooter />

@@ -123,6 +123,7 @@ const Index = () => {
         <title>TradeHQ — Free Paper Trading Simulator 2026 | $10K Virtual Cash (No Signup)</title>
         <meta name="description" content="Practice stocks, crypto, ETFs & forex with $10,000 virtual cash. Zero signup. AI mentor, live charts, leaderboard & 150+ assets. Best free trading simulator in 2026." />
         <link rel="canonical" href="https://tradinghq.vercel.app/" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator 2026 | $10K Virtual Cash (No Signup)" />
         <meta property="og:description" content="Practice real trading risk-free with $10K virtual money. AI mentor + live charts. No signup needed. Start in seconds." />

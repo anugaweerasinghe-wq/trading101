@@ -14,6 +14,7 @@ import { ChartSkeleton } from "@/components/trading/ChartSkeleton";
 import { MobileOrderDrawer } from "@/components/trading/MobileOrderDrawer";
 import { LiveDataToggle } from "@/components/trading/LiveDataToggle";
 import { MegaFooter } from "@/components/MegaFooter";
+import { SEOSection } from "@/components/SEOSection";
 import { ASSETS } from "@/lib/assets";
 import { Asset, JournalEntry } from "@/lib/types";
 import {
@@ -309,6 +310,7 @@ export default function Trade() {
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
         <link rel="canonical" href={pageUrl} />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
@@ -484,6 +486,40 @@ export default function Trade() {
           assets={assets}
           selectedAsset={selectedAsset}
         />
+        <div className="container mx-auto px-4 md:px-6 mt-8">
+          <SEOSection
+            path="/trade"
+            faqHeading="Trading Simulator"
+            breadcrumbs={[{ label: "Trade Simulator" }]}
+            faqs={[
+              {
+                question: "Is the TradeHQ trading simulator free to use?",
+                answer:
+                  "Yes. TradeHQ gives every user $100,000 in virtual cash with no signup, no credit card, and no hidden fees. (Educational simulation only — not financial advice.)",
+              },
+              {
+                question: "Are the prices on the trading simulator real?",
+                answer:
+                  "We pull live market data for the most-traded crypto, stock, ETF, forex and commodity assets and refresh quotes every 60 seconds. Less-liquid assets fall back to cached or simulated prices and are clearly labelled with LIVE / CACHED / SIM badges.",
+              },
+              {
+                question: "What can I trade on TradeHQ?",
+                answer:
+                  "Over 130 assets across 5 markets: cryptocurrencies (BTC, ETH, SOL…), US stocks (AAPL, NVDA, TSLA…), ETFs (SPY, QQQ, VOO…), major forex pairs and commodities like gold and oil — all in one simulated portfolio.",
+              },
+              {
+                question: "Can I lose real money on TradeHQ?",
+                answer:
+                  "No. Every trade uses virtual currency only — no real funds are ever at risk. TradeHQ is built purely for education and practice. (Educational simulation only — not financial advice.)",
+              },
+              {
+                question: "How do I start practice trading?",
+                answer:
+                  "Pick any asset from the grid above, click it to open the trading terminal, set your order size and click Buy or Sell. Your portfolio updates instantly and is saved to your browser.",
+              },
+            ]}
+          />
+        </div>
         <MegaFooter />
       </div>
     </>

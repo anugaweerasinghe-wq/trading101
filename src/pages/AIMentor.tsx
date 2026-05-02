@@ -9,6 +9,7 @@ import { Send, Bot, User, Sparkles, TrendingUp, BookOpen, Shield } from "lucide-
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import { SEOSection } from "@/components/SEOSection";
 
 interface Message {
   role: "user" | "assistant";
@@ -138,6 +139,7 @@ export default function AIMentor() {
         <title>AI Trading Mentor — Personalized Trading Coach & Behavioral Analyst | TradeHQ</title>
         <meta name="description" content="Chat with your personal AI trading mentor. Get real-time strategy advice, risk warnings, portfolio analysis, and psychological support to improve your trading." />
         <link rel="canonical" href="https://tradinghq.vercel.app/ai-mentor" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="AI Trading Mentor — Your Personal Trading Coach | TradeHQ" />
         <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Powered by advanced AI. Free on TradeHQ." />
@@ -270,6 +272,34 @@ export default function AIMentor() {
               <Link to="/trade" className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all">Trade Now</Link>
             </div>
           </nav>
+
+          <SEOSection
+            path="/ai-mentor"
+            faqHeading="AI Mentor"
+            breadcrumbs={[{ label: "AI Mentor" }]}
+            faqs={[
+              {
+                question: "What is the TradeHQ AI Mentor?",
+                answer:
+                  "An always-on AI trading coach that answers questions about strategies, indicators, market mechanics and trading psychology — tailored to your simulated portfolio. (Educational simulation only — not financial advice.)",
+              },
+              {
+                question: "Can the AI Mentor predict prices?",
+                answer:
+                  "No. The mentor is built for education — it explains concepts, reviews your trade history and helps you build discipline. It will never give specific buy/sell recommendations or guarantees.",
+              },
+              {
+                question: "Is the AI Mentor free?",
+                answer:
+                  "Yes — it is included free with every TradeHQ account, no signup or payment required.",
+              },
+              {
+                question: "What questions should I ask?",
+                answer:
+                  "Try things like: 'Explain stop-loss orders', 'What is dollar-cost averaging?', 'How do I manage risk on a $100K portfolio?', or 'Walk me through a candlestick pattern'.",
+              },
+            ]}
+          />
         </main>
       </div>
     </>
