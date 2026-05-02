@@ -5,6 +5,40 @@ import { Link } from "react-router-dom";
 import { Trophy, TrendingUp, ArrowRight, Medal, Home, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AssetFAQSection } from "@/components/AssetFAQSection";
+
+const LEADERBOARD_FAQS = [
+  {
+    question: "Is the TradeHQ leaderboard real?",
+    answer:
+      "The current leaderboard shows demo rankings to illustrate how the system works. Real user rankings roll out in the next release. (Educational simulation only — not financial advice.)",
+  },
+  {
+    question: "How do I climb the leaderboard?",
+    answer:
+      "Trade your $100,000 of virtual cash to grow your portfolio percentage gain. Top performers by total % return rank highest. Risk management and consistency matter more than swinging for huge wins.",
+  },
+  {
+    question: "Do I need an account to compete?",
+    answer:
+      "No — start trading with no signup. Your portfolio is tracked locally; opt-in account creation for leaderboard submission is coming soon.",
+  },
+  {
+    question: "How often is the leaderboard updated?",
+    answer:
+      "Live rankings refresh every 60 seconds based on the latest market prices and your held positions.",
+  },
+];
+
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: LEADERBOARD_FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.question,
+    acceptedAnswer: { "@type": "Answer", text: f.answer },
+  })),
+};
 
 const leaderboardData = [
   { rank: 1, username: "CryptoPhantom", portfolioValue: 14820, gain: 48.2, bestTrade: "BTC +12.4%" },
@@ -56,6 +90,7 @@ export default function Leaderboard() {
         <meta name="twitter:description" content="Live rankings of the best paper traders. Start with $10K and climb the leaderboard." />
         <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -132,6 +167,12 @@ export default function Leaderboard() {
                 </Button>
               </Link>
             </div>
+
+            <AssetFAQSection
+              assetName="Leaderboard"
+              assetSymbol="Leaderboard"
+              faqs={LEADERBOARD_FAQS}
+            />
           </div>
         </main>
         <MegaFooter />

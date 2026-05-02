@@ -303,6 +303,35 @@ export default function Learn() {
               </div>
             </Card>
 
+            <SEOSection
+              path="/learn"
+              faqHeading="Learning Center"
+              breadcrumbs={[{ label: "Learn" }]}
+              hideVisibleBreadcrumb
+              faqs={[
+                {
+                  question: "What can I learn on TradeHQ?",
+                  answer:
+                    "Structured beginner-to-intermediate guides on technical analysis, risk management, trading psychology, candlestick patterns, market mechanics and asset-specific strategies for stocks, crypto, ETFs, forex and commodities.",
+                },
+                {
+                  question: "Is the TradeHQ Learning Center free?",
+                  answer:
+                    "Yes — every article, glossary entry and lesson is 100% free with no signup required. (Educational simulation only — not financial advice.)",
+                },
+                {
+                  question: "What's the difference between an article and a lesson?",
+                  answer:
+                    "Articles are quick 5–8 minute reads on a single concept (e.g. paper trading). Lessons are interactive, multi-step modules that include quizzes and link to the trading simulator so you can practice instantly.",
+                },
+                {
+                  question: "Where should a complete beginner start?",
+                  answer:
+                    "Start with 'What Is Paper Trading' and 'How to Read a Stock Chart', then explore the Trading Glossary above before opening your $100K virtual portfolio on the simulator.",
+                },
+              ]}
+            />
+
           </div>
         </main>
         <MegaFooter />
