@@ -58,6 +58,7 @@ export default function LearnArticle() {
         <title>{article.title} | TradeHQ Learn</title>
         <meta name="description" content={article.metaDescription} />
         <link rel="canonical" href={articleUrl} />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={`${article.title} | TradeHQ Learn`} />
         <meta property="og:description" content={article.metaDescription} />

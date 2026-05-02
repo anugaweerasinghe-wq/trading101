@@ -281,6 +281,7 @@ export default function Portfolio() {
           content="Real-time portfolio tracker with AI analytics, trading journal, performance charts, and milestone alerts. See your P&L, positions, and risk metrics instantly."
         />
         <link rel="canonical" href="https://tradinghq.vercel.app/portfolio" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"

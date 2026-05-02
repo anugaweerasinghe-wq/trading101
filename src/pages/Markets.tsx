@@ -125,6 +125,7 @@ export default function Markets() {
         <title>Live Markets 2026 — Track 150+ Stocks, Crypto, ETFs & Forex | TradeHQ</title>
         <meta name="description" content="Real-time market dashboard with 150+ assets. Top gainers/losers, search, and sector clusters. Practice trading live prices with $10K virtual cash — TradeHQ 2026." />
         <link rel="canonical" href="https://tradinghq.vercel.app/markets" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Live Markets 2026 — 150+ Stocks, Crypto, ETFs & Forex | TradeHQ" />
         <meta property="og:description" content="Track stocks, crypto, ETFs, forex & commodities in real time. Free market dashboard — TradeHQ." />

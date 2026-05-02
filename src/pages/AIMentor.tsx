@@ -139,6 +139,7 @@ export default function AIMentor() {
         <title>AI Trading Mentor — Personalized Trading Coach & Behavioral Analyst | TradeHQ</title>
         <meta name="description" content="Chat with your personal AI trading mentor. Get real-time strategy advice, risk warnings, portfolio analysis, and psychological support to improve your trading." />
         <link rel="canonical" href="https://tradinghq.vercel.app/ai-mentor" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="AI Trading Mentor — Your Personal Trading Coach | TradeHQ" />
         <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Powered by advanced AI. Free on TradeHQ." />
