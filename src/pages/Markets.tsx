@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { TradingSidebar } from "@/components/trading/TradingSidebar";
 import { MarketClusters } from "@/components/MarketClusters";
 import { MegaFooter } from "@/components/MegaFooter";
+import { SEOSection } from "@/components/SEOSection";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { simulateAssetPrices } from "@/lib/priceSimulation";
@@ -399,6 +400,36 @@ export default function Markets() {
 
           </div>
         </div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 mt-6">
+        <SEOSection
+          path="/markets"
+          faqHeading="Markets"
+          breadcrumbs={[{ label: "Markets" }]}
+          faqs={[
+            {
+              question: "What does the TradeHQ Markets dashboard show?",
+              answer:
+                "The markets dashboard tracks live prices, 24h % change and volume for 130+ crypto, stock, ETF, forex and commodity assets — all sortable by sector and category.",
+            },
+            {
+              question: "How often does market data refresh?",
+              answer:
+                "We refresh quotes for the most-liquid assets every 60 seconds via free public market APIs. Less-liquid assets are anchored to a real cached price and given small micro-fluctuations between refreshes for visual liveness.",
+            },
+            {
+              question: "Can I trade directly from the Markets page?",
+              answer:
+                "Yes — click any asset row to open the trading terminal with $100,000 of virtual cash. (Educational simulation only — not financial advice.)",
+            },
+            {
+              question: "Which sectors are covered?",
+              answer:
+                "Six pillar sectors: AI & Tech, Crypto & DeFi, Mega Cap, ETFs & Indices, Forex & Currencies, and Commodities. Each has a dedicated hub page with sector-level analysis.",
+            },
+          ]}
+        />
       </div>
 
       {/* Mega Footer - Outside the flex container */}

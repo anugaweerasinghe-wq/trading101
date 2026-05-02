@@ -3,6 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Shield, Lock, Eye, Database, Globe, Mail } from "lucide-react";
+import { SEOSection } from "@/components/SEOSection";
 
 export default function Privacy() {
   const sections = [
@@ -147,6 +148,34 @@ For users in the European Economic Area (EEA), we comply with GDPR requirements.
               </p>
             </div>
           </section>
+
+          <SEOSection
+            path="/privacy"
+            faqHeading="Privacy"
+            breadcrumbs={[{ label: "Privacy Policy" }]}
+            faqs={[
+              {
+                question: "Does TradeHQ collect personal data?",
+                answer:
+                  "No. TradeHQ requires no signup. Your portfolio and trade history are stored in your browser's local storage and never transmitted to our servers.",
+              },
+              {
+                question: "Is TradeHQ GDPR and CCPA compliant?",
+                answer:
+                  "Yes — because we collect no personal identifiers, we comply with both GDPR (EU) and CCPA (California) by design. You can clear all stored data at any time via your browser settings.",
+              },
+              {
+                question: "Does TradeHQ sell my data?",
+                answer:
+                  "No. We do not sell, rent or share user data with third parties. We use only anonymous, aggregate analytics to improve the platform.",
+              },
+              {
+                question: "Do I need an account to use TradeHQ?",
+                answer:
+                  "No. Open the site and start trading with $100,000 of virtual cash immediately — no email, no credit card, nothing required.",
+              },
+            ]}
+          />
         </main>
 
         <MegaFooter />
