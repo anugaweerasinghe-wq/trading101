@@ -126,6 +126,37 @@ export default function LearnArticle() {
                   Start Trading Free <ArrowRight className="w-4 h-4" />
                 </Link>
               </section>
+
+              <SEOSection
+                path={`/learn/article/${article.slug}`}
+                faqHeading={article.title}
+                breadcrumbs={[
+                  { label: "Learn", href: "/learn" },
+                  { label: article.title },
+                ]}
+                hideVisibleBreadcrumb
+                faqs={[
+                  {
+                    question: `What is "${article.title}" about?`,
+                    answer: article.summary,
+                  },
+                  {
+                    question: "Is this guide free?",
+                    answer:
+                      "Yes — every TradeHQ Learning Center article is free and requires no signup. (Educational simulation only — not financial advice.)",
+                  },
+                  {
+                    question: "How can I practice what I just read?",
+                    answer:
+                      "Open the trading simulator with $100,000 in virtual cash and apply the concepts from this article risk-free. Real-time price data, charts and an AI mentor are included.",
+                  },
+                  {
+                    question: "What should I read next?",
+                    answer:
+                      "Browse the related links above, or visit the Learning Center hub for structured beginner-to-advanced trading courses.",
+                  },
+                ]}
+              />
             </article>
           </div>
         </main>

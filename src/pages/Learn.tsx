@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target, ArrowRight, Zap, Coins, Brain, ChevronRight, Home, Clock, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LEARN_ARTICLES } from "@/lib/learnArticles";
+import { SEOSection } from "@/components/SEOSection";
 import tradingBasics from "@/assets/course-trading-basics.jpg";
 import riskManagement from "@/assets/course-risk-management.jpg";
 import technicalAnalysis from "@/assets/course-technical-analysis.jpg";
