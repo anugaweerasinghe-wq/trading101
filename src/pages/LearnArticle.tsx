@@ -4,6 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { ArrowRight, Home, ChevronRight, Clock, BookOpen } from "lucide-react";
 import { LEARN_ARTICLES } from "@/lib/learnArticles";
+import { SEOSection } from "@/components/SEOSection";
 
 const DOMAIN = "https://tradinghq.vercel.app";
 

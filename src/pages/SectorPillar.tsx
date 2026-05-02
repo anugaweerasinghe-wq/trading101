@@ -4,6 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { SEOSection } from "@/components/SEOSection";
 import { ASSETS } from "@/lib/assets";
 import { TrendingUp, TrendingDown, ArrowRight, Cpu, Coins, Building2, Globe, Gem, LineChart } from "lucide-react";
 import { cn } from "@/lib/utils";
