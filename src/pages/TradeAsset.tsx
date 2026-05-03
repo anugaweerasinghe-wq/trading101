@@ -205,6 +205,16 @@ export default function TradeAsset() {
     return <Navigate to="/trade" replace />;
   }
 
+  // Canonicalize URL casing: enforce lowercase asset id in the path.
+  // Prevents duplicate-content warnings in Google Search Console for /trade/BTC vs /trade/btc.
+  if (symbol) {
+    const matched = findAssetBySymbol(symbol);
+    const canonicalSlug = matched?.id;
+    if (canonicalSlug && symbol !== canonicalSlug) {
+      return <Navigate to={`/trade/${canonicalSlug}`} replace />;
+    }
+  }
+
   // Get content for SEO blocks
   const assetContent = selectedAsset ? getAssetContent(selectedAsset.id) : null;
   const assetFAQs = selectedAsset ? getAssetFAQs(selectedAsset.id) : [];
