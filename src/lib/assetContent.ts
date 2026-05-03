@@ -1,5 +1,6 @@
 // Unique SEO content for each asset - Anti-thin content blocks
 import { Asset } from './types';
+import { ASSETS } from './assets';
 
 interface AssetFAQ {
   question: string;
