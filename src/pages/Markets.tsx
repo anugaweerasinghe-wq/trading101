@@ -4,6 +4,7 @@ import { TradingSidebar } from "@/components/trading/TradingSidebar";
 import { MarketClusters } from "@/components/MarketClusters";
 import { MegaFooter } from "@/components/MegaFooter";
 import { SEOSection } from "@/components/SEOSection";
+import { ContextualLinks } from "@/components/ContextualLinks";
 import { ASSETS } from "@/lib/assets";
 import { Asset } from "@/lib/types";
 import { simulateAssetPrices } from "@/lib/priceSimulation";
@@ -167,6 +168,8 @@ export default function Markets() {
 
             {/* Topical Clusters + State of the Market 2026 Intro */}
             <MarketClusters assets={assets} />
+
+            <ContextualLinks variant="markets" />
 
             {/* ── NEW: Sector Directory for internal linking ── */}
             <section aria-label="Market Sectors">
