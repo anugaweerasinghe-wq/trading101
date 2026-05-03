@@ -11,6 +11,7 @@ import { TradeAnalytics } from "@/components/TradeAnalytics";
 import { PriceTicker } from "@/components/PriceTicker";
 import { MegaFooter } from "@/components/MegaFooter";
 import { SEOSection } from "@/components/SEOSection";
+import { ContextualLinks } from "@/components/ContextualLinks";
 import {
   getPortfolio,
   updatePositionPrices,
@@ -527,6 +528,8 @@ export default function Portfolio() {
             <div className="mb-12">
               <TradeHistory trades={portfolio.trades} />
             </div>
+
+            <ContextualLinks variant="portfolio" />
 
             <SEOSection
               path="/portfolio"

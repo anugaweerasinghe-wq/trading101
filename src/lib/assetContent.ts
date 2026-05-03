@@ -1,5 +1,6 @@
 // Unique SEO content for each asset - Anti-thin content blocks
 import { Asset } from './types';
+import { ASSETS } from './assets';
 
 interface AssetFAQ {
   question: string;
@@ -174,7 +175,68 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
 
 // Get FAQs for an asset
 export function getAssetFAQs(assetId: string): AssetFAQ[] {
-  return ASSET_FAQS[assetId] || [];
+  const handWritten = ASSET_FAQS[assetId];
+  if (handWritten && handWritten.length > 0) return handWritten;
+  return generateAssetFAQs(assetId);
+}
+
+// Programmatic FAQ generator — emits 5 unique, asset-tailored Q&A
+// for any asset that lacks a hand-written ASSET_FAQS entry.
+// Pulls asset name, symbol, type, sector and category context so the
+// FAQ block is unique per page (not boilerplate) for FAQPage rich results.
+export function generateAssetFAQs(assetId: string): AssetFAQ[] {
+  const asset = ASSETS.find((a) => a.id === assetId);
+  if (!asset) return [];
+
+  const name = asset.name;
+  const sym = asset.symbol;
+  const type = asset.type;
+  const content = ASSET_CONTENT[assetId];
+  const driver =
+    content?.stats?.primaryDriver ||
+    (type === "crypto"
+      ? "network adoption, regulatory news and overall crypto market sentiment"
+      : type === "stock"
+        ? "quarterly earnings, sector trends and macroeconomic conditions"
+        : type === "etf"
+          ? "the underlying index composition, fund flows and sector rotation"
+          : type === "forex"
+            ? "central bank policy, interest-rate differentials and macro releases"
+            : "global supply/demand, USD strength and geopolitical events");
+
+  const categoryLabel =
+    type === "crypto"
+      ? "cryptocurrency"
+      : type === "stock"
+        ? "stock"
+        : type === "etf"
+          ? "ETF"
+          : type === "forex"
+            ? "forex pair"
+            : "commodity";
+
+  return [
+    {
+      question: `How can I practice trading ${name} (${sym}) for free?`,
+      answer: `Open the TradeHQ simulator, search for ${sym}, and place a buy or sell order using your $100,000 in virtual cash. There's no signup, no credit card and no real money at risk. (Educational simulation only — not financial advice.)`,
+    },
+    {
+      question: `What drives ${name} price action?`,
+      answer: `${name} (${sym}) is primarily influenced by ${driver}. On TradeHQ you can practice reading these catalysts on simulated charts before risking real capital.`,
+    },
+    {
+      question: `Is ${sym} a good ${categoryLabel} for beginner traders to study?`,
+      answer: `${sym} is one of the more widely-followed ${categoryLabel}s, which makes it a useful learning instrument because chart patterns, news flow and analyst commentary are all easy to find. Use the TradeHQ practice account to test entries and exits without financial risk.`,
+    },
+    {
+      question: `How does ${sym} compare to other ${categoryLabel}s on the simulator?`,
+      answer: `Open the Markets page to compare ${sym} side-by-side with other ${categoryLabel}s by price, 24h change and simulated volume. Practice rotating between assets to learn how correlations behave in different market conditions.`,
+    },
+    {
+      question: `Can I lose real money trading ${sym} on TradeHQ?`,
+      answer: `No. Every ${sym} trade on TradeHQ uses virtual currency only — your portfolio is stored in your browser and no real funds are ever at risk. The platform is designed purely for education and skill-building.`,
+    },
+  ];
 }
 
 // Asset brand colors for OG images

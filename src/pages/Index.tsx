@@ -71,6 +71,22 @@ const webAppSchema = {
   description: "Practice stock & crypto trading free with $10,000 virtual cash. No signup needed. 150+ assets, AI mentor, leaderboard.",
 };
 
+// WebSite + SearchAction — enables Google sitelinks search box.
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "TradeHQ",
+  url: "https://tradinghq.vercel.app/",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: "https://tradinghq.vercel.app/markets?q={search_term_string}",
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
+
 // NEW: hardcoded from the 154 URL list — lowercase symbols matching exact URLs
 const TOP_ASSETS = [
   { symbol: "btc", label: "BTC" }, { symbol: "eth", label: "ETH" },
@@ -139,6 +155,7 @@ const Index = () => {
         <script type="application/ld+json">{JSON.stringify(homeFaqSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(webAppSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(websiteSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">

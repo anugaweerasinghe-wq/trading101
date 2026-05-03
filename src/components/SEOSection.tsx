@@ -49,12 +49,24 @@ export function SEOSection({
 
   const breadcrumbItems = [
     { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-    ...breadcrumbs.map((b, i) => ({
-      "@type": "ListItem",
-      position: i + 2,
-      name: b.label,
-      item: b.href ? `${DOMAIN}${b.href}` : fullUrl,
-    })),
+    ...breadcrumbs.map((b, i) => {
+      const isLast = i === breadcrumbs.length - 1;
+      // schema.org: `item` should be the canonical URL of that crumb's page.
+      // For intermediate crumbs without an explicit href, omit `item` (allowed by spec)
+      // rather than incorrectly point it at the current page URL.
+      const item = b.href
+        ? `${DOMAIN}${b.href}`
+        : isLast
+          ? fullUrl
+          : undefined;
+      const entry: Record<string, unknown> = {
+        "@type": "ListItem",
+        position: i + 2,
+        name: b.label,
+      };
+      if (item) entry.item = item;
+      return entry;
+    }),
   ];
 
   const breadcrumbSchema = {

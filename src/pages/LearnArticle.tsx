@@ -5,6 +5,7 @@ import { MegaFooter } from "@/components/MegaFooter";
 import { ArrowRight, Home, ChevronRight, Clock, BookOpen } from "lucide-react";
 import { LEARN_ARTICLES } from "@/lib/learnArticles";
 import { SEOSection } from "@/components/SEOSection";
+import { ContextualLinks } from "@/components/ContextualLinks";
 
 const DOMAIN = "https://tradinghq.vercel.app";
 
@@ -40,6 +41,8 @@ export default function LearnArticle() {
     "@type": "Article",
     headline: article.title,
     description: article.metaDescription,
+    image: [`${DOMAIN}/og-image.png`],
+    mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
     url: articleUrl,
     datePublished: "2026-03-01",
     dateModified: "2026-04-02",
@@ -128,6 +131,8 @@ export default function LearnArticle() {
                   Start Trading Free <ArrowRight className="w-4 h-4" />
                 </Link>
               </section>
+
+              <ContextualLinks variant="learn" />
 
               <SEOSection
                 path={`/learn/article/${article.slug}`}
