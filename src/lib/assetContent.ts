@@ -185,9 +185,6 @@ export function getAssetFAQs(assetId: string): AssetFAQ[] {
 // Pulls asset name, symbol, type, sector and category context so the
 // FAQ block is unique per page (not boilerplate) for FAQPage rich results.
 export function generateAssetFAQs(assetId: string): AssetFAQ[] {
-  // Lazy import to avoid circular module init issues
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { ASSETS } = require("./assets") as typeof import("./assets");
   const asset = ASSETS.find((a) => a.id === assetId);
   if (!asset) return [];
 
