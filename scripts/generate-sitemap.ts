@@ -6,6 +6,10 @@
 // Inline asset IDs and glossary slugs to avoid importing from src (which uses path aliases)
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const DOMAIN = "https://tradinghq.vercel.app";
 const TODAY = new Date().toISOString().split('T')[0];
