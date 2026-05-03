@@ -40,6 +40,8 @@ export default function LearnArticle() {
     "@type": "Article",
     headline: article.title,
     description: article.metaDescription,
+    image: [`${DOMAIN}/og-image.png`],
+    mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
     url: articleUrl,
     datePublished: "2026-03-01",
     dateModified: "2026-04-02",
