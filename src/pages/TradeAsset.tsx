@@ -10,6 +10,7 @@ import { AssetIntelligence } from "@/components/AssetIntelligence";
 import { AIReadySummary } from "@/components/AIReadySummary";
 import { GEOKeyTakeaways } from "@/components/GEOKeyTakeaways";
 import { TradingStrengthMeter } from "@/components/TradingStrengthMeter";
+import { ContextualLinks } from "@/components/ContextualLinks";
 
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
@@ -559,6 +560,7 @@ export default function TradeAsset() {
 
           {selectedAsset && <RecentAnalysis focusAsset={selectedAsset.id} />}
           {selectedAsset && <RelatedMarkets currentAsset={selectedAsset} />}
+          {selectedAsset && <ContextualLinks variant="trade-asset" asset={selectedAsset} />}
 
           {/* Disclaimer */}
           <div className="mt-8 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04]">
