@@ -43,6 +43,7 @@ import {
 import { cn } from "@/lib/utils";
 import { AIInsightSummary } from "@/components/portfolio/AIInsightSummary";
 import { PositionsTable } from "@/components/portfolio/PositionsTable";
+import { ScenarioBuilder } from "@/components/portfolio/ScenarioBuilder";
 import { useToast } from "@/hooks/use-toast";
 import {
   requestNotificationPermission,
@@ -406,6 +407,10 @@ export default function Portfolio() {
               <div className="xl:col-span-1">
                 <RiskManagement portfolio={portfolio} />
               </div>
+            </div>
+
+            <div className="mb-12">
+              <ScenarioBuilder portfolio={portfolio} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">

@@ -2,10 +2,17 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { Link } from "react-router-dom";
-import { Trophy, TrendingUp, ArrowRight, Medal, Home, ChevronRight } from "lucide-react";
+import { Trophy, ArrowRight, Medal, Home, ChevronRight, Clock, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
+import { useEffect, useState } from "react";
+import {
+  getLeaderboard,
+  formatTimeAgo,
+  formatTimeUntil,
+  type LeaderboardTrader,
+} from "@/lib/leaderboardEngine";
 
 const LEADERBOARD_FAQS = [
   {
@@ -26,7 +33,7 @@ const LEADERBOARD_FAQS = [
   {
     question: "How often is the leaderboard updated?",
     answer:
-      "Live rankings refresh every 60 seconds based on the latest market prices and your held positions.",
+      "Rankings auto-evolve every 3 days based on simulated market performance. Each virtual trader's portfolio drifts realistically based on their personality (aggressive, balanced, or steady), so the standings shift organically over time.",
   },
 ];
 
@@ -40,19 +47,6 @@ const FAQ_SCHEMA = {
   })),
 };
 
-const leaderboardData = [
-  { rank: 1, username: "CryptoPhantom", portfolioValue: 14820, gain: 48.2, bestTrade: "BTC +12.4%" },
-  { rank: 2, username: "AlphaTrader99", portfolioValue: 13950, gain: 39.5, bestTrade: "NVDA +18.7%" },
-  { rank: 3, username: "SilentBull", portfolioValue: 13410, gain: 34.1, bestTrade: "SOL +22.1%" },
-  { rank: 4, username: "RiskManager_X", portfolioValue: 12780, gain: 27.8, bestTrade: "ETH +9.3%" },
-  { rank: 5, username: "PipHunter", portfolioValue: 12340, gain: 23.4, bestTrade: "EUR/USD +5.1%" },
-  { rank: 6, username: "IndexSurfer", portfolioValue: 11950, gain: 19.5, bestTrade: "SPY +7.8%" },
-  { rank: 7, username: "NightOwlTrader", portfolioValue: 11620, gain: 16.2, bestTrade: "TSLA +14.5%" },
-  { rank: 8, username: "GoldDigger2026", portfolioValue: 11280, gain: 12.8, bestTrade: "XAU +6.2%" },
-  { rank: 9, username: "MomentumKing", portfolioValue: 10890, gain: 8.9, bestTrade: "AAPL +4.8%" },
-  { rank: 10, username: "SteadyEddie", portfolioValue: 10540, gain: 5.4, bestTrade: "QQQ +3.9%" },
-];
-
 function getRankIcon(rank: number) {
   if (rank === 1) return <Trophy className="w-5 h-5 text-yellow-400" />;
   if (rank === 2) return <Medal className="w-5 h-5 text-gray-300" />;
@@ -61,6 +55,39 @@ function getRankIcon(rank: number) {
 }
 
 export default function Leaderboard() {
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardTrader[]>([]);
+  const [lastUpdate, setLastUpdate] = useState<number>(Date.now());
+  const [nextUpdate, setNextUpdate] = useState<number>(Date.now());
+  const [, setTick] = useState(0);
+
+  useEffect(() => {
+    const board = getLeaderboard();
+    setLeaderboardData(board.traders);
+    setLastUpdate(board.lastUpdate);
+    setNextUpdate(board.nextUpdate);
+
+    // Re-check on focus + every minute (in case the 3-day window closes while page is open)
+    const interval = setInterval(() => {
+      const next = getLeaderboard();
+      setLeaderboardData(next.traders);
+      setLastUpdate(next.lastUpdate);
+      setNextUpdate(next.nextUpdate);
+      setTick((t) => t + 1);
+    }, 60_000);
+
+    const onFocus = () => {
+      const next = getLeaderboard();
+      setLeaderboardData(next.traders);
+      setLastUpdate(next.lastUpdate);
+      setNextUpdate(next.nextUpdate);
+    };
+    window.addEventListener("focus", onFocus);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("focus", onFocus);
+    };
+  }, []);
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -108,13 +135,27 @@ export default function Leaderboard() {
             </nav>
 
             <div className="text-center mb-12">
-              <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary">Live Rankings</Badge>
+              <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary inline-flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                Live Rankings
+              </Badge>
               <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
                 TradeHQ Leaderboard — Top Virtual Traders
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Track the best-performing paper traders. Everyone starts with $10,000 virtual cash — can you reach the top?
               </p>
+              <div className="mt-4 inline-flex items-center gap-3 text-2xs text-muted-foreground">
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  Updated {formatTimeAgo(lastUpdate)}
+                </span>
+                <span className="opacity-50">•</span>
+                <span className="inline-flex items-center gap-1">
+                  <RefreshCw className="w-3 h-3" />
+                  Next refresh in {formatTimeUntil(nextUpdate)}
+                </span>
+              </div>
             </div>
 
             {/* Leaderboard Table */}
