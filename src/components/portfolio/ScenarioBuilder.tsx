@@ -19,7 +19,7 @@ import {
 } from "recharts";
 import { runScenario, type ScenarioResult, type Shock } from "@/lib/scenarioEngine";
 import { supabase } from "@/integrations/supabase/client";
-import type { Portfolio } from "@/lib/types";
+import type { Portfolio, Asset } from "@/lib/types";
 
 const EXAMPLES = [
   "What if BTC drops 30%?",
@@ -30,9 +30,13 @@ const EXAMPLES = [
 
 interface Props {
   portfolio: Portfolio;
+  /** Live ticking asset list (same source as the Trade page). When provided,
+   *  position prices are overridden with their live counterparts so the
+   *  scenario engine simulates from the exact real-time price. */
+  liveAssets?: Asset[];
 }
 
-export function ScenarioBuilder({ portfolio }: Props) {
+export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ScenarioResult | null>(null);
@@ -41,7 +45,28 @@ export function ScenarioBuilder({ portfolio }: Props) {
   const [horizonDays, setHorizonDays] = useState<number>(30);
   const { toast } = useToast();
 
-  const hasPositions = portfolio.positions.length > 0;
+  // Build a live-price-synced portfolio snapshot — matches the Trade page exactly.
+  const livePortfolio = (() => {
+    if (!liveAssets || liveAssets.length === 0) return portfolio;
+    const liveById = new Map(liveAssets.map((a) => [a.id, a]));
+    const positions = portfolio.positions.map((p) => {
+      const live = liveById.get(p.asset.id);
+      if (!live) return p;
+      const currentValue = live.price * p.quantity;
+      const totalCost = p.avgPrice * p.quantity;
+      return {
+        ...p,
+        asset: { ...p.asset, price: live.price, change: live.change, changePercent: live.changePercent },
+        currentValue,
+        profitLoss: currentValue - totalCost,
+        profitLossPercent: totalCost > 0 ? ((currentValue - totalCost) / totalCost) * 100 : 0,
+      };
+    });
+    const positionsValue = positions.reduce((s, p) => s + p.currentValue, 0);
+    return { ...portfolio, positions, totalValue: portfolio.cash + positionsValue };
+  })();
+
+  const hasPositions = livePortfolio.positions.length > 0;
 
   const runQuery = async (queryText?: string) => {
     const finalPrompt = (queryText ?? prompt).trim();
@@ -58,7 +83,7 @@ export function ScenarioBuilder({ portfolio }: Props) {
     setLoading(true);
     setResult(null);
     try {
-      const holdings = portfolio.positions.map((p) => ({
+      const holdings = livePortfolio.positions.map((p) => ({
         symbol: p.asset.symbol,
         name: p.asset.name,
         type: p.asset.type,
@@ -91,7 +116,7 @@ export function ScenarioBuilder({ portfolio }: Props) {
       setHorizonDays(parsed.horizonDays ?? 30);
       setNarrative(parsed.narrative ?? "");
 
-      const sim = runScenario(portfolio, parsed.shocks ?? [], parsed.horizonDays ?? 30, 1000);
+      const sim = runScenario(livePortfolio, parsed.shocks ?? [], parsed.horizonDays ?? 30, 1000);
       setResult(sim);
     } catch (e: any) {
       toast({ title: "Scenario error", description: e?.message ?? "Unknown error", variant: "destructive" });
