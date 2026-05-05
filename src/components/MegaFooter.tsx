@@ -19,7 +19,7 @@ import {
   Award,
   CheckCircle2
 } from "lucide-react";
-import tradehqLogo from "@/assets/tradehq-logo.png";
+import { BrandMark } from "@/components/brand/BrandMark";
 import { tradingGlossary } from "@/lib/tradingGlossary";
 
 /**

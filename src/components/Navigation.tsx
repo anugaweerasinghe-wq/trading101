@@ -4,7 +4,7 @@ import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X } from "
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
-import tradehqLogo from "@/assets/tradehq-logo.png";
+import { BrandMark } from "@/components/brand/BrandMark";
 
 export function Navigation() {
   const location = useLocation();
@@ -36,15 +36,8 @@ export function Navigation() {
       <div className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <img
-              src={tradehqLogo}
-              alt="TradeHQ"
-              className="h-9 w-auto object-contain"
-            />
-            <span className="text-xl font-bold tracking-tight">
-              Trade<span className="text-primary">HQ</span>
-            </span>
+          <Link to="/" className="group active:scale-[0.97] transition-transform" aria-label="TradeHQ home">
+            <BrandMark size="md" />
           </Link>
 
           {/* Desktop Navigation */}
