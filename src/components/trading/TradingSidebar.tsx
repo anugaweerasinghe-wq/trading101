@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import tradehqLogo from "@/assets/tradehq-logo.png";
+import { BrandMark } from "@/components/brand/BrandMark";
 
 const navItems = [
   { icon: LayoutGrid, label: "Dashboard", path: "/" },
@@ -27,8 +27,8 @@ export function TradingSidebar() {
     <aside className="fixed left-0 top-0 h-screen w-16 bg-gradient-sidebar border-r border-border/30 flex flex-col items-center py-4 z-50">
       {/* Logo */}
       <div className="mb-8">
-        <Link to="/" className="flex items-center justify-center w-10 h-10 rounded-2xl hover:opacity-80 transition-opacity">
-          <img src={tradehqLogo} alt="TradeHQ" className="w-8 h-8 object-contain" />
+        <Link to="/" className="flex items-center justify-center w-10 h-10 rounded-2xl hover:opacity-80 active:scale-[0.97] transition-all" aria-label="TradeHQ home">
+          <BrandMark size="sm" showWordmark={false} />
         </Link>
       </div>
 
