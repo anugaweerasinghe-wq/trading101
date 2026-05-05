@@ -156,11 +156,8 @@ export function MegaFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-3 mb-4 group">
-              <img src={tradehqLogo} alt="TradeHQ" className="h-10 w-auto object-contain" />
-              <span className="text-xl font-bold">
-                Trade<span className="text-primary">HQ</span>
-              </span>
+            <Link to="/" className="inline-flex mb-4 group active:scale-[0.97] transition-transform" aria-label="TradeHQ home">
+              <BrandMark size="lg" />
             </Link>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
               An AI-powered trading simulator for 2026. Practice with $10K virtual capital
