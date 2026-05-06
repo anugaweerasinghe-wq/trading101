@@ -176,6 +176,7 @@ export default function AdminEditor() {
       <>
         <Helmet>
           <title>Admin Editor — TradeHQ</title>
+          <meta name="robots" content="noindex, nofollow" />
         </Helmet>
 
         <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -216,6 +217,7 @@ export default function AdminEditor() {
     <>
       <Helmet>
         <title>CMS Editor — TradeHQ</title>
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
       <div className="min-h-screen bg-background p-4 md:p-8">
