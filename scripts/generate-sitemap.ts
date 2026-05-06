@@ -14,6 +14,14 @@ const __dirname = path.dirname(__filename);
 const DOMAIN = "https://tradinghq.vercel.app";
 const TODAY = new Date().toISOString().split('T')[0];
 
+// Real file mtime → lastmod (Google trusts this more than "today" everywhere)
+function mtimeOf(relPath: string): string {
+  try {
+    const p = path.resolve(__dirname, "..", relPath);
+    return fs.statSync(p).mtime.toISOString().split("T")[0];
+  } catch { return TODAY; }
+}
+
 // Read assets from src/lib/assets.ts to extract IDs
 function extractAssetIds(): string[] {
   const filePath = path.resolve(__dirname, '../src/lib/assets.ts');

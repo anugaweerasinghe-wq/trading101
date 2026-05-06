@@ -1,99 +1,108 @@
-## Plan: AI Scenario Builder + Auto-Evolving Leaderboard
+# Plan — Premium Logo Refresh + Full Indexing Hardening
 
-Two independent features. Both use existing infrastructure (Lovable AI Gateway, localStorage persistence, ASSETS price data).
-
----
-
-### Feature 1 — AI Scenario Builder ("What if BTC drops 30%?")
-
-A new card on `/portfolio` where the user types a free-form what-if question. We extract the asset(s) and shock magnitude using Lovable AI (structured tool-call output), then run a deterministic Monte Carlo on their current positions to produce expected portfolio outcome with risk bands.
-
-**New edge function:** `supabase/functions/scenario-parser/index.ts`
-
-- Input: `{ prompt, holdings: [{symbol, name, type, quantity, currentPrice}] }`
-- Calls Lovable AI (`google/gemini-3-flash-preview`) with a tool schema:
-  ```
-  parse_scenario({ shocks: [{symbol, shockPercent, confidence}], horizonDays, narrative })
-  ```
-- Returns structured shocks + a 2–3 sentence narrative (educational simulation framing).
-- Handles 429/402 errors with friendly toasts.
-- CORS + `verify_jwt = false` (default).
-
-**New file:** `src/lib/scenarioEngine.ts`
-
-- `runScenario(portfolio, shocks, horizonDays)` → runs 1,000 Monte Carlo paths:
-  - For each held asset: applies the directional shock as the **mean** drift.
-  - Volatility per asset class: crypto 4%/day, stock 1.5%/day, etf 1%/day, commodity 1.2%/day, forex 0.6%/day.
-  - Correlation: assets sharing the same shock category move together (simplified single-factor model).
-  - Cash unchanged.
-- Returns `{ p5, p25, median, p75, p95, expected, worstCase, bestCase, deltaPercent, perAsset: [...] }`.
-
-**New component:** `src/components/portfolio/ScenarioBuilder.tsx`
-
-- Input field with example chips ("What if BTC drops 30%?", "ETH +50% in 30 days", "Tech stocks crash 20%").
-- "Run Scenario" button → calls edge function → runs engine → renders:
-  - **Risk band chart**: shaded p5–p95 area, p25–p75 inner band, median line (uses recharts AreaChart already in deps).
-  - **Outcome cards**: Expected $, Worst case (p5), Best case (p95), Probability of loss.
-  - **Per-asset breakdown**: each held asset's expected price after shock.
-  - **AI narrative** with mandatory disclaimer: "(Educational simulation only — not financial advice.)"
-- Empty-state when no positions: prompts user to buy assets first.
-- Glassmorphism 2.0 styling, `active:scale-97` on button.
-
-**Integration:** Add `<ScenarioBuilder portfolio={portfolio} />` in `src/pages/Portfolio.tsx` between `PortfolioAnalytics`/`RiskManagement` row and the stat cards row.
+Two parallel tracks. Each is scoped so nothing major in the app changes — only the brand mark and the build/SEO layer.
 
 ---
 
-### Feature 2 — Auto-Evolving Leaderboard
+## Track 1 — New Logo (Premium, Symbol-Only)
 
-Currently `src/pages/Leaderboard.tsx` uses a hardcoded array. Convert it to evolve realistically every few days based on simulated market drift, persisted in localStorage so all visitors on the same device see consistent rankings that progress over time.
+### Direction
+A single iconic mark — no wordmark anywhere. Apple/Nike/Adidas use the symbol alone in nav, OG images, favicons, app icons. We'll do the same.
 
-**New file:** `src/lib/leaderboardEngine.ts`
+**Mark concept — "Apex"**
+A monolithic dark obsidian rounded-square plate (deep graphite gradient `#0A0A0F → #1C1C22`) with a single ascending wedge cut into it using a soft platinum-to-emerald gradient (`#E8ECF1 → #00E396`). The wedge is asymmetric (left edge taller than right) — suggests a breakout candle, but reads as pure geometry first. Subtle inner highlight on the plate gives it physical depth (like brushed aluminum / Vision Pro hardware), not flat material.
 
-- Seed roster of 10 traders (current usernames preserved for continuity).
-- `getLeaderboard()`:
-  - Reads `tradehq_leaderboard` from localStorage (state: `{ traders: [...], lastUpdate: timestamp }`).
-  - If missing → seed with current values, save, return.
-  - If `Date.now() - lastUpdate >= 3 days` → run `evolveLeaderboard(daysElapsed)`:
-    - Each trader's portfolioValue drifts by `dailyReturn ~ N(0.001, traderVolatility)` per elapsed day.
-    - Each trader has a fixed personality: aggressive (high σ), steady (low σ), etc. — keeps "SteadyEddie" steady, "CryptoPhantom" volatile.
-    - Recomputes `gain%` from $10,000 baseline.
-    - Re-sorts by gain% and reassigns ranks.
-    - Updates `bestTrade` occasionally (every ~2 evolutions) by picking a random asset from `ASSETS` with a plausible % move.
-    - Saves new state with fresh timestamp.
-- Cap values to a realistic range ($6k–$25k) so no runaway growth.
+Why this satisfies "dark, premium, aesthetic, memorable":
+- Dark plate = premium / hardware aesthetic (Apple, Tesla, Vision Pro)
+- Single gesture inside = Nike-level memorability (recognizable at 16px)
+- Emerald accent ties to existing Bloomberg palette (`#00E396`) so brand stays cohesive
+- Works on light + dark backgrounds without inversion
 
-**Update `src/pages/Leaderboard.tsx`:**
+### Files
+- **Replace** `src/components/brand/BrandMark.tsx` — single SVG, gradients defined in `<defs>`, `showWordmark` prop kept for backward compat but defaults to `false`. All consumers already use the component.
+- **Replace** `public/logo.svg` — same artwork, standalone (used by favicon/manifest/OG).
+- **Add** `public/og-image.png` regen note: existing OG references stay, but mark in OG should be updated in a follow-up (out of scope for this pass to avoid scope creep).
+- **Update** `src/components/Navigation.tsx`, `src/components/MegaFooter.tsx`, `src/components/trading/TradingSidebar.tsx` — remove `showWordmark` so symbol-only renders everywhere.
+- **Update** `index.html` `theme-color` from cyan `#00FFFF` → `#0A0A0F` (matches new mark, also fixes the duplicate `theme-color` meta tag).
 
-- Replace hardcoded array with `useState(getLeaderboard())`.
-- Add `useEffect` that calls `getLeaderboard()` on mount (handles deferred evolution).
-- Show "Last updated X days ago • Next refresh in Y days" subtle timestamp under the title.
-- Add a small live-pulse indicator next to "Live Rankings" badge using `LiveStatusIndicator` if available, else a simple animated dot.
-- Keep all existing FAQ, breadcrumbs, schema, CTA intact.
-
-**Update FAQ copy** in `Leaderboard.tsx` "How often is the leaderboard updated?" answer:
-
-> "Rankings evolve every 3 days based on simulated market performance. Each trader's portfolio drifts realistically based on their risk profile."
+No other components touched. No layout reflow risk (mark is same bounding box).
 
 ---
 
-### Technical Details
+## Track 2 — Maximize Indexing for ~150 Pages (Free Tier)
 
-**Stack used:** React 18, recharts, react-helmet-async, Lovable AI Gateway (no API key needed for user), localStorage persistence. No new dependencies.
+The site is a Vite SPA. Googlebot can render JS but does it slowly and unreliably — this is the #1 reason SPA pages don't get indexed. Fix = ship real HTML for every route. Everything below is free.
 
-**Files created:**
+### A. Prerendering (the single biggest unlock)
+Add `vite-plugin-prerender` (or `react-snap` post-build). At build time, a headless Chromium visits every route in `sitemap.xml` and writes the fully-rendered HTML to `dist/<route>/index.html`.
 
-- `supabase/functions/scenario-parser/index.ts`
-- `src/lib/scenarioEngine.ts`
-- `src/lib/leaderboardEngine.ts`
-- `src/components/portfolio/ScenarioBuilder.tsx`
+- Routes pulled directly from the existing sitemap generator (already enumerates 150+ URLs).
+- Each route gets: real `<title>`, real `<meta description>`, real JSON-LD, real visible content — before any JS runs.
+- Hydration takes over after load; users see no difference.
 
-**Files edited:**
+**Trade-off:** build time goes from ~30s → ~2–3 min. Acceptable, user approved.
 
-- `src/pages/Portfolio.tsx` (mount ScenarioBuilder)
-- `src/pages/Leaderboard.tsx` (dynamic data + timestamp + updated FAQ)
+### B. Per-Route Meta + JSON-LD via React Helmet Async
+Currently most meta lives in `index.html` only — every route serves the same title/description to crawlers without prerender. After prerendering, we still need each route to *set* unique meta on mount.
 
-**Compliance:** All scenario outputs include the mandatory disclaimer "(Educational simulation only — not financial advice.)". Leaderboard remains framed as "Simulated/Practice".
+- Install `react-helmet-async`, wrap `App.tsx` in `<HelmetProvider>`.
+- Add `<SEOHead>` component used on every page (Index, Trade, TradeAsset, Markets, Portfolio, Learn, LearnArticle, LessonDetail, Leaderboard, AIMentor, WikiTerm, NicheAsset, SectorPillar, etc.) with: title, description, canonical, OG tags, Twitter tags, route-appropriate JSON-LD.
+- Asset/wiki/niche/article pages already have rich content — we just surface it as proper meta.
 
-**No DB changes, no new secrets** — `LOVABLE_API_KEY` already configured.  
-  
-DO NOT CHANGE ANY CURRENT FEATURES OR SEO/GEO!
+### C. Sitemap + robots Hardening
+- Split `sitemap.xml` into a sitemap index + chunked sitemaps if count grows past 200 (currently safe, but add the index now for headroom).
+- Add `<lastmod>` from real file mtime (not today's date) so Google trusts crawl-priority signals.
+- `robots.txt`: keep `Allow: /`, remove the `Disallow: /api/` ambiguity (it's followed by `Allow: /api/og/` which is fine), add explicit `Sitemap:` line (already there).
+
+### D. IndexNow + GSC Submission Script
+- Add `scripts/submit-indexnow.ts` — pings Bing/Yandex via the free IndexNow protocol with all sitemap URLs after deploy. (Google ignores IndexNow but Bing indexing helps surface signals.)
+- Add `scripts/gsc-submit.md` — step-by-step doc for the user to: verify domain in GSC, submit `sitemap.xml`, use the URL Inspection API for ad-hoc requests. (Programmatic GSC submission needs OAuth — we'll document, not automate, to stay free + secret-free.)
+
+### E. Internal Linking Audit
+- Verify every page is reachable from `MegaFooter` + at least one contextual link. Programmatic pages (niche, wiki, sector) need to appear in topic hubs — Google won't index orphans.
+- Add a `RelatedLinks` block to `WikiTerm`, `NicheAsset`, `SectorPillar` if not present (light addition).
+
+### F. Core Web Vitals Quick Wins (helps indexing priority)
+- Add `<link rel="preconnect">` for Supabase (already done for fonts).
+- Defer non-critical scripts; lazy-load heavy components below-the-fold (`Hero` stays eager, everything else `React.lazy`).
+- Add `loading="lazy"` + `decoding="async"` to all non-hero images.
+
+### G. Canonical + hreflang
+- Every page sets `<link rel="canonical">` to the absolute URL (prevents duplicate content from query strings, trailing slashes, preview domains).
+- Add `<link rel="alternate" hreflang="en" />` and `hreflang="x-default"` (single-locale site, but this signals language clearly).
+
+### H. Structured Data Coverage
+- Homepage: `Organization` + `WebSite` + `SearchAction` (sitelinks search box eligibility).
+- Asset pages: `FinancialProduct` + `BreadcrumbList` + `FAQPage` (already partly there — make consistent).
+- Article pages: `Article` + `BreadcrumbList`.
+- Wiki pages: `DefinedTerm` + `BreadcrumbList`.
+- Validate via the existing `rich_results_validation_log.csv` workflow.
+
+---
+
+## Trade-offs (honest)
+
+| Decision | Cost | Benefit |
+|---|---|---|
+| Prerender all 150 routes | +2 min build | ~10× indexing reliability |
+| react-helmet-async on every page | ~10kb gzip + small refactor | Per-route meta — required for indexing |
+| IndexNow only (no GSC API) | Manual GSC sitemap submit | Stays 100% free, no OAuth secrets |
+| Symbol-only logo | Loses literal "tradehq" letters in nav | Matches Nike/Apple — the brief |
+| Keep Bloomberg emerald in mark | Less "pure dark" than full mono | Brand cohesion across 150 pages |
+
+---
+
+## Execution Order (single message, no scope creep)
+
+1. New `BrandMark.tsx` + `public/logo.svg` + theme-color fix.
+2. Symbol-only update in Nav / Footer / Sidebar.
+3. Install `react-helmet-async` + add `<SEOHead>` reusable component.
+4. Wire `<SEOHead>` into all primary + programmatic pages.
+5. Install + configure prerender plugin in `vite.config.ts`, sourcing routes from the sitemap generator.
+6. Sitemap generator: lastmod from mtime, sitemap-index scaffolding.
+7. Add `scripts/submit-indexnow.ts` + `scripts/gsc-submit.md`.
+8. Lazy-load non-hero routes/components in `App.tsx`.
+9. Add image `loading="lazy"` sweep.
+10. Verify build, run `verify-build.js` locally against `dist/`.
+
+Approve and I'll ship it.
