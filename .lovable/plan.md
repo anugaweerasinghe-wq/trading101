@@ -1,108 +1,145 @@
-# Plan — Premium Logo Refresh + Full Indexing Hardening
 
-Two parallel tracks. Each is scoped so nothing major in the app changes — only the brand mark and the build/SEO layer.
+# World-Class Plan — Indexing Blitz + Retention Engine
 
----
-
-## Track 1 — New Logo (Premium, Symbol-Only)
-
-### Direction
-A single iconic mark — no wordmark anywhere. Apple/Nike/Adidas use the symbol alone in nav, OG images, favicons, app icons. We'll do the same.
-
-**Mark concept — "Apex"**
-A monolithic dark obsidian rounded-square plate (deep graphite gradient `#0A0A0F → #1C1C22`) with a single ascending wedge cut into it using a soft platinum-to-emerald gradient (`#E8ECF1 → #00E396`). The wedge is asymmetric (left edge taller than right) — suggests a breakout candle, but reads as pure geometry first. Subtle inner highlight on the plate gives it physical depth (like brushed aluminum / Vision Pro hardware), not flat material.
-
-Why this satisfies "dark, premium, aesthetic, memorable":
-- Dark plate = premium / hardware aesthetic (Apple, Tesla, Vision Pro)
-- Single gesture inside = Nike-level memorability (recognizable at 16px)
-- Emerald accent ties to existing Bloomberg palette (`#00E396`) so brand stays cohesive
-- Works on light + dark backgrounds without inversion
-
-### Files
-- **Replace** `src/components/brand/BrandMark.tsx` — single SVG, gradients defined in `<defs>`, `showWordmark` prop kept for backward compat but defaults to `false`. All consumers already use the component.
-- **Replace** `public/logo.svg` — same artwork, standalone (used by favicon/manifest/OG).
-- **Add** `public/og-image.png` regen note: existing OG references stay, but mark in OG should be updated in a follow-up (out of scope for this pass to avoid scope creep).
-- **Update** `src/components/Navigation.tsx`, `src/components/MegaFooter.tsx`, `src/components/trading/TradingSidebar.tsx` — remove `showWordmark` so symbol-only renders everywhere.
-- **Update** `index.html` `theme-color` from cyan `#00FFFF` → `#0A0A0F` (matches new mark, also fixes the duplicate `theme-color` meta tag).
-
-No other components touched. No layout reflow risk (mark is same bounding box).
+Built around the 30-credit budget. Every item is implementable by me, free, and ordered by impact-per-credit.
 
 ---
 
-## Track 2 — Maximize Indexing for ~150 Pages (Free Tier)
+## Part 1 — Quick Wins (Credits: ~2)
 
-The site is a Vite SPA. Googlebot can render JS but does it slowly and unreliably — this is the #1 reason SPA pages don't get indexed. Fix = ship real HTML for every route. Everything below is free.
+**A. Sitemap recrawl push**
+- Update `scripts/generate-sitemap.ts`: bump every `lastmod` to `2026-06-02` and switch `changefreq` on deep pages (`/trade/*`, `/wiki/*`, `/niche/*`) from `weekly` → `daily` for a 2-week recrawl window, then we can revert.
+- Re-run generator so `public/sitemap.xml` regenerates on next build.
 
-### A. Prerendering (the single biggest unlock)
-Add `vite-plugin-prerender` (or `react-snap` post-build). At build time, a headless Chromium visits every route in `sitemap.xml` and writes the fully-rendered HTML to `dist/<route>/index.html`.
-
-- Routes pulled directly from the existing sitemap generator (already enumerates 150+ URLs).
-- Each route gets: real `<title>`, real `<meta description>`, real JSON-LD, real visible content — before any JS runs.
-- Hydration takes over after load; users see no difference.
-
-**Trade-off:** build time goes from ~30s → ~2–3 min. Acceptable, user approved.
-
-### B. Per-Route Meta + JSON-LD via React Helmet Async
-Currently most meta lives in `index.html` only — every route serves the same title/description to crawlers without prerender. After prerendering, we still need each route to *set* unique meta on mount.
-
-- Install `react-helmet-async`, wrap `App.tsx` in `<HelmetProvider>`.
-- Add `<SEOHead>` component used on every page (Index, Trade, TradeAsset, Markets, Portfolio, Learn, LearnArticle, LessonDetail, Leaderboard, AIMentor, WikiTerm, NicheAsset, SectorPillar, etc.) with: title, description, canonical, OG tags, Twitter tags, route-appropriate JSON-LD.
-- Asset/wiki/niche/article pages already have rich content — we just surface it as proper meta.
-
-### C. Sitemap + robots Hardening
-- Split `sitemap.xml` into a sitemap index + chunked sitemaps if count grows past 200 (currently safe, but add the index now for headroom).
-- Add `<lastmod>` from real file mtime (not today's date) so Google trusts crawl-priority signals.
-- `robots.txt`: keep `Allow: /`, remove the `Disallow: /api/` ambiguity (it's followed by `Allow: /api/og/` which is fine), add explicit `Sitemap:` line (already there).
-
-### D. IndexNow + GSC Submission Script
-- Add `scripts/submit-indexnow.ts` — pings Bing/Yandex via the free IndexNow protocol with all sitemap URLs after deploy. (Google ignores IndexNow but Bing indexing helps surface signals.)
-- Add `scripts/gsc-submit.md` — step-by-step doc for the user to: verify domain in GSC, submit `sitemap.xml`, use the URL Inspection API for ad-hoc requests. (Programmatic GSC submission needs OAuth — we'll document, not automate, to stay free + secret-free.)
-
-### E. Internal Linking Audit
-- Verify every page is reachable from `MegaFooter` + at least one contextual link. Programmatic pages (niche, wiki, sector) need to appear in topic hubs — Google won't index orphans.
-- Add a `RelatedLinks` block to `WikiTerm`, `NicheAsset`, `SectorPillar` if not present (light addition).
-
-### F. Core Web Vitals Quick Wins (helps indexing priority)
-- Add `<link rel="preconnect">` for Supabase (already done for fonts).
-- Defer non-critical scripts; lazy-load heavy components below-the-fold (`Hero` stays eager, everything else `React.lazy`).
-- Add `loading="lazy"` + `decoding="async"` to all non-hero images.
-
-### G. Canonical + hreflang
-- Every page sets `<link rel="canonical">` to the absolute URL (prevents duplicate content from query strings, trailing slashes, preview domains).
-- Add `<link rel="alternate" hreflang="en" />` and `hreflang="x-default"` (single-locale site, but this signals language clearly).
-
-### H. Structured Data Coverage
-- Homepage: `Organization` + `WebSite` + `SearchAction` (sitelinks search box eligibility).
-- Asset pages: `FinancialProduct` + `BreadcrumbList` + `FAQPage` (already partly there — make consistent).
-- Article pages: `Article` + `BreadcrumbList`.
-- Wiki pages: `DefinedTerm` + `BreadcrumbList`.
-- Validate via the existing `rich_results_validation_log.csv` workflow.
+**B. Button readability fix**
+- "Start Trading Free" (Hero) and "Claim Bonus" (Portfolio): currently white-on-light-glass. Switch to filled solid using `--primary` (Electric Neon) with `--primary-foreground` (black) text → WCAG AAA contrast, matches design system, no custom colors.
+- Add subtle `shadow-glow-cyan` for premium feel.
 
 ---
 
-## Trade-offs (honest)
+## Part 2 — Maximum-Aggression Indexing (Credits: ~4)
 
-| Decision | Cost | Benefit |
-|---|---|---|
-| Prerender all 150 routes | +2 min build | ~10× indexing reliability |
-| react-helmet-async on every page | ~10kb gzip + small refactor | Per-route meta — required for indexing |
-| IndexNow only (no GSC API) | Manual GSC sitemap submit | Stays 100% free, no OAuth secrets |
-| Symbol-only logo | Loses literal "tradehq" letters in nav | Matches Nike/Apple — the brief |
-| Keep Bloomberg emerald in mark | Less "pure dark" than full mono | Brand cohesion across 150 pages |
+Goal: get all ~150 pages indexed in 7–14 days instead of months.
+
+1. **IndexNow auto-submit on deploy** — Extend `scripts/submit-indexnow.ts` to read every URL from `sitemap.xml` and POST to Bing/Yandex in one batch. Add a `postbuild` npm script. Bing crawls within hours; Bing-indexed pages often surface in Google faster via discovery.
+2. **Google Search Console API auto-submit** — Use the connected `google_search_console` connector. Create `scripts/gsc-submit.ts` that calls the URL Inspection API to request indexing for every sitemap URL on every deploy. Honors the daily 200-URL quota with batching state in `/tmp/gsc-submitted.json`.
+3. **Internal link injection (the real unlock)** — 37/45 clicks stayed on homepage. Crawlers do the same. Add to homepage:
+   - New "Explore 150+ Trading Topics" section: 3-column hub linking to top wiki terms, top assets, top articles (randomized per pageload so all 150 rotate through homepage crawls).
+   - "Trending Now" strip in `MegaFooter` showing 12 random deep links.
+4. **Sitemap split** — Create `sitemap-index.xml` referencing `sitemap-core.xml`, `sitemap-assets.xml`, `sitemap-wiki.xml`, `sitemap-niche.xml`. Google prioritizes split sitemaps and reports coverage per group → easier diagnosis.
+5. **`<lastmod>` on real edit** — Already wired via `mtimeOf()`. Confirm and extend to all URL types.
 
 ---
 
-## Execution Order (single message, no scope creep)
+## Part 3 — Retention Engine: "Come Back Daily" (Credits: ~18)
 
-1. New `BrandMark.tsx` + `public/logo.svg` + theme-color fix.
-2. Symbol-only update in Nav / Footer / Sidebar.
-3. Install `react-helmet-async` + add `<SEOHead>` reusable component.
-4. Wire `<SEOHead>` into all primary + programmatic pages.
-5. Install + configure prerender plugin in `vite.config.ts`, sourcing routes from the sitemap generator.
-6. Sitemap generator: lastmod from mtime, sitemap-index scaffolding.
-7. Add `scripts/submit-indexnow.ts` + `scripts/gsc-submit.md`.
-8. Lazy-load non-hero routes/components in `App.tsx`.
-9. Add image `loading="lazy"` sweep.
-10. Verify build, run `verify-build.js` locally against `dist/`.
+This is the differentiator. TradingView/Webull do not have any of this together. Built as one cohesive system with localStorage persistence (no auth required = zero friction).
 
-Approve and I'll ship it.
+### 3A. Daily Trading Challenge + Streak System
+
+New page `/daily` + homepage hero card.
+
+- **Challenge generator**: deterministic per UTC date — picks one asset + one scenario type from a curated bank (e.g. "NVDA pre-earnings: long or short?", "Bitcoin breaks $100k support: your move?", "Tesla insider selling — react"). 365 unique challenges seeded.
+- **Streak tracking** (localStorage): consecutive days completed, longest streak, total challenges. Visible badge in nav (🔥 7).
+- **Daily leaderboard** (Supabase): users opt-in with a display name → row in new `daily_results` table. Resets at UTC midnight.
+- **Unlock badges**: Day 3, 7, 14, 30, 100 → "Bronze Trader", "Iron Hand", "Diamond Mind". Stored localStorage, displayed on profile.
+- **Why it works**: Duolingo-style streak fear-of-loss + daily variety + social proof leaderboard.
+
+### 3B. Live Market Pulse Dashboard (Homepage centerpiece)
+
+New `<MarketPulse />` component above-the-fold (replaces no existing content — joins the split hero).
+
+- **Fear & Greed Index** (computed from `useLiveMarketData` momentum across top 20 assets) — animated dial 0–100.
+- **Sector Heatmap** — 11 sector tiles colored by today's perf. Click → filter trade page.
+- **"What's Moving Now"** — top 3 gainers + top 3 losers, auto-refreshing every 30s.
+- **Market Clock** — NYSE/NASDAQ/LSE/TSE open/closed badges with countdown to next bell.
+
+Habit-forming: same purpose as people checking stocks app 8x/day.
+
+### 3C. AI Trade Coach (personalized report card)
+
+New page `/coach` + a "Get Your Report Card" CTA on Portfolio.
+
+- After each closed trade, capture entry/exit/size/asset/timing into `tradingJournal`.
+- "Generate Daily Report Card" button → calls existing `trading-mentor` edge function with full journal context → returns:
+  - Strengths (e.g. "You exit winners well")
+  - Weaknesses (e.g. "Revenge trading after 2 losses — 73% of your losses follow a loss within 1h")
+  - One actionable lesson for tomorrow
+  - Personalized risk score
+- Cached per-day (localStorage `coach:report:${date}`) → free, no extra AI cost on revisit.
+- Shareable image export ("My TradeHQ Report Card — Day 14 streak, +12% practice gain") → viral loop.
+
+### 3D. Split Hero (per your answer)
+
+Keep existing intro/copy. Add right-column card showing:
+- Today's challenge preview ("Today: NVDA earnings reaction — 3,421 traders played")
+- Current streak (if any) OR "Start your streak"
+- Live Fear & Greed mini-dial
+- Bottom CTA: "Start Trading Free →" (now readable, primary fill)
+
+---
+
+## Part 4 — World-Class Polish (Credits: ~4)
+
+- **Activity ticker** (bottom strip site-wide): "Tomás in 🇫🇷 just closed +8.2% on EURUSD" — pulled from anonymized leaderboard rows. Social proof in real-time.
+- **OG image generator**: per-page dynamic OG images for wiki/asset pages → higher CTR on shared links.
+- **JSON-LD `Quiz` schema** on daily challenge → eligible for Google rich results.
+- **`Speakable` schema** on glossary → eligible for voice search.
+- **`prefetch` on hover** for nav links → instant page transitions (Lighthouse + UX).
+- **WebSite SearchAction JSON-LD** → enables Google sitelinks search box.
+
+---
+
+## Technical Details
+
+**New files**
+- `scripts/gsc-submit.ts` — programmatic Search Console submission via connector gateway
+- `scripts/generate-sitemap-index.ts` — split sitemap generator
+- `src/pages/Daily.tsx`, `src/pages/Coach.tsx`
+- `src/lib/dailyChallenge.ts` — 365 seeded challenges + streak engine
+- `src/lib/marketPulse.ts` — fear/greed computation, sector aggregation
+- `src/components/home/MarketPulse.tsx`, `src/components/home/SplitHero.tsx`, `src/components/home/DiscoverHub.tsx`
+- `src/components/ActivityTicker.tsx`
+- `src/components/badges/StreakBadge.tsx`
+
+**Supabase migration**
+- `daily_results` (id, display_name, challenge_date, score, asset, decision, created_at) — RLS: public insert + public select today only.
+- GRANT block included per project rules.
+
+**Files modified**
+- `scripts/generate-sitemap.ts` — bump lastmod to 2026-06-02, daily changefreq on deep pages
+- `scripts/submit-indexnow.ts` — read from sitemap, batch
+- `package.json` — add `postbuild: indexnow + gsc-submit`
+- `src/pages/Index.tsx` — integrate SplitHero + MarketPulse + DiscoverHub
+- `src/pages/Portfolio.tsx` — fix Claim Bonus button + add Coach CTA
+- `src/components/Hero.tsx` — fix Start Trading Free button
+- `src/components/Navigation.tsx` — streak badge
+- `src/components/MegaFooter.tsx` — Trending Now strip
+- `src/App.tsx` — `/daily`, `/coach` routes + SEOHead on every page
+
+**Trade-offs noted**
+- localStorage-first means streaks reset if user clears browser → mitigated by optional Supabase save with display name only (no email/auth = zero friction).
+- 365 seeded challenges is finite → year 2 reuses with shuffle; in practice users won't notice.
+- GSC API quota = 200 URLs/day → 150 pages submits in 1 day, then daily delta only.
+
+---
+
+## Recommended Build Order
+
+1. Part 1 (sitemap date + button fix) — ship in first commit
+2. Part 2 (indexing) — ships immediately after to start the crawl clock
+3. Part 3A + 3D (Daily Challenge + Split Hero) — biggest retention lever
+4. Part 3B (Market Pulse) — homepage habit hook
+5. Part 3C (AI Coach) — depth + virality
+6. Part 4 (polish) — only if credits remain
+
+---
+
+## Out of Scope (intentionally)
+
+- Geo-personalization (you opted out)
+- Pre-rendering / SSG (kept off per earlier decision — build stability)
+- Auth/signup (kept frictionless; everything works anonymously)
+- Paid ads, social media automation (not implementable by me alone)
+
+Approve and I'll execute top-to-bottom.
