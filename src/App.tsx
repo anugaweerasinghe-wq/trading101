@@ -29,6 +29,7 @@ const AdminEditor = lazy(() => import("./pages/AdminEditor"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Leaderboard = lazy(() => import("./pages/Leaderboard"));
 const LearnArticle = lazy(() => import("./pages/LearnArticle"));
+const Daily = lazy(() => import("./pages/Daily"));
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
@@ -52,6 +53,7 @@ function AnimatedRoutes() {
           <Route path="/learn-trading-guide" element={<LearnTradingGuide />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/ai-mentor" element={<AIMentor />} />
+          <Route path="/daily" element={<Daily />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sectors/:sectorId" element={<SectorPillar />} />

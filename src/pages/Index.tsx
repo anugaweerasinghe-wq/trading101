@@ -2,6 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { Link } from "react-router-dom";
+import { DailyChallengeCard } from "@/components/home/DailyChallengeCard";
+import { MarketPulse } from "@/components/home/MarketPulse";
 
 // ORIGINAL schemas — unchanged
 const homeFaqSchema = {
@@ -163,6 +165,21 @@ const Index = () => {
 
         {/* ORIGINAL — Hero component completely unchanged */}
         <Hero />
+
+        {/* NEW: Retention engine — Daily Challenge + Market Pulse (split layout) */}
+        <section
+          aria-label="Daily engagement"
+          className="container mx-auto px-6 max-w-7xl pt-12 pb-4"
+        >
+          <div className="grid lg:grid-cols-5 gap-6">
+            <div className="lg:col-span-2">
+              <DailyChallengeCard />
+            </div>
+            <div className="lg:col-span-3">
+              <MarketPulse />
+            </div>
+          </div>
+        </section>
 
         {/* ── NEW: Internal link hub (below fold, Googlebot crawls this) ── */}
         <section
