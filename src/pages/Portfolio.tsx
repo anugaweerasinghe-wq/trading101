@@ -387,7 +387,8 @@ export default function Portfolio() {
                     onClick={handleClaimBonus}
                     disabled={!canClaim}
                     size="sm"
-                    className="gap-1.5 text-xs"
+                    className="gap-1.5 text-xs font-bold bg-primary hover:bg-primary/90 text-black disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100"
+                    style={canClaim ? { color: '#000', boxShadow: '0 0 18px hsl(168 100% 50% / 0.35)' } : undefined}
                   >
                     <Gift className="w-4 h-4" />
                     {canClaim ? "Claim Bonus" : `${getTimeUntilNextBonus()}`}
