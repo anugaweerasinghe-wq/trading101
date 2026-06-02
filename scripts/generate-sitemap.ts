@@ -12,7 +12,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const DOMAIN = "https://tradinghq.vercel.app";
-const TODAY = new Date().toISOString().split('T')[0];
+// Force recrawl: bump every lastmod to today so Google reprocesses the entire site.
+const TODAY = "2026-06-02";
 
 // Real file mtime → lastmod (Google trusts this more than "today" everywhere)
 function mtimeOf(relPath: string): string {
@@ -81,20 +82,23 @@ function generateSitemap(): string {
   }
 
   for (const id of assetIds) {
-    urls.push(`  <url><loc>${DOMAIN}/trade/${id}</loc><lastmod>${TODAY}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>`);
+    urls.push(`  <url><loc>${DOMAIN}/trade/${id}</loc><lastmod>${TODAY}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>`);
   }
 
   for (const slug of articleSlugs) {
-    urls.push(`  <url><loc>${DOMAIN}/learn/article/${slug}</loc><lastmod>${TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
+    urls.push(`  <url><loc>${DOMAIN}/learn/article/${slug}</loc><lastmod>${TODAY}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>`);
   }
 
   for (const slug of glossarySlugs) {
-    urls.push(`  <url><loc>${DOMAIN}/wiki/${slug}</loc><lastmod>${TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>`);
+    urls.push(`  <url><loc>${DOMAIN}/wiki/${slug}</loc><lastmod>${TODAY}</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>`);
   }
 
   for (const sym of nicheSymbols) {
-    urls.push(`  <url><loc>${DOMAIN}/niche/${sym}</loc><lastmod>${TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>`);
+    urls.push(`  <url><loc>${DOMAIN}/niche/${sym}</loc><lastmod>${TODAY}</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>`);
   }
+
+  // NEW: Daily Challenge (retention hook)
+  urls.push(`  <url><loc>${DOMAIN}/daily</loc><lastmod>${TODAY}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>`);
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

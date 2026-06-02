@@ -5,6 +5,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { BrandMark } from "@/components/brand/BrandMark";
+import { StreakBadge } from "@/components/badges/StreakBadge";
 
 export function Navigation() {
   const location = useLocation();
@@ -60,12 +61,14 @@ export function Navigation() {
               </Link>
             ))}
             <div className="ml-2 pl-2 border-l border-white/[0.06]">
+              <StreakBadge className="mr-2" />
               <ThemeToggle />
             </div>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
+            <StreakBadge />
             <ThemeToggle />
             <Button
               variant="ghost"
