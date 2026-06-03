@@ -1,9 +1,17 @@
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/components/Hero";
 import { Link } from "react-router-dom";
 import { DailyChallengeCard } from "@/components/home/DailyChallengeCard";
 import { MarketPulse } from "@/components/home/MarketPulse";
+import { PremiumHero } from "@/components/PremiumHero";
+import { PremiumFeatures } from "@/components/PremiumFeatures";
+import { TopAssetsGrid } from "@/components/TopAssetsGrid";
+import { WhatIsTradeHQ } from "@/components/WhatIsTradeHQ";
+import { MarketTrends2026 } from "@/components/MarketTrends2026";
+import { PremiumFAQ } from "@/components/PremiumFAQ";
+import { MegaFooter } from "@/components/MegaFooter";
+import { SocialProofTicker } from "@/components/SocialProofTicker";
+import { HowItWorks } from "@/components/HowItWorks";
 
 // ORIGINAL schemas — unchanged
 const homeFaqSchema = {
@@ -163,13 +171,15 @@ const Index = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
 
-        {/* ORIGINAL — Hero component completely unchanged */}
-        <Hero />
+        {/* 1. Premium hero (above fold) */}
+        <PremiumHero />
 
-        {/* NEW: Retention engine — Daily Challenge + Market Pulse (split layout) */}
+        {/* 2. Retention engine — placed immediately after hero so the
+            Daily Challenge + Market Pulse are the FIRST thing users see
+            when they scroll. Critical for return-visitor rate. */}
         <section
           aria-label="Daily engagement"
-          className="container mx-auto px-6 max-w-7xl pt-12 pb-4"
+          className="container mx-auto px-6 max-w-7xl pt-10 pb-10"
         >
           <div className="grid lg:grid-cols-5 gap-6">
             <div className="lg:col-span-2">
@@ -180,6 +190,15 @@ const Index = () => {
             </div>
           </div>
         </section>
+
+        {/* 3. Original homepage flow continues */}
+        <SocialProofTicker />
+        <WhatIsTradeHQ />
+        <HowItWorks />
+        <PremiumFeatures />
+        <TopAssetsGrid />
+        <MarketTrends2026 />
+        <PremiumFAQ />
 
         {/* ── NEW: Internal link hub (below fold, Googlebot crawls this) ── */}
         <section
@@ -255,6 +274,8 @@ const Index = () => {
           </div>
 
         </section>
+
+        <MegaFooter />
       </div>
     </>
   );

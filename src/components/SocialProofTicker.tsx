@@ -19,7 +19,7 @@ export function SocialProofTicker() {
       <motion.div
         className="flex w-max items-center gap-3"
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 24, ease: "linear", repeat: Infinity }}
+        transition={{ duration: 120, ease: "linear", repeat: Infinity }}
       >
         {loopItems.map((item, index) => (
           <div
