@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { PageTransition } from "@/components/PageTransition";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { BackgroundMusic } from "@/components/BackgroundMusic";
 
 import Index from "./pages/Index";
 
@@ -82,6 +83,7 @@ const App = () => (
         <BrowserRouter>
           <AnimatedRoutes />
           <MobileBottomNav />
+          <BackgroundMusic />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { Link } from "react-router-dom";
-import { Flame, Trophy, Check, X, ArrowRight, Sparkles } from "lucide-react";
+import { Flame, Trophy, Check, X, ArrowRight, Sparkles, TrendingUp, Brain, Lock } from "lucide-react";
 import {
   getTodayChallenge,
   getStreak,
@@ -63,62 +63,116 @@ export default function Daily() {
 
       <div className="min-h-screen bg-background">
         <Navigation />
-        <main className="pt-24 pb-16">
-          <div className="container mx-auto px-6 max-w-4xl">
-            {/* Header */}
-            <header className="mb-8 text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4">
+        {/* Atmospheric backdrop */}
+        <div
+          aria-hidden
+          className="fixed inset-0 pointer-events-none -z-0 opacity-60"
+          style={{
+            background:
+              "radial-gradient(900px 600px at 15% -10%, hsl(168 100% 50% / 0.10), transparent 60%), radial-gradient(700px 500px at 90% 20%, hsl(12 90% 62% / 0.08), transparent 60%), radial-gradient(600px 400px at 50% 100%, hsl(280 60% 55% / 0.05), transparent 60%)",
+          }}
+        />
+        <main className="relative pt-24 pb-20">
+          <div className="container mx-auto px-6 max-w-5xl">
+            {/* Premium header */}
+            <header className="mb-10 text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-5 backdrop-blur-xl">
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
-                <span className="text-xs font-bold text-primary uppercase tracking-widest">Daily Challenge</span>
+                <span className="text-[11px] font-bold text-primary uppercase tracking-[0.2em]">
+                  Daily Challenge · {new Date().toUTCString().slice(5, 16)}
+                </span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-3 text-foreground">
+              <h1
+                className="text-4xl md:text-6xl font-bold mb-4 tracking-tight leading-[1.05]"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(220 15% 98%) 0%, hsl(168 70% 75%) 50%, hsl(220 15% 85%) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
                 Today's Trading Scenario
               </h1>
-              <p className="text-muted-foreground max-w-xl mx-auto">
-                One scenario every UTC midnight. Practice decision-making with no money on the line.
-                Build a streak, unlock badges, learn one pro insight per day.
+              <p className="text-foreground/70 max-w-xl mx-auto text-[15px] leading-relaxed">
+                A fresh real-world setup every UTC midnight. Pick your move, learn one pro-grade insight, and grow your streak.
               </p>
             </header>
 
-            {/* Streak stats */}
+            {/* Streak stats — premium */}
             {streak && (
-              <div className="grid grid-cols-3 gap-3 mb-8">
-                <div className="p-4 rounded-2xl bg-orange-500/5 border border-orange-500/20 text-center">
-                  <Flame className={cn("w-5 h-5 mx-auto mb-1", streak.current > 0 ? "text-orange-400" : "text-muted-foreground")} />
-                  <div className="text-2xl font-bold tabular-nums text-foreground">{streak.current}</div>
-                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Current Streak</div>
-                </div>
-                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-center">
-                  <Trophy className="w-5 h-5 mx-auto mb-1 text-amber-400" />
-                  <div className="text-2xl font-bold tabular-nums text-foreground">{streak.longest}</div>
-                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Personal Best</div>
-                </div>
-                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-center">
-                  <Check className="w-5 h-5 mx-auto mb-1 text-success" />
-                  <div className="text-2xl font-bold tabular-nums text-foreground">{streak.totalCompleted}</div>
-                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Total Played</div>
-                </div>
+              <div className="grid grid-cols-3 gap-3 md:gap-4 mb-8">
+                {[
+                  { icon: Flame, value: streak.current, label: "Current Streak", color: "orange-400", glow: "12 90% 62%", active: streak.current > 0 },
+                  { icon: Trophy, value: streak.longest, label: "Personal Best", color: "amber-400", glow: "38 90% 55%", active: streak.longest > 0 },
+                  { icon: Check, value: streak.totalCompleted, label: "Total Played", color: "success", glow: "157 100% 44%", active: streak.totalCompleted > 0 },
+                ].map((s, i) => (
+                  <div
+                    key={i}
+                    className="relative overflow-hidden p-4 md:p-5 rounded-2xl border border-white/[0.08] backdrop-blur-xl group transition-all hover:border-white/[0.15]"
+                    style={{
+                      background: `linear-gradient(140deg, hsl(${s.glow} / 0.06) 0%, hsl(0 0% 6% / 0.7) 100%)`,
+                      boxShadow: s.active ? `0 8px 32px -12px hsl(${s.glow} / 0.3), inset 0 1px 0 0 hsl(0 0% 100% / 0.05)` : "inset 0 1px 0 0 hsl(0 0% 100% / 0.04)",
+                    }}
+                  >
+                    <s.icon className={cn("w-5 h-5 mb-2", s.active ? `text-${s.color}` : "text-foreground/40")} />
+                    <div className="text-3xl font-bold tabular-nums text-foreground leading-none">{s.value}</div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-foreground/60 mt-2 font-semibold">{s.label}</div>
+                  </div>
+                ))}
               </div>
             )}
 
-            {/* Challenge card */}
+            {/* Challenge card — world-class premium */}
             <article
-              className="rounded-3xl p-6 md:p-10 border border-white/[0.06] mb-6"
+              className="relative overflow-hidden rounded-[28px] p-6 md:p-12 border border-white/[0.08] mb-6"
               style={{
-                background: "linear-gradient(135deg, hsl(0 0% 6% / 0.9) 0%, hsl(0 0% 4% / 0.95) 100%)",
-                backdropFilter: "blur(24px)",
-                boxShadow: "0 8px 40px -10px hsl(0 0% 0% / 0.5)",
+                background:
+                  "linear-gradient(140deg, hsl(0 0% 8% / 0.95) 0%, hsl(0 0% 4% / 0.98) 100%)",
+                backdropFilter: "blur(40px) saturate(180%)",
+                boxShadow:
+                  "0 24px 80px -20px hsl(0 0% 0% / 0.7), inset 0 1px 0 0 hsl(0 0% 100% / 0.06)",
               }}
             >
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-bold px-2.5 py-1 rounded bg-primary/15 text-primary border border-primary/30">{challenge.asset} · {challenge.assetName}</span>
-                <span className="text-[10px] uppercase tracking-widest text-muted-foreground">{challenge.difficulty}</span>
+              {/* Top shimmer */}
+              <div
+                aria-hidden
+                className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px"
+                style={{ background: "linear-gradient(90deg, transparent, hsl(168 100% 50% / 0.5), transparent)" }}
+              />
+              {/* Asset banner */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-sm tabular-nums">
+                    {challenge.asset.slice(0, 4)}
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-foreground">{challenge.assetName}</div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-foreground/60 font-semibold flex items-center gap-2">
+                      <span className={cn(
+                        "inline-block w-1.5 h-1.5 rounded-full",
+                        challenge.difficulty === "Beginner" && "bg-success",
+                        challenge.difficulty === "Intermediate" && "bg-amber-400",
+                        challenge.difficulty === "Pro" && "bg-destructive",
+                      )} />
+                      {challenge.difficulty}
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden md:flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-foreground/50 font-semibold">
+                  <TrendingUp className="w-3.5 h-3.5" /> Live Scenario
+                </div>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground leading-tight">{challenge.scenario}</h2>
-              <p className="text-base text-muted-foreground mb-8 leading-relaxed">{challenge.context}</p>
+
+              <h2 className="text-2xl md:text-[34px] font-bold mb-4 text-foreground leading-[1.15] tracking-tight">
+                {challenge.scenario}
+              </h2>
+              <p className="text-[15px] md:text-base text-foreground/75 mb-8 leading-relaxed max-w-3xl">
+                {challenge.context}
+              </p>
 
               {/* Options */}
-              <div className="space-y-3 mb-6">
+              <div className="space-y-2.5 mb-6">
                 {challenge.options.map((opt) => {
                   const isSelected = selected === opt.value;
                   const showCorrect = submitted && opt.correct;
@@ -129,31 +183,50 @@ export default function Daily() {
                       onClick={() => handleSubmit(opt.value)}
                       disabled={submitted}
                       className={cn(
-                        "w-full text-left p-4 rounded-xl border transition-all active:scale-[0.98]",
-                        !submitted && "bg-white/[0.03] border-white/[0.08] hover:border-primary/40 hover:bg-primary/5 cursor-pointer",
-                        showCorrect && "bg-success/10 border-success/40",
-                        showWrong && "bg-destructive/10 border-destructive/40",
-                        submitted && !isSelected && !opt.correct && "bg-white/[0.02] border-white/[0.04] opacity-50",
+                        "group w-full text-left p-4 md:p-5 rounded-2xl border transition-all duration-200 active:scale-[0.98]",
+                        !submitted && "bg-white/[0.03] border-white/[0.08] hover:border-primary/50 hover:bg-primary/[0.06] hover:translate-x-0.5 cursor-pointer",
+                        showCorrect && "bg-success/10 border-success/50 shadow-[0_0_24px_-4px_hsl(157_100%_44%/0.3)]",
+                        showWrong && "bg-destructive/10 border-destructive/50",
+                        submitted && !isSelected && !opt.correct && "bg-white/[0.02] border-white/[0.04] opacity-40",
                       )}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1">
-                          <div className="text-sm font-bold text-foreground mb-1">{opt.label}</div>
-                          {submitted && <div className="text-xs text-muted-foreground">{opt.rationale}</div>}
+                          <div className="text-[15px] font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">{opt.label}</div>
+                          {submitted && <div className="text-xs text-foreground/65 leading-relaxed">{opt.rationale}</div>}
                         </div>
-                        {showCorrect && <Check className="w-5 h-5 text-success flex-shrink-0" />}
-                        {showWrong && <X className="w-5 h-5 text-destructive flex-shrink-0" />}
+                        {showCorrect && (
+                          <div className="w-7 h-7 rounded-full bg-success/20 border border-success/50 flex items-center justify-center flex-shrink-0">
+                            <Check className="w-4 h-4 text-success" />
+                          </div>
+                        )}
+                        {showWrong && (
+                          <div className="w-7 h-7 rounded-full bg-destructive/20 border border-destructive/50 flex items-center justify-center flex-shrink-0">
+                            <X className="w-4 h-4 text-destructive" />
+                          </div>
+                        )}
                       </div>
                     </button>
                   );
                 })}
               </div>
 
-              {/* Insight reveal */}
+              {/* Insight reveal — premium */}
               {submitted && (
-                <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 mb-4">
-                  <div className="text-[10px] uppercase tracking-widest text-primary font-bold mb-2">💡 Pro Insight</div>
-                  <p className="text-sm text-foreground leading-relaxed">{challenge.insight}</p>
+                <div
+                  className="relative overflow-hidden p-5 md:p-6 rounded-2xl border border-primary/30 mb-4 animate-fade-in"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, hsl(168 100% 50% / 0.08) 0%, hsl(168 100% 50% / 0.02) 100%)",
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                      <Brain className="w-4 h-4 text-primary" />
+                    </div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Pro Insight</div>
+                  </div>
+                  <p className="text-[15px] text-foreground leading-relaxed">{challenge.insight}</p>
                 </div>
               )}
 
@@ -172,34 +245,65 @@ export default function Daily() {
                 </div>
               )}
 
-              <p className="text-[10px] text-muted-foreground/70 text-center mt-6">
+              <p className="text-[10px] text-foreground/45 text-center mt-6">
                 Educational simulation only — not financial advice. Come back tomorrow for a new challenge.
               </p>
             </article>
 
-            {/* Badges */}
-            <section className="rounded-2xl p-5 bg-white/[0.02] border border-white/[0.06]">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-foreground">Streak Badges</h3>
-                <span className="text-xs text-muted-foreground">{unlocked.length}/5 unlocked</span>
+            {/* Badges — premium */}
+            <section
+              className="rounded-[24px] p-6 md:p-7 border border-white/[0.08] backdrop-blur-xl"
+              style={{
+                background:
+                  "linear-gradient(140deg, hsl(38 90% 55% / 0.04) 0%, hsl(0 0% 5% / 0.8) 100%)",
+              }}
+            >
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <h3 className="text-base font-bold text-foreground tracking-tight">Streak Badges</h3>
+                  <p className="text-xs text-foreground/60 mt-0.5">Unlock as your streak grows</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold tabular-nums text-amber-400">{unlocked.length}<span className="text-foreground/40 text-base">/5</span></div>
+                  <div className="text-[10px] uppercase tracking-widest text-foreground/50">Unlocked</div>
+                </div>
               </div>
-              <div className="grid grid-cols-5 gap-2">
-                {[3, 7, 14, 30, 100].map((th) => {
+              <div className="grid grid-cols-5 gap-2 md:gap-3">
+                {[
+                  { th: 3, label: "Spark", emoji: "✨" },
+                  { th: 7, label: "Iron", emoji: "🔥" },
+                  { th: 14, label: "Diamond", emoji: "💎" },
+                  { th: 30, label: "Master", emoji: "🏆" },
+                  { th: 100, label: "Legend", emoji: "👑" },
+                ].map(({ th, label, emoji }) => {
                   const got = streak ? streak.longest >= th : false;
                   return (
-                    <div key={th} className={cn("p-3 rounded-xl text-center border", got ? "bg-amber-500/10 border-amber-500/30" : "bg-white/[0.02] border-white/[0.04] opacity-40")}>
-                      <div className="text-2xl mb-1">{got ? "🏆" : "🔒"}</div>
-                      <div className="text-[10px] font-bold text-foreground">{th}-day</div>
+                    <div
+                      key={th}
+                      className={cn(
+                        "relative p-3 md:p-4 rounded-2xl text-center border transition-all",
+                        got
+                          ? "bg-amber-500/10 border-amber-500/40 shadow-[0_4px_20px_-6px_hsl(38_90%_55%/0.3)]"
+                          : "bg-white/[0.02] border-white/[0.05]",
+                      )}
+                    >
+                      <div className={cn("text-2xl md:text-3xl mb-1", !got && "grayscale opacity-40")}>
+                        {got ? emoji : <Lock className="w-5 h-5 mx-auto text-foreground/30" />}
+                      </div>
+                      <div className={cn("text-[10px] font-bold uppercase tracking-wider", got ? "text-amber-400" : "text-foreground/50")}>
+                        {label}
+                      </div>
+                      <div className="text-[9px] text-foreground/50 tabular-nums mt-0.5">{th}d</div>
                     </div>
                   );
                 })}
               </div>
               {next && (
-                <p className="text-xs text-muted-foreground text-center mt-3">
+                <p className="text-xs text-foreground/70 text-center mt-4">
                   Next: <strong className="text-foreground">{next.label}</strong> at {next.threshold}-day streak
                 </p>
               )}
-              <p className="text-[10px] text-muted-foreground/70 text-center mt-3">
+              <p className="text-[10px] text-foreground/45 text-center mt-2">
                 {getChallengeCount()} unique scenarios in rotation
               </p>
             </section>
