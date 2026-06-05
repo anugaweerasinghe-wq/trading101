@@ -61,6 +61,9 @@ export default {
         buy: "hsl(var(--buy))",
         sell: "hsl(var(--sell))",
         warning: "hsl(var(--warning))",
+        "profit-foreground": "hsl(var(--profit-foreground))",
+        "loss-foreground": "hsl(var(--loss-foreground))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
         // Cyber accent colors
         coral: "hsl(var(--coral))",
         neon: "hsl(var(--neon))",

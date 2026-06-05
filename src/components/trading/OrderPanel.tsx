@@ -140,7 +140,7 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
           className={cn(
             "h-9 font-semibold transition-all rounded-xl",
             side === 'sell' 
-              ? "bg-loss text-white hover:bg-loss/90" 
+              ? "bg-loss text-loss-foreground hover:bg-loss/90" 
               : "text-muted-foreground hover:text-foreground"
           )}
           onClick={() => setSide('sell')}
@@ -248,10 +248,10 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
       <div className="p-4 border-t border-border/30">
         <Button
           className={cn(
-            "w-full h-11 font-semibold text-white rounded-xl transition-all",
+            "w-full h-11 font-semibold rounded-xl transition-all",
             side === 'buy'
-              ? "bg-profit hover:bg-profit/90 text-glow-cyan"
-              : "bg-loss hover:bg-loss/90"
+              ? "bg-profit text-profit-foreground hover:bg-profit/90 text-glow-cyan"
+              : "bg-loss text-loss-foreground hover:bg-loss/90"
           )}
           disabled={!isValid}
           onClick={handleSubmit}

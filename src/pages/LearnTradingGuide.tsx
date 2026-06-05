@@ -121,7 +121,7 @@ const LearnTradingGuide = () => {
             </p>
 
             <Link to="/trade/BTC">
-              <Button size="lg" className="h-12 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-10 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+              <Button size="lg" className="h-12 bg-profit hover:bg-profit/90 text-profit-foreground font-bold px-10 rounded-xl transition-all shadow-glow-profit">
                 LAUNCH TERMINAL <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
@@ -254,7 +254,7 @@ const LearnTradingGuide = () => {
                         challengeAnswer === null
                           ? "border-white/10 text-slate-300 hover:border-emerald-500/40 hover:text-emerald-400"
                           : i === challenge.correct
-                          ? "bg-emerald-600 text-white border-emerald-500"
+                          ? "bg-profit text-profit-foreground border-profit"
                           : challengeAnswer === i
                           ? "bg-red-600/20 text-red-400 border-red-500/30"
                           : "border-white/5 text-slate-500"

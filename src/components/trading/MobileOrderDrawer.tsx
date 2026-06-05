@@ -125,11 +125,11 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
           <div className="px-4 pb-6 space-y-4 overflow-auto">
             <div className="grid grid-cols-2 gap-2">
               <Button
-                className={cn("h-14 text-lg font-semibold rounded-xl transition-all", side === 'buy' ? "bg-profit text-white hover:bg-profit/90" : "bg-muted text-muted-foreground hover:bg-muted/80")}
+                className={cn("h-14 text-lg font-semibold rounded-xl transition-all", side === 'buy' ? "bg-profit text-profit-foreground hover:bg-profit/90" : "bg-muted text-muted-foreground hover:bg-muted/80")}
                 onClick={() => setSide('buy')}
               >Buy</Button>
               <Button
-                className={cn("h-14 text-lg font-semibold rounded-xl transition-all", side === 'sell' ? "bg-loss text-white hover:bg-loss/90" : "bg-muted text-muted-foreground hover:bg-muted/80")}
+                className={cn("h-14 text-lg font-semibold rounded-xl transition-all", side === 'sell' ? "bg-loss text-loss-foreground hover:bg-loss/90" : "bg-muted text-muted-foreground hover:bg-muted/80")}
                 onClick={() => setSide('sell')}
               >Sell</Button>
             </div>
@@ -179,7 +179,7 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
             </div>
 
             <Button
-              className={cn("w-full h-14 text-lg font-semibold text-white rounded-xl transition-all", side === 'buy' ? "bg-profit hover:bg-profit/90" : "bg-loss hover:bg-loss/90")}
+              className={cn("w-full h-14 text-lg font-semibold rounded-xl transition-all", side === 'buy' ? "bg-profit text-profit-foreground hover:bg-profit/90" : "bg-loss text-loss-foreground hover:bg-loss/90")}
               disabled={!isValid}
               onClick={handleSubmit}
             >

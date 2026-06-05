@@ -138,7 +138,7 @@ export function MinimalistOrderPanel({
             className={cn(
               "flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all",
               side === "buy"
-                ? "bg-profit text-white shadow-lg"
+                ? "bg-profit text-profit-foreground shadow-lg"
                 : "text-muted-foreground hover:text-foreground",
             )}
           >
@@ -150,7 +150,7 @@ export function MinimalistOrderPanel({
             className={cn(
               "flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all",
               side === "sell"
-                ? "bg-loss text-white shadow-lg"
+                ? "bg-loss text-loss-foreground shadow-lg"
                 : "text-muted-foreground hover:text-foreground",
             )}
           >
@@ -260,8 +260,8 @@ export function MinimalistOrderPanel({
             "w-full rounded-xl py-3 text-sm font-semibold transition-all",
             isValid
               ? side === "buy"
-                ? "bg-profit text-white shadow-lg hover:opacity-90"
-                : "bg-loss text-white shadow-lg hover:opacity-90"
+                ? "bg-profit text-profit-foreground shadow-lg hover:opacity-90"
+                : "bg-loss text-loss-foreground shadow-lg hover:opacity-90"
               : "cursor-not-allowed bg-white/5 text-muted-foreground/50",
           )}
         >

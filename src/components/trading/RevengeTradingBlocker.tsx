@@ -103,7 +103,7 @@ export function RevengeTradingBlocker({ isOpen, onComplete, onCancel }: RevengeT
               "flex-1 py-3 rounded-xl text-sm font-semibold transition-all",
               secondsLeft > 0
                 ? "bg-white/5 text-muted-foreground/50 cursor-not-allowed"
-                : "bg-warning text-white hover:bg-warning/90 shadow-lg"
+                : "bg-warning text-warning-foreground hover:bg-warning/90 shadow-lg"
             )}
           >
             {secondsLeft > 0 ? "Wait..." : "Proceed Anyway"}

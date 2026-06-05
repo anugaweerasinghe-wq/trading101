@@ -19,7 +19,7 @@
 
     /* Electric Neon primary */
     --primary: 168 100% 50%;
-    --primary-foreground: 0 0% 0%;
+    --primary-foreground: 0 0% 3%;
 
     /* Sunset Coral secondary */
     --secondary: 12 90% 62%;
@@ -45,6 +45,9 @@
     --buy: 157 100% 44%;
     --sell: 354 100% 64%;
     --warning: 38 90% 55%;
+    --profit-foreground: 0 0% 3%;
+    --loss-foreground: 0 0% 100%;
+    --warning-foreground: 0 0% 3%;
 
     /* Cyber accent tokens */
     --coral: 12 90% 62%;
@@ -98,7 +101,7 @@
     --popover-foreground: 0 0% 6%;
 
     --primary: 168 100% 32%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 0 0% 3%;
 
     --secondary: 12 85% 52%;
     --secondary-foreground: 0 0% 100%;
@@ -110,7 +113,7 @@
     --accent-foreground: 0 0% 100%;
 
     --success: 152 69% 35%;
-    --success-foreground: 0 0% 100%;
+    --success-foreground: 0 0% 3%;
     
     --destructive: 0 75% 50%;
     --destructive-foreground: 0 0% 100%;
@@ -120,6 +123,9 @@
     --buy: 152 69% 35%;
     --sell: 0 75% 50%;
     --warning: 38 92% 45%;
+    --profit-foreground: 0 0% 100%;
+    --loss-foreground: 0 0% 100%;
+    --warning-foreground: 0 0% 3%;
 
     --coral: 12 85% 52%;
     --neon: 168 100% 32%;

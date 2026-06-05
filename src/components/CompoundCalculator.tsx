@@ -85,7 +85,7 @@ export function CompoundCalculator() {
               type="number"
               value={initialInvestment}
               onChange={(e) => setInitialInvestment(Number(e.target.value))}
-              className="h-8 bg-white/5 border-white/10 text-[11px] font-bold text-white"
+              className="h-8 bg-white/5 border-white/10 text-[11px] font-bold text-foreground"
             />
           </div>
           <div className="space-y-1">
@@ -94,7 +94,7 @@ export function CompoundCalculator() {
               type="number"
               value={monthlyContribution}
               onChange={(e) => setMonthlyContribution(Number(e.target.value))}
-              className="h-8 bg-white/5 border-white/10 text-[11px] font-bold text-white"
+              className="h-8 bg-white/5 border-white/10 text-[11px] font-bold text-foreground"
             />
           </div>
         </div>
