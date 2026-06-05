@@ -156,8 +156,8 @@ export default function Learn() {
                 <h3 className="text-lg font-bold mb-1">New to trading?</h3>
                 <p className="text-sm text-muted-foreground">Start with Lesson 1 — it covers everything you need to place your first simulated trade.</p>
               </div>
-              <Link to="/learn/1">
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-xl font-semibold whitespace-nowrap">
+                <Link to="/learn/1">
+                <Button className="bg-primary hover:bg-primary/90 !text-black px-6 py-3 rounded-xl font-bold whitespace-nowrap shadow-[0_0_24px_hsl(168_100%_50%/0.3)]">
                   Start Lesson 1 <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
