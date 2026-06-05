@@ -12,6 +12,7 @@ import {
   getUnlockedBadges,
   getNextBadge,
   getChallengeCount,
+  getTodayBonus,
   type ChallengeDecision,
   type StreakState,
 } from "@/lib/dailyChallenge";
@@ -19,9 +20,11 @@ import { cn } from "@/lib/utils";
 
 export default function Daily() {
   const challenge = getTodayChallenge();
+  const bonus = getTodayBonus();
   const [streak, setStreak] = useState<StreakState | null>(null);
   const [selected, setSelected] = useState<ChallengeDecision | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [bonusPick, setBonusPick] = useState<number | null>(null);
 
   useEffect(() => {
     setStreak(getStreak());
@@ -227,6 +230,56 @@ export default function Daily() {
                     <div className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Pro Insight</div>
                   </div>
                   <p className="text-[15px] text-foreground leading-relaxed">{challenge.insight}</p>
+                </div>
+              )}
+
+              {/* Bonus knowledge — second daily question */}
+              {submitted && (
+                <div
+                  className="relative overflow-hidden p-5 md:p-6 rounded-2xl border border-amber-500/30 mb-4 animate-fade-in"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, hsl(38 90% 55% / 0.08) 0%, hsl(38 90% 55% / 0.02) 100%)",
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-amber-400" />
+                    </div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-amber-400 font-bold">Bonus Knowledge · Daily +1</div>
+                  </div>
+                  <p className="text-[15px] text-foreground font-semibold mb-4">{bonus.prompt}</p>
+                  <div className="space-y-2">
+                    {bonus.options.map((o, idx) => {
+                      const picked = bonusPick === idx;
+                      const reveal = bonusPick !== null;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => bonusPick === null && setBonusPick(idx)}
+                          disabled={bonusPick !== null}
+                          className={cn(
+                            "w-full text-left p-3 rounded-xl border transition-all text-sm",
+                            !reveal && "bg-white/[0.03] border-white/[0.08] hover:border-amber-400/50 hover:bg-amber-400/[0.05] cursor-pointer",
+                            reveal && o.correct && "bg-success/10 border-success/50 text-foreground",
+                            reveal && picked && !o.correct && "bg-destructive/10 border-destructive/50 text-foreground",
+                            reveal && !picked && !o.correct && "bg-white/[0.02] border-white/[0.04] opacity-50",
+                          )}
+                        >
+                          <div className="flex items-start gap-2">
+                            {reveal && o.correct && <Check className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />}
+                            {reveal && picked && !o.correct && <X className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />}
+                            <div className="flex-1">
+                              <div className="font-medium">{o.label}</div>
+                              {reveal && (picked || o.correct) && (
+                                <div className="text-xs text-foreground/65 mt-1 leading-relaxed">{o.explain}</div>
+                              )}
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
 
