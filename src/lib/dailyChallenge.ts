@@ -416,15 +416,28 @@ const DEFAULT_STATE: StreakState = {
   history: [],
 };
 
-function utcDateKey(d: Date = new Date()): string {
-  return d.toISOString().slice(0, 10);
+/**
+ * Local-timezone day key (YYYY-MM-DD).
+ * Switching from UTC to local time so a "day" matches the user's actual day —
+ * critical for streaks not breaking when a user plays at 9pm local two days in a row
+ * but the UTC boundary falls between them (or vice-versa).
+ */
+function dayKey(d: Date = new Date()): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
 
 function isYesterday(prev: string, todayKey: string): boolean {
-  const t = new Date(todayKey + "T00:00:00Z");
-  const y = new Date(t.getTime() - 86_400_000);
-  return y.toISOString().slice(0, 10) === prev;
+  const [y, m, d] = todayKey.split("-").map(Number);
+  const t = new Date(y, m - 1, d);
+  t.setDate(t.getDate() - 1);
+  return dayKey(t) === prev;
 }
+
+// Back-compat alias (older callers)
+const utcDateKey = dayKey;
 
 export function getStreak(): StreakState {
   try {
