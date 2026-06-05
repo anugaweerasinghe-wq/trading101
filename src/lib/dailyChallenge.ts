@@ -416,15 +416,28 @@ const DEFAULT_STATE: StreakState = {
   history: [],
 };
 
-function utcDateKey(d: Date = new Date()): string {
-  return d.toISOString().slice(0, 10);
+/**
+ * Local-timezone day key (YYYY-MM-DD).
+ * Switching from UTC to local time so a "day" matches the user's actual day —
+ * critical for streaks not breaking when a user plays at 9pm local two days in a row
+ * but the UTC boundary falls between them (or vice-versa).
+ */
+function dayKey(d: Date = new Date()): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
 
 function isYesterday(prev: string, todayKey: string): boolean {
-  const t = new Date(todayKey + "T00:00:00Z");
-  const y = new Date(t.getTime() - 86_400_000);
-  return y.toISOString().slice(0, 10) === prev;
+  const [y, m, d] = todayKey.split("-").map(Number);
+  const t = new Date(y, m - 1, d);
+  t.setDate(t.getDate() - 1);
+  return dayKey(t) === prev;
 }
+
+// Back-compat alias (older callers)
+const utcDateKey = dayKey;
 
 export function getStreak(): StreakState {
   try {
@@ -490,4 +503,86 @@ export function getUnlockedBadges(longest: number): BadgeUnlock[] {
 
 export function getNextBadge(longest: number): BadgeUnlock | null {
   return BADGES.find((b) => longest < b.threshold) ?? null;
+}
+
+// ───────────────────────────────────────────
+// BONUS KNOWLEDGE QUIZ (appears after main challenge)
+// ───────────────────────────────────────────
+
+export interface BonusQuestion {
+  id: number;
+  prompt: string;
+  options: { label: string; correct: boolean; explain: string }[];
+}
+
+const BONUS_BANK: BonusQuestion[] = [
+  {
+    id: 1, prompt: "What does a 'stop-loss' order do?",
+    options: [
+      { label: "Automatically closes your trade at a preset loss level", correct: true, explain: "Stop-losses cap your downside — the #1 risk tool every pro uses." },
+      { label: "Guarantees you exit at the exact price you set", correct: false, explain: "Slippage in fast markets means stops can fill worse than the trigger." },
+      { label: "Doubles your position when price drops", correct: false, explain: "That's averaging down — the opposite of stop-losses." },
+    ],
+  },
+  {
+    id: 2, prompt: "If RSI reads 80, the asset is generally considered…",
+    options: [
+      { label: "Oversold — likely bounce", correct: false, explain: "Oversold is RSI <30, not 80." },
+      { label: "Overbought — pullback risk rises", correct: true, explain: "RSI >70 signals overbought; >80 is extreme." },
+      { label: "Neutral — keep buying", correct: false, explain: "Neutral RSI is around 50." },
+    ],
+  },
+  {
+    id: 3, prompt: "What's the '2% rule' in risk management?",
+    options: [
+      { label: "Never risk more than 2% of your account on one trade", correct: true, explain: "Caps drawdown — even 10 losing trades only dent you 20%." },
+      { label: "Always target 2% profit per trade", correct: false, explain: "Profit targets aren't the rule — risk per trade is." },
+      { label: "Trade only 2% of the day", correct: false, explain: "Not a real risk concept." },
+    ],
+  },
+  {
+    id: 4, prompt: "Why do traders watch the VIX?",
+    options: [
+      { label: "It measures expected S&P 500 volatility (the 'fear gauge')", correct: true, explain: "Rising VIX = market expects bigger moves. Often spikes at lows." },
+      { label: "It tracks Bitcoin dominance", correct: false, explain: "That's BTC.D, not VIX." },
+      { label: "It signals interest-rate decisions", correct: false, explain: "Rate signals come from Fed funds futures." },
+    ],
+  },
+  {
+    id: 5, prompt: "A 'breakout' on heavy volume usually suggests…",
+    options: [
+      { label: "Real conviction — higher follow-through odds", correct: true, explain: "Volume validates price — low-volume breakouts often fake out." },
+      { label: "A trap — short immediately", correct: false, explain: "High-volume breakouts are statistically more reliable, not less." },
+      { label: "The trend is ending", correct: false, explain: "Reversals usually need a divergence, not a breakout." },
+    ],
+  },
+  {
+    id: 6, prompt: "What does 'diversification' protect you from?",
+    options: [
+      { label: "Single-asset blow-up risk", correct: true, explain: "Spreads exposure so one bad position can't sink your account." },
+      { label: "All market crashes", correct: false, explain: "In a broad crash, most assets fall together — diversification helps but isn't bulletproof." },
+      { label: "Inflation", correct: false, explain: "Inflation needs hedges (commodities, TIPS), not just diversification." },
+    ],
+  },
+  {
+    id: 7, prompt: "What's 'slippage'?",
+    options: [
+      { label: "Difference between expected price and actual fill", correct: true, explain: "Common in fast or thin markets — eats into edge." },
+      { label: "A broker fee", correct: false, explain: "Fees are separate — slippage is execution cost." },
+      { label: "Profit you didn't take", correct: false, explain: "That's opportunity cost, not slippage." },
+    ],
+  },
+  {
+    id: 8, prompt: "Why is 'risk-reward ratio' so important?",
+    options: [
+      { label: "Even a 40% win rate is profitable with 1:3 R:R", correct: true, explain: "Math beats prediction — asymmetric trades survive losing streaks." },
+      { label: "Higher win rate always = more profit", correct: false, explain: "Not if the wins are tiny and losses huge." },
+      { label: "It tells you which asset to trade", correct: false, explain: "It's about trade structure, not asset selection." },
+    ],
+  },
+];
+
+export function getTodayBonus(now: Date = new Date()): BonusQuestion {
+  const seed = Math.floor(now.getTime() / 86_400_000);
+  return BONUS_BANK[seed % BONUS_BANK.length];
 }

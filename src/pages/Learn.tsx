@@ -109,7 +109,16 @@ export default function Learn() {
 
       <div className="min-h-screen bg-background">
         <Navigation />
-        <main className="pt-32 pb-20">
+        {/* Atmospheric backdrop */}
+        <div
+          aria-hidden
+          className="fixed inset-0 pointer-events-none -z-0 opacity-60"
+          style={{
+            background:
+              "radial-gradient(900px 600px at 10% -10%, hsl(168 100% 50% / 0.10), transparent 60%), radial-gradient(700px 500px at 90% 10%, hsl(280 60% 55% / 0.07), transparent 60%), radial-gradient(600px 400px at 50% 100%, hsl(38 90% 55% / 0.05), transparent 60%)",
+          }}
+        />
+        <main className="relative pt-32 pb-20">
           <div className="container mx-auto px-6 max-w-7xl">
 
             {/* Breadcrumb */}
@@ -119,15 +128,45 @@ export default function Learn() {
               <span className="text-foreground font-medium">Learning</span>
             </nav>
 
-            {/* Hero */}
-            <div className="mb-16 text-center animate-fade-in">
-              <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary">2026 Edition</Badge>
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
-                Learn Trading — Free Beginner to Advanced Guides
+            {/* Premium hero */}
+            <div
+              className="relative mb-16 overflow-hidden rounded-[32px] border border-white/[0.08] p-10 md:p-16 text-center animate-fade-in"
+              style={{
+                background:
+                  "linear-gradient(140deg, hsl(168 100% 50% / 0.06) 0%, hsl(0 0% 6% / 0.85) 50%, hsl(280 60% 55% / 0.05) 100%)",
+                backdropFilter: "blur(28px) saturate(160%)",
+                boxShadow: "0 24px 80px -20px hsl(0 0% 0% / 0.6), inset 0 1px 0 0 hsl(0 0% 100% / 0.06)",
+              }}
+            >
+              <div
+                aria-hidden
+                className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px"
+                style={{ background: "linear-gradient(90deg, transparent, hsl(168 100% 50% / 0.5), transparent)" }}
+              />
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-6 backdrop-blur-xl">
+                <GraduationCap className="w-3.5 h-3.5 text-primary" />
+                <span className="text-[11px] font-bold text-primary uppercase tracking-[0.2em]">2026 Edition · 100% Free</span>
+              </div>
+              <h1
+                className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-[1.05]"
+                style={{
+                  background: "linear-gradient(135deg, hsl(220 15% 98%) 0%, hsl(168 70% 75%) 50%, hsl(220 15% 85%) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Learn Trading — From Zero to Confident
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Master stocks, crypto, and market analysis with structured lessons. No experience needed.
+              <p className="text-base md:text-lg text-foreground/70 max-w-2xl mx-auto leading-relaxed mb-6">
+                Structured paths from absolute beginner to advanced strategy. Every concept paired with a real practice trade — no signup, no risk, no fluff.
               </p>
+              <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-foreground/60">
+                <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">⚡ 6 core courses</span>
+                <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">📚 21 wiki terms</span>
+                <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">🎯 Daily challenge</span>
+                <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">💸 $10K virtual cash</span>
+              </div>
             </div>
 
             {/* Learning Path Overview */}
@@ -156,8 +195,8 @@ export default function Learn() {
                 <h3 className="text-lg font-bold mb-1">New to trading?</h3>
                 <p className="text-sm text-muted-foreground">Start with Lesson 1 — it covers everything you need to place your first simulated trade.</p>
               </div>
-              <Link to="/learn/1">
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-xl font-semibold whitespace-nowrap">
+                <Link to="/learn/1">
+                <Button className="bg-primary hover:bg-primary/90 !text-black px-6 py-3 rounded-xl font-bold whitespace-nowrap shadow-[0_0_24px_hsl(168_100%_50%/0.3)]">
                   Start Lesson 1 <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>

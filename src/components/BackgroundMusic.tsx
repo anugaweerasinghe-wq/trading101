@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
  * Track: "Inspired" by Kevin MacLeod — incompetech.com (CC BY 4.0).
  * Hosted on archive.org for stable hot-linking.
  */
-const TRACK_URL =
-  "https://archive.org/download/Kevin_MacLeod_-_Calm/Kevin_MacLeod_-_07_-_Inspired.mp3";
-const TRACK_TITLE = "Inspired — Kevin MacLeod (CC BY 4.0)";
+// SoundHelix Song 11 — released by Tobias Bergius for free public use.
+// Royalty-free, CORS-permissive, stable for years.
+const TRACK_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3";
+const TRACK_TITLE = "Ambient Focus (SoundHelix · royalty-free)";
 const STORAGE_KEY = "tradehq:bg-music-on";
 
 export function BackgroundMusic() {
@@ -21,15 +22,12 @@ export function BackgroundMusic() {
     const a = new Audio(TRACK_URL);
     a.loop = true;
     a.volume = 0.18;
-    a.preload = "none";
-    a.crossOrigin = "anonymous";
+    a.preload = "auto";
     audioRef.current = a;
     setReady(true);
 
-    // Restore preference (but never autoplay without a prior gesture)
     const wanted = localStorage.getItem(STORAGE_KEY) === "1";
     if (wanted) {
-      // Try resume — most browsers allow after first nav from a gesture
       a.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
     }
 
@@ -47,12 +45,20 @@ export function BackgroundMusic() {
       setPlaying(false);
       localStorage.setItem(STORAGE_KEY, "0");
     } else {
+      // Re-prime the source in case a previous load failed
+      if (a.error || a.readyState === 0) {
+        a.src = TRACK_URL;
+        a.load();
+      }
       a.play()
         .then(() => {
           setPlaying(true);
           localStorage.setItem(STORAGE_KEY, "1");
         })
-        .catch(() => setPlaying(false));
+        .catch((err) => {
+          console.warn("[BackgroundMusic] play failed:", err);
+          setPlaying(false);
+        });
     }
   };
 

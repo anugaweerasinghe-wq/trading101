@@ -202,7 +202,7 @@ export default function Leaderboard() {
             <div className="text-center mt-12">
               <p className="text-muted-foreground mb-6">Start trading now to appear on the leaderboard</p>
               <Link to="/trade">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-base rounded-2xl font-semibold">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 !text-black px-10 py-6 text-base rounded-2xl font-bold shadow-[0_0_28px_hsl(168_100%_50%/0.35)]">
                   Start Trading Free
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
