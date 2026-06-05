@@ -4,13 +4,11 @@ import { cn } from "@/lib/utils";
 
 /**
  * Floating ambient-music toggle. Persists user preference in localStorage.
- * Track: "Inspired" by Kevin MacLeod — incompetech.com (CC BY 4.0).
- * Hosted on archive.org for stable hot-linking.
+ * Track: "Long Road Ahead" by Kevin MacLeod — incompetech.com (CC BY 4.0).
+ * Bundled locally so playback is reliable and no third-party request is needed.
  */
-// SoundHelix Song 11 — released by Tobias Bergius for free public use.
-// Royalty-free, CORS-permissive, stable for years.
-const TRACK_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3";
-const TRACK_TITLE = "Ambient Focus (SoundHelix · royalty-free)";
+const TRACK_URL = "/audio/long-road-ahead-kevin-macleod.mp3";
+const TRACK_TITLE = "Long Road Ahead · Kevin MacLeod (CC BY 4.0)";
 const STORAGE_KEY = "tradehq:bg-music-on";
 
 export function BackgroundMusic() {
