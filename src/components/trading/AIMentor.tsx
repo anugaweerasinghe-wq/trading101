@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Message, Portfolio, Asset } from "@/lib/types";
+import { getPortfolioMentorReply } from "@/lib/smartMentor";
 
 interface AIMentorProps {
   portfolio: Portfolio;
@@ -77,111 +78,34 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
     setInput("");
     setIsLoading(true);
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/trading-advisor`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-      body: JSON.stringify({
-            message: messageText,
-            portfolio: {
-              cash: portfolio.cash,
-              totalValue: portfolio.totalValue,
-              positions: portfolio.positions.map(p => ({
-                asset: { id: p.asset.id, symbol: p.asset.symbol, name: p.asset.name, price: p.asset.price },
-                quantity: p.quantity,
-                averagePrice: p.avgPrice,
-                profitLoss: p.profitLoss,
-                profitLossPercent: p.profitLossPercent,
-              })),
-              trades: portfolio.trades.slice(0, 20).map(t => ({
-                type: t.type,
-                assetId: t.assetId,
-                symbol: t.symbol,
-                quantity: t.quantity,
-                price: t.price,
-                total: t.total,
-                timestamp: t.timestamp,
-                journal: t.journal,
-              })),
-            },
-            assets: assets.slice(0, 10).map(a => ({ id: a.id, symbol: a.symbol, price: a.price, changePercent: a.changePercent })),
-            selectedAsset: selectedAsset ? { id: selectedAsset.id, symbol: selectedAsset.symbol, name: selectedAsset.name, price: selectedAsset.price, changePercent: selectedAsset.changePercent } : null,
-            conversationHistory: messages.filter(m => m.id !== '1').map(m => ({ role: m.role, content: m.content })),
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to get response');
-      }
-
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let assistantContent = "";
-
-      const assistantMessage: Message = {
+    // Compute portfolio context for the rule-based mentor.
+    const topPos = portfolio.positions
+      .map(p => ({
+        symbol: p.asset.symbol,
+        weightPct: (p.quantity * p.asset.price / Math.max(portfolio.totalValue, 1)) * 100,
+        pnlPct: p.profitLossPercent ?? 0,
+      }))
+      .sort((a, b) => b.weightPct - a.weightPct)[0] ?? null;
+    const wrNum = winRate === '—' ? null : Number(winRate);
+    const reply = getPortfolioMentorReply(messageText, {
+      cash: portfolio.cash,
+      totalValue: portfolio.totalValue,
+      positionsCount: portfolio.positions.length,
+      tradesCount: portfolio.trades.length,
+      winRate: wrNum,
+      topPosition: topPos,
+      selectedSymbol: selectedAsset?.symbol ?? null,
+      selectedChangePct: selectedAsset?.changePercent ?? null,
+    });
+    window.setTimeout(() => {
+      setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "",
+        content: reply,
         timestamp: new Date(),
-      };
-
-      setMessages(prev => [...prev, assistantMessage]);
-
-      if (reader) {
-        let buffer = "";
-        
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || "";
-
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              const data = line.slice(6);
-              if (data === '[DONE]') continue;
-              
-              try {
-                const parsed = JSON.parse(data);
-                const content = parsed.choices?.[0]?.delta?.content;
-                if (content) {
-                  assistantContent += content;
-                  setMessages(prev => 
-                    prev.map(msg => 
-                      msg.id === assistantMessage.id 
-                        ? { ...msg, content: assistantContent }
-                        : msg
-                    )
-                  );
-                }
-              } catch (e) {
-                // Skip invalid JSON
-              }
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: `I apologize, but I encountered an issue. Please try again in a moment.`,
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
+      }]);
       setIsLoading(false);
-    }
+    }, 300);
   };
 
   return (
