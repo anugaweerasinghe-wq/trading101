@@ -108,8 +108,8 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
       // Try to match a specific symbol from holdings, otherwise apply to all
       const targetSymbol = holdings.find(h => lower.includes(h.symbol.toLowerCase()) || lower.includes(h.name.toLowerCase()))?.symbol;
       const shocks: Shock[] = targetSymbol
-        ? [{ symbol: targetSymbol, pricePct: signedPct }]
-        : holdings.map(h => ({ symbol: h.symbol, pricePct: signedPct }));
+        ? [{ symbol: targetSymbol, shockPercent: signedPct, confidence: 0.7 }]
+        : holdings.map(h => ({ symbol: h.symbol, shockPercent: signedPct, confidence: 0.7 }));
       const parsed = {
         shocks,
         horizonDays: horizon,

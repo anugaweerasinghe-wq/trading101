@@ -42,16 +42,21 @@ export function TradingJournal({ trades }: TradingJournalProps) {
       }
       if (totalEntries < 10) insights.push(`Only ${totalEntries} journaled trades — log at least 20 for reliable patterns.`);
       const computed: JournalAnalysis = {
-        summary: `Across ${totalEntries} journaled trades, your dominant emotion is "${emotionLabel}". ${insights[0]}`,
-        patterns: insights,
-        recommendations: [
-          "Write a 1-line thesis before every entry.",
-          "Set stop-loss + target *before* placing the trade.",
-          "Review every Friday — what worked, what didn't, what's repeatable.",
-        ],
-        riskLevel: emotionLabel === "fear" || emotionLabel === "greed" || emotionLabel === "fomo" ? "high" : "medium",
-        generatedAt: new Date().toISOString(),
-      } as JournalAnalysis;
+        totalTrades: totalEntries,
+        emotionalPatterns: Object.entries(emotionalBreakdown).map(([emotion, frequency]) => ({
+          emotion,
+          winRate: 0,
+          avgProfit: 0,
+          frequency: frequency as number,
+          recommendation: `Logged ${frequency} times`,
+        })),
+        mostSuccessfulEmotion: emotionLabel,
+        leastSuccessfulEmotion: emotionLabel === "fear" ? "fear" : "fomo",
+        commonMistakes: insights,
+        strengths: ["You're journaling — most traders don't.", "Self-awareness is the first edge."],
+        aiInsights: `Across ${totalEntries} journaled trades, your dominant emotion is "${emotionLabel}". ${insights[0]}\n\nRecommendations:\n• Write a 1-line thesis before every entry.\n• Set stop-loss + target *before* placing the trade.\n• Review every Friday — what worked, what didn't.`,
+        lastUpdated: new Date(),
+      };
       setAnalysis(computed);
       toast({ title: "Analysis Complete", description: "Pattern analysis ready." });
       setLoading(false);
