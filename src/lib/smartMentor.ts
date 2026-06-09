@@ -266,3 +266,83 @@ export const MENTOR_SUGGESTIONS = [
   "Explain RSI",
   "How does leverage work?",
 ];
+
+/**
+ * Portfolio-aware Smart Mentor reply.
+ * Used by the in-trade sidebar — combines topic match with real portfolio stats.
+ */
+export interface PortfolioContext {
+  cash: number;
+  totalValue: number;
+  positionsCount: number;
+  tradesCount: number;
+  winRate: number | null; // 0-100 or null if not enough sells
+  topPosition?: { symbol: string; weightPct: number; pnlPct: number } | null;
+  selectedSymbol?: string | null;
+  selectedChangePct?: number | null;
+}
+
+function fmt(n: number): string {
+  if (n >= 1000) return `$${(n / 1000).toFixed(1)}K`;
+  return `$${n.toFixed(0)}`;
+}
+
+export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): string {
+  const text = input.toLowerCase().trim();
+
+  // Portfolio analysis
+  if (/portfolio|positions?|my (cash|balance|holdings?)|analy[sz]e my/.test(text)) {
+    const lines = [
+      `**Your portfolio at a glance:**`,
+      `• Total value: ${fmt(ctx.totalValue)}`,
+      `• Cash: ${fmt(ctx.cash)} (${((ctx.cash / ctx.totalValue) * 100).toFixed(0)}% of book)`,
+      `• Positions: ${ctx.positionsCount}`,
+      `• Trades executed: ${ctx.tradesCount}`,
+      ctx.winRate !== null ? `• Win rate: ${ctx.winRate.toFixed(0)}%` : `• Win rate: not enough closed trades yet`,
+    ];
+    if (ctx.topPosition) {
+      lines.push(
+        `\n**Top position:** ${ctx.topPosition.symbol} — ${ctx.topPosition.weightPct.toFixed(0)}% of book, P&L ${ctx.topPosition.pnlPct >= 0 ? "+" : ""}${ctx.topPosition.pnlPct.toFixed(2)}%`,
+      );
+    }
+    const cashPct = (ctx.cash / ctx.totalValue) * 100;
+    if (cashPct > 80) lines.push(`\n**Observation:** You're sitting on heavy cash (${cashPct.toFixed(0)}%) — consider DCAing into a few positions.`);
+    else if (cashPct < 5) lines.push(`\n**Observation:** Almost fully invested. Keep some dry powder (5-15%) for opportunities.`);
+    return lines.join("\n") + DISCLAIMER;
+  }
+
+  // Risk assessment
+  if (/risk|overexposed|exposure|concentration/.test(text)) {
+    const lines = ["**Risk assessment:**"];
+    if (ctx.topPosition && ctx.topPosition.weightPct > 30) {
+      lines.push(`⚠️ **Concentration risk** — ${ctx.topPosition.symbol} is ${ctx.topPosition.weightPct.toFixed(0)}% of your book. Rule of thumb: no single asset >20%.`);
+    }
+    if (ctx.positionsCount === 1) lines.push(`⚠️ Only one position — that's not a portfolio, it's a bet.`);
+    if (ctx.positionsCount > 15) lines.push(`⚠️ ${ctx.positionsCount} positions — likely over-diversified. You can't track that many edges.`);
+    if (lines.length === 1) lines.push(`✓ Allocation looks reasonable. Maintain 1-2% risk per trade and 5-15% cash reserve.`);
+    return lines.join("\n") + DISCLAIMER;
+  }
+
+  // Trade history
+  if (/trade history|recent trades|review my trades|patterns/.test(text)) {
+    if (ctx.tradesCount === 0) return "You haven't placed any trades yet. Start with a small position on a familiar asset, journal your reasoning, and we'll review patterns once you have 10+ trades." + DISCLAIMER;
+    if (ctx.tradesCount < 10) return `You have ${ctx.tradesCount} trades — too few for pattern analysis. Aim for 20-30 closed trades before drawing conclusions.${ctx.winRate !== null ? ` Current win rate: ${ctx.winRate.toFixed(0)}%.` : ""}` + DISCLAIMER;
+    const wr = ctx.winRate ?? 0;
+    const verdict = wr >= 55 ? "above average" : wr >= 45 ? "average" : "below average";
+    return `**Trade history review** (${ctx.tradesCount} trades, ${wr.toFixed(0)}% win rate — ${verdict}):\n\n• Win rate alone is misleading without R-multiple. A 40% win rate with 3:1 winners beats 60% with 1:1.\n• Track avg-win / avg-loss in your journal.\n• Look for time-of-day or asset-class patterns.` + DISCLAIMER;
+  }
+
+  // What should I do
+  if (/what should i (do|buy|sell|trade)|next move|next action/.test(text)) {
+    return "I won't give you specific buy/sell calls — that's the line between mentor and signal-seller. What I will say:\n\n1. Define your edge in one sentence.\n2. Size positions so a stop-out costs ≤1-2% of book.\n3. Pre-write your exit (target + stop) before entry.\n4. Journal *why* — entries with no reason are gambling." + DISCLAIMER;
+  }
+
+  // Selected asset analysis
+  if (ctx.selectedSymbol && /this asset|analyze.*asset|current asset|this coin|this stock/.test(text)) {
+    const dir = (ctx.selectedChangePct ?? 0) >= 0 ? "up" : "down";
+    return `**${ctx.selectedSymbol}** — ${dir} ${Math.abs(ctx.selectedChangePct ?? 0).toFixed(2)}% today.\n\nWithout giving a call, here's a framework:\n• Mark the higher-timeframe trend (daily, weekly).\n• Identify the nearest support and resistance.\n• Define risk:reward before entering — minimum 1:2.\n• If the chart confuses you, pass. Cash is a position.` + DISCLAIMER;
+  }
+
+  // Fall back to topic engine
+  return getSmartMentorReply(input);
+}
