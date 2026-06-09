@@ -4,6 +4,8 @@ import { recordSnapshot, getPortfolioHistory } from './portfolioHistory';
 
 const STORAGE_KEY = 'tradehq_portfolio';
 const HISTORY_KEY = 'tradehq_history';
+const BALANCE_MIGRATION_KEY = 'tradehq:balance-migration:v2';
+const LEGACY_INITIAL_CASH = 10000;
 
 export function getPortfolio(): Portfolio {
   const stored = localStorage.getItem(STORAGE_KEY);
@@ -14,9 +16,23 @@ export function getPortfolio(): Portfolio {
       ...t,
       timestamp: new Date(t.timestamp),
     }));
+    // One-shot migration: bump existing users from $10K baseline to $100K
+    // so they're not disadvantaged after the rebrand. Only runs once per browser.
+    try {
+      if (!localStorage.getItem(BALANCE_MIGRATION_KEY)) {
+        const bump = INITIAL_CASH - LEGACY_INITIAL_CASH;
+        if (bump > 0) {
+          portfolio.cash = (portfolio.cash ?? 0) + bump;
+          portfolio.totalValue = (portfolio.totalValue ?? 0) + bump;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolio));
+        }
+        localStorage.setItem(BALANCE_MIGRATION_KEY, '1');
+      }
+    } catch { /* localStorage unavailable */ }
     return portfolio;
   }
 
+  try { localStorage.setItem(BALANCE_MIGRATION_KEY, '1'); } catch {}
   return {
     cash: INITIAL_CASH,
     totalValue: INITIAL_CASH,
