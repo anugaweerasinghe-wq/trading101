@@ -1,145 +1,187 @@
+# TradeHQ — Growth, Trust & CTR Plan
 
-# World-Class Plan — Indexing Blitz + Retention Engine
-
-Built around the 30-credit budget. Every item is implementable by me, free, and ordered by impact-per-credit.
-
----
-
-## Part 1 — Quick Wins (Credits: ~2)
-
-**A. Sitemap recrawl push**
-- Update `scripts/generate-sitemap.ts`: bump every `lastmod` to `2026-06-02` and switch `changefreq` on deep pages (`/trade/*`, `/wiki/*`, `/niche/*`) from `weekly` → `daily` for a 2-week recrawl window, then we can revert.
-- Re-run generator so `public/sitemap.xml` regenerates on next build.
-
-**B. Button readability fix**
-- "Start Trading Free" (Hero) and "Claim Bonus" (Portfolio): currently white-on-light-glass. Switch to filled solid using `--primary` (Electric Neon) with `--primary-foreground` (black) text → WCAG AAA contrast, matches design system, no custom colors.
-- Add subtle `shadow-glow-cyan` for premium feel.
+Three workstreams shipped in one round: (1) full **$10K → $100K** rebrand, (2) **CTR 3.1% → 6%** machinery (rich-result schema sitewide + a written marketing strategy doc you approve), and (3) **homepage→deeper-page funnel + retention** layer (interactive hero, exit-intent, web push, optional account sign-in).
 
 ---
 
-## Part 2 — Maximum-Aggression Indexing (Credits: ~4)
+## Part 1 — $100K Virtual Cash Rebrand (full sweep)
 
-Goal: get all ~150 pages indexed in 7–14 days instead of months.
+Replace every `$10,000` / `$10K` / `10000` reference — visible copy, engine logic, AI prompts, SEO meta, sitemap'd snippets.
 
-1. **IndexNow auto-submit on deploy** — Extend `scripts/submit-indexnow.ts` to read every URL from `sitemap.xml` and POST to Bing/Yandex in one batch. Add a `postbuild` npm script. Bing crawls within hours; Bing-indexed pages often surface in Google faster via discovery.
-2. **Google Search Console API auto-submit** — Use the connected `google_search_console` connector. Create `scripts/gsc-submit.ts` that calls the URL Inspection API to request indexing for every sitemap URL on every deploy. Honors the daily 200-URL quota with batching state in `/tmp/gsc-submitted.json`.
-3. **Internal link injection (the real unlock)** — 37/45 clicks stayed on homepage. Crawlers do the same. Add to homepage:
-   - New "Explore 150+ Trading Topics" section: 3-column hub linking to top wiki terms, top assets, top articles (randomized per pageload so all 150 rotate through homepage crawls).
-   - "Trending Now" strip in `MegaFooter` showing 12 random deep links.
-4. **Sitemap split** — Create `sitemap-index.xml` referencing `sitemap-core.xml`, `sitemap-assets.xml`, `sitemap-wiki.xml`, `sitemap-niche.xml`. Google prioritizes split sitemaps and reports coverage per group → easier diagnosis.
-5. **`<lastmod>` on real edit** — Already wired via `mtimeOf()`. Confirm and extend to all URL types.
+**Files touched (audit pass):**
 
----
+- Engine: `src/lib/portfolio.ts`, `src/lib/portfolioHistory.ts`, `src/lib/leaderboardEngine.ts`, `src/lib/priceSimulation.ts` — starting balance, weekly refill amount.
+- Copy: `src/components/PremiumHero.tsx`, `WhatIsTradeHQ.tsx`, `HowItWorks.tsx`, `PremiumFeatures.tsx`, `PremiumFAQ.tsx`, `MegaFooter.tsx`, `home/MarketPulse.tsx`, `home/DailyChallengeCard.tsx`, `CompoundCalculator.tsx`, `NewsletterSignup.tsx`.
+- Pages: `Index.tsx`, `Trade.tsx`, `TradeAsset.tsx`, `Portfolio.tsx`, `Learn.tsx`, `LearnArticle.tsx`, `LearnTradingGuide.tsx`, `Markets.tsx`, `AIMentor.tsx`, `Leaderboard.tsx`, `NicheAsset.tsx`, `SectorPillar.tsx`, `WikiTerm.tsx`.
+- SEO: `index.html`, `src/components/SEOHead.tsx` defaults, `public/sitemap.xml` (regenerated), `scripts/generate-sitemap.ts`, `public/meta_variants.csv` + `meta_turbo_variants.csv`.
+- AI: `supabase/functions/trading-mentor`, `trading-advisor`, `market-analysis`, `analyze-trading-psychology`, `scenario-parser` system prompts.
+- Migration: bump existing localStorage balance from $10K baseline to $100K **on first load after deploy** via a one-shot version key (`tradehq:balance-migration:v2`) so existing users aren't disadvantaged — fresh users start at $100K.
 
-## Part 3 — Retention Engine: "Come Back Daily" (Credits: ~18)
-
-This is the differentiator. TradingView/Webull do not have any of this together. Built as one cohesive system with localStorage persistence (no auth required = zero friction).
-
-### 3A. Daily Trading Challenge + Streak System
-
-New page `/daily` + homepage hero card.
-
-- **Challenge generator**: deterministic per UTC date — picks one asset + one scenario type from a curated bank (e.g. "NVDA pre-earnings: long or short?", "Bitcoin breaks $100k support: your move?", "Tesla insider selling — react"). 365 unique challenges seeded.
-- **Streak tracking** (localStorage): consecutive days completed, longest streak, total challenges. Visible badge in nav (🔥 7).
-- **Daily leaderboard** (Supabase): users opt-in with a display name → row in new `daily_results` table. Resets at UTC midnight.
-- **Unlock badges**: Day 3, 7, 14, 30, 100 → "Bronze Trader", "Iron Hand", "Diamond Mind". Stored localStorage, displayed on profile.
-- **Why it works**: Duolingo-style streak fear-of-loss + daily variety + social proof leaderboard.
-
-### 3B. Live Market Pulse Dashboard (Homepage centerpiece)
-
-New `<MarketPulse />` component above-the-fold (replaces no existing content — joins the split hero).
-
-- **Fear & Greed Index** (computed from `useLiveMarketData` momentum across top 20 assets) — animated dial 0–100.
-- **Sector Heatmap** — 11 sector tiles colored by today's perf. Click → filter trade page.
-- **"What's Moving Now"** — top 3 gainers + top 3 losers, auto-refreshing every 30s.
-- **Market Clock** — NYSE/NASDAQ/LSE/TSE open/closed badges with countdown to next bell.
-
-Habit-forming: same purpose as people checking stocks app 8x/day.
-
-### 3C. AI Trade Coach (personalized report card)
-
-New page `/coach` + a "Get Your Report Card" CTA on Portfolio.
-
-- After each closed trade, capture entry/exit/size/asset/timing into `tradingJournal`.
-- "Generate Daily Report Card" button → calls existing `trading-mentor` edge function with full journal context → returns:
-  - Strengths (e.g. "You exit winners well")
-  - Weaknesses (e.g. "Revenge trading after 2 losses — 73% of your losses follow a loss within 1h")
-  - One actionable lesson for tomorrow
-  - Personalized risk score
-- Cached per-day (localStorage `coach:report:${date}`) → free, no extra AI cost on revisit.
-- Shareable image export ("My TradeHQ Report Card — Day 14 streak, +12% practice gain") → viral loop.
-
-### 3D. Split Hero (per your answer)
-
-Keep existing intro/copy. Add right-column card showing:
-- Today's challenge preview ("Today: NVDA earnings reaction — 3,421 traders played")
-- Current streak (if any) OR "Start your streak"
-- Live Fear & Greed mini-dial
-- Bottom CTA: "Start Trading Free →" (now readable, primary fill)
+**Why $100K works psychologically:** higher number = perceived bigger sandbox, removes "feels like pocket change" friction for forex/oil/index traders, and aligns with industry norms (Investopedia, ThinkOrSwim paperMoney both start ≥$100K).
 
 ---
 
-## Part 4 — World-Class Polish (Credits: ~4)
+## Part 2 — CTR 3.1% → 6% Marketing Strategy
 
-- **Activity ticker** (bottom strip site-wide): "Tomás in 🇫🇷 just closed +8.2% on EURUSD" — pulled from anonymized leaderboard rows. Social proof in real-time.
-- **OG image generator**: per-page dynamic OG images for wiki/asset pages → higher CTR on shared links.
-- **JSON-LD `Quiz` schema** on daily challenge → eligible for Google rich results.
-- **`Speakable` schema** on glossary → eligible for voice search.
-- **`prefetch` on hover** for nav links → instant page transitions (Lighthouse + UX).
-- **WebSite SearchAction JSON-LD** → enables Google sitelinks search box.
+### 2A. Strategy document (deliverable: `/public/ctr-doubling-plan.md`)
 
----
+Written, not auto-applied. You review then approve specific tactics. Sections:
 
-## Technical Details
+1. **Psychology levers** (Cialdini + Nielsen Norman + Backlinko CTR studies):
+  - **Curiosity gap** — titles end with unfinished thought ("…here's why").
+  - **Numbers + brackets** — `[2026]`, `(Free)`, `(No Signup)`. Backlinko: brackets +33% CTR.
+  - **Power words** — Free, Instant, Proven, Secret, Risk-Free, $100K.
+  - **Loss aversion** — "Stop losing on real money — practice first".
+  - **Specificity** — "150+ Assets", "$100K", "3-min setup" beat round/vague numbers.
+  - **Year freshness** — 2026 in every title that ranks for evergreen queries.
+2. **Title formula** — `{Primary KW} — {Benefit/Number} | TradeHQ {Year}` capped at 58 chars.
+3. **Description formula** — Hook (curiosity/loss) + Proof (number) + CTA verb + "(Free, no signup)". 150–158 chars.
+4. **Competitor SERP teardown** — Investopedia, TradingView, Webull paper, ThinkOrSwim, Wall Street Survivor. What words they use, what FAQ snippets they own, where the gaps are.
+5. **Page-by-page rewrite table** for the 15 seed URLs (current title → new title → reason).
+6. **Tracking** — extend `public/monitoring_plan.csv` with CTR-per-URL targets and rollback rules (already partially there).
 
-**New files**
-- `scripts/gsc-submit.ts` — programmatic Search Console submission via connector gateway
-- `scripts/generate-sitemap-index.ts` — split sitemap generator
-- `src/pages/Daily.tsx`, `src/pages/Coach.tsx`
-- `src/lib/dailyChallenge.ts` — 365 seeded challenges + streak engine
-- `src/lib/marketPulse.ts` — fear/greed computation, sector aggregation
-- `src/components/home/MarketPulse.tsx`, `src/components/home/SplitHero.tsx`, `src/components/home/DiscoverHub.tsx`
-- `src/components/ActivityTicker.tsx`
-- `src/components/badges/StreakBadge.tsx`
+### 2B. Rich-result schema expansion (shipped this round)
 
-**Supabase migration**
-- `daily_results` (id, display_name, challenge_date, score, asset, decision, created_at) — RLS: public insert + public select today only.
-- GRANT block included per project rules.
+Maximize SERP real estate so Google gives us more pixels = higher CTR even at same position.
 
-**Files modified**
-- `scripts/generate-sitemap.ts` — bump lastmod to 2026-06-02, daily changefreq on deep pages
-- `scripts/submit-indexnow.ts` — read from sitemap, batch
-- `package.json` — add `postbuild: indexnow + gsc-submit`
-- `src/pages/Index.tsx` — integrate SplitHero + MarketPulse + DiscoverHub
-- `src/pages/Portfolio.tsx` — fix Claim Bonus button + add Coach CTA
-- `src/components/Hero.tsx` — fix Start Trading Free button
-- `src/components/Navigation.tsx` — streak badge
-- `src/components/MegaFooter.tsx` — Trending Now strip
-- `src/App.tsx` — `/daily`, `/coach` routes + SEOHead on every page
 
-**Trade-offs noted**
-- localStorage-first means streaks reset if user clears browser → mitigated by optional Supabase save with display name only (no email/auth = zero friction).
-- 365 seeded challenges is finite → year 2 reuses with shuffle; in practice users won't notice.
-- GSC API quota = 200 URLs/day → 150 pages submits in 1 day, then daily delta only.
+| Page type                        | Schema added                                                                                         | SERP win                                     |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `/` (home)                       | `WebSite` + `SearchAction` + `Organization` w/ `sameAs` + `AggregateRating` (educational disclaimer) | Sitelinks search box, brand panel            |
+| `/learn`, `/learn-trading-guide` | `Course` + `LearningResource` + `EducationalOrganization`                                            | "Course" rich card                           |
+| `/learn/:slug` (articles)        | `Article` + `BreadcrumbList` + `Author` (TradeHQ Editorial) + `Speakable`                            | Top stories / voice search                   |
+| `/trade/:asset`                  | `FAQPage` + `BreadcrumbList` + `HowTo` ("How to practice trading X")                                 | FAQ accordion + HowTo carousel               |
+| `/wiki/:term`                    | `DefinedTerm` + `DefinedTermSet` + `BreadcrumbList`                                                  | Definition snippet                           |
+| `/leaderboard`                   | `ItemList` (top 10 traders)                                                                          | List rich result                             |
+| All pages                        | `BreadcrumbList` site-wide                                                                           | Sitelinks-style breadcrumbs replace ugly URL |
 
----
 
-## Recommended Build Order
+Validate via `https://search.google.com/test/rich-results` and log to `public/rich_results_turbo_log.csv`.
 
-1. Part 1 (sitemap date + button fix) — ship in first commit
-2. Part 2 (indexing) — ships immediately after to start the crawl clock
-3. Part 3A + 3D (Daily Challenge + Split Hero) — biggest retention lever
-4. Part 3B (Market Pulse) — homepage habit hook
-5. Part 3C (AI Coach) — depth + virality
-6. Part 4 (polish) — only if credits remain
+### 2C. CTR-helper micro-changes shipped now (no copy rewrite yet)
+
+- Add `<meta name="news_keywords">` + `<meta name="robots" content="max-snippet:-1, max-image-preview:large">` (already partly there — extend).
+- Add `<link rel="preconnect">` for fonts → faster LCP → better ranking → better CTR.
+- Favicon dark-mode variant (already have light) — branded SERP icon = +CTR on mobile.
+
+**Realistic forecast:** schema rollout typically lifts CTR 15–35% on affected queries within 2–4 weeks (Google Search Central case studies). Combined with title rewrites once you approve them, doubling from 3.1% → 6% in 60–90 days is plausible but not guaranteed.
 
 ---
 
-## Out of Scope (intentionally)
+## Part 3 — Fix the "97% only see homepage" problem
 
-- Geo-personalization (you opted out)
-- Pre-rendering / SSG (kept off per earlier decision — build stability)
-- Auth/signup (kept frictionless; everything works anonymously)
-- Paid ads, social media automation (not implementable by me alone)
+### 3A. Interactive hero (live mini-chart + 1-click "Try a demo trade")
 
-Approve and I'll execute top-to-bottom.
+Replace the current static stats grid in `PremiumHero.tsx` with an **embedded micro-terminal**:
+
+```text
+┌──────────────────────────────────────────────────────┐
+│  BTC/USD  $68,241  ▲ +2.3%       [ live sparkline ] │
+│  ──────────────────────────────────────────────      │
+│  [ Buy $100 demo ]   [ See full chart → ]            │
+└──────────────────────────────────────────────────────┘
+```
+
+- Uses existing `useHybridMarketData` + a 60-tick sparkline.
+- "Buy $100 demo" → instantly opens a success toast ("You bought 0.0014 BTC — view in your portfolio") and routes to `/trade/btc` with that position pre-seeded.
+- Psychology: **zero-friction first action** (Hooked model "trigger→action→reward→investment"). The smallest possible commitment from the user creates ownership.
+
+### 3B. Exit-intent + scroll-depth modal
+
+New component `src/components/EngagementModal.tsx`:
+
+- **Trigger A:** mouse leaves viewport top (desktop) — "Wait — try today's Daily Challenge before you go. 60-second scenario, free."
+- **Trigger B:** 70% scroll on mobile — same offer.
+- **Trigger C:** 25s idle on home — soft nudge to AI Mentor.
+- Suppressed for 7 days after dismissal (localStorage), suppressed entirely on /trade and /portfolio (don't interrupt active users).
+
+### 3C. Move Daily Challenge card above-the-fold
+
+Already lifted higher last round — verify it's between hero and "What is TradeHQ?" not below it.
+
+### 3D. Sticky bottom CTA bar on home (mobile only)
+
+After 30% scroll, a thin bar slides up: **"Start with $100K virtual cash →"**. Closes on tap-X (session-only).
+
+---
+
+## Part 4 — Retention layer (revisits, loyalty, trust)
+
+### 4A. Web Push notifications
+
+New: `public/sw.js` (push-only worker, NOT app-shell PWA — per skill rules), `src/lib/push.ts`, edge function `supabase/functions/send-push`.
+
+- **Opt-in moment:** *not* on page load. Triggered after user completes their first Daily Challenge ("Want a reminder tomorrow to keep your streak?") — context-relevant ask = 4x higher accept rate vs cold prompt.
+- **Push triggers:**
+  - Streak warning (22 hours since last challenge, before reset).
+  - Big market move on a watchlisted asset (>3% in 1h).
+  - New weekly leaderboard reset.
+- VAPID keys via `add_secret` (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`) — you'll generate them once via `npx web-push generate-vapid-keys`; I'll guide you.
+- Subscriptions stored in new table `push_subscriptions(user_id nullable, endpoint, p256dh, auth, created_at)` with RLS allowing anon insert (endpoint is the auth) and service-role read.
+
+### 4B. Optional account system (sign-in, not gated)
+
+Lovable Cloud auth: **email/password + Google** (defaults). Everything stays free without signing in — signing in just unlocks:
+
+- Cross-device sync of portfolio, streak, watchlist.
+- Real leaderboard entry (vs current local-only).
+- Custom username + badge in leaderboard.
+
+Schema:
+
+```sql
+create table public.profiles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  username text unique,
+  avatar_url text,
+  created_at timestamptz default now()
+);
+-- + grants + RLS (public read username, owner write)
+```
+
+Sync trigger: on auth event, push local `tradehq:*` localStorage to a `user_state` JSONB table; pull on next login.
+
+### 4C. Trust / EEAT boost (cheap, high impact for both CTR and retention)
+
+- New `/about` page — team blurb (even if 1 person), mission, "Why we built this", contact.
+- Add visible **disclaimer badge** in footer linking to `/disclaimer`.
+- Add `Organization` JSON-LD `sameAs` array (GitHub, Twitter, LinkedIn — even if placeholders the user fills in).
+- Author bylines on `/learn/:slug` ("TradeHQ Editorial" + reviewed date) — Google E-E-A-T requirement.
+
+---
+
+## Part 5 — Audit pass (duplicates / errors / dead code)
+
+Run during build mode:
+
+- `rg "10,000|10K|\\$10000"` to confirm zero stragglers after rebrand.
+- `rg "text-white"` to confirm contrast cleanup is complete (last round may have missed places).
+- Check `App.tsx` for duplicate route registrations.
+- Verify `BackgroundMusic.tsx` actually plays (audit replay shows no music events — fix autoplay-policy: require first user gesture, persist `tradehq:bg-music-on` correctly).
+- Run `seo--list_findings` + scanner; fix any open items.
+- Run `security--run_security_scan`; fix new findings introduced by `profiles` + `push_subscriptions` tables.
+
+---
+
+## Implementation order
+
+1. **$100K rebrand** + balance migration (highest user-visible impact).
+2. **Schema expansion** + breadcrumb component (CTR foundation).
+3. **Interactive hero** + sticky mobile CTA + exit-intent modal.
+4. **Push notifications** infra (needs you to generate VAPID keys mid-flow).
+5. **Auth + profiles + cross-device sync**.
+6. **Trust pages** (/about, author bylines) + final audit + CTR strategy doc dropped in `/public/ctr-doubling-plan.md`.
+
+## What I need from you mid-build
+
+- One command run on your machine: `npx web-push generate-vapid-keys` → paste the two keys when I prompt `add_secret`.
+- Confirmation to enable **Email/password + Google** auth (Lovable Cloud defaults). Google needs no extra config from you.
+
+## Out of scope (call out so you know)
+
+- Dynamic per-route OG images (you skipped — fine, current static OG works).
+- Title rewrites are **planned in the doc, not auto-applied** — you approve titles individually after reading the strategy.
+- No native mobile / app store work.
+- No paid ads, no backlink purchases — all tactics are free/organic.  
+  
+Ask any questions if necessary, I need you to also remove the AI mentor throughout the entire site or perhaps intergate something else into it. because the lovable ai credits for ai is finished. Let me know this also.
