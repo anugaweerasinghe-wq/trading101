@@ -91,27 +91,30 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         currentPrice: p.asset.price,
       }));
 
-      const { data, error } = await supabase.functions.invoke("scenario-parser", {
-        body: { prompt: finalPrompt, holdings },
-      });
-
-      if (error) {
-        const status = (error as any).context?.status;
-        if (status === 429) {
-          toast({ title: "Slow down", description: "Too many scenarios. Try again shortly.", variant: "destructive" });
-        } else if (status === 402) {
-          toast({ title: "AI credits needed", description: "Add credits in workspace settings.", variant: "destructive" });
-        } else {
-          toast({ title: "Scenario failed", description: error.message ?? "Unknown error", variant: "destructive" });
-        }
-        return;
+      // Deterministic regex-based scenario parser — no AI credits required.
+      const lower = finalPrompt.toLowerCase();
+      const pctMatch = lower.match(/(-?\d+(?:\.\d+)?)\s*%/);
+      const daysMatch = lower.match(/(\d+)\s*(day|week|month)/);
+      const dropMatch = /drop|crash|fall|down|plunge|dump/.test(lower);
+      const pumpMatch = /pump|rally|surge|moon|up|rise/.test(lower);
+      const pct = pctMatch ? Number(pctMatch[1]) : (dropMatch ? -20 : pumpMatch ? 20 : -10);
+      const signedPct = dropMatch && pct > 0 ? -pct : pct;
+      let horizon = 30;
+      if (daysMatch) {
+        const n = Number(daysMatch[1]);
+        const unit = daysMatch[2];
+        horizon = unit === "week" ? n * 7 : unit === "month" ? n * 30 : n;
       }
-      if (!data || (data as any).error) {
-        toast({ title: "Could not parse scenario", description: (data as any)?.error ?? "Try rephrasing.", variant: "destructive" });
-        return;
-      }
-
-      const parsed = data as { shocks: Shock[]; horizonDays: number; narrative: string };
+      // Try to match a specific symbol from holdings, otherwise apply to all
+      const targetSymbol = holdings.find(h => lower.includes(h.symbol.toLowerCase()) || lower.includes(h.name.toLowerCase()))?.symbol;
+      const shocks: Shock[] = targetSymbol
+        ? [{ symbol: targetSymbol, shockPercent: signedPct, confidence: 0.7 }]
+        : holdings.map(h => ({ symbol: h.symbol, shockPercent: signedPct, confidence: 0.7 }));
+      const parsed = {
+        shocks,
+        horizonDays: horizon,
+        narrative: `Modeled a ${signedPct >= 0 ? "+" : ""}${signedPct}% move on ${targetSymbol ?? "your full portfolio"} over ${horizon} days. (Deterministic scenario — no AI required.)`,
+      };
       setShocks(parsed.shocks ?? []);
       setHorizonDays(parsed.horizonDays ?? 30);
       setNarrative(parsed.narrative ?? "");

@@ -8,7 +8,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Brain, TrendingUp, AlertTriangle, Sparkles, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 interface TradingJournalProps {
@@ -25,37 +24,43 @@ export function TradingJournal({ trades }: TradingJournalProps) {
 
   const analyzeWithAI = async () => {
     setLoading(true);
-    try {
-      const journalData = journalTrades.map(t => ({
-        symbol: t.symbol,
-        type: t.type,
-        profit: t.total,
-        emotions: t.journal?.emotions || [],
-        notes: t.journal?.notes || '',
-        reasoning: t.journal?.reasoning || ''
-      }));
-
-      const { data, error } = await supabase.functions.invoke('analyze-trading-psychology', {
-        body: { trades: journalData, emotionalBreakdown }
-      });
-
-      if (error) throw error;
-
-      setAnalysis(data);
-      toast({
-        title: "Analysis Complete",
-        description: "AI has analyzed your trading patterns",
-      });
-    } catch (error) {
-      console.error('Error analyzing:', error);
-      toast({
-        title: "Analysis Failed",
-        description: "Could not analyze trading psychology",
-        variant: "destructive",
-      });
-    } finally {
+    // Deterministic rule-based analysis — no AI credits required.
+    setTimeout(() => {
+      const topEmotion = Object.entries(emotionalBreakdown)
+        .sort((a, b) => b[1] - a[1])[0];
+      const emotionLabel = topEmotion?.[0] ?? "neutral";
+      const totalEntries = journalTrades.length;
+      const insights: string[] = [];
+      if (emotionLabel === "fear" || emotionLabel === "anxious") {
+        insights.push("You journal most often when fearful — this often correlates with exits at local lows. Set rules before entry, not during stress.");
+      } else if (emotionLabel === "greed" || emotionLabel === "fomo") {
+        insights.push("FOMO/greed is your dominant emotion. Use a 5-minute cool-down rule before any new entry.");
+      } else if (emotionLabel === "confident") {
+        insights.push("High confidence detected — watch for overconfidence after wins (the recency bias trap).");
+      } else {
+        insights.push("Balanced emotional spread. Keep journaling — patterns emerge after 30+ entries.");
+      }
+      if (totalEntries < 10) insights.push(`Only ${totalEntries} journaled trades — log at least 20 for reliable patterns.`);
+      const computed: JournalAnalysis = {
+        totalTrades: totalEntries,
+        emotionalPatterns: Object.entries(emotionalBreakdown).map(([emotion, frequency]) => ({
+          emotion,
+          winRate: 0,
+          avgProfit: 0,
+          frequency: frequency as number,
+          recommendation: `Logged ${frequency} times`,
+        })),
+        mostSuccessfulEmotion: emotionLabel,
+        leastSuccessfulEmotion: emotionLabel === "fear" ? "fear" : "fomo",
+        commonMistakes: insights,
+        strengths: ["You're journaling — most traders don't.", "Self-awareness is the first edge."],
+        aiInsights: `Across ${totalEntries} journaled trades, your dominant emotion is "${emotionLabel}". ${insights[0]}\n\nRecommendations:\n• Write a 1-line thesis before every entry.\n• Set stop-loss + target *before* placing the trade.\n• Review every Friday — what worked, what didn't.`,
+        lastUpdated: new Date(),
+      };
+      setAnalysis(computed);
+      toast({ title: "Analysis Complete", description: "Pattern analysis ready." });
       setLoading(false);
-    }
+    }, 400);
   };
 
   return (

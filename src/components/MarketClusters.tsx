@@ -100,7 +100,7 @@ export function MarketClusters({ assets }: MarketClustersProps) {
             For practice traders, this environment offers exceptional learning opportunities. Technology stocks like NVIDIA (NVDA) and Microsoft (MSFT) exhibit high-conviction trends ideal for momentum strategy practice. Cryptocurrencies including Bitcoin (BTC) and Ethereum (ETH) provide 24/7 market access to refine entry and exit timing. Blue-chip names like Apple (AAPL) and Amazon (AMZN) teach patience and earnings-based positioning.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            TradeHQ's $10,000 virtual portfolio lets you simulate professional positioning across all five asset clusters below—from the AI Revolution to Hard Assets—without risking real capital. Master chart patterns, develop emotional discipline, and build your 2026 strategy playbook before committing real funds.
+            TradeHQ's $100,000 virtual portfolio lets you simulate professional positioning across all five asset clusters below—from the AI Revolution to Hard Assets—without risking real capital. Master chart patterns, develop emotional discipline, and build your 2026 strategy playbook before committing real funds.
           </p>
         </div>
       </article>

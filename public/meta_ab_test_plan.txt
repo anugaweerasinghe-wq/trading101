@@ -30,12 +30,12 @@ ROLLBACK THRESHOLDS (automatic rollback if ANY triggered):
   - Average position degrades by more than 10 positions on any seed asset
 
 VARIANT A PATTERN (active):
-  Title: "Learn & Practice [Asset] Trading Free — $10K Simulator | Simulated [Ticker] Data 2026"
-  Desc:  "Learn & practice [asset] trading risk-free with $10K virtual cash. Simulated [ticker] charts, [AI] strategy builder. No signup."
+  Title: "Learn & Practice [Asset] Trading Free — $100K Simulator | Simulated [Ticker] Data 2026"
+  Desc:  "Learn & practice [asset] trading risk-free with $100K virtual cash. Simulated [ticker] charts, [AI] strategy builder. No signup."
 
 VARIANT B PATTERN (saved):
-  Title: "[TICKER] 2026 Simulated Analysis — Free $10K Trading Simulator | TradeHQ"
-  Desc:  "Start trading [TICKER] now — $10K free [virtual/demo] cash, simulated [asset] charts[, AI mentor]. No signup. [Benefit]."
+  Title: "[TICKER] 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ"
+  Desc:  "Start trading [TICKER] now — $100K free [virtual/demo] cash, simulated [asset] charts[, AI mentor]. No signup. [Benefit]."
 
 NOTES:
   - All "Live" references have been replaced with "Simulated" in both variants.

@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Bot, Send, X, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Message } from "@/lib/types";
-import { supabase } from "@/integrations/supabase/client";
+import { getSmartMentorReply } from "@/lib/smartMentor";
 
 interface AIAssistantProps {
   portfolio: any;
@@ -44,92 +44,20 @@ export function AIAssistant({ portfolio, assets }: AIAssistantProps) {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const text = input;
     setInput("");
     setIsLoading(true);
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/trading-advisor`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: JSON.stringify({
-            message: input,
-            portfolio,
-            assets,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to get response');
-      }
-
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let assistantContent = "";
-
-      const assistantMessage: Message = {
+    const reply = getSmartMentorReply(text);
+    window.setTimeout(() => {
+      setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "",
+        content: reply,
         timestamp: new Date(),
-      };
-
-      setMessages(prev => [...prev, assistantMessage]);
-
-      if (reader) {
-        let buffer = "";
-        
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || "";
-
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              const data = line.slice(6);
-              if (data === '[DONE]') continue;
-              
-              try {
-                const parsed = JSON.parse(data);
-                const content = parsed.choices?.[0]?.delta?.content;
-                if (content) {
-                  assistantContent += content;
-                  setMessages(prev => 
-                    prev.map(msg => 
-                      msg.id === assistantMessage.id 
-                        ? { ...msg, content: assistantContent }
-                        : msg
-                    )
-                  );
-                }
-              } catch (e) {
-                // Skip invalid JSON
-              }
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`,
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
+      }]);
       setIsLoading(false);
-    }
+    }, 300);
   };
 
   return (
@@ -155,8 +83,8 @@ export function AIAssistant({ portfolio, assets }: AIAssistantProps) {
                 <Sparkles className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold">AI Trading Advisor</h3>
-                <p className="text-xs text-muted-foreground">Powered by Lovable AI</p>
+                <h3 className="font-semibold">Smart Trading Advisor</h3>
+                <p className="text-xs text-muted-foreground">Curated knowledge engine</p>
               </div>
             </div>
             <Button

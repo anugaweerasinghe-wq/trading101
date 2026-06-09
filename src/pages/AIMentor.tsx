@@ -5,35 +5,33 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Bot, User, Sparkles, TrendingUp, BookOpen, Shield } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { Send, Bot, User, Sparkles, TrendingUp, BookOpen, Shield, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SEOSection } from "@/components/SEOSection";
+import { getSmartMentorReply, MENTOR_SUGGESTIONS } from "@/lib/smartMentor";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-const SUGGESTED_QUESTIONS = [
-  { icon: TrendingUp, text: "What is a bull market?" },
-  { icon: BookOpen, text: "Explain stop-loss orders" },
-  { icon: Shield, text: "How do I manage risk?" },
-  { icon: Sparkles, text: "What is dollar-cost averaging?" },
-];
+const SUGGESTED_ICONS = [TrendingUp, BookOpen, Shield, Sparkles, Brain, Bot];
+const SUGGESTED_QUESTIONS = MENTOR_SUGGESTIONS.map((text, i) => ({
+  icon: SUGGESTED_ICONS[i % SUGGESTED_ICONS.length],
+  text,
+}));
 
 export default function AIMentor() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hey! I'm your AI trading mentor. Ask me anything about stocks, crypto, trading strategies, or market concepts. I'm here to help you learn!"
+      content:
+        "Hey! I'm your **Smart Mentor** — a curated trading-knowledge engine built from real strategy, risk, and psychology lessons. Ask me anything about trading, or tap a topic below."
     }
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -41,7 +39,7 @@ export default function AIMentor() {
     }
   }, [messages]);
 
-  const sendMessage = async (messageText: string) => {
+  const sendMessage = (messageText: string) => {
     if (!messageText.trim() || isLoading) return;
 
     const userMessage: Message = { role: "user", content: messageText };
@@ -49,83 +47,12 @@ export default function AIMentor() {
     setInput("");
     setIsLoading(true);
 
-    let assistantContent = "";
-
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/trading-mentor`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: JSON.stringify({ 
-            messages: [...messages, userMessage].map(m => ({ role: m.role, content: m.content }))
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || "Failed to get response");
-      }
-
-      if (!response.body) throw new Error("No response body");
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-
-      setMessages(prev => [...prev, { role: "assistant", content: "" }]);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        
-        let newlineIndex: number;
-        while ((newlineIndex = buffer.indexOf("\n")) !== -1) {
-          let line = buffer.slice(0, newlineIndex);
-          buffer = buffer.slice(newlineIndex + 1);
-
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (line.startsWith(":") || line.trim() === "") continue;
-          if (!line.startsWith("data: ")) continue;
-
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === "[DONE]") break;
-
-          try {
-            const parsed = JSON.parse(jsonStr);
-            const content = parsed.choices?.[0]?.delta?.content;
-            if (content) {
-              assistantContent += content;
-              setMessages(prev => {
-                const updated = [...prev];
-                updated[updated.length - 1] = { role: "assistant", content: assistantContent };
-                return updated;
-              });
-            }
-          } catch {
-            // Incomplete JSON, will be handled in next chunk
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Chat error:", error);
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to get response",
-        variant: "destructive",
-      });
-      if (!assistantContent) {
-        setMessages(prev => prev.slice(0, -1));
-      }
-    } finally {
+    // Simulate brief "thinking" delay so the UI feels alive.
+    const reply = getSmartMentorReply(messageText);
+    window.setTimeout(() => {
+      setMessages(prev => [...prev, { role: "assistant", content: reply }]);
       setIsLoading(false);
-    }
+    }, 350);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -136,21 +63,21 @@ export default function AIMentor() {
   return (
     <>
       <Helmet>
-        <title>AI Trading Mentor — Personalized Trading Coach & Behavioral Analyst | TradeHQ</title>
-        <meta name="description" content="Chat with your personal AI trading mentor. Get real-time strategy advice, risk warnings, portfolio analysis, and psychological support to improve your trading." />
+        <title>Smart Trading Mentor — Free Strategy, Risk & Psychology Coach | TradeHQ</title>
+        <meta name="description" content="Chat with TradeHQ's Smart Mentor — a curated knowledge engine covering stop-losses, RSI, position sizing, psychology, crypto, ETFs and more. Free, instant, no signup." />
         <link rel="canonical" href="https://tradinghq.vercel.app/ai-mentor" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="AI Trading Mentor — Your Personal Trading Coach | TradeHQ" />
-        <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Powered by advanced AI. Free on TradeHQ." />
+        <meta property="og:title" content="Smart Trading Mentor — Your Free Trading Coach | TradeHQ" />
+        <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Curated by expert traders. Free on TradeHQ." />
         <meta property="og:url" content="https://tradinghq.vercel.app/ai-mentor" />
         <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="AI Trading Mentor — Your Personal Trading Coach | TradeHQ" />
-        <meta name="twitter:description" content="Ask anything about trading, risk, psychology, or markets. Powered by advanced AI." />
+        <meta name="twitter:title" content="Smart Trading Mentor — Your Free Trading Coach | TradeHQ" />
+        <meta name="twitter:description" content="Ask anything about trading, risk, psychology, or markets. Curated by expert traders." />
         <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
       </Helmet>
 
@@ -161,14 +88,14 @@ export default function AIMentor() {
           {/* Header */}
           <div className="text-center mb-8 animate-fade-in">
             <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-primary/10 border border-primary/20">
-              <Bot className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium text-primary">AI Trading Mentor</span>
+              <Brain className="w-5 h-5 text-primary" />
+              <span className="text-sm font-medium text-primary">Smart Trading Mentor</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-2">
-              Learn Trading with <span className="text-primary">AI</span>
+              Trading Mentor <span className="text-primary">— Curated Knowledge</span>
             </h1>
             <p className="text-muted-foreground">
-              Ask any trading question — stocks, crypto, strategies, risk management
+              Expert-curated answers — strategy, risk, psychology, technicals
             </p>
           </div>
 

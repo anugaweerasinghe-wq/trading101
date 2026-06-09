@@ -17,7 +17,7 @@ interface LeaderboardState {
 
 const STORAGE_KEY = "tradehq_leaderboard_v1";
 const REFRESH_INTERVAL_MS = 3 * 24 * 60 * 60 * 1000; // 3 days
-const BASELINE = 10000;
+const BASELINE = 100000;
 const MIN_VALUE = 6000;
 const MAX_VALUE = 25000;
 

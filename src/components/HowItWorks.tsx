@@ -4,8 +4,8 @@ import { Wallet, ShoppingCart, BarChart3 } from "lucide-react";
 const steps = [
   {
     icon: Wallet,
-    title: "Get $10K Virtual Cash Instantly",
-    description: "No signup, no credit card. Open TradeHQ and you're ready to trade with $10,000 in virtual money.",
+    title: "Get $100K Virtual Cash Instantly",
+    description: "No signup, no credit card. Open TradeHQ and you're ready to trade with $100,000 in virtual money.",
   },
   {
     icon: ShoppingCart,

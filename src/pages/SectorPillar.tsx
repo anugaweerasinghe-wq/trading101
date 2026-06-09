@@ -116,7 +116,7 @@ export default function SectorPillar() {
     <>
       <Helmet>
         <title>{sector.name} Trading Simulator | 2026 Strategy & Analysis | TradeHQ</title>
-        <meta name="description" content={`Practice trading ${sector.name.toLowerCase()} assets with $10K virtual funds. ${sector.description.slice(0, 100)}...`} />
+        <meta name="description" content={`Practice trading ${sector.name.toLowerCase()} assets with $100K virtual funds. ${sector.description.slice(0, 100)}...`} />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content={`${sector.name} Trading Simulator | TradeHQ`} />
@@ -160,7 +160,7 @@ export default function SectorPillar() {
                 {sector.description}
               </p>
               <p className="text-sm text-muted-foreground mt-4">
-                Practice trading {sector.name.toLowerCase()} with $10,000 virtual capital. 
+                Practice trading {sector.name.toLowerCase()} with $100,000 virtual capital. 
                 No signup required. (Educational simulation only — not financial advice.)
               </p>
             </div>

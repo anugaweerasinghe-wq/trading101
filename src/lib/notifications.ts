@@ -52,7 +52,7 @@ export function getMilestoneState(): MilestoneState {
   
   // Initialize with current portfolio value
   return {
-    initialValue: 10000, // Default starting value
+    initialValue: 100000, // Default starting value
     milestones: MILESTONES.reduce((acc, m) => {
       acc[m.value.toString()] = { percentage: m.value, reached: false };
       return acc;
@@ -129,7 +129,7 @@ export function initializeMilestones(currentValue: number): void {
   const state = getMilestoneState();
   
   // If initial value is still default, set it to current value
-  if (state.initialValue === 10000 && currentValue !== 10000) {
+  if (state.initialValue === 100000 && currentValue !== 100000) {
     resetMilestones(currentValue);
   }
 }

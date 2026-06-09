@@ -166,7 +166,7 @@ const WikiTerm = () => {
               <h3 className="text-sm font-bold text-foreground">Apply This in the Simulator</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-4">
-              Practice identifying {term.term.toLowerCase()} patterns with $10,000 in virtual capital. Zero risk, real market data.
+              Practice identifying {term.term.toLowerCase()} patterns with $100,000 in virtual capital. Zero risk, real market data.
             </p>
             <Link to="/trade/BTC">
               <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-lg">

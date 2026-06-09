@@ -293,12 +293,12 @@ export default function Trade() {
   }, []);
 
   const pageTitle = symbol
-    ? `Trade ${symbol.toUpperCase()} — Free Simulator with $10K Virtual Cash | TradeHQ`
-    : "Free Trading Simulator — Buy Stocks, ETFs & Crypto with $10K | TradeHQ";
+    ? `Trade ${symbol.toUpperCase()} — Free Simulator with $100K Virtual Cash | TradeHQ`
+    : "Free Trading Simulator — Buy Stocks, ETFs & Crypto with $100K | TradeHQ";
 
   const pageDescription = symbol
-    ? `Practice trading ${symbol.toUpperCase()} with $10,000 virtual cash. Real-time charts, AI mentor & zero risk. No signup required — TradeHQ 2026.`
-    : "Use our free trading simulator to buy stocks, ETFs, and crypto with $10K virtual money. Real-time practice, zero risk. No signup required.";
+    ? `Practice trading ${symbol.toUpperCase()} with $100,000 virtual cash. Real-time charts, AI mentor & zero risk. No signup required — TradeHQ 2026.`
+    : "Use our free trading simulator to buy stocks, ETFs, and crypto with $100K virtual money. Real-time practice, zero risk. No signup required.";
 
   const pageUrl = `https://tradinghq.vercel.app/trade${
     symbol ? `/${symbol.toLowerCase()}` : ""

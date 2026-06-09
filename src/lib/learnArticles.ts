@@ -23,7 +23,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     slug: "what-is-paper-trading",
     title: "What Is Paper Trading and Why Every Beginner Should Start Here",
     summary: "Paper trading lets you practice buying and selling stocks, crypto, and other assets using virtual money — so you can learn without losing a cent.",
-    metaDescription: "Learn what paper trading is and why it's the safest way to start investing. Practice with $10,000 virtual cash on TradeHQ — no signup, no risk.",
+    metaDescription: "Learn what paper trading is and why it's the safest way to start investing. Practice with $100,000 virtual cash on TradeHQ — no signup, no risk.",
     readTime: "5 min read",
     sections: [
       {
@@ -31,7 +31,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Paper trading is the practice of simulating trades without using real money. Instead of risking your hard-earned savings, you use virtual currency to buy and sell stocks, ETFs, cryptocurrencies, and other financial instruments. The term dates back to a time when aspiring traders would literally write their hypothetical trades on paper to track performance.",
           "Today, paper trading is done digitally through platforms like TradeHQ, which provide simulated trading environments with real-time market data. You get all the experience of placing orders, reading charts, and managing a portfolio — without any financial risk. It is the single best way for a beginner to learn how markets actually work.",
-          "On TradeHQ, every user starts with $10,000 in virtual cash. You can trade over 150 assets including blue-chip stocks like Apple (AAPL), cryptocurrencies like Bitcoin (BTC), ETFs like SPY, forex pairs, and commodities like gold. Every trade you make is tracked, giving you a realistic portfolio experience."
+          "On TradeHQ, every user starts with $100,000 in virtual cash. You can trade over 150 assets including blue-chip stocks like Apple (AAPL), cryptocurrencies like Bitcoin (BTC), ETFs like SPY, forex pairs, and commodities like gold. Every trade you make is tracked, giving you a realistic portfolio experience."
         ]
       },
       {
@@ -45,14 +45,14 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "How to Get Started with Paper Trading on TradeHQ",
         paragraphs: [
-          "Getting started is simple: visit TradeHQ, and you'll have $10,000 in virtual cash ready to trade immediately — no signup or credit card required. Browse over 150 assets, read the AI-generated market analysis, place your first simulated trade, and start tracking your portfolio performance.",
+          "Getting started is simple: visit TradeHQ, and you'll have $100,000 in virtual cash ready to trade immediately — no signup or credit card required. Browse over 150 assets, read the AI-generated market analysis, place your first simulated trade, and start tracking your portfolio performance.",
           "As you gain experience, use the AI Mentor feature to get personalized strategy recommendations. Review your trade history, analyze what worked and what didn't, and continuously refine your approach. The goal isn't to make money — it's to build the skills and discipline you'll need when you eventually trade with real capital.",
           "Many professional traders still use paper trading to test new strategies before deploying real capital. It's not just for beginners — it's a lifelong tool for any serious market participant. Start your paper trading journey today and build the foundation for long-term financial success."
         ]
       }
     ],
     relatedLinks: [
-      { href: "/trade", label: "Start paper trading with $10,000 virtual cash" },
+      { href: "/trade", label: "Start paper trading with $100,000 virtual cash" },
       { href: "/trade/aapl", label: "Practice trading Apple (AAPL)" },
       { href: "/trade/btc", label: "Practice trading Bitcoin (BTC)" },
       { href: "/learn/how-to-read-stock-charts", label: "Learn how to read stock charts" },
@@ -117,7 +117,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Stocks offer more stability and a longer track record. The S&P 500 has returned an average of about 10% per year over the last century. Company fundamentals — earnings reports, revenue growth, dividends — provide concrete data points for making trading decisions, which can be easier for beginners to analyze.",
           "Stocks are also more heavily regulated, which provides investor protections. You can learn about well-known companies you already use daily (Apple, Google, Amazon) and understand how real-world events affect stock prices. This practical connection makes learning more intuitive.",
-          "On TradeHQ, you can practice trading popular stocks like Tesla (TSLA), NVIDIA (NVDA), and Amazon (AMZN) with your $10,000 virtual portfolio. Watch how earnings announcements, product launches, and macro-economic data drive price movements."
+          "On TradeHQ, you can practice trading popular stocks like Tesla (TSLA), NVIDIA (NVDA), and Amazon (AMZN) with your $100,000 virtual portfolio. Watch how earnings announcements, product launches, and macro-economic data drive price movements."
         ]
       },
       {
@@ -140,7 +140,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     slug: "trading-strategies-for-beginners",
     title: "5 Trading Strategies You Can Test Risk-Free on a Simulator",
     summary: "From buy-and-hold to momentum trading — explore five proven strategies you can practice with virtual money before risking real capital.",
-    metaDescription: "5 beginner-friendly trading strategies to practice risk-free. Test momentum, swing, and value trading with $10K virtual cash on TradeHQ.",
+    metaDescription: "5 beginner-friendly trading strategies to practice risk-free. Test momentum, swing, and value trading with $100K virtual cash on TradeHQ.",
     readTime: "7 min read",
     sections: [
       {
@@ -170,7 +170,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       }
     ],
     relatedLinks: [
-      { href: "/trade", label: "Start testing strategies with $10K virtual cash" },
+      { href: "/trade", label: "Start testing strategies with $100K virtual cash" },
       { href: "/trade/tsla", label: "Practice swing trading Tesla (TSLA)" },
       { href: "/trade/sol", label: "Trade Solana (SOL) momentum" },
       { href: "/learn/how-to-read-stock-charts", label: "How to read stock charts" },
@@ -218,8 +218,8 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   {
     slug: "how-to-build-a-portfolio",
     title: "How to Build a Balanced Virtual Portfolio from Scratch",
-    summary: "Learn the fundamentals of portfolio construction — asset allocation, diversification, and rebalancing — using your $10,000 TradeHQ virtual cash.",
-    metaDescription: "Learn how to build a diversified portfolio from scratch. Practice asset allocation with $10K virtual cash on TradeHQ — free stock simulator.",
+    summary: "Learn the fundamentals of portfolio construction — asset allocation, diversification, and rebalancing — using your $100,000 TradeHQ virtual cash.",
+    metaDescription: "Learn how to build a diversified portfolio from scratch. Practice asset allocation with $100K virtual cash on TradeHQ — free stock simulator.",
     readTime: "6 min read",
     sections: [
       {
@@ -266,13 +266,13 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Most beginner traders obsess over finding the perfect stock or crypto to buy. But professional traders know the truth: risk management is far more important than any single trade idea. You can be wrong on 60% of your trades and still be profitable if your winners are larger than your losers — and that's entirely a function of risk management.",
           "Risk management is a set of rules and strategies designed to limit your potential losses on any single trade and across your entire portfolio. Without it, a single bad trade can wipe out weeks or months of gains. With it, you can survive losing streaks, preserve capital, and stay in the game long enough for your edge to play out.",
-          "On TradeHQ, you can practice risk management techniques with $10,000 in virtual cash. Experiment with different position sizes, stop-loss levels, and risk-reward ratios — and see firsthand how they impact your portfolio over dozens of trades. This is the single most valuable skill you can develop before trading with real money."
+          "On TradeHQ, you can practice risk management techniques with $100,000 in virtual cash. Experiment with different position sizes, stop-loss levels, and risk-reward ratios — and see firsthand how they impact your portfolio over dozens of trades. This is the single most valuable skill you can develop before trading with real money."
         ]
       },
       {
         heading: "Position Sizing and the 2% Rule",
         paragraphs: [
-          "Position sizing determines how much of your portfolio you allocate to a single trade. The most widely recommended rule is the 2% rule: never risk more than 2% of your total portfolio on any single trade. With a $10,000 account, that means your maximum loss per trade should be $200.",
+          "Position sizing determines how much of your portfolio you allocate to a single trade. The most widely recommended rule is the 2% rule: never risk more than 2% of your total portfolio on any single trade. With a $100,000 account, that means your maximum loss per trade should be $200.",
           "To calculate position size, you need three numbers: your account size, your risk percentage (e.g., 2%), and your stop-loss distance. If you're buying a stock at $100 with a stop-loss at $95, your risk per share is $5. With a $200 maximum risk, you'd buy 40 shares ($200 ÷ $5 = 40 shares, or a $4,000 position).",
           "The 2% rule ensures that even a string of 10 consecutive losing trades only costs you about 18% of your account — painful but recoverable. Compare that to risking 10% per trade, where 10 losses would destroy 65% of your portfolio. Practice calculating position sizes on TradeHQ until it becomes second nature."
         ]
@@ -287,7 +287,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       }
     ],
     relatedLinks: [
-      { href: "/trade", label: "Practice risk management with $10K virtual cash" },
+      { href: "/trade", label: "Practice risk management with $100K virtual cash" },
       { href: "/learn/trading-strategies-for-beginners", label: "5 beginner trading strategies" },
       { href: "/trade/btc", label: "Practice stop-losses on Bitcoin (BTC)" },
       { href: "/learn/how-to-read-stock-charts", label: "How to read stock charts" },

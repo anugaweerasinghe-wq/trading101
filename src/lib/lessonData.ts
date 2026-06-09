@@ -556,7 +556,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "You have $10,000 to trade. If you put all $10,000 into one stock and it drops 50%, you now have $5,000. Even if your next trade doubles, you're still at $10,000 - back to where you started!",
+            data: "You have $100,000 to trade. If you put all $100,000 into one stock and it drops 50%, you now have $5,000. Even if your next trade doubles, you're still at $100,000 - back to where you started!",
           },
           {
             type: "heading",
@@ -569,7 +569,7 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "$10,000 account = Risk maximum $200 per trade",
+              "$100,000 account = Risk maximum $200 per trade",
               "$50,000 account = Risk maximum $1,000 per trade",
               "$100,000 account = Risk maximum $2,000 per trade",
               "Conservative traders use 1% rule instead",
@@ -590,7 +590,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Account: $10,000 | Risk per trade: 2% = $200 | Stock price: $100 | Stop-loss: $95 | Risk per share: $5 | Position size: $200 ÷ $5 = 40 shares. Buy 40 shares at $100 = $4,000 investment, but only $200 at risk!",
+            data: "Account: $100,000 | Risk per trade: 2% = $200 | Stock price: $100 | Stop-loss: $95 | Risk per share: $5 | Position size: $200 ÷ $5 = 40 shares. Buy 40 shares at $100 = $4,000 investment, but only $200 at risk!",
           },
           {
             type: "list",
@@ -893,7 +893,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "For a $10,000 account, hold 5-8 positions maximum. Too few = too much risk. Too many = can't manage effectively. Find the sweet spot.",
+            data: "For a $100,000 account, hold 5-8 positions maximum. Too few = too much risk. Too many = can't manage effectively. Find the sweet spot.",
           },
           {
             type: "heading",
@@ -937,7 +937,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "$10,000 account: $6,000 in SPY and QQQ ETFs (core). $4,000 spread across AAPL, TSLA, NVDA, MSFT (satellites). Safe base with growth potential.",
+            data: "$100,000 account: $6,000 in SPY and QQQ ETFs (core). $4,000 spread across AAPL, TSLA, NVDA, MSFT (satellites). Safe base with growth potential.",
           },
           {
             type: "heading",
@@ -984,10 +984,10 @@ export const lessonData: Lesson[] = [
     ],
     quiz: [
       {
-        question: "According to the 2% rule, how much should you risk per trade on a $10,000 account?",
+        question: "According to the 2% rule, how much should you risk per trade on a $100,000 account?",
         options: ["$100", "$200", "$500", "$1,000"],
         correctAnswer: 1,
-        explanation: "The 2% rule means you risk 2% of your total capital per trade. 2% of $10,000 = $200.",
+        explanation: "The 2% rule means you risk 2% of your total capital per trade. 2% of $100,000 = $200.",
       },
       {
         question: "What is the main purpose of a stop-loss order?",
@@ -1329,7 +1329,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "$10,000 portfolio: $6,000 in SPY/QQQ gives you exposure to 500+ companies with two purchases. That's instant diversification!",
+            data: "$100,000 portfolio: $6,000 in SPY/QQQ gives you exposure to 500+ companies with two purchases. That's instant diversification!",
           },
           {
             type: "heading",
@@ -1663,7 +1663,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Trader A targets $10,000 monthly, takes risky trades to hit goal, blows up account. Trader B focuses on quality setups only, makes $8,000 some months, $2,000 others, but compounds wealth steadily over years.",
+            data: "Trader A targets $100,000 monthly, takes risky trades to hit goal, blows up account. Trader B focuses on quality setups only, makes $8,000 some months, $2,000 others, but compounds wealth steadily over years.",
           },
           {
             type: "tip",

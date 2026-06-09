@@ -6,7 +6,7 @@
     {
       "symbol": "BTC",
       "url": "/trade/btc",
-      "meta_title": "Practice Trading Bitcoin (BTC) | Free $10k Demo",
+      "meta_title": "Practice Trading Bitcoin (BTC) | Free $100k Demo",
       "meta_title_length": 47,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice BTC trading risk-free. Digital Gold. A decentralized store of value with a capped supply of 21 million coins.",
@@ -20,7 +20,7 @@
     {
       "symbol": "ETH",
       "url": "/trade/eth",
-      "meta_title": "Practice Trading Ethereum (ETH) | Free $10k Demo",
+      "meta_title": "Practice Trading Ethereum (ETH) | Free $100k Demo",
       "meta_title_length": 48,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice ETH trading risk-free. The foundation for DeFi and smart contracts.",
@@ -34,7 +34,7 @@
     {
       "symbol": "SOL",
       "url": "/trade/sol",
-      "meta_title": "Practice Trading Solana (SOL) | Free $10k Demo",
+      "meta_title": "Practice Trading Solana (SOL) | Free $100k Demo",
       "meta_title_length": 46,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice SOL trading risk-free. A high-performance blockchain built for mass adoption with sub-second finality.",
@@ -48,7 +48,7 @@
     {
       "symbol": "XRP",
       "url": "/trade/xrp",
-      "meta_title": "Practice Trading XRP (XRP) | Free $10k Demo",
+      "meta_title": "Practice Trading XRP (XRP) | Free $100k Demo",
       "meta_title_length": 43,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice XRP trading risk-free. XRP is the digital asset native to the XRP Ledger, designed for fast, low-cost cross-border payments.",
@@ -62,7 +62,7 @@
     {
       "symbol": "BNB",
       "url": "/trade/bnb",
-      "meta_title": "Practice Trading BNB (BNB) | Free $10k Demo",
+      "meta_title": "Practice Trading BNB (BNB) | Free $100k Demo",
       "meta_title_length": 43,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice BNB trading risk-free. BNB is the native token of the Binance ecosystem, powering the BNB Chain.",
@@ -76,7 +76,7 @@
     {
       "symbol": "NVDA",
       "url": "/trade/nvda",
-      "meta_title": "Practice Trading NVIDIA (NVDA) | Free $10k Demo",
+      "meta_title": "Practice Trading NVIDIA (NVDA) | Free $100k Demo",
       "meta_title_length": 47,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice NVDA trading risk-free. The undisputed leader in AI computing and GPUs.",
@@ -90,7 +90,7 @@
     {
       "symbol": "AAPL",
       "url": "/trade/aapl",
-      "meta_title": "Practice Trading Apple (AAPL) | Free $10k Demo",
+      "meta_title": "Practice Trading Apple (AAPL) | Free $100k Demo",
       "meta_title_length": 46,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice AAPL trading risk-free. Apple Inc. is the world's most valuable company, known for the iPhone, Mac, iPad, and services.",
@@ -104,7 +104,7 @@
     {
       "symbol": "MSFT",
       "url": "/trade/msft",
-      "meta_title": "Practice Trading Microsoft (MSFT) | Free $10k Demo",
+      "meta_title": "Practice Trading Microsoft (MSFT) | Free $100k Demo",
       "meta_title_length": 50,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice MSFT trading risk-free. A technology giant leading in cloud computing (Azure), enterprise software, and AI development.",
@@ -118,7 +118,7 @@
     {
       "symbol": "AMZN",
       "url": "/trade/amzn",
-      "meta_title": "Practice Trading Amazon (AMZN) | Free $10k Demo",
+      "meta_title": "Practice Trading Amazon (AMZN) | Free $100k Demo",
       "meta_title_length": 47,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice AMZN trading risk-free. The global leader in e-commerce and cloud computing (AWS).",
@@ -132,7 +132,7 @@
     {
       "symbol": "GOOGL",
       "url": "/trade/googl",
-      "meta_title": "Practice Trading Alphabet (GOOGL) | Free $10k Demo",
+      "meta_title": "Practice Trading Alphabet (GOOGL) | Free $100k Demo",
       "meta_title_length": 50,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice GOOGL trading risk-free. Alphabet, the parent company of Google, dominates search, digital advertising, and AI.",
@@ -146,7 +146,7 @@
     {
       "symbol": "META",
       "url": "/trade/meta",
-      "meta_title": "Practice Trading Meta (META) | Free $10k Demo",
+      "meta_title": "Practice Trading Meta (META) | Free $100k Demo",
       "meta_title_length": 45,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice META trading risk-free. Owner of Facebook, Instagram, WhatsApp, and Threads—the world's largest social media platforms.",
@@ -160,7 +160,7 @@
     {
       "symbol": "NFLX",
       "url": "/trade/nflx",
-      "meta_title": "Practice Trading Netflix (NFLX) | Free $10k Demo",
+      "meta_title": "Practice Trading Netflix (NFLX) | Free $100k Demo",
       "meta_title_length": 48,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice NFLX trading risk-free. The world's largest streaming entertainment service with 280M+ subscribers globally.",
@@ -174,7 +174,7 @@
     {
       "symbol": "SPY",
       "url": "/trade/spy",
-      "meta_title": "Practice Trading SPDR S&P 500 ETF (SPY) | Free $10k Demo",
+      "meta_title": "Practice Trading SPDR S&P 500 ETF (SPY) | Free $100k Demo",
       "meta_title_length": 56,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice SPY trading risk-free. The world's most traded ETF, tracking the S&P 500 index—500 of America's largest public companies.",
@@ -188,7 +188,7 @@
     {
       "symbol": "OIL",
       "url": "/trade/oil",
-      "meta_title": "Practice Trading Crude Oil WTI (OIL) | Free $10k Demo",
+      "meta_title": "Practice Trading Crude Oil WTI (OIL) | Free $100k Demo",
       "meta_title_length": 52,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice OIL trading risk-free. Crude Oil (WTI) is the primary energy commodity and a global inflation indicator.",
@@ -202,7 +202,7 @@
     {
       "symbol": "GBP/USD",
       "url": "/trade/gbp-usd",
-      "meta_title": "Practice Trading GBP/USD (Cable) | Free $10k Demo",
+      "meta_title": "Practice Trading GBP/USD (Cable) | Free $100k Demo",
       "meta_title_length": 49,
       "meta_title_status": "✅ PASS (<60 chars)",
       "meta_description": "Practice GBP/USD trading risk-free. The 'Cable' pair, representing the exchange rate between British Pound and US Dollar.",

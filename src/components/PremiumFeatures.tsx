@@ -9,7 +9,7 @@ export function PremiumFeatures() {
     {
       icon: Shield,
       title: "100% Risk-Free Practice",
-      description: "Trade with $10K virtual cash. Make bold moves, learn from mistakes, and master strategies without risking a single dollar.",
+      description: "Trade with $100K virtual cash. Make bold moves, learn from mistakes, and master strategies without risking a single dollar.",
       gradient: "from-primary/20 to-primary/5",
       iconColor: "text-primary",
       borderGlow: "hover:border-primary/30",

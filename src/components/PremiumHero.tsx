@@ -95,7 +95,7 @@ export function PremiumHero() {
           transition={{ duration: 0.7, delay: 0.25 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 font-normal leading-relaxed"
         >
-          Start with <span className="text-foreground font-medium">$10,000 virtual cash</span> — the free simulator for stocks, ETFs & crypto. No signup. No risk.
+          Start with <span className="text-foreground font-medium">$100,000 virtual cash</span> — the free simulator for stocks, ETFs & crypto. No signup. No risk.
         </motion.p>
 
         {/* CTA buttons */}
@@ -147,9 +147,9 @@ export function PremiumHero() {
         >
           {[
             { label: 'Tradeable Assets', value: '150+', icon: TrendingUp, glow: 'hsl(180 70% 50% / 0.1)' },
-            { label: 'Virtual Capital', value: '$10K', icon: Shield, glow: 'hsl(152 60% 42% / 0.1)' },
+            { label: 'Virtual Capital', value: '$100K', icon: Shield, glow: 'hsl(152 60% 42% / 0.1)' },
             { label: 'AI Mentoring', value: 'Free', icon: Sparkles, glow: 'hsl(280 60% 55% / 0.1)' },
-            { label: 'Weekly Refill', value: '$10K', icon: Zap, glow: 'hsl(38 75% 50% / 0.1)' },
+            { label: 'Weekly Refill', value: '$100K', icon: Zap, glow: 'hsl(38 75% 50% / 0.1)' },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}

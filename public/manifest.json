@@ -1,7 +1,7 @@
 {
   "name": "TradeHQ - Stock Trading Simulator",
   "short_name": "TradeHQ",
-  "description": "Practice stock trading & crypto with TradeHQ's free $10K simulator. Master technical analysis indicators, risk-adjusted returns & virtual capital allocation.",
+  "description": "Practice stock trading & crypto with TradeHQ's free $100K simulator. Master technical analysis indicators, risk-adjusted returns & virtual capital allocation.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0B0B0B",

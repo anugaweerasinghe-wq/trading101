@@ -40,7 +40,7 @@ const defaultModules: LearningModule[] = [
   { id: "risk", title: "Risk Management", description: "Protect your capital", icon: <Zap className="w-5 h-5" />, xp: 200, completed: false, locked: true },
   { id: "psychology", title: "Trading Psychology", description: "Master your emotions", icon: <Target className="w-5 h-5" />, xp: 250, completed: false, locked: true },
   { id: "ai-bots", title: "AI Trading Bot Safety", description: "Navigate AI trading safely", icon: <Zap className="w-5 h-5" />, xp: 300, completed: false, locked: true },
-  { id: "practice", title: "Simulator Practice", description: "Trade with $10K demo", icon: <Trophy className="w-5 h-5" />, xp: 500, completed: false, locked: true },
+  { id: "practice", title: "Simulator Practice", description: "Trade with $100K demo", icon: <Trophy className="w-5 h-5" />, xp: 500, completed: false, locked: true },
 ];
 
 function safeParseState(raw: string | null): PersistedLearningModuleState[] | null {

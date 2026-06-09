@@ -67,7 +67,7 @@ const LearnTradingGuide = () => {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "AI-Assisted Trading for Beginners: 2026 Guide",
-    "description": "Master AI-assisted trading, Bitcoin Layer 2, and risk management with a free $10K simulator.",
+    "description": "Master AI-assisted trading, Bitcoin Layer 2, and risk management with a free $100K simulator.",
     "author": { "@type": "Organization", "name": "TradeHQ" },
     "datePublished": "2026-02-01",
     "image": `${DOMAIN}/og-image.jpg`
@@ -82,7 +82,7 @@ const LearnTradingGuide = () => {
         "name": "How do I start trading with no money?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The best way is to use a trading simulator like TradeHQ which provides $10,000 in virtual capital to practice risk-free."
+          "text": "The best way is to use a trading simulator like TradeHQ which provides $100,000 in virtual capital to practice risk-free."
         }
       }
     ]
@@ -112,7 +112,7 @@ const LearnTradingGuide = () => {
             </motion.div>
             
             <h1 className="text-3xl md:text-5xl font-black mb-6 tracking-tight text-white leading-tight uppercase italic">
-              Practice with <span className="text-emerald-500">$10K Risk-Free</span>
+              Practice with <span className="text-emerald-500">$100K Risk-Free</span>
             </h1>
 
             <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
@@ -197,7 +197,7 @@ const LearnTradingGuide = () => {
                     </div>
                     <div>
                       <h4 className="text-sm font-black text-white uppercase tracking-tight mb-1">Risk Architecture</h4>
-                      <p className="text-xs text-slate-400 leading-relaxed">Master the 1% risk rule. Protect your virtual $10K balance as if it were your last dollar.</p>
+                      <p className="text-xs text-slate-400 leading-relaxed">Master the 1% risk rule. Protect your virtual $100K balance as if it were your last dollar.</p>
                     </div>
                   </div>
                 </div>
@@ -356,7 +356,7 @@ const LearnTradingGuide = () => {
           </section>
 
           <div className="mt-6 pt-4 border-t border-white/5 text-center">
-            <SocialShare title="I'm learning AI-assisted trading on TradeHQ! 🚀" description="Mastering 2026 trading with a free $10K simulator" variant="compact" />
+            <SocialShare title="I'm learning AI-assisted trading on TradeHQ! 🚀" description="Mastering 2026 trading with a free $100K simulator" variant="compact" />
           </div>
         </main>
 

@@ -12,7 +12,7 @@ interface SocialShareProps {
 
 export function SocialShare({ 
   title = "I'm learning to trade on TradingHQ!",
-  description = "Master trading with a risk-free $10K simulator",
+  description = "Master trading with a risk-free $100K simulator",
   url = "https://tradinghq.vercel.app/learn-trading-guide",
   variant = "default"
 }: SocialShareProps) {

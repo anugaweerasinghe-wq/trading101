@@ -246,7 +246,7 @@ export default function TradeAsset() {
       {
         "@type": "PropertyValue",
         "name": "simulatorScope",
-        "value": `Practice ${selectedAsset.symbol} trading with $10K virtual capital, simulated charts, and AI mentoring — educational only.`
+        "value": `Practice ${selectedAsset.symbol} trading with $100K virtual capital, simulated charts, and AI mentoring — educational only.`
       },
       {
         "@type": "PropertyValue",
@@ -327,7 +327,7 @@ export default function TradeAsset() {
       "name": `How can I practice trading ${selectedAsset.name}?`,
       "acceptedAnswer": {
         "@type": "Answer" as const,
-        "text": `TradeHQ provides $10,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and AI mentoring.`
+        "text": `TradeHQ provides $100,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and AI mentoring.`
       }
     }
   ] : [];
@@ -445,7 +445,7 @@ export default function TradeAsset() {
                 {selectedAsset.name} — Practice Trading Simulator 2026
               </h1>
               <p className="text-sm text-muted-foreground mb-2 max-w-3xl">
-                Master {selectedAsset.symbol} trading with $10,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
+                Master {selectedAsset.symbol} trading with $100,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
               </p>
               {/* Data trust signal */}
               <div className="flex items-center gap-3 text-xs">

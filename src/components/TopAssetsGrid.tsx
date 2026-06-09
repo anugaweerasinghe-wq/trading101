@@ -76,7 +76,7 @@ export function TopAssetsGrid() {
             </span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-base">
-            Jump into our most popular simulations. $10,000 virtual capital — no signup required.
+            Jump into our most popular simulations. $100,000 virtual capital — no signup required.
           </p>
         </motion.div>
 
