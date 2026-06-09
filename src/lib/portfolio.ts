@@ -178,7 +178,7 @@ export function updatePositionPrices(portfolio: Portfolio): Portfolio {
 }
 
 const WEEKLY_BONUS_KEY = 'tradesandbox_last_bonus';
-const WEEKLY_BONUS_AMOUNT = 10000;
+const WEEKLY_BONUS_AMOUNT = 100000;
 const WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
 
 export function canClaimWeeklyBonus(): boolean {

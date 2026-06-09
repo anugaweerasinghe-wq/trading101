@@ -26,8 +26,8 @@ serve(async (req) => {
     }
 
     // Build rich portfolio context
-    const cash = portfolio?.cash ?? 10000;
-    const totalValue = portfolio?.totalValue ?? 10000;
+    const cash = portfolio?.cash ?? 100000;
+    const totalValue = portfolio?.totalValue ?? 100000;
     const positions = portfolio?.positions || [];
     const trades = portfolio?.trades || [];
     

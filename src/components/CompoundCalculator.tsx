@@ -16,7 +16,7 @@ interface CalculatorResult {
 }
 
 export function CompoundCalculator() {
-  const [initialInvestment, setInitialInvestment] = useState(10000);
+  const [initialInvestment, setInitialInvestment] = useState(100000);
   const [monthlyContribution, setMonthlyContribution] = useState(500);
   const [annualReturn, setAnnualReturn] = useState(12);
   const [tradingFeePct, setTradingFeePct] = useState(0.1);
