@@ -21,12 +21,12 @@ const homeFaqSchema = {
     {
       "@type": "Question",
       name: "What is TradeHQ?",
-      acceptedAnswer: { "@type": "Answer", text: "TradeHQ is a free paper trading simulator where you can practice trading stocks, crypto, ETFs, forex, and commodities with $10,000 in virtual cash. No signup or credit card required." },
+      acceptedAnswer: { "@type": "Answer", text: "TradeHQ is a free paper trading simulator where you can practice trading stocks, crypto, ETFs, forex, and commodities with $100,000 in virtual cash. No signup or credit card required." },
     },
     {
       "@type": "Question",
       name: "Is TradeHQ completely free?",
-      acceptedAnswer: { "@type": "Answer", text: "Yes, TradeHQ is 100% free. You get $10,000 in virtual capital with weekly refills. There are no hidden fees, premium tiers, or credit card requirements." },
+      acceptedAnswer: { "@type": "Answer", text: "Yes, TradeHQ is 100% free. You get $100,000 in virtual capital with weekly refills. There are no hidden fees, premium tiers, or credit card requirements." },
     },
     {
       "@type": "Question",
@@ -36,7 +36,7 @@ const homeFaqSchema = {
     {
       "@type": "Question",
       name: "How do I start trading on TradeHQ?",
-      acceptedAnswer: { "@type": "Answer", text: "Just visit TradeHQ and click 'Start Trading Free.' You'll instantly receive $10,000 in virtual cash to trade 150+ assets — no account creation needed." },
+      acceptedAnswer: { "@type": "Answer", text: "Just visit TradeHQ and click 'Start Trading Free.' You'll instantly receive $100,000 in virtual cash to trade 150+ assets — no account creation needed." },
     },
     {
       "@type": "Question",
@@ -46,7 +46,7 @@ const homeFaqSchema = {
     {
       "@type": "Question",
       name: "Is there a leaderboard or competition?",
-      acceptedAnswer: { "@type": "Answer", text: "Yes! TradeHQ features a leaderboard ranking virtual traders by portfolio performance. Start with $10,000 and compete to reach the top." },
+      acceptedAnswer: { "@type": "Answer", text: "Yes! TradeHQ features a leaderboard ranking virtual traders by portfolio performance. Start with $100,000 and compete to reach the top." },
     },
     {
       "@type": "Question",
@@ -78,7 +78,7 @@ const webAppSchema = {
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web Browser",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  description: "Practice stock & crypto trading free with $10,000 virtual cash. No signup needed. 150+ assets, AI mentor, leaderboard.",
+  description: "Practice stock & crypto trading free with $100,000 virtual cash. No signup needed. 150+ assets, AI mentor, leaderboard.",
 };
 
 // WebSite + SearchAction — enables Google sitelinks search box.
@@ -146,13 +146,13 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>TradeHQ — Free Paper Trading Simulator 2026 | $10K Virtual Cash (No Signup)</title>
-        <meta name="description" content="Practice stocks, crypto, ETFs & forex with $10,000 virtual cash. Zero signup. AI mentor, live charts, leaderboard & 150+ assets. Best free trading simulator in 2026." />
+        <title>TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)</title>
+        <meta name="description" content="Practice stocks, crypto, ETFs & forex with $100,000 virtual cash. Zero signup. AI mentor, live charts, leaderboard & 150+ assets. Best free trading simulator in 2026." />
         <link rel="canonical" href="https://tradinghq.vercel.app/" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator 2026 | $10K Virtual Cash (No Signup)" />
-        <meta property="og:description" content="Practice real trading risk-free with $10K virtual money. AI mentor + live charts. No signup needed. Start in seconds." />
+        <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)" />
+        <meta property="og:description" content="Practice real trading risk-free with $100K virtual money. AI mentor + live charts. No signup needed. Start in seconds." />
         <meta property="og:url" content="https://tradinghq.vercel.app/" />
         <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -160,7 +160,7 @@ const Index = () => {
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="TradeHQ — Free Paper Trading Simulator 2026" />
-        <meta name="twitter:description" content="Practice stocks & crypto with $10K virtual cash. No signup. AI mentor included." />
+        <meta name="twitter:description" content="Practice stocks & crypto with $100K virtual cash. No signup. AI mentor included." />
         <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(homeFaqSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>

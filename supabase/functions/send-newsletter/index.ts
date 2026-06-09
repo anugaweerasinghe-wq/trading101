@@ -60,7 +60,7 @@ serve(async (req) => {
     <h2 style="margin:0 0 12px;font-size:18px;color:#fff;">📊 Market Pulse</h2>
     <p style="margin:0 0 16px;font-size:14px;color:#999;line-height:1.6;">
       Markets continue to evolve — stay ahead with TradeHQ's paper trading simulator.
-      Practice your strategies risk-free with $10K virtual capital across 150+ assets including stocks, ETFs, and crypto.
+      Practice your strategies risk-free with $100K virtual capital across 150+ assets including stocks, ETFs, and crypto.
     </p>
     <h2 style="margin:0 0 12px;font-size:18px;color:#fff;">🎯 This Week's Focus</h2>
     <ul style="margin:0 0 16px;padding-left:20px;color:#999;font-size:14px;line-height:1.8;">

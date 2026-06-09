@@ -8,7 +8,7 @@
       "url": "/trade/btc",
       "definition": "Bitcoin (BTC) — Digital Gold. A decentralized store of value with a capped supply of 21 million coins.",
       "influencers": "Cryptocurrency influenced by network adoption, regulatory developments, and broader digital asset sentiment.",
-      "simulator_value": "TradeHQ lets you practice BTC trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice BTC trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     },
     {
@@ -16,7 +16,7 @@
       "url": "/trade/eth",
       "definition": "Ethereum (ETH) — The foundation for DeFi and smart contracts.",
       "influencers": "Cryptocurrency influenced by network adoption, regulatory developments, and broader digital asset sentiment.",
-      "simulator_value": "TradeHQ lets you practice ETH trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice ETH trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     },
     {
@@ -24,7 +24,7 @@
       "url": "/trade/aapl",
       "definition": "Apple Inc. (AAPL) — the world's most valuable company.",
       "influencers": "Primary market driver: Consumer Electronics & Services. Sector: Technology.",
-      "simulator_value": "TradeHQ lets you practice AAPL trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice AAPL trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     },
     {
@@ -32,7 +32,7 @@
       "url": "/trade/googl",
       "definition": "Alphabet, Inc. (GOOGL) — the parent company of Google, dominates search, digital advertising, YouTube, and cloud services.",
       "influencers": "Primary market driver: Advertising & AI. Sector: Technology.",
-      "simulator_value": "TradeHQ lets you practice GOOGL trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice GOOGL trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     },
     {
@@ -40,7 +40,7 @@
       "url": "/trade/nvda",
       "definition": "NVIDIA Corporation (NVDA) — The undisputed leader in AI computing and GPUs.",
       "influencers": "Primary market driver: AI & Data Centers. Sector: Semiconductors.",
-      "simulator_value": "TradeHQ lets you practice NVDA trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice NVDA trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     },
     {
@@ -48,7 +48,7 @@
       "url": "/trade/msft",
       "definition": "Microsoft Corporation (MSFT) — A technology giant leading in cloud computing (Azure), enterprise software, and AI.",
       "influencers": "Primary market driver: Cloud & AI. Sector: Technology.",
-      "simulator_value": "TradeHQ lets you practice MSFT trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice MSFT trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     },
     {
@@ -56,7 +56,7 @@
       "url": "/trade/amzn",
       "definition": "Amazon.com Inc. (AMZN) — The global leader in e-commerce and cloud computing (AWS).",
       "influencers": "Primary market driver: E-commerce & Cloud. Sector: Technology.",
-      "simulator_value": "TradeHQ lets you practice AMZN trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice AMZN trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     },
     {
@@ -64,7 +64,7 @@
       "url": "/trade/tsla",
       "definition": "Tesla Inc. (TSLA) — the world's most valuable automaker, leading in electric vehicles and AI-powered autonomous driving.",
       "influencers": "Primary market driver: EV Demand & AI. Sector: Automotive.",
-      "simulator_value": "TradeHQ lets you practice TSLA trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice TSLA trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     },
     {
@@ -72,7 +72,7 @@
       "url": "/trade/spy",
       "definition": "SPY — The world's most traded ETF, tracking the S&P 500 index.",
       "influencers": "Primary market driver: US Large-Cap.",
-      "simulator_value": "TradeHQ lets you practice SPY trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice SPY trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     },
     {
@@ -80,7 +80,7 @@
       "url": "/trade/qqq",
       "definition": "QQQ — Tracks the Nasdaq-100 index, heavily weighted toward technology stocks.",
       "influencers": "Primary market driver: Tech & Growth.",
-      "simulator_value": "TradeHQ lets you practice QQQ trading with $10,000 virtual capital, real-time charts, and AI mentoring.",
+      "simulator_value": "TradeHQ lets you practice QQQ trading with $100,000 virtual capital, real-time charts, and AI mentoring.",
       "disclaimer": "(Educational simulation only — not financial advice.)"
     }
   ]

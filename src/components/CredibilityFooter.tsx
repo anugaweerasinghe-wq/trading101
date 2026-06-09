@@ -28,7 +28,7 @@ export function CredibilityFooter() {
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-profit/20 flex items-center justify-center">
               <Star className="w-8 h-8 text-profit" />
             </div>
-            <p className="text-3xl font-bold mb-1">$10K</p>
+            <p className="text-3xl font-bold mb-1">$100K</p>
             <p className="text-sm text-muted-foreground">Virtual Cash</p>
           </div>
           <div className="text-center">
@@ -106,7 +106,7 @@ export function CredibilityFooter() {
             </Link>
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
               An AI-powered financial education hub for 2026 and beyond. Practice trading with our 
-              risk-free $10K simulator and master the markets with guided learning.
+              risk-free $100K simulator and master the markets with guided learning.
             </p>
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} TradingHQ. All rights reserved.

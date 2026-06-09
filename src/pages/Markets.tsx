@@ -124,7 +124,7 @@ export default function Markets() {
     <>
       <Helmet>
         <title>Live Markets 2026 — Track 150+ Stocks, Crypto, ETFs & Forex | TradeHQ</title>
-        <meta name="description" content="Real-time market dashboard with 150+ assets. Top gainers/losers, search, and sector clusters. Practice trading live prices with $10K virtual cash — TradeHQ 2026." />
+        <meta name="description" content="Real-time market dashboard with 150+ assets. Top gainers/losers, search, and sector clusters. Practice trading live prices with $100K virtual cash — TradeHQ 2026." />
         <link rel="canonical" href="https://tradinghq.vercel.app/markets" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
@@ -342,7 +342,7 @@ export default function Markets() {
                 📊 Complete Asset Directory
               </h2>
               <p className="text-xs text-muted-foreground mb-6">
-                Trade all {assets.length}+ assets with $10K virtual capital. 
+                Trade all {assets.length}+ assets with $100K virtual capital. 
                 Select any market below to start practicing:
               </p>
               

@@ -101,12 +101,12 @@ export default function Leaderboard() {
     <>
       <Helmet>
         <title>Leaderboard — Top Virtual Traders 2026 | TradeHQ Simulator Rankings</title>
-        <meta name="description" content="See who's crushing it with $10K virtual cash. Real-time leaderboard of the best paper traders on TradeHQ. Can you beat the top 10?" />
+        <meta name="description" content="See who's crushing it with $100K virtual cash. Real-time leaderboard of the best paper traders on TradeHQ. Can you beat the top 10?" />
         <link rel="canonical" href="https://tradinghq.vercel.app/leaderboard" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ Leaderboard — Top Virtual Traders 2026" />
-        <meta property="og:description" content="Live rankings of the best paper traders. Start with $10K and climb the leaderboard." />
+        <meta property="og:description" content="Live rankings of the best paper traders. Start with $100K and climb the leaderboard." />
         <meta property="og:url" content="https://tradinghq.vercel.app/leaderboard" />
         <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -114,7 +114,7 @@ export default function Leaderboard() {
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="TradeHQ Leaderboard — Top Virtual Traders 2026" />
-        <meta name="twitter:description" content="Live rankings of the best paper traders. Start with $10K and climb the leaderboard." />
+        <meta name="twitter:description" content="Live rankings of the best paper traders. Start with $100K and climb the leaderboard." />
         <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
@@ -143,7 +143,7 @@ export default function Leaderboard() {
                 TradeHQ Leaderboard — Top Virtual Traders
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Track the best-performing paper traders. Everyone starts with $10,000 virtual cash — can you reach the top?
+                Track the best-performing paper traders. Everyone starts with $100,000 virtual cash — can you reach the top?
               </p>
               <div className="mt-4 inline-flex items-center gap-3 text-2xs text-muted-foreground">
                 <span className="inline-flex items-center gap-1">

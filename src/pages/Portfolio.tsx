@@ -276,7 +276,7 @@ export default function Portfolio() {
     <>
       <Helmet>
         <title>
-          Portfolio Dashboard — Track Your $10K Virtual Trading Performance | TradeHQ
+          Portfolio Dashboard — Track Your $100K Virtual Trading Performance | TradeHQ
         </title>
         <meta
           name="description"
@@ -291,7 +291,7 @@ export default function Portfolio() {
         />
         <meta
           property="og:description"
-          content="Live P&L, AI insights, journal, and risk management for your $10K practice portfolio."
+          content="Live P&L, AI insights, journal, and risk management for your $100K practice portfolio."
         />
         <meta property="og:url" content="https://tradinghq.vercel.app/portfolio" />
         <meta

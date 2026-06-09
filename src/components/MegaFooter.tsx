@@ -160,7 +160,7 @@ export function MegaFooter() {
               <BrandMark size="lg" />
             </Link>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-              An AI-powered trading simulator for 2026. Practice with $10K virtual capital
+              An AI-powered trading simulator for 2026. Practice with $100K virtual capital
               and master stocks, crypto, forex, and commodities risk-free.
             </p>
 

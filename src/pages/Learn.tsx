@@ -89,12 +89,12 @@ export default function Learn() {
     <>
       <Helmet>
         <title>Learn Trading 2026 — Free Beginner to Advanced Guides | TradeHQ</title>
-        <meta name="description" content="Free trading education 2026: stocks, crypto, technical analysis & risk management. Practice everything with $10K virtual cash. No signup required — TradeHQ." />
+        <meta name="description" content="Free trading education 2026: stocks, crypto, technical analysis & risk management. Practice everything with $100K virtual cash. No signup required — TradeHQ." />
         <link rel="canonical" href="https://tradinghq.vercel.app/learn" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Learn Trading 2026 — Free Beginner to Advanced Guides" />
-        <meta property="og:description" content="Master trading with free beginner-to-advanced lessons. Practice instantly with $10K virtual cash. No signup required." />
+        <meta property="og:description" content="Master trading with free beginner-to-advanced lessons. Practice instantly with $100K virtual cash. No signup required." />
         <meta property="og:url" content="https://tradinghq.vercel.app/learn" />
         <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -102,7 +102,7 @@ export default function Learn() {
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Learn Trading 2026 — Free Beginner to Advanced Guides" />
-        <meta name="twitter:description" content="Free trading education: stocks, crypto, technical analysis & more. Practice with $10K virtual cash." />
+        <meta name="twitter:description" content="Free trading education: stocks, crypto, technical analysis & more. Practice with $100K virtual cash." />
         <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
       </Helmet>
@@ -165,7 +165,7 @@ export default function Learn() {
                 <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">⚡ 6 core courses</span>
                 <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">📚 21 wiki terms</span>
                 <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">🎯 Daily challenge</span>
-                <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">💸 $10K virtual cash</span>
+                <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">💸 $100K virtual cash</span>
               </div>
             </div>
 
@@ -335,7 +335,7 @@ export default function Learn() {
             <Card className="p-12 bg-gradient-to-br from-primary/5 via-background to-background border-primary/10 backdrop-blur-xl">
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-4xl font-bold mb-6">Ready to Start Trading?</h2>
-                <p className="text-xl text-muted-foreground mb-8 leading-relaxed">Practice these strategies with your $10,000 virtual cash.</p>
+                <p className="text-xl text-muted-foreground mb-8 leading-relaxed">Practice these strategies with your $100,000 virtual cash.</p>
                 <Link to="/trade">
                   <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg rounded-xl min-h-[48px] font-semibold">
                     Start Trading Free <ArrowRight className="ml-2 w-5 h-5" />

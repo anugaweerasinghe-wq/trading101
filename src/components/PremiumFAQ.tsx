@@ -14,11 +14,11 @@ export function PremiumFAQ() {
   const faqs = [
     {
       question: "What is TradeHQ?",
-      answer: "TradeHQ is a free paper trading simulator where you can practice trading stocks, crypto, ETFs, forex, and commodities with $10,000 in virtual cash. No signup or credit card required — just open the app and start trading."
+      answer: "TradeHQ is a free paper trading simulator where you can practice trading stocks, crypto, ETFs, forex, and commodities with $100,000 in virtual cash. No signup or credit card required — just open the app and start trading."
     },
     {
       question: "Is TradeHQ completely free?",
-      answer: "Yes, TradeHQ is 100% free to use. You get $10,000 in virtual capital to practice trading with no signup required. We also provide weekly $10K refills so you can continue learning indefinitely. No hidden fees or premium tiers."
+      answer: "Yes, TradeHQ is 100% free to use. You get $100,000 in virtual capital to practice trading with no signup required. We also provide weekly $100K refills so you can continue learning indefinitely. No hidden fees or premium tiers."
     },
     {
       question: "What is paper trading?",
@@ -26,7 +26,7 @@ export function PremiumFAQ() {
     },
     {
       question: "How do I start trading on TradeHQ?",
-      answer: "Just click 'Start Trading Free' — you'll instantly receive $10,000 in virtual cash to trade 150+ assets. No signup, no email, no account creation needed."
+      answer: "Just click 'Start Trading Free' — you'll instantly receive $100,000 in virtual cash to trade 150+ assets. No signup, no email, no account creation needed."
     },
     {
       question: "What stocks and crypto can I trade?",
@@ -34,7 +34,7 @@ export function PremiumFAQ() {
     },
     {
       question: "Is there a leaderboard or competition?",
-      answer: "Yes! TradeHQ features a leaderboard ranking virtual traders by portfolio performance. Start with $10,000 and compete to reach the top. Visit the Leaderboard page to see the current rankings."
+      answer: "Yes! TradeHQ features a leaderboard ranking virtual traders by portfolio performance. Start with $100,000 and compete to reach the top. Visit the Leaderboard page to see the current rankings."
     },
     {
       question: "Do I need to create an account?",
