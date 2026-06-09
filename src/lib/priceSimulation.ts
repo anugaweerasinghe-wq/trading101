@@ -81,54 +81,9 @@ function cachePredictions(predictions: Record<string, MarketPrediction>) {
 
 // Fetch AI-driven market predictions
 export async function fetchMarketPredictions(assets: Asset[]): Promise<Record<string, MarketPrediction>> {
-  try {
-    // Check cache first
-    const cached = getCachedPredictions();
-    if (cached) {
-      console.log('Using cached AI predictions');
-      return cached;
-    }
-
-    console.log('Fetching new AI market predictions...');
-    
-    const { data, error } = await supabase.functions.invoke('market-analysis', {
-      body: {
-        assets: assets.map(a => ({
-          symbol: a.symbol,
-          name: a.name,
-          price: a.price,
-          type: a.type,
-          changePercent: a.changePercent
-        })),
-        timeframe: 365 // 1 year ahead
-      }
-    });
-
-    if (error) {
-      console.error('Error fetching AI predictions:', error);
-      return {};
-    }
-
-    // Convert array to record
-    const predictions: Record<string, MarketPrediction> = {};
-    if (data?.predictions) {
-      for (const pred of data.predictions) {
-        predictions[pred.symbol] = {
-          ...pred,
-          timestamp: Date.now()
-        };
-      }
-      
-      // Cache the predictions
-      cachePredictions(predictions);
-      console.log('AI predictions cached:', Object.keys(predictions));
-    }
-
-    return predictions;
-  } catch (error) {
-    console.error('Error in fetchMarketPredictions:', error);
-    return {};
-  }
+  // AI predictions disabled — geometric Brownian motion fallback handles all price movement.
+  // Returning an empty record routes every asset through the deterministic simulator below.
+  return {};
 }
 
 /**
