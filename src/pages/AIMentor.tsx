@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, Bot, User, Sparkles, TrendingUp, BookOpen, Shield, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SEOSection } from "@/components/SEOSection";
-import { getSmartMentorReply, MENTOR_SUGGESTIONS } from "@/lib/smartMentor";
+import { getAIReply, MENTOR_SUGGESTIONS } from "@/lib/smartMentor";
 
 interface Message {
   role: "user" | "assistant";
@@ -39,20 +39,18 @@ export default function AIMentor() {
     }
   }, [messages]);
 
-  const sendMessage = (messageText: string) => {
+  const sendMessage = async (messageText: string) => {
     if (!messageText.trim() || isLoading) return;
 
     const userMessage: Message = { role: "user", content: messageText };
+    const history = messages.map((m) => ({ role: m.role, content: m.content }));
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
 
-    // Simulate brief "thinking" delay so the UI feels alive.
-    const reply = getSmartMentorReply(messageText);
-    window.setTimeout(() => {
-      setMessages(prev => [...prev, { role: "assistant", content: reply }]);
-      setIsLoading(false);
-    }, 350);
+    const reply = await getAIReply(messageText, { history });
+    setMessages(prev => [...prev, { role: "assistant", content: reply }]);
+    setIsLoading(false);
   };
 
   const handleSubmit = (e: React.FormEvent) => {

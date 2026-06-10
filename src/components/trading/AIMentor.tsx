@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Message, Portfolio, Asset } from "@/lib/types";
-import { getPortfolioMentorReply } from "@/lib/smartMentor";
+import { getPortfolioAIReply } from "@/lib/smartMentor";
 
 interface AIMentorProps {
   portfolio: Portfolio;
@@ -74,6 +74,7 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
       timestamp: new Date(),
     };
 
+    const history = messages.map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
@@ -87,7 +88,7 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
       }))
       .sort((a, b) => b.weightPct - a.weightPct)[0] ?? null;
     const wrNum = winRate === '—' ? null : Number(winRate);
-    const reply = getPortfolioMentorReply(messageText, {
+    const reply = await getPortfolioAIReply(messageText, {
       cash: portfolio.cash,
       totalValue: portfolio.totalValue,
       positionsCount: portfolio.positions.length,
@@ -96,16 +97,14 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
       topPosition: topPos,
       selectedSymbol: selectedAsset?.symbol ?? null,
       selectedChangePct: selectedAsset?.changePercent ?? null,
-    });
-    window.setTimeout(() => {
-      setMessages(prev => [...prev, {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: reply,
-        timestamp: new Date(),
-      }]);
-      setIsLoading(false);
-    }, 300);
+    }, history);
+    setMessages(prev => [...prev, {
+      id: (Date.now() + 1).toString(),
+      role: 'assistant',
+      content: reply,
+      timestamp: new Date(),
+    }]);
+    setIsLoading(false);
   };
 
   return (
