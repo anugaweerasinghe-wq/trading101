@@ -47,6 +47,42 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          ip_hash: string
+          is_featured: boolean
+          is_visible: boolean
+          name: string | null
+          rating: number
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          ip_hash: string
+          is_featured?: boolean
+          is_visible?: boolean
+          name?: string | null
+          rating?: number
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          ip_hash?: string
+          is_featured?: boolean
+          is_visible?: boolean
+          name?: string | null
+          rating?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       subscribers: {
         Row: {
           email: string
