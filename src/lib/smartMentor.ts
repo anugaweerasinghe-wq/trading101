@@ -268,6 +268,57 @@ export const MENTOR_SUGGESTIONS = [
 ];
 
 /**
+ * Async AI reply with multi-LLM backend (Gemini → Groq → Lovable Gemini)
+ * and rule-based smart-mentor as a guaranteed last-resort fallback.
+ */
+import { supabase } from "@/integrations/supabase/client";
+
+export async function getAIReply(
+  input: string,
+  opts: { system?: string; history?: { role: "user" | "assistant"; content: string }[] } = {},
+): Promise<string> {
+  try {
+    const { data, error } = await supabase.functions.invoke("ai-chat", {
+      body: { message: input, system: opts.system, history: opts.history },
+    });
+    if (error) throw error;
+    const text = (data as { text?: string })?.text;
+    if (text && text.trim()) return text.trim();
+  } catch (e) {
+    console.warn("AI chat failed, using rule-based fallback", e);
+  }
+  return getSmartMentorReply(input);
+}
+
+export async function getPortfolioAIReply(
+  input: string,
+  ctx: PortfolioContext,
+  history?: { role: "user" | "assistant"; content: string }[],
+): Promise<string> {
+  const ctxLines = [
+    `User portfolio: total $${ctx.totalValue.toFixed(0)}, cash $${ctx.cash.toFixed(0)}, ${ctx.positionsCount} positions, ${ctx.tradesCount} trades${ctx.winRate !== null ? `, win rate ${ctx.winRate.toFixed(0)}%` : ""}.`,
+    ctx.topPosition ? `Top position: ${ctx.topPosition.symbol} at ${ctx.topPosition.weightPct.toFixed(0)}% weight, P&L ${ctx.topPosition.pnlPct >= 0 ? "+" : ""}${ctx.topPosition.pnlPct.toFixed(1)}%.` : "",
+    ctx.selectedSymbol ? `Currently viewing ${ctx.selectedSymbol} (${(ctx.selectedChangePct ?? 0) >= 0 ? "+" : ""}${(ctx.selectedChangePct ?? 0).toFixed(2)}% today).` : "",
+  ].filter(Boolean).join(" ");
+
+  const system = `You are TradeHQ's AI Trading Mentor with FULL access to the user's live simulated portfolio.
+${ctxLines}
+Rules: be concise (under 120 words), conversational, no markdown headers. Reference their real numbers when relevant. Never give buy/sell signals. End every reply with: (Educational simulation only — not financial advice.)`;
+
+  try {
+    const { data, error } = await supabase.functions.invoke("ai-chat", {
+      body: { message: input, system, history },
+    });
+    if (error) throw error;
+    const text = (data as { text?: string })?.text;
+    if (text && text.trim()) return text.trim();
+  } catch (e) {
+    console.warn("AI portfolio chat failed, using rule-based fallback", e);
+  }
+  return getPortfolioMentorReply(input, ctx);
+}
+
+/**
  * Portfolio-aware Smart Mentor reply.
  * Used by the in-trade sidebar — combines topic match with real portfolio stats.
  */
