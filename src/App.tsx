@@ -31,6 +31,8 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const Leaderboard = lazy(() => import("./pages/Leaderboard"));
 const LearnArticle = lazy(() => import("./pages/LearnArticle"));
 const Daily = lazy(() => import("./pages/Daily"));
+const Reviews = lazy(() => import("./pages/Reviews"));
+const AdminReviews = lazy(() => import("./pages/AdminReviews"));
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
@@ -55,6 +57,7 @@ function AnimatedRoutes() {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/ai-mentor" element={<AIMentor />} />
           <Route path="/daily" element={<Daily />} />
+          <Route path="/reviews" element={<Reviews />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sectors/:sectorId" element={<SectorPillar />} />
@@ -65,6 +68,7 @@ function AnimatedRoutes() {
           <Route path="/admin/seo-audit" element={<SEOAudit />} />
           <Route path="/admin/validator" element={<AdminValidator />} />
           <Route path="/admin/editor" element={<AdminEditor />} />
+          <Route path="/admin/reviews" element={<AdminReviews />} />
 
           {/* CATCH-ALL */}
           <Route path="*" element={<NotFound />} />

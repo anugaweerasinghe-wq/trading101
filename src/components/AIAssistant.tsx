@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Bot, Send, X, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Message } from "@/lib/types";
-import { getSmartMentorReply } from "@/lib/smartMentor";
+import { getAIReply } from "@/lib/smartMentor";
 
 interface AIAssistantProps {
   portfolio: any;
@@ -43,21 +43,20 @@ export function AIAssistant({ portfolio, assets }: AIAssistantProps) {
       timestamp: new Date(),
     };
 
+    const history = messages.map((m) => ({ role: m.role, content: m.content }));
     setMessages(prev => [...prev, userMessage]);
     const text = input;
     setInput("");
     setIsLoading(true);
 
-    const reply = getSmartMentorReply(text);
-    window.setTimeout(() => {
-      setMessages(prev => [...prev, {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: reply,
-        timestamp: new Date(),
-      }]);
-      setIsLoading(false);
-    }, 300);
+    const reply = await getAIReply(text, { history });
+    setMessages(prev => [...prev, {
+      id: (Date.now() + 1).toString(),
+      role: 'assistant',
+      content: reply,
+      timestamp: new Date(),
+    }]);
+    setIsLoading(false);
   };
 
   return (

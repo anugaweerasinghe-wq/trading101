@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X } from "lucide-react";
+import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X, Star } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -25,6 +25,7 @@ export function Navigation() {
     { to: "/learn", label: "Learn", icon: GraduationCap },
     { to: "/leaderboard", label: "Leaderboard", icon: Wallet },
     { to: "/ai-mentor", label: "AI Mentor", icon: Bot },
+    { to: "/reviews", label: "Reviews", icon: Star },
   ];
 
   return (
