@@ -33,6 +33,13 @@ const LearnArticle = lazy(() => import("./pages/LearnArticle"));
 const Daily = lazy(() => import("./pages/Daily"));
 const Reviews = lazy(() => import("./pages/Reviews"));
 const AdminReviews = lazy(() => import("./pages/AdminReviews"));
+const Roadmap = lazy(() => import("./pages/Roadmap"));
+const Compare = lazy(() => import("./pages/Compare"));
+const CompareIndex = lazy(() => import("./pages/Compare").then(m => ({ default: m.CompareIndex })));
+const HowToTrade = lazy(() => import("./pages/HowToTrade"));
+const HowToTradeIndex = lazy(() => import("./pages/HowToTrade").then(m => ({ default: m.HowToTradeIndex })));
+const Strategy = lazy(() => import("./pages/Strategy"));
+const StrategyIndex = lazy(() => import("./pages/Strategy").then(m => ({ default: m.StrategyIndex })));
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
@@ -58,6 +65,13 @@ function AnimatedRoutes() {
           <Route path="/ai-mentor" element={<AIMentor />} />
           <Route path="/daily" element={<Daily />} />
           <Route path="/reviews" element={<Reviews />} />
+          <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/compare" element={<CompareIndex />} />
+          <Route path="/compare/:slug" element={<Compare />} />
+          <Route path="/how-to-trade" element={<HowToTradeIndex />} />
+          <Route path="/how-to-trade/:symbol" element={<HowToTrade />} />
+          <Route path="/strategy" element={<StrategyIndex />} />
+          <Route path="/strategy/:slug" element={<Strategy />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sectors/:sectorId" element={<SectorPillar />} />

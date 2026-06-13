@@ -128,6 +128,20 @@ export default function Learn() {
               <span className="text-foreground font-medium">Learning</span>
             </nav>
 
+            {/* Roadmap teaser (not in navigation, surfaced here + homepage) */}
+            <Link
+              to="/roadmap"
+              className="group block mb-8 relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-500/10 via-background/40 to-fuchsia-500/10 backdrop-blur-xl p-5 hover:border-emerald-500/40 transition"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <div className="text-[10px] uppercase tracking-widest text-emerald-400 mb-1">✨ Coming soon</div>
+                  <p className="text-sm font-medium">Expanded courses, optional sign-in & realistic portfolio projections — peek the roadmap.</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-emerald-400 group-hover:translate-x-1 transition" />
+              </div>
+            </Link>
+
             {/* Premium hero */}
             <div
               className="relative mb-16 overflow-hidden rounded-[32px] border border-white/[0.08] p-10 md:p-16 text-center animate-fade-in"

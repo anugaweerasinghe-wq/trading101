@@ -12,6 +12,8 @@ import { PremiumFAQ } from "@/components/PremiumFAQ";
 import { MegaFooter } from "@/components/MegaFooter";
 import { SocialProofTicker } from "@/components/SocialProofTicker";
 import { HowItWorks } from "@/components/HowItWorks";
+import { Sparkles, ArrowRight } from "lucide-react";
+import { COMPARE_PAIRS, HOWTO_ASSETS, STRATEGIES } from "@/lib/seoData";
 
 // ORIGINAL schemas — unchanged
 const homeFaqSchema = {
@@ -200,6 +202,28 @@ const Index = () => {
         <MarketTrends2026 />
         <PremiumFAQ />
 
+        {/* Roadmap teaser — only linked from homepage + /learn (not navigation) */}
+        <section className="container mx-auto px-6 max-w-7xl py-12">
+          <Link
+            to="/roadmap"
+            className="group block relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-500/10 via-background to-fuchsia-500/10 backdrop-blur-xl p-8 md:p-10 hover:border-emerald-500/40 transition-all"
+          >
+            <div className="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition" />
+            <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div>
+                <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 mb-3">
+                  <Sparkles className="h-3 w-3" /> What's coming next
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold tracking-tight">The Future of TradeHQ</h3>
+                <p className="mt-2 text-muted-foreground max-w-xl">Realistic portfolio projections, optional sign-in, expanded courses & more — all 100% free.</p>
+              </div>
+              <div className="inline-flex items-center gap-2 text-emerald-400 font-medium whitespace-nowrap">
+                See the roadmap <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition" />
+              </div>
+            </div>
+          </Link>
+        </section>
+
         {/* ── NEW: Internal link hub (below fold, Googlebot crawls this) ── */}
         <section
           aria-label="Explore TradeHQ"
@@ -254,6 +278,42 @@ const Index = () => {
                   className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full bg-primary/5 border border-primary/15 text-primary/80 hover:text-primary hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
                 >
                   {term.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Asset comparisons */}
+          <div className="mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]" style={{ backdropFilter: "blur(12px)" }}>
+            <h2 className="text-lg font-bold mb-4 text-foreground">Asset Comparisons</h2>
+            <div className="flex flex-wrap gap-2">
+              {COMPARE_PAIRS.map(p => (
+                <Link key={p.slug} to={`/compare/${p.slug}`} className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full bg-white/[0.03] border border-white/[0.08] hover:border-emerald-500/30 hover:text-emerald-400 transition-all">
+                  {p.a.name} vs {p.b.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* How to trade */}
+          <div className="mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]" style={{ backdropFilter: "blur(12px)" }}>
+            <h2 className="text-lg font-bold mb-4 text-foreground">How-to Guides</h2>
+            <div className="flex flex-wrap gap-2">
+              {HOWTO_ASSETS.map(a => (
+                <Link key={a.symbol} to={`/how-to-trade/${a.symbol}`} className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full bg-white/[0.03] border border-white/[0.08] hover:border-emerald-500/30 hover:text-emerald-400 transition-all">
+                  How to trade {a.fullName}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Strategies */}
+          <div className="mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]" style={{ backdropFilter: "blur(12px)" }}>
+            <h2 className="text-lg font-bold mb-4 text-foreground">Trading Strategies</h2>
+            <div className="flex flex-wrap gap-2">
+              {STRATEGIES.map(s => (
+                <Link key={s.slug} to={`/strategy/${s.slug}`} className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full bg-white/[0.03] border border-white/[0.08] hover:border-emerald-500/30 hover:text-emerald-400 transition-all">
+                  {s.name}
                 </Link>
               ))}
             </div>
