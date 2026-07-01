@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 import {
   TrendingUp,
   BarChart3,
@@ -17,7 +18,9 @@ import {
   Github,
   Shield,
   Award,
-  CheckCircle2
+  CheckCircle2,
+  Info,
+  Mail
 } from "lucide-react";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { tradingGlossary } from "@/lib/tradingGlossary";
@@ -91,6 +94,14 @@ export function MegaFooter() {
     { to: "/learn", label: "All Courses", icon: GraduationCap },
     { to: "/learn-trading-guide", label: "Trading Guide", icon: BookOpen },
     { to: "/ai-mentor", label: "AI Mentor", icon: Bot },
+  ];
+
+  const companyLinks = [
+    { to: "/about", label: "About", icon: Info },
+    { to: "/contact", label: "Contact", icon: Mail },
+    { to: "/privacy", label: "Privacy Policy", icon: Shield },
+    { to: "/terms", label: "Terms of Service", icon: BookOpen },
+    { to: "/about#disclaimer", label: "Disclaimer", icon: Info },
   ];
 
   return (
@@ -212,6 +223,20 @@ export function MegaFooter() {
                 </li>
               ))}
             </ul>
+            <h3 className="text-xs font-bold text-foreground mt-6 mb-4 uppercase tracking-[0.15em]">Company</h3>
+            <ul className="space-y-3">
+              {companyLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 flex items-center gap-2"
+                  >
+                    <link.icon className="w-4 h-4" aria-hidden="true" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Trust Signals */}
@@ -255,16 +280,11 @@ export function MegaFooter() {
           </div>
 
           <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] max-w-4xl mx-auto mb-4">
-            <p className="text-xs text-muted-foreground text-center leading-relaxed">
-              <strong className="text-foreground">Disclaimer:</strong> TradeHQ is a market simulation platform.
-              No real capital is at risk. Not financial advice. Data provided for educational purposes only.
-              Past simulated performance does not guarantee future real-world results.
-              Always consult a qualified financial advisor before making investment decisions.
-            </p>
+            <EducationalDisclaimer variant="footer" className="!p-0 !bg-transparent !border-0" />
           </div>
 
-          <p className="text-xs text-muted-foreground/50 text-center">
-            © {new Date().getFullYear()} TradeHQ. All rights reserved.
+          <p className="text-xs text-muted-foreground/60 text-center">
+            © {new Date().getFullYear()} TradeHQ · Built by Anuga Weerasinghe · Educational Use Only
           </p>
         </div>
       </div>
