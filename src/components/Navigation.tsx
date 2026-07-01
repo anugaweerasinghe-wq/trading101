@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X, Star } from "lucide-react";
+import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X, Star, Info } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -26,6 +26,7 @@ export function Navigation() {
     { to: "/leaderboard", label: "Leaderboard", icon: Wallet },
     { to: "/ai-mentor", label: "AI Mentor", icon: Bot },
     { to: "/reviews", label: "Reviews", icon: Star },
+    { to: "/about", label: "About", icon: Info },
   ];
 
   return (
@@ -76,6 +77,8 @@ export function Navigation() {
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="h-9 w-9"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>

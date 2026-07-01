@@ -40,6 +40,8 @@ const HowToTrade = lazy(() => import("./pages/HowToTrade"));
 const HowToTradeIndex = lazy(() => import("./pages/HowToTrade").then(m => ({ default: m.HowToTradeIndex })));
 const Strategy = lazy(() => import("./pages/Strategy"));
 const StrategyIndex = lazy(() => import("./pages/Strategy").then(m => ({ default: m.StrategyIndex })));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
@@ -66,6 +68,8 @@ function AnimatedRoutes() {
           <Route path="/daily" element={<Daily />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/compare" element={<CompareIndex />} />
           <Route path="/compare/:slug" element={<Compare />} />
           <Route path="/how-to-trade" element={<HowToTradeIndex />} />

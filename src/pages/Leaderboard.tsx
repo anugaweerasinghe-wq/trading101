@@ -28,7 +28,7 @@ const LEADERBOARD_FAQS = [
   {
     question: "Do I need an account to compete?",
     answer:
-      "No — start trading with no signup. Your portfolio is tracked locally; opt-in account creation for leaderboard submission is coming soon.",
+      "No — start trading with no signup. Your portfolio is tracked locally in your browser. Optional account-based leaderboard submission is planned; see the roadmap for details.",
   },
   {
     question: "How often is the leaderboard updated?",

@@ -135,7 +135,7 @@ export default function Learn() {
             >
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <div className="text-[10px] uppercase tracking-widest text-emerald-400 mb-1">✨ Coming soon</div>
+                  <div className="text-[10px] uppercase tracking-widest text-emerald-400 mb-1">✨ What's next</div>
                   <p className="text-sm font-medium">Expanded courses, optional sign-in & realistic portfolio projections — peek the roadmap.</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-emerald-400 group-hover:translate-x-1 transition" />

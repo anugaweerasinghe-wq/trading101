@@ -71,18 +71,18 @@ export function PremiumFeatures() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4">
-              Why Traders Choose Us
+              Built for Beginners
             </span>
             <h2 className="text-3xl md:text-5xl font-bold mb-5 tracking-tight">
               Everything You Need to{' '}
               <span className="text-transparent bg-clip-text" style={{
                 backgroundImage: 'linear-gradient(135deg, hsl(180 70% 50%), hsl(152 60% 50%))'
               }}>
-                Trade Like a Pro
+                Learn by Practicing
               </span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Professional-grade tools, zero financial risk. The fastest way to go from beginner to confident trader.
+              Practical tools, zero financial risk. Designed to help beginners learn how markets work by doing.
             </p>
           </motion.div>
         </div>

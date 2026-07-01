@@ -74,7 +74,7 @@ For users in the European Economic Area (EEA), we comply with GDPR requirements.
             </div>
             <h1 className="text-4xl font-bold mb-4">Privacy Policy</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Your privacy matters. TradeHQ is committed to protecting your data while providing a world-class trading simulation experience.
+              Your privacy matters. TradeHQ is committed to protecting your data while providing an educational trading simulation.
             </p>
             <p className="text-sm text-muted-foreground mt-4">
               Last Updated: January 26, 2026
