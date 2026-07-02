@@ -1,98 +1,126 @@
-## Phase 1 — Trust, Consistency, E-E-A-T (audit + implementation)
+## Phase 2 — SEO Rescue + GEO + Retention Engine
 
-Scope-locked: no visual redesign, no color/typography/spacing changes, no schema/auth/portfolio/simulator logic changes, no routing removal. Reuse existing components (glass-liquid-card, Navigation, MegaFooter, shadcn primitives) throughout.
-
----
-
-### A. Audit findings (from codebase sweep)
-
-**False / unverifiable claims to remove or rewrite** (search across all files):
-- Any "50,000+ traders", "best simulator", "most trusted", "#1", "trusted by thousands", "join thousands", "world-class" marketing superlatives in `Hero.tsx`, `PremiumHero.tsx`, `Index.tsx`, `CredibilityFooter.tsx`, `MegaFooter.tsx`, `WhatIsTradeHQ.tsx`, `HowItWorks.tsx`, `PremiumFeatures.tsx`, meta descriptions in `index.html` + per-page Helmet.
-- Fabricated user counts, star ratings not backed by the real `reviews` table, "used by X universities" style claims.
-- Replacement voice: "Built for beginners.", "Designed for learning.", "Practice trading without risking real money.", "Free forever — no signup."
-
-**$10K → $100K residue sweep**: `rg -i "10[,]?000|10k|\$10K"` across `src/**` + `public/**` metadata + edge functions + sitemap-linked copy. Known residual spots: some FAQ answers, older LessonDetail copy, meta descriptions in `index.html`, learn articles in `src/lib/learnArticles.ts`, wiki entries, seoData programmatic templates.
-
-**Duplicated components / metadata**:
-- `CredibilityFooter.tsx` AND `MegaFooter.tsx` both exist — MegaFooter is the canonical one used in most pages, CredibilityFooter appears unused or legacy. Will consolidate imports to MegaFooter only (no deletion of file unless zero refs).
-- `Hero.tsx` vs `PremiumHero.tsx` — both used; keep as-is (used on different routes).
-- Duplicate FAQ copy across `SEOSection`, `PremiumFAQ`, per-page inline FAQs — flag only, no dedup this phase.
-
-**Placeholder / thin content**: search for "Lorem", "Coming Soon", "TODO", "placeholder", empty CTA buttons. Fix inline.
-
-**Missing pages**: `/about` and `/contact` don't exist as routes. Footer links to `#` or missing anchors. Nav has no About.
-
-**Trust signals missing**: no single global disclaimer component — disclaimer text is duplicated inconsistently in `CredibilityFooter`, `Terms`, and scattered pages.
-
-**Accessibility gaps** (spot audit): icon-only buttons in `Navigation`, `TradingSidebar`, `BackgroundMusic`, `MobileBottomNav` missing `aria-label`; some `<div onClick>` in market/asset cards; heading hierarchy skips on `Index.tsx`; `h-screen` in a few places should be `h-dvh`; form inputs on Contact/Reviews need explicit labels.
+Traffic dropped from 10-15/day to 2-3/day. This plan attacks all three causes: **crawl/index quality**, **generative-engine visibility (GEO)**, and **return-visitor retention**. Scope is additive — no redesign, no removal of existing features.
 
 ---
 
-### B. Implementation steps (Phase 1 only)
+### 1. SEO Rescue (fix what's bleeding)
 
-**1. Global disclaimer component**
-- New `src/components/EducationalDisclaimer.tsx` — subtle bordered card / inline variant prop (`variant: "footer" | "inline" | "compact"`). Uses existing tokens (`text-muted-foreground`, `border-border/40`, `bg-muted/20`). No new colors.
-- Mount in: `MegaFooter` (footer variant, once), `Trade.tsx`, `TradeAsset.tsx`, `Portfolio.tsx`, `Markets.tsx`, `Learn.tsx`, `LearnArticle.tsx`, `LessonDetail.tsx`, `WikiTerm.tsx`, `SectorPillar.tsx` (inline/compact variant near bottom).
-- Text exactly as specified.
+**Diagnosis first** (via Google Search Console API — already connected):
 
-**2. Remove false claims + $10K residue**
-- Sweep with rg, edit each occurrence to truthful copy. Files touched will include `index.html` meta, `Hero.tsx`, `PremiumHero.tsx`, `WhatIsTradeHQ.tsx`, `PremiumFeatures.tsx`, `CredibilityFooter.tsx`, `MegaFooter.tsx`, `HowItWorks.tsx`, `SEOSection.tsx` defaults, `learnArticles.ts`, `seoData.ts`, `lessonData.ts`, `tradingGlossary.ts`, per-page Helmet meta descriptions.
-- Replace unverifiable numeric stat cards on `CredibilityFooter` with verifiable ones ("150+ assets", "$100K virtual cash", "Free forever"). Remove any "50,000+ traders" style tile.
+- Pull last 28d queries, pages, CTR, position, and impressions per URL.
+- Identify pages that lost impressions vs 28d prior, and pages stuck at position 11-20 (page 2 — highest-leverage wins).
+- Run URL Inspection on top 10 pages to detect indexing/coverage regressions.
 
-**3. About page — `/about`**
-- New `src/pages/About.tsx`, registered in `App.tsx` under existing lazy pattern.
-- Sections: Mission, Vision, Educational Philosophy, Transparency, Technology, Creator (Anuga Weerasinghe — exact wording from brief, no age, no fabricated credentials).
-- Reuse existing layout primitives (`glass-liquid-card`, container widths, Navigation, MegaFooter). Full Helmet (title/desc/canonical/robots/OG). Breadcrumb via existing `SEOSection`. Add to sitemap generator.
-- Link added to Navigation (desktop + mobile) and MegaFooter.
+**Fixes**:
 
-**4. Contact page**
-- Reuse the contact info card already in MegaFooter (email `anugaweerasinghe1@gmail.com`, phone `+94 714897346`).
-- New `src/pages/Contact.tsx` — professional form (name, email, subject, message) with zod validation, honeypot + timing spam protection (no backend write; opens `mailto:` prefill on submit so we don't need a new edge function). Shows response-time expectation ("within 48 hours"). Full Helmet + canonical + breadcrumb.
-- Register route, add to Nav + MegaFooter, sitemap.
+- **Canonical audit** — every route uses `SEOHead` with a self-referencing canonical. Currently `Index.tsx` and several pages set canonicals manually with `Helmet` and some point at wrong URLs. Migrate all pages to shared `SEOHead` component.
+- **Sitemap regeneration** — `sitemapGenerator.ts` is missing 100+ routes (compares, how-to, strategy, sectors, niche assets, about, contact, roadmap, reviews, daily). Rewrite to auto-include every static + programmatic route with correct `lastmod` (today) and priorities. Ping Google + Bing + IndexNow after deploy.
+- **Robots.txt hardening** — allow all crawlers, unblock `/api/og/`, block admin routes (`/admin/*`, `/seo-audit`, `/adminvalidator`, `/admineditor`, `/adminreviews`).
+- **Internal linking gaps** — audit orphan pages (Compare, HowToTrade, Strategy pages currently only linked from homepage). Add "Related" blocks at bottom of every content page (Wiki→3 related terms + 2 assets; Compare→related pairs; HowTo→related how-tos + strategy).
+- **Title/description rewrites** for underperforming pages using proven SERP patterns: "X vs Y (2026): Which Is Better for Beginners?", "How to Trade X: 5-Step Beginner Guide", etc.
+- **Duplicate/thin content sweep** — Compare/HowTo/Strategy templates need distinct intros per slug (currently share phrasing patterns).
+- **404/soft-404 elimination** — `NotFound.tsx` must return proper meta + noindex.
 
-**5. Footer improvement (MegaFooter)**
-- Ensure link groups include: About, Contact, Privacy, Terms, Disclaimer (anchor to About#disclaimer or /disclaimer? — will link to disclaimer section within About), Learn, Wiki (link to `/learn` glossary anchor), Markets.
-- Add "Built by Anuga Weerasinghe · Educational Use Only" beneath copyright, subtle muted styling.
-- Keep existing responsive grid and design tokens untouched.
+### 2. GEO (Generative Engine Optimization for ChatGPT / Gemini / Perplexity / Google AI Overviews)
 
-**6. Privacy expansion**
-- Extend existing `Privacy.tsx` sections with subsections: cookies, analytics status (state whichever is actually in use — none if none), user rights (GDPR/CCPA already there — verify accuracy), security specifics (HTTPS, local-only storage, no PII transmission), contact block. Keep existing card layout.
+The next 12 months of search growth comes from LLM answer engines. TradeHQ needs to be *quoted*, not just ranked.
 
-**7. Terms improvement**
-- Extend existing `Terms.tsx`: explicit clauses on Educational Use, No Financial Advice, No Brokerage Relationship, No Guarantees, User Responsibilities, Limitation of Liability, Governing Law placeholder (generic).
+- **Answer-first content blocks** — every page gets a `<AIAnswerBlock>` at the top: single-paragraph, plain-English, 50-70 word direct answer to the page's primary query. LLMs pull these verbatim.
+- **Comparison tables + stats blocks** — LLMs favor scannable, structured data. Add tables to Compare, HowTo, Strategy pages.
+- **JSON-LD expansion**:
+  - `Article` + `author` (Anuga Weerasinghe with sameAs GitHub/LinkedIn placeholders — ask user to confirm real URLs before publish)
+  - `FAQPage` on every Compare/HowTo/Strategy/Wiki/Sector page
+  - `HowTo` on all how-to guides
+  - `BreadcrumbList` sitewide via new `<Breadcrumbs>` slot
+  - `DefinedTerm` + `DefinedTermSet` on Wiki entries (GEO gold — LLMs use these)
+  - `SoftwareApplication` with real `aggregateRating` sourced from the `reviews` table
+  - `SpeakableSpecification` on TL;DR blocks (voice assistants)
+- **llms.txt** — new `public/llms.txt` file (emerging standard, LLM crawlers read this) listing key pages with descriptions.
+- **AI-friendly URL patterns** — verify all slugs are lowercase-hyphen (already a core rule).
+- **Citations panel** — each Wiki/Learn page gets a "Sources" section citing Investopedia/SEC/CFTC where relevant (E-E-A-T + LLM trust signal).
 
-**8. Placeholder content sweep**
-- rg for "Coming Soon", "Lorem", "TODO", "placeholder" — fix or remove each.
+### 3. Retention Engine (fix 97% single-session)
 
-**9. Trust polish**
-- Grammar/spelling/capitalization pass across visible copy on Index, Hero, Learn, Trade, Portfolio, Markets.
-- Consistent button labels ("Start Trading" vs "Start Practicing" — pick one, standardize).
-- Heading hierarchy: ensure one `<h1>` per page.
+Users land, look once, leave. Add hooks that require coming back.
 
-**10. Accessibility (no UI change)**
-- Add `aria-label` to every icon-only button in Navigation, MobileBottomNav, TradingSidebar, BackgroundMusic, SocialShare, ThemeToggle.
-- Convert `<div onClick>` interactive tiles to `<button>` where trivial; otherwise add `role="button"`, `tabIndex={0}`, keyboard handlers.
-- Replace `h-screen` with `h-dvh` where found.
-- Ensure form inputs on Contact + Reviews + admin pages have associated `<Label htmlFor>` or `aria-label`.
-- Add `alt` text audit on all `<img>`.
-- Wrap each route main content in exactly one `<main>`.
+- **Daily Streak system** (localStorage, no login): visit-day counter, streak badge in nav, milestone toasts (3/7/14/30 days). Streak-loss "come back" indicator.
+- **Weekly Recap card** on homepage: "Your week — 4 trades, +2.3%, best pick: NVDA". Reads from local portfolio history.
+- **Watchlist alerts** — user pins assets; on next visit, homepage shows "AAPL moved +3.2% since your last visit". Pure client-side, powered by `pricePersistence.ts`.
+- **Daily Challenge upgrade** — currently exists but static. Rotate 30 unique challenges, mark completion, show streak.
+- **"Continue where you left off"** banner — last route visited + last asset viewed, top of homepage on return visits.
+- **Web Push notifications (opt-in)** — service worker for daily challenge reminder + big market moves. Optional, dismissible, no dark patterns.
+- **PWA install prompt** — `manifest.json` exists; add proper icons + install banner. Installed users return 3-5× more.
+- **Email capture with a real hook** — "Get the weekly TradeHQ recap" (existing `NewsletterSignup` refresh with clearer value prop + double-opt-in).
 
-**11. Quality check**
-- Build passes, no TS errors.
-- Manual link crawl of Nav + Footer + new pages via Playwright (headless) — screenshot About, Contact, Privacy, Terms, Home for regression, capture console errors.
-- Verify no visual diff on existing pages beyond added disclaimer strip.
+### 4. Virality loop (compounding growth)
+
+- **Shareable trade cards** — after any trade, generate a 1200×630 PNG (`/api/og/trade/:id` via edge function using `@vercel/og`-equivalent) with P&L, asset, TradeHQ branding. One-click share to X/Reddit.
+- **Public portfolio pages** — `/u/:handle` route (optional handle set locally) so users can share their leaderboard rank. Adds social proof + backlinks.
+- **Referral counter** — "Invite a friend, both get a badge" (badge only — no fake rewards).
+
+### 5. Technical / performance / Core Web Vitals
+
+Google position depends heavily on CWV.
+
+- **Image audit** — convert PNGs to AVIF/WebP with `<picture>` fallback, add `loading="lazy"` + `decoding="async"` on all below-fold images.
+- **Code-split heavy routes** — `React.lazy` for `AdminEditor`, `AdminReviews`, `SEOAudit`, `TradeAsset` chart libraries.
+- **Preload critical fonts** with `rel="preload"`, subset to Latin.
+- **Prefetch on hover** for internal Links (react-router already supports).
+- **Meta viewport + `theme-color**` verified per route.
+
+### 6. Google Search Console actions (I run these)
+
+- Submit fresh sitemap.
+- URL-inspect + request-index the top 20 revenue pages.
+- Pull query-level report to feed the title/description rewrites in step 1.
 
 ---
 
-### C. Files created
-- `src/components/EducationalDisclaimer.tsx`
-- `src/pages/About.tsx`
-- `src/pages/Contact.tsx`
+### Technical implementation summary
 
-### D. Files modified (est.)
-`App.tsx`, `Navigation.tsx`, `MobileBottomNav.tsx`, `MegaFooter.tsx`, `CredibilityFooter.tsx` (or remove refs), `Hero.tsx`, `PremiumHero.tsx`, `WhatIsTradeHQ.tsx`, `PremiumFeatures.tsx`, `HowItWorks.tsx`, `SEOSection.tsx`, `Trade.tsx`, `TradeAsset.tsx`, `Portfolio.tsx`, `Markets.tsx`, `Learn.tsx`, `LearnArticle.tsx`, `LessonDetail.tsx`, `WikiTerm.tsx`, `SectorPillar.tsx`, `Privacy.tsx`, `Terms.tsx`, `index.html`, `learnArticles.ts`, `seoData.ts`, `lessonData.ts`, `tradingGlossary.ts`, `scripts/generate-sitemap.ts`, `public/sitemap.xml`, plus icon-only button accessibility touch-ups.
+**New files**:
 
-### E. Explicitly NOT in this phase
-No new JSON-LD, no metadata rewrites for SEO, no new articles, no wiki expansion, no schema changes, no auth changes, no simulator/portfolio logic edits, no color/font/spacing changes.
+- `public/llms.txt`
+- `src/components/seo/AIAnswerBlock.tsx`
+- `src/components/seo/Breadcrumbs.tsx` (with JSON-LD)
+- `src/components/seo/RelatedContent.tsx`
+- `src/components/retention/StreakBadge.tsx` (upgrade existing)
+- `src/components/retention/WeeklyRecap.tsx`
+- `src/components/retention/ContinueBanner.tsx`
+- `src/components/retention/WatchlistAlerts.tsx`
+- `src/lib/streaks.ts`, `src/lib/watchlistDiff.ts`, `src/lib/weeklyRecap.ts`
+- `src/lib/pwa.ts` + updated `public/sw.js`
+- `supabase/functions/og-trade/index.ts` (shareable trade cards)
+- `scripts/regenerate-sitemap.ts` (auto-crawl all routes)
+- `scripts/gsc-diagnose.ts` (pulls GSC data, prints top opportunities)
 
-Reply "approve" to proceed, or tell me what to adjust.
+**Modified**:
+
+- Every page component → migrate to `SEOHead` + `Breadcrumbs` + `AIAnswerBlock` + `RelatedContent`
+- `src/lib/sitemapGenerator.ts` → full route enumeration
+- `public/robots.txt` → hardened
+- `public/manifest.json` → PWA polish
+- `index.html` → theme-color, preloads, sitewide `Organization` + `WebSite` JSON-LD only (move per-route to Helmet)
+- `src/App.tsx` → lazy routes, PWA registration
+- `src/components/Navigation.tsx` → streak badge slot
+- `src/pages/Index.tsx` → Continue banner + Watchlist alerts + Weekly Recap on return visits
+- `src/components/NewsletterSignup.tsx` → new value prop
+
+**Explicitly NOT in this phase**: no visual redesign, no color/typography change, no auth requirement (streaks stay local-only), no fake stats, no reward tokens.
+
+---
+
+### One question before I build
+
+Two decisions from you:
+
+1. **Author E-E-A-T for GEO** — LLMs weight `author.sameAs` heavily. Do you want me to include real profile URLs (GitHub, LinkedIn, X) for Anuga Weerasinghe in the Article schema? If yes, paste them; if not, I'll omit `sameAs` rather than fabricate.
+2. **Web Push notifications** — OK to add opt-in browser push (daily challenge + big market moves)? It's the single biggest retention lever but some users find it aggressive. Default = **opt-in, one-time subtle prompt on day-2 return**.
+
+Reply "go" (I'll omit sameAs + include opt-in push) or answer the two, and I'll ship Phase 2.  
+  
+1) no do not include  
+2) yes do it.  
+  
+NOTE: ensure that you continue all the previous plans before starting with ANYTHING ELSE. EXTREMELY IMPORTANT NOTE. otherwise it will be a big fail.
