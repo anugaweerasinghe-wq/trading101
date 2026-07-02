@@ -104,6 +104,22 @@ function AnimatedRoutes() {
   );
 }
 
+/** Periodically snapshot watchlist prices so we can diff on next visit. */
+function WatchlistSnapshot() {
+  useEffect(() => {
+    const snap = () => snapshotWatchlist();
+    const t = setTimeout(snap, 5000);
+    const iv = setInterval(snap, 5 * 60 * 1000);
+    window.addEventListener("beforeunload", snap);
+    return () => {
+      clearTimeout(t);
+      clearInterval(iv);
+      window.removeEventListener("beforeunload", snap);
+    };
+  }, []);
+  return null;
+}
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
