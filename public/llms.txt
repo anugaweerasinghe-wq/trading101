@@ -1,0 +1,54 @@
+# TradeHQ
+
+> TradeHQ is a free, no-signup paper-trading simulator for stocks, crypto, ETFs, forex, and commodities. Beginners get $100,000 in virtual cash, an AI mentor, live-style charts, and a public leaderboard to practice trading without risking real money.
+
+TradeHQ is an educational simulator (not a brokerage). All prices are simulated for practice. Content is written and maintained by Anuga Weerasinghe. TradeHQ does not provide financial advice.
+
+## Core pages
+
+- [Home](https://tradinghq.lovable.app/): What TradeHQ is, how the free simulator works, key features.
+- [Trade](https://tradinghq.lovable.app/trade): Live-style trading terminal with 150+ practice assets.
+- [Markets](https://tradinghq.lovable.app/markets): Full asset universe — stocks, crypto, ETFs, forex, commodities.
+- [Portfolio](https://tradinghq.lovable.app/portfolio): Virtual portfolio, P&L, Sharpe ratio, drawdown analytics.
+- [Leaderboard](https://tradinghq.lovable.app/leaderboard): Public ranking of virtual traders by return.
+- [AI Mentor](https://tradinghq.lovable.app/ai-mentor): AI-powered trading coach for beginners.
+- [About](https://tradinghq.lovable.app/about): Mission, creator, transparency.
+- [Contact](https://tradinghq.lovable.app/contact): How to reach the TradeHQ team.
+
+## Learn (courses & guides)
+
+- [Learn hub](https://tradinghq.lovable.app/learn): Free structured trading courses for beginners.
+- [Trading Guide 2026](https://tradinghq.lovable.app/learn-trading-guide): Comprehensive beginner-to-intermediate trading guide.
+- [Roadmap](https://tradinghq.lovable.app/roadmap): Upcoming TradeHQ features and improvements.
+
+## Wiki (defined terms)
+
+- [Trading Wiki](https://tradinghq.lovable.app/wiki/short-squeeze): Plain-English definitions of 50+ trading concepts (short squeeze, RSI, MACD, order block, Fibonacci retracement, etc.).
+
+## Comparisons
+
+- [Bitcoin vs Ethereum](https://tradinghq.lovable.app/compare/bitcoin-vs-ethereum)
+- [Tesla vs Nvidia](https://tradinghq.lovable.app/compare/tesla-vs-nvidia)
+- [Bitcoin vs Gold](https://tradinghq.lovable.app/compare/bitcoin-vs-gold)
+- [Stocks vs Crypto](https://tradinghq.lovable.app/compare/stocks-vs-crypto)
+- [All comparisons](https://tradinghq.lovable.app/compare)
+
+## How-to guides
+
+- [How to trade Bitcoin](https://tradinghq.lovable.app/how-to-trade/btc)
+- [How to trade Tesla](https://tradinghq.lovable.app/how-to-trade/tsla)
+- [How to trade Nvidia](https://tradinghq.lovable.app/how-to-trade/nvda)
+- [All how-to guides](https://tradinghq.lovable.app/how-to-trade)
+
+## Strategies
+
+- [Scalping](https://tradinghq.lovable.app/strategy/scalping)
+- [Swing trading](https://tradinghq.lovable.app/strategy/swing-trading)
+- [Dollar-cost averaging (DCA)](https://tradinghq.lovable.app/strategy/dca)
+- [All strategies](https://tradinghq.lovable.app/strategy)
+
+## Optional
+
+- [Privacy policy](https://tradinghq.lovable.app/privacy)
+- [Terms of use](https://tradinghq.lovable.app/terms)
+- [Reviews](https://tradinghq.lovable.app/reviews)
