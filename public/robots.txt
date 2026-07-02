@@ -49,7 +49,15 @@ Disallow: /api/
 # But allow OG image generation
 Allow: /api/og/
 
+# Block admin routes from all crawlers
+Disallow: /admin/
+Disallow: /admin/seo-audit
+Disallow: /admin/validator
+Disallow: /admin/editor
+Disallow: /admin/reviews
+
 # Sitemap location
+Sitemap: https://tradinghq.lovable.app/sitemap.xml
 Sitemap: https://tradinghq.vercel.app/sitemap.xml
 
 # Crawl-delay for polite crawling
