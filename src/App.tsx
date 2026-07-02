@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +8,9 @@ import { HelmetProvider } from "react-helmet-async";
 import { PageTransition } from "@/components/PageTransition";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { BackgroundMusic } from "@/components/BackgroundMusic";
+import { PushNotificationPrompt } from "@/components/retention/PushNotificationPrompt";
+import { recordVisit } from "@/lib/lastVisit";
+import { snapshotWatchlist } from "@/lib/watchlistDiff";
 
 import Index from "./pages/Index";
 
@@ -49,7 +52,12 @@ const queryClient = new QueryClient({
 
 function AnimatedRoutes() {
   const location = useLocation();
-  
+
+  // Track last visited route for the "Continue where you left off" hook.
+  useEffect(() => {
+    recordVisit(location.pathname);
+  }, [location.pathname]);
+
   return (
     <Suspense fallback={<div className="min-h-screen bg-background" />}>
       <PageTransition key={location.pathname}>
@@ -96,6 +104,22 @@ function AnimatedRoutes() {
   );
 }
 
+/** Periodically snapshot watchlist prices so we can diff on next visit. */
+function WatchlistSnapshot() {
+  useEffect(() => {
+    const snap = () => snapshotWatchlist();
+    const t = setTimeout(snap, 5000);
+    const iv = setInterval(snap, 5 * 60 * 1000);
+    window.addEventListener("beforeunload", snap);
+    return () => {
+      clearTimeout(t);
+      clearInterval(iv);
+      window.removeEventListener("beforeunload", snap);
+    };
+  }, []);
+  return null;
+}
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -106,6 +130,8 @@ const App = () => (
           <AnimatedRoutes />
           <MobileBottomNav />
           <BackgroundMusic />
+          <PushNotificationPrompt />
+          <WatchlistSnapshot />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
