@@ -75,7 +75,7 @@ export function RecentAnalysis({ focusAsset }: { focusAsset: string }) {
               "publisher": {
                 "@type": "Organization",
                 "name": "TradeHQ",
-                "logo": { "@type": "ImageObject", "url": "https://tradinghq.lovable.app/og-image.png" }
+                "logo": { "@type": "ImageObject", "url": "https://tradinghq.vercel.app/og-image.png" }
               },
               "description": a.content.slice(0, 160),
             }) }} />

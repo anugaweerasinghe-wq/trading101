@@ -555,7 +555,7 @@ export default function Portfolio() {
                 {
                   question: "How do I reset my virtual portfolio?",
                   answer:
-                    "Your portfolio is stored locally in your browser. Clear your browser's site data for tradinghq.lovable.app to reset back to the default $100,000 starting balance.",
+                    "Your portfolio is stored locally in your browser. Clear your browser's site data for tradinghq.vercel.app to reset back to the default $100,000 starting balance.",
                 },
                 {
                   question: "What is the weekly bonus?",

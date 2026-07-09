@@ -358,4 +358,4 @@ export const COUNTRY_PAGES = [
   { slug: "pakistan", country: "Pakistan", currency: "PKR", note: "Educational practice only — perfect for students before PSX or international broker accounts." },
 ];
 
-export const SITE_DOMAIN = "https://tradinghq.lovable.app";
+export const SITE_DOMAIN = "https://tradinghq.vercel.app";

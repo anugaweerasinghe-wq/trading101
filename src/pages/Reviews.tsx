@@ -114,7 +114,7 @@ export default function Reviews() {
       "@type": "Product",
       name: "TradeHQ — Free Trading Simulator",
       description: "Practice stock, crypto, ETF and forex trading with $100,000 simulated cash. Free, no signup.",
-      url: "https://tradinghq.lovable.app/reviews",
+      url: "https://tradinghq.vercel.app/reviews",
     };
     if (stats.count > 0) {
       base.aggregateRating = {
@@ -143,11 +143,11 @@ export default function Reviews() {
           name="description"
           content={`Read ${stats.count || "real"} verified reviews from traders using TradeHQ's free $100,000 simulator. ${stats.count > 0 ? `Average rating ${stats.avg.toFixed(1)}/5.` : ""} Share your own experience.`}
         />
-        <link rel="canonical" href="https://tradinghq.lovable.app/reviews" />
+        <link rel="canonical" href="https://tradinghq.vercel.app/reviews" />
         <meta name="robots" content="index, follow, max-snippet:-1" />
         <meta property="og:title" content="TradeHQ Reviews — What Traders Say" />
         <meta property="og:description" content="Real reviews from real traders using TradeHQ's free simulator." />
-        <meta property="og:url" content="https://tradinghq.lovable.app/reviews" />
+        <meta property="og:url" content="https://tradinghq.vercel.app/reviews" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
