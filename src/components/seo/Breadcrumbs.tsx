@@ -7,7 +7,7 @@ export interface Crumb {
   href?: string; // omit for current page
 }
 
-const DOMAIN = "https://tradinghq.lovable.app";
+const DOMAIN = "https://tradinghq.vercel.app";
 
 export function Breadcrumbs({ items, className = "" }: { items: Crumb[]; className?: string }) {
   const jsonLd = {

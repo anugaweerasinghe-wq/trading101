@@ -18,7 +18,7 @@ const NotFound = () => {
         <title>Page not found — TradeHQ</title>
         <meta name="description" content="The page you're looking for doesn't exist on TradeHQ. Head back to the free trading simulator, markets, or learn hub." />
         <meta name="robots" content="noindex, follow" />
-        <link rel="canonical" href={`https://tradinghq.lovable.app${location.pathname}`} />
+        <link rel="canonical" href={`https://tradinghq.vercel.app${location.pathname}`} />
       </Helmet>
       <div className="min-h-screen bg-background flex flex-col">
         <Navigation />
