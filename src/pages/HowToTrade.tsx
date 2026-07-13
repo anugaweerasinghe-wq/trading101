@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { SEOSection } from "@/components/SEOSection";
+import { AIAnswerBlock } from "@/components/seo/AIAnswerBlock";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, AlertTriangle, GraduationCap } from "lucide-react";
@@ -55,6 +56,12 @@ export default function HowToTrade() {
               <Button className="mt-6">Practise {asset.name} now <ArrowRight className="ml-2 h-4 w-4" /></Button>
             </Link>
           </header>
+
+          <AIAnswerBlock
+            question={`How do you trade ${asset.fullName} step by step?`}
+            answer={`To trade ${asset.fullName}: ${asset.steps.slice(0, 3).join(" → ")}. Practise the full flow free on TradeHQ with $100,000 in virtual cash — no signup required. (Educational simulation only — not financial advice.)`}
+            className="mb-6"
+          />
 
           <Card className="p-6 mb-6">
             <h2 className="text-2xl font-semibold mb-4">Step-by-step</h2>
