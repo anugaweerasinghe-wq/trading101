@@ -1,101 +1,105 @@
-## TradeHQ Bug-Fix Pass — Crawlability, Canonicals, Data Truth, Trust Pages
+## Scope
 
-This is a **bug-fix only** pass. No visual redesign, no new AI features, no new sections. Every change below maps 1:1 to an item in the request.
-
----
-
-### 1. Rendering / crawlability (root cause fix)
-
-**Diagnosis (confirmed):** the project is a Vite + React SPA (`vite.config.ts` has no SSR/prerender plugin). `index.html` is served verbatim for every route, and `react-helmet-async` only mutates the head *after* JS hydrates. That is why `curl /`, `/markets`, `/wiki/macd`, `/learn-trading-guide` all return the same `<head>` and an empty `<div id="root">`.
-
-**Fix — add build-time prerendering (SSG) to the existing Vite pipeline.** No framework migration, no SSR server, no runtime change. The published `dist/` will contain a real HTML file per route with that route's `<title>`, `<meta description>`, `<link rel="canonical">`, JSON-LD, and the primary rendered body copy (h1, hero text, main sections). SPA hydration continues to work as-is for interactive features.
-
-Implementation:
-
-1. Add `vite-plugin-prerender` (Puppeteer-based; renders each route in a headless browser after `vite build`, snapshots `document.documentElement.outerHTML`, and writes it to `dist/<route>/index.html`).
-2. Enumerate routes from the same sources `scripts/generate-sitemap.ts` already uses (core pages + `assets.ts` IDs + `tradingGlossary.ts` slugs + `nicheData.ts` symbols + article slugs + how-to/compare/strategy slugs from `seoData.ts`). One shared route-list module so sitemap and prerender never drift.
-3. Wire `vercel.json` so Vercel serves the prerendered `index.html` for each path and falls back to SPA routing for anything unknown.
-4. Add a small `postbuild` step that fails the build if any prerendered HTML is missing `<title>`, `<meta name="description">`, `<link rel="canonical">`, or an `<h1>`.
-
-**Verification (part of the same build):** `scripts/verify-build.js` gets extended to read the actual prerendered files in `dist/**/index.html` (not just HEAD the live URL) and assert per-route `title`, `description`, `canonical`, and non-empty h1 text. Build fails on any duplication of the homepage head across routes.
+Big feature pass. Broken into 5 blocks. All work stays inside the existing Bloomberg-palette design system, prerender pipeline, and `STARTING_BALANCE` = $100K rule. Every new route flows through `scripts/routes.ts` so SSG, sitemap, and canonical checks stay in sync.
 
 ---
 
-### 2. Canonical tags
+### Block 1 — Four new learning tracks (YMYL-grade content)
 
-Every page already renders `SEOHead` with a per-route canonical via `react-helmet-async` — but because there is no SSR/SSG, the raw HTML still shows the sitewide fallback `<link rel="canonical">` from `index.html`. Two changes:
+New content module `src/lib/coursesData.ts` with 4 tracks. Each track has 5–7 lessons, each lesson has body copy (600–900 words, original), key takeaways, an image, a 4–6-question quiz, and a completion badge.
 
-1. **Remove the hardcoded `<link rel="canonical">` from `index.html`.** Each route owns its own canonical via `SEOHead` (already correct), which will now be baked into the prerendered HTML from step 1.
-2. **Audit every page component and ensure it renders `SEOHead` (or `<Helmet>` with a self-referencing canonical)** — spot-fix any that use ad-hoc `<Helmet>` blocks with only a title. Pages to verify: `HowToTrade`, `HowToTradeIndex`, `Compare`, `CompareIndex`, `Strategy`, `StrategyIndex`, `Roadmap`, `About`, `Contact`, `Reviews`, `Daily`, `LearnArticle`, `LearnTradingGuide`, `LessonDetail`, `SectorPillar`, `WikiTerm`, `NicheAsset`, `TradeAsset`, `Trade`, `Markets`, `Portfolio`, `Learn`, `Leaderboard`, `AIMentor`, `Privacy`, `Terms`.
-3. **Build-time duplicate-canonical check** added to the postbuild script: parse every `dist/**/index.html`, collect `<link rel="canonical">` values, fail if any URL appears twice.
+Tracks:
+1. `options-trading-fundamentals` — calls, puts, Greeks, spreads, risk.
+2. `futures-and-derivatives` — contracts, margin, contango/backwardation, hedging.
+3. `macro-reading-for-traders` — CPI, Fed, yield curve, DXY, commodities linkage.
+4. `trading-psychology-mastery` — biases, tilt, journaling, revenge trading, discipline.
+
+**YMYL compliance baked into every lesson:**
+- Author byline (Anuga Weerasinghe), "Last reviewed" date, "Educational simulation only — not financial advice" disclaimer above and below the fold.
+- Explicit `about`/`mentions` in JSON-LD (`Course`, `LearningResource`, `Article`), plus `EducationalOccupationalCredential` for the badge.
+- Sources section per lesson (SEC, CFTC, Investopedia, FRED) as visible outbound links with `rel="noopener nofollow"`.
+- Sri Lankan student perspective callout where relevant (LKR examples).
+
+**Images that actually load:** stop using missing `/lesson-*.png` paths. Generate one 1200×675 JPG per lesson via `imagegen`, save to `src/assets/courses/<track>/<lesson>.jpg`, import as ES module — this fixes the current broken images across the whole `/learn` system too (audit `lessonData.ts` and swap any broken URLs).
+
+Routes (added to `scripts/routes.ts` for prerender + sitemap + unique title/desc/H1):
+- `/courses` — index of all 4 tracks.
+- `/courses/:trackSlug` — track overview + lesson list + progress bar.
+- `/courses/:trackSlug/:lessonSlug` — lesson reader with quiz.
+
+### Block 2 — "Continue where you left off" (world-class impl)
+
+Persistence layer `src/lib/courseProgress.ts` (typed, versioned schema):
+
+```
+{ v: 1, tracks: { [slug]: { lessons: { [slug]: { status, score, completedAt } }, badgeEarnedAt? } }, lastLesson: { track, lesson, scrolledPct }, updatedAt }
+```
+
+- Storage: `localStorage` primary + `IndexedDB` mirror (via `idb-keyval`) for durability across profiles.
+- Debounced writes on scroll (throttled 2s) capture `scrolledPct`.
+- Cross-tab sync via `storage` event.
+- Reuses existing `ContinueBanner` on `/` and `/learn` — new "Resume: {lesson}" state driven by `courseProgress.lastLesson`.
+- Completion triggers `BadgeAwarded` toast + adds badge to a new `/profile/badges` mini-section on Portfolio.
+- Optional AI recap: after a lesson, a "Ask the AI guide" button opens the existing `AIMentor` prefilled with the lesson context, so the AI can quiz/reinforce.
+
+### Block 3 — SEO + GEO for every new page
+
+For each of `/courses`, `/courses/:track`, `/courses/:track/:lesson`:
+- Unique `<title>`, meta description, self-canonical (via prerender pipeline).
+- JSON-LD: `Course` (track), `LearningResource` + `Article` (lesson), `BreadcrumbList`, `FAQPage` (from lesson quiz Qs), `Person` (author).
+- `AIAnswerBlock` (speakable) at top of every lesson.
+- `RelatedContent` linking sibling lessons + relevant `/wiki/*` terms + relevant `/how-to-trade/*` and `/strategy/*`.
+- Add all lesson slugs to `public/llms.txt` and `sitemap.xml` (auto via `routes.ts`).
+- H1 + 120-char summary rendered in prerender body block so crawlers see real content pre-hydration.
+
+### Block 4 — Roadmap refresh (real dates, current status)
+
+Rewrite `src/pages/Roadmap.tsx` timeline (today = 13 Jul 2026):
+
+| Item | Status | Target |
+|---|---|---|
+| Guided learning pathways (this feature) | In Progress → Shipped this week | Jul 2026 |
+| Daily streak & reminders | In Progress | Jul 2026 |
+| Public trader profiles | Planned | Jul 2026 |
+| Google Sign-In | Planned | Aug 2026 |
+| Realistic portfolio projections | Planned | Aug 2026 |
+| Remaining items currently marked Q3/Q4 2026 | Rescheduled | Aug–Oct 2026 with real month labels |
+
+No `Q3`/`Q4` strings anywhere — real month + year only.
+
+### Block 5 — Finish leftover items from prior turns
+
+Sweep and complete anything left hanging:
+- Verify `AIAnswerBlock` + `DefinedTerm` JSON-LD present on every content route (audit).
+- Confirm `MegaFooter` links to `/courses` and its 4 tracks.
+- Regenerate `sitemap.xml`, `llms.txt`, run `verify-seo.mjs` — must pass with new routes.
+- Confirm no `$10,000` / `$10K` legacy strings introduced by new copy (prerender guard already enforces).
+- Add `Breadcrumbs` to every new page.
 
 ---
 
-### 3. Sitewide data inconsistency ($10K vs $100K)
+## Technical notes
 
-Establish a single source of truth and reconcile everywhere.
+- New dep: `idb-keyval` (~600 B) for IndexedDB mirror.
+- Image generation batch: 4 tracks × ~6 lessons = ~24 images at `standard` quality (JPG, 1200×675) — imported as ES modules, not `.asset.json`, so Vite fingerprints them.
+- All new files typed, no `any`. TSGo typecheck must pass.
+- No visual redesign — reuse existing `Card`, `Badge`, `Button`, glassmorphism tokens.
+- No new backend. Progress is client-only until Google Sign-In lands in August.
+- Prerender pipeline picks up new routes automatically once added to `scripts/routes.ts`.
 
-1. Create `src/lib/constants.ts` exporting `STARTING_BALANCE = 100_000`, `STARTING_BALANCE_LABEL = "$100,000"`, `STARTING_BALANCE_SHORT = "$100K"`.
-2. Grep the codebase for the literals `"$10,000"`, `"$10K"`, `"10000"` (in copy contexts), `"$100,000"`, `"$100K"` across `src/**`, `index.html`, `public/*.json`, `public/*.md`, `scripts/**`, and reconcile each hit to $100K — including meta descriptions, JSON-LD, hero copy, onboarding, `seoData.ts`, wiki articles, learn articles, `PremiumFeatures`, `PremiumHero`, `WhatIsTradeHQ`, `Hero`, `HowItWorks`, and any structured-data blocks.
-3. Where the actual portfolio engine seeds the starting cash, import `STARTING_BALANCE` from the new constants module so future changes are one-line.
-4. Add a build-time grep guard: fail the build if the strings `"$10,000"` or `"$10K"` appear anywhere under `src/`, `index.html`, or prerendered `dist/**/*.html`.
+## Explicitly NOT in this pass
 
----
+- No auth (Google Sign-In is Aug).
+- No server-side progress sync.
+- No paid tier / gating.
+- No visual redesign of existing pages.
 
-### 4. Sitemap and robots.txt
+## Verification checklist
 
-1. Migrate `scripts/generate-sitemap.ts` to consume the shared route-list module from step 1 so sitemap = prerender set = verify set. No route can be prerendered without appearing in the sitemap, and vice versa.
-2. Update `BASE_URL` in the sitemap generator to `https://tradinghq.lovable.app` (matches the current published domain and the canonical/og:url convention from head-meta knowledge) — currently pointing at the old `vercel.app` domain. Confirm with user before flipping if they still want `vercel.app`.
-3. Deprecate and delete `src/lib/sitemapGenerator.ts` (unused runtime duplicate that outputs a stale, partial list).
-4. `public/robots.txt`: confirm no unintended `Disallow:` on indexable routes; keep the admin/private disallows; add/keep a single correct `Sitemap:` line pointing at the chosen domain.
-
----
-
-### 5. Missing trust/policy pages
-
-Status check:
-
-- `/privacy`, `/terms`, `/about`, `/contact` already exist as routes (`src/pages/Privacy.tsx`, `Terms.tsx`, `About.tsx`, `Contact.tsx`) and are footer-linked via `MegaFooter.tsx`.
-
-Bug-fix work:
-
-1. Read each of the four pages and confirm the copy actually covers: (a) that TradeHQ is a free educational simulator with no brokerage relationship and no real money, (b) what is stored (localStorage only — trades, journal, watchlist, streaks) vs. what is sent to the server (only newsletter opt-in / contact form / review submissions), (c) no third-party ad tracking, (d) contact route, (e) author attribution for Anuga Weerasinghe on About. Patch any page whose copy is thin or generic.
-2. Ensure all four routes have unique `SEOHead` (title, description, self-canonical, JSON-LD `WebPage`/`AboutPage`/`ContactPage` where relevant).
-3. Confirm all four are included in the shared route list → sitemap → prerender.
-
----
-
-### 6. Verification pass
-
-After the above, run a single verify script that outputs a route-by-route checklist for:
-`/`, `/markets`, `/wiki/macd`, `/wiki/bollinger-band-squeeze`, `/learn-trading-guide`, `/privacy`, `/terms`, `/about`
-
-For each route, the script asserts (against the prerendered `dist/**/index.html`, i.e. no JS executed):
-
-- Unique `<title>`
-- Unique `<meta name="description">`
-- Self-referencing `<link rel="canonical">`
-- Non-empty `<h1>` and ≥ 200 chars of visible body text
-- Contains `$100,000` (or is a policy page where the figure is not applicable — the script whitelists `/privacy` and `/terms` for this check)
-- Appears in `dist/sitemap.xml`
-- No `console.error` when the same URL is loaded in a headless browser
-
-Output: a Markdown table pasted into the final reply.
-
----
-
-### Explicitly NOT in this pass
-
-- No visual redesign, no new components, no color/typography changes.
-- No new AI features, no new retention widgets, no new schemas beyond fixing existing ones.
-- No auth, no gating, no framework migration (staying on Vite + React Router, adding SSG only).
-- Roadmap items and Phase 3+ features are deferred.
-
----
-
-### Question before I build
-
-1. **Canonical domain** — the current sitemap and every JSON-LD block still says `https://tradinghq.vercel.app`, but your live published URL is `https://tradinghq.lovable.app`. Do you want me to switch everything to `tradinghq.lovable.app` (recommended — matches what Google actually resolves), keep `tradinghq.vercel.app`, or point at a custom domain you're about to attach? This is a one-line change but it must be right before prerendering bakes it into every HTML file.  
-  
-Answer: NO KEEP EVERYTHING & CHANGE EVERYTHING TO "tradinghq.vercel.app" because that is the link in google and everything.  
-IF it is inot much of a huge task continue phase 2b!
+- [ ] `/courses`, 4 track pages, ~24 lesson pages all prerender with unique title/desc/canonical/H1.
+- [ ] Every lesson image loads (no 404s) — confirmed by build + Playwright screenshot spot-check.
+- [ ] Quiz completes → badge saved → visible next visit → resume banner shows correct lesson.
+- [ ] JSON-LD validates (Course, LearningResource, FAQPage, BreadcrumbList).
+- [ ] Sitemap contains every new URL; `verify-seo.mjs` green.
+- [ ] Roadmap shows real months, no Q3/Q4 placeholders.
+- [ ] Typecheck + build pass.
