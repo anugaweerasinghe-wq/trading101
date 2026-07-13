@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { SEOSection } from "@/components/SEOSection";
+import { AIAnswerBlock } from "@/components/seo/AIAnswerBlock";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Target, ArrowRight } from "lucide-react";
@@ -45,6 +46,12 @@ export default function Strategy() {
             <p className="mt-4 text-lg text-muted-foreground">{s.oneLiner}</p>
             <Link to="/trade"><Button className="mt-6">Practise this strategy <ArrowRight className="ml-2 h-4 w-4" /></Button></Link>
           </header>
+
+          <AIAnswerBlock
+            question={`What is the ${s.name} trading strategy and does it work?`}
+            answer={`${s.name}: ${s.oneLiner} ${s.successRate} Best for ${s.bestFor.toLowerCase()} Practise it free on TradeHQ with $100,000 in virtual cash. (Educational simulation only — not financial advice.)`}
+            className="mb-6"
+          />
 
           <div className="grid md:grid-cols-2 gap-4 mb-6">
             <Card className="p-5 border-emerald-500/20">

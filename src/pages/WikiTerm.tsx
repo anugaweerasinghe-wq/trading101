@@ -39,6 +39,20 @@ const WikiTerm = () => {
     "mainEntityOfPage": `${DOMAIN}/wiki/${term.slug}`
   };
 
+  const definedTermSchema = {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": term.term,
+    "description": term.definition,
+    "inDefinedTermSet": {
+      "@type": "DefinedTermSet",
+      "name": "TradeHQ Trading Glossary",
+      "url": `${DOMAIN}/learn-trading-guide`,
+    },
+    "termCode": term.slug,
+    "url": `${DOMAIN}/wiki/${term.slug}`,
+  };
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -84,6 +98,7 @@ const WikiTerm = () => {
         <meta name="twitter:image" content={`${DOMAIN}/og-image.png`} />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(definedTermSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-[hsl(var(--background))] text-foreground font-sans selection:bg-primary/30">
