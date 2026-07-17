@@ -10,6 +10,19 @@ import { useState } from "react";
 import { lessonData } from "@/lib/lessonData";
 import { Quiz } from "@/components/Quiz";
 
+// Eagerly import every lesson image so Vite fingerprints them and the src
+// resolves in prod (raw `/src/assets/*` paths would 404 after build).
+const LESSON_IMAGE_MODULES = import.meta.glob("@/assets/lesson-*.jpg", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+function resolveLessonImage(raw: string): string {
+  const filename = raw.split("/").pop() ?? "";
+  const match = Object.entries(LESSON_IMAGE_MODULES).find(([k]) => k.endsWith("/" + filename));
+  return match ? match[1] : raw;
+}
+
 export default function LessonDetail() {
   const { lessonId } = useParams();
   const navigate = useNavigate();
@@ -168,8 +181,9 @@ export default function LessonDetail() {
                     <div className="my-12 rounded-3xl overflow-hidden shadow-2xl hover-lift relative group">
                       <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                       <img
-                        src={section.data as string}
+                        src={resolveLessonImage(section.data as string)}
                         alt={section.alt || "Lesson visual"}
+                        loading="lazy"
                         className="w-full h-auto transform group-hover:scale-105 transition-transform duration-700"
                       />
                       {section.caption && (

@@ -112,6 +112,30 @@ function extractSeoDataList(constName: "COMPARE_PAIRS" | "HOWTO_ASSETS" | "STRAT
   return out;
 }
 
+function extractCourses(): { slug: string; title: string; tagline: string; lessons: { slug: string; title: string; summary: string }[] }[] {
+  const src = readSrc("src/lib/coursesData.ts");
+  const tracks: { slug: string; title: string; tagline: string; lessons: { slug: string; title: string; summary: string }[] }[] = [];
+  const trackRe = /slug:\s*"([^"]+)",\s*\n\s*title:\s*"([^"]+)",\s*\n\s*tagline:\s*"([^"]+)"/g;
+  let tm: RegExpExecArray | null;
+  const trackStarts: { slug: string; title: string; tagline: string; index: number }[] = [];
+  while ((tm = trackRe.exec(src)) !== null) {
+    trackStarts.push({ slug: tm[1], title: tm[2], tagline: tm[3], index: tm.index });
+  }
+  for (let i = 0; i < trackStarts.length; i++) {
+    const t = trackStarts[i];
+    const end = i + 1 < trackStarts.length ? trackStarts[i + 1].index : src.length;
+    const block = src.slice(t.index, end);
+    const lessonRe = /slug:\s*"([^"]+)",\s*\n\s*title:\s*"([^"]+)",\s*\n\s*summary:\s*"([^"]+)"/g;
+    const lessons: { slug: string; title: string; summary: string }[] = [];
+    let lm: RegExpExecArray | null;
+    while ((lm = lessonRe.exec(block)) !== null) {
+      lessons.push({ slug: lm[1], title: lm[2], summary: lm[3] });
+    }
+    tracks.push({ slug: t.slug, title: t.title, tagline: t.tagline, lessons });
+  }
+  return tracks;
+}
+
 export function buildRoutes(): RouteMeta[] {
   const routes: RouteMeta[] = [];
 
@@ -390,6 +414,39 @@ export function buildRoutes(): RouteMeta[] {
     priority: "0.7",
     changefreq: "weekly",
   });
+
+  // ---- Structured course tracks (/courses, /courses/:track, /courses/:track/:lesson) ----
+  routes.push({
+    path: "/courses",
+    title: "Free Trading Courses 2026 — Options, Futures, Macro & Psychology | TradeHQ",
+    description: `Four structured, expert-written trading courses. Free lessons, quizzes and completion badges. Practice with ${BALANCE} virtual cash.`,
+    h1: "Structured Trading Courses",
+    summary: `Four structured tracks — options, futures, macro reading, and trading psychology — each with quizzes and a completion badge. Practice everything with ${BALANCE} in virtual cash on TradeHQ.`,
+    priority: "0.8",
+    changefreq: "weekly",
+  });
+  for (const t of extractCourses()) {
+    routes.push({
+      path: `/courses/${t.slug}`,
+      title: `${t.title} — Free Trading Course | TradeHQ`,
+      description: `${t.tagline} ${t.lessons.length} free lessons with quizzes and a completion badge. Practice with ${BALANCE} virtual cash.`,
+      h1: t.title,
+      summary: `${t.tagline} Includes ${t.lessons.length} lessons, quizzes, sources, and a completion badge — plus a free ${BALANCE} practice account to apply everything you learn.`,
+      priority: "0.75",
+      changefreq: "weekly",
+    });
+    for (const l of t.lessons) {
+      routes.push({
+        path: `/courses/${t.slug}/${l.slug}`,
+        title: `${l.title} — ${t.title} | TradeHQ`,
+        description: l.summary.length > 155 ? l.summary.slice(0, 152) + "..." : l.summary,
+        h1: l.title,
+        summary: `${l.summary} Practice with ${BALANCE} virtual cash on TradeHQ — educational simulation only, not financial advice.`,
+        priority: "0.7",
+        changefreq: "monthly",
+      });
+    }
+  }
 
   return routes;
 }

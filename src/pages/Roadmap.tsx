@@ -10,32 +10,34 @@ interface RoadmapItem {
   icon: any;
   title: string;
   desc: string;
-  status: "shipping-soon" | "in-progress" | "exploring";
+  status: "shipped" | "shipping-soon" | "in-progress" | "planned";
   eta: string;
 }
 
 const ITEMS: RoadmapItem[] = [
-  { icon: BookOpenCheck, title: "Expanded Learning Courses", desc: "New structured tracks covering options, futures, macro reading and trading psychology — each with quizzes and a completion badge.", status: "in-progress", eta: "Q3 2026" },
-  { icon: UserCircle2, title: "Optional Email + Google Sign-In", desc: "Sync your practice portfolio, journal and watchlists across devices. Still 100% optional — guest mode stays forever.", status: "shipping-soon", eta: "This month" },
-  { icon: LineChart, title: "Realistic Portfolio Projections", desc: "See where your simulated equity curve trends if your current win rate, R-multiple and frequency continue — powered by your real trade history.", status: "in-progress", eta: "Q3 2026" },
-  { icon: GraduationCap, title: "Guided Learning Pathways", desc: "Personalised next-lesson suggestions based on what you've already studied and which simulated trades went wrong.", status: "in-progress", eta: "Q3 2026" },
-  { icon: Bell, title: "Daily Streak + Practice Reminders", desc: "Gentle browser notifications to keep your practice habit alive — fully opt-in, fully free.", status: "shipping-soon", eta: "This month" },
-  { icon: Trophy, title: "Public Trader Profiles", desc: "Optional shareable profile page showing your simulated stats — perfect for building a track record before a prop-firm challenge.", status: "exploring", eta: "Q4 2026" },
-  { icon: Users2, title: "Challenge a Friend", desc: "Share a referral link, both start with $100K practice capital, leaderboard tracks who's ahead after 30 days.", status: "exploring", eta: "Q4 2026" },
-  { icon: BarChart3, title: "Embeddable Live Price Widgets", desc: "Drop a TradeHQ live BTC, ETH or SPY widget into any blog or notion page — free, no API key.", status: "exploring", eta: "Q4 2026" },
-  { icon: Globe2, title: "Localised Country Pages", desc: "Dedicated guides for Sri Lankan, Indian, Filipino, Pakistani and Nigerian students — local context, same free $100K account.", status: "in-progress", eta: "Rolling" },
+  { icon: BookOpenCheck, title: "Expanded Learning Courses", desc: "Four structured tracks — options, futures, macro reading and trading psychology — each with quizzes and a completion badge. Now live at /courses.", status: "shipped", eta: "Shipped Jul 2026" },
+  { icon: GraduationCap, title: "Guided Learning Pathways", desc: "Personalised next-lesson suggestions based on what you've already studied and which simulated trades went wrong. Rolling out this month.", status: "in-progress", eta: "Jul 2026" },
+  { icon: Bell, title: "Daily Streak + Practice Reminders", desc: "Gentle browser notifications to keep your practice habit alive — fully opt-in, fully free.", status: "in-progress", eta: "Jul 2026" },
+  { icon: Trophy, title: "Public Trader Profiles", desc: "Optional shareable profile page showing your simulated stats — perfect for building a track record before a prop-firm challenge.", status: "in-progress", eta: "Jul 2026" },
+  { icon: UserCircle2, title: "Optional Email + Google Sign-In", desc: "Sync your practice portfolio, journal and watchlists across devices. Still 100% optional — guest mode stays forever.", status: "planned", eta: "Aug 2026" },
+  { icon: LineChart, title: "Realistic Portfolio Projections", desc: "See where your simulated equity curve trends if your current win rate, R-multiple and frequency continue — powered by your real trade history.", status: "planned", eta: "Aug 2026" },
+  { icon: Users2, title: "Challenge a Friend", desc: "Share a referral link, both start with $100K practice capital, leaderboard tracks who's ahead after 30 days.", status: "planned", eta: "Sep 2026" },
+  { icon: BarChart3, title: "Embeddable Live Price Widgets", desc: "Drop a TradeHQ live BTC, ETH or SPY widget into any blog or notion page — free, no API key.", status: "planned", eta: "Oct 2026" },
+  { icon: Globe2, title: "Localised Country Pages", desc: "Dedicated guides for Sri Lankan, Indian, Filipino, Pakistani and Nigerian students — local context, same free $100K account.", status: "in-progress", eta: "Rolling — next drop Aug 2026" },
 ];
 
 const STATUS_STYLES: Record<RoadmapItem["status"], string> = {
+  "shipped": "bg-sky-500/15 text-sky-300 border-sky-500/30",
   "shipping-soon": "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
   "in-progress": "bg-amber-500/15 text-amber-300 border-amber-500/30",
-  "exploring": "bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-500/30",
+  "planned": "bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-500/30",
 };
 
 const STATUS_LABEL: Record<RoadmapItem["status"], string> = {
+  "shipped": "Shipped",
   "shipping-soon": "Shipping soon",
   "in-progress": "In progress",
-  "exploring": "Exploring",
+  "planned": "Planned",
 };
 
 export default function Roadmap() {

@@ -92,6 +92,11 @@ export function MegaFooter() {
 
   const learnLinks = [
     { to: "/learn", label: "All Courses", icon: GraduationCap },
+    { to: "/courses", label: "Structured Tracks", icon: Award },
+    { to: "/courses/options-trading-fundamentals", label: "Options Fundamentals", icon: BookOpen },
+    { to: "/courses/futures-and-derivatives", label: "Futures & Derivatives", icon: BookOpen },
+    { to: "/courses/macro-reading-for-traders", label: "Macro Reading", icon: BookOpen },
+    { to: "/courses/trading-psychology-mastery", label: "Trading Psychology", icon: BookOpen },
     { to: "/learn-trading-guide", label: "Trading Guide", icon: BookOpen },
     { to: "/ai-mentor", label: "AI Mentor", icon: Bot },
   ];
