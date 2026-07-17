@@ -45,6 +45,9 @@ const Strategy = lazy(() => import("./pages/Strategy"));
 const StrategyIndex = lazy(() => import("./pages/Strategy").then(m => ({ default: m.StrategyIndex })));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
+const Courses = lazy(() => import("./pages/Courses"));
+const CourseTrack = lazy(() => import("./pages/CourseTrack"));
+const CourseLesson = lazy(() => import("./pages/CourseLesson"));
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
@@ -84,6 +87,9 @@ function AnimatedRoutes() {
           <Route path="/how-to-trade/:symbol" element={<HowToTrade />} />
           <Route path="/strategy" element={<StrategyIndex />} />
           <Route path="/strategy/:slug" element={<Strategy />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/:trackSlug" element={<CourseTrack />} />
+          <Route path="/courses/:trackSlug/:lessonSlug" element={<CourseLesson />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sectors/:sectorId" element={<SectorPillar />} />
