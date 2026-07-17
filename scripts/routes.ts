@@ -128,10 +128,7 @@ function extractCourses(): { slug: string; title: string; tagline: string; lesso
     const lessonRe = /slug:\s*["']([^"']+)["'],\s*\n\s*title:\s*["']([^"']+)["'],\s*\n\s*summary:\s*["']([^"']+)["']/g;
     const lessons: { slug: string; title: string; summary: string }[] = [];
     let lm: RegExpExecArray | null;
-    // Skip first match — that's the track itself.
-    let first = true;
     while ((lm = lessonRe.exec(block)) !== null) {
-      if (first) { first = false; continue; }
       lessons.push({ slug: lm[1], title: lm[2], summary: lm[3] });
     }
     tracks.push({ slug: t.slug, title: t.title, tagline: t.tagline, lessons });
