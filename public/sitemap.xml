@@ -245,4 +245,22 @@
   <url><loc>https://tradinghq.vercel.app/strategy/rsi-strategy</loc><lastmod>2026-07-17</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://tradinghq.vercel.app/strategy/macd-strategy</loc><lastmod>2026-07-17</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://tradinghq.vercel.app/strategy</loc><lastmod>2026-07-17</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses</loc><lastmod>2026-07-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/options-trading-fundamentals</loc><lastmod>2026-07-17</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/options-trading-fundamentals/the-greeks-delta-gamma-theta-vega</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/options-trading-fundamentals/defined-risk-spreads</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/options-trading-fundamentals/implied-volatility-and-earnings</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/options-trading-fundamentals/options-risk-management</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/futures-and-derivatives</loc><lastmod>2026-07-17</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/futures-and-derivatives/margin-and-leverage-in-futures</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/futures-and-derivatives/contango-and-backwardation</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/futures-and-derivatives/hedging-with-futures</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/futures-and-derivatives/micro-futures-for-beginners</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/macro-reading-for-traders</loc><lastmod>2026-07-17</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/macro-reading-for-traders/the-fed-and-fomc-cycle</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/macro-reading-for-traders/the-dollar-index-dxy</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/macro-reading-for-traders/putting-macro-signals-together</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/trading-psychology-mastery</loc><lastmod>2026-07-17</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/trading-psychology-mastery/revenge-trading-and-tilt</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://tradinghq.vercel.app/courses/trading-psychology-mastery/the-trading-journal</loc><lastmod>2026-07-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
