@@ -19,6 +19,11 @@ TradeHQ is an educational simulator (not a brokerage). All prices are simulated 
 
 - [Learn hub](https://tradinghq.vercel.app/learn): Free structured trading courses for beginners.
 - [Trading Guide 2026](https://tradinghq.vercel.app/learn-trading-guide): Comprehensive beginner-to-intermediate trading guide.
+- [Structured Courses](https://tradinghq.vercel.app/courses): Four YMYL-compliant tracks with quizzes and completion badges.
+- [Options Trading Fundamentals](https://tradinghq.vercel.app/courses/options-trading-fundamentals): Calls, puts, Greeks, spreads and risk.
+- [Futures & Derivatives](https://tradinghq.vercel.app/courses/futures-and-derivatives): Contracts, margin, contango/backwardation, hedging.
+- [Macro Reading for Traders](https://tradinghq.vercel.app/courses/macro-reading-for-traders): CPI, FOMC, yield curve, DXY.
+- [Trading Psychology Mastery](https://tradinghq.vercel.app/courses/trading-psychology-mastery): Biases, tilt, journaling, discipline, drawdowns.
 - [Roadmap](https://tradinghq.vercel.app/roadmap): Upcoming TradeHQ features and improvements.
 
 ## Wiki (defined terms)
