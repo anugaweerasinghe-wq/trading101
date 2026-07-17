@@ -115,7 +115,7 @@ function extractSeoDataList(constName: "COMPARE_PAIRS" | "HOWTO_ASSETS" | "STRAT
 function extractCourses(): { slug: string; title: string; tagline: string; lessons: { slug: string; title: string; summary: string }[] }[] {
   const src = readSrc("src/lib/coursesData.ts");
   const tracks: { slug: string; title: string; tagline: string; lessons: { slug: string; title: string; summary: string }[] }[] = [];
-  const trackRe = /slug:\s*["']([^"']+)["'],\s*\n\s*title:\s*["']([^"']+)["'],\s*\n\s*tagline:\s*["']([^"']+)["']/g;
+  const trackRe = /slug:\s*"([^"]+)",\s*\n\s*title:\s*"([^"]+)",\s*\n\s*tagline:\s*"([^"]+)"/g;
   let tm: RegExpExecArray | null;
   const trackStarts: { slug: string; title: string; tagline: string; index: number }[] = [];
   while ((tm = trackRe.exec(src)) !== null) {
@@ -125,7 +125,7 @@ function extractCourses(): { slug: string; title: string; tagline: string; lesso
     const t = trackStarts[i];
     const end = i + 1 < trackStarts.length ? trackStarts[i + 1].index : src.length;
     const block = src.slice(t.index, end);
-    const lessonRe = /slug:\s*["']([^"']+)["'],\s*\n\s*title:\s*["']([^"']+)["'],\s*\n\s*summary:\s*["']([^"']+)["']/g;
+    const lessonRe = /slug:\s*"([^"]+)",\s*\n\s*title:\s*"([^"]+)",\s*\n\s*summary:\s*"([^"]+)"/g;
     const lessons: { slug: string; title: string; summary: string }[] = [];
     let lm: RegExpExecArray | null;
     while ((lm = lessonRe.exec(block)) !== null) {
