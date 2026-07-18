@@ -485,10 +485,10 @@ function extraRoutes(): RouteMeta[] {
   return out;
 }
 
-const _origBuildRoutes = buildRoutes;
-// @ts-expect-error redeclare with extras
-export function buildRoutes(): RouteMeta[] {
-  return [..._origBuildRoutes(), ...extraRoutes()];
+// Patch uniqueRoutes to include the extras. (buildRoutes can't be redeclared.)
+const _origUnique = uniqueRoutes;
+export function allRoutes(): RouteMeta[] {
+  return [..._origUnique(), ...extraRoutes()];
 }
 
 // Dedupe path collisions (last write wins) so future data overlap can't ship two entries for the same URL.
