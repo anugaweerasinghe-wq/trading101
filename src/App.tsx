@@ -48,6 +48,9 @@ const Contact = lazy(() => import("./pages/Contact"));
 const Courses = lazy(() => import("./pages/Courses"));
 const CourseTrack = lazy(() => import("./pages/CourseTrack"));
 const CourseLesson = lazy(() => import("./pages/CourseLesson"));
+const CountryGuide = lazy(() => import("./pages/CountryGuide"));
+const CountryGuideIndex = lazy(() => import("./pages/CountryGuide").then(m => ({ default: m.CountryGuideIndex })));
+const TraderProfile = lazy(() => import("./pages/TraderProfile"));
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
@@ -90,6 +93,9 @@ function AnimatedRoutes() {
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/:trackSlug" element={<CourseTrack />} />
           <Route path="/courses/:trackSlug/:lessonSlug" element={<CourseLesson />} />
+          <Route path="/learn/country" element={<CountryGuideIndex />} />
+          <Route path="/learn/country/:country" element={<CountryGuide />} />
+          <Route path="/trader/me" element={<TraderProfile />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sectors/:sectorId" element={<SectorPillar />} />

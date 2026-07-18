@@ -16,14 +16,14 @@ interface RoadmapItem {
 
 const ITEMS: RoadmapItem[] = [
   { icon: BookOpenCheck, title: "Expanded Learning Courses", desc: "Four structured tracks — options, futures, macro reading and trading psychology — each with quizzes and a completion badge. Now live at /courses.", status: "shipped", eta: "Shipped Jul 2026" },
-  { icon: GraduationCap, title: "Guided Learning Pathways", desc: "Personalised next-lesson suggestions based on what you've already studied and which simulated trades went wrong. Rolling out this month.", status: "in-progress", eta: "Jul 2026" },
-  { icon: Bell, title: "Daily Streak + Practice Reminders", desc: "Gentle browser notifications to keep your practice habit alive — fully opt-in, fully free.", status: "in-progress", eta: "Jul 2026" },
-  { icon: Trophy, title: "Public Trader Profiles", desc: "Optional shareable profile page showing your simulated stats — perfect for building a track record before a prop-firm challenge.", status: "in-progress", eta: "Jul 2026" },
+  { icon: GraduationCap, title: "Guided Learning Pathways", desc: "Personalised next-lesson suggestions based on what you've already studied. Live on the Learn hub — the 'Picked for you' card resumes your last lesson or points you to the best starting point.", status: "shipped", eta: "Shipped Jul 2026" },
+  { icon: Bell, title: "Daily Streak + Practice Reminders", desc: "Streak tracker on the daily challenge and opt-in browser notifications for returning learners. Fully free, no signup required.", status: "shipped", eta: "Shipped Jul 2026" },
+  { icon: Trophy, title: "Public Trader Profiles", desc: "Shareable profile at /trader/me showing your simulated P&L, win rate, drawdown and course badges. Copy or share the link anywhere.", status: "shipped", eta: "Shipped Jul 2026" },
+  { icon: Globe2, title: "Localised Country Pages", desc: "Free tailored guides for Sri Lanka, India, Philippines, Pakistan and Nigeria — local regulator, exchange, tax notes and student angle. Live under /learn/country.", status: "shipped", eta: "Shipped Jul 2026" },
   { icon: UserCircle2, title: "Optional Email + Google Sign-In", desc: "Sync your practice portfolio, journal and watchlists across devices. Still 100% optional — guest mode stays forever.", status: "planned", eta: "Aug 2026" },
   { icon: LineChart, title: "Realistic Portfolio Projections", desc: "See where your simulated equity curve trends if your current win rate, R-multiple and frequency continue — powered by your real trade history.", status: "planned", eta: "Aug 2026" },
   { icon: Users2, title: "Challenge a Friend", desc: "Share a referral link, both start with $100K practice capital, leaderboard tracks who's ahead after 30 days.", status: "planned", eta: "Sep 2026" },
   { icon: BarChart3, title: "Embeddable Live Price Widgets", desc: "Drop a TradeHQ live BTC, ETH or SPY widget into any blog or notion page — free, no API key.", status: "planned", eta: "Oct 2026" },
-  { icon: Globe2, title: "Localised Country Pages", desc: "Dedicated guides for Sri Lankan, Indian, Filipino, Pakistani and Nigerian students — local context, same free $100K account.", status: "in-progress", eta: "Rolling — next drop Aug 2026" },
 ];
 
 const STATUS_STYLES: Record<RoadmapItem["status"], string> = {

@@ -342,7 +342,7 @@ const Index = () => {
             <div className="flex flex-wrap gap-3">
               <Link to="/trade" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all">Trade Now</Link>
               <Link to="/markets" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Markets</Link>
-              <Link to="/learn" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Learn Trading</Link>
+              <Link to="/courses" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Learn Trading</Link>
               <Link to="/portfolio" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Portfolio</Link>
               <Link to="/leaderboard" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">Leaderboard</Link>
               <Link to="/ai-mentor" className="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-primary/30 transition-all">AI Mentor</Link>
