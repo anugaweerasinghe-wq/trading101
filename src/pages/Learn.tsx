@@ -8,6 +8,9 @@ import { BookOpen, TrendingUp, Shield, PieChart, LineChart, Target, ArrowRight, 
 import { Link } from "react-router-dom";
 import { LEARN_ARTICLES } from "@/lib/learnArticles";
 import { SEOSection } from "@/components/SEOSection";
+import { courseTracks } from "@/lib/coursesData";
+import { GuidedNextLesson } from "@/components/GuidedNextLesson";
+import { COUNTRY_GUIDES } from "@/lib/countryGuides";
 import tradingBasics from "@/assets/course-trading-basics.jpg";
 import riskManagement from "@/assets/course-risk-management.jpg";
 import technicalAnalysis from "@/assets/course-technical-analysis.jpg";
@@ -127,6 +130,56 @@ export default function Learn() {
               <ChevronRight className="w-4 h-4" />
               <span className="text-foreground font-medium">Learning</span>
             </nav>
+
+            {/* Guided next lesson — pathway pick */}
+            <div className="mb-8">
+              <GuidedNextLesson />
+            </div>
+
+            {/* Structured Courses — top-of-page discovery */}
+            <section className="mb-14" aria-label="Structured Courses">
+              <div className="flex items-end justify-between gap-3 mb-5 flex-wrap">
+                <div>
+                  <div className="text-[10px] uppercase tracking-widest text-emerald-400 mb-1">Full courses</div>
+                  <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
+                    <GraduationCap className="w-6 h-6 text-emerald-400" /> Structured Trading Courses
+                  </h2>
+                  <p className="text-sm text-muted-foreground mt-1">Four expert-written tracks, 20 lessons, quizzes and completion badges — 100% free.</p>
+                </div>
+                <Link to="/courses" className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-400 hover:text-emerald-300">
+                  View all courses <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {courseTracks.map((t) => (
+                  <Link key={t.slug} to={`/courses/${t.slug}`} className="group block">
+                    <Card className="overflow-hidden bg-white/[0.02] border-white/10 hover:border-emerald-500/40 transition h-full">
+                      <div className="aspect-[16/9] overflow-hidden bg-black">
+                        <img src={t.hero} alt={t.title} loading="lazy" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
+                      </div>
+                      <div className="p-4">
+                        <Badge variant="outline" className="text-[9px] uppercase tracking-widest mb-2">{t.level}</Badge>
+                        <h3 className="text-sm font-semibold group-hover:text-emerald-300 transition-colors leading-snug">{t.title}</h3>
+                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{t.tagline}</p>
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            {/* Country guides */}
+            <section className="mb-14" aria-label="Country guides">
+              <h2 className="text-2xl font-bold mb-3">Learn trading in your country</h2>
+              <p className="text-sm text-muted-foreground mb-4">Local regulator, exchange and student angle for five focus markets.</p>
+              <div className="flex flex-wrap gap-2">
+                {COUNTRY_GUIDES.map((c) => (
+                  <Link key={c.slug} to={`/learn/country/${c.slug}`} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 text-sm hover:border-emerald-500/30 transition">
+                    <span aria-hidden>{c.flag}</span> {c.country}
+                  </Link>
+                ))}
+              </div>
+            </section>
 
             {/* Roadmap teaser (not in navigation, surfaced here + homepage) */}
             <Link

@@ -117,7 +117,7 @@ export function PremiumHero() {
               </span>
             </Button>
           </Link>
-          <Link to="/learn">
+          <Link to="/courses">
             <Button
               size="lg"
               variant="outline"
