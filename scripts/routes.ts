@@ -451,6 +451,46 @@ export function buildRoutes(): RouteMeta[] {
   return routes;
 }
 
+// ---- Country guides & trader profile appended ----
+const COUNTRIES = [
+  { slug: "sri-lanka", name: "Sri Lanka" },
+  { slug: "india", name: "India" },
+  { slug: "philippines", name: "Philippines" },
+  { slug: "pakistan", name: "Pakistan" },
+  { slug: "nigeria", name: "Nigeria" },
+];
+
+function extraRoutes(): RouteMeta[] {
+  const out: RouteMeta[] = [];
+  out.push({
+    path: "/learn/country",
+    title: "Country Guides — Learn Trading Locally | TradeHQ",
+    description: `Free trading guides for Sri Lanka, India, Philippines, Pakistan and Nigeria. Local regulator, exchange and ${BALANCE} virtual practice cash.`,
+    h1: "Country trading guides",
+    summary: `Free trading guides tailored to five focus markets — with local regulator, exchange, tax notes and the free ${BALANCE} practice account.`,
+    priority: "0.6",
+    changefreq: "monthly",
+  });
+  for (const c of COUNTRIES) {
+    out.push({
+      path: `/learn/country/${c.slug}`,
+      title: `Learn Trading in ${c.name} — Free Guide for ${c.name} Students | TradeHQ`,
+      description: `Free trading education for ${c.name}. Practise with ${BALANCE} virtual cash, learn how global markets work, and understand local rules. Educational simulation only.`,
+      h1: `Learn Trading in ${c.name}`,
+      summary: `A localised free guide for ${c.name} learners — local regulator, local exchange, tax note and the same ${BALANCE} virtual practice account.`,
+      priority: "0.6",
+      changefreq: "monthly",
+    });
+  }
+  return out;
+}
+
+const _origBuildRoutes = buildRoutes;
+// @ts-expect-error redeclare with extras
+export function buildRoutes(): RouteMeta[] {
+  return [..._origBuildRoutes(), ...extraRoutes()];
+}
+
 // Dedupe path collisions (last write wins) so future data overlap can't ship two entries for the same URL.
 export function uniqueRoutes(): RouteMeta[] {
   const map = new Map<string, RouteMeta>();
