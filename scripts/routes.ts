@@ -485,15 +485,9 @@ function extraRoutes(): RouteMeta[] {
   return out;
 }
 
-// Patch uniqueRoutes to include the extras. (buildRoutes can't be redeclared.)
-const _origUnique = uniqueRoutes;
-export function allRoutes(): RouteMeta[] {
-  return [..._origUnique(), ...extraRoutes()];
-}
-
 // Dedupe path collisions (last write wins) so future data overlap can't ship two entries for the same URL.
 export function uniqueRoutes(): RouteMeta[] {
   const map = new Map<string, RouteMeta>();
-  for (const r of buildRoutes()) map.set(r.path, r);
+  for (const r of [...buildRoutes(), ...extraRoutes()]) map.set(r.path, r);
   return Array.from(map.values());
 }
