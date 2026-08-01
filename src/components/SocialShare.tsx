@@ -57,7 +57,7 @@ export function SocialShare({
         await navigator.share({
           title,
           text: description,
-          url,
+          url: shareUrl,
         });
       } catch (err) {
         // User cancelled share
