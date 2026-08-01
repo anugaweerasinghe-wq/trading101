@@ -15,7 +15,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export const DOMAIN = "https://tradinghq.vercel.app";
+export const DOMAIN = "https://www.thetradehq.com";
 export const TODAY = new Date().toISOString().split("T")[0];
 export const BALANCE = "$100,000";
 

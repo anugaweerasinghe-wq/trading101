@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { SITE_DOMAIN } from "@/lib/constants";
 
 export interface SEOHeadProps {
   title: string;
@@ -10,7 +11,7 @@ export interface SEOHeadProps {
   noindex?: boolean;
 }
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = SITE_DOMAIN;
 const DEFAULT_OG = `${DOMAIN}/og-image.png`;
 
 /**

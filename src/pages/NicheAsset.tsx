@@ -25,7 +25,7 @@ export default function NicheAsset() {
   }
 
   const displaySymbol = niche.symbol.replace('/', '-');
-  const canonical = `https://tradinghq.vercel.app/niche/${displaySymbol.toLowerCase()}`;
+  const canonical = `https://www.thetradehq.com/niche/${displaySymbol.toLowerCase()}`;
   const title = `${niche.name} (${niche.symbol}) — Institutional Analysis & 2026 Scenario Drivers | TradeHQ`;
   const description = `Practice ${niche.name} trading with $100K virtual cash. Expert analysis, real-time charts, technical indicators & risk management tools. Start trading ${niche.symbol} risk-free on TradeHQ simulator.`;
 
@@ -53,8 +53,8 @@ export default function NicheAsset() {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tradinghq.vercel.app/" },
-        { "@type": "ListItem", "position": 2, "name": "Markets", "item": "https://tradinghq.vercel.app/markets" },
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.thetradehq.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Markets", "item": "https://www.thetradehq.com/markets" },
         { "@type": "ListItem", "position": 3, "name": niche.name, "item": canonical },
       ],
     },

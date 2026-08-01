@@ -10,7 +10,7 @@ import { getTrackProgress, trackCompletionPct } from "@/lib/courseProgress";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 export default function CourseTrack() {
   const { trackSlug } = useParams<{ trackSlug: string }>();

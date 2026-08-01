@@ -1,5 +1,5 @@
 # Robots.txt for TradingHQ
-# https://tradinghq.vercel.app/
+# https://www.thetradehq.com/
 
 User-agent: Googlebot
 Allow: /
@@ -57,7 +57,7 @@ Disallow: /admin/editor
 Disallow: /admin/reviews
 
 # Sitemap location
-Sitemap: https://tradinghq.vercel.app/sitemap.xml
+Sitemap: https://www.thetradehq.com/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1

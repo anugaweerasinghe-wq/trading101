@@ -6,54 +6,54 @@ TradeHQ is an educational simulator (not a brokerage). All prices are simulated 
 
 ## Core pages
 
-- [Home](https://tradinghq.vercel.app/): What TradeHQ is, how the free simulator works, key features.
-- [Trade](https://tradinghq.vercel.app/trade): Live-style trading terminal with 150+ practice assets.
-- [Markets](https://tradinghq.vercel.app/markets): Full asset universe — stocks, crypto, ETFs, forex, commodities.
-- [Portfolio](https://tradinghq.vercel.app/portfolio): Virtual portfolio, P&L, Sharpe ratio, drawdown analytics.
-- [Leaderboard](https://tradinghq.vercel.app/leaderboard): Public ranking of virtual traders by return.
-- [AI Mentor](https://tradinghq.vercel.app/ai-mentor): AI-powered trading coach for beginners.
-- [About](https://tradinghq.vercel.app/about): Mission, creator, transparency.
-- [Contact](https://tradinghq.vercel.app/contact): How to reach the TradeHQ team.
+- [Home](https://www.thetradehq.com/): What TradeHQ is, how the free simulator works, key features.
+- [Trade](https://www.thetradehq.com/trade): Live-style trading terminal with 150+ practice assets.
+- [Markets](https://www.thetradehq.com/markets): Full asset universe — stocks, crypto, ETFs, forex, commodities.
+- [Portfolio](https://www.thetradehq.com/portfolio): Virtual portfolio, P&L, Sharpe ratio, drawdown analytics.
+- [Leaderboard](https://www.thetradehq.com/leaderboard): Public ranking of virtual traders by return.
+- [AI Mentor](https://www.thetradehq.com/ai-mentor): AI-powered trading coach for beginners.
+- [About](https://www.thetradehq.com/about): Mission, creator, transparency.
+- [Contact](https://www.thetradehq.com/contact): How to reach the TradeHQ team.
 
 ## Learn (courses & guides)
 
-- [Learn hub](https://tradinghq.vercel.app/learn): Free structured trading courses for beginners.
-- [Trading Guide 2026](https://tradinghq.vercel.app/learn-trading-guide): Comprehensive beginner-to-intermediate trading guide.
-- [Structured Courses](https://tradinghq.vercel.app/courses): Four YMYL-compliant tracks with quizzes and completion badges.
-- [Options Trading Fundamentals](https://tradinghq.vercel.app/courses/options-trading-fundamentals): Calls, puts, Greeks, spreads and risk.
-- [Futures & Derivatives](https://tradinghq.vercel.app/courses/futures-and-derivatives): Contracts, margin, contango/backwardation, hedging.
-- [Macro Reading for Traders](https://tradinghq.vercel.app/courses/macro-reading-for-traders): CPI, FOMC, yield curve, DXY.
-- [Trading Psychology Mastery](https://tradinghq.vercel.app/courses/trading-psychology-mastery): Biases, tilt, journaling, discipline, drawdowns.
-- [Roadmap](https://tradinghq.vercel.app/roadmap): Upcoming TradeHQ features and improvements.
+- [Learn hub](https://www.thetradehq.com/learn): Free structured trading courses for beginners.
+- [Trading Guide 2026](https://www.thetradehq.com/learn-trading-guide): Comprehensive beginner-to-intermediate trading guide.
+- [Structured Courses](https://www.thetradehq.com/courses): Four YMYL-compliant tracks with quizzes and completion badges.
+- [Options Trading Fundamentals](https://www.thetradehq.com/courses/options-trading-fundamentals): Calls, puts, Greeks, spreads and risk.
+- [Futures & Derivatives](https://www.thetradehq.com/courses/futures-and-derivatives): Contracts, margin, contango/backwardation, hedging.
+- [Macro Reading for Traders](https://www.thetradehq.com/courses/macro-reading-for-traders): CPI, FOMC, yield curve, DXY.
+- [Trading Psychology Mastery](https://www.thetradehq.com/courses/trading-psychology-mastery): Biases, tilt, journaling, discipline, drawdowns.
+- [Roadmap](https://www.thetradehq.com/roadmap): Upcoming TradeHQ features and improvements.
 
 ## Wiki (defined terms)
 
-- [Trading Wiki](https://tradinghq.vercel.app/wiki/short-squeeze): Plain-English definitions of 50+ trading concepts (short squeeze, RSI, MACD, order block, Fibonacci retracement, etc.).
+- [Trading Wiki](https://www.thetradehq.com/wiki/short-squeeze): Plain-English definitions of 50+ trading concepts (short squeeze, RSI, MACD, order block, Fibonacci retracement, etc.).
 
 ## Comparisons
 
-- [Bitcoin vs Ethereum](https://tradinghq.vercel.app/compare/bitcoin-vs-ethereum)
-- [Tesla vs Nvidia](https://tradinghq.vercel.app/compare/tesla-vs-nvidia)
-- [Bitcoin vs Gold](https://tradinghq.vercel.app/compare/bitcoin-vs-gold)
-- [Stocks vs Crypto](https://tradinghq.vercel.app/compare/stocks-vs-crypto)
-- [All comparisons](https://tradinghq.vercel.app/compare)
+- [Bitcoin vs Ethereum](https://www.thetradehq.com/compare/bitcoin-vs-ethereum)
+- [Tesla vs Nvidia](https://www.thetradehq.com/compare/tesla-vs-nvidia)
+- [Bitcoin vs Gold](https://www.thetradehq.com/compare/bitcoin-vs-gold)
+- [Stocks vs Crypto](https://www.thetradehq.com/compare/stocks-vs-crypto)
+- [All comparisons](https://www.thetradehq.com/compare)
 
 ## How-to guides
 
-- [How to trade Bitcoin](https://tradinghq.vercel.app/how-to-trade/btc)
-- [How to trade Tesla](https://tradinghq.vercel.app/how-to-trade/tsla)
-- [How to trade Nvidia](https://tradinghq.vercel.app/how-to-trade/nvda)
-- [All how-to guides](https://tradinghq.vercel.app/how-to-trade)
+- [How to trade Bitcoin](https://www.thetradehq.com/how-to-trade/btc)
+- [How to trade Tesla](https://www.thetradehq.com/how-to-trade/tsla)
+- [How to trade Nvidia](https://www.thetradehq.com/how-to-trade/nvda)
+- [All how-to guides](https://www.thetradehq.com/how-to-trade)
 
 ## Strategies
 
-- [Scalping](https://tradinghq.vercel.app/strategy/scalping)
-- [Swing trading](https://tradinghq.vercel.app/strategy/swing-trading)
-- [Dollar-cost averaging (DCA)](https://tradinghq.vercel.app/strategy/dca)
-- [All strategies](https://tradinghq.vercel.app/strategy)
+- [Scalping](https://www.thetradehq.com/strategy/scalping)
+- [Swing trading](https://www.thetradehq.com/strategy/swing-trading)
+- [Dollar-cost averaging (DCA)](https://www.thetradehq.com/strategy/dca)
+- [All strategies](https://www.thetradehq.com/strategy)
 
 ## Optional
 
-- [Privacy policy](https://tradinghq.vercel.app/privacy)
-- [Terms of use](https://tradinghq.vercel.app/terms)
-- [Reviews](https://tradinghq.vercel.app/reviews)
+- [Privacy policy](https://www.thetradehq.com/privacy)
+- [Terms of use](https://www.thetradehq.com/terms)
+- [Reviews](https://www.thetradehq.com/reviews)

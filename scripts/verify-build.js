@@ -7,7 +7,7 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
-const BASE_URL = process.argv[2] || 'https://tradinghq.vercel.app';
+const BASE_URL = process.argv[2] || 'https://www.thetradehq.com';
 
 async function main() {
   const sitemapPath = resolve(process.cwd(), 'public/sitemap.xml');

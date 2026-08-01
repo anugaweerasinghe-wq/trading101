@@ -83,8 +83,8 @@ export default function Learn() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "TradeHQ", item: "https://tradinghq.vercel.app/" },
-      { "@type": "ListItem", position: 2, name: "Learning", item: "https://tradinghq.vercel.app/learn" },
+      { "@type": "ListItem", position: 1, name: "TradeHQ", item: "https://www.thetradehq.com/" },
+      { "@type": "ListItem", position: 2, name: "Learning", item: "https://www.thetradehq.com/learn" },
     ],
   };
 
@@ -93,20 +93,20 @@ export default function Learn() {
       <Helmet>
         <title>Learn Trading 2026 — Free Beginner to Advanced Guides | TradeHQ</title>
         <meta name="description" content="Free trading education 2026: stocks, crypto, technical analysis & risk management. Practice everything with $100K virtual cash. No signup required — TradeHQ." />
-        <link rel="canonical" href="https://tradinghq.vercel.app/learn" />
+        <link rel="canonical" href="https://www.thetradehq.com/learn" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Learn Trading 2026 — Free Beginner to Advanced Guides" />
         <meta property="og:description" content="Master trading with free beginner-to-advanced lessons. Practice instantly with $100K virtual cash. No signup required." />
-        <meta property="og:url" content="https://tradinghq.vercel.app/learn" />
-        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:url" content="https://www.thetradehq.com/learn" />
+        <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Learn Trading 2026 — Free Beginner to Advanced Guides" />
         <meta name="twitter:description" content="Free trading education: stocks, crypto, technical analysis & more. Practice with $100K virtual cash." />
-        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
       </Helmet>
 

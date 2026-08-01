@@ -48,11 +48,11 @@ export default function Daily() {
       <Helmet>
         <title>Daily Trading Challenge — Build Your Streak | TradeHQ</title>
         <meta name="description" content="A new trading scenario every day. Pick long, short, or hold. Build your streak, unlock badges, learn one new pro insight every 24 hours. Free, no signup." />
-        <link rel="canonical" href="https://tradinghq.vercel.app/daily" />
+        <link rel="canonical" href="https://www.thetradehq.com/daily" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Daily Trading Challenge — TradeHQ" />
         <meta property="og:description" content="One new trading scenario per day. Build your streak. Free." />
-        <meta property="og:url" content="https://tradinghq.vercel.app/daily" />
+        <meta property="og:url" content="https://www.thetradehq.com/daily" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -60,7 +60,7 @@ export default function Daily() {
           name: `Daily Trading Challenge: ${challenge.asset}`,
           about: challenge.scenario,
           educationalLevel: challenge.difficulty,
-          provider: { "@type": "Organization", name: "TradeHQ", url: "https://tradinghq.vercel.app/" },
+          provider: { "@type": "Organization", name: "TradeHQ", url: "https://www.thetradehq.com/" },
         })}</script>
       </Helmet>
 

@@ -7,7 +7,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
-import { uniqueRoutes, DOMAIN, TODAY } from "./routes";
+import { uniqueRoutes, DOMAIN } from "./routes";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -15,7 +15,7 @@ const routes = uniqueRoutes();
 const urls = routes
   .map(
     (r) =>
-      `  <url><loc>${DOMAIN}${r.path === "/" ? "/" : r.path}</loc><lastmod>${TODAY}</lastmod><changefreq>${r.changefreq ?? "weekly"}</changefreq><priority>${r.priority ?? "0.6"}</priority></url>`
+      `  <url><loc>${DOMAIN}${r.path === "/" ? "/" : r.path}</loc><changefreq>${r.changefreq ?? "weekly"}</changefreq><priority>${r.priority ?? "0.6"}</priority></url>`
   )
   .join("\n");
 

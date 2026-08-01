@@ -126,7 +126,7 @@ export function LearningProgressTracker() {
   };
 
   const handleShareProgress = () => {
-    const shareText = `I'm leveling up my trading skills on TradingHQ! 📈\n\n🎯 Level ${levelInfo.level}: ${levelInfo.title}\n⚡ ${totalXP}/${maxXP} XP\n✅ ${completedCount}/${modules.length} modules completed\n\nLearn to trade risk-free: https://tradinghq.vercel.app/learn-trading-guide\n\n#TradingEducation #LearnToTrade #Investing2026`;
+    const shareText = `I'm leveling up my trading skills on TradingHQ! 📈\n\n🎯 Level ${levelInfo.level}: ${levelInfo.title}\n⚡ ${totalXP}/${maxXP} XP\n✅ ${completedCount}/${modules.length} modules completed\n\nLearn to trade risk-free: https://www.thetradehq.com/learn-trading-guide\n\n#TradingEducation #LearnToTrade #Investing2026`;
     
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
     window.open(twitterUrl, '_blank', 'width=550,height=420');

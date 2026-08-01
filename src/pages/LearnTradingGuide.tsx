@@ -13,7 +13,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { tradingGlossary } from "@/lib/tradingGlossary";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 // Seeded random for daily consistency
 function seededRandom(seed: string) {

@@ -300,7 +300,7 @@ export default function Trade() {
     ? `Practice trading ${symbol.toUpperCase()} with $100,000 virtual cash. Real-time charts, AI mentor & zero risk. No signup required — TradeHQ 2026.`
     : "Use our free trading simulator to buy stocks, ETFs, and crypto with $100K virtual money. Real-time practice, zero risk. No signup required.";
 
-  const pageUrl = `https://tradinghq.vercel.app/trade${
+  const pageUrl = `https://www.thetradehq.com/trade${
     symbol ? `/${symbol.toLowerCase()}` : ""
   }`;
 
@@ -317,7 +317,7 @@ export default function Trade() {
         <meta property="og:url" content={pageUrl} />
         <meta
           property="og:image"
-          content="https://tradinghq.vercel.app/og-image.png"
+          content="https://www.thetradehq.com/og-image.png"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -327,7 +327,7 @@ export default function Trade() {
         <meta name="twitter:description" content={pageDescription} />
         <meta
           name="twitter:image"
-          content="https://tradinghq.vercel.app/og-image.png"
+          content="https://www.thetradehq.com/og-image.png"
         />
       </Helmet>
 

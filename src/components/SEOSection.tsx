@@ -27,7 +27,7 @@ interface SEOSectionProps {
   hideVisibleBreadcrumb?: boolean;
 }
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 /**
  * SEOSection — drop-in component that emits:

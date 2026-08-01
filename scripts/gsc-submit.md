@@ -2,9 +2,9 @@
 
 ## One-time setup (15 min)
 1. Go to https://search.google.com/search-console
-2. Add property → **Domain** (preferred) or **URL prefix** for `https://tradinghq.vercel.app`
+2. Add property → **Domain** (preferred) or **URL prefix** for `https://www.thetradehq.com`
 3. Verify via DNS TXT (domain) or HTML tag (URL prefix). For Vercel: paste the verification meta tag into `index.html` `<head>` and redeploy.
-4. **Sitemaps** tab → submit `https://tradinghq.vercel.app/sitemap.xml`
+4. **Sitemaps** tab → submit `https://www.thetradehq.com/sitemap.xml`
 5. Wait 24–72h for the first crawl.
 
 ## Weekly indexing routine

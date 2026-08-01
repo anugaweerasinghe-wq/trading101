@@ -14,7 +14,7 @@ import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 import { AIAnswerBlock } from "@/components/seo/AIAnswerBlock";
 import { toast } from "sonner";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 const AUTHOR = "Anuga Weerasinghe";
 const REVIEWED = "2026-07-13";
 

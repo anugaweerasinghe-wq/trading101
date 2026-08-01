@@ -92,7 +92,7 @@ export default function SectorPillar() {
     .map(id => ASSETS.find(a => a.id === id))
     .filter(Boolean);
 
-  const canonicalUrl = `https://tradinghq.vercel.app/sectors/${sector.slug}`;
+  const canonicalUrl = `https://www.thetradehq.com/sectors/${sector.slug}`;
 
   // JSON-LD Schema
   const pageSchema = {
@@ -107,7 +107,7 @@ export default function SectorPillar() {
       "itemListElement": sectorAssets.map((asset, index) => ({
         "@type": "ListItem",
         "position": index + 1,
-        "url": `https://tradinghq.vercel.app/trade/${asset!.symbol.toLowerCase().replace('/', '-')}`
+        "url": `https://www.thetradehq.com/trade/${asset!.symbol.toLowerCase().replace('/', '-')}`
       }))
     }
   };

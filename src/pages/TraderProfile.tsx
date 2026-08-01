@@ -14,7 +14,7 @@ import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { toast } from "sonner";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 function useTraderStats() {
   return useMemo(() => {

@@ -83,7 +83,7 @@ export default function LessonDetail() {
       <Helmet>
         <title>{lesson.title} — Free Trading Course | TradeHQ 2026</title>
         <meta name="description" content={`Learn ${lesson.title.toLowerCase()}. ${lesson.description} Free interactive course with quiz.`} />
-        <link rel="canonical" href={`https://tradinghq.vercel.app/learn/${lessonId}`} />
+        <link rel="canonical" href={`https://www.thetradehq.com/learn/${lessonId}`} />
         <meta name="robots" content="index, follow" />
       </Helmet>
     <div className="min-h-screen bg-background">
