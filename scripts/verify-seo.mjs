@@ -87,6 +87,28 @@ for (const r of routes) {
   if (!present) fail = true;
 }
 
+// Stale-domain guard: no legacy host may survive anywhere in the build output.
+const STALE_HOSTS = ["tradinghq.vercel.app", "lovable.app"];
+const staleHits = [];
+for (const route of routes) {
+  const filePath = route === "/" ? `${DIST}/index.html` : `${DIST}${route}/index.html`;
+  if (!existsSync(filePath)) continue;
+  const html = readFileSync(filePath, "utf-8");
+  for (const host of STALE_HOSTS) {
+    if (html.includes(host)) staleHits.push(`${route} → ${host}`);
+  }
+}
+for (const host of STALE_HOSTS) {
+  if (sitemap.includes(host)) staleHits.push(`sitemap.xml → ${host}`);
+}
+console.log("\n**Stale domain guard:**");
+if (staleHits.length) {
+  for (const hit of staleHits) console.log(`- ❌ ${hit}`);
+  fail = true;
+} else {
+  console.log(`- ✅ no legacy hosts (${STALE_HOSTS.join(", ")}) in build output`);
+}
+
 if (fail) {
   console.error("\n🔴 SEO verification failed");
   process.exit(1);
