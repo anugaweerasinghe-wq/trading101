@@ -1,13 +1,13 @@
 # Google Search Console — Post-Deploy Actions
 
 ## Prerequisites
-- Verified ownership of https://tradinghq.vercel.app/ in Google Search Console
+- Verified ownership of https://www.thetradehq.com/ in Google Search Console
 - Site verification code: `I9Z6Vo-t00zuqHRrR_RFgAZ14hsA5YzA0gHeK2POL-I`
 
 ## Step 1: Submit Sitemap
 
 1. Go to [Google Search Console](https://search.google.com/search-console/)
-2. Select property: `https://tradinghq.vercel.app/`
+2. Select property: `https://www.thetradehq.com/`
 3. Navigate to **Index → Sitemaps**
 4. Enter: `sitemap.xml`
 5. Click **Submit**
@@ -19,29 +19,29 @@ Use **URL Inspection** for each URL below — paste, press Enter, click **Reques
 
 ### Priority 1 (Submit First)
 ```
-https://tradinghq.vercel.app/
-https://tradinghq.vercel.app/trade
-https://tradinghq.vercel.app/learn-trading-guide
+https://www.thetradehq.com/
+https://www.thetradehq.com/trade
+https://www.thetradehq.com/learn-trading-guide
 ```
 
 ### Priority 2 (Seed Assets)
 ```
-https://tradinghq.vercel.app/trade/btc
-https://tradinghq.vercel.app/trade/eth
-https://tradinghq.vercel.app/trade/nvda
-https://tradinghq.vercel.app/trade/aapl
-https://tradinghq.vercel.app/trade/msft
-https://tradinghq.vercel.app/trade/googl
-https://tradinghq.vercel.app/trade/amzn
-https://tradinghq.vercel.app/trade/tsla
-https://tradinghq.vercel.app/trade/spy
-https://tradinghq.vercel.app/trade/qqq
-https://tradinghq.vercel.app/trade/gold
-https://tradinghq.vercel.app/trade/oil
-https://tradinghq.vercel.app/trade/gbpusd
-https://tradinghq.vercel.app/trade/xrp
-https://tradinghq.vercel.app/trade/bnb
-https://tradinghq.vercel.app/trade/sol
+https://www.thetradehq.com/trade/btc
+https://www.thetradehq.com/trade/eth
+https://www.thetradehq.com/trade/nvda
+https://www.thetradehq.com/trade/aapl
+https://www.thetradehq.com/trade/msft
+https://www.thetradehq.com/trade/googl
+https://www.thetradehq.com/trade/amzn
+https://www.thetradehq.com/trade/tsla
+https://www.thetradehq.com/trade/spy
+https://www.thetradehq.com/trade/qqq
+https://www.thetradehq.com/trade/gold
+https://www.thetradehq.com/trade/oil
+https://www.thetradehq.com/trade/gbpusd
+https://www.thetradehq.com/trade/xrp
+https://www.thetradehq.com/trade/bnb
+https://www.thetradehq.com/trade/sol
 ```
 
 ## Step 3: A/B Meta Test (After 7-Day Baseline)
