@@ -358,4 +358,4 @@ export const COUNTRY_PAGES = [
   { slug: "pakistan", country: "Pakistan", currency: "PKR", note: "Educational practice only — perfect for students before PSX or international broker accounts." },
 ];
 
-export const SITE_DOMAIN = "https://www.thetradehq.com";
+export { SITE_DOMAIN } from "./constants";
