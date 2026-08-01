@@ -1,105 +1,49 @@
-## Scope
+## Goal
 
-Big feature pass. Broken into 5 blocks. All work stays inside the existing Bloomberg-palette design system, prerender pipeline, and `STARTING_BALANCE` = $100K rule. Every new route flows through `scripts/routes.ts` so SSG, sitemap, and canonical checks stay in sync.
+Make `https://www.thetradehq.com` the single canonical domain everywhere, and make the site easier for Google to crawl fully.
 
----
+## Current state (verified)
 
-### Block 1 — Four new learning tracks (YMYL-grade content)
+The old domain `tradinghq.vercel.app` is hardcoded in ~50 files. There are four separate domain constants that can drift apart:
 
-New content module `src/lib/coursesData.ts` with 4 tracks. Each track has 5–7 lessons, each lesson has body copy (600–900 words, original), key takeaways, an image, a 4–6-question quiz, and a completion badge.
+- `scripts/routes.ts` → `DOMAIN` (drives sitemap + prerender canonicals)
+- `src/lib/constants.ts` → `SITE_DOMAIN`
+- `src/lib/seoData.ts` → `SITE_DOMAIN` (duplicate)
+- `src/components/SEOHead.tsx` → local `DOMAIN` const
 
-Tracks:
-1. `options-trading-fundamentals` — calls, puts, Greeks, spreads, risk.
-2. `futures-and-derivatives` — contracts, margin, contango/backwardation, hedging.
-3. `macro-reading-for-traders` — CPI, Fed, yield curve, DXY, commodities linkage.
-4. `trading-psychology-mastery` — biases, tilt, journaling, revenge trading, discipline.
+Plus literal strings in `index.html` (11), ~40 page/component files, `public/robots.txt`, `public/sitemap.xml` (270 URLs), `public/llms.txt`, and `scripts/` (verify-seo, verify-build, submit-indexnow, gsc-submit). One `.lovable.app` link pair lives in the newsletter edge function. The only `http://` hits are schema XML namespaces, which must stay unchanged.
 
-**YMYL compliance baked into every lesson:**
-- Author byline (Anuga Weerasinghe), "Last reviewed" date, "Educational simulation only — not financial advice" disclaimer above and below the fold.
-- Explicit `about`/`mentions` in JSON-LD (`Course`, `LearningResource`, `Article`), plus `EducationalOccupationalCredential` for the badge.
-- Sources section per lesson (SEC, CFTC, Investopedia, FRED) as visible outbound links with `rel="noopener nofollow"`.
-- Sri Lankan student perspective callout where relevant (LKR examples).
+## Plan
 
-**Images that actually load:** stop using missing `/lesson-*.png` paths. Generate one 1200×675 JPG per lesson via `imagegen`, save to `src/assets/courses/<track>/<lesson>.jpg`, import as ES module — this fixes the current broken images across the whole `/learn` system too (audit `lessonData.ts` and swap any broken URLs).
+**1. One source of truth for the domain**
+- Set `SITE_DOMAIN = "https://www.thetradehq.com"` in `src/lib/constants.ts`.
+- Re-export it from `src/lib/seoData.ts` instead of redeclaring, and have `SEOHead.tsx` import it rather than keep its own copy.
+- Set the same value in `scripts/routes.ts` (`DOMAIN`) — scripts can't import from `src/`, so this stays a second literal, guarded by step 5.
 
-Routes (added to `scripts/routes.ts` for prerender + sitemap + unique title/desc/H1):
-- `/courses` — index of all 4 tracks.
-- `/courses/:trackSlug` — track overview + lesson list + progress bar.
-- `/courses/:trackSlug/:lessonSlug` — lesson reader with quiz.
+**2. Replace every hardcoded literal**
+- `index.html`: `og:url`, `og:image`, `twitter:image`, and all three JSON-LD blocks (SoftwareApplication, EducationalOrganization, BreadcrumbList) → new absolute domain.
+- All `src/pages/*` and `src/components/*` occurrences (JSON-LD `url`/`@id`/`item`, share links, breadcrumbs) → new domain; where the file already imports a domain constant, prefer the constant over a literal.
+- `supabase/functions/send-newsletter/index.ts`: the two `tradinghq.lovable.app` CTA links → new domain.
+- Leave `http://www.sitemaps.org/...` and `http://www.w3.org/...` namespaces untouched.
 
-### Block 2 — "Continue where you left off" (world-class impl)
+**3. robots.txt + sitemap**
+- `public/robots.txt`: header comment and `Sitemap: https://www.thetradehq.com/sitemap.xml`. Keep existing per-crawler blocks and admin disallows.
+- Regenerate `public/sitemap.xml` via `scripts/generate-sitemap.ts` so all ~270 URLs carry the new host.
+- Per sitemap policy: the generator currently stamps every entry with a build-time `TODAY` value, which is not a page-specific timestamp. Remove the `<lastmod>` emission rather than shipping 270 identical fake dates — Google ignores/distrusts them anyway.
 
-Persistence layer `src/lib/courseProgress.ts` (typed, versioned schema):
+**4. Relative paths for runtime navigation**
+- Confirm no in-app `<Link>`/`fetch` targets use the absolute domain (currently they don't — hits are all metadata/share strings). Any share/copy links that need an absolute URL will use `window.location.origin` so preview environments stay correct; only crawler-facing metadata keeps the hardcoded canonical domain.
 
-```
-{ v: 1, tracks: { [slug]: { lessons: { [slug]: { status, score, completedAt } }, badgeEarnedAt? } }, lastLesson: { track, lesson, scrolledPct }, updatedAt }
-```
+**5. Guards + crawl improvements**
+- `scripts/verify-seo.mjs` and `scripts/verify-build.js`: update their `DOMAIN`/`BASE_URL` defaults, so the post-build check fails loudly if any canonical still points at the old host.
+- Add a check to the verify script that greps `dist/` for `tradinghq.vercel.app` and `lovable.app` and fails the build if found.
+- `scripts/submit-indexnow.ts`: default host → `www.thetradehq.com`.
+- `public/llms.txt` and `scripts/gsc-submit.md`: update URLs and the Search Console instructions to reference the new property.
+- Leave the historical CSV/JSON audit artifacts in `public/` (old reports) as-is unless you want them rewritten too.
 
-- Storage: `localStorage` primary + `IndexedDB` mirror (via `idb-keyval`) for durability across profiles.
-- Debounced writes on scroll (throttled 2s) capture `scrolledPct`.
-- Cross-tab sync via `storage` event.
-- Reuses existing `ContinueBanner` on `/` and `/learn` — new "Resume: {lesson}" state driven by `courseProgress.lastLesson`.
-- Completion triggers `BadgeAwarded` toast + adds badge to a new `/profile/badges` mini-section on Portfolio.
-- Optional AI recap: after a lesson, a "Ask the AI guide" button opens the existing `AIMentor` prefilled with the lesson context, so the AI can quiz/reinforce.
+**6. Verify**
+Run build → prerender → `verify-seo.mjs`, confirming every route's canonical, `og:url`, and sitemap entry is `https://www.thetradehq.com/...` and that the old host appears nowhere in `dist/`.
 
-### Block 3 — SEO + GEO for every new page
+## Note
 
-For each of `/courses`, `/courses/:track`, `/courses/:track/:lesson`:
-- Unique `<title>`, meta description, self-canonical (via prerender pipeline).
-- JSON-LD: `Course` (track), `LearningResource` + `Article` (lesson), `BreadcrumbList`, `FAQPage` (from lesson quiz Qs), `Person` (author).
-- `AIAnswerBlock` (speakable) at top of every lesson.
-- `RelatedContent` linking sibling lessons + relevant `/wiki/*` terms + relevant `/how-to-trade/*` and `/strategy/*`.
-- Add all lesson slugs to `public/llms.txt` and `sitemap.xml` (auto via `routes.ts`).
-- H1 + 120-char summary rendered in prerender body block so crawlers see real content pre-hydration.
-
-### Block 4 — Roadmap refresh (real dates, current status)
-
-Rewrite `src/pages/Roadmap.tsx` timeline (today = 13 Jul 2026):
-
-| Item | Status | Target |
-|---|---|---|
-| Guided learning pathways (this feature) | In Progress → Shipped this week | Jul 2026 |
-| Daily streak & reminders | In Progress | Jul 2026 |
-| Public trader profiles | Planned | Jul 2026 |
-| Google Sign-In | Planned | Aug 2026 |
-| Realistic portfolio projections | Planned | Aug 2026 |
-| Remaining items currently marked Q3/Q4 2026 | Rescheduled | Aug–Oct 2026 with real month labels |
-
-No `Q3`/`Q4` strings anywhere — real month + year only.
-
-### Block 5 — Finish leftover items from prior turns
-
-Sweep and complete anything left hanging:
-- Verify `AIAnswerBlock` + `DefinedTerm` JSON-LD present on every content route (audit).
-- Confirm `MegaFooter` links to `/courses` and its 4 tracks.
-- Regenerate `sitemap.xml`, `llms.txt`, run `verify-seo.mjs` — must pass with new routes.
-- Confirm no `$10,000` / `$10K` legacy strings introduced by new copy (prerender guard already enforces).
-- Add `Breadcrumbs` to every new page.
-
----
-
-## Technical notes
-
-- New dep: `idb-keyval` (~600 B) for IndexedDB mirror.
-- Image generation batch: 4 tracks × ~6 lessons = ~24 images at `standard` quality (JPG, 1200×675) — imported as ES modules, not `.asset.json`, so Vite fingerprints them.
-- All new files typed, no `any`. TSGo typecheck must pass.
-- No visual redesign — reuse existing `Card`, `Badge`, `Button`, glassmorphism tokens.
-- No new backend. Progress is client-only until Google Sign-In lands in August.
-- Prerender pipeline picks up new routes automatically once added to `scripts/routes.ts`.
-
-## Explicitly NOT in this pass
-
-- No auth (Google Sign-In is Aug).
-- No server-side progress sync.
-- No paid tier / gating.
-- No visual redesign of existing pages.
-
-## Verification checklist
-
-- [ ] `/courses`, 4 track pages, ~24 lesson pages all prerender with unique title/desc/canonical/H1.
-- [ ] Every lesson image loads (no 404s) — confirmed by build + Playwright screenshot spot-check.
-- [ ] Quiz completes → badge saved → visible next visit → resume banner shows correct lesson.
-- [ ] JSON-LD validates (Course, LearningResource, FAQPage, BreadcrumbList).
-- [ ] Sitemap contains every new URL; `verify-seo.mjs` green.
-- [ ] Roadmap shows real months, no Q3/Q4 placeholders.
-- [ ] Typecheck + build pass.
+DNS/domain connection itself is separate — once the code ships, point `www.thetradehq.com` at the project in Project Settings → Domains, add both apex and `www` (with `www` as primary), and submit the new sitemap in Search Console.
