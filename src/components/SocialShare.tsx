@@ -13,13 +13,20 @@ interface SocialShareProps {
 export function SocialShare({ 
   title = "I'm learning to trade on TradingHQ!",
   description = "Master trading with a risk-free $100K simulator",
-  url = "https://www.thetradehq.com/learn-trading-guide",
+  url,
   variant = "default"
 }: SocialShareProps) {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
 
-  const shareText = `${title} 📈\n\n${description}\n\n🔗 ${url}\n\n#TradingEducation #LearnToTrade #Investing2026`;
+  // Runtime share links follow the current origin so preview builds stay correct.
+  const shareUrl =
+    url ??
+    (typeof window !== "undefined"
+      ? `${window.location.origin}${window.location.pathname}`
+      : "https://www.thetradehq.com/learn-trading-guide");
+
+  const shareText = `${title} 📈\n\n${description}\n\n🔗 ${shareUrl}\n\n#TradingEducation #LearnToTrade #Investing2026`;
 
   const handleTwitterShare = () => {
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
@@ -28,7 +35,7 @@ export function SocialShare({
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       toast({
         title: "Link copied!",
