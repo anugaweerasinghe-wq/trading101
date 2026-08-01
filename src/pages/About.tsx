@@ -6,7 +6,7 @@ import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 import { SEOSection } from "@/components/SEOSection";
 import { Target, Compass, GraduationCap, Eye, Cpu, User } from "lucide-react";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 const sections = [
   {

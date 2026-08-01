@@ -11,7 +11,7 @@ import { ArrowRight, BookOpen, Clock, Share2, Zap, CheckCircle2, Lightbulb, Tren
 import { motion } from "framer-motion";
 import NotFound from "./NotFound";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 const WikiTerm = () => {
   const { slug } = useParams<{ slug: string }>();

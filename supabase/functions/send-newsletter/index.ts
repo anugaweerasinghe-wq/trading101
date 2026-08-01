@@ -73,10 +73,10 @@ serve(async (req) => {
     <table cellpadding="0" cellspacing="0" style="margin-bottom:8px;">
       <tr>
         <td style="padding-right:12px;">
-          <a href="https://tradinghq.lovable.app/trade" style="display:inline-block;padding:10px 24px;background:#0ea5e9;color:#fff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Start Trading</a>
+          <a href="https://www.thetradehq.com/trade" style="display:inline-block;padding:10px 24px;background:#0ea5e9;color:#fff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;">Start Trading</a>
         </td>
         <td>
-          <a href="https://tradinghq.lovable.app/learn" style="display:inline-block;padding:10px 24px;background:#1a1a1a;color:#0ea5e9;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;border:1px solid #333;">Learn More</a>
+          <a href="https://www.thetradehq.com/learn" style="display:inline-block;padding:10px 24px;background:#1a1a1a;color:#0ea5e9;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;border:1px solid #333;">Learn More</a>
         </td>
       </tr>
     </table>

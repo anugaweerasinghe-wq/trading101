@@ -282,7 +282,7 @@ export default function Portfolio() {
           name="description"
           content="Real-time portfolio tracker with AI analytics, trading journal, performance charts, and milestone alerts. See your P&L, positions, and risk metrics instantly."
         />
-        <link rel="canonical" href="https://tradinghq.vercel.app/portfolio" />
+        <link rel="canonical" href="https://www.thetradehq.com/portfolio" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta
@@ -293,10 +293,10 @@ export default function Portfolio() {
           property="og:description"
           content="Live P&L, AI insights, journal, and risk management for your $100K practice portfolio."
         />
-        <meta property="og:url" content="https://tradinghq.vercel.app/portfolio" />
+        <meta property="og:url" content="https://www.thetradehq.com/portfolio" />
         <meta
           property="og:image"
-          content="https://tradinghq.vercel.app/og-image.png"
+          content="https://www.thetradehq.com/og-image.png"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -309,7 +309,7 @@ export default function Portfolio() {
         />
         <meta
           name="twitter:image"
-          content="https://tradinghq.vercel.app/og-image.png"
+          content="https://www.thetradehq.com/og-image.png"
         />
       </Helmet>
 
@@ -555,7 +555,7 @@ export default function Portfolio() {
                 {
                   question: "How do I reset my virtual portfolio?",
                   answer:
-                    "Your portfolio is stored locally in your browser. Clear your browser's site data for tradinghq.vercel.app to reset back to the default $100,000 starting balance.",
+                    "Your portfolio is stored locally in your browser. Clear your browser's site data for www.thetradehq.com to reset back to the default $100,000 starting balance.",
                 },
                 {
                   question: "What is the weekly bonus?",

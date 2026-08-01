@@ -92,8 +92,8 @@ export default function Leaderboard() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://tradinghq.vercel.app/" },
-      { "@type": "ListItem", position: 2, name: "Leaderboard", item: "https://tradinghq.vercel.app/leaderboard" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thetradehq.com/" },
+      { "@type": "ListItem", position: 2, name: "Leaderboard", item: "https://www.thetradehq.com/leaderboard" },
     ],
   };
 
@@ -102,20 +102,20 @@ export default function Leaderboard() {
       <Helmet>
         <title>Leaderboard — Top Virtual Traders 2026 | TradeHQ Simulator Rankings</title>
         <meta name="description" content="See who's crushing it with $100K virtual cash. Real-time leaderboard of the best paper traders on TradeHQ. Can you beat the top 10?" />
-        <link rel="canonical" href="https://tradinghq.vercel.app/leaderboard" />
+        <link rel="canonical" href="https://www.thetradehq.com/leaderboard" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ Leaderboard — Top Virtual Traders 2026" />
         <meta property="og:description" content="Live rankings of the best paper traders. Start with $100K and climb the leaderboard." />
-        <meta property="og:url" content="https://tradinghq.vercel.app/leaderboard" />
-        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:url" content="https://www.thetradehq.com/leaderboard" />
+        <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="TradeHQ Leaderboard — Top Virtual Traders 2026" />
         <meta name="twitter:description" content="Live rankings of the best paper traders. Start with $100K and climb the leaderboard." />
-        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
       </Helmet>

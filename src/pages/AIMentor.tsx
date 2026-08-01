@@ -63,20 +63,20 @@ export default function AIMentor() {
       <Helmet>
         <title>Smart Trading Mentor — Free Strategy, Risk & Psychology Coach | TradeHQ</title>
         <meta name="description" content="Chat with TradeHQ's Smart Mentor — a curated knowledge engine covering stop-losses, RSI, position sizing, psychology, crypto, ETFs and more. Free, instant, no signup." />
-        <link rel="canonical" href="https://tradinghq.vercel.app/ai-mentor" />
+        <link rel="canonical" href="https://www.thetradehq.com/ai-mentor" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Smart Trading Mentor — Your Free Trading Coach | TradeHQ" />
         <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Curated by expert traders. Free on TradeHQ." />
-        <meta property="og:url" content="https://tradinghq.vercel.app/ai-mentor" />
-        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:url" content="https://www.thetradehq.com/ai-mentor" />
+        <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Smart Trading Mentor — Your Free Trading Coach | TradeHQ" />
         <meta name="twitter:description" content="Ask anything about trading, risk, psychology, or markets. Curated by expert traders." />
-        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
       </Helmet>
 
       <div className="min-h-screen bg-background flex flex-col">

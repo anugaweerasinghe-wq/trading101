@@ -125,20 +125,20 @@ export default function Markets() {
       <Helmet>
         <title>Live Markets 2026 — Track 150+ Stocks, Crypto, ETFs & Forex | TradeHQ</title>
         <meta name="description" content="Real-time market dashboard with 150+ assets. Top gainers/losers, search, and sector clusters. Practice trading live prices with $100K virtual cash — TradeHQ 2026." />
-        <link rel="canonical" href="https://tradinghq.vercel.app/markets" />
+        <link rel="canonical" href="https://www.thetradehq.com/markets" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Live Markets 2026 — 150+ Stocks, Crypto, ETFs & Forex | TradeHQ" />
         <meta property="og:description" content="Track stocks, crypto, ETFs, forex & commodities in real time. Free market dashboard — TradeHQ." />
-        <meta property="og:url" content="https://tradinghq.vercel.app/markets" />
-        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:url" content="https://www.thetradehq.com/markets" />
+        <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Live Markets 2026 — 150+ Assets | TradeHQ" />
         <meta name="twitter:description" content="Track stocks, crypto, ETFs, forex & commodities. Free market dashboard." />
-        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
       </Helmet>
 
       <div className="min-h-screen bg-background flex">

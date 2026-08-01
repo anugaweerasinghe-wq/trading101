@@ -8,4 +8,4 @@ export const STARTING_BALANCE_LABEL = "$100,000";
 export const STARTING_BALANCE_SHORT = "$100K";
 
 /** Canonical production domain — used by SEO, sitemap, prerender, OG tags. */
-export const SITE_DOMAIN = "https://tradinghq.vercel.app";
+export const SITE_DOMAIN = "https://www.thetradehq.com";

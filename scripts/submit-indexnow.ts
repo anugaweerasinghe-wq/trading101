@@ -13,7 +13,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const KEY = process.env.INDEXNOW_KEY || "REPLACE_WITH_YOUR_KEY";
-const HOST = process.env.INDEXNOW_HOST || "tradinghq.vercel.app";
+const HOST = process.env.INDEXNOW_HOST || "www.thetradehq.com";
 const ENDPOINT = "https://api.indexnow.org/IndexNow";
 
 async function main() {

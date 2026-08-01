@@ -10,7 +10,7 @@ export interface SEOHeadProps {
   noindex?: boolean;
 }
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 const DEFAULT_OG = `${DOMAIN}/og-image.png`;
 
 /**

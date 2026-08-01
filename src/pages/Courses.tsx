@@ -24,7 +24,7 @@ import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 import { AIAnswerBlock } from "@/components/seo/AIAnswerBlock";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 const LEARNING_OUTCOMES = [
   "Read an options chain, understand strike/expiry and price defined-risk spreads with confidence",

@@ -7,7 +7,7 @@ import { LEARN_ARTICLES } from "@/lib/learnArticles";
 import { SEOSection } from "@/components/SEOSection";
 import { ContextualLinks } from "@/components/ContextualLinks";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 function normalizeLearnHref(href: string) {
   if (!href.startsWith("/learn/")) return href;

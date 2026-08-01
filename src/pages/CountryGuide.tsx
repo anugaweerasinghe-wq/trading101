@@ -9,7 +9,7 @@ import { AIAnswerBlock } from "@/components/seo/AIAnswerBlock";
 import { getCountryGuide, COUNTRY_GUIDES } from "@/lib/countryGuides";
 import { Globe2, GraduationCap, ShieldCheck, Building2, Landmark, ArrowRight } from "lucide-react";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 export default function CountryGuide() {
   const { country } = useParams<{ country: string }>();

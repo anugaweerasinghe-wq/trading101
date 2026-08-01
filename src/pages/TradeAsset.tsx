@@ -222,8 +222,8 @@ export default function TradeAsset() {
   const metaTitle = selectedAsset ? generateAssetMetaTitle(selectedAsset) : "Trade | TradeHQ";
   const metaDescription = selectedAsset ? generateAssetMetaDescription(selectedAsset) : "";
   const canonicalUrl = selectedAsset 
-    ? `https://tradinghq.vercel.app/trade/${selectedAsset.id}`
-    : "https://tradinghq.vercel.app/trade";
+    ? `https://www.thetradehq.com/trade/${selectedAsset.id}`
+    : "https://www.thetradehq.com/trade";
   const assetColor = selectedAsset ? getAssetColor(selectedAsset.id) : '#00FFFF';
 
   // --- CLEAN SCHEMA: No fake ratings, proper nesting ---
@@ -269,8 +269,8 @@ export default function TradeAsset() {
           "provider": {
             "@type": "Organization",
             "name": "TradeHQ",
-            "url": "https://tradinghq.vercel.app/",
-            "logo": "https://tradinghq.vercel.app/og-image.png"
+            "url": "https://www.thetradehq.com/",
+            "logo": "https://www.thetradehq.com/og-image.png"
           },
           "offers": {
             "@type": "Offer",
@@ -297,7 +297,7 @@ export default function TradeAsset() {
           "provider": {
             "@type": "Organization",
             "name": "TradeHQ",
-            "url": "https://tradinghq.vercel.app/"
+            "url": "https://www.thetradehq.com/"
           }
         }
   ) : null;
@@ -307,8 +307,8 @@ export default function TradeAsset() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "TradeHQ",
-    "url": "https://tradinghq.vercel.app/",
-    "logo": "https://tradinghq.vercel.app/og-image.png",
+    "url": "https://www.thetradehq.com/",
+    "logo": "https://www.thetradehq.com/og-image.png",
     
   };
 
@@ -347,13 +347,13 @@ export default function TradeAsset() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://tradinghq.vercel.app/"
+        "item": "https://www.thetradehq.com/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Markets",
-        "item": "https://tradinghq.vercel.app/markets"
+        "item": "https://www.thetradehq.com/markets"
       },
       {
         "@type": "ListItem",
@@ -383,7 +383,7 @@ export default function TradeAsset() {
         <meta property="og:title" content={metaTitle} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
@@ -393,7 +393,7 @@ export default function TradeAsset() {
         <meta name="twitter:site" content="@tradehq" />
         <meta name="twitter:title" content={metaTitle} />
         <meta name="twitter:description" content={metaDescription} />
-        <meta name="twitter:image" content="https://tradinghq.vercel.app/og-image.png" />
+        <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         
         <meta name="robots" content="index, follow" />
         <meta name="theme-color" content={assetColor} />

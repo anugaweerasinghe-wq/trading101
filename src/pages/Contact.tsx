@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Mail, Phone, Clock, MessageSquare } from "lucide-react";
 
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 const OWNER_EMAIL = "anugaweerasinghe1@gmail.com";
 
 const contactSchema = z.object({

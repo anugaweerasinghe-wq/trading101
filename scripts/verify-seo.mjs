@@ -10,7 +10,7 @@ import { readFileSync, existsSync } from "fs";
 import { resolve } from "path";
 
 const DIST = resolve(process.cwd(), "dist");
-const DOMAIN = "https://tradinghq.vercel.app";
+const DOMAIN = "https://www.thetradehq.com";
 
 const routes = [
   "/",
