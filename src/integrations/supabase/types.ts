@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      duels: {
+        Row: {
+          code: string
+          created_at: string
+          creator_id: string
+          creator_start_value: number
+          ends_at: string
+          id: string
+          opponent_id: string | null
+          opponent_start_value: number | null
+          starts_at: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          creator_id: string
+          creator_start_value?: number
+          ends_at?: string
+          id?: string
+          opponent_id?: string | null
+          opponent_start_value?: number | null
+          starts_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          creator_id?: string
+          creator_start_value?: number
+          ends_at?: string
+          id?: string
+          opponent_id?: string | null
+          opponent_start_value?: number | null
+          starts_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       market_articles: {
         Row: {
           content: string
@@ -44,6 +86,36 @@ export type Database = {
           slug?: string
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          bio: string | null
+          country: string | null
+          created_at: string
+          id: string
+          is_public: boolean
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          bio?: string | null
+          country?: string | null
+          created_at?: string
+          id: string
+          is_public?: boolean
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          bio?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          is_public?: boolean
+          updated_at?: string
+          username?: string
         }
         Relationships: []
       }
@@ -101,6 +173,42 @@ export type Database = {
           id?: string
           source?: string | null
           subscribed_at?: string
+        }
+        Relationships: []
+      }
+      trader_stats: {
+        Row: {
+          badges: number
+          created_at: string
+          max_drawdown: number
+          pnl_pct: number
+          portfolio_value: number
+          trades: number
+          updated_at: string
+          user_id: string
+          win_rate: number
+        }
+        Insert: {
+          badges?: number
+          created_at?: string
+          max_drawdown?: number
+          pnl_pct?: number
+          portfolio_value?: number
+          trades?: number
+          updated_at?: string
+          user_id: string
+          win_rate?: number
+        }
+        Update: {
+          badges?: number
+          created_at?: string
+          max_drawdown?: number
+          pnl_pct?: number
+          portfolio_value?: number
+          trades?: number
+          updated_at?: string
+          user_id?: string
+          win_rate?: number
         }
         Relationships: []
       }

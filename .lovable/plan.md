@@ -1,49 +1,54 @@
-## Goal
+## 1. Clarify Learn vs Courses (split by role)
 
-Make `https://www.thetradehq.com` the single canonical domain everywhere, and make the site easier for Google to crawl fully.
+- `/learn` becomes the **free reference hub**: articles, glossary, country guides, calculators. The Foundations / Intermediate / Advanced "lesson tier" blocks stay but are relabelled **"Quick reads"** and visually separated from courses.
+- `/courses` becomes the **only** place with structured multi-lesson tracks, quizzes and badges.
+- Add a single clear explainer banner at the top of `/learn` ("Two ways to learn: quick reads vs. structured courses") with one primary CTA to `/courses`.
+- Same explainer, mirrored, on `/courses` pointing back to `/learn`.
+- Nav + MegaFooter: group "Learn (guides)" and "Courses (structured)" as distinct labelled items.
+- No routes removed, so no redirects or sitemap churn.
 
-## Current state (verified)
+## 2. Futures course cover image
 
-The old domain `tradinghq.vercel.app` is hardcoded in ~50 files. There are four separate domain constants that can drift apart:
+Regenerate `src/assets/courses/futures-hero.jpg` as a **no-text** abstract dark-green futures/derivatives visual (candles + order-ladder feel) matching the other three covers. Title text already renders in HTML over the image, so nothing else changes. Other three covers untouched.
 
-- `scripts/routes.ts` → `DOMAIN` (drives sitemap + prerender canonicals)
-- `src/lib/constants.ts` → `SITE_DOMAIN`
-- `src/lib/seoData.ts` → `SITE_DOMAIN` (duplicate)
-- `src/components/SEOHead.tsx` → local `DOMAIN` const
+## 3. Real trader accounts + real leaderboard
 
-Plus literal strings in `index.html` (11), ~40 page/component files, `public/robots.txt`, `public/sitemap.xml` (270 URLs), `public/llms.txt`, and `scripts/` (verify-seo, verify-build, submit-indexnow, gsc-submit). One `.lovable.app` link pair lives in the newsletter edge function. The only `http://` hits are schema XML namespaces, which must stay unchanged.
+Accounts (optional — the whole app keeps working signed-out):
 
-## Plan
+- Email + password sign-up/sign-in via Lovable Cloud auth, plus Google sign-in. New `/auth` page and a `/reset-password` page.
+- `profiles` table: `id`, `username` (unique), `country`, `bio`, `is_public`, `created_at`. Auto-created on signup by trigger.
+- `trader_stats` table: portfolio value, total P&L %, trades, win rate, max drawdown, badges count, `updated_at` — written only by the owner, read publicly **only when `is_public = true**`.
+- Signed-in users get a "Sync my stats" action; local browser portfolio stays the source of truth and is pushed to the server on trade + on load (debounced). Signed-out users lose nothing.
+- `/trader/me` gains a real public counterpart `/trader/:username` (indexable, with Person/ProfilePage JSON-LD, noindex if private).
 
-**1. One source of truth for the domain**
-- Set `SITE_DOMAIN = "https://www.thetradehq.com"` in `src/lib/constants.ts`.
-- Re-export it from `src/lib/seoData.ts` instead of redeclaring, and have `SEOHead.tsx` import it rather than keep its own copy.
-- Set the same value in `scripts/routes.ts` (`DOMAIN`) — scripts can't import from `src/`, so this stays a second literal, guarded by step 5.
+Leaderboard:
 
-**2. Replace every hardcoded literal**
-- `index.html`: `og:url`, `og:image`, `twitter:image`, and all three JSON-LD blocks (SoftwareApplication, EducationalOrganization, BreadcrumbList) → new absolute domain.
-- All `src/pages/*` and `src/components/*` occurrences (JSON-LD `url`/`@id`/`item`, share links, breadcrumbs) → new domain; where the file already imports a domain constant, prefer the constant over a literal.
-- `supabase/functions/send-newsletter/index.ts`: the two `tradinghq.lovable.app` CTA links → new domain.
-- Leave `http://www.sitemaps.org/...` and `http://www.w3.org/...` namespaces untouched.
+- **All simulated traders removed.** `src/lib/leaderboardEngine.ts` deleted; `/leaderboard` reads real opted-in public profiles ranked by P&L %.
+- Honest empty state: "No public traders yet — be the first" + sign-up CTA, plus a clear note that all figures are simulated practice results, not real money.
+- Anti-nonsense guards: minimum 5 trades and account age ≥ 24h to appear; server-side clamping of impossible values.
 
-**3. robots.txt + sitemap**
-- `public/robots.txt`: header comment and `Sitemap: https://www.thetradehq.com/sitemap.xml`. Keep existing per-crawler blocks and admin disallows.
-- Regenerate `public/sitemap.xml` via `scripts/generate-sitemap.ts` so all ~270 URLs carry the new host.
-- Per sitemap policy: the generator currently stamps every entry with a build-time `TODAY` value, which is not a page-specific timestamp. Remove the `<lastmod>` emission rather than shipping 270 identical fake dates — Google ignores/distrusts them anyway.
+## 4. Challenge-a-friend duels
 
-**4. Relative paths for runtime navigation**
-- Confirm no in-app `<Link>`/`fetch` targets use the absolute domain (currently they don't — hits are all metadata/share strings). Any share/copy links that need an absolute URL will use `window.location.origin` so preview environments stay correct; only crawler-facing metadata keeps the hardcoded canonical domain.
+- `duels` table: `id`, `code` (short slug), `creator_id`, `opponent_id`, `starts_at`, `ends_at` (30 days), `status`.
+- `/challenge` page: create a duel → shareable link `/challenge/:code`. Opponent opens it, signs in, joins. Both start from the standard $100,000 practice balance (a duel snapshot of starting equity is recorded, so no wallet reset is forced).
+- Duel view shows both traders' P&L side by side, days remaining, and who's ahead; a "Duels" tab on `/leaderboard` lists active/finished head-to-heads.
+- Web-share + copy-link, with the educational-simulation disclaimer attached to every share string.
 
-**5. Guards + crawl improvements**
-- `scripts/verify-seo.mjs` and `scripts/verify-build.js`: update their `DOMAIN`/`BASE_URL` defaults, so the post-build check fails loudly if any canonical still points at the old host.
-- Add a check to the verify script that greps `dist/` for `tradinghq.vercel.app` and `lovable.app` and fails the build if found.
-- `scripts/submit-indexnow.ts`: default host → `www.thetradehq.com`.
-- `public/llms.txt` and `scripts/gsc-submit.md`: update URLs and the Search Console instructions to reference the new property.
-- Leave the historical CSV/JSON audit artifacts in `public/` (old reports) as-is unless you want them rewritten too.
+## 5. Full site audit (all ~217 routes)
 
-**6. Verify**
-Run build → prerender → `verify-seo.mjs`, confirming every route's canonical, `og:url`, and sitemap entry is `https://www.thetradehq.com/...` and that the old host appears nowhere in `dist/`.
+A sweep script + manual review across every route in `scripts/routes.ts`, checking and fixing:
 
-## Note
+- **Fabricated data**: any invented user counts, testimonials, win rates, "traders trust us" numbers, fake activity tickers (`SocialProofTicker`, `MarketStats`, `RecentAnalysis`, homepage social proof), unverifiable performance claims.
+- **YMYL / AdSense hardening**: every financial page carries the educational-simulation disclaimer, author attribution + last-reviewed date, cited sources (FRED, CME, SEC/Investor.gov, BLS), and no advice-shaped phrasing ("you should buy", "guaranteed").
+- **Replace, don't just delete**: where fake stats are removed, substitute genuinely useful content — worked examples, formulas, risk tables, source-linked definitions — so no page becomes thin.
+- **Thin-page check**: flag every route under ~400 words and either enrich it or drop it from the sitemap.
+- Re-run the existing SEO verification + prerender guards at the end.
 
-DNS/domain connection itself is separate — once the code ships, point `www.thetradehq.com` at the project in Project Settings → Domains, add both apex and `www` (with `www` as primary), and submit the new sitemap in Search Console.
+### Technical notes
+
+- Auth: Cloud email/password + Google; `onAuthStateChange` listener, `getUser()` for trusted checks, email-confirm flow respected.
+- Every new public table gets explicit GRANTs, RLS enabled, and owner-scoped policies (`anon` SELECT only on public profiles / duels).
+- No changes to existing local-storage portfolio logic beyond an optional sync layer.
+- Order of work: (2) image → (1) Learn/Courses → (3) auth + leaderboard → (4) duels → (5) audit.  
+  
+ensure that the sign in is optional and not compulsory, if the user wants to sign in, make sure that all their details are safely stored (should be free on my side as well), and even without the sign in, the user must be able to access everything, but the /leaderboard doesn't show their rankings and all. any questions before you begin? btw claude by anthropic did a thorough scan and found that there are incosistencies with the numbers, in one place it is 10k other places it is 100k, fix all these incosistencies, remove fake data, final output: premium, aesthethic apple-like layout multi-million dollar feeling site (dont change anything else other than the things in this plan)

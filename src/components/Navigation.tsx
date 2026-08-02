@@ -1,14 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X, Star, Info } from "lucide-react";
+import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X, Star, Info, UserRound } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { StreakBadge } from "@/components/badges/StreakBadge";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Navigation() {
   const location = useLocation();
+  const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,9 +25,9 @@ export function Navigation() {
     { to: "/trade", label: "Trade", icon: BarChart3 },
     { to: "/portfolio", label: "Portfolio", icon: BookOpen },
     { to: "/learn", label: "Learn", icon: GraduationCap },
+    { to: "/courses", label: "Courses", icon: BookOpen },
     { to: "/leaderboard", label: "Leaderboard", icon: Wallet },
     { to: "/ai-mentor", label: "AI Mentor", icon: Bot },
-    { to: "/reviews", label: "Reviews", icon: Star },
     { to: "/about", label: "About", icon: Info },
   ];
 
@@ -65,6 +67,12 @@ export function Navigation() {
             <div className="ml-2 pl-2 border-l border-white/[0.06]">
               <StreakBadge className="mr-2" />
               <ThemeToggle />
+              <Link to={user ? "/trader/me" : "/auth"} className="ml-2 inline-block">
+                <Button variant="outline" size="sm" className="h-9 rounded-xl text-sm">
+                  <UserRound className="w-4 h-4 mr-2" />
+                  {user ? "Profile" : "Sign in"}
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -109,6 +117,18 @@ export function Navigation() {
                   </Button>
                 </Link>
               ))}
+              <Link to={user ? "/trader/me" : "/auth"} onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start h-11 px-4 text-sm font-medium rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/[0.05]">
+                  <UserRound className="w-4 h-4 mr-3" />
+                  {user ? "My profile" : "Sign in (optional)"}
+                </Button>
+              </Link>
+              <Link to="/reviews" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start h-11 px-4 text-sm font-medium rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/[0.05]">
+                  <Star className="w-4 h-4 mr-3" />
+                  Reviews
+                </Button>
+              </Link>
             </div>
           </div>
         )}

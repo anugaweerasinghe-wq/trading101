@@ -2,38 +2,53 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { Link } from "react-router-dom";
-import { Trophy, ArrowRight, Medal, Home, ChevronRight, Clock, RefreshCw } from "lucide-react";
+import { Trophy, ArrowRight, Medal, Home, ChevronRight, Users, Swords, RefreshCw, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
-import { useEffect, useState } from "react";
-import {
-  getLeaderboard,
-  formatTimeAgo,
-  formatTimeUntil,
-  type LeaderboardTrader,
-} from "@/lib/leaderboardEngine";
+import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { syncStats, MIN_TRADES_TO_RANK } from "@/lib/traderSync";
+import { STARTING_BALANCE_LABEL } from "@/lib/constants";
+
+interface BoardRow {
+  userId: string;
+  username: string;
+  country: string | null;
+  portfolioValue: number;
+  pnlPct: number;
+  trades: number;
+  winRate: number;
+}
 
 const LEADERBOARD_FAQS = [
   {
     question: "Is the TradeHQ leaderboard real?",
     answer:
-      "The current leaderboard shows demo rankings to illustrate how the system works. Real user rankings roll out in the next release. (Educational simulation only — not financial advice.)",
+      "Yes. Every entry belongs to a real person who created a free account and chose to make their profile public. There are no demo or bot traders. All figures are simulated practice results from virtual money. (Educational simulation only — not financial advice.)",
   },
   {
     question: "How do I climb the leaderboard?",
     answer:
-      "Trade your $100,000 of virtual cash to grow your portfolio percentage gain. Top performers by total % return rank highest. Risk management and consistency matter more than swinging for huge wins.",
+      "Trade your $100,000 of virtual cash to grow your portfolio percentage return. Traders are ranked by total percentage return, so account size never matters — only discipline does. You need at least 5 recorded trades before you are listed.",
   },
   {
     question: "Do I need an account to compete?",
     answer:
-      "No — start trading with no signup. Your portfolio is tracked locally in your browser. Optional account-based leaderboard submission is planned; see the roadmap for details.",
+      "An account is only needed to appear on the leaderboard. Everything else on TradeHQ — trading, courses, tools and guides — works with no sign-up at all, with your portfolio stored privately in your own browser.",
   },
   {
-    question: "How often is the leaderboard updated?",
+    question: "What data does TradeHQ store if I sign up?",
     answer:
-      "Rankings auto-evolve every 3 days based on simulated market performance. Each virtual trader's portfolio drifts realistically based on their personality (aggressive, balanced, or steady), so the standings shift organically over time.",
+      "Only your email address, the username you choose, and your simulated practice statistics (virtual portfolio value, percentage return, trade count and win rate). No payment details, no brokerage connections and no real financial data are ever collected.",
+  },
+  {
+    question: "Can I stay private?",
+    answer:
+      "Yes. Profiles can be switched to private at any time from your trader profile page, which removes you from the leaderboard immediately while keeping your account.",
   },
 ];
 
@@ -55,38 +70,73 @@ function getRankIcon(rank: number) {
 }
 
 export default function Leaderboard() {
-  const [leaderboardData, setLeaderboardData] = useState<LeaderboardTrader[]>([]);
-  const [lastUpdate, setLastUpdate] = useState<number>(Date.now());
-  const [nextUpdate, setNextUpdate] = useState<number>(Date.now());
-  const [, setTick] = useState(0);
+  const { user, profile } = useAuth();
+  const [rows, setRows] = useState<BoardRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("id, username, country")
+      .eq("is_public", true);
+
+    if (!profiles || profiles.length === 0) {
+      setRows([]);
+      setLoading(false);
+      return;
+    }
+
+    const { data: stats } = await supabase
+      .from("trader_stats")
+      .select("user_id, portfolio_value, pnl_pct, trades, win_rate")
+      .in("user_id", profiles.map((p) => p.id))
+      .gte("trades", MIN_TRADES_TO_RANK);
+
+    const byId = new Map(profiles.map((p) => [p.id, p]));
+    const merged: BoardRow[] = (stats ?? [])
+      .map((s) => {
+        const p = byId.get(s.user_id);
+        if (!p) return null;
+        return {
+          userId: s.user_id,
+          username: p.username,
+          country: p.country,
+          portfolioValue: Number(s.portfolio_value),
+          pnlPct: Number(s.pnl_pct),
+          trades: s.trades,
+          winRate: Number(s.win_rate),
+        };
+      })
+      .filter(Boolean) as BoardRow[];
+
+    merged.sort((a, b) => b.pnlPct - a.pnlPct);
+    setRows(merged);
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
-    const board = getLeaderboard();
-    setLeaderboardData(board.traders);
-    setLastUpdate(board.lastUpdate);
-    setNextUpdate(board.nextUpdate);
+    load();
+  }, [load]);
 
-    // Re-check on focus + every minute (in case the 3-day window closes while page is open)
-    const interval = setInterval(() => {
-      const next = getLeaderboard();
-      setLeaderboardData(next.traders);
-      setLastUpdate(next.lastUpdate);
-      setNextUpdate(next.nextUpdate);
-      setTick((t) => t + 1);
-    }, 60_000);
-
-    const onFocus = () => {
-      const next = getLeaderboard();
-      setLeaderboardData(next.traders);
-      setLastUpdate(next.lastUpdate);
-      setNextUpdate(next.nextUpdate);
-    };
-    window.addEventListener("focus", onFocus);
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener("focus", onFocus);
-    };
-  }, []);
+  const handleSync = async () => {
+    if (!user) return;
+    setSyncing(true);
+    try {
+      const s = await syncStats(user.id);
+      toast.success(
+        s.trades < MIN_TRADES_TO_RANK
+          ? `Synced. Place ${MIN_TRADES_TO_RANK - s.trades} more practice trades to be listed.`
+          : "Stats synced to the leaderboard.",
+      );
+      await load();
+    } catch {
+      toast.error("Could not sync your stats. Please try again.");
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -100,21 +150,21 @@ export default function Leaderboard() {
   return (
     <>
       <Helmet>
-        <title>Leaderboard — Top Virtual Traders 2026 | TradeHQ Simulator Rankings</title>
-        <meta name="description" content="See who's crushing it with $100K virtual cash. Real-time leaderboard of the best paper traders on TradeHQ. Can you beat the top 10?" />
+        <title>Leaderboard — Real TradeHQ Paper Traders Ranked by Return</title>
+        <meta name="description" content="Live rankings of real TradeHQ members who opted in, ranked by percentage return on $100,000 of virtual practice capital. No bots, no demo data." />
         <link rel="canonical" href="https://www.thetradehq.com/leaderboard" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="TradeHQ Leaderboard — Top Virtual Traders 2026" />
-        <meta property="og:description" content="Live rankings of the best paper traders. Start with $100K and climb the leaderboard." />
+        <meta property="og:title" content="TradeHQ Leaderboard — Real Paper Traders Ranked" />
+        <meta property="og:description" content="Real members ranked by percentage return on $100K of virtual practice capital." />
         <meta property="og:url" content="https://www.thetradehq.com/leaderboard" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="TradeHQ Leaderboard — Top Virtual Traders 2026" />
-        <meta name="twitter:description" content="Live rankings of the best paper traders. Start with $100K and climb the leaderboard." />
+        <meta name="twitter:title" content="TradeHQ Leaderboard — Real Paper Traders Ranked" />
+        <meta name="twitter:description" content="Real members ranked by percentage return on $100K of virtual practice capital." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
@@ -137,24 +187,37 @@ export default function Leaderboard() {
             <div className="text-center mb-12">
               <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Live Rankings
+                Real members only
               </Badge>
               <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-                TradeHQ Leaderboard — Top Virtual Traders
+                TradeHQ Leaderboard
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Track the best-performing paper traders. Everyone starts with $100,000 virtual cash — can you reach the top?
+                Every trader below is a real member who opted in to a public profile.
+                No bots and no demo entries. Everyone starts with {STARTING_BALANCE_LABEL} of
+                virtual practice capital and is ranked by percentage return.
               </p>
-              <div className="mt-4 inline-flex items-center gap-3 text-2xs text-muted-foreground">
-                <span className="inline-flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  Updated {formatTimeAgo(lastUpdate)}
-                </span>
-                <span className="opacity-50">•</span>
-                <span className="inline-flex items-center gap-1">
-                  <RefreshCw className="w-3 h-3" />
-                  Next refresh in {formatTimeUntil(nextUpdate)}
-                </span>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                {user ? (
+                  <>
+                    <Button onClick={handleSync} disabled={syncing} className="!text-black font-bold rounded-xl">
+                      {syncing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <RefreshCw className="w-4 h-4 mr-2" />}
+                      Sync my stats
+                    </Button>
+                    <Link to="/trader/me">
+                      <Button variant="outline" className="rounded-xl">My profile</Button>
+                    </Link>
+                  </>
+                ) : (
+                  <Link to="/auth">
+                    <Button className="!text-black font-bold rounded-xl">Create a free account to join</Button>
+                  </Link>
+                )}
+                <Link to="/challenge">
+                  <Button variant="outline" className="rounded-xl">
+                    <Swords className="w-4 h-4 mr-2" /> Challenge a friend
+                  </Button>
+                </Link>
               </div>
             </div>
 
@@ -165,55 +228,100 @@ export default function Leaderboard() {
                 <span>Rank</span>
                 <span>Trader</span>
                 <span className="text-right">Portfolio Value</span>
-                <span className="text-right">% Gain/Loss</span>
-                <span className="text-right">Best Trade</span>
+                <span className="text-right">% Return</span>
+                <span className="text-right">Trades · Win rate</span>
               </div>
 
-              {leaderboardData.map((trader) => (
-                <div
-                  key={trader.rank}
-                  className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4 px-4 md:px-6 py-4 border-b border-white/[0.04] hover:bg-white/[0.03] transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    {getRankIcon(trader.rank)}
-                    <span className="font-semibold text-sm md:hidden">{trader.username}</span>
-                  </div>
-                  <div className="hidden md:flex items-center">
-                    <span className="font-semibold text-sm text-foreground">{trader.username}</span>
-                  </div>
-                  <div className="flex items-center justify-end md:justify-end">
-                    <span className="font-mono text-sm text-foreground">
-                      ${trader.portfolioValue.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-end">
-                    <Badge variant="outline" className={trader.gain >= 0 ? "text-profit border-profit/30" : "text-loss border-loss/30"}>
-                      {trader.gain >= 0 ? "+" : ""}{trader.gain.toFixed(1)}%
-                    </Badge>
-                  </div>
-                  <div className="hidden md:flex items-center justify-end">
-                    <span className="text-xs text-muted-foreground">{trader.bestTrade}</span>
-                  </div>
+              {loading ? (
+                <div className="py-16 text-center text-muted-foreground text-sm">
+                  <Loader2 className="w-5 h-5 animate-spin mx-auto mb-3" />
+                  Loading rankings…
                 </div>
-              ))}
+              ) : rows.length === 0 ? (
+                <div className="py-16 px-6 text-center">
+                  <Users className="w-10 h-10 text-primary/60 mx-auto mb-4" />
+                  <h2 className="text-lg font-semibold mb-2">No public traders yet — be the first</h2>
+                  <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
+                    We removed all simulated placeholder traders. This board now fills up
+                    only with real members who create a free account, make their profile
+                    public and record at least {MIN_TRADES_TO_RANK} practice trades.
+                  </p>
+                  <Link to={user ? "/trade" : "/auth"}>
+                    <Button className="!text-black font-bold rounded-xl">
+                      {user ? "Place your first trades" : "Create a free account"}
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
+                rows.map((trader, i) => (
+                  <Link
+                    key={trader.userId}
+                    to={`/trader/${trader.username}`}
+                    className={`grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4 px-4 md:px-6 py-4 border-b border-white/[0.04] hover:bg-white/[0.03] transition-colors ${
+                      profile?.id === trader.userId ? "bg-primary/[0.06]" : ""
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      {getRankIcon(i + 1)}
+                      <span className="font-semibold text-sm md:hidden">{trader.username}</span>
+                    </div>
+                    <div className="hidden md:flex items-center">
+                      <span className="font-semibold text-sm text-foreground">{trader.username}</span>
+                      {trader.country && (
+                        <span className="ml-2 text-2xs text-muted-foreground">{trader.country}</span>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-end">
+                      <span className="font-mono text-sm text-foreground">
+                        ${trader.portfolioValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-end">
+                      <Badge variant="outline" className={trader.pnlPct >= 0 ? "text-profit border-profit/30" : "text-loss border-loss/30"}>
+                        {trader.pnlPct >= 0 ? "+" : ""}{trader.pnlPct.toFixed(1)}%
+                      </Badge>
+                    </div>
+                    <div className="hidden md:flex items-center justify-end">
+                      <span className="text-xs text-muted-foreground">
+                        {trader.trades} trades · {trader.winRate}% win
+                      </span>
+                    </div>
+                  </Link>
+                ))
+              )}
             </div>
 
-            {/* CTA */}
-            <div className="text-center mt-12">
-              <p className="text-muted-foreground mb-6">Start trading now to appear on the leaderboard</p>
-              <Link to="/trade">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 !text-black px-10 py-6 text-base rounded-2xl font-bold shadow-[0_0_28px_hsl(168_100%_50%/0.35)]">
-                  Start Trading Free
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
+            {/* How ranking works — replaces the old synthetic "next refresh" widget */}
+            <section className="mt-12 grid gap-4 md:grid-cols-3">
+              {[
+                {
+                  title: "Ranked by % return",
+                  body: `Every member begins with the same ${STARTING_BALANCE_LABEL} of virtual capital, so rank reflects percentage return only — never account size.`,
+                },
+                {
+                  title: "Minimum activity",
+                  body: `A profile appears once it records at least ${MIN_TRADES_TO_RANK} practice trades, which prevents single-trade luck from topping the board.`,
+                },
+                {
+                  title: "You control visibility",
+                  body: "Profiles are public by default but can be switched to private from your trader profile at any time, removing you from this board instantly.",
+                },
+              ].map((c) => (
+                <div key={c.title} className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
+                  <h3 className="font-semibold mb-2 text-sm">{c.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{c.body}</p>
+                </div>
+              ))}
+            </section>
 
             <AssetFAQSection
               assetName="Leaderboard"
               assetSymbol="Leaderboard"
               faqs={LEADERBOARD_FAQS}
             />
+
+            <EducationalDisclaimer variant="footer" />
           </div>
         </main>
         <MegaFooter />
