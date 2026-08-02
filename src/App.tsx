@@ -9,6 +9,7 @@ import { PageTransition } from "@/components/PageTransition";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { BackgroundMusic } from "@/components/BackgroundMusic";
 import { PushNotificationPrompt } from "@/components/retention/PushNotificationPrompt";
+import { AuthProvider } from "@/hooks/useAuth";
 import { recordVisit } from "@/lib/lastVisit";
 import { snapshotWatchlist } from "@/lib/watchlistDiff";
 
@@ -51,6 +52,10 @@ const CourseLesson = lazy(() => import("./pages/CourseLesson"));
 const CountryGuide = lazy(() => import("./pages/CountryGuide"));
 const CountryGuideIndex = lazy(() => import("./pages/CountryGuide").then(m => ({ default: m.CountryGuideIndex })));
 const TraderProfile = lazy(() => import("./pages/TraderProfile"));
+const PublicTrader = lazy(() => import("./pages/PublicTrader"));
+const Auth = lazy(() => import("./pages/Auth"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const Challenge = lazy(() => import("./pages/Challenge"));
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
@@ -96,6 +101,11 @@ function AnimatedRoutes() {
           <Route path="/learn/country" element={<CountryGuideIndex />} />
           <Route path="/learn/country/:country" element={<CountryGuide />} />
           <Route path="/trader/me" element={<TraderProfile />} />
+          <Route path="/trader/:username" element={<PublicTrader />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/challenge" element={<Challenge />} />
+          <Route path="/challenge/:code" element={<Challenge />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sectors/:sectorId" element={<SectorPillar />} />
@@ -139,11 +149,13 @@ const App = () => (
         <Toaster />
         <Sonner position="top-center" richColors closeButton />
         <BrowserRouter>
-          <AnimatedRoutes />
-          <MobileBottomNav />
-          <BackgroundMusic />
-          <PushNotificationPrompt />
-          <WatchlistSnapshot />
+          <AuthProvider>
+            <AnimatedRoutes />
+            <MobileBottomNav />
+            <BackgroundMusic />
+            <PushNotificationPrompt />
+            <WatchlistSnapshot />
+          </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
