@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/useAuth";
 import { SITE_DOMAIN, STARTING_BALANCE_LABEL } from "@/lib/constants";
+import { authOrigin, authUrl } from "@/lib/authRedirect";
 
 const schema = z.object({
   email: z.string().trim().email("Enter a valid email").max(255),
@@ -59,7 +60,7 @@ export default function Auth() {
           email: parsed.data.email,
           password: parsed.data.password,
           options: {
-            emailRedirectTo: window.location.origin,
+            emailRedirectTo: authUrl("/auth"),
             data: { username: parsed.data.username },
           },
         });
@@ -84,7 +85,7 @@ export default function Auth() {
   const google = async () => {
     setBusy(true);
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: authOrigin(),
     });
     setBusy(false);
     if (result.error) toast.error("Google sign-in failed. Try email instead.");
@@ -94,7 +95,7 @@ export default function Auth() {
     const parsed = z.string().email().safeParse(email.trim());
     if (!parsed.success) return toast.error("Enter your email first");
     const { error } = await supabase.auth.resetPasswordForEmail(parsed.data, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: authUrl("/reset-password"),
     });
     if (error) toast.error(error.message);
     else toast.success("Password reset link sent.");
