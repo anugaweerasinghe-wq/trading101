@@ -72,6 +72,12 @@ const LEARNING_PATH = [
   { tier: "advanced" as const, label: "Advanced Practice", tagline: "Refine your approach — portfolio construction, diversification, and real-world application.", color: "text-amber-400", borderColor: "border-amber-500/20", bgColor: "bg-amber-500/5" },
 ];
 
+/** Explains the difference between /courses (structured) and /learn (quick reads). */
+const FORMAT_GUIDE = [
+  { label: "Full Courses", where: "/courses", detail: "Multi-lesson tracks with quizzes, saved progress and completion badges. Best if you want to learn in order, start to finish." },
+  { label: "Quick Reads", where: "this page", detail: "Standalone 12–22 minute explainers, guides and glossary terms. Best if you want one specific topic answered right now." },
+];
+
 const difficultyColors: Record<string, string> = {
   Beginner: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   Intermediate: "bg-blue-500/10 text-blue-400 border-blue-500/20",
@@ -144,7 +150,7 @@ export default function Learn() {
                   <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
                     <GraduationCap className="w-6 h-6 text-emerald-400" /> Structured Trading Courses
                   </h2>
-                  <p className="text-sm text-muted-foreground mt-1">Four expert-written tracks, 20 lessons, quizzes and completion badges — 100% free.</p>
+                  <p className="text-sm text-muted-foreground mt-1">Four expert-written tracks, 20 lessons, quizzes and completion badges — 100% free. This is the guided, in-order way to learn.</p>
                 </div>
                 <Link to="/courses" className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-400 hover:text-emerald-300">
                   View all courses <ChevronRight className="w-4 h-4" />
@@ -166,6 +172,22 @@ export default function Learn() {
                   </Link>
                 ))}
               </div>
+             </section>
+
+            {/* Courses vs Quick Reads — removes the "why are there two?" confusion */}
+            <section className="mb-14" aria-label="How this page is organised">
+              <div className="grid md:grid-cols-2 gap-4">
+                {FORMAT_GUIDE.map((f) => (
+                  <div key={f.label} className="p-5 rounded-2xl border border-white/10 bg-white/[0.02]">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm font-bold text-foreground">{f.label}</span>
+                      <span className="text-[10px] uppercase tracking-widest text-muted-foreground">{f.where}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{f.detail}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground mt-3">Same material, two formats — the courses go deeper and track your progress; the quick reads below are self-contained. Educational simulation only — not financial advice.</p>
             </section>
 
             {/* Country guides */}
@@ -229,7 +251,7 @@ export default function Learn() {
                 Structured paths from absolute beginner to advanced strategy. Every concept paired with a real practice trade — no signup, no risk, no fluff.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-foreground/60">
-                <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">⚡ 6 core courses</span>
+                <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">⚡ 4 full courses · 6 quick reads</span>
                 <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">📚 21 wiki terms</span>
                 <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">🎯 Daily challenge</span>
                 <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">💸 $100K virtual cash</span>
@@ -240,7 +262,7 @@ export default function Learn() {
             <section className="mb-16" aria-label="Learning path">
               <div className="flex items-center gap-3 mb-6">
                 <GraduationCap className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl font-bold">Your Learning Path</h2>
+                <h2 className="text-2xl font-bold">Quick Reads — Your Learning Path</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 {LEARNING_PATH.map((step, i) => (
@@ -253,18 +275,18 @@ export default function Learn() {
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-muted-foreground">Follow the path below or jump to any lesson that fits your level.</p>
+              <p className="text-xs text-muted-foreground">Follow the path below or jump to any quick read that fits your level. Want the full, progress-tracked version instead? <Link to="/courses" className="text-emerald-400 hover:underline">Take a course</Link>.</p>
             </section>
 
             {/* Start Here CTA */}
             <div className="mb-16 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col sm:flex-row items-center gap-4" style={{ backdropFilter: "blur(12px)" }}>
               <div className="flex-1">
                 <h3 className="text-lg font-bold mb-1">New to trading?</h3>
-                <p className="text-sm text-muted-foreground">Start with Lesson 1 — it covers everything you need to place your first simulated trade.</p>
+                <p className="text-sm text-muted-foreground">Start with Quick Read 1 — it covers everything you need to place your first simulated trade.</p>
               </div>
                 <Link to="/learn/1">
                 <Button className="bg-primary hover:bg-primary/90 !text-black px-6 py-3 rounded-xl font-bold whitespace-nowrap shadow-[0_0_24px_hsl(168_100%_50%/0.3)]">
-                  Start Lesson 1 <ArrowRight className="ml-2 w-4 h-4" />
+                  Start Quick Read 1 <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
             </div>
@@ -319,7 +341,7 @@ export default function Learn() {
               const tierLessons = lessons.filter((l) => l.tier === pathStep.tier);
               if (tierLessons.length === 0) return null;
               return (
-                <section key={pathStep.tier} className="mb-16" aria-label={`${pathStep.label} courses`}>
+                <section key={pathStep.tier} className="mb-16" aria-label={`${pathStep.label} quick reads`}>
                   <div className="flex items-center gap-3 mb-2">
                     <span className={`text-xs font-bold uppercase tracking-wider ${pathStep.color}`}>{pathStep.label}</span>
                   </div>
@@ -356,7 +378,7 @@ export default function Learn() {
                                 ))}
                               </ul>
                               <div className="flex items-center gap-2 text-primary text-sm font-semibold group-hover:gap-3 transition-all">
-                                <span>Start Lesson</span><ArrowRight className="w-4 h-4" />
+                                <span>Read now</span><ArrowRight className="w-4 h-4" />
                               </div>
                             </div>
                           </Card>
