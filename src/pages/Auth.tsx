@@ -42,6 +42,16 @@ export default function Auth() {
     if (user) navigate("/trader/me", { replace: true });
   }, [user, navigate]);
 
+  // Surface expired / invalid email-link errors instead of a silent no-op.
+  useEffect(() => {
+    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const err = hash.get("error_description") || hash.get("error");
+    if (err) {
+      toast.error(decodeURIComponent(err.replace(/\+/g, " ")));
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, []);
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = schema.safeParse({
