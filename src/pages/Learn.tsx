@@ -150,7 +150,7 @@ export default function Learn() {
                   <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
                     <GraduationCap className="w-6 h-6 text-emerald-400" /> Structured Trading Courses
                   </h2>
-                  <p className="text-sm text-muted-foreground mt-1">Four expert-written tracks, 20 lessons, quizzes and completion badges — 100% free.</p>
+                  <p className="text-sm text-muted-foreground mt-1">Four expert-written tracks, 20 lessons, quizzes and completion badges — 100% free. This is the guided, in-order way to learn.</p>
                 </div>
                 <Link to="/courses" className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-400 hover:text-emerald-300">
                   View all courses <ChevronRight className="w-4 h-4" />
@@ -172,6 +172,22 @@ export default function Learn() {
                   </Link>
                 ))}
               </div>
+             </section>
+
+            {/* Courses vs Quick Reads — removes the "why are there two?" confusion */}
+            <section className="mb-14" aria-label="How this page is organised">
+              <div className="grid md:grid-cols-2 gap-4">
+                {FORMAT_GUIDE.map((f) => (
+                  <div key={f.label} className="p-5 rounded-2xl border border-white/10 bg-white/[0.02]">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm font-bold text-foreground">{f.label}</span>
+                      <span className="text-[10px] uppercase tracking-widest text-muted-foreground">{f.where}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{f.detail}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground mt-3">Same material, two formats — the courses go deeper and track your progress; the quick reads below are self-contained. Educational simulation only — not financial advice.</p>
             </section>
 
             {/* Country guides */}
