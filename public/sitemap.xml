@@ -13,6 +13,7 @@
   <url><loc>https://www.thetradehq.com/roadmap</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
   <url><loc>https://www.thetradehq.com/about</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.thetradehq.com/contact</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://www.thetradehq.com/challenge</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.thetradehq.com/privacy</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://www.thetradehq.com/terms</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://www.thetradehq.com/trade/btc</loc><changefreq>daily</changefreq><priority>0.8</priority></url>

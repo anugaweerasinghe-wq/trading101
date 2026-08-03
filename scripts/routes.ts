@@ -271,6 +271,16 @@ export function buildRoutes(): RouteMeta[] {
   });
 
   routes.push({
+    path: "/challenge",
+    title: `Challenge a Friend — 30-Day ${BALANCE} Practice Duel | TradeHQ`,
+    description: `Challenge a friend to a 30-day practice trading duel. Both traders start with ${BALANCE} virtual cash. Free, educational, no real money.`,
+    h1: "Challenge a Friend",
+    summary: `Create a shareable invite and run a 30-day practice trading duel. Both sides start from ${BALANCE} in virtual cash and the leaderboard tracks who is ahead. Educational simulation only — not financial advice.`,
+    priority: "0.6",
+    changefreq: "weekly",
+  });
+
+  routes.push({
     path: "/privacy",
     title: "Privacy Policy | TradeHQ",
     description: `TradeHQ privacy policy. What we store (locally in your browser), what we send to the server, and what we never do. Free educational trading simulator.`,

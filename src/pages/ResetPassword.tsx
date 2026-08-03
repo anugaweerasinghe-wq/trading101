@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -16,7 +16,25 @@ import { SITE_DOMAIN } from "@/lib/constants";
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+  const [ready, setReady] = useState<"checking" | "ok" | "invalid">("checking");
   const navigate = useNavigate();
+
+  // The recovery link creates a temporary session. Without it we cannot
+  // update the password, so show a clear "link expired" state instead.
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash.includes("error")) {
+      setReady("invalid");
+      return;
+    }
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      if (session) setReady("ok");
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      setReady(data.session ? "ok" : "invalid");
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,6 +61,23 @@ export default function ResetPassword() {
         <main className="flex-1 container mx-auto px-4 pt-28 pb-20 max-w-md">
           <h1 className="text-3xl font-bold tracking-tight mb-6 text-center">Set a new password</h1>
           <Card className="p-6 glass-tactile border-chrome">
+            {ready === "checking" && (
+              <p className="text-sm text-muted-foreground text-center py-6">
+                Checking your reset link…
+              </p>
+            )}
+            {ready === "invalid" && (
+              <div className="text-center py-6 space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  This password reset link is invalid or has expired. Request a new
+                  one from the sign-in page.
+                </p>
+                <Button variant="outline" onClick={() => navigate("/auth")}>
+                  Back to sign in
+                </Button>
+              </div>
+            )}
+            {ready === "ok" && (
             <form onSubmit={submit} className="space-y-4">
               <div className="space-y-1.5">
                 <Label htmlFor="new-password">New password</Label>
@@ -61,6 +96,7 @@ export default function ResetPassword() {
                 Update password
               </Button>
             </form>
+            )}
           </Card>
         </main>
         <MegaFooter />
