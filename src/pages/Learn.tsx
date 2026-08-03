@@ -72,6 +72,12 @@ const LEARNING_PATH = [
   { tier: "advanced" as const, label: "Advanced Practice", tagline: "Refine your approach — portfolio construction, diversification, and real-world application.", color: "text-amber-400", borderColor: "border-amber-500/20", bgColor: "bg-amber-500/5" },
 ];
 
+/** Explains the difference between /courses (structured) and /learn (quick reads). */
+const FORMAT_GUIDE = [
+  { label: "Full Courses", where: "/courses", detail: "Multi-lesson tracks with quizzes, saved progress and completion badges. Best if you want to learn in order, start to finish." },
+  { label: "Quick Reads", where: "this page", detail: "Standalone 12–22 minute explainers, guides and glossary terms. Best if you want one specific topic answered right now." },
+];
+
 const difficultyColors: Record<string, string> = {
   Beginner: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   Intermediate: "bg-blue-500/10 text-blue-400 border-blue-500/20",
