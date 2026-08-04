@@ -38,6 +38,7 @@ import {
   getAssetFAQs
 } from "@/lib/assetContent";
 import { AlertTriangle, Wifi, WifiOff, Clock } from "lucide-react";
+import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 
 // Wrapper component to provide live data to AssetIntelligence
 function AssetIntelligenceWithLiveData({ asset }: { asset: Asset }) {
@@ -582,6 +583,7 @@ export default function TradeAsset() {
               onTrade={handleTrade}
             />
           </div>
+          <EducationalDisclaimer variant="footer" className="mb-10" />
         </main>
 
         <AIMentor 

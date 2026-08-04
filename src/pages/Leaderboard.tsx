@@ -24,6 +24,17 @@ interface BoardRow {
   winRate: number;
 }
 
+interface DuelRow {
+  id: string;
+  code: string;
+  creatorName: string;
+  opponentName: string;
+  creatorPct: number;
+  opponentPct: number;
+  endsAt: string;
+  finished: boolean;
+}
+
 const LEADERBOARD_FAQS = [
   {
     question: "Is the TradeHQ leaderboard real?",
@@ -74,6 +85,9 @@ export default function Leaderboard() {
   const [rows, setRows] = useState<BoardRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const [tab, setTab] = useState<"traders" | "duels">("traders");
+  const [duels, setDuels] = useState<DuelRow[]>([]);
+  const [duelsLoading, setDuelsLoading] = useState(true);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -119,6 +133,58 @@ export default function Leaderboard() {
   useEffect(() => {
     load();
   }, [load]);
+
+  // Head-to-head duels between members with public profiles.
+  useEffect(() => {
+    (async () => {
+      setDuelsLoading(true);
+      const { data: raw } = await supabase
+        .from("duels")
+        .select("id, code, creator_id, opponent_id, creator_start_value, opponent_start_value, ends_at")
+        .not("opponent_id", "is", null)
+        .order("created_at", { ascending: false })
+        .limit(50);
+
+      const list = raw ?? [];
+      if (list.length === 0) {
+        setDuels([]);
+        setDuelsLoading(false);
+        return;
+      }
+
+      const ids = Array.from(
+        new Set(list.flatMap((d) => [d.creator_id, d.opponent_id].filter(Boolean) as string[])),
+      );
+      const [{ data: profiles }, { data: stats }] = await Promise.all([
+        supabase.from("profiles").select("id, username").in("id", ids).eq("is_public", true),
+        supabase.from("trader_stats").select("user_id, portfolio_value").in("user_id", ids),
+      ]);
+      const nameOf = new Map((profiles ?? []).map((p) => [p.id, p.username]));
+      const valueOf = new Map((stats ?? []).map((s) => [s.user_id, Number(s.portfolio_value)]));
+
+      const mapped = list
+        .filter((d) => nameOf.has(d.creator_id) && nameOf.has(d.opponent_id as string))
+        .map((d) => {
+          const cStart = Number(d.creator_start_value);
+          const oStart = Number(d.opponent_start_value ?? 0) || cStart;
+          const cVal = valueOf.get(d.creator_id) ?? cStart;
+          const oVal = valueOf.get(d.opponent_id as string) ?? oStart;
+          return {
+            id: d.id,
+            code: d.code,
+            creatorName: nameOf.get(d.creator_id) as string,
+            opponentName: nameOf.get(d.opponent_id as string) as string,
+            creatorPct: ((cVal - cStart) / cStart) * 100,
+            opponentPct: ((oVal - oStart) / oStart) * 100,
+            endsAt: d.ends_at,
+            finished: new Date(d.ends_at).getTime() <= Date.now(),
+          };
+        });
+
+      setDuels(mapped);
+      setDuelsLoading(false);
+    })();
+  }, []);
 
   const handleSync = async () => {
     if (!user) return;
@@ -221,7 +287,27 @@ export default function Leaderboard() {
               </div>
             </div>
 
-            {/* Leaderboard Table */}
+            {/* Tabs: overall board vs head-to-head duels */}
+            <div className="flex gap-2 mb-4">
+              {([
+                { id: "traders", label: "Traders" },
+                { id: "duels", label: "Duels" },
+              ] as const).map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors border ${
+                    tab === t.id
+                      ? "bg-primary text-black border-transparent"
+                      : "border-white/[0.08] text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            {tab === "traders" ? (
             <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden" style={{ backdropFilter: "blur(12px)" }}>
               {/* Header */}
               <div className="hidden md:grid grid-cols-5 gap-4 px-6 py-4 bg-white/[0.03] border-b border-white/[0.06] text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -291,6 +377,67 @@ export default function Leaderboard() {
                 ))
               )}
             </div>
+            ) : (
+              <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden" style={{ backdropFilter: "blur(12px)" }}>
+                {duelsLoading ? (
+                  <div className="py-16 text-center text-muted-foreground text-sm">
+                    <Loader2 className="w-5 h-5 animate-spin mx-auto mb-3" />
+                    Loading duels…
+                  </div>
+                ) : duels.length === 0 ? (
+                  <div className="py-16 px-6 text-center">
+                    <Swords className="w-10 h-10 text-primary/60 mx-auto mb-4" />
+                    <h2 className="text-lg font-semibold mb-2">No public duels yet</h2>
+                    <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
+                      Duels are 30-day head-to-head practice challenges between two members.
+                      Both sides are scored on percentage return from their own recorded
+                      starting balance, so nobody begins with an advantage.
+                    </p>
+                    <Link to="/challenge">
+                      <Button className="!text-black font-bold rounded-xl">
+                        Challenge a friend <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                ) : (
+                  duels.map((d) => {
+                    const creatorAhead = d.creatorPct >= d.opponentPct;
+                    return (
+                      <Link
+                        key={d.id}
+                        to={`/challenge/${d.code}`}
+                        className="flex items-center justify-between gap-4 px-4 md:px-6 py-4 border-b border-white/[0.04] hover:bg-white/[0.03] transition-colors"
+                      >
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold truncate">
+                            <span className={creatorAhead ? "text-foreground" : "text-muted-foreground"}>
+                              {d.creatorName}
+                            </span>
+                            <span className="text-muted-foreground mx-2">vs</span>
+                            <span className={!creatorAhead ? "text-foreground" : "text-muted-foreground"}>
+                              {d.opponentName}
+                            </span>
+                          </p>
+                          <p className="text-2xs text-muted-foreground mt-1">
+                            {d.finished
+                              ? "Finished"
+                              : `Ends ${new Date(d.endsAt).toLocaleDateString(undefined, { day: "numeric", month: "short" })}`}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <Badge variant="outline" className={d.creatorPct >= 0 ? "text-profit border-profit/30" : "text-loss border-loss/30"}>
+                            {d.creatorPct >= 0 ? "+" : ""}{d.creatorPct.toFixed(1)}%
+                          </Badge>
+                          <Badge variant="outline" className={d.opponentPct >= 0 ? "text-profit border-profit/30" : "text-loss border-loss/30"}>
+                            {d.opponentPct >= 0 ? "+" : ""}{d.opponentPct.toFixed(1)}%
+                          </Badge>
+                        </div>
+                      </Link>
+                    );
+                  })
+                )}
+              </div>
+            )}
 
             {/* How ranking works — replaces the old synthetic "next refresh" widget */}
             <section className="mt-12 grid gap-4 md:grid-cols-3">

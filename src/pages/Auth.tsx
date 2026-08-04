@@ -15,6 +15,7 @@ import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/useAuth";
 import { SITE_DOMAIN, STARTING_BALANCE_LABEL } from "@/lib/constants";
 import { authOrigin, authUrl } from "@/lib/authRedirect";
+import { takePendingPath } from "@/lib/pendingRedirect";
 
 const schema = z.object({
   email: z.string().trim().email("Enter a valid email").max(255),
@@ -39,7 +40,7 @@ export default function Auth() {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user) navigate("/trader/me", { replace: true });
+    if (user) navigate(takePendingPath() ?? "/trader/me", { replace: true });
   }, [user, navigate]);
 
   // Surface expired / invalid email-link errors instead of a silent no-op.

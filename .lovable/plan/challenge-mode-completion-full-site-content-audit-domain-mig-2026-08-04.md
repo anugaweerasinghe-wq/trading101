@@ -52,4 +52,5 @@ What code cannot do, and where I need you:
 
 ## Scope note
 
-The audit is large. I will work it in full batches and report progress rather than half-finishing every section; if I run out of room, I stop at a completed batch boundary and tell you exactly which routes remain.
+The audit is large. I will work it in full batches and report progress rather than half-finishing every section; if I run out of room, I stop at a completed batch boundary and tell you exactly which routes remain.  
+must follow rule : report honestly without sycophancy even if it means you didn't do anything say it plainly to my face.

@@ -9,6 +9,7 @@ import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Quote, TrendingUp, Spark
 import { useState } from "react";
 import { lessonData } from "@/lib/lessonData";
 import { Quiz } from "@/components/Quiz";
+import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 
 // Eagerly import every lesson image so Vite fingerprints them and the src
 // resolves in prod (raw `/src/assets/*` paths would 404 after build).
@@ -291,6 +292,7 @@ export default function LessonDetail() {
             </div>
           </nav>
         </div>
+        <EducationalDisclaimer variant="footer" className="mb-10" />
       </main>
     </div>
     </>

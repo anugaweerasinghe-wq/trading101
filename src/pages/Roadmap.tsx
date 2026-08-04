@@ -20,9 +20,9 @@ const ITEMS: RoadmapItem[] = [
   { icon: Bell, title: "Daily Streak + Practice Reminders", desc: "Streak tracker on the daily challenge and opt-in browser notifications for returning learners. Fully free, no signup required.", status: "shipped", eta: "Shipped Jul 2026" },
   { icon: Trophy, title: "Public Trader Profiles", desc: "Shareable profile at /trader/me showing your simulated P&L, win rate, drawdown and course badges. Copy or share the link anywhere.", status: "shipped", eta: "Shipped Jul 2026" },
   { icon: Globe2, title: "Localised Country Pages", desc: "Free tailored guides for Sri Lanka, India, Philippines, Pakistan and Nigeria — local regulator, exchange, tax notes and student angle. Live under /learn/country.", status: "shipped", eta: "Shipped Jul 2026" },
-  { icon: UserCircle2, title: "Optional Email + Google Sign-In", desc: "Sync your practice portfolio, journal and watchlists across devices. Still 100% optional — guest mode stays forever.", status: "planned", eta: "Aug 2026" },
+  { icon: UserCircle2, title: "Optional Email + Google Sign-In", desc: "Create a free account to sync your practice stats and appear on the leaderboard. Still 100% optional — guest mode stays forever and every page works signed out.", status: "shipped", eta: "Shipped Aug 2026" },
+  { icon: Users2, title: "Challenge a Friend", desc: "Share an invite link and run a 30-day head-to-head practice duel. Both sides are scored on percentage return from their own recorded starting balance, with a live scoreboard and a Duels tab on the leaderboard.", status: "shipped", eta: "Shipped Aug 2026" },
   { icon: LineChart, title: "Realistic Portfolio Projections", desc: "See where your simulated equity curve trends if your current win rate, R-multiple and frequency continue — powered by your real trade history.", status: "planned", eta: "Aug 2026" },
-  { icon: Users2, title: "Challenge a Friend", desc: "Share a referral link, both start with $100K practice capital, leaderboard tracks who's ahead after 30 days.", status: "planned", eta: "Sep 2026" },
   { icon: BarChart3, title: "Embeddable Live Price Widgets", desc: "Drop a TradeHQ live BTC, ETH or SPY widget into any blog or notion page — free, no API key.", status: "planned", eta: "Oct 2026" },
 ];
 
