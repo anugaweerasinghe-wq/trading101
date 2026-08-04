@@ -24,6 +24,17 @@ interface BoardRow {
   winRate: number;
 }
 
+interface DuelRow {
+  id: string;
+  code: string;
+  creatorName: string;
+  opponentName: string;
+  creatorPct: number;
+  opponentPct: number;
+  endsAt: string;
+  finished: boolean;
+}
+
 const LEADERBOARD_FAQS = [
   {
     question: "Is the TradeHQ leaderboard real?",
@@ -74,6 +85,9 @@ export default function Leaderboard() {
   const [rows, setRows] = useState<BoardRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const [tab, setTab] = useState<"traders" | "duels">("traders");
+  const [duels, setDuels] = useState<DuelRow[]>([]);
+  const [duelsLoading, setDuelsLoading] = useState(true);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -119,6 +133,58 @@ export default function Leaderboard() {
   useEffect(() => {
     load();
   }, [load]);
+
+  // Head-to-head duels between members with public profiles.
+  useEffect(() => {
+    (async () => {
+      setDuelsLoading(true);
+      const { data: raw } = await supabase
+        .from("duels")
+        .select("id, code, creator_id, opponent_id, creator_start_value, opponent_start_value, ends_at")
+        .not("opponent_id", "is", null)
+        .order("created_at", { ascending: false })
+        .limit(50);
+
+      const list = raw ?? [];
+      if (list.length === 0) {
+        setDuels([]);
+        setDuelsLoading(false);
+        return;
+      }
+
+      const ids = Array.from(
+        new Set(list.flatMap((d) => [d.creator_id, d.opponent_id].filter(Boolean) as string[])),
+      );
+      const [{ data: profiles }, { data: stats }] = await Promise.all([
+        supabase.from("profiles").select("id, username").in("id", ids).eq("is_public", true),
+        supabase.from("trader_stats").select("user_id, portfolio_value").in("user_id", ids),
+      ]);
+      const nameOf = new Map((profiles ?? []).map((p) => [p.id, p.username]));
+      const valueOf = new Map((stats ?? []).map((s) => [s.user_id, Number(s.portfolio_value)]));
+
+      const mapped = list
+        .filter((d) => nameOf.has(d.creator_id) && nameOf.has(d.opponent_id as string))
+        .map((d) => {
+          const cStart = Number(d.creator_start_value);
+          const oStart = Number(d.opponent_start_value ?? 0) || cStart;
+          const cVal = valueOf.get(d.creator_id) ?? cStart;
+          const oVal = valueOf.get(d.opponent_id as string) ?? oStart;
+          return {
+            id: d.id,
+            code: d.code,
+            creatorName: nameOf.get(d.creator_id) as string,
+            opponentName: nameOf.get(d.opponent_id as string) as string,
+            creatorPct: ((cVal - cStart) / cStart) * 100,
+            opponentPct: ((oVal - oStart) / oStart) * 100,
+            endsAt: d.ends_at,
+            finished: new Date(d.ends_at).getTime() <= Date.now(),
+          };
+        });
+
+      setDuels(mapped);
+      setDuelsLoading(false);
+    })();
+  }, []);
 
   const handleSync = async () => {
     if (!user) return;
