@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
@@ -9,10 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
-import { Swords, Share2, Loader2, Clock, Trophy } from "lucide-react";
+import { Swords, Share2, Loader2, Clock, Trophy, Copy, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { computeLocalStats, syncStats } from "@/lib/traderSync";
+import { setPendingPath } from "@/lib/pendingRedirect";
 import { SITE_DOMAIN, STARTING_BALANCE, STARTING_BALANCE_LABEL } from "@/lib/constants";
 
 interface Duel {
@@ -33,6 +34,9 @@ interface SideStats {
   startValue: number;
 }
 
+const SHARE_LINE =
+  "Educational simulation only — not financial advice. No real money is traded.";
+
 function makeCode() {
   const alphabet = "abcdefghjkmnpqrstuvwxyz23456789";
   let out = "";
@@ -42,13 +46,28 @@ function makeCode() {
   return out;
 }
 
-function daysLeft(endsAt: string) {
-  const ms = new Date(endsAt).getTime() - Date.now();
-  return Math.max(0, Math.ceil(ms / 86_400_000));
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+/** Live remaining time broken into days + hours, floored at zero. */
+function remaining(endsAt: string, now: number) {
+  const ms = Math.max(0, new Date(endsAt).getTime() - now);
+  return {
+    ms,
+    days: Math.floor(ms / 86_400_000),
+    hours: Math.floor((ms % 86_400_000) / 3_600_000),
+    over: ms === 0,
+  };
 }
 
 export default function Challenge() {
   const { code } = useParams();
+  const navigate = useNavigate();
   const { user, profile } = useAuth();
   const [duel, setDuel] = useState<Duel | null>(null);
   const [sides, setSides] = useState<{ creator: SideStats | null; opponent: SideStats | null }>({
@@ -58,6 +77,14 @@ export default function Challenge() {
   const [myDuels, setMyDuels] = useState<Duel[]>([]);
   const [loading, setLoading] = useState(!!code);
   const [busy, setBusy] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
+
+  // Tick the countdown once a minute — cheap, and keeps "days left" honest.
+  useEffect(() => {
+    const iv = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(iv);
+  }, []);
 
   const loadSides = useCallback(async (d: Duel) => {
     const ids = [d.creator_id, d.opponent_id].filter(Boolean) as string[];
@@ -110,6 +137,13 @@ export default function Challenge() {
       .then(({ data }) => setMyDuels((data as Duel[]) ?? []));
   }, [code, user]);
 
+  const inviteUrl = code ? `${window.location.origin}/challenge/${code}` : "";
+  const time = duel ? remaining(duel.ends_at, now) : null;
+  const isFinished = !!duel && !!duel.opponent_id && !!time?.over;
+  const isFull = !!duel?.opponent_id;
+  const isMine = !!duel && !!user && duel.creator_id === user.id;
+  const amOpponent = !!duel && !!user && duel.opponent_id === user.id;
+
   const createDuel = async () => {
     if (!user) return;
     setBusy(true);
@@ -123,12 +157,8 @@ export default function Challenge() {
         creator_start_value: stats.portfolio_value,
       });
       if (error) throw error;
-      const url = `${window.location.origin}/challenge/${newCode}`;
-      await navigator.clipboard.writeText(
-        `I challenge you to a 30-day TradeHQ practice duel — both of us trade virtual capital and the leaderboard tracks who's ahead. ${url} (Educational simulation only — not financial advice.)`,
-      );
-      toast.success("Challenge created — invite link copied to your clipboard.");
-      window.location.href = `/challenge/${newCode}`;
+      toast.success("Challenge created — share the link with your friend.");
+      navigate(`/challenge/${newCode}`);
     } catch {
       toast.error("Could not create the challenge. Please try again.");
     } finally {
@@ -138,11 +168,15 @@ export default function Challenge() {
 
   const joinDuel = async () => {
     if (!user || !duel) return;
+    if (duel.creator_id === user.id) {
+      toast.error("You cannot accept your own challenge — send the link to a friend.");
+      return;
+    }
     setBusy(true);
     try {
       await syncStats(user.id);
       const stats = computeLocalStats();
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("duels")
         .update({
           opponent_id: user.id,
@@ -152,9 +186,14 @@ export default function Challenge() {
           ends_at: new Date(Date.now() + 30 * 86_400_000).toISOString(),
         })
         .eq("id", duel.id)
-        .is("opponent_id", null);
+        .is("opponent_id", null)
+        .select();
       if (error) throw error;
-      toast.success("You joined the duel. 30 days on the clock.");
+      if (!data || data.length === 0) {
+        toast.error("Someone already took this seat.");
+      } else {
+        toast.success("You joined the duel. 30 days on the clock.");
+      }
       await loadDuel();
     } catch {
       toast.error("Could not join this duel.");
@@ -163,21 +202,52 @@ export default function Challenge() {
     }
   };
 
+  const shareText = `Join my 30-day TradeHQ practice trading duel. We both start from equal virtual capital and the scoreboard tracks who is ahead. ${SHARE_LINE}`;
+
   const share = async () => {
-    const url = `${window.location.origin}/challenge/${code}`;
-    const text = `Join my 30-day TradeHQ practice trading duel. Both of us start from virtual capital — the leaderboard tracks who's ahead. (Educational simulation only — not financial advice.)`;
     try {
-      if (navigator.share) await navigator.share({ title: "TradeHQ duel", text, url });
-      else {
-        await navigator.clipboard.writeText(`${text} ${url}`);
-        toast.success("Invite link copied");
+      if (navigator.share) {
+        await navigator.share({ title: "TradeHQ practice duel", text: shareText, url: inviteUrl });
+        return;
       }
     } catch {
-      /* user cancelled */
+      /* user cancelled the share sheet */
+    }
+    try {
+      await navigator.clipboard.writeText(`${shareText} ${inviteUrl}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+      toast.success("Invite link copied");
+    } catch {
+      toast.error("Could not copy — select the link manually.");
     }
   };
 
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(inviteUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+      toast.success("Link copied");
+    } catch {
+      toast.error("Could not copy — select the link manually.");
+    }
+  };
+
+  const goSignIn = () => {
+    if (code) setPendingPath(`/challenge/${code}`);
+    navigate("/auth");
+  };
+
   const pct = (s: SideStats) => ((s.value - s.startValue) / s.startValue) * 100;
+
+  const leader = useMemo(() => {
+    if (!sides.creator || !sides.opponent) return null;
+    const a = pct(sides.creator);
+    const b = pct(sides.opponent);
+    if (a === b) return "tie" as const;
+    return a > b ? sides.creator.username : sides.opponent.username;
+  }, [sides]);
 
   const title = code
     ? "30-day practice trading duel | TradeHQ"
@@ -213,7 +283,7 @@ export default function Challenge() {
             </h1>
             <p className="text-sm text-muted-foreground mt-3 max-w-xl mx-auto">
               Send a link, both of you trade the simulator for 30 days, and the scoreboard
-              tracks who is ahead by percentage return. Everyone starts from{" "}
+              tracks who is ahead by percentage return. Every TradeHQ account starts from{" "}
               {STARTING_BALANCE_LABEL} of virtual capital. No real money is ever involved.
             </p>
           </header>
@@ -226,93 +296,176 @@ export default function Challenge() {
             <Card className="p-8 text-center glass-tactile border-chrome">
               <h2 className="text-lg font-semibold mb-2">This challenge link is not valid</h2>
               <p className="text-sm text-muted-foreground mb-6">
-                It may have been removed. You can start a fresh duel instead.
+                The code does not match an existing duel. Double-check the link, or start a
+                fresh duel of your own.
               </p>
               <Link to="/challenge">
                 <Button className="!text-black font-bold rounded-xl">Create a challenge</Button>
               </Link>
             </Card>
           ) : duel ? (
-            <Card className="p-6 md:p-8 glass-tactile border-chrome">
-              <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-                <Badge variant="outline" className="border-primary/30 text-primary">
-                  {duel.status === "open" ? "Waiting for an opponent" : "Duel in progress"}
-                </Badge>
-                <span className="inline-flex items-center gap-1 text-2xs text-muted-foreground">
-                  <Clock className="w-3 h-3" /> {daysLeft(duel.ends_at)} days remaining
-                </span>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {[sides.creator, sides.opponent].map((s, i) => (
-                  <div
-                    key={i}
-                    className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 text-center"
-                  >
-                    <p className="text-2xs uppercase tracking-widest text-muted-foreground mb-2">
-                      {i === 0 ? "Challenger" : "Opponent"}
+            <>
+              {/* Invite card for a visitor who has not signed in yet. */}
+              {!user && (
+                <Card className="p-6 md:p-8 mb-6 glass-tactile border-chrome text-center">
+                  <p className="text-2xs uppercase tracking-widest text-muted-foreground mb-2">
+                    You have been invited
+                  </p>
+                  <h2 className="text-xl font-semibold mb-3">
+                    {sides.creator?.username ?? "A TradeHQ trader"} challenged you to a
+                    30-day practice duel
+                  </h2>
+                  <ul className="text-sm text-muted-foreground space-y-1.5 mb-6 max-w-sm mx-auto text-left">
+                    <li>• Both sides trade virtual capital — {STARTING_BALANCE_LABEL} is the standard practice balance.</li>
+                    <li>• Scoring is percentage return from each trader's recorded starting line, so nobody gets a head start.</li>
+                    <li>• The duel runs for 30 days from the moment you accept.</li>
+                    <li>• A free account is only needed so both scores can be tracked.</li>
+                  </ul>
+                  {isFull ? (
+                    <p className="text-sm text-muted-foreground">
+                      This duel already has two traders. You can still watch the scoreboard below.
                     </p>
-                    {s ? (
-                      <>
-                        <p className="font-semibold mb-1">{s.username}</p>
-                        <p className={`text-2xl font-bold ${pct(s) >= 0 ? "text-profit" : "text-loss"}`}>
-                          {pct(s) >= 0 ? "+" : ""}
-                          {pct(s).toFixed(1)}%
-                        </p>
-                        <p className="text-2xs text-muted-foreground mt-1">
-                          ${s.value.toLocaleString(undefined, { maximumFractionDigits: 0 })} simulated
-                        </p>
-                      </>
-                    ) : (
-                      <p className="text-sm text-muted-foreground py-4">Seat open</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {sides.creator && sides.opponent && (
-                <p className="mt-6 text-center text-sm">
-                  <Trophy className="w-4 h-4 inline mr-1 text-primary" />
-                  <strong>
-                    {pct(sides.creator) === pct(sides.opponent)
-                      ? "Dead even"
-                      : pct(sides.creator) > pct(sides.opponent)
-                        ? sides.creator.username
-                        : sides.opponent.username}
-                  </strong>{" "}
-                  is currently ahead.
-                </p>
+                  ) : (
+                    <Button onClick={goSignIn} className="!text-black font-bold rounded-xl px-8">
+                      Sign in to accept
+                    </Button>
+                  )}
+                </Card>
               )}
 
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button variant="outline" onClick={share} className="rounded-xl">
-                  <Share2 className="w-4 h-4 mr-2" /> Share invite link
-                </Button>
-                {!user ? (
-                  <Link to="/auth">
-                    <Button className="!text-black font-bold rounded-xl">Sign in to join</Button>
-                  </Link>
-                ) : duel.status === "open" && duel.creator_id !== user.id ? (
-                  <Button onClick={joinDuel} disabled={busy} className="!text-black font-bold rounded-xl">
-                    {busy && <Loader2 className="w-4 h-4 mr-2 animate-spin" />} Accept the challenge
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outline"
-                    className="rounded-xl"
-                    disabled={busy}
-                    onClick={async () => {
-                      setBusy(true);
-                      await syncStats(user.id).catch(() => null);
-                      await loadDuel();
-                      setBusy(false);
-                    }}
-                  >
-                    Refresh my score
-                  </Button>
+              <Card className="p-6 md:p-8 glass-tactile border-chrome">
+                <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+                  <Badge variant="outline" className="border-primary/30 text-primary">
+                    {isFinished
+                      ? "Duel finished"
+                      : isFull
+                        ? "Duel in progress"
+                        : "Waiting for an opponent"}
+                  </Badge>
+                  <span className="inline-flex items-center gap-1 text-2xs text-muted-foreground">
+                    <Clock className="w-3 h-3" />
+                    {isFinished
+                      ? `Ended ${formatDate(duel.ends_at)}`
+                      : isFull
+                        ? `${time?.days}d ${time?.hours}h remaining`
+                        : "Clock starts when your friend accepts"}
+                  </span>
+                </div>
+
+                <p className="text-2xs text-muted-foreground mb-6">
+                  {isFull
+                    ? `Runs ${formatDate(duel.starts_at)} → ${formatDate(duel.ends_at)}.`
+                    : "The 30-day window begins the moment the second trader joins."}
+                </p>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  {[sides.creator, sides.opponent].map((s, i) => (
+                    <div
+                      key={i}
+                      className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 text-center"
+                    >
+                      <p className="text-2xs uppercase tracking-widest text-muted-foreground mb-2">
+                        {i === 0 ? "Challenger" : "Opponent"}
+                      </p>
+                      {s ? (
+                        <>
+                          <p className="font-semibold mb-1">{s.username}</p>
+                          <p className={`text-2xl font-bold ${pct(s) >= 0 ? "text-profit" : "text-loss"}`}>
+                            {pct(s) >= 0 ? "+" : ""}
+                            {pct(s).toFixed(1)}%
+                          </p>
+                          <p className="text-2xs text-muted-foreground mt-1">
+                            ${s.value.toLocaleString(undefined, { maximumFractionDigits: 0 })} simulated
+                          </p>
+                          <p className="text-2xs text-muted-foreground/70 mt-1">
+                            Started at ${s.startValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                          </p>
+                        </>
+                      ) : (
+                        <p className="text-sm text-muted-foreground py-4">Seat open</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {leader && (
+                  <p className="mt-6 text-center text-sm">
+                    <Trophy className="w-4 h-4 inline mr-1 text-primary" />
+                    <strong>{leader === "tie" ? "Dead even" : leader}</strong>{" "}
+                    {leader === "tie"
+                      ? isFinished
+                        ? "— the duel ended tied."
+                        : "so far."
+                      : isFinished
+                        ? "won this duel."
+                        : "is currently ahead."}
+                  </p>
                 )}
-              </div>
-            </Card>
+
+                {isFinished && (
+                  <p className="mt-2 text-center text-2xs text-muted-foreground">
+                    Final figures are simulated practice results and do not represent real returns.
+                  </p>
+                )}
+
+                {/* Share row */}
+                {!isFull && (
+                  <div className="mt-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4">
+                    <p className="text-2xs uppercase tracking-widest text-muted-foreground mb-2">
+                      Invite link
+                    </p>
+                    <p className="font-mono text-xs break-all text-foreground/90 mb-3">{inviteUrl}</p>
+                    <div className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" onClick={copyLink} className="rounded-xl">
+                        {copied ? <CheckCircle2 className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+                        {copied ? "Copied" : "Copy link"}
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={share} className="rounded-xl">
+                        <Share2 className="w-4 h-4 mr-2" /> Share
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                <div className="mt-8 flex flex-wrap justify-center gap-3">
+                  {!user ? (
+                    !isFull && (
+                      <Button onClick={goSignIn} className="!text-black font-bold rounded-xl">
+                        Sign in to join
+                      </Button>
+                    )
+                  ) : !isFull && !isMine ? (
+                    <Button onClick={joinDuel} disabled={busy} className="!text-black font-bold rounded-xl">
+                      {busy && <Loader2 className="w-4 h-4 mr-2 animate-spin" />} Accept the challenge
+                    </Button>
+                  ) : isMine || amOpponent ? (
+                    <Button
+                      variant="outline"
+                      className="rounded-xl"
+                      disabled={busy}
+                      onClick={async () => {
+                        setBusy(true);
+                        await syncStats(user.id).catch(() => null);
+                        await loadDuel();
+                        setBusy(false);
+                      }}
+                    >
+                      {busy && <Loader2 className="w-4 h-4 mr-2 animate-spin" />} Refresh my score
+                    </Button>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      This duel is full. <Link to="/challenge" className="text-primary underline">Start your own</Link>.
+                    </p>
+                  )}
+                </div>
+
+                {isMine && !isFull && (
+                  <p className="mt-4 text-center text-2xs text-muted-foreground">
+                    This is your own challenge — send the link above to a friend so they can take the second seat.
+                  </p>
+                )}
+              </Card>
+            </>
           ) : (
             <>
               <Card className="p-6 md:p-8 glass-tactile border-chrome text-center">
@@ -332,11 +485,9 @@ export default function Challenge() {
                       Duels need a free account so both scores can be tracked. Everything else on
                       TradeHQ stays available without signing in.
                     </p>
-                    <Link to="/auth">
-                      <Button className="!text-black font-bold rounded-xl px-8">
-                        Create a free account
-                      </Button>
-                    </Link>
+                    <Button onClick={goSignIn} className="!text-black font-bold rounded-xl px-8">
+                      Create a free account
+                    </Button>
                   </>
                 )}
               </Card>
@@ -345,18 +496,25 @@ export default function Challenge() {
                 <section className="mt-10">
                   <h2 className="text-lg font-semibold mb-4">Your duels</h2>
                   <div className="space-y-2">
-                    {myDuels.map((d) => (
-                      <Link
-                        key={d.id}
-                        to={`/challenge/${d.code}`}
-                        className="flex items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-3 hover:bg-white/[0.04] transition"
-                      >
-                        <span className="text-sm font-mono">{d.code}</span>
-                        <span className="text-2xs text-muted-foreground">
-                          {d.status === "open" ? "Waiting for opponent" : `${daysLeft(d.ends_at)} days left`}
-                        </span>
-                      </Link>
-                    ))}
+                    {myDuels.map((d) => {
+                      const t = remaining(d.ends_at, now);
+                      return (
+                        <Link
+                          key={d.id}
+                          to={`/challenge/${d.code}`}
+                          className="flex items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-3 hover:bg-white/[0.04] transition"
+                        >
+                          <span className="text-sm font-mono">{d.code}</span>
+                          <span className="text-2xs text-muted-foreground">
+                            {!d.opponent_id
+                              ? "Waiting for opponent"
+                              : t.over
+                                ? "Finished"
+                                : `${t.days}d ${t.hours}h left`}
+                          </span>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </section>
               )}
@@ -372,6 +530,25 @@ export default function Challenge() {
                     <p className="text-xs text-muted-foreground leading-relaxed">{s.b}</p>
                   </div>
                 ))}
+              </section>
+
+              <section className="mt-10 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
+                <h2 className="text-lg font-semibold mb-3">How duel scoring works</h2>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                  A duel compares percentage change, not dollar totals. If you begin a duel at
+                  $104,000 of simulated equity and finish at $109,200, your duel score is
+                  +5.0% — the $4,000 you were already up before the duel started does not count.
+                  Your friend is measured the same way from their own starting line.
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Nothing is reset when a duel begins. Your practice portfolio, journal and
+                  watchlist stay exactly as they were, and losing a duel has no effect on your
+                  account. The purpose is deliberate practice under a deadline, which is the
+                  same reason trading educators use timed paper-trading exercises.
+                </p>
+                <p className="text-2xs text-muted-foreground/70 mt-3">
+                  (Educational simulation only — not financial advice.)
+                </p>
               </section>
             </>
           )}
