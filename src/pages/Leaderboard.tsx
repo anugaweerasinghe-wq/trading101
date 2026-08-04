@@ -308,7 +308,6 @@ export default function Leaderboard() {
             </div>
 
             {tab === "traders" ? (
-            {/* Leaderboard Table */}
             <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden" style={{ backdropFilter: "blur(12px)" }}>
               {/* Header */}
               <div className="hidden md:grid grid-cols-5 gap-4 px-6 py-4 bg-white/[0.03] border-b border-white/[0.06] text-xs font-semibold text-muted-foreground uppercase tracking-wider">
