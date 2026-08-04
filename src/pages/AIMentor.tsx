@@ -9,6 +9,7 @@ import { Send, Bot, User, Sparkles, TrendingUp, BookOpen, Shield, Brain } from "
 import { Link } from "react-router-dom";
 import { SEOSection } from "@/components/SEOSection";
 import { getAIReply, MENTOR_SUGGESTIONS } from "@/lib/smartMentor";
+import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 
 interface Message {
   role: "user" | "assistant";
@@ -225,6 +226,7 @@ export default function AIMentor() {
               },
             ]}
           />
+          <EducationalDisclaimer variant="footer" className="mb-10" />
         </main>
       </div>
     </>

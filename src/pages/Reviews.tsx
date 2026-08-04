@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Star, Quote, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 
 interface Review {
   id: string;
@@ -251,6 +252,7 @@ export default function Reviews() {
               </Card>
             </aside>
           </div>
+          <EducationalDisclaimer variant="footer" className="mb-10" />
         </main>
       </div>
     </>

@@ -12,6 +12,7 @@ import { Shield, Globe, CheckCircle2, ArrowRight, Target, Sparkles, LineChart, Z
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { tradingGlossary } from "@/lib/tradingGlossary";
+import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 
 const DOMAIN = "https://www.thetradehq.com";
 
@@ -358,6 +359,7 @@ const LearnTradingGuide = () => {
           <div className="mt-6 pt-4 border-t border-white/5 text-center">
             <SocialShare title="I'm learning AI-assisted trading on TradeHQ! 🚀" description="Mastering 2026 trading with a free $100K simulator" variant="compact" />
           </div>
+          <EducationalDisclaimer variant="footer" className="mb-10" />
         </main>
 
         <CredibilityFooter />
