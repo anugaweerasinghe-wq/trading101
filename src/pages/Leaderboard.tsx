@@ -287,6 +287,27 @@ export default function Leaderboard() {
               </div>
             </div>
 
+            {/* Tabs: overall board vs head-to-head duels */}
+            <div className="flex gap-2 mb-4">
+              {([
+                { id: "traders", label: "Traders" },
+                { id: "duels", label: "Duels" },
+              ] as const).map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors border ${
+                    tab === t.id
+                      ? "bg-primary text-black border-transparent"
+                      : "border-white/[0.08] text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            {tab === "traders" ? (
             {/* Leaderboard Table */}
             <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden" style={{ backdropFilter: "blur(12px)" }}>
               {/* Header */}
@@ -357,6 +378,67 @@ export default function Leaderboard() {
                 ))
               )}
             </div>
+            ) : (
+              <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden" style={{ backdropFilter: "blur(12px)" }}>
+                {duelsLoading ? (
+                  <div className="py-16 text-center text-muted-foreground text-sm">
+                    <Loader2 className="w-5 h-5 animate-spin mx-auto mb-3" />
+                    Loading duels…
+                  </div>
+                ) : duels.length === 0 ? (
+                  <div className="py-16 px-6 text-center">
+                    <Swords className="w-10 h-10 text-primary/60 mx-auto mb-4" />
+                    <h2 className="text-lg font-semibold mb-2">No public duels yet</h2>
+                    <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
+                      Duels are 30-day head-to-head practice challenges between two members.
+                      Both sides are scored on percentage return from their own recorded
+                      starting balance, so nobody begins with an advantage.
+                    </p>
+                    <Link to="/challenge">
+                      <Button className="!text-black font-bold rounded-xl">
+                        Challenge a friend <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                ) : (
+                  duels.map((d) => {
+                    const creatorAhead = d.creatorPct >= d.opponentPct;
+                    return (
+                      <Link
+                        key={d.id}
+                        to={`/challenge/${d.code}`}
+                        className="flex items-center justify-between gap-4 px-4 md:px-6 py-4 border-b border-white/[0.04] hover:bg-white/[0.03] transition-colors"
+                      >
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold truncate">
+                            <span className={creatorAhead ? "text-foreground" : "text-muted-foreground"}>
+                              {d.creatorName}
+                            </span>
+                            <span className="text-muted-foreground mx-2">vs</span>
+                            <span className={!creatorAhead ? "text-foreground" : "text-muted-foreground"}>
+                              {d.opponentName}
+                            </span>
+                          </p>
+                          <p className="text-2xs text-muted-foreground mt-1">
+                            {d.finished
+                              ? "Finished"
+                              : `Ends ${new Date(d.endsAt).toLocaleDateString(undefined, { day: "numeric", month: "short" })}`}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <Badge variant="outline" className={d.creatorPct >= 0 ? "text-profit border-profit/30" : "text-loss border-loss/30"}>
+                            {d.creatorPct >= 0 ? "+" : ""}{d.creatorPct.toFixed(1)}%
+                          </Badge>
+                          <Badge variant="outline" className={d.opponentPct >= 0 ? "text-profit border-profit/30" : "text-loss border-loss/30"}>
+                            {d.opponentPct >= 0 ? "+" : ""}{d.opponentPct.toFixed(1)}%
+                          </Badge>
+                        </div>
+                      </Link>
+                    );
+                  })
+                )}
+              </div>
+            )}
 
             {/* How ranking works — replaces the old synthetic "next refresh" widget */}
             <section className="mt-12 grid gap-4 md:grid-cols-3">
