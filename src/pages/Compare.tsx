@@ -92,6 +92,42 @@ export default function Compare() {
             <p className="mt-3 text-xs text-muted-foreground/70 italic">(Educational simulation only — not financial advice.)</p>
           </Card>
 
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">
+              What actually separates {pair.a.name} and {pair.b.name}
+            </h2>
+            <div className="space-y-4">
+              {pair.deepDive.map((p, i) => (
+                <p key={i} className="text-sm leading-relaxed text-muted-foreground">{p}</p>
+              ))}
+            </div>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Common mistakes with this comparison</h2>
+            <ul className="space-y-3">
+              {pair.mistakes.map((m, i) => (
+                <li key={i} className="text-sm leading-relaxed text-muted-foreground flex gap-3">
+                  <span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-rose-400" aria-hidden />
+                  <span>{m}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <Card className="p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-2">How to settle it for yourself</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Rather than picking a side from an article, run both. Open the practice terminal, take a
+              position of the same risk — not the same dollar amount — in {pair.a.symbol} and{" "}
+              {pair.b.symbol}, and hold them for at least 30 days while logging how each behaves on
+              red days, on news days and overnight. The portfolio analytics will show you the
+              volatility difference and the drawdown you would actually have sat through, which is the
+              only part of this comparison that changes how you invest. Nothing here is a
+              recommendation to buy either one.
+            </p>
+          </Card>
+
           <section className="mb-10">
             <h2 className="text-2xl font-semibold mb-4">More comparisons</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
