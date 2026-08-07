@@ -251,6 +251,14 @@ export interface Strategy {
   successRate: string;
 }
 
+/** Long-form, page-specific depth added to each strategy page. */
+export interface StrategyDepth {
+  context: string;      // where the method came from / why it works
+  regime: string;       // market conditions that help or hurt it
+  mistakes: string[];   // 3 concrete failure modes
+  math: string;         // expectancy / sizing worked in numbers
+}
+
 export const STRATEGIES: Strategy[] = [
   {
     slug: "scalping",
