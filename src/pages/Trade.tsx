@@ -335,6 +335,18 @@ export default function Trade() {
         <Navigation />
 
         <div className="flex-1 container mx-auto px-4 pt-20 pb-6 space-y-4 max-w-7xl">
+          <header className="pt-2">
+            <h1 className="text-xl md:text-2xl font-bold tracking-tight">
+              Practice Trading Terminal{selectedAsset ? ` — ${selectedAsset.name} (${selectedAsset.symbol})` : ""}
+            </h1>
+            <p className="text-xs md:text-sm text-muted-foreground mt-1 max-w-3xl">
+              Place simulated buy and sell orders across crypto, stocks, ETFs, forex and
+              commodities with $100,000 in virtual cash. Prices are live where available and
+              clearly labelled LIVE, CACHED or SIM. (Educational simulation only — not
+              financial advice.)
+            </p>
+          </header>
+
           <MinimalistPortfolioBar portfolio={portfolio} />
 
           <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
