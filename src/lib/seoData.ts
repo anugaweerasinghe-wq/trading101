@@ -249,6 +249,7 @@ export interface Strategy {
   steps: string[];
   example: string;
   successRate: string;
+  depth: StrategyDepth;
 }
 
 /** Long-form, page-specific depth added to each strategy page. */
@@ -275,6 +276,19 @@ export const STRATEGIES: Strategy[] = [
     ],
     example: "Long BTC at $95,120 with stop $95,080, target $95,210 — risking $40 to make $90.",
     successRate: "Realistic win rate: 55-60% with 1:1.5 R. Below that, you'll grind to zero.",
+    depth: {
+      context:
+        "Scalping exists because order books are noisy. Market makers quote a bid and an ask, and between those two prices there is a constant tug-of-war as large orders get worked into the book. A scalper is not predicting where an asset will be next month — they are trying to be on the right side of the next few hundred ticks and get out before the noise reverses. That makes execution quality, not analysis, the main variable: a 2-tick worse fill on a 10-tick target destroys a third of the trade's expected value.",
+      regime:
+        "Scalping works best when the spread is one tick wide and volume is heavy — US equity index products in the first hour, BTC and ETH during US/Europe overlap, EUR/USD around the London open. It fails in thin overnight sessions, in low-volume altcoins where the spread can be 0.3% (three times a typical target), and around scheduled events such as CPI or FOMC where the book empties out seconds before the print.",
+      mistakes: [
+        "Trading a wide-spread instrument. If the spread is 0.2% and your target is 0.15%, the position is negative-expectancy before you click.",
+        "Increasing size after a losing streak to 'get it back'. Scalping produces long strings of small losses by design; size changes turn a normal drawdown into a blow-up.",
+        "Holding a scalp that goes against you and calling it a swing trade. That is a different plan with a different stop, and switching mid-trade means you have no plan at all.",
+      ],
+      math:
+        "With a 57% win rate and a 1:1.5 reward-to-risk ratio, expectancy per trade is (0.57 x 1.5) - (0.43 x 1) = +0.42R. On a $100,000 practice account risking 0.25% ($250) per trade, that is roughly $105 of expected value per trade before costs — and costs are the point: 20 trades a day at $3 round-turn is $60, so more than half the theoretical edge goes to friction. Test that friction in the simulator before assuming it away.",
+    },
   },
   {
     slug: "swing-trading",
@@ -291,6 +305,19 @@ export const STRATEGIES: Strategy[] = [
     ],
     example: "Bought NVDA at $145 after a pullback, stop $138, target $165 — risked $7 to make $20.",
     successRate: "Realistic win rate: 45-50% with 1:2+ R. Compounds nicely with discipline.",
+    depth: {
+      context:
+        "Swing trading sits between day trading and investing: positions are held long enough for a thesis to play out, short enough that a single position is never a life decision. It suits anyone with a job because the analysis happens once, usually in the evening, and the market does the work while you are away. The trade-off is overnight risk — earnings, macro prints and weekend headlines all move price while your stop cannot protect you at the exact level you set.",
+      regime:
+        "It performs when a market is trending on the daily chart with regular pullbacks: think large-cap tech in an uptrend, or a major FX pair in a sustained rate-differential move. It performs badly in tight, headline-driven chop where every pullback becomes a reversal, and around earnings, where a single gap can exceed several planned stops.",
+      mistakes: [
+        "Placing the stop at a round number rather than outside the market's normal noise. Use a volatility measure such as 1.5x the 14-day ATR so ordinary movement does not close the trade.",
+        "Holding through earnings on a full-size position because 'it should beat'. Either halve the size or close before the print — that event has nothing to do with your entry signal.",
+        "Adding to a losing swing. Averaging down converts a defined-risk trade into an undefined one, which is the single most common way practice accounts hit zero.",
+      ],
+      math:
+        "At a 47% win rate and 1:2 reward-to-risk, expectancy is (0.47 x 2) - (0.53 x 1) = +0.41R per trade. Risking 1% of a $100,000 practice account means $410 expected per trade, but with only 4-8 trades a month the sample is small — 30 trades is the minimum before the numbers say anything. Expect drawdowns of 5-7 losers in a row at that win rate; it is statistically ordinary, not evidence the method is broken.",
+    },
   },
   {
     slug: "day-trading",
@@ -307,6 +334,19 @@ export const STRATEGIES: Strategy[] = [
     ],
     example: "Long SPY at VWAP reclaim, stop below VWAP, target the day's prior high.",
     successRate: "Realistic win rate: 50-55%. The edge comes from session selection, not magic indicators.",
+    depth: {
+      context:
+        "Day trading concentrates a whole trading career into single sessions. Because everything is closed by the bell there is no overnight gap risk, but there is also no time for a thesis to recover — the market either agrees with you within hours or it does not. Most of the day's directional movement happens in the opening 90 minutes and the final hour, which is why disciplined day traders trade those windows and stay flat through the low-volume midday drift.",
+      regime:
+        "Good days have a clear opening drive, expanding range and volume above the recent average. Bad days are narrow, overlapping and volume-starved — typically the sessions before a major holiday or the day before a central-bank decision, when institutions stand aside. Learning to recognise a no-trade day is worth more than any additional indicator.",
+      mistakes: [
+        "Trading the midday lull out of boredom. Range contracts, stops get hit by noise, and the day's profit from the open is handed back.",
+        "Using a fixed dollar stop instead of a structural one. The stop should sit where the idea is wrong — below VWAP, below the opening range — not at an arbitrary loss you find comfortable.",
+        "Ignoring the daily loss limit. Two full stops in a session is a signal to close the platform; a third is almost always emotional rather than analytical.",
+      ],
+      math:
+        "A 52% win rate at 1:1.5 gives (0.52 x 1.5) - (0.48 x 1) = +0.30R per trade. Five trades a day at 0.5% risk on $100,000 is $250 risk per trade, so roughly $375 of expected value a day before commissions and slippage — and slippage on market orders in fast conditions is routinely a quarter of that. Track your actual fills in the simulator's journal rather than assuming the mid-price.",
+    },
   },
   {
     slug: "dca-dollar-cost-averaging",
@@ -323,6 +363,19 @@ export const STRATEGIES: Strategy[] = [
     ],
     example: "$100 into SPY every Friday for 10 years has historically outperformed 80% of active retail traders.",
     successRate: "Win rate of *strategy execution*: 100% if you stick to it. Most people don't.",
+    depth: {
+      context:
+        "Dollar-cost averaging removes the hardest variable in investing: timing. By committing a fixed amount on a fixed schedule you automatically buy more units when prices are low and fewer when they are high, and you never have to form a view about the next three months. Academic work generally finds lump-sum investing beats DCA on average expected return simply because markets rise more often than they fall — but DCA wins on behaviour, and behaviour is what determines whether someone is still invested after a 30% drawdown.",
+      regime:
+        "It is designed for broad, diversified, long-lived assets — a total-market or S&P 500 index fund, and for those who accept the volatility, a small allocation to a major crypto asset. It is not designed for single stocks, leveraged products, or anything that can go to zero, because averaging into a permanently impaired asset just buys more of a losing position.",
+      mistakes: [
+        "Pausing contributions during a crash. That is precisely when the schedule is buying the cheapest units; stopping converts a mechanical plan into market timing.",
+        "DCA-ing into a single speculative name and calling it investing. The method assumes the underlying asset recovers over long horizons — that assumption holds for a diversified index, not for one company.",
+        "Checking the balance daily. The plan works on a horizon of years; daily monitoring only increases the chance of abandoning it.",
+      ],
+      math:
+        "$500 a month for 20 years at an 8% annualised return contributes $120,000 of capital and ends near $295,000, so roughly 60% of the final balance comes from compounding rather than contributions. Raise the horizon to 30 years and contributions become a minority of the outcome entirely. Model your own numbers with the compound calculator on the learn pages before deciding a monthly amount.",
+    },
   },
   {
     slug: "rsi-strategy",
@@ -339,6 +392,19 @@ export const STRATEGIES: Strategy[] = [
     ],
     example: "BTC RSI dips to 26 at $92K with a bullish engulfing — buy, stop $91K, target $94K.",
     successRate: "55-60% in ranges. Drops to 30% in trends. Regime detection is the real edge.",
+    depth: {
+      context:
+        "RSI, published by J. Welles Wilder in 1978, measures the ratio of average gains to average losses over a lookback window, normally 14 periods, and scales it from 0 to 100. Mean-reversion traders use it as a stretch gauge: a reading under 30 says recent selling has been unusually one-sided, which in a range-bound market often precedes a bounce. Crucially, RSI says nothing about direction — it describes how price got here, not where it goes next.",
+      regime:
+        "The method only makes sense in a market that is oscillating around a value area: a large-cap stock consolidating after a run, a major FX pair inside a monthly range, BTC chopping between well-defined levels. In a strong trend RSI can hold above 70 for weeks, and every 'overbought' short is a loss. Check the 50 and 200 EMA relationship first: if they are widely separated and sloping, this is a trend regime and mean reversion should be skipped.",
+      mistakes: [
+        "Taking the signal without confirmation. RSI under 30 alone is not an entry; wait for the reversal candle or a reclaim of a prior level so there is a defined place to be wrong.",
+        "Shorting an overbought reading in an uptrend. This is the single most expensive misuse of the indicator, and it feels most compelling exactly when it is most dangerous.",
+        "Tuning the lookback until history looks profitable. An RSI(9) that backtests beautifully on one asset and one year is usually curve-fitting, not an edge.",
+      ],
+      math:
+        "In range conditions a 57% win rate at 1:1.2 reward-to-risk gives (0.57 x 1.2) - (0.43 x 1) = +0.25R. Apply the same rules to trending conditions at a 32% win rate and expectancy falls to (0.32 x 1.2) - (0.68 x 1) = -0.30R. The identical setup is profitable in one regime and clearly negative in the other, which is why regime classification — not indicator settings — is where the work belongs.",
+    },
   },
   {
     slug: "macd-strategy",
@@ -355,6 +421,19 @@ export const STRATEGIES: Strategy[] = [
     ],
     example: "NVDA MACD crosses up at $130 with stop $124 — held for 6 weeks to $165.",
     successRate: "40-50% with 1:2.5+ R — payoff matters more than frequency.",
+    depth: {
+      context:
+        "MACD is the difference between a 12-period and a 26-period exponential moving average, plotted against a 9-period signal line. Because it is built from averages, it always confirms a move after it has begun — it is a trend-following tool, not a predictive one. That lag is the price paid for filtering out most false starts, and it is why MACD systems typically lose more trades than they win while still making money: the winners run far longer than the losers.",
+      regime:
+        "It performs in markets that trend persistently on the daily chart — index ETFs, mega-cap equities, major commodities in a supply cycle. It performs badly in range-bound conditions, where the signal line crosses back and forth and each whipsaw costs a full stop. A simple filter that removes most of the damage: only take long crosses while price is above the 200-day moving average.",
+      mistakes: [
+        "Trading every cross. Crosses below the zero line in a downtrend, or inside a tight range, produce the bulk of the losing trades in any MACD backtest.",
+        "Exiting winners at a fixed target. The method's entire expectancy depends on a handful of large trends; capping them at 1R while taking full 1R losses inverts the edge.",
+        "Reading histogram divergence as a reversal signal. Divergence is common and frequently resolves by the trend simply continuing after a pause.",
+      ],
+      math:
+        "At a 43% win rate with 1:2.5 reward-to-risk, expectancy is (0.43 x 2.5) - (0.57 x 1) = +0.51R per trade — strong, but delivered unevenly. Expect stretches of 6-8 consecutive losers; in a 40-trade sample that is normal variance rather than a broken system. This is why position sizing at 1% or less matters more here than in higher-win-rate methods: the strategy is only profitable if you are still trading when the trend finally arrives.",
+    },
   },
 ];
 
