@@ -81,6 +81,39 @@ export default function Strategy() {
             <p className="text-sm font-mono bg-black/30 p-3 rounded">{s.example}</p>
           </Card>
 
+          <section className="mb-6 space-y-6">
+            <div>
+              <h2 className="text-2xl font-semibold mb-3">Where this method comes from</h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">{s.depth.context}</p>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-semibold mb-3">When it works and when it fails</h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">{s.depth.regime}</p>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-semibold mb-3">The three mistakes that ruin it</h2>
+              <ul className="space-y-3">
+                {s.depth.mistakes.map((m, i) => (
+                  <li key={i} className="text-sm leading-relaxed text-muted-foreground flex gap-3">
+                    <span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-rose-400" aria-hidden />
+                    <span>{m}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <Card className="p-6">
+              <h2 className="text-xl font-semibold mb-3">The expectancy maths</h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">{s.depth.math}</p>
+              <p className="mt-3 text-xs text-muted-foreground/70 italic">
+                Figures are illustrative teaching examples, not projections of your results.
+                (Educational simulation only — not financial advice.)
+              </p>
+            </Card>
+          </section>
+
           <Card className="p-5 mb-8 bg-gradient-to-br from-emerald-500/5 to-transparent">
             <h3 className="text-sm font-semibold mb-1">Realistic expectations</h3>
             <p className="text-sm text-muted-foreground">{s.successRate}</p>
@@ -131,6 +164,38 @@ export function StrategyIndex() {
         <main className="flex-1 container mx-auto px-4 pt-24 pb-12 max-w-5xl">
           <h1 className="text-4xl font-bold mb-2">Trading Strategies</h1>
           <p className="text-muted-foreground mb-8">Pick one. Master it on the practice account before risking real capital.</p>
+
+          <section className="mb-10 space-y-4 max-w-3xl">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              A trading strategy is nothing more than a written set of conditions that tells you what to
+              buy or sell, how much to risk, where you are wrong, and when you are finished. Everything
+              else — indicators, chart colours, news feeds — is decoration. The six methods below cover
+              the realistic range of holding periods available to a retail participant, from seconds
+              (scalping) to decades (dollar-cost averaging), and each page states the rules, the market
+              conditions the method needs, the mistakes that break it, and the expectancy maths in numbers
+              rather than adjectives.
+            </p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Choosing between them is mostly a question of time, not intelligence. If you can watch a
+              screen for three uninterrupted hours, day trading and scalping are open to you; if you can
+              check charts twice a day, swing trading fits; if you can only act once a month, dollar-cost
+              averaging into a diversified index is the honest answer. Picking a method your schedule
+              cannot support is the most common reason beginners lose money, because the method is
+              abandoned mid-trade rather than executed.
+            </p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Whichever you pick, judge it over a sample, not a session. A method with a 45% win rate will
+              routinely produce five or six consecutive losses; that is ordinary variance, not a broken
+              system. Log at least 30 simulated trades with a fixed risk per trade before changing
+              anything, and record why you entered as well as what happened — the journal, not the
+              indicator, is where improvement actually comes from.
+            </p>
+            <p className="text-xs text-muted-foreground/70 italic">
+              (Educational simulation only — not financial advice.)
+            </p>
+          </section>
+
+          <h2 className="text-xl font-semibold mb-4">The six strategies</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {STRATEGIES.map((s) => (
               <Link key={s.slug} to={`/strategy/${s.slug}`}>
@@ -141,6 +206,19 @@ export function StrategyIndex() {
               </Link>
             ))}
           </div>
+
+          <section className="mt-10 max-w-3xl">
+            <h2 className="text-xl font-semibold mb-3">How to test a strategy without risking money</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Open the practice terminal, pick one instrument and one method, and fix your risk per trade
+              at a constant percentage of the $100,000 virtual balance. Take every signal the rules
+              produce — including the ones you dislike — for a full 30-trade sample, then read the results
+              in the portfolio analytics: win rate, average win divided by average loss, and the largest
+              peak-to-trough drawdown. If the expectancy is positive and the drawdown is one you could
+              have sat through calmly, the method is worth continuing. If not, change one variable and run
+              the sample again.
+            </p>
+          </section>
         </main>
         <MegaFooter />
       </div>

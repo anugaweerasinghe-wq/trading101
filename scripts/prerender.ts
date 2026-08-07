@@ -57,8 +57,8 @@ function renderHead(r: RouteMeta, template: string): string {
 
   // <meta name="description">
   html = html.replace(
-    /<meta\s+name=["']description["'][^>]*>/i,
-    `<meta name="description" content="${desc}" />`
+    /<meta\s[^>]*name=["']description["'][^>]*>/i,
+    `<meta data-static-head name="description" content="${desc}" />`
   );
 
   // <link rel="canonical"> — remove any existing, then add self-referencing
@@ -70,30 +70,30 @@ function renderHead(r: RouteMeta, template: string): string {
 
   // og:url
   html = html.replace(
-    /<meta\s+property=["']og:url["'][^>]*>/i,
-    `<meta property="og:url" content="${url}" />`
+    /<meta\s[^>]*property=["']og:url["'][^>]*>/i,
+    `<meta data-static-head property="og:url" content="${url}" />`
   );
 
   // og:title
   html = html.replace(
-    /<meta\s+property=["']og:title["'][^>]*>/i,
-    `<meta property="og:title" content="${title}" />`
+    /<meta\s[^>]*property=["']og:title["'][^>]*>/i,
+    `<meta data-static-head property="og:title" content="${title}" />`
   );
 
   // og:description
   html = html.replace(
-    /<meta\s+property=["']og:description["'][^>]*>/i,
-    `<meta property="og:description" content="${desc}" />`
+    /<meta\s[^>]*property=["']og:description["'][^>]*>/i,
+    `<meta data-static-head property="og:description" content="${desc}" />`
   );
 
   // twitter:title / description
   html = html.replace(
-    /<meta\s+name=["']twitter:title["'][^>]*>/i,
-    `<meta name="twitter:title" content="${title}" />`
+    /<meta\s[^>]*name=["']twitter:title["'][^>]*>/i,
+    `<meta data-static-head name="twitter:title" content="${title}" />`
   );
   html = html.replace(
-    /<meta\s+name=["']twitter:description["'][^>]*>/i,
-    `<meta name="twitter:description" content="${desc}" />`
+    /<meta\s[^>]*name=["']twitter:description["'][^>]*>/i,
+    `<meta data-static-head name="twitter:description" content="${desc}" />`
   );
 
   // Inject SEO body block INSIDE #root so crawlers see real content.

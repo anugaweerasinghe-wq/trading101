@@ -913,9 +913,13 @@ export function generateAssetMetaTitle(asset: Asset): string {
     return CUSTOM_META_TITLES[asset.id];
   }
   
-  // Fallback pattern for other assets
-  const title = `${asset.symbol} — Market Analysis & 2026 Strategy | TradeHQ`;
-  return title.length > 60 ? `${asset.symbol} Analysis | TradeHQ` : title;
+  // Fallback pattern for other assets — include the name so symbols that
+  // collide across asset classes (e.g. ZS = Zscaler and Soybeans) stay unique.
+  const label = asset.name && asset.name !== asset.symbol
+    ? `${asset.name} (${asset.symbol})`
+    : asset.symbol;
+  const title = `${label} — Market Analysis & 2026 Strategy | TradeHQ`;
+  return title.length > 60 ? `${label} Analysis | TradeHQ` : title;
 }
 
 // Truncate meta description safely at 155 chars (no mid-sentence cuts)

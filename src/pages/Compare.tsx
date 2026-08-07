@@ -92,6 +92,42 @@ export default function Compare() {
             <p className="mt-3 text-xs text-muted-foreground/70 italic">(Educational simulation only — not financial advice.)</p>
           </Card>
 
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">
+              What actually separates {pair.a.name} and {pair.b.name}
+            </h2>
+            <div className="space-y-4">
+              {pair.deepDive.map((p, i) => (
+                <p key={i} className="text-sm leading-relaxed text-muted-foreground">{p}</p>
+              ))}
+            </div>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Common mistakes with this comparison</h2>
+            <ul className="space-y-3">
+              {pair.mistakes.map((m, i) => (
+                <li key={i} className="text-sm leading-relaxed text-muted-foreground flex gap-3">
+                  <span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-rose-400" aria-hidden />
+                  <span>{m}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <Card className="p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-2">How to settle it for yourself</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Rather than picking a side from an article, run both. Open the practice terminal, take a
+              position of the same risk — not the same dollar amount — in {pair.a.symbol} and{" "}
+              {pair.b.symbol}, and hold them for at least 30 days while logging how each behaves on
+              red days, on news days and overnight. The portfolio analytics will show you the
+              volatility difference and the drawdown you would actually have sat through, which is the
+              only part of this comparison that changes how you invest. Nothing here is a
+              recommendation to buy either one.
+            </p>
+          </Card>
+
           <section className="mb-10">
             <h2 className="text-2xl font-semibold mb-4">More comparisons</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -138,17 +174,51 @@ export function CompareIndex() {
         <main className="flex-1 container mx-auto px-4 pt-24 pb-12 max-w-5xl">
           <h1 className="text-4xl font-bold mb-2">Asset Comparisons</h1>
           <p className="text-muted-foreground mb-8">Pick a head-to-head. Each comparison is built around real differences in returns, risk and use case.</p>
+
+          <section className="mb-10 max-w-3xl space-y-4">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Most "X vs Y" questions are really questions about risk tolerance and time horizon. Two
+              assets rarely do the same job: one may be a slow compounding holding suited to a decade,
+              the other a volatile position that can halve in a quarter. Each comparison below sets out
+              what the two instruments actually are, where their returns come from, how differently they
+              behave in a drawdown, and the mistakes people commonly make when treating them as
+              interchangeable.
+            </p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              A useful habit when reading any comparison: convert the claim into a position size. If one
+              asset is four times as volatile as the other, an equal dollar allocation is not an equal
+              bet — it is a concentrated position in the riskier one with a token holding in the other.
+              Comparing annualised volatility and worst historical drawdown before comparing returns is
+              what turns a comparison into a decision.
+            </p>
+            <p className="text-xs text-muted-foreground/70 italic">
+              (Educational simulation only — not financial advice.)
+            </p>
+          </section>
+
+          <h2 className="text-xl font-semibold mb-4">All comparisons</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {COMPARE_PAIRS.map((p) => (
               <Link key={p.slug} to={`/compare/${p.slug}`}>
                 <Card className="p-6 hover:border-emerald-500/40 transition">
                   <div className="text-xs text-muted-foreground mb-2">{p.a.tag} vs {p.b.tag}</div>
-                  <h2 className="text-xl font-bold">{p.a.name} vs {p.b.name}</h2>
+                  <h3 className="text-xl font-bold">{p.a.name} vs {p.b.name}</h3>
                   <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{p.intro}</p>
                 </Card>
               </Link>
             ))}
           </div>
+
+          <section className="mt-10 max-w-3xl">
+            <h2 className="text-xl font-semibold mb-3">Test the comparison instead of arguing about it</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Every asset named on these pages is available in the practice terminal with $100,000 of
+              virtual cash. Take both sides of a comparison at matched risk, hold them for a month, and
+              read the portfolio analytics afterwards: the volatility gap, the largest drawdown, and how
+              each one behaved on the days the market fell. Thirty days of watching that is worth more
+              than any amount of reading, and it costs nothing because none of it is real money.
+            </p>
+          </section>
         </main>
         <MegaFooter />
       </div>
