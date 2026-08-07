@@ -81,6 +81,39 @@ export default function Strategy() {
             <p className="text-sm font-mono bg-black/30 p-3 rounded">{s.example}</p>
           </Card>
 
+          <section className="mb-6 space-y-6">
+            <div>
+              <h2 className="text-2xl font-semibold mb-3">Where this method comes from</h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">{s.depth.context}</p>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-semibold mb-3">When it works and when it fails</h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">{s.depth.regime}</p>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-semibold mb-3">The three mistakes that ruin it</h2>
+              <ul className="space-y-3">
+                {s.depth.mistakes.map((m, i) => (
+                  <li key={i} className="text-sm leading-relaxed text-muted-foreground flex gap-3">
+                    <span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-rose-400" aria-hidden />
+                    <span>{m}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <Card className="p-6">
+              <h2 className="text-xl font-semibold mb-3">The expectancy maths</h2>
+              <p className="text-sm leading-relaxed text-muted-foreground">{s.depth.math}</p>
+              <p className="mt-3 text-xs text-muted-foreground/70 italic">
+                Figures are illustrative teaching examples, not projections of your results.
+                (Educational simulation only — not financial advice.)
+              </p>
+            </Card>
+          </section>
+
           <Card className="p-5 mb-8 bg-gradient-to-br from-emerald-500/5 to-transparent">
             <h3 className="text-sm font-semibold mb-1">Realistic expectations</h3>
             <p className="text-sm text-muted-foreground">{s.successRate}</p>
