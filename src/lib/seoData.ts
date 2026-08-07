@@ -8,6 +8,8 @@ export interface ComparePair {
   intro: string;       // 2-3 sentences, unique per pair
   verdict: string;     // who wins, when
   bullets: string[];   // 4 differentiators
+  deepDive: string[];  // 2 long-form paragraphs, unique per pair
+  mistakes: string[];  // 3 concrete errors people make with this comparison
 }
 
 export const COMPARE_PAIRS: ComparePair[] = [
@@ -23,6 +25,15 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Use case: BTC = settlement and reserve asset; ETH = computation, DeFi rails, tokenization.",
       "Volatility: ETH typically swings 1.3-1.6x harder than BTC during risk-on/off cycles.",
     ],
+    deepDive: [
+      "The two assets answer different questions. Bitcoin's design goal is credible scarcity: a fixed issuance schedule, a deliberately simple scripting language, and a network whose main job is to never change in ways holders did not agree to. Ethereum's design goal is expressiveness: a general-purpose virtual machine where anyone can deploy code that settles value. That difference shows up in how each network's value is argued for. Bitcoin's case is monetary and rests on adoption as a savings asset; Ethereum's case is closer to an economy, where fees paid by applications and the burn mechanism tie network usage to the supply of the token.",
+      "For someone practising, the practical consequence is that the two behave differently in a portfolio. Bitcoin usually leads a crypto cycle and draws the institutional flows first, while Ethereum and the wider app layer tend to outperform later in a rally and fall harder in a liquidity squeeze. Holding both is not diversification in any meaningful statistical sense — their correlation is typically above 0.8 — so treat a BTC/ETH split as a single risk bucket with a tilt, not as two independent positions. Size the whole bucket first, then decide the tilt.",
+    ],
+    mistakes: [
+      "Treating a BTC and ETH split as diversified. They fall together in almost every stress event; the combined position is what needs sizing.",
+      "Assuming staking yield is free money. Staking rewards come with lock-up periods, validator risk and, through liquid staking tokens, an extra layer of smart-contract exposure.",
+      "Comparing prices per unit. One ETH costing less than one BTC says nothing about value — only market capitalisation and issuance are comparable.",
+    ],
   },
   {
     slug: "tesla-vs-nvidia",
@@ -35,6 +46,15 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Margins: NVDA gross margin ~75% in data center; TSLA auto gross margin ~17-20%.",
       "Risk: NVDA depends on hyperscaler capex; TSLA depends on demand cycles + execution.",
       "Beta: TSLA typically 2.0+, NVDA ~1.7 — both punish leverage in drawdowns.",
+    ],
+    deepDive: [
+      "Nvidia's revenue is concentrated in a small number of very large buyers building data centres, which makes its results a fairly direct read on hyperscaler capital expenditure. When those budgets expand, orders and margins expand with them; when a single large customer defers a build-out, the effect is visible in one quarter. Tesla's revenue comes from millions of individual consumers making financed purchase decisions, so it responds to interest rates, incentives and regional demand rather than to enterprise budgets. Two very different demand signals sit behind two stocks that retail traders often lump together as 'AI names'.",
+      "That difference matters for how each is analysed. For Nvidia, the numbers that move the story are data-centre revenue growth, gross margin and customer concentration. For Tesla, they are deliveries, automotive gross margin excluding regulatory credits, and progress on the autonomy and energy segments that carry the long-duration part of the valuation. Both trade at multiples that assume years of execution, which is why both can fall sharply on results that would be considered good for an average company — the bar is set by expectations, not by absolute performance.",
+    ],
+    mistakes: [
+      "Buying both as one 'AI trade'. Their demand drivers are unrelated, and holding both simply doubles exposure to high-multiple growth without adding an independent thesis.",
+      "Using leverage on beta above 2. A 20% drawdown is ordinary in both names; leveraged, it becomes a forced exit at the worst possible price.",
+      "Reading a headline earnings beat as a bullish signal. In high-expectation stocks the reaction is driven by guidance and margins, not by the beat itself.",
     ],
   },
   {
@@ -49,6 +69,15 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Carry: Neither pays yield; storage cost differs (vault fees vs. self-custody hardware).",
       "Liquidity: Gold trades 24/5 via futures; BTC trades 24/7/365 with deep on-chain settlement.",
     ],
+    deepDive: [
+      "Gold's role in portfolios is empirical rather than theoretical: over multiple decades it has held purchasing power, carried low correlation to equities, and attracted official-sector buying during periods of currency stress. Central banks have been consistent net buyers in recent years, which puts a slow, price-insensitive bid under the market that no other commodity enjoys. Bitcoin has none of that history. Its argument is structural — a fixed supply schedule, global settlement, and self-custody — and its record covers roughly one and a half full monetary cycles, which is not enough data to make confident statistical claims.",
+      "In practice the two behave differently in a panic. Gold tends to rise or hold when equity volatility spikes. Bitcoin, being held by a leveraged and largely retail base, frequently falls first in a liquidity crunch as positions are unwound to meet margin elsewhere, then recovers faster afterwards. Anyone using either as a hedge should be clear about which behaviour they are actually buying, and should size accordingly: with annualised volatility of roughly 15% versus 60-80%, an equal dollar allocation to each is not an equal risk allocation — it is a bitcoin position with a small gold decoration attached.",
+    ],
+    mistakes: [
+      "Sizing them equally in dollars. Matching risk, not capital, means a much smaller bitcoin position for the same contribution to portfolio volatility.",
+      "Calling bitcoin an inflation hedge based on 2020-2021. It behaved like a high-beta risk asset through the 2022 inflation peak, which is the opposite of a hedge.",
+      "Ignoring custody. Vault fees for gold and key management for bitcoin are real, ongoing costs that a price chart never shows.",
+    ],
   },
   {
     slug: "apple-vs-microsoft",
@@ -61,6 +90,15 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "AI exposure: MSFT direct via Azure/OpenAI; AAPL indirect via on-device intelligence.",
       "Capital return: AAPL is the largest buyback program in history; MSFT prefers reinvestment + smaller dividends.",
       "Regulatory: AAPL faces App Store antitrust pressure; MSFT navigating EU AI Act + cloud bundling probes.",
+    ],
+    deepDive: [
+      "Apple's economics rest on an installed base of well over a billion active devices and the high-margin services revenue that flows from it — the App Store, iCloud, payments and search licensing. Hardware growth is largely a replacement-cycle story, so the interesting variable is how much recurring revenue each device generates over its life. Microsoft's economics rest on enterprise contracts: Office and Windows licensing that renews almost automatically, plus Azure, where consumption grows as customers migrate workloads and, more recently, run AI inference.",
+      "The AI exposure of each is often misread. Microsoft monetises AI directly through Azure capacity and per-seat Copilot subscriptions, which show up in reported cloud revenue. Apple's approach is on-device and privacy-framed, so its benefit is indirect — it may accelerate hardware upgrades rather than create a new revenue line. Neither approach is obviously superior, but they carry different risks: Microsoft is spending enormous capital up front and must fill that capacity, while Apple depends on consumers deciding a new device is worth buying.",
+    ],
+    mistakes: [
+      "Treating mega-caps as low risk because they are large. Both have had drawdowns above 30% within the last decade.",
+      "Comparing headline price-to-earnings ratios without adjusting for buybacks and cash. Apple's share count shrinks materially each year, which flatters per-share metrics.",
+      "Assuming index exposure already covers them. In a cap-weighted index these two are already a large single-name concentration; buying more adds to a position you likely hold.",
     ],
   },
   {
@@ -75,6 +113,15 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Outage risk: SOL has had multi-hour outages historically; ETH has never halted.",
       "Yield: ETH staking ~3-4% APR; SOL staking ~6-8% with higher inflation offset.",
     ],
+    deepDive: [
+      "The architectural bet is the whole story. Ethereum decided that the base layer should stay small enough for ordinary hardware to verify, pushing throughput to rollups that post proofs back to the main chain. That preserves decentralisation and creates a modular ecosystem, at the cost of a fragmented user experience across many L2s. Solana decided that hardware improves faster than coordination does, so it runs one chain with parallel execution and higher validator requirements. That produces a single, fast, cheap environment, at the cost of a smaller validator set and a history of network halts.",
+      "For a practising trader the tokens inherit those characteristics. Ethereum's fee revenue is increasingly split with its rollups, which complicates the direct link between usage and token value; Solana captures its activity on one chain but carries concentration and reliability risk. Both are far more volatile than large-cap equities, both are heavily correlated with bitcoin's direction, and both have staking mechanisms whose advertised yield is nominal — the number that matters is the yield net of token issuance, which is considerably lower than the headline figure.",
+    ],
+    mistakes: [
+      "Choosing on transactions per second alone. Sustained throughput under real load, and what happens when the chain is congested, matter far more than a benchmark figure.",
+      "Reading a nominal staking yield as a real return. Subtract issuance before comparing anything.",
+      "Assuming an outage is priced in permanently. Reliability events tend to affect institutional adoption timelines, which is a slow variable, not a one-day price move.",
+    ],
   },
   {
     slug: "stocks-vs-crypto",
@@ -87,6 +134,15 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Drawdowns: S&P max ~55% (2008); BTC has had 4 separate >75% drawdowns.",
       "Yield: Equities pay dividends + buybacks; BTC is non-yielding unless lent.",
       "Access: Both fractional and 24/7 on TradeHQ's $100K practice account.",
+    ],
+    deepDive: [
+      "Equities and crypto are not competing versions of the same thing. A share is a legal claim on a company's future cash flows, protected by securities law, with audited accounts and a regulator that can act on fraud. A crypto token is a unit of a protocol whose value comes from what its network is used for and what people will pay for it; the disclosure regime is thinner and the investor protections are largely whatever the exchange chooses to offer. That is not an argument that one is good and one is bad — it is a description of what you own and what recourse exists when something goes wrong.",
+      "The behavioural difference is just as large. A broad equity index has produced roughly 10% annualised over long periods with a worst drawdown near 55%, spread over months. Bitcoin has compounded faster and has had four separate drawdowns exceeding 75%, some of them in weeks. Any allocation should be sized so that the second scenario is survivable without changing the plan. For most beginners that means the index is the core holding and crypto is a small satellite — a 5-10% position that can fall by three quarters without derailing anything.",
+    ],
+    mistakes: [
+      "Sizing a crypto allocation as if its drawdown profile resembled an index. It does not; assume a 75% fall is possible and set the position accordingly.",
+      "Judging either over a single year. Both need a multi-year horizon before returns say anything about the strategy.",
+      "Using leverage on 24/7 markets. Crypto liquidations happen while you sleep, and there is no closing bell to stop the move.",
     ],
   },
   {
@@ -101,6 +157,15 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Multiple: NVDA usually trades at a higher P/E reflecting the moat premium.",
       "Catalyst: Both ride AI capex; AMD has more re-rating upside per dollar of share gain.",
     ],
+    deepDive: [
+      "The competitive question is not whether AMD can build a capable accelerator — it can — but whether the surrounding software is good enough that a large customer will accept the migration cost. Nvidia's CUDA ecosystem has more than fifteen years of libraries, tooling and trained engineers behind it, and that accumulated familiarity is the real moat. AMD's ROCm has improved substantially and the largest buyers have strong commercial reasons to fund a credible second source, which is why AMD's share gains, when they come, tend to arrive through a handful of very large design wins rather than through gradual market drift.",
+      "That structure creates an asymmetry worth understanding before trading either. Nvidia is priced for continued dominance, so incremental good news moves it less than a hint of share loss moves it down. AMD is priced as the challenger, so a single credible large-scale deployment can re-rate the whole stock. Both remain tied to the same underlying variable — how much the hyperscalers spend on compute — so a slowdown in that spending hurts both regardless of who is winning the architectural argument.",
+    ],
+    mistakes: [
+      "Assuming benchmark performance decides market share. Software maturity, supply allocation and existing contracts usually decide it first.",
+      "Pairing them as a long/short hedge without accounting for beta. Both move with the same capex cycle, but not with the same amplitude.",
+      "Extrapolating one quarter's growth rate. Semiconductor demand is cyclical, and order patterns are lumpy by nature.",
+    ],
   },
   {
     slug: "forex-vs-stocks",
@@ -113,6 +178,15 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Leverage: FX commonly 30-100x; equity margin caps at ~2x without options.",
       "Hours: FX 24/5; equities limited to regional sessions.",
       "Edge: FX edge comes from macro + flow; equity edge from research + duration.",
+    ],
+    deepDive: [
+      "Currency prices are relative: every quote is one economy priced against another, so a EUR/USD move can come from Europe, from the United States, or from a global risk event that affects both differently. The dominant drivers are interest-rate differentials, growth expectations and central-bank policy, which is why professional FX participants spend their time on macroeconomic releases rather than on company analysis. There is no equivalent of earnings, no dividend, and no long-term upward drift — a currency pair is a mean-reverting relationship punctuated by policy-driven trends, which is a fundamentally different game from owning productive assets.",
+      "The structural risk in retail FX is leverage. Because major pairs move less than 1% on a typical day, brokers offer very high leverage to make the market feel active, and that leverage is what causes most account losses — not bad analysis. Equities, by contrast, offer roughly 2:1 margin and move enough on their own that leverage is rarely necessary to see a result. For anyone learning, the honest framing is that stocks reward patience and research, FX rewards macro literacy and strict risk control, and neither rewards trading a large position on a small account.",
+    ],
+    mistakes: [
+      "Using the leverage the broker offers. Available leverage is a marketing number, not a recommendation; position size should be set from the stop distance and account risk.",
+      "Trading FX around scheduled data without a plan. Spreads widen and slippage during a rate decision can exceed a normal day's range.",
+      "Expecting long-term appreciation from a currency pair. There is no equivalent of retained earnings compounding in your favour.",
     ],
   },
 ];
