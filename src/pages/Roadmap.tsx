@@ -103,10 +103,6 @@ export default function Roadmap() {
             })}
           </div>
 
-          <Card className="mt-12 p-8 text-center bg-gradient-to-br from-emerald-500/10 via-transparent to-fuchsia-500/10 border-white/10 backdrop-blur-xl">
-            <h2 className="sr-only">How this roadmap works</h2>
-          </Card>
-
           <section className="mt-12 max-w-3xl mx-auto space-y-4">
             <h2 className="text-2xl font-semibold">What the statuses actually mean</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">
