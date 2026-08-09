@@ -94,6 +94,33 @@ export default function CourseTrack() {
 
           <p className="text-base text-muted-foreground leading-relaxed mb-8">{track.description}</p>
 
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold mb-4">What you'll be able to do</h2>
+            <ul className="space-y-3">
+              {track.outcomes.map((o) => (
+                <li key={o} className="flex gap-3 text-sm text-muted-foreground leading-relaxed">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>{o}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold mb-3">Before you start</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">{track.prerequisites}</p>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold mb-3">How the lessons build on each other</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">{track.progression}</p>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold mb-3">Who this track is not for</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">{track.notFor}</p>
+          </section>
+
           <h2 className="text-xl font-semibold mb-4">Lessons</h2>
           <div className="space-y-3">
             {track.lessons.map((lesson, i) => {
@@ -117,7 +144,7 @@ export default function CourseTrack() {
                         Lesson {i + 1}
                       </div>
                       <div className="font-semibold text-foreground mb-1">{lesson.title}</div>
-                      <div className="text-sm text-muted-foreground line-clamp-2">{lesson.summary}</div>
+                      <div className="text-sm text-muted-foreground leading-relaxed">{lesson.summary}</div>
                     </div>
                     <div className="text-xs text-muted-foreground inline-flex items-center gap-1 whitespace-nowrap">
                       <Clock className="w-3.5 h-3.5" /> {lesson.readingMinutes} min

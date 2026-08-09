@@ -29,6 +29,14 @@ export interface CourseTrack {
   hero: string;
   level: "Beginner" | "Intermediate" | "Advanced";
   badge: { name: string; description: string };
+  /** Concrete capabilities the learner should have at the end of the track. */
+  outcomes: string[];
+  /** What the learner should already know or have done first. */
+  prerequisites: string;
+  /** How the lessons build on one another. */
+  progression: string;
+  /** Honest statement of who this track is not for. */
+  notFor: string;
   lessons: CourseLesson[];
 }
 
@@ -48,6 +56,19 @@ const optionsTrack: CourseTrack = {
     description:
       "Awarded after completing every lesson and passing every quiz in the Options Trading Fundamentals track.",
   },
+  outcomes: [
+    "Read an option chain and explain what a specific call or put contract obliges each side to do.",
+    "Estimate how a position's value changes when price, time or implied volatility moves, using delta, theta and vega rather than intuition.",
+    "Build a defined-risk vertical spread and state its maximum loss before placing it.",
+    "Recognise why an option can lose money even when the directional call was correct.",
+    "Size an options position so that a total loss of premium is a survivable, pre-decided outcome.",
+  ],
+  prerequisites:
+    "You should be comfortable with what a share of stock is, how a market order differs from a limit order, and what a percentage return means. No mathematics beyond arithmetic is required. If you have never placed a simulated trade, spend an hour in the practice terminal first — the options lessons assume you have seen an order ticket.",
+  progression:
+    "The track moves from object to behaviour to structure. The first lesson defines the contract itself, because almost every later misunderstanding traces back to a fuzzy definition. The Greeks lesson then explains why the contract's price moves the way it does, which is what turns a static definition into something you can reason about. Defined-risk spreads apply that reasoning to combinations where the worst case is known in advance, and the implied-volatility lesson explains the single factor that most often makes a correct directional view unprofitable. The final lesson is risk management, placed last deliberately: rules only make sense once you understand what they are protecting you from.",
+  notFor:
+    "This is not a track about income strategies, signal services or generating consistent weekly returns. It will not tell you which contracts to buy, and it does not cover selling naked options, which carries loss potential far beyond the premium received. If you are looking for trade recommendations rather than an explanation of how the instrument works, this material will disappoint you.",
   lessons: [
     {
       slug: "what-is-an-option",
@@ -240,6 +261,19 @@ const futuresTrack: CourseTrack = {
   hero: futuresHero,
   level: "Intermediate",
   badge: { name: "Futures Fundamentals Certified", description: "Awarded after completing every lesson in the Futures & Derivatives track." },
+  outcomes: [
+    "Explain what a futures contract standardises and who the natural counterparties in a market are.",
+    "Calculate the notional value behind a contract and the margin actually required to hold it.",
+    "Read a term structure and say whether a market is in contango or backwardation, and what that implies for anyone holding a rolling position.",
+    "Describe how a producer or consumer uses futures to hedge a real-world exposure.",
+    "Choose an appropriately small contract size when learning, rather than a full-size contract.",
+  ],
+  prerequisites:
+    "Some familiarity with charts and with the idea of buying and selling an asset. The margin lesson involves multiplication and percentages, nothing more. Working through the Trading Psychology track first is recommended, because leverage punishes emotional decisions faster than any other instrument on the site.",
+  progression:
+    "The sequence deliberately delays the exciting part. You first learn what the contract is and why it exists, then how margin and leverage work — the mechanism responsible for most account losses in this asset class. Term structure follows, because contango and backwardation explain returns that otherwise look inexplicable to anyone holding a rolling position. Hedging comes next to restore the original purpose of these markets, and the track closes on micro contracts, which are the only sensible size for someone learning.",
+  notFor:
+    "This track does not teach day-trading systems, scalping methods or any approach that relies on high leverage to produce results. It does not cover crypto perpetual contracts, which have different funding mechanics. If your interest is in maximising position size on a small account, the honest answer from this material is that the approach has a poor survival rate.",
   lessons: [
     {
       slug: "what-is-a-futures-contract",
@@ -419,6 +453,19 @@ const macroTrack: CourseTrack = {
   hero: macroHero,
   level: "Intermediate",
   badge: { name: "Macro Reading Certified", description: "Awarded after completing every lesson in the Macro Reading for Traders track." },
+  outcomes: [
+    "Read a CPI release and identify which component drove the surprise, rather than reacting to the headline number.",
+    "Explain how the Fed's policy cycle is set and why the market's expectation matters more than the decision itself.",
+    "Interpret the shape of the yield curve and describe what a flattening or inversion has historically signalled.",
+    "Connect dollar strength to the behaviour of commodities, emerging markets and large exporters.",
+    "Combine several macro signals into one written view instead of trading each release in isolation.",
+  ],
+  prerequisites:
+    "No economics background is assumed. You should know what an interest rate is and be willing to read a data release rather than a summary of it. Each lesson links to the primary source — the statistical agency or the central bank itself — so you can check every figure yourself.",
+  progression:
+    "Inflation comes first because it is the input that determines policy. The Fed lesson then shows how that input becomes an interest-rate decision, and the yield-curve lesson shows how the bond market prices the entire expected path of those decisions. The dollar lesson adds the international transmission channel, which is where the effect reaches commodities and emerging markets. The final lesson is synthesis: how to hold four signals at once and write a single view you can be wrong about in a measurable way.",
+  notFor:
+    "This is not a macroeconomic forecasting course and it will not tell you where rates or inflation are going. It does not cover trading around releases with leverage, which is a specialist activity with execution risks that reading cannot prepare you for. If you want a directional call on the economy, no honest course can give you one.",
   lessons: [
     {
       slug: "reading-cpi-and-inflation",
@@ -601,6 +648,19 @@ const psychologyTrack: CourseTrack = {
   hero: psychologyHero,
   level: "Beginner",
   badge: { name: "Psychology Mastery Certified", description: "Awarded after completing every lesson in the Trading Psychology Mastery track." },
+  outcomes: [
+    "Name the specific biases most likely to affect your own decisions, with an example from your own trade log.",
+    "Recognise the physical and behavioural signs of tilt early enough to stop trading.",
+    "Keep a trade journal that records reasoning before the outcome is known, which is the only version that is useful.",
+    "Follow a written pre-market and post-market routine that does not depend on motivation.",
+    "Distinguish between a losing trade that followed the plan and a winning trade that broke it.",
+  ],
+  prerequisites:
+    "None. This is the recommended starting track for anyone new, and the most useful one to revisit after a losing streak. Having a handful of practice trades already logged makes the exercises concrete, but you can start with an empty journal.",
+  progression:
+    "The track begins with biases because you cannot correct a pattern you cannot name. Tilt and revenge trading follow, since those are the acute failures that turn a manageable drawdown into a serious one. The journal lesson then supplies the instrument for observing both, and the final lesson turns those observations into daily rituals — the point where the material stops being knowledge and becomes behaviour.",
+  notFor:
+    "This track does not address clinical mental health, gambling addiction or financial distress, and it is not a substitute for professional support. If trading is causing you real financial or psychological harm, please speak to a qualified professional rather than reading another lesson on discipline.",
   lessons: [
     {
       slug: "cognitive-biases-in-trading",
