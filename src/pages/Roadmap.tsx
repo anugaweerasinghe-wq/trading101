@@ -103,6 +103,35 @@ export default function Roadmap() {
             })}
           </div>
 
+          <section className="mt-12 max-w-3xl mx-auto space-y-4">
+            <h2 className="text-2xl font-semibold">What the statuses actually mean</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              "Shipped" means the feature is live on this site right now and you can use it without an
+              account — not that it is finished forever. Shipped items still get refined as people use
+              them, and the date shown is when the first working version went live rather than when
+              the idea started. "Planned" means the work is specified and intended, with a target
+              month that is an estimate rather than a commitment; because TradeHQ is built by one
+              person and given away free, a planned date can slip when something more useful takes
+              priority. Nothing on this page is a promise of a paid feature, because there are none.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Items reach the list in one of two ways. Most come from watching where people get stuck:
+              the courses were added because the glossary alone left readers without a sequence to
+              follow, and the country guides exist because a large share of visitors were trying to
+              work out whether any of this applied where they live. The rest come from messages
+              readers send through the contact page, which is the fastest way to get something
+              considered.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Two things will not appear on this roadmap. There will be no real-money trading, because
+              the moment a site handles funds it becomes a regulated broker and stops being an
+              educational tool. And there will be no signals, trade alerts or recommendations, because
+              telling people what to buy is precisely the failure mode this project was built to
+              replace with practice.
+            </p>
+            <p className="text-xs text-muted-foreground/60 italic">(Educational simulation only — not financial advice.)</p>
+          </section>
+
           <Card className="mt-12 p-8 text-center bg-gradient-to-br from-emerald-500/10 via-transparent to-fuchsia-500/10 border-white/10 backdrop-blur-xl">
             <h3 className="text-xl font-semibold mb-2">Want a feature on this list?</h3>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">

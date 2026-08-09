@@ -92,6 +92,56 @@ export default function HowToTrade() {
             <p className="mt-2 text-xs text-muted-foreground/70 italic">(Educational simulation only — not financial advice.)</p>
           </Card>
 
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">What actually moves {asset.fullName}</h2>
+            <ul className="space-y-3">
+              {asset.drivers.map((d, i) => (
+                <li key={i} className="text-sm leading-relaxed text-muted-foreground flex gap-3">
+                  <span className="shrink-0 mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden />
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-3">A realistic first practice trade</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">{asset.firstTrade}</p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-3">When to trade it — and when not to</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">{asset.timing}</p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Common mistakes specific to {asset.fullName}</h2>
+            <ul className="space-y-3">
+              {asset.mistakes.map((m, i) => (
+                <li key={i} className="text-sm leading-relaxed text-muted-foreground flex gap-3">
+                  <span className="shrink-0 mt-1.5 h-1.5 w-1.5 rounded-full bg-rose-400" aria-hidden />
+                  <span>{m}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-3">How to review the trade afterwards</h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">{asset.review}</p>
+            <p className="mt-3 text-xs text-muted-foreground/70 italic">(Educational simulation only — not financial advice.)</p>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold mb-3">Keep going</h2>
+            <div className="flex flex-wrap gap-2 text-sm">
+              <Link to={`/trade/${asset.symbol}`} className="px-4 py-2 rounded-full border border-white/10 hover:border-emerald-500/40">Practice {asset.fullName} in the simulator</Link>
+              <Link to="/courses" className="px-4 py-2 rounded-full border border-white/10 hover:border-emerald-500/40">Structured courses</Link>
+              <Link to="/wiki" className="px-4 py-2 rounded-full border border-white/10 hover:border-emerald-500/40">Trading glossary</Link>
+              <Link to="/compare" className="px-4 py-2 rounded-full border border-white/10 hover:border-emerald-500/40">Asset comparisons</Link>
+            </div>
+          </section>
+
           <section className="mb-10">
             <h2 className="text-xl font-semibold mb-3">More guides</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">

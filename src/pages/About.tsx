@@ -112,6 +112,27 @@ export default function About() {
                 <li>Not a substitute for professional advice — talk to a licensed advisor before investing real money.</li>
               </ul>
             </section>
+
+            <section className="glass-liquid-card p-6">
+              <h2 className="text-xl font-semibold mb-3">How the material is written and reviewed</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Every lesson, glossary entry and asset page on TradeHQ is written for one purpose: to
+                explain a mechanism clearly enough that a beginner can act on it inside the simulator
+                and see the result for themselves. Where a lesson states a fact about how an
+                instrument works — how margin is calculated, what a CPI release contains, what a
+                contract obliges each side to do — it links to a primary source such as a regulator,
+                an exchange or a statistical agency, so the claim can be checked rather than trusted.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+                We deliberately do not publish performance claims, testimonials, win-rate promises or
+                statistics about our own users. Numbers of that kind are impossible for a reader to
+                verify and are the standard signature of a site selling something. When a page needs a
+                figure, it comes from a cited public source; when a question has no honest answer —
+                which asset will rise, whether a strategy will work for you — the page says so instead
+                of guessing. Content is revised whenever a reader points out an error or a market
+                mechanism changes, and corrections are made in place rather than quietly removed.
+              </p>
+            </section>
           </div>
 
           <EducationalDisclaimer variant="inline" className="mt-4 mb-0" />

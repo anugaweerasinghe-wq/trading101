@@ -27,6 +27,7 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const SectorPillar = lazy(() => import("./pages/SectorPillar"));
 const WikiTerm = lazy(() => import("./pages/WikiTerm"));
+const WikiIndex = lazy(() => import("./pages/WikiIndex"));
 const NicheAsset = lazy(() => import("./pages/NicheAsset"));
 const SEOAudit = lazy(() => import("./pages/SEOAudit"));
 const AdminValidator = lazy(() => import("./pages/AdminValidator"));
@@ -109,6 +110,7 @@ function AnimatedRoutes() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sectors/:sectorId" element={<SectorPillar />} />
+          <Route path="/wiki" element={<WikiIndex />} />
           <Route path="/wiki/:slug" element={<WikiTerm />} />
           <Route path="/niche/:symbol" element={<NicheAsset />} />
 

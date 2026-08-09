@@ -204,6 +204,11 @@ export interface HowToAsset {
   beginnerTip: string;
   risk: string;
   studentNote: string;  // localized for SL audience
+  drivers: string[];        // what actually moves this asset
+  firstTrade: string;       // a concrete first practice trade with sizing
+  timing: string;           // sessions / liquidity / when to avoid
+  mistakes: string[];       // instrument-specific beginner mistakes
+  review: string;           // how to review the trade afterwards
 }
 
 export const HOWTO_ASSETS: HowToAsset[] = [
@@ -223,6 +228,24 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     beginnerTip: "Use the 1-hour chart with RSI(14) and the 20/50 EMA. Most rookies blow accounts by trading 1-minute candles.",
     risk: "BTC can move 5-10% in a day. On real money that obliterates undersized accounts. Practice sizing here first.",
     studentNote: "For Sri Lankan students: even when LKR is volatile, treat BTC as an educational asset, not a savings plan. Master discipline first, capital second.",
+    drivers: [
+      "Global liquidity and real interest rates. Bitcoin has behaved like a long-duration risk asset since 2020: when rate-cut expectations rise, it tends to firm; when yields spike, it tends to lead the sell-off.",
+      "Spot ETF and large-holder flow. Sustained creations or redemptions in the listed spot products change the marginal buyer, which is why price can drift on days with no crypto-specific news.",
+      "Leverage in the derivatives market. Funding rates and open interest tell you how crowded one side is; the fastest moves are usually liquidation cascades rather than fresh conviction.",
+      "The halving supply schedule, which matters over years rather than weeks — treat it as context, not as a trade trigger.",
+    ],
+    firstTrade:
+      "A sane first practice trade: risk 1% of the $100,000 practice account, which is $1,000. Mark the most recent clear swing low on the 4-hour chart, place your stop just under it, and measure the distance from your intended entry to that stop as a percentage. If the stop is 4% away, your position is $1,000 / 0.04 = $25,000 of BTC — not the $50,000 that 'half the account' feels like. Doing this arithmetic before every entry is the single habit that separates traders who survive from traders who reload.",
+    timing:
+      "Bitcoin trades continuously, but liquidity is not constant. The deepest books are during US equity hours, and the thinnest are weekend nights, when a modest order can move price further than it would on a Tuesday afternoon. Beginners who trade the weekend often conclude they are bad at analysis when they are actually being punished by spread and slippage. Note also that BTC now reacts to scheduled US macro releases — CPI and FOMC days produce equity-like spikes in a market that never closes.",
+    mistakes: [
+      "Sizing in dollars rather than in risk. A $10,000 BTC position and a $10,000 bond-ETF position are not comparable exposures.",
+      "Using round numbers as stops. $100,000 and similar levels are where the most stops sit, which is exactly why price is drawn through them before reversing.",
+      "Trading the 1-minute chart. Bitcoin's noise on that timeframe exceeds most beginners' edge, and fees plus spread compound the damage.",
+      "Treating a drawdown as an opportunity to average down without a predefined maximum position size.",
+    ],
+    review:
+      "After the position closes, open the portfolio analytics and answer three questions in writing: was the entry the one you planned or one you chased, did you honour the stop you set before entering, and would the outcome have been the same with half the size. Over twenty logged trades those answers form a pattern that no article can give you, and the Ghost Journal records the entries automatically so the record is honest rather than remembered.",
   },
   {
     symbol: "eth",
@@ -240,6 +263,23 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     beginnerTip: "ETH trades cleaner technicals than most alts. Stick with horizontal support/resistance before chasing indicators.",
     risk: "Smart-contract narratives can flip overnight (exploits, regulation). Size positions assuming a 30% gap is possible.",
     studentNote: "Students: use ETH practice trades to learn risk-reward — not to time tops. Most pros agree timing is the hardest skill.",
+    drivers: [
+      "The ETH/BTC ratio, which tells you whether capital is rotating into the wider crypto complex or consolidating into Bitcoin. Most ETH-specific edge lives in this ratio rather than in the dollar price.",
+      "Network activity and fee revenue, including how much settlement has migrated to layer-2 chains, which changes how much value accrues to the base layer.",
+      "Staking flows and the size of the queue to enter or exit, which affects the freely tradable float.",
+      "Regulatory headlines about staking and token classification, which have historically produced single-day gaps.",
+    ],
+    firstTrade:
+      "Practice a ratio-aware entry rather than a naked directional bet. On the 4-hour chart, wait for ETH to make a higher low while ETH/BTC is also holding its own higher low. Risk 1% ($1,000) with the stop under that ETH low, and set the first target at the previous swing high so the reward-to-risk is at least 2:1 before you commit. If the two charts disagree — ETH rising while the ratio falls — you are simply long crypto beta and should size as if you were trading Bitcoin.",
+    timing:
+      "Ethereum's cleanest structure appears on the 4-hour and daily timeframes; intraday it inherits Bitcoin's direction most of the time, so short-term ETH trades are often BTC trades with worse liquidity. Avoid entering immediately before major protocol upgrades: implied volatility is elevated, the outcome is binary, and the post-event move frequently runs opposite to the headline.",
+    mistakes: [
+      "Assuming ETH always outperforms BTC in a rally. It leads in some regimes and lags badly in others; check the ratio instead of assuming.",
+      "Ignoring the gap risk from exploits and regulatory rulings when choosing position size.",
+      "Confusing an upgrade narrative with a price catalyst. Upgrades are usually priced in weeks before they ship.",
+    ],
+    review:
+      "Log every ETH practice trade alongside what BTC did in the same window. If your ETH results simply track Bitcoin's, you do not yet have an Ethereum thesis — you have crypto exposure, and you should size it accordingly. Reviewing pairs of outcomes like this is the fastest way to find out whether your edge is real or borrowed.",
   },
   {
     symbol: "tsla",
@@ -257,6 +297,23 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     beginnerTip: "Avoid trading TSLA into earnings unless you understand options-implied moves. Sit out the event, trade the reaction.",
     risk: "TSLA can gap 8-12% on earnings. A 10x leveraged FX-style mindset will be liquidated here.",
     studentNote: "Sri Lankan students: US market hours are late evening local time — practise during weekends to build the habit without sleep loss.",
+    drivers: [
+      "Quarterly delivery numbers and margin commentary, which move the stock more reliably than the earnings-per-share headline.",
+      "Price cuts and demand signals in China and Europe, which arrive as news between reporting dates.",
+      "The energy and autonomy narrative, which changes the multiple investors are willing to pay far more than near-term cash flow does.",
+      "Positioning: Tesla carries some of the heaviest retail options volume of any listed stock, so dealer hedging can amplify moves around large open-interest strikes.",
+    ],
+    firstTrade:
+      "Trade the reaction, not the event. Wait for an earnings release to pass, let the first thirty minutes of the next session set a high and a low, then take a position only if price breaks and holds beyond one of those extremes. Risk 1% of practice capital, place the stop on the other side of the opening range, and size from the distance — with a 3% stop that is roughly $33,000 of stock on the $100,000 practice account. This gives you the volatility without the coin-flip of holding through the print.",
+    timing:
+      "Tesla is a US-hours instrument. Liquidity is best in the first and last hour of the regular session; the pre-market and after-hours prints that look dramatic often trade on thin volume and reverse at the open. If you are learning from a timezone where the US open is late at night, use the daily chart and place your orders in advance rather than trying to trade tired.",
+    mistakes: [
+      "Holding through an earnings print with a position sized for a normal day. An 8-12% gap can jump straight past a stop.",
+      "Reading founder headlines as tradable information. By the time the story is on your feed, the move has usually happened.",
+      "Anchoring to a past all-time high as if it were a target. Prices do not owe anyone a return trip.",
+    ],
+    review:
+      "For each Tesla practice trade, note whether your loss (or gain) came from the direction call or from the size. Most beginner damage on this stock is a sizing error wearing the costume of a bad call, and the analytics page will show that pattern within a dozen trades.",
   },
   {
     symbol: "nvda",
@@ -274,6 +331,23 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     beginnerTip: "NVDA respects trend more than most names. Don't shortcut it with reversal trades.",
     risk: "AI capex cycles can pause without warning (hyperscaler guidance cuts). Always know your exit.",
     studentNote: "Practise compounding here — a 2% R-trade weekly on NVDA, over 50 weeks, teaches more than chasing 10x crypto setups.",
+    drivers: [
+      "Data-centre capital expenditure guidance from the largest cloud operators, which is the demand signal that ultimately funds Nvidia's revenue.",
+      "Supply and packaging constraints, which determine how much of that demand can actually be shipped in a quarter.",
+      "Export-control policy, which can remove an entire geography from the forecast with a single announcement.",
+      "Index and momentum flows: as one of the largest index weights, Nvidia is bought and sold mechanically by funds that have no view on it at all.",
+    ],
+    firstTrade:
+      "Practice a trend-following entry instead of a reversal. On the daily chart, confirm price is above a rising 50-day average, then wait for a pullback that touches or nears it. Enter on the first day that closes back up, risk 1% with the stop under the pullback low, and then do the harder part: trail the stop under each subsequent higher low rather than taking the first small profit. The purpose of the exercise is to feel how uncomfortable it is to hold a winner.",
+    timing:
+      "The stock trends for weeks and chops violently intraday, which is why the daily timeframe suits learners better than the five-minute. The two dates that matter most are the company's own results and the results of its largest customers; both can reprice the entire semiconductor complex overnight.",
+    mistakes: [
+      "Shorting strength because the valuation looks high. Expensive is not a timing signal and momentum names stay expensive for long stretches.",
+      "Taking profits at the first green day and then re-entering higher, which converts a good trend trade into a series of poor ones.",
+      "Assuming the whole chip sector moves together. Correlations break exactly when the news is company-specific.",
+    ],
+    review:
+      "Compare your realised result against simply buying and holding for the same period. If the buy-and-hold line beats your activity — which it often will on a strong trend — that is genuine information about whether trading this name adds anything for you, and it costs nothing to learn here.",
   },
   {
     symbol: "spy",
@@ -291,6 +365,23 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     beginnerTip: "Most retail traders underperform a simple SPY DCA. Practising here will show you why — and how to beat it.",
     risk: "SPY rarely moves >2% in a day, but leverage products on it can wipe accounts during gaps.",
     studentNote: "For long-term Sri Lankan investors: SPY practice teaches that boring, consistent exposure beats most trading attempts.",
+    drivers: [
+      "Interest-rate expectations, which set the discount rate for every company in the index and therefore drive most multi-week moves.",
+      "Aggregate earnings revisions across the five hundred constituents rather than any single company's results.",
+      "Index concentration: a handful of mega-cap names now carry an outsized weight, so the 'broad market' can be dragged by a few tickers.",
+      "Scheduled macro releases — CPI, payrolls and FOMC decisions — which produce the majority of the index's largest single-day moves.",
+    ],
+    firstTrade:
+      "Use the index to learn benchmarking rather than to chase moves. Buy a practice position equal to 25% of the account and leave it untouched for thirty days as a control. Trade whatever else you like alongside it, then compare the two lines. Risking 1% per active trade while a passive quarter of the account simply sits there is the clearest possible demonstration of whether your activity is adding value or subtracting it.",
+    timing:
+      "The index is most liquid at the US open and into the closing auction, and it is thinnest in the middle of the session. Macro release days at 8:30am US Eastern routinely produce more movement in ten minutes than the previous three sessions combined, so if you are learning execution, avoid placing your first orders into that window.",
+    mistakes: [
+      "Using leveraged index products to make a slow instrument feel exciting; the daily-reset mechanics erode value in choppy markets.",
+      "Confusing the index with the economy. It can rise through weak data when rate expectations fall.",
+      "Overtrading a 1%-a-day instrument, where costs and spread consume a meaningful share of any edge.",
+    ],
+    review:
+      "At the end of the thirty days, put your active trading return and the untouched index position side by side in the analytics view. Whichever way it comes out, you now have a personal, evidence-based answer to the question most beginners argue about online.",
   },
   {
     symbol: "sol",
@@ -308,6 +399,23 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     beginnerTip: "SOL trends explosively but reverses just as fast. Lock in partials — perfection is the enemy of profit.",
     risk: "Network outages have happened. Don't be max-leveraged through low-liquidity weekends.",
     studentNote: "Use SOL practice to learn position-sizing on a fast-moving asset — the lesson transfers to every other market.",
+    drivers: [
+      "Risk appetite across the wider crypto market. Solana is a high-beta expression of the same trade as Bitcoin, so it rises further in rallies and falls further in liquidations.",
+      "On-chain consumer activity — trading apps, payments and token launches — which drives fee revenue and the attention cycle around the chain.",
+      "Network reliability. Historic outages taught the market to discount the chain during periods of extreme load, and any recurrence reprices it quickly.",
+      "Unlock schedules for previously locked supply, which add sellers on known dates.",
+    ],
+    firstTrade:
+      "Because Solana can move twice as far as Bitcoin in a session, halve the position you would otherwise take. Risking 1% of the $100,000 practice account with a stop 8% below entry gives a position of roughly $12,500 — a number that feels far too small until the first fast reversal, at which point it feels exactly right. Take partial profit at the middle of the prior range and move the stop to break-even on the remainder.",
+    timing:
+      "Solana's largest moves cluster around US hours and around token launches, while weekend liquidity is thin enough that stop orders can fill several percent away from their trigger. If you are practising execution rather than direction, trade it midweek during US hours and leave the weekend to observation.",
+    mistakes: [
+      "Copying a Bitcoin position size onto a Solana trade, which quietly doubles or triples the risk taken.",
+      "Chasing a launch narrative after it has already trended for days, when the reward-to-risk has inverted.",
+      "Treating a fast recovery as proof that no stop was needed. Survivorship in one trade is not a method.",
+    ],
+    review:
+      "Record the maximum adverse excursion — how far the trade went against you before it worked — on every Solana practice position. If that number is routinely close to your stop, your entries are early rather than wrong, and tightening entry timing will improve results more than changing indicators.",
   },
 ];
 

@@ -95,6 +95,33 @@ export default function CountryGuide() {
           </section>
 
           <section className="mb-10">
+            <h2 className="text-2xl font-bold mb-3">How market access actually works in {guide.country}</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">{guide.marketAccess}</p>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold mb-3">How much capital do you really need?</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">{guide.startingCapital}</p>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold mb-3">What to follow from {guide.country}</h2>
+            <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1.5">
+              {guide.localAssets.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold mb-3">A three-month practice plan</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">{guide.practicePlan}</p>
+            <p className="mt-3 text-xs text-muted-foreground italic">
+              Educational simulation only — not financial, tax or legal advice. Confirm all local rules with a licensed professional in {guide.country}.
+            </p>
+          </section>
+
+          <section className="mb-10">
             <h2 className="text-2xl font-bold mb-3 flex items-center gap-2">
               <GraduationCap className="w-6 h-6 text-emerald-400" /> Student perspective
             </h2>

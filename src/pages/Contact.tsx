@@ -246,6 +246,62 @@ export default function Contact() {
 
           <EducationalDisclaimer variant="inline" className="my-0" />
 
+          <section className="glass-liquid-card p-6 mt-8" aria-labelledby="contact-expectations">
+            <h2 id="contact-expectations" className="text-xl font-semibold mb-3">What to expect when you write to us</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              TradeHQ is a small independent project rather than a company with a support desk, so
+              messages are read and answered by the person who builds the site. In practice that means
+              a reply usually arrives within forty-eight hours on weekdays and can take longer over a
+              weekend or a public holiday. Nothing is auto-responded to, and no message is passed to a
+              third party — the contact form simply opens your own email client with the text
+              pre-filled, so your address is never stored on this site.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+              Bug reports are the most useful thing you can send. If something behaved unexpectedly,
+              include the page address you were on, the browser and device you were using, what you
+              expected to happen and what actually happened. A screenshot removes most of the
+              guesswork. For a problem with a simulated trade, mention the ticker and roughly when it
+              happened, since positions are stored in your own browser and cannot be inspected from
+              our side.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+              Feature suggestions are welcome and genuinely do shape the public roadmap — several of
+              the items already shipped started as a message from a reader. If you are writing about a
+              partnership, an educational collaboration or use of the material in a classroom, say so
+              in the subject line and include enough detail that the first reply can be a useful one
+              rather than a request for more information.
+            </p>
+          </section>
+
+          <section className="glass-liquid-card p-6 mt-6" aria-labelledby="contact-cannot-help">
+            <h2 id="contact-cannot-help" className="text-xl font-semibold mb-3">What we cannot help with</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              We cannot tell you what to buy or sell, review your real portfolio, or comment on whether
+              a particular asset is a good investment. TradeHQ is an educational simulator and is not a
+              broker, an adviser or a research house, so any such answer would be both unhelpful and
+              inappropriate. Questions about tax, residency rules or the legality of a real brokerage
+              account in your country need a licensed professional where you live — the country guides
+              point to the relevant regulator, but they are context, not advice.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+              We also cannot recover an account balance. Practice portfolios are stored in your own
+              browser, so clearing site data or switching device resets them, and there is no copy on
+              our side to restore. Signing in with the optional free account keeps your stats and
+              badges attached to you across devices, which is the only way to preserve a record.
+            </p>
+          </section>
+
+          <section className="mt-6" aria-labelledby="contact-quick-links">
+            <h2 id="contact-quick-links" className="text-xl font-semibold mb-3">Answers you might not need to write in for</h2>
+            <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1.5">
+              <li><a className="hover:text-foreground underline-offset-4 hover:underline" href="/about">About TradeHQ</a> — who builds it, what it is and what it deliberately is not.</li>
+              <li><a className="hover:text-foreground underline-offset-4 hover:underline" href="/courses">Courses</a> — the four structured tracks, with quizzes and completion badges.</li>
+              <li><a className="hover:text-foreground underline-offset-4 hover:underline" href="/wiki">Trading glossary</a> — plain-language definitions of the terms used across the site.</li>
+              <li><a className="hover:text-foreground underline-offset-4 hover:underline" href="/roadmap">Roadmap</a> — what has shipped and what is planned next.</li>
+              <li><a className="hover:text-foreground underline-offset-4 hover:underline" href="/privacy">Privacy</a> and <a className="hover:text-foreground underline-offset-4 hover:underline" href="/terms">Terms</a> — what is stored, and the rules for using the simulator.</li>
+            </ul>
+          </section>
+
           <SEOSection
             path="/contact"
             faqHeading="Contact"
