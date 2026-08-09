@@ -399,6 +399,23 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     beginnerTip: "SOL trends explosively but reverses just as fast. Lock in partials — perfection is the enemy of profit.",
     risk: "Network outages have happened. Don't be max-leveraged through low-liquidity weekends.",
     studentNote: "Use SOL practice to learn position-sizing on a fast-moving asset — the lesson transfers to every other market.",
+    drivers: [
+      "Risk appetite across the wider crypto market. Solana is a high-beta expression of the same trade as Bitcoin, so it rises further in rallies and falls further in liquidations.",
+      "On-chain consumer activity — trading apps, payments and token launches — which drives fee revenue and the attention cycle around the chain.",
+      "Network reliability. Historic outages taught the market to discount the chain during periods of extreme load, and any recurrence reprices it quickly.",
+      "Unlock schedules for previously locked supply, which add sellers on known dates.",
+    ],
+    firstTrade:
+      "Because Solana can move twice as far as Bitcoin in a session, halve the position you would otherwise take. Risking 1% of the $100,000 practice account with a stop 8% below entry gives a position of roughly $12,500 — a number that feels far too small until the first fast reversal, at which point it feels exactly right. Take partial profit at the middle of the prior range and move the stop to break-even on the remainder.",
+    timing:
+      "Solana's largest moves cluster around US hours and around token launches, while weekend liquidity is thin enough that stop orders can fill several percent away from their trigger. If you are practising execution rather than direction, trade it midweek during US hours and leave the weekend to observation.",
+    mistakes: [
+      "Copying a Bitcoin position size onto a Solana trade, which quietly doubles or triples the risk taken.",
+      "Chasing a launch narrative after it has already trended for days, when the reward-to-risk has inverted.",
+      "Treating a fast recovery as proof that no stop was needed. Survivorship in one trade is not a method.",
+    ],
+    review:
+      "Record the maximum adverse excursion — how far the trade went against you before it worked — on every Solana practice position. If that number is routinely close to your stop, your entries are early rather than wrong, and tightening entry timing will improve results more than changing indicators.",
   },
 ];
 
