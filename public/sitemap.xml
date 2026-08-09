@@ -165,6 +165,7 @@
   <url><loc>https://www.thetradehq.com/trade/sugar</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/cotton</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/aluminum</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.thetradehq.com/wiki</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.thetradehq.com/wiki/short-squeeze</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.thetradehq.com/wiki/golden-cross</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.thetradehq.com/wiki/death-cross</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
