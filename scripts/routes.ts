@@ -314,6 +314,15 @@ export function buildRoutes(): RouteMeta[] {
   }
 
   // ---- Wiki glossary pages (/wiki/:slug) ----
+  routes.push({
+    path: "/wiki",
+    title: "Trading Glossary — Every Term Explained | TradeHQ Wiki",
+    description: `A complete plain-language trading glossary, browsable by category, with practice on the free ${BALANCE} simulator. Educational only.`,
+    h1: "Trading Glossary",
+    summary: `Every trading term used across TradeHQ in one browsable index, grouped by category and linked to where you can practise it with ${BALANCE} virtual cash.`,
+    priority: "0.7",
+    changefreq: "weekly",
+  });
   for (const g of extractGlossary()) {
     routes.push({
       path: `/wiki/${g.slug}`,
