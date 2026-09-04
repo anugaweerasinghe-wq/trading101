@@ -11,7 +11,9 @@ import { uniqueRoutes, DOMAIN } from "./routes";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const routes = uniqueRoutes();
+// Only indexable routes belong in the sitemap — noindex routes are excluded.
+const routes = uniqueRoutes().filter((r) => !r.noindex);
+
 const urls = routes
   .map(
     (r) =>

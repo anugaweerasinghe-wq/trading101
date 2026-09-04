@@ -28,7 +28,10 @@ export interface RouteMeta {
   changefreq?: string;
   priority?: string;
   keywords?: string;
+  /** Excluded from the sitemap and served with robots: noindex. */
+  noindex?: boolean;
 }
+
 
 function readSrc(rel: string): string {
   return fs.readFileSync(path.resolve(__dirname, "..", rel), "utf-8");
@@ -49,6 +52,17 @@ function extractAssets(): { id: string; name: string; symbol: string }[] {
     results.push({ id: m[1], symbol: m[2], name: m[3] });
   }
   return results;
+}
+
+function extractAssetContentKeys(): string[] {
+  const src = readSrc("src/lib/assetContent.ts");
+  const start = src.indexOf("export const ASSET_CONTENT");
+  if (start < 0) return [];
+  const block = src.slice(start);
+  // Top-level keys are indented by exactly two spaces inside the object literal.
+  return (block.match(/^  ([a-z0-9]+):\s*\{/gm) || []).map((m) =>
+    m.trim().replace(/:\s*\{$/, "")
+  );
 }
 
 function extractGlossary(): { slug: string; term: string; definition: string }[] {
@@ -301,6 +315,10 @@ export function buildRoutes(): RouteMeta[] {
   });
 
   // ---- Trade asset pages (/trade/:id) ----
+  // Only assets with authored, unique editorial content are indexable.
+  // The rest are still reachable in-app but marked noindex and kept out
+  // of the sitemap so we never ship mass-templated near-duplicates.
+  const authored = new Set(extractAssetContentKeys());
   for (const a of extractAssets()) {
     routes.push({
       path: `/trade/${a.id}`,
@@ -310,8 +328,10 @@ export function buildRoutes(): RouteMeta[] {
       summary: `Simulate buying and selling ${a.name} (${a.symbol}) with ${BALANCE} in virtual cash. Charts and prices are for education only — no real money, no brokerage relationship.`,
       priority: "0.8",
       changefreq: "daily",
+      noindex: !authored.has(a.id),
     });
   }
+
 
   // ---- Wiki glossary pages (/wiki/:slug) ----
   routes.push({
@@ -358,6 +378,7 @@ export function buildRoutes(): RouteMeta[] {
       summary: `A dedicated ${sym} research page with simulated charts, AI-mentor commentary, and one-click paper trading. Everything is educational — no real orders and no brokerage.`,
       priority: "0.6",
       changefreq: "daily",
+      noindex: true,
     });
   }
 
