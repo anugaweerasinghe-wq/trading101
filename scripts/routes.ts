@@ -54,6 +54,17 @@ function extractAssets(): { id: string; name: string; symbol: string }[] {
   return results;
 }
 
+function extractAssetContentKeys(): string[] {
+  const src = readSrc("src/lib/assetContent.ts");
+  const start = src.indexOf("export const ASSET_CONTENT");
+  if (start < 0) return [];
+  const block = src.slice(start);
+  // Top-level keys are indented by exactly two spaces inside the object literal.
+  return (block.match(/^  ([a-z0-9]+):\s*\{/gm) || []).map((m) =>
+    m.trim().replace(/:\s*\{$/, "")
+  );
+}
+
 function extractGlossary(): { slug: string; term: string; definition: string }[] {
   const src = readSrc("src/lib/tradingGlossary.ts");
   const results: { slug: string; term: string; definition: string }[] = [];
@@ -367,6 +378,7 @@ export function buildRoutes(): RouteMeta[] {
       summary: `A dedicated ${sym} research page with simulated charts, AI-mentor commentary, and one-click paper trading. Everything is educational — no real orders and no brokerage.`,
       priority: "0.6",
       changefreq: "daily",
+      noindex: true,
     });
   }
 
