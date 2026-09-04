@@ -301,6 +301,10 @@ export function buildRoutes(): RouteMeta[] {
   });
 
   // ---- Trade asset pages (/trade/:id) ----
+  // Only assets with authored, unique editorial content are indexable.
+  // The rest are still reachable in-app but marked noindex and kept out
+  // of the sitemap so we never ship mass-templated near-duplicates.
+  const authored = new Set(extractAssetContentKeys());
   for (const a of extractAssets()) {
     routes.push({
       path: `/trade/${a.id}`,
@@ -310,8 +314,10 @@ export function buildRoutes(): RouteMeta[] {
       summary: `Simulate buying and selling ${a.name} (${a.symbol}) with ${BALANCE} in virtual cash. Charts and prices are for education only — no real money, no brokerage relationship.`,
       priority: "0.8",
       changefreq: "daily",
+      noindex: !authored.has(a.id),
     });
   }
+
 
   // ---- Wiki glossary pages (/wiki/:slug) ----
   routes.push({
