@@ -28,7 +28,10 @@ export interface RouteMeta {
   changefreq?: string;
   priority?: string;
   keywords?: string;
+  /** Excluded from the sitemap and served with robots: noindex. */
+  noindex?: boolean;
 }
+
 
 function readSrc(rel: string): string {
   return fs.readFileSync(path.resolve(__dirname, "..", rel), "utf-8");
