@@ -214,7 +214,8 @@ async function main() {
   }
 
   // Guard: forbidden legacy currency literals in prerendered output.
-  const forbidden = ["$10,000", "$10K"];
+  // Legacy starting-balance wording only — "$10,000" as a generic position size is fine.
+  const forbidden = ["$10K", "$10,000 virtual", "$10,000 in virtual", "$10,000 practice"];
   for (const r of routes) {
     const filePath = r.path === "/" ? path.join(DIST, "index.html") : path.join(DIST, r.path, "index.html");
     const body = fs.readFileSync(filePath, "utf-8");
