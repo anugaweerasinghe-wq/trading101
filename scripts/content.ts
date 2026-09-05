@@ -142,6 +142,13 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         ),
       },
       {
+        h: "Why a glossary matters more in trading than in most subjects",
+        p: [
+          "Trading vocabulary is unusually hostile to beginners because the same word often carries a precise technical meaning and a loose marketing meaning at the same time. 'Leverage' is a neutral description of borrowed exposure in a textbook and a sales pitch in an advertisement. 'Support' is a level where buyers previously appeared, not a floor that holds. Reading material without pinning down which meaning is in play is how people end up confident about something they have misunderstood.",
+          "Each entry here therefore gives a plain definition first, then a longer expert explanation of the mechanics, then the practical caveat that matters when you try to use the idea. Where a concept is popular but weakly evidenced, the entry says so instead of repeating the folklore.",
+        ],
+      },
+      {
         h: "How to use the glossary while practising",
         list: [
           "Look a term up the first time you meet it rather than guessing from context.",
@@ -239,7 +246,10 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
           { h: "Key takeaways", list: l.keyTakeaways },
           {
             h: "Check your understanding",
-            list: l.quiz.map((q: any) => `${q.question} — ${q.explanation}`),
+            list: l.quiz.map(
+              (q: any) =>
+                `${q.question} Options: ${q.options.join("; ")}. Correct answer: ${q.options[q.correctAnswer]}. Why: ${q.explanation}`
+            ),
           },
           {
             h: "Sources",
@@ -275,6 +285,13 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "Available comparisons",
         list: pairs.map((p) => `${p.a.name} vs ${p.b.name} — ${p.a.tag} against ${p.b.tag}`),
+      },
+      {
+        h: "Why comparison beats a ranking",
+        p: [
+          "There is no such thing as the best asset to trade, only assets that suit different tolerances, schedules and levels of experience. A pair of instruments that look interchangeable on a price chart can differ completely in what moves them, when they are liquid, how far they typically travel in a day, and how badly they punish a mis-sized position. That is what these pages compare.",
+          "None of them tell you what to buy, and none of them predict which side will perform better. The verdict section answers a narrower and more useful question: which of the two is the better vehicle for learning a particular skill, and under what circumstances the other one becomes the better choice.",
+        ],
       },
       {
         h: "How to use a comparison",
@@ -324,6 +341,22 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         ],
       },
       { h: "Available guides", list: howto.map((h) => `${h.fullName} (${h.type}) — ${h.whyTrade}`) },
+      {
+        h: "What every one of these guides has in common",
+        p: [
+          "The structure is deliberate. Beginners usually start with the question 'how do I buy this?', which is the least important part — placing the order takes seconds and any broker will show you how. The parts that decide whether the trade was sensible come before and after it: understanding what actually moves the instrument, choosing a size that survives being wrong, picking a time of day when liquidity is not working against you, and reviewing the result honestly afterwards.",
+          "So each guide spends most of its length on those parts. None of them tell you whether to buy, none contain price targets, and none imply that following the steps produces a profit. They aim to make your first practice trade in an instrument an informed one rather than a random one.",
+        ],
+      },
+      {
+        h: "Using a guide properly",
+        list: [
+          "Read the drivers section before looking at a chart, so the chart does not supply your opinion.",
+          "Copy the suggested first practice trade exactly, including the sizing, before improvising.",
+          "Note the timing guidance — trading an instrument outside its liquid window is a common and avoidable handicap.",
+          "Come back to the review section a day after the trade closes, not while it is open.",
+        ],
+      },
     ],
     links: howto.map((h) => ({ href: `/how-to-trade/${h.symbol}`, label: `How to trade ${h.fullName}` })),
   });
@@ -360,6 +393,23 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         ],
       },
       { h: "Strategies covered", list: strategies.map((s) => `${s.name} — ${s.oneLiner}`) },
+      {
+        h: "What a strategy is, and what it is not",
+        p: [
+          "A strategy is a set of rules describing what you will trade, when you will enter, how much you will risk, and where you will get out. It is not a prediction and it is not an edge by itself. Two traders can follow identical rules and get opposite results over a year purely because one honoured the exit rule and the other did not.",
+          "These pages therefore give as much space to failure modes and to the arithmetic of expectancy as they give to the entry conditions. If a method has a 45% win rate, that is not a flaw as long as the average win is comfortably larger than the average loss — and it is fatal if it is not. Understanding that trade-off is more useful than collecting more entry patterns.",
+        ],
+      },
+      {
+        h: "Testing a strategy without fooling yourself",
+        list: [
+          "Write the rules down before you start. Rules remembered after the fact always look better than they were.",
+          "Take at least thirty trades before drawing any conclusion, and keep the size constant throughout.",
+          "Record every trade the rules generated, including the ones you chose to skip, and why you skipped them.",
+          "Judge the method by expectancy and drawdown together, never by the best week.",
+          "Expect any method to have losing stretches long enough to make you doubt it — that is the normal condition, not a malfunction.",
+        ],
+      },
     ],
     links: strategies.map((s) => ({ href: `/strategy/${s.slug}`, label: s.name })),
   });
@@ -403,6 +453,22 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "Guides available",
         list: countries.map((c) => `${c.country} — ${c.localExchange}, regulated by ${c.regulator.name}, local currency ${c.currency}`),
+      },
+      {
+        h: "Why location changes the practical answer",
+        p: [
+          "The mechanics of a limit order are identical everywhere, but almost everything around them is local. Which brokers are licensed to serve you, whether you can hold foreign currency, how money leaves and re-enters the country, what a realistic first account size is in local terms, and how any gains are treated for tax all depend on where you live. Advice written for a US audience quietly assumes a US answer to all of those questions.",
+          "These guides supply the local context that global tutorials skip, so the general education elsewhere on the site actually connects to your situation. They describe how access typically works and point you to the official regulator, rather than recommending a particular broker.",
+        ],
+      },
+      {
+        h: "What these guides deliberately avoid",
+        list: [
+          "They do not rank or recommend brokers, and they contain no affiliate links.",
+          "They do not give tax advice; tax sections point you to a qualified local professional.",
+          "They do not suggest that trading is a realistic income source for someone with little capital.",
+          "They do not claim regulatory endorsement of any kind — TradeHQ is a simulator, not a licensed firm.",
+        ],
       },
     ],
     links: countries.map((c) => ({ href: `/learn/country/${c.slug}`, label: `Learn trading in ${c.country}` })),
