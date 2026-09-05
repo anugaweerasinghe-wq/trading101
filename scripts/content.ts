@@ -296,9 +296,10 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "How to use a comparison",
         list: [
-          "Read both deep-dive sections before looking at the verdict.",
+          "Read both deep-dive sections before looking at the verdict, so you form a view of each instrument on its own terms first.",
           "Practise both sides in the simulator for a week before deciding which suits you.",
-          "Note that 'better' here means better to learn on, never better to buy.",
+          "Note that 'better' here means better to learn on, never better to buy — no page here recommends an instrument.",
+          "Check the mistakes section even if you think the comparison is obvious; the obvious version is usually where the error lives.",
           DISCLAIMER,
         ],
       },
@@ -408,6 +409,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
           "Record every trade the rules generated, including the ones you chose to skip, and why you skipped them.",
           "Judge the method by expectancy and drawdown together, never by the best week.",
           "Expect any method to have losing stretches long enough to make you doubt it — that is the normal condition, not a malfunction.",
+          "Re-test in a different market environment before trusting it; a method tuned to a calm trending month often fails the first volatile one.",
         ],
       },
     ],
@@ -468,6 +470,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
           "They do not give tax advice; tax sections point you to a qualified local professional.",
           "They do not suggest that trading is a realistic income source for someone with little capital.",
           "They do not claim regulatory endorsement of any kind — TradeHQ is a simulator, not a licensed firm.",
+          "They do not present trading as a solution to financial pressure; if the capital matters to you, learning is the only safe use of it here.",
         ],
       },
     ],
