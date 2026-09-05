@@ -96,6 +96,21 @@ const TYPE_GUIDE: Record<string, { h: string; p: string[]; list: string[] }> = {
   },
 };
 
+
+/** Per-asset-class note on where a simulator stops being representative. */
+const TYPE_LIVE_GAP: Record<string, string> = {
+  crypto:
+    "One caveat before you take any of this to a live venue: crypto exchanges differ enormously in fees, withdrawal rules, custody arrangements and how they handle outages, and none of that appears in a simulator. Practice teaches you sizing, patience and how the instrument moves; it cannot teach you what happens when a venue halts withdrawals or when a stop is triggered during a liquidity gap at three in the morning. Assume live execution will be worse than practice execution, and that the emotional weight of a real drawdown in an asset that moves this fast is substantially heavier than the same percentage on a practice screen.",
+  stock:
+    "One caveat before you take any of this to a live account: real equity execution includes commissions or spreads, settlement rules, and the possibility of an overnight gap straight through your stop. Practice teaches you position sizing, patience and how earnings dates reshape a chart; it cannot teach you how it feels to hold a position through a halt or to watch a gap open against you before the market does. Assume live results will be meaningfully worse than practice results, and treat any simulated track record as evidence about your process rather than a forecast of returns.",
+  etf:
+    "One caveat before you take any of this to a live account: a fund's expense ratio, tracking difference, bid-ask spread and any dividend or distribution treatment all affect real returns and none of them are fully modelled here. Practice teaches you how the basket behaves and how to size exposure to it; it cannot teach you the tax treatment in your country or how a thinly traded fund behaves in a stressed market. Confirm the fund's own documentation before committing money, and assume real returns will lag the simulated ones.",
+  forex:
+    "One caveat before you take any of this to a live account: retail forex execution involves spreads that widen around news, overnight financing on positions held past the daily rollover, and leverage terms that vary by jurisdiction. None of those costs are fully represented in a simulator. Practice teaches you the mechanics of a pair and the discipline of sizing from a stop; it cannot teach you what a widened spread does to a tight stop during a rate decision. Assume live results are worse, and treat leverage as a hazard rather than a feature.",
+  commodity:
+    "One caveat before you take any of this to a live account: real commodity exposure usually means futures or a fund holding futures, which brings contract expiry, roll costs, margin requirements and, in some products, the theoretical obligation to take delivery. None of that is modelled here. Practice teaches you what drives the underlying market and how to size a volatile position; it cannot teach you the operational mechanics of a futures account. Read the contract specification and the product documentation before committing money.",
+};
+
 export async function buildContentMap(): Promise<Map<string, PageContent>> {
   const d: any = await loadSiteData();
   const map = new Map<string, PageContent>();
@@ -448,6 +463,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: `${c.category} as an asset class`, p: [intros[a.type] || ""] },
         ...(stats.length ? [{ h: "Reference facts", list: stats }] : []),
         { h: "How to practise it here", p: [c.strategy] },
+        ...(TYPE_LIVE_GAP[a.type] ? [{ h: "Where practice stops being representative", p: [TYPE_LIVE_GAP[a.type]] }] : []),
         ...(TYPE_GUIDE[a.type]
           ? [
               { h: TYPE_GUIDE[a.type].h, p: TYPE_GUIDE[a.type].p },
