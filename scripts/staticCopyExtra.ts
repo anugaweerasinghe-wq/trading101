@@ -301,6 +301,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "How to influence it",
       p: [
+        "Dates on this page describe when work shipped or is expected to ship, not a commitment. TradeHQ is maintained by a very small team, so an item can slip a month without anything being wrong; items are only marked as shipped once the feature is live on the site and usable.",
         "The contact page is the roadmap's real input. Describe the thing you were trying to learn and where the site failed you — that is far more actionable than a feature name, and it is how most of the items above ended up on the list.",
       ],
     },
@@ -382,6 +383,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Changes and contact",
       p: [
+        "No data is sold, and there is no advertising network profiling built into the practice tools. Analytics are used only to see which pages are read and where people give up, which is what drives the roadmap.",
         "If this policy changes materially, the updated text appears on this page. Questions about what is stored, requests for a copy of account data, and deletion requests all go through the contact page and are handled by the person who maintains the site rather than an automated system.",
       ],
     },
@@ -407,6 +409,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Availability and jurisdiction",
       p: [
+        "You must be old enough to form a contract where you live to use the account features, and you are responsible for keeping your login details private. Accounts that are used to abuse other people through public profiles, reviews or duels can be removed.",
         "The service is provided as it is, without any guarantee of uptime, and features may change or be withdrawn. Because TradeHQ handles no money and executes no trades, disputes about market outcomes cannot arise from using it; anything relating to a real broker is between you and that broker.",
       ],
     },
