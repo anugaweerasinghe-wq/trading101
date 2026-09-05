@@ -6,6 +6,7 @@
 
 import { loadSiteData } from "./loadData";
 import { STATIC_COPY, DISCLAIMER } from "./staticCopy";
+import { EXTRA_SECTIONS } from "./staticCopyExtra";
 
 export interface PageSection {
   h: string;
@@ -29,7 +30,12 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
   const d: any = await loadSiteData();
   const map = new Map<string, PageContent>();
 
-  for (const [path, content] of Object.entries(STATIC_COPY)) map.set(path, content);
+  for (const [path, content] of Object.entries(STATIC_COPY)) {
+    map.set(path, {
+      ...content,
+      sections: [...content.sections, ...(EXTRA_SECTIONS[path] || [])],
+    });
+  }
 
   // ---------- Wiki glossary ----------
   const glossary: any[] = d.tradingGlossary;
