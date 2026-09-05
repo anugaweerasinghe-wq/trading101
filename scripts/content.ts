@@ -26,6 +26,76 @@ function clean(s: string): string {
   return s.replace(/^#+\s*/, "").replace(/\*\*/g, "").trim();
 }
 
+
+/** Asset-class background used as supporting context on instrument pages. */
+const TYPE_GUIDE: Record<string, { h: string; p: string[]; list: string[] }> = {
+  crypto: {
+    h: "How to approach a crypto instrument as a learner",
+    p: [
+      "Crypto markets never close, which sounds convenient and is actually the hardest part of learning on them. There is no closing bell to force a review, no overnight gap to punish sloppy sizing visibly, and no session structure to tell you when liquidity is thin. Volatility is several times that of a large-cap equity, so a position size that feels small can produce an equity swing that feels enormous.",
+      "Price is driven by overall market liquidity, flows into and out of listed products, exchange and custody news, protocol changes, and — more than most participants admit — leverage. Forced liquidations of leveraged positions cause a large share of the sharpest moves in both directions, which is why the same headline can produce a 2% move one week and a 12% move the next.",
+    ],
+    list: [
+      "Size crypto positions smaller than equity positions for the same account risk; the stop distance has to be wider.",
+      "Set a fixed review time each day, because the market will not create one for you.",
+      "Never learn on leverage. Liquidation is a permanent loss of capital, not a temporary drawdown.",
+      "Treat weekend moves with suspicion: liquidity is thinner and prices move further on less volume.",
+    ],
+  },
+  stock: {
+    h: "How to approach a listed stock as a learner",
+    p: [
+      "A share is a claim on a real business, so its price responds to earnings, guidance, margins, competition and the interest rate used to discount future profits. Over days, sentiment and sector rotation dominate; over years, the business does. Beginners tend to have a view about the company and no view at all about the timeframe on which that view could be right.",
+      "Equities also carry structural features a simulator makes easy to forget: they gap between sessions, they halt on news, earnings dates cluster volatility into single days, and index membership can move a price for reasons unrelated to the business.",
+    ],
+    list: [
+      "Know the next earnings date before entering; it is the single most predictable source of a large move.",
+      "A stop does not protect you overnight — price can open below it.",
+      "Read the last quarterly report before forming an opinion about the company.",
+      "Be honest about whether your idea is a trade with an exit or an investment with a thesis.",
+    ],
+  },
+  etf: {
+    h: "How to approach an ETF as a learner",
+    p: [
+      "An exchange-traded fund is a basket, so its behaviour comes from what it holds and how it is weighted. A broad market ETF spreads risk across hundreds of companies; a sector or thematic ETF concentrates it, and can fall as hard as any single stock when that theme goes out of favour. The word 'diversified' on a fact sheet is not the same as diversified in practice.",
+      "Costs and structure matter more than beginners expect: an expense ratio compounds, leveraged and inverse products reset daily and decay in choppy markets, and thinly traded funds can trade away from the value of their holdings.",
+    ],
+    list: [
+      "Check the top ten holdings and their combined weight before assuming a fund is broad.",
+      "Avoid daily-leveraged and inverse products entirely while learning — their maths works against holding periods longer than a day.",
+      "Prefer funds with high average volume so the spread does not quietly tax every trade.",
+      "Compare the fund's return to its benchmark, not to an unrelated index.",
+    ],
+  },
+  forex: {
+    h: "How to approach a currency pair as a learner",
+    p: [
+      "A currency pair is a relative price: buying one currency is simultaneously selling the other, so every move reflects a change in the relationship rather than in a single asset. The main drivers are interest-rate expectations, inflation data, growth surprises and global risk appetite, and the largest moves cluster around central-bank meetings and monthly data releases.",
+      "Retail forex is where leverage does the most damage. Because daily percentage moves are small compared with equities or crypto, brokers offer very high leverage, which turns an ordinary move into an account-ending one. The mechanics are simple; the position sizing is where beginners fail.",
+    ],
+    list: [
+      "Learn the economic calendar before learning any indicator — timing beats analysis in this market.",
+      "Trade during the session where the pair is most liquid; spreads widen dramatically outside it.",
+      "Calculate position size from stop distance and account risk every single time.",
+      "Ignore any material that presents high leverage as an opportunity rather than a hazard.",
+    ],
+  },
+  commodity: {
+    h: "How to approach a commodity as a learner",
+    p: [
+      "Commodities are physical goods, so supply and demand for the actual material sets the price: weather, harvests, output decisions, inventories, transport and storage all matter in ways they never do for a share. Many commodities are also seasonal, and that seasonality shows up in price patterns that have a real cause rather than a chart-pattern one.",
+      "Most commodity exposure is taken through futures, which expire and roll. That roll has a cost or a benefit depending on the shape of the forward curve, and it is the reason a long-held commodity product can drift away from the spot price it appears to track.",
+    ],
+    list: [
+      "Learn what physically drives this specific commodity before trading it — the drivers differ completely between energy, metals and agriculture.",
+      "Understand contract expiry and rolling if you ever move beyond a simulator.",
+      "Expect gaps around production decisions, inventory reports and geopolitical news.",
+      "Currency matters: most commodities are priced in dollars, so the dollar itself is part of the trade.",
+    ],
+  },
+};
+
 export async function buildContentMap(): Promise<Map<string, PageContent>> {
   const d: any = await loadSiteData();
   const map = new Map<string, PageContent>();
@@ -378,6 +448,12 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: `${c.category} as an asset class`, p: [intros[a.type] || ""] },
         ...(stats.length ? [{ h: "Reference facts", list: stats }] : []),
         { h: "How to practise it here", p: [c.strategy] },
+        ...(TYPE_GUIDE[a.type]
+          ? [
+              { h: TYPE_GUIDE[a.type].h, p: TYPE_GUIDE[a.type].p },
+              { h: "Rules of thumb for this asset class", list: TYPE_GUIDE[a.type].list },
+            ]
+          : []),
         ...(c.executiveOutlook ? [{ h: "Context to be aware of", p: [`${c.executiveOutlook.summary} This is background context on the asset, not a forecast and not a recommendation.`] }] : []),
         ...(c.institutionalDrivers
           ? [{ h: "Arguments people make on each side", list: [`Bull case commonly cited: ${c.institutionalDrivers.bull}`, `Bear case commonly cited: ${c.institutionalDrivers.bear}`] }]
