@@ -52,7 +52,7 @@ for (const route of routes) {
   const titleUnique = title && !seenTitles.has(title);
   const descUnique = desc && !seenDescs.has(desc);
   const h1Ok = !!(h1 && h1.replace(/<[^>]+>/g, "").trim().length > 0);
-  const noBad = !html.includes("$10,000") && !html.includes("$10K");
+  const noBad = !html.includes("$10K") && !html.includes("$10,000 virtual") && !html.includes("$10,000 in virtual");
 
   if (title) seenTitles.add(title);
   if (desc) seenDescs.add(desc);

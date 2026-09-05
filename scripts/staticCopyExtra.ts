@@ -143,6 +143,16 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "You can stop publishing at any time and the entry is removed.",
       ],
     },
+    {
+      h: "Frequently asked",
+      list: [
+        "Do I have to appear here? No. Publishing is opt-in and can be switched off at any time.",
+        "Is there a prize? No. There is no money, no entry fee and nothing to win.",
+        "Can I see someone's trades? Only the summary statistics they chose to publish, never their journal.",
+        "How often does it update? Rankings refresh as published portfolios change; short-term positions move constantly.",
+        "Why is the top return so large? Usually concentration and leverage-like sizing, not a repeatable method — check the drawdown column before being impressed.",
+      ],
+    },
   ],
 
   "/ai-mentor": [
@@ -161,6 +171,12 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       p: [
         "The mentor runs on large language models through the site's backend, with a fallback chain so an outage at one provider does not take the feature down. It is free to use and there is no message quota for normal use.",
         "Conversations are used to produce your answer and are not sold or used to build an advertising profile. Because language models can be confidently wrong, every substantive answer should be checked against the linked lessons or an authoritative source before you rely on it.",
+      ],
+    },
+    {
+      h: "A reminder about limits",
+      p: [
+        "No assistant, however fluent, can assess whether a trade suits your finances, and none of the answers here are regulated advice. Treat the mentor as a patient tutor for mechanics and vocabulary, and take anything that sounds like a recommendation as a sign the question needs rewording.",
       ],
     },
   ],
@@ -183,6 +199,13 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "There is no penalty for missing a day beyond the counter resetting, and there is no reward for a long streak other than the habit itself. Nothing about the challenge involves money, prizes or entry fees.",
       ],
     },
+    {
+      h: "If you miss a day",
+      p: [
+        "Nothing bad happens beyond the counter going back to one. The purpose of the streak is to make practice frequent, not to punish a missed evening, and restarting after a gap is the normal experience rather than a failure. Traders who quit after breaking a streak lose far more than the streak itself.",
+        "If daily is unrealistic for your schedule, a fixed three-days-a-week rhythm produces most of the benefit. Consistency of review matters more than the raw number of sessions.",
+      ],
+    },
   ],
 
   "/reviews": [
@@ -200,6 +223,21 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       p: [
         "A specific bug report or a specific content correction is worth more to the project than a rating. If a lesson is wrong, if a page renders badly on your phone, or if a term is missing from the glossary, the contact page reaches the maintainer directly and those messages are what actually change the site.",
         "If you are considering whether to use TradeHQ at all: it costs nothing, requires no account for the core features, and holds no money. The only thing at stake is your time.",
+      ],
+    },
+    {
+      h: "Reading reviews of any trading product",
+      list: [
+        "Be sceptical of any review mentioning profits — a simulator cannot produce them, and a real platform showing them proves nothing about you.",
+        "Reviews that only appear in a cluster on the same day usually are a cluster from the same source.",
+        "The most useful reviews describe a specific task the reviewer tried to complete and whether it worked.",
+        "A product with no negative reviews is a product that removes them.",
+      ],
+    },
+    {
+      h: "Leaving one",
+      p: [
+        "Reviews are limited to one per visitor, and you do not need an account to leave one. Say what you were trying to learn, what helped and what did not. Criticism about missing content or confusing pages is genuinely welcome — several sections of the site exist because someone said the previous version was unclear.",
       ],
     },
   ],
@@ -221,6 +259,16 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "There is no fee, no stake, no prize and no real money — running a duel for money would be gambling, and this is not that.",
       ],
     },
+    {
+      h: "Setting up a duel",
+      list: [
+        "Create the duel and copy the invite link that appears.",
+        "Send it to one person; the duel starts when they join.",
+        "Both balances reset to the same starting figure at that moment.",
+        "The scoreboard and countdown appear on this page for both participants for the next 30 days.",
+        "When the countdown ends the duel closes and neither side can trade into it further.",
+      ],
+    },
   ],
 
   "/roadmap": [
@@ -239,6 +287,22 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Localised country guides covering regulators, market access and realistic starting capital.",
         "Optional public trader profiles and a 30-day practice duel against a friend.",
         "Daily challenges with a local-time streak counter, plus journal and portfolio analytics.",
+      ],
+    },
+    {
+      h: "In progress",
+      list: [
+        "Deeper portfolio analytics, including per-strategy expectancy rather than only account-level metrics.",
+        "More structured course tracks covering risk management and market microstructure.",
+        "Wider glossary coverage, with each entry linked to the lesson where the concept is applied.",
+        "Better mobile layouts for the charting and order areas.",
+      ],
+    },
+    {
+      h: "How to influence it",
+      p: [
+        "Dates on this page describe when work shipped or is expected to ship, not a commitment. TradeHQ is maintained by a very small team, so an item can slip a month without anything being wrong; items are only marked as shipped once the feature is live on the site and usable.",
+        "The contact page is the roadmap's real input. Describe the thing you were trying to learn and where the site failed you — that is far more actionable than a feature name, and it is how most of the items above ended up on the list.",
       ],
     },
   ],
@@ -316,6 +380,13 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "TradeHQ is not directed at children and asks for no financial information from anyone. Because the service holds no funds and executes no trades, it is not a financial services provider in any jurisdiction; local financial regulation applies to the broker you eventually use, not to this simulator.",
       ],
     },
+    {
+      h: "Changes and contact",
+      p: [
+        "No data is sold, and there is no advertising network profiling built into the practice tools. Analytics are used only to see which pages are read and where people give up, which is what drives the roadmap.",
+        "If this policy changes materially, the updated text appears on this page. Questions about what is stored, requests for a copy of account data, and deletion requests all go through the contact page and are handled by the person who maintains the site rather than an automated system.",
+      ],
+    },
   ],
 
   "/terms": [
@@ -333,6 +404,13 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Accounts may be removed for abuse, spam, or attempts to present the simulator as a real trading record to third parties.",
         "Automated scraping that degrades the service for others is not permitted.",
         "These terms may change; material changes are reflected on this page.",
+      ],
+    },
+    {
+      h: "Availability and jurisdiction",
+      p: [
+        "You must be old enough to form a contract where you live to use the account features, and you are responsible for keeping your login details private. Accounts that are used to abuse other people through public profiles, reviews or duels can be removed.",
+        "The service is provided as it is, without any guarantee of uptime, and features may change or be withdrawn. Because TradeHQ handles no money and executes no trades, disputes about market outcomes cannot arise from using it; anything relating to a real broker is between you and that broker.",
       ],
     },
   ],

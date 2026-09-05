@@ -6,6 +6,7 @@
 
 import { loadSiteData } from "./loadData";
 import { STATIC_COPY, DISCLAIMER } from "./staticCopy";
+import { EXTRA_SECTIONS } from "./staticCopyExtra";
 
 export interface PageSection {
   h: string;
@@ -25,11 +26,101 @@ function clean(s: string): string {
   return s.replace(/^#+\s*/, "").replace(/\*\*/g, "").trim();
 }
 
+
+/** Asset-class background used as supporting context on instrument pages. */
+const TYPE_GUIDE: Record<string, { h: string; p: string[]; list: string[] }> = {
+  crypto: {
+    h: "How to approach a crypto instrument as a learner",
+    p: [
+      "Crypto markets never close, which sounds convenient and is actually the hardest part of learning on them. There is no closing bell to force a review, no overnight gap to punish sloppy sizing visibly, and no session structure to tell you when liquidity is thin. Volatility is several times that of a large-cap equity, so a position size that feels small can produce an equity swing that feels enormous.",
+      "Price is driven by overall market liquidity, flows into and out of listed products, exchange and custody news, protocol changes, and — more than most participants admit — leverage. Forced liquidations of leveraged positions cause a large share of the sharpest moves in both directions, which is why the same headline can produce a 2% move one week and a 12% move the next.",
+    ],
+    list: [
+      "Size crypto positions smaller than equity positions for the same account risk; the stop distance has to be wider.",
+      "Set a fixed review time each day, because the market will not create one for you.",
+      "Never learn on leverage. Liquidation is a permanent loss of capital, not a temporary drawdown.",
+      "Treat weekend moves with suspicion: liquidity is thinner and prices move further on less volume.",
+    ],
+  },
+  stock: {
+    h: "How to approach a listed stock as a learner",
+    p: [
+      "A share is a claim on a real business, so its price responds to earnings, guidance, margins, competition and the interest rate used to discount future profits. Over days, sentiment and sector rotation dominate; over years, the business does. Beginners tend to have a view about the company and no view at all about the timeframe on which that view could be right.",
+      "Equities also carry structural features a simulator makes easy to forget: they gap between sessions, they halt on news, earnings dates cluster volatility into single days, and index membership can move a price for reasons unrelated to the business.",
+    ],
+    list: [
+      "Know the next earnings date before entering; it is the single most predictable source of a large move.",
+      "A stop does not protect you overnight — price can open below it.",
+      "Read the last quarterly report before forming an opinion about the company.",
+      "Be honest about whether your idea is a trade with an exit or an investment with a thesis.",
+    ],
+  },
+  etf: {
+    h: "How to approach an ETF as a learner",
+    p: [
+      "An exchange-traded fund is a basket, so its behaviour comes from what it holds and how it is weighted. A broad market ETF spreads risk across hundreds of companies; a sector or thematic ETF concentrates it, and can fall as hard as any single stock when that theme goes out of favour. The word 'diversified' on a fact sheet is not the same as diversified in practice.",
+      "Costs and structure matter more than beginners expect: an expense ratio compounds, leveraged and inverse products reset daily and decay in choppy markets, and thinly traded funds can trade away from the value of their holdings.",
+    ],
+    list: [
+      "Check the top ten holdings and their combined weight before assuming a fund is broad.",
+      "Avoid daily-leveraged and inverse products entirely while learning — their maths works against holding periods longer than a day.",
+      "Prefer funds with high average volume so the spread does not quietly tax every trade.",
+      "Compare the fund's return to its benchmark, not to an unrelated index.",
+    ],
+  },
+  forex: {
+    h: "How to approach a currency pair as a learner",
+    p: [
+      "A currency pair is a relative price: buying one currency is simultaneously selling the other, so every move reflects a change in the relationship rather than in a single asset. The main drivers are interest-rate expectations, inflation data, growth surprises and global risk appetite, and the largest moves cluster around central-bank meetings and monthly data releases.",
+      "Retail forex is where leverage does the most damage. Because daily percentage moves are small compared with equities or crypto, brokers offer very high leverage, which turns an ordinary move into an account-ending one. The mechanics are simple; the position sizing is where beginners fail.",
+    ],
+    list: [
+      "Learn the economic calendar before learning any indicator — timing beats analysis in this market.",
+      "Trade during the session where the pair is most liquid; spreads widen dramatically outside it.",
+      "Calculate position size from stop distance and account risk every single time.",
+      "Ignore any material that presents high leverage as an opportunity rather than a hazard.",
+    ],
+  },
+  commodity: {
+    h: "How to approach a commodity as a learner",
+    p: [
+      "Commodities are physical goods, so supply and demand for the actual material sets the price: weather, harvests, output decisions, inventories, transport and storage all matter in ways they never do for a share. Many commodities are also seasonal, and that seasonality shows up in price patterns that have a real cause rather than a chart-pattern one.",
+      "Most commodity exposure is taken through futures, which expire and roll. That roll has a cost or a benefit depending on the shape of the forward curve, and it is the reason a long-held commodity product can drift away from the spot price it appears to track.",
+    ],
+    list: [
+      "Learn what physically drives this specific commodity before trading it — the drivers differ completely between energy, metals and agriculture.",
+      "Understand contract expiry and rolling if you ever move beyond a simulator.",
+      "Expect gaps around production decisions, inventory reports and geopolitical news.",
+      "Currency matters: most commodities are priced in dollars, so the dollar itself is part of the trade.",
+    ],
+  },
+};
+
+
+/** Per-asset-class note on where a simulator stops being representative. */
+const TYPE_LIVE_GAP: Record<string, string> = {
+  crypto:
+    "One caveat before you take any of this to a live venue: crypto exchanges differ enormously in fees, withdrawal rules, custody arrangements and how they handle outages, and none of that appears in a simulator. Practice teaches you sizing, patience and how the instrument moves; it cannot teach you what happens when a venue halts withdrawals or when a stop is triggered during a liquidity gap at three in the morning. Assume live execution will be worse than practice execution, and that the emotional weight of a real drawdown in an asset that moves this fast is substantially heavier than the same percentage on a practice screen.",
+  stock:
+    "One caveat before you take any of this to a live account: real equity execution includes commissions or spreads, settlement rules, and the possibility of an overnight gap straight through your stop. Practice teaches you position sizing, patience and how earnings dates reshape a chart; it cannot teach you how it feels to hold a position through a halt or to watch a gap open against you before the market does. Assume live results will be meaningfully worse than practice results, and treat any simulated track record as evidence about your process rather than a forecast of returns.",
+  etf:
+    "One caveat before you take any of this to a live account: a fund's expense ratio, tracking difference, bid-ask spread and any dividend or distribution treatment all affect real returns and none of them are fully modelled here. Practice teaches you how the basket behaves and how to size exposure to it; it cannot teach you the tax treatment in your country or how a thinly traded fund behaves in a stressed market. Confirm the fund's own documentation before committing money, and assume real returns will lag the simulated ones.",
+  forex:
+    "One caveat before you take any of this to a live account: retail forex execution involves spreads that widen around news, overnight financing on positions held past the daily rollover, and leverage terms that vary by jurisdiction. None of those costs are fully represented in a simulator. Practice teaches you the mechanics of a pair and the discipline of sizing from a stop; it cannot teach you what a widened spread does to a tight stop during a rate decision. Assume live results are worse, and treat leverage as a hazard rather than a feature.",
+  commodity:
+    "One caveat before you take any of this to a live account: real commodity exposure usually means futures or a fund holding futures, which brings contract expiry, roll costs, margin requirements and, in some products, the theoretical obligation to take delivery. None of that is modelled here. Practice teaches you what drives the underlying market and how to size a volatile position; it cannot teach you the operational mechanics of a futures account. Read the contract specification and the product documentation before committing money.",
+};
+
 export async function buildContentMap(): Promise<Map<string, PageContent>> {
   const d: any = await loadSiteData();
   const map = new Map<string, PageContent>();
 
-  for (const [path, content] of Object.entries(STATIC_COPY)) map.set(path, content);
+  for (const [path, content] of Object.entries(STATIC_COPY)) {
+    map.set(path, {
+      ...content,
+      sections: [...content.sections, ...(EXTRA_SECTIONS[path] || [])],
+    });
+  }
 
   // ---------- Wiki glossary ----------
   const glossary: any[] = d.tradingGlossary;
@@ -49,6 +140,13 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         list: Array.from(new Set(glossary.map((g) => g.category))).map(
           (c) => `${c}: ${glossary.filter((g) => g.category === c).map((g) => g.term).slice(0, 8).join(", ")}`
         ),
+      },
+      {
+        h: "Why a glossary matters more in trading than in most subjects",
+        p: [
+          "Trading vocabulary is unusually hostile to beginners because the same word often carries a precise technical meaning and a loose marketing meaning at the same time. 'Leverage' is a neutral description of borrowed exposure in a textbook and a sales pitch in an advertisement. 'Support' is a level where buyers previously appeared, not a floor that holds. Reading material without pinning down which meaning is in play is how people end up confident about something they have misunderstood.",
+          "Each entry here therefore gives a plain definition first, then a longer expert explanation of the mechanics, then the practical caveat that matters when you try to use the idea. Where a concept is popular but weakly evidenced, the entry says so instead of repeating the folklore.",
+        ],
       },
       {
         h: "How to use the glossary while practising",
@@ -148,7 +246,10 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
           { h: "Key takeaways", list: l.keyTakeaways },
           {
             h: "Check your understanding",
-            list: l.quiz.map((q: any) => `${q.question} — ${q.explanation}`),
+            list: l.quiz.map(
+              (q: any) =>
+                `${q.question} Options: ${q.options.join("; ")}. Correct answer: ${q.options[q.correctAnswer]}. Why: ${q.explanation}`
+            ),
           },
           {
             h: "Sources",
@@ -186,11 +287,19 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         list: pairs.map((p) => `${p.a.name} vs ${p.b.name} — ${p.a.tag} against ${p.b.tag}`),
       },
       {
+        h: "Why comparison beats a ranking",
+        p: [
+          "There is no such thing as the best asset to trade, only assets that suit different tolerances, schedules and levels of experience. A pair of instruments that look interchangeable on a price chart can differ completely in what moves them, when they are liquid, how far they typically travel in a day, and how badly they punish a mis-sized position. That is what these pages compare.",
+          "None of them tell you what to buy, and none of them predict which side will perform better. The verdict section answers a narrower and more useful question: which of the two is the better vehicle for learning a particular skill, and under what circumstances the other one becomes the better choice.",
+        ],
+      },
+      {
         h: "How to use a comparison",
         list: [
-          "Read both deep-dive sections before looking at the verdict.",
+          "Read both deep-dive sections before looking at the verdict, so you form a view of each instrument on its own terms first.",
           "Practise both sides in the simulator for a week before deciding which suits you.",
-          "Note that 'better' here means better to learn on, never better to buy.",
+          "Note that 'better' here means better to learn on, never better to buy — no page here recommends an instrument.",
+          "Check the mistakes section even if you think the comparison is obvious; the obvious version is usually where the error lives.",
           DISCLAIMER,
         ],
       },
@@ -233,6 +342,22 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         ],
       },
       { h: "Available guides", list: howto.map((h) => `${h.fullName} (${h.type}) — ${h.whyTrade}`) },
+      {
+        h: "What every one of these guides has in common",
+        p: [
+          "The structure is deliberate. Beginners usually start with the question 'how do I buy this?', which is the least important part — placing the order takes seconds and any broker will show you how. The parts that decide whether the trade was sensible come before and after it: understanding what actually moves the instrument, choosing a size that survives being wrong, picking a time of day when liquidity is not working against you, and reviewing the result honestly afterwards.",
+          "So each guide spends most of its length on those parts. None of them tell you whether to buy, none contain price targets, and none imply that following the steps produces a profit. They aim to make your first practice trade in an instrument an informed one rather than a random one.",
+        ],
+      },
+      {
+        h: "Using a guide properly",
+        list: [
+          "Read the drivers section before looking at a chart, so the chart does not supply your opinion.",
+          "Copy the suggested first practice trade exactly, including the sizing, before improvising.",
+          "Note the timing guidance — trading an instrument outside its liquid window is a common and avoidable handicap.",
+          "Come back to the review section a day after the trade closes, not while it is open.",
+        ],
+      },
     ],
     links: howto.map((h) => ({ href: `/how-to-trade/${h.symbol}`, label: `How to trade ${h.fullName}` })),
   });
@@ -269,6 +394,24 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         ],
       },
       { h: "Strategies covered", list: strategies.map((s) => `${s.name} — ${s.oneLiner}`) },
+      {
+        h: "What a strategy is, and what it is not",
+        p: [
+          "A strategy is a set of rules describing what you will trade, when you will enter, how much you will risk, and where you will get out. It is not a prediction and it is not an edge by itself. Two traders can follow identical rules and get opposite results over a year purely because one honoured the exit rule and the other did not.",
+          "These pages therefore give as much space to failure modes and to the arithmetic of expectancy as they give to the entry conditions. If a method has a 45% win rate, that is not a flaw as long as the average win is comfortably larger than the average loss — and it is fatal if it is not. Understanding that trade-off is more useful than collecting more entry patterns.",
+        ],
+      },
+      {
+        h: "Testing a strategy without fooling yourself",
+        list: [
+          "Write the rules down before you start. Rules remembered after the fact always look better than they were.",
+          "Take at least thirty trades before drawing any conclusion, and keep the size constant throughout.",
+          "Record every trade the rules generated, including the ones you chose to skip, and why you skipped them.",
+          "Judge the method by expectancy and drawdown together, never by the best week.",
+          "Expect any method to have losing stretches long enough to make you doubt it — that is the normal condition, not a malfunction.",
+          "Re-test in a different market environment before trusting it; a method tuned to a calm trending month often fails the first volatile one.",
+        ],
+      },
     ],
     links: strategies.map((s) => ({ href: `/strategy/${s.slug}`, label: s.name })),
   });
@@ -312,6 +455,23 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "Guides available",
         list: countries.map((c) => `${c.country} — ${c.localExchange}, regulated by ${c.regulator.name}, local currency ${c.currency}`),
+      },
+      {
+        h: "Why location changes the practical answer",
+        p: [
+          "The mechanics of a limit order are identical everywhere, but almost everything around them is local. Which brokers are licensed to serve you, whether you can hold foreign currency, how money leaves and re-enters the country, what a realistic first account size is in local terms, and how any gains are treated for tax all depend on where you live. Advice written for a US audience quietly assumes a US answer to all of those questions.",
+          "These guides supply the local context that global tutorials skip, so the general education elsewhere on the site actually connects to your situation. They describe how access typically works and point you to the official regulator, rather than recommending a particular broker.",
+        ],
+      },
+      {
+        h: "What these guides deliberately avoid",
+        list: [
+          "They do not rank or recommend brokers, and they contain no affiliate links.",
+          "They do not give tax advice; tax sections point you to a qualified local professional.",
+          "They do not suggest that trading is a realistic income source for someone with little capital.",
+          "They do not claim regulatory endorsement of any kind — TradeHQ is a simulator, not a licensed firm.",
+          "They do not present trading as a solution to financial pressure; if the capital matters to you, learning is the only safe use of it here.",
+        ],
       },
     ],
     links: countries.map((c) => ({ href: `/learn/country/${c.slug}`, label: `Learn trading in ${c.country}` })),
@@ -372,6 +532,13 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: `${c.category} as an asset class`, p: [intros[a.type] || ""] },
         ...(stats.length ? [{ h: "Reference facts", list: stats }] : []),
         { h: "How to practise it here", p: [c.strategy] },
+        ...(TYPE_LIVE_GAP[a.type] ? [{ h: "Where practice stops being representative", p: [TYPE_LIVE_GAP[a.type]] }] : []),
+        ...(TYPE_GUIDE[a.type]
+          ? [
+              { h: TYPE_GUIDE[a.type].h, p: TYPE_GUIDE[a.type].p },
+              { h: "Rules of thumb for this asset class", list: TYPE_GUIDE[a.type].list },
+            ]
+          : []),
         ...(c.executiveOutlook ? [{ h: "Context to be aware of", p: [`${c.executiveOutlook.summary} This is background context on the asset, not a forecast and not a recommendation.`] }] : []),
         ...(c.institutionalDrivers
           ? [{ h: "Arguments people make on each side", list: [`Bull case commonly cited: ${c.institutionalDrivers.bull}`, `Bear case commonly cited: ${c.institutionalDrivers.bear}`] }]
