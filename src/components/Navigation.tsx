@@ -122,7 +122,7 @@ export function Navigation() {
     {/* Mobile slide-in sheet */}
     <div
       className={cn(
-        "md:hidden fixed inset-0 z-[60] transition-opacity duration-300",
+        "md:hidden fixed inset-0 z-[80] transition-opacity duration-300",
         mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
       aria-hidden={!mobileMenuOpen}
