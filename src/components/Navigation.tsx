@@ -116,46 +116,78 @@ export function Navigation() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden pt-4 pb-2 border-t border-white/[0.06] mt-3 animate-fade-in">
-            <div className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Button
-                    variant="ghost"
-                    className={cn(
-                      "w-full justify-start h-11 px-4 text-sm font-medium rounded-xl transition-all",
-                      location.pathname === item.to
-                        ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:text-foreground hover:bg-white/[0.05]"
-                    )}
-                  >
-                    <item.icon className="w-4 h-4 mr-3" />
-                    {item.label}
-                  </Button>
-                </Link>
-              ))}
-              <Link to={user ? "/trader/me" : "/auth"} onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start h-11 px-4 text-sm font-medium rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/[0.05]">
-                  <UserRound className="w-4 h-4 mr-3" />
-                  {user ? "My profile" : "Sign in (optional)"}
-                </Button>
-              </Link>
-              <Link to="/reviews" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start h-11 px-4 text-sm font-medium rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/[0.05]">
-                  <Star className="w-4 h-4 mr-3" />
-                  Reviews
-                </Button>
-              </Link>
-            </div>
-          </div>
-        )}
       </div>
     </nav>
+
+    {/* Mobile slide-in sheet */}
+    <div
+      className={cn(
+        "md:hidden fixed inset-0 z-[60] transition-opacity duration-300",
+        mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+      )}
+      aria-hidden={!mobileMenuOpen}
+    >
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={() => setMobileMenuOpen(false)}
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+        className={cn(
+          "absolute right-0 top-0 h-full w-[82%] max-w-xs flex flex-col",
+          "bg-[hsl(0_0%_4%)] border-l border-white/10 shadow-2xl",
+          "transition-transform duration-300 ease-out",
+          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        )}
+      >
+        <div className="flex items-center justify-between px-4 h-16 border-b border-white/[0.06] shrink-0">
+          <BrandMark size="sm" />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-10 w-10"
+            aria-label="Close menu"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <X className="w-5 h-5" />
+          </Button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto px-3 py-3 flex flex-col gap-1 pb-[calc(env(safe-area-inset-bottom)+5.5rem)]">
+          {navItems.map((item) => (
+            <Link key={item.to} to={item.to} onClick={() => setMobileMenuOpen(false)}>
+              <Button
+                variant="ghost"
+                className={cn(
+                  "w-full justify-start h-12 px-4 text-sm font-medium rounded-xl transition-all",
+                  location.pathname === item.to
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:text-foreground hover:bg-white/[0.05]"
+                )}
+              >
+                <item.icon className="w-4 h-4 mr-3" />
+                {item.label}
+              </Button>
+            </Link>
+          ))}
+          <Link to={user ? "/trader/me" : "/auth"} onClick={() => setMobileMenuOpen(false)}>
+            <Button variant="ghost" className="w-full justify-start h-12 px-4 text-sm font-medium rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/[0.05]">
+              <UserRound className="w-4 h-4 mr-3" />
+              {user ? "My profile" : "Sign in (optional)"}
+            </Button>
+          </Link>
+          <Link to="/reviews" onClick={() => setMobileMenuOpen(false)}>
+            <Button variant="ghost" className="w-full justify-start h-12 px-4 text-sm font-medium rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/[0.05]">
+              <Star className="w-4 h-4 mr-3" />
+              Reviews
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+    </>
   );
+
 }
