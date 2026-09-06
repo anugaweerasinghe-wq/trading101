@@ -525,9 +525,41 @@ function extraRoutes(): RouteMeta[] {
   return out;
 }
 
+/**
+ * Keep <title> inside Google's ~60-character display window and meta
+ * descriptions inside ~158 characters, trimming on word boundaries so
+ * nothing gets cut mid-word in the SERP snippet.
+ */
+function fitTitle(title: string): string {
+  if (title.length <= 62) return title;
+  const BRAND = " | TradeHQ";
+  const hasBrand = title.endsWith(BRAND) || / \| TradeHQ .*/.test(title);
+  let main = title.replace(/\s*\|\s*TradeHQ.*$/, "");
+  const budget = 62 - (hasBrand ? BRAND.length : 0);
+  if (main.length > budget) {
+    main = main.slice(0, budget);
+    main = main.slice(0, Math.max(main.lastIndexOf(" "), main.lastIndexOf("—"), 20)).replace(/[\s—–-]+$/, "");
+  }
+  return hasBrand ? `${main}${BRAND}` : main;
+}
+
+function fitDescription(desc: string): string {
+  const d = desc.replace(/\s+/g, " ").trim();
+  if (d.length <= 158) return d;
+  const cut = d.slice(0, 158);
+  const end = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("? "), cut.lastIndexOf("! "));
+  if (end > 110) return cut.slice(0, end + 1).trim();
+  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:—–-]$/, "").trim() + "…";
+}
+
 // Dedupe path collisions (last write wins) so future data overlap can't ship two entries for the same URL.
 export function uniqueRoutes(): RouteMeta[] {
   const map = new Map<string, RouteMeta>();
   for (const r of [...buildRoutes(), ...extraRoutes()]) map.set(r.path, r);
-  return Array.from(map.values());
+  return Array.from(map.values()).map((r) => ({
+    ...r,
+    title: fitTitle(r.title),
+    description: fitDescription(r.description),
+  }));
+
 }
