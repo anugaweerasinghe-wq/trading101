@@ -65,6 +65,22 @@ function extractAssetContentKeys(): string[] {
   );
 }
 
+/**
+ * Assets that carry authored Q&A on top of the editorial block. Only these
+ * carry enough genuinely unique writing to be worth indexing; the rest stay
+ * reachable in-app but noindex, so we never ship near-duplicate pages.
+ */
+function extractAssetFaqKeys(): string[] {
+  const src = readSrc("src/lib/assetContent.ts");
+  const start = src.indexOf("ASSET_FAQS");
+  if (start < 0) return [];
+  const block = src.slice(start);
+  return (block.match(/^  ([a-z0-9]+):\s*\[/gm) || []).map((m) =>
+    m.trim().replace(/:\s*\[$/, "")
+  );
+}
+
+
 function extractGlossary(): { slug: string; term: string; definition: string }[] {
   const src = readSrc("src/lib/tradingGlossary.ts");
   const results: { slug: string; term: string; definition: string }[] = [];
