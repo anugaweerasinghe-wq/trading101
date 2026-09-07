@@ -367,7 +367,7 @@ export function buildRoutes(): RouteMeta[] {
       title: `${g.term} — Definition, Example & How to Trade It | TradeHQ Wiki`,
       description: g.definition.length > 150 ? g.definition.slice(0, 147) + "..." : g.definition,
       h1: `${g.term} — Trading Wiki`,
-      summary: `${g.definition} Practice trading this concept on TradeHQ with ${BALANCE} in free virtual cash.`,
+      summary: `${g.definition}`,
       priority: "0.7",
       changefreq: "weekly",
     });
