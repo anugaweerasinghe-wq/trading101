@@ -560,7 +560,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
     map.set(`/trade/${a.id}`, {
       sections: [
         { h: `What ${a.name} is`, p: [c.whatIs] },
-        { h: `${c.category} as an asset class`, p: [intros[a.type] || ""] },
+        ...(TYPE_GUIDE[a.type] ? [] : [{ h: `${c.category} as an asset class`, p: [intros[a.type] || ""] }]),
         ...(stats.length ? [{ h: "Reference facts", list: stats }] : []),
         { h: "How to practise it here", p: [c.strategy] },
         ...(TYPE_LIVE_GAP[a.type] ? [{ h: "Where practice stops being representative", p: [TYPE_LIVE_GAP[a.type]] }] : []),
