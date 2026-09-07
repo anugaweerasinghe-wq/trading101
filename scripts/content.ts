@@ -545,14 +545,13 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
           : []),
         ...(f.length ? [{ h: `Common questions about trading ${a.name}`, list: f.map((q) => `${q.question} — ${q.answer}`) }] : []),
         {
-          h: "Before you place a practice order",
+          h: `A practice checklist for ${a.name}`,
           list: [
-            `Decide the size first: 1-2% of your ${BALANCE} practice balance, not a round number of shares or coins.`,
-            "Write the invalidation level down before entry, not after the position moves against you.",
-            `Read the ${a.name} guide and glossary entries for any term you cannot define out loud.`,
-            `Review the trade a day later in the journal. ${DISCLAIMER}`,
+            ...(TYPE_CHECKLIST[a.type] || TYPE_CHECKLIST.stock),
+            `Read the ${a.name} sections above and look up any term here you cannot define out loud. ${DISCLAIMER}`,
           ],
         },
+
       ],
       links: [
         ...(howtoSyms.has(a.id) ? [{ href: `/how-to-trade/${a.id}`, label: `How to trade ${a.name}` }] : []),
