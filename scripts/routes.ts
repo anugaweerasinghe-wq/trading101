@@ -334,7 +334,9 @@ export function buildRoutes(): RouteMeta[] {
   // Only assets with authored, unique editorial content are indexable.
   // The rest are still reachable in-app but marked noindex and kept out
   // of the sitemap so we never ship mass-templated near-duplicates.
-  const authored = new Set(extractAssetContentKeys());
+  const editorial = new Set(extractAssetContentKeys());
+  const authored = new Set(extractAssetFaqKeys().filter((k) => editorial.has(k)));
+
   for (const a of extractAssets()) {
     routes.push({
       path: `/trade/${a.id}`,
