@@ -27,6 +27,37 @@ function clean(s: string): string {
 }
 
 
+/** Asset-class specific pre-trade checklist, so instrument pages do not all
+ *  close with the same four lines of text. */
+const TYPE_CHECKLIST: Record<string, string[]> = {
+  crypto: [
+    "Check what the position would be worth after a 10% overnight move before you size it — crypto gaps happen while you sleep.",
+    "Note whether the move you are reacting to came with rising volume or is a thin weekend drift.",
+    "Write the invalidation price down first; leverage-driven wicks punish stops that are decided afterwards.",
+  ],
+  stock: [
+    "Check whether earnings, a split or an index event falls inside your intended holding window.",
+    "Size against the recent daily range rather than a round number of shares.",
+    "Decide in advance what news would make you exit, and write it in the journal before entry.",
+  ],
+  etf: [
+    "Look at what the fund actually holds; two ETFs with similar names can behave very differently.",
+    "Remember that a broad fund moves slower than its largest holding — set expectations for a smaller daily range.",
+    "Treat it as an exercise in patience: fund positions reward a longer review cycle than single names.",
+  ],
+  forex: [
+    "Note which session you are trading in; the same pair behaves differently in London and in Asia.",
+    "Check the economic calendar for rate decisions or inflation prints inside your window.",
+    "Express risk in account currency, not pips, so the size means something concrete.",
+  ],
+  commodity: [
+    "Check whether the move is supply-driven, demand-driven or currency-driven before deciding it is a trend.",
+    "Expect seasonality: several commodities have recurring demand patterns that distort short samples.",
+    "Give the position a wider stop and a smaller size than an equity trade of the same conviction.",
+  ],
+};
+
+
 /** Asset-class background used as supporting context on instrument pages. */
 const TYPE_GUIDE: Record<string, { h: string; p: string[]; list: string[] }> = {
   crypto: {
@@ -173,7 +204,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         {
           h: `Practising ${g.term} on the simulator`,
           p: [
-            `Reading a definition is not the same as recognising ${g.term} in a live chart under time pressure. Open the practice desk, find the pattern or condition described above on an instrument you already follow, and place a small simulated position with a written invalidation level. Review it a day later in the journal and note whether the concept behaved the way this page describes. ${DISCLAIMER}`,
+            glossaryPractice(g),
           ],
         },
       ],
@@ -529,7 +560,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
     map.set(`/trade/${a.id}`, {
       sections: [
         { h: `What ${a.name} is`, p: [c.whatIs] },
-        { h: `${c.category} as an asset class`, p: [intros[a.type] || ""] },
+        ...(TYPE_GUIDE[a.type] ? [] : [{ h: `${c.category} as an asset class`, p: [intros[a.type] || ""] }]),
         ...(stats.length ? [{ h: "Reference facts", list: stats }] : []),
         { h: "How to practise it here", p: [c.strategy] },
         ...(TYPE_LIVE_GAP[a.type] ? [{ h: "Where practice stops being representative", p: [TYPE_LIVE_GAP[a.type]] }] : []),
@@ -545,14 +576,13 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
           : []),
         ...(f.length ? [{ h: `Common questions about trading ${a.name}`, list: f.map((q) => `${q.question} — ${q.answer}`) }] : []),
         {
-          h: "Before you place a practice order",
+          h: `A practice checklist for ${a.name}`,
           list: [
-            `Decide the size first: 1-2% of your ${BALANCE} practice balance, not a round number of shares or coins.`,
-            "Write the invalidation level down before entry, not after the position moves against you.",
-            `Read the ${a.name} guide and glossary entries for any term you cannot define out loud.`,
-            `Review the trade a day later in the journal. ${DISCLAIMER}`,
+            ...(TYPE_CHECKLIST[a.type] || TYPE_CHECKLIST.stock),
+            `Read the ${a.name} sections above and look up any term here you cannot define out loud. ${DISCLAIMER}`,
           ],
         },
+
       ],
       links: [
         ...(howtoSyms.has(a.id) ? [{ href: `/how-to-trade/${a.id}`, label: `How to trade ${a.name}` }] : []),
@@ -600,4 +630,26 @@ function groupLessonBody(body: string[]): PageSection[] {
   }
   if (current) sections.push(current);
   return sections.filter((s) => (s.p || []).length > 0);
+}
+
+/**
+ * Closing "how to practise this" paragraph for a glossary term. Written
+ * per category so 49 glossary pages do not end with one identical block.
+ */
+function glossaryPractice(g: any): string {
+  const t = g.term;
+  const cat = String(g.category || "").toLowerCase();
+  if (cat.includes("technical")) {
+    return `Recognising ${t} on a static example is easy; spotting it on the right-hand edge of a live chart, before the outcome is known, is the actual skill. Open the practice desk, scan a handful of instruments you already follow until you find a candidate, and mark the level that would prove the read wrong. Take a small simulated position, then come back a day later and compare what happened with what this page describes. ${DISCLAIMER}`;
+  }
+  if (cat.includes("risk")) {
+    return `${t} only becomes real once it costs you something. Work through it on the simulator with deliberately awkward numbers — an odd position size, a stop that sits close to entry — so you feel how the maths behaves rather than reading it. Log the trade and check whether your actual loss matched the one you planned for. ${DISCLAIMER}`;
+  }
+  if (cat.includes("psych") || cat.includes("behav")) {
+    return `${t} is a habit, not a fact to memorise, so the useful exercise is watching yourself. Trade a normal simulated session, then read back through the journal entries and mark the moments where this pattern showed up in your own decisions. Naming it after the fact is how you learn to catch it in advance. ${DISCLAIMER}`;
+  }
+  if (cat.includes("mechanic") || cat.includes("order")) {
+    return `The fastest way to understand ${t} is to use it once. Place a small simulated order that involves it, watch exactly how the fill and the portfolio line respond, and repeat it on a second instrument so you can tell what is general and what is specific to one market. ${DISCLAIMER}`;
+  }
+  return `Reading about ${t} and using it are different skills. Try it once in the simulator on an instrument you already follow, write down beforehand what you expect to happen, and check the journal a day later to see whether it played out that way. ${DISCLAIMER}`;
 }

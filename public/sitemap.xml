@@ -21,13 +21,6 @@
   <url><loc>https://www.thetradehq.com/trade/sol</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/bnb</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/xrp</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/ada</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/doge</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/avax</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/dot</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/matic</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/link</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/ltc</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/aapl</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/msft</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/googl</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
@@ -35,29 +28,12 @@
   <url><loc>https://www.thetradehq.com/trade/nvda</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/tsla</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/meta</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/nflx</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/amd</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/crm</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/intc</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/jpm</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/v</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/ma</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/spy</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/qqq</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/iwm</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/dia</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/voo</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/arkk</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/eurusd</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/gbpusd</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/usdjpy</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/usdchf</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/audusd</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/gold</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/silver</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/trade/oil</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/natgas</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.thetradehq.com/trade/copper</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.thetradehq.com/wiki</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.thetradehq.com/wiki/short-squeeze</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.thetradehq.com/wiki/golden-cross</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>

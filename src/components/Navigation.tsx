@@ -4,6 +4,7 @@ import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X, Star, I
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { StreakBadge } from "@/components/badges/StreakBadge";
 import { useAuth } from "@/hooks/useAuth";
@@ -119,7 +120,8 @@ export function Navigation() {
       </div>
     </nav>
 
-    {/* Mobile slide-in sheet */}
+    {/* Mobile slide-in sheet — portalled to <body> so no floating control overlaps it */}
+    {createPortal(
     <div
       className={cn(
         "md:hidden fixed inset-0 z-[80] transition-opacity duration-300",
@@ -186,7 +188,8 @@ export function Navigation() {
           </Link>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body)}
     </>
   );
 
