@@ -204,7 +204,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         {
           h: `Practising ${g.term} on the simulator`,
           p: [
-            `Reading a definition is not the same as recognising ${g.term} in a live chart under time pressure. Open the practice desk, find the pattern or condition described above on an instrument you already follow, and place a small simulated position with a written invalidation level. Review it a day later in the journal and note whether the concept behaved the way this page describes. ${DISCLAIMER}`,
+            glossaryPractice(g),
           ],
         },
       ],
