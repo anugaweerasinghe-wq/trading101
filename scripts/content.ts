@@ -27,6 +27,37 @@ function clean(s: string): string {
 }
 
 
+/** Asset-class specific pre-trade checklist, so instrument pages do not all
+ *  close with the same four lines of text. */
+const TYPE_CHECKLIST: Record<string, string[]> = {
+  crypto: [
+    "Check what the position would be worth after a 10% overnight move before you size it — crypto gaps happen while you sleep.",
+    "Note whether the move you are reacting to came with rising volume or is a thin weekend drift.",
+    "Write the invalidation price down first; leverage-driven wicks punish stops that are decided afterwards.",
+  ],
+  stock: [
+    "Check whether earnings, a split or an index event falls inside your intended holding window.",
+    "Size against the recent daily range rather than a round number of shares.",
+    "Decide in advance what news would make you exit, and write it in the journal before entry.",
+  ],
+  etf: [
+    "Look at what the fund actually holds; two ETFs with similar names can behave very differently.",
+    "Remember that a broad fund moves slower than its largest holding — set expectations for a smaller daily range.",
+    "Treat it as an exercise in patience: fund positions reward a longer review cycle than single names.",
+  ],
+  forex: [
+    "Note which session you are trading in; the same pair behaves differently in London and in Asia.",
+    "Check the economic calendar for rate decisions or inflation prints inside your window.",
+    "Express risk in account currency, not pips, so the size means something concrete.",
+  ],
+  commodity: [
+    "Check whether the move is supply-driven, demand-driven or currency-driven before deciding it is a trend.",
+    "Expect seasonality: several commodities have recurring demand patterns that distort short samples.",
+    "Give the position a wider stop and a smaller size than an equity trade of the same conviction.",
+  ],
+};
+
+
 /** Asset-class background used as supporting context on instrument pages. */
 const TYPE_GUIDE: Record<string, { h: string; p: string[]; list: string[] }> = {
   crypto: {
