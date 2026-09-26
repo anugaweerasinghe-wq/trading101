@@ -28,7 +28,7 @@ interface AssetStats {
 export const CATEGORY_INTROS: Record<string, string> = {
   crypto: "Cryptocurrencies are decentralized digital assets known for 24/7 market cycles and high volatility.",
   stock: "Equities represent ownership in public companies and are driven by earnings, macro trends, and sector performance.",
-  etf: "ETFs hold baskets of securities. Broad funds can spread company-specific exposure, while sector and thematic funds can still be highly concentrated."
+  etf: "ETFs hold baskets of securities. Broad funds can spread company-specific exposure, while sector and thematic funds can still be highly concentrated.",
   forex: "Global currencies reflect macroeconomic health and geopolitical shifts, trading 24/5 across global markets.",
   commodity: "Commodities are raw materials and resources that reflect macroeconomic health and geopolitical shifts."
 };
