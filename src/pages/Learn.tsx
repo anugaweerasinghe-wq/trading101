@@ -150,7 +150,7 @@ export default function Learn() {
                   <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
                     <GraduationCap className="w-6 h-6 text-emerald-400" /> Structured Trading Courses
                   </h2>
-                  <p className="text-sm text-muted-foreground mt-1">Four expert-written tracks, 20 lessons, quizzes and completion badges — 100% free. This is the guided, in-order way to learn.</p>
+                  <p className="text-sm text-muted-foreground mt-1">Four structured tracks, 20 lessons, quizzes and completion badges — 100% free. This is the guided, in-order way to learn.</p>
                 </div>
                 <Link to="/courses" className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-400 hover:text-emerald-300">
                   View all courses <ChevronRight className="w-4 h-4" />

@@ -127,8 +127,8 @@ export const COMPARE_PAIRS: ComparePair[] = [
     slug: "stocks-vs-crypto",
     a: { symbol: "SPY", name: "Stocks (S&P 500)", tag: "Equity index" },
     b: { symbol: "BTC", name: "Crypto (Bitcoin)", tag: "Digital asset" },
-    intro: "A 60/40 question for the 2026 saver: equities give you fractional ownership of cash-flowing businesses, crypto gives you exposure to a new monetary and settlement layer. The smart approach is rarely 'one or the other' — it's how much of each.",
-    verdict: "Most beginners should anchor in index equities and use a small (5-10%) crypto allocation for asymmetric upside.",
+    intro: "Equities and crypto represent very different kinds of exposure: equities are ownership claims on businesses, while crypto assets depend on network use, market structure and investor demand. This comparison focuses on those structural differences rather than prescribing an allocation.",
+    verdict: "Broad equity indexes and crypto have very different risk profiles. Use the comparison to understand those differences rather than treating either allocation as a universal recommendation.",
     bullets: [
       "Returns: S&P 500 ~10%/yr long-term; BTC has compounded faster but with massive drawdowns.",
       "Drawdowns: S&P max ~55% (2008); BTC has had 4 separate >75% drawdowns.",
@@ -222,7 +222,7 @@ export const HOWTO_ASSETS: HowToAsset[] = [
       "Open TradeHQ's free $100K practice account — no signup required.",
       "Navigate to /trade/btc to see the live BTC chart and order panel.",
       "Start with a small simulated position (1-2% of practice capital) to learn order flow.",
-      "Set a stop-loss below recent support; never trade without one, even on practice.",
+      "If you use an exit rule in simulation, define it before entry and record how it affects drawdown and average loss.",
       "Journal every entry, exit and reason — the Ghost Journal does this automatically.",
     ],
     beginnerTip: "Use the 1-hour chart with RSI(14) and the 20/50 EMA. Most rookies blow accounts by trading 1-minute candles.",
@@ -262,7 +262,7 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     ],
     beginnerTip: "ETH trades cleaner technicals than most alts. Stick with horizontal support/resistance before chasing indicators.",
     risk: "Smart-contract narratives can flip overnight (exploits, regulation). Size positions assuming a 30% gap is possible.",
-    studentNote: "Students: use ETH practice trades to learn risk-reward — not to time tops. Most pros agree timing is the hardest skill.",
+    studentNote: "Use ETH practice trades to compare entry, exit and sizing rules. Market timing is difficult to evaluate reliably from a small sample, so focus on process and review rather than prediction.",
     drivers: [
       "The ETH/BTC ratio, which tells you whether capital is rotating into the wider crypto complex or consolidating into Bitcoin. Most ETH-specific edge lives in this ratio rather than in the dollar price.",
       "Network activity and fee revenue, including how much settlement has migrated to layer-2 chains, which changes how much value accrues to the base layer.",
@@ -394,7 +394,7 @@ export const HOWTO_ASSETS: HowToAsset[] = [
       "Open /trade/sol and check SOL/BTC ratio for relative strength.",
       "Identify a higher-timeframe range; only buy near the bottom of that range.",
       "Set invalidation just below the range low.",
-      "Take partial profits at the mid-range; let the rest ride to the top.",
+      "In simulation, compare fixed exits with partial exits and record how each approach changes average win, average loss and drawdown.",
     ],
     beginnerTip: "SOL trends explosively but reverses just as fast. Lock in partials — perfection is the enemy of profit.",
     risk: "Network outages have happened. Don't be max-leveraged through low-liquidity weekends.",
@@ -452,12 +452,12 @@ export const STRATEGIES: Strategy[] = [
     steps: [
       "Pick one liquid instrument and trade only that for 30 days.",
       "Use 1-min + 5-min charts; ignore higher timeframes for entries.",
-      "Risk ≤0.25% of equity per trade — you'll take 10-30 trades a day.",
-      "Hard stop after 3 consecutive losses; revenge trading is the #1 killer.",
+      "Choose a small predefined practice risk budget and keep it consistent while you collect enough trades to review the results.",
+      "Use a predefined session stop in the simulator if repeated losses are affecting decision quality, and review the session before continuing.",
       "Review every trade nightly — most edge comes from cutting bad setups, not adding new ones.",
     ],
     example: "Long BTC at $95,120 with stop $95,080, target $95,210 — risking $40 to make $90.",
-    successRate: "Realistic win rate: 55-60% with 1:1.5 R. Below that, you'll grind to zero.",
+    successRate: "No universal win rate applies. Track your own simulated win rate, payoff ratio, costs and drawdown over a sufficiently large sample.",
     depth: {
       context:
         "Scalping exists because order books are noisy. Market makers quote a bid and an ask, and between those two prices there is a constant tug-of-war as large orders get worked into the book. A scalper is not predicting where an asset will be next month — they are trying to be on the right side of the next few hundred ticks and get out before the noise reverses. That makes execution quality, not analysis, the main variable: a 2-tick worse fill on a 10-tick target destroys a third of the trade's expected value.",
@@ -483,10 +483,10 @@ export const STRATEGIES: Strategy[] = [
       "Use the 4-hour chart for entries on pullbacks.",
       "Risk 0.5-1% per trade.",
       "Set stops outside daily noise (1.5x ATR is a good default).",
-      "Take partial profits at 1R, trail the rest with a moving average.",
+      "Test fixed exits, partial exits and trailing exits separately so you can compare how each rule behaves in simulation.",
     ],
     example: "Bought NVDA at $145 after a pullback, stop $138, target $165 — risked $7 to make $20.",
-    successRate: "Realistic win rate: 45-50% with 1:2+ R. Compounds nicely with discipline.",
+    successRate: "Performance depends on market regime, entry/exit rules, costs and sample size. Use the simulator to measure your own distribution of outcomes.",
     depth: {
       context:
         "Swing trading sits between day trading and investing: positions are held long enough for a thesis to play out, short enough that a single position is never a life decision. It suits anyone with a job because the analysis happens once, usually in the evening, and the market does the work while you are away. The trade-off is overnight risk — earnings, macro prints and weekend headlines all move price while your stop cannot protect you at the exact level you set.",
@@ -510,12 +510,12 @@ export const STRATEGIES: Strategy[] = [
     steps: [
       "Trade only the first 90 minutes and the last 60 minutes of the session.",
       "Use the 5-min chart with VWAP.",
-      "Risk ≤0.5% per trade, max 5 trades per day.",
+      "Use a deliberately small and consistent simulated risk budget, and set a session limit that you can evaluate afterwards.",
       "Close everything before the close — no overnight exposure.",
       "End every day with a journal entry: what worked, what didn't, what to cut tomorrow.",
     ],
     example: "Long SPY at VWAP reclaim, stop below VWAP, target the day's prior high.",
-    successRate: "Realistic win rate: 50-55%. The edge comes from session selection, not magic indicators.",
+    successRate: "There is no dependable universal win-rate range. Evaluate the method by expectancy, drawdown, costs and consistency across a larger sample.",
     depth: {
       context:
         "Day trading concentrates a whole trading career into single sessions. Because everything is closed by the bell there is no overnight gap risk, but there is also no time for a thesis to recover — the market either agrees with you within hours or it does not. Most of the day's directional movement happens in the opening 90 minutes and the final hour, which is why disciplined day traders trade those windows and stay flat through the low-volume midday drift.",
@@ -544,7 +544,7 @@ export const STRATEGIES: Strategy[] = [
       "Track total return on TradeHQ's portfolio analytics to see compounding in action.",
     ],
     example: "$100 into SPY every Friday for 10 years has historically outperformed 80% of active retail traders.",
-    successRate: "Win rate of *strategy execution*: 100% if you stick to it. Most people don't.",
+    successRate: "Execution can be measured separately from investment performance: track whether the scheduled contribution was made as planned, without treating adherence as a guarantee of returns.",
     depth: {
       context:
         "Dollar-cost averaging removes the hardest variable in investing: timing. By committing a fixed amount on a fixed schedule you automatically buy more units when prices are low and fewer when they are high, and you never have to form a view about the next three months. Academic work generally finds lump-sum investing beats DCA on average expected return simply because markets rise more often than they fall — but DCA wins on behaviour, and behaviour is what determines whether someone is still invested after a 30% drawdown.",
@@ -573,7 +573,7 @@ export const STRATEGIES: Strategy[] = [
       "Skip the trade in obvious strong-trend regimes — check the 50/200 EMA first.",
     ],
     example: "BTC RSI dips to 26 at $92K with a bullish engulfing — buy, stop $91K, target $94K.",
-    successRate: "55-60% in ranges. Drops to 30% in trends. Regime detection is the real edge.",
+    successRate: "RSI-based results can vary sharply by market regime and rule set. Test the same rules in ranging and trending periods rather than relying on a fixed win-rate claim.",
     depth: {
       context:
         "RSI, published by J. Welles Wilder in 1978, measures the ratio of average gains to average losses over a lookback window, normally 14 periods, and scales it from 0 to 100. Mean-reversion traders use it as a stretch gauge: a reading under 30 says recent selling has been unusually one-sided, which in a range-bound market often precedes a bounce. Crucially, RSI says nothing about direction — it describes how price got here, not where it goes next.",
@@ -602,7 +602,7 @@ export const STRATEGIES: Strategy[] = [
       "Exit when MACD crosses back.",
     ],
     example: "NVDA MACD crosses up at $130 with stop $124 — held for 6 weeks to $165.",
-    successRate: "40-50% with 1:2.5+ R — payoff matters more than frequency.",
+    successRate: "MACD results vary by timeframe, market and exit rule. Track payoff distribution and drawdown instead of assuming a fixed win-rate range.",
     depth: {
       context:
         "MACD is the difference between a 12-period and a 26-period exponential moving average, plotted against a 9-period signal line. Because it is built from averages, it always confirms a move after it has begun — it is a trend-following tool, not a predictive one. That lag is the price paid for filtering out most false starts, and it is why MACD systems typically lose more trades than they win while still making money: the winners run far longer than the losers.",

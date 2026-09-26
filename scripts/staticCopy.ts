@@ -24,7 +24,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
           "Paper trade 150+ instruments across stocks, crypto, ETFs, forex and commodities with market and limit orders.",
           "Track a full practice portfolio — open positions, realised and unrealised P&L, win rate, Sharpe ratio and maximum drawdown.",
           "Work through four structured courses (options, futures, macro reading and trading psychology) with quizzes and completion badges.",
-          "Read a 49-term trading glossary written in plain language, each entry with an expert explanation and a worked example.",
+          "Read a 49-term trading glossary written in plain language, each entry with a detailed explanation and a worked example.",
           "Follow step-by-step guides for individual assets, side-by-side asset comparisons, and named strategy walkthroughs.",
           "Keep a trading journal, build daily streaks with the daily challenge, and run a 30-day practice duel against a friend.",
         ],
@@ -32,7 +32,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "Who it is for, and who it is not for",
         p: [
-          "TradeHQ is built for complete beginners and for self-taught traders who want a place to rehearse a process before risking capital. It is particularly used by students, who often have time to learn but very little capital to lose.",
+          "TradeHQ is built for beginners and self-directed learners who want a place to rehearse market mechanics and a repeatable process without using real money. It can also be useful in classroom or independent-study settings.",
           "It is not for you if you want signals, copy-trading, portfolio management, or someone to tell you what to buy. We do not publish price targets, we do not run a Discord with calls, and we do not accept payment for coverage of any asset. If you are looking for a recommendation, this is the wrong site.",
         ],
       },
@@ -41,7 +41,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         list: [
           "Open the markets page and pick one instrument you already recognise.",
           "Read its guide page so you know what actually moves it before you trade it.",
-          "Place a small practice position — 1-2% of the $100,000 balance, not 50%.",
+          "Choose a deliberately small practice position first, then compare how different simulated position sizes affect drawdown and volatility.",
           "Write down, before you enter, where you would exit if you are wrong.",
           "Come back the next day, review the trade in the journal, and repeat.",
         ],

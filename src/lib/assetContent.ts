@@ -982,13 +982,13 @@ export function generateMarketOutlook(asset: Asset): string {
   // Strategy paragraph
   const strategy = content?.strategy 
     ? content.strategy
-    : `Develop your ${asset.symbol} trading strategy by analyzing chart patterns, support and resistance levels, and market sentiment indicators. Consider using multiple timeframes to confirm trends and identify optimal entry points. Technical analysis combined with awareness of broader market conditions can improve trading outcomes.`;
+    : `Develop your ${asset.symbol} trading strategy by analyzing chart patterns, support and resistance levels, and market sentiment indicators. Consider using multiple timeframes to confirm trends and identify optimal entry points. Technical analysis can be used as one way to describe price behaviour, but it does not guarantee better outcomes; compare any method against a simple baseline in the simulator.`;
   
   // Risk management paragraph
-  const riskManagement = `Risk management is critical when trading ${asset.symbol}. Consider position sizing relative to your virtual portfolio, set appropriate stop-loss levels, and never risk more than 2% of capital on a single trade. Understanding volatility patterns specific to ${asset.symbol} helps set realistic profit targets and loss limits. Paper trading allows you to practice these risk management techniques without financial consequences.`;
+  const riskManagement = `Risk management is a useful part of a ${asset.symbol} simulation. Compare several position sizes and predefined exit rules, and record how each choice changes drawdown and portfolio volatility. Treat percentage limits as test settings rather than universal real-money rules.`;
   
   // Practice advice paragraph
-  const practiceAdvice = `TradeHQ provides $100,000 in virtual capital to practice ${asset.symbol} trading. Use this simulator to test strategies, learn technical analysis, and build confidence before committing real capital. Track your performance over time and refine your approach based on results. The ability to practice without financial risk accelerates the learning curve for new traders while helping experienced traders test new strategies.`;
+  const practiceAdvice = `TradeHQ provides $100,000 in virtual capital to practise ${asset.symbol} trading. Use the simulator to test a written process, learn order mechanics, and review results over a larger sample. Paper trading can help with practice, but it cannot reproduce every feature of live execution or the emotions attached to real losses.`;
   
   // Educational disclaimer paragraph
   const disclaimer = `This analysis is for educational purposes only. Past simulated performance does not guarantee future results. Market conditions can change rapidly, and all trading involves risk of loss. Always conduct your own research and consult a qualified financial advisor before making investment decisions. TradeHQ is a practice simulator designed to help you develop skills in a risk-free environment.`;
@@ -1008,29 +1008,14 @@ export function getAssetContent(assetId: string): AssetContent {
 
 // Generate "How Students Use This Simulator" section per asset
 export function generateStudentUseSection(asset: Asset): string {
-  const content = ASSET_CONTENT[asset.id];
-  const typeLabel = asset.type === 'crypto' ? 'cryptocurrency' : asset.type === 'forex' ? 'forex' : asset.type === 'etf' ? 'ETF' : 'stock';
-  
-  const STUDENT_SECTIONS: Record<string, string> = {
-    btc: `Students use TradeHQ to practice Bitcoin trading by placing simulated buy and sell orders on BTC's price chart. Many beginners start by learning to identify support and resistance levels at key psychological prices like $50K or $100K. The simulator tracks your virtual P&L so you can see how holding through volatility versus quick scalping affects returns. Students in Colombo and across Sri Lanka use this to learn crypto fundamentals before opening a real exchange account.`,
-    eth: `Ethereum traders on TradeHQ practice analyzing DeFi trends and gas fee patterns. Students learn how network upgrades (like proto-danksharding) affect ETH price action. The simulator helps beginners understand the ETH/BTC ratio as a risk gauge. Sri Lankan university students use this tool to practice smart-contract ecosystem analysis without needing real capital or a crypto wallet.`,
-    nvda: `Students practice trading NVIDIA stock to understand semiconductor cycles and AI demand. The simulator lets you practice identifying momentum breakouts when NVDA trends strongly. Many beginners use NVDA as their first stock because its AI narrative creates clear entry signals. Students in Sri Lanka can learn US tech stock analysis without needing a brokerage account.`,
-    aapl: `Apple stock is where many students start their equity trading practice. TradeHQ lets you simulate AAPL trades around product launch events and earnings reports. Practice the 'buy the rumor, sell the news' pattern that AAPL is famous for. Students learn to read market sentiment through AAPL's price action — it's often a bellwether for the entire tech sector.`,
-    tsla: `Tesla is the ultimate volatility training ground for student traders. TradeHQ's simulator lets you practice managing emotions during TSLA's rapid price swings. Students learn stop-loss discipline, position sizing, and the importance of not over-leveraging on high-beta stocks. The lessons learned from TSLA volatility apply to every asset class.`,
-    spy: `SPY is the recommended starting point for all student traders on TradeHQ. By trading the S&P 500 ETF first, students learn how the overall market moves before specializing. Practice reading moving averages, volume patterns, and market breadth indicators. The skills you build trading SPY transfer directly to individual stocks and other ETFs.`,
-    sol: `Students practice Solana trading to experience high-speed crypto volatility. SOL's fast price action teaches quick decision-making and the importance of pre-set take-profit and stop-loss levels. Beginners learn how DeFi ecosystem growth on Solana correlates with token price, building cross-asset analysis skills.`,
-    gold: `Gold trading practice teaches students macro-fundamental analysis. On TradeHQ, beginners learn how inflation data, Fed decisions, and geopolitical events move XAU/USD. Gold's inverse correlation with the US dollar makes it an excellent asset for learning cross-asset relationships and portfolio hedging concepts.`,
-    eurusd: `EUR/USD is the entry point for students learning forex trading. TradeHQ's simulator lets you practice during the London/New York session overlap when liquidity peaks. Students learn pip calculations, central bank policy analysis, and how economic data releases create trading opportunities — all with virtual money.`,
-    gbpusd: `Students practice GBP/USD to learn forex volatility management. Cable's wider spreads and sharper moves versus EUR/USD teach risk management faster. The simulator helps beginners understand how BOE and Fed policy divergence creates directional trends in currency pairs.`,
-    amzn: `Students use AMZN to practice earnings-driven trading strategies. The simulator lets you position before Amazon's quarterly reports and learn from gap-up/gap-down scenarios. Practice reading AWS revenue growth and advertising income as leading indicators for price direction.`,
-    oil: `Crude oil on TradeHQ teaches students commodity trading fundamentals. Practice analyzing EIA inventory reports, OPEC+ meeting outcomes, and geopolitical supply disruptions. Oil's connection to inflation and consumer spending makes it essential for macro analysis practice.`,
-    msft: `Microsoft is ideal for students learning steady trend-following strategies. MSFT's lower volatility compared to NVDA or TSLA makes it perfect for practicing position building and moving average crossover techniques. Students learn how cloud computing growth (Azure) drives tech stock valuations.`,
-    googl: `Students practice GOOGL trading to learn AI-driven momentum strategies. The simulator helps you identify how product announcements and Search ad revenue create breakout patterns. Practice using Google's earnings as a tech sector sentiment gauge.`,
-    meta: `META stock practice on TradeHQ teaches students social media sector analysis. Learn to correlate Daily Active Users, ad revenue per user, and Reels engagement with stock price movements. Practice managing positions through META's notoriously dramatic earnings reactions.`,
-  };
-  
-  return STUDENT_SECTIONS[asset.id] || 
-    `Students use TradeHQ to practice ${asset.symbol} ${typeLabel} trading with $100,000 in virtual capital. The simulator helps beginners learn to read charts, identify trends, and manage risk without any financial exposure. Whether you're in Colombo or anywhere else, you can build trading skills at your own pace before committing real capital.`;
+  const typeLabel =
+    asset.type === 'crypto' ? 'cryptocurrency' :
+    asset.type === 'forex' ? 'forex' :
+    asset.type === 'etf' ? 'ETF' :
+    asset.type === 'commodity' ? 'commodity' :
+    'stock';
+
+  return `Use TradeHQ to practise ${asset.symbol} ${typeLabel} trading with virtual funds. Start by writing down what you think could move the asset, place a simulated order, choose an exit condition, and review the result afterwards. The goal is to learn order mechanics, position sizing and how volatility affects a practice portfolio — not to predict the next move or prepare for a specific real-money trade.`;
 }
 
 // Check if asset is in seed set

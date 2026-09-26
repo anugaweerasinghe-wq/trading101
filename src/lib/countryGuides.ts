@@ -54,7 +54,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
     practicePlan:
       "A workable first quarter: in month one, complete the Trading Psychology track and place no more than three simulated trades a week, writing down the reason for each before you know the result. In month two, add the Macro Reading track and start following the CBSL policy announcements alongside US CPI releases, noting how USD/LKR reacts. In month three, run a single strategy consistently for thirty days and review the drawdown rather than the return. Because US market hours fall late in the Sri Lankan evening, use daily charts and pre-placed orders instead of trying to trade live after midnight.",
     faqs: [
-      { q: "Is TradeHQ legal to use in Sri Lanka?", a: "Yes. TradeHQ is a free educational simulator with no real money or brokerage relationship, so it is not regulated as a financial service. Only real-money trading falls under SEC Sri Lanka." },
+      { q: "What should Sri Lankan users know about regulation?", a: "TradeHQ is an educational simulator and does not execute real-money trades. Financial-market rules can change, so for questions about investing, brokerage access or local regulation, check current guidance from the Securities and Exchange Commission of Sri Lanka and other relevant authorities." },
       { q: "Can I convert my paper gains to real money?", a: "No. Paper trades are simulated only. To trade real markets from Sri Lanka you must open an account with a SEC-licensed CSE broker or a compliant international broker." },
       { q: "Do prices show in LKR?", a: "No. Prices are shown in USD to match global exchanges. To estimate LKR exposure, multiply by the current USD/LKR rate." },
     ],
@@ -68,11 +68,11 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
     intro:
       "India has one of the world's fastest-growing retail trading populations — and one of the highest failure rates among new traders. TradeHQ gives Indian students and working professionals a way to build real market understanding before touching a Demat account.",
     whyPractice:
-      "SEBI's 2023 study found ~90% of active Indian equity F&O traders lose money in their first year. Paper trading first is not optional if you value your capital.",
+      "SEBI has published research showing high loss rates among individual traders in equity derivatives. Paper trading can be one way to learn market mechanics before considering any real-money activity, but it does not guarantee better live results.",
     regulator: { name: "Securities and Exchange Board of India (SEBI)", url: "https://www.sebi.gov.in/" },
     brokers: ["Zerodha, Groww, Upstox, Angel One and other SEBI-registered brokers"],
     taxNote:
-      "Indian residents owe short-term or long-term capital gains tax on real trades, plus STT and applicable GST. TradeHQ is not tax advice — speak to a chartered accountant.",
+      "Tax treatment depends on the instrument, holding period and current Indian rules. TradeHQ is not tax advice; verify current guidance with an official source or qualified tax professional.",
     studentAngle:
       "Ideal for CA, CFA and MBA candidates. Complete the Trading Psychology and Macro Reading tracks first — they are the two topics Indian colleges rarely teach.",
     marketAccess:

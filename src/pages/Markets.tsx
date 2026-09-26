@@ -123,20 +123,20 @@ export default function Markets() {
   return (
     <>
       <Helmet>
-        <title>Live Markets 2026 — Track 150+ Stocks, Crypto, ETFs & Forex | TradeHQ</title>
-        <meta name="description" content="Real-time market dashboard with 150+ assets. Top gainers/losers, search, and sector clusters. Practice trading live prices with $100K virtual cash — TradeHQ 2026." />
+        <title>Practice Markets — Stocks, Crypto, ETFs & Forex | TradeHQ</title>
+        <meta name="description" content="Browse 150+ practice markets across stocks, crypto, ETFs, forex and commodities. Quotes may be simulated, cached or delayed. Trade with $100K virtual cash." />
         <link rel="canonical" href="https://www.thetradehq.com/markets" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Live Markets 2026 — 150+ Stocks, Crypto, ETFs & Forex | TradeHQ" />
-        <meta property="og:description" content="Track stocks, crypto, ETFs, forex & commodities in real time. Free market dashboard — TradeHQ." />
+        <meta property="og:title" content="Practice Markets — 150+ Stocks, Crypto, ETFs & Forex | TradeHQ" />
+        <meta property="og:description" content="Explore simulated, cached or delayed market data across stocks, crypto, ETFs, forex and commodities." />
         <meta property="og:url" content="https://www.thetradehq.com/markets" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Live Markets 2026 — 150+ Assets | TradeHQ" />
+        <meta name="twitter:title" content="Practice Markets — 150+ Assets | TradeHQ" />
         <meta name="twitter:description" content="Track stocks, crypto, ETFs, forex & commodities. Free market dashboard." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
       </Helmet>

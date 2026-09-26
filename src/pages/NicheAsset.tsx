@@ -26,8 +26,8 @@ export default function NicheAsset() {
 
   const displaySymbol = niche.symbol.replace('/', '-');
   const canonical = `https://www.thetradehq.com/niche/${displaySymbol.toLowerCase()}`;
-  const title = `${niche.name} (${niche.symbol}) — Institutional Analysis & 2026 Scenario Drivers | TradeHQ`;
-  const description = `Practice ${niche.name} trading with $100K virtual cash. Expert analysis, real-time charts, technical indicators & risk management tools. Start trading ${niche.symbol} risk-free on TradeHQ simulator.`;
+  const title = `${niche.name} (${niche.symbol}) — Price Drivers & Practice Guide | TradeHQ`;
+  const description = `Learn the main factors that can move ${niche.name}, review educational chart concepts, and practise ${niche.symbol} with $100K virtual cash. Data may be simulated or delayed.`;
 
   // JSON-LD: SoftwareApplication + FAQPage + BreadcrumbList
   const jsonLd = [

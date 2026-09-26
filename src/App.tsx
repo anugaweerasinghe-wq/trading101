@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { PageTransition } from "@/components/PageTransition";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
@@ -81,6 +81,13 @@ function AnimatedRoutes() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/learn/article/:slug" element={<LearnArticle />} />
+          <Route path="/learn/how-to-read-stock-charts" element={<Navigate to="/learn/article/how-to-read-stock-charts" replace />} />
+          <Route path="/learn/trading-strategies-for-beginners" element={<Navigate to="/learn/article/trading-strategies-for-beginners" replace />} />
+          <Route path="/learn/what-is-paper-trading" element={<Navigate to="/learn/article/what-is-paper-trading" replace />} />
+          <Route path="/learn/how-to-build-a-portfolio" element={<Navigate to="/learn/article/how-to-build-a-portfolio" replace />} />
+          <Route path="/learn/crypto-vs-stocks" element={<Navigate to="/learn/article/crypto-vs-stocks" replace />} />
+          <Route path="/learn/stock-market-index-etfs" element={<Navigate to="/learn/article/stock-market-index-etfs" replace />} />
+          <Route path="/learn/risk-management-in-trading" element={<Navigate to="/learn/article/risk-management-in-trading" replace />} />
           <Route path="/learn/:lessonId" element={<LessonDetail />} />
           <Route path="/learn-trading-guide" element={<LearnTradingGuide />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
