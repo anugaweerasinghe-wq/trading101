@@ -56,8 +56,8 @@ export function getNicheAsset(symbol: string): NicheAsset | null {
     type: asset.type,
     mentorTake,
     faqs: [
-      { question: `Is ${asset.name} a good investment in 2026?`, answer: `${asset.name} shows mixed signals. Always conduct your own analysis and consider risk tolerance. Use our simulator to practice strategies risk-free before committing real capital.` },
-      { question: `How to trade ${asset.symbol} for beginners?`, answer: `Start by understanding ${asset.symbol}'s price drivers, practice with a simulator using virtual funds, learn technical analysis basics like support/resistance levels, and never risk more than 2% of your portfolio on a single trade.` },
+      { question: `Does TradeHQ recommend buying ${asset.name}?`, answer: `No. TradeHQ is an educational simulator and does not rate assets as good or bad investments. Use the page to understand ${asset.symbol} price drivers and to test a process with virtual funds.` },
+      { question: `How can a beginner practise trading ${asset.symbol}?`, answer: `Start by learning what tends to move ${asset.symbol}, then use virtual funds to practise order types, position sizing, predefined exits, and post-trade review. Treat any risk percentage as a simulation setting rather than a universal rule.` },
       { question: `What affects ${asset.symbol} price?`, answer: `${asset.symbol} price is influenced by ${asset.type === 'crypto' ? 'market sentiment, regulatory news, network metrics, and Bitcoin correlation' : asset.type === 'stock' ? 'earnings reports, sector trends, macroeconomic data, and analyst upgrades/downgrades' : asset.type === 'forex' ? 'interest rate differentials, economic data releases, central bank policy, and geopolitical events' : 'supply/demand dynamics, geopolitical factors, currency movements, and seasonal patterns'}.` },
     ],
     keyStats: [
