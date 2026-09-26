@@ -543,15 +543,14 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
 
   // ---------- Trade asset pages with authored content ----------
   const content: Record<string, any> = d.ASSET_CONTENT;
-  const faqs: Record<string, any[]> = d.ASSET_FAQS;
   const intros: Record<string, string> = d.CATEGORY_INTROS;
   const assets: any[] = d.ASSETS;
   const howtoSyms = new Set(howto.map((h) => h.symbol));
 
   for (const a of assets) {
-    const c = content[a.id];
-    if (!c) continue;
-    const f = faqs[a.id] || [];
+    if (!content[a.id]) continue;
+    const c = d.getAssetContent(a.id);
+    const f = d.getAssetFAQs(a.id);
     const stats = Object.entries(c.stats || {})
       .filter(([, v]) => v !== "live_sourced_at_runtime")
       .map(([k, v]) => `${humanise(k)}: ${v}`);
@@ -560,17 +559,13 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: `What ${a.name} is`, p: [c.whatIs] },
         ...(TYPE_GUIDE[a.type] ? [] : [{ h: `${c.category} as an asset class`, p: [intros[a.type] || ""] }]),
         ...(stats.length ? [{ h: "Reference facts", list: stats }] : []),
-        { h: "How to practise it here", p: [c.strategy] },
+        { h: "Practice exercise", p: [c.strategy] },
         ...(TYPE_LIVE_GAP[a.type] ? [{ h: "Where practice stops being representative", p: [TYPE_LIVE_GAP[a.type]] }] : []),
         ...(TYPE_GUIDE[a.type]
           ? [
               { h: TYPE_GUIDE[a.type].h, p: TYPE_GUIDE[a.type].p },
               { h: "Rules of thumb for this asset class", list: TYPE_GUIDE[a.type].list },
             ]
-          : []),
-        ...(c.executiveOutlook ? [{ h: "Context to be aware of", p: [`${c.executiveOutlook.summary} This is background context on the asset, not a forecast and not a recommendation.`] }] : []),
-        ...(c.institutionalDrivers
-          ? [{ h: "Arguments people make on each side", list: [`Bull case commonly cited: ${c.institutionalDrivers.bull}`, `Bear case commonly cited: ${c.institutionalDrivers.bear}`] }]
           : []),
         ...(f.length ? [{ h: `Common questions about trading ${a.name}`, list: f.map((q) => `${q.question} — ${q.answer}`) }] : []),
         {
