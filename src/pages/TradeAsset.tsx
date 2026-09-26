@@ -252,7 +252,7 @@ export default function TradeAsset() {
       {
         "@type": "PropertyValue",
         "name": "studentPerspective",
-        "value": `Students can practice ${selectedAsset.symbol} trading as beginners — build skills risk-free before committing real capital.`
+        "value": `Students can practice ${selectedAsset.symbol} trading as beginners — build skills without real-money exposure before committing real capital.`
       }
     ]
   } : null;
@@ -328,7 +328,7 @@ export default function TradeAsset() {
       "name": `How can I practice trading ${selectedAsset.name}?`,
       "acceptedAnswer": {
         "@type": "Answer" as const,
-        "text": `TradeHQ provides $100,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and AI mentoring.`
+        "text": `TradeHQ provides $100,000 in virtual capital to practice ${selectedAsset.symbol} trading without real-money exposure. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and AI mentoring.`
       }
     }
   ] : [];
@@ -396,7 +396,7 @@ export default function TradeAsset() {
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={isInSeedSet(selectedAsset.id) ? "index, follow" : "noindex, follow"} />
         <meta name="theme-color" content={assetColor} />
         
         {/* GEO KEY SUMMARY SCHEMA */}
@@ -443,7 +443,7 @@ export default function TradeAsset() {
           {selectedAsset && (
             <header className="pb-2">
               <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2 tracking-tight">
-                {selectedAsset.name} — Practice Trading Simulator 2026
+                {selectedAsset.name} — Practice Trading Simulator
               </h1>
               <p className="text-sm text-muted-foreground mb-2 max-w-3xl">
                 Master {selectedAsset.symbol} trading with $100,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
@@ -540,7 +540,7 @@ export default function TradeAsset() {
                 {generateStudentUseSection(selectedAsset)}
               </p>
               <p className="text-xs text-muted-foreground/60 mt-3 italic">
-                Student perspective: Practice {selectedAsset.symbol} trading as a beginner in Colombo or anywhere — build skills risk-free.
+                Practice perspective: Use {selectedAsset.symbol} in the simulator to learn order mechanics and review decisions without risking real money.
               </p>
             </section>
           )}
@@ -549,7 +549,7 @@ export default function TradeAsset() {
           {selectedAsset && (
             <section className="mt-8 p-6 bg-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/[0.06]">
               <h2 className="text-lg font-bold text-foreground mb-4 tracking-tight">
-                {selectedAsset.symbol} Simulated Market Analysis — Educational Overview 2026
+                {selectedAsset.symbol} Simulated Market Overview — Educational Only
               </h2>
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                 {generateMarketOutlook(selectedAsset).split('\n\n').map((paragraph, index) => (
