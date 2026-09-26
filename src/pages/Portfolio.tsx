@@ -51,6 +51,7 @@ import {
   initializeMilestones,
   getMilestoneState,
 } from "@/lib/notifications";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
 
 export default function Portfolio() {
   const [portfolio, setPortfolio] = useState(getPortfolio());
@@ -82,10 +83,10 @@ export default function Portfolio() {
   const fetchLivePrice = async (asset: typeof ASSETS[number]) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
         {
           headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
             "Content-Type": "application/json",
           },
         },
