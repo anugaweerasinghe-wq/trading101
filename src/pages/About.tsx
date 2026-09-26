@@ -37,7 +37,7 @@ const sections = [
     icon: Cpu,
     title: "Technology",
     body:
-      "TradeHQ is a modern web application built with React, TypeScript and a serverless backend. Portfolios are stored locally in your browser so you can start instantly with no signup. Optional AI features use large language models to generate feedback and structured lessons.",
+      "TradeHQ is a React and TypeScript web application with a serverless backend. Guest practice data is primarily kept in your browser. Optional accounts add public-profile, leaderboard and challenge features, and optional AI tools use language models to generate educational responses.",
   },
 ];
 
@@ -114,23 +114,27 @@ export default function About() {
             </section>
 
             <section className="glass-liquid-card p-6">
-              <h2 className="text-xl font-semibold mb-3">How the material is written and reviewed</h2>
+              <h2 className="text-xl font-semibold mb-3">How TradeHQ content is produced</h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Every lesson, glossary entry and asset page on TradeHQ is written for one purpose: to
-                explain a mechanism clearly enough that a beginner can act on it inside the simulator
-                and see the result for themselves. Where a lesson states a fact about how an
-                instrument works — how margin is calculated, what a CPI release contains, what a
-                contract obliges each side to do — it links to a primary source such as a regulator,
-                an exchange or a statistical agency, so the claim can be checked rather than trusted.
+                TradeHQ is an independent educational software project, not a newsroom, brokerage or
+                licensed advisory service. Some drafting, editing and coding work is assisted by AI
+                tools. AI output is not treated as an authority: published material is edited for
+                clarity, checked against the simulator's actual behaviour, and reviewed for obvious
+                factual or mathematical errors before it is kept on the site.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mt-3">
-                We deliberately do not publish performance claims, testimonials, win-rate promises or
-                statistics about our own users. Numbers of that kind are impossible for a reader to
-                verify and are the standard signature of a site selling something. When a page needs a
-                figure, it comes from a cited public source; when a question has no honest answer —
-                which asset will rise, whether a strategy will work for you — the page says so instead
-                of guessing. Content is revised whenever a reader points out an error or a market
-                mechanism changes, and corrections are made in place rather than quietly removed.
+                Courses link to primary or established public sources when a lesson depends on a
+                regulator, exchange, central bank or other external rule. Basic definitions and
+                simulator instructions may not need a citation on every sentence. Time-sensitive
+                market claims, unsupported performance promises and invented user statistics do not
+                belong in the educational material. If a fact cannot be supported confidently, the
+                preferred treatment is to qualify it, source it, or remove it.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+                The creator is identified above so readers know who is responsible for the project.
+                TradeHQ content is educational software content and is not represented as expert
+                financial review. Corrections can be reported through the contact page and are made
+                directly in the published material.
               </p>
             </section>
           </div>
