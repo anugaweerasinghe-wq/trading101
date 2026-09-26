@@ -28,6 +28,7 @@ import { recordLoss } from "@/components/trading/RevengeTradingBlocker";
 import { useToast } from "@/hooks/use-toast";
 import { persistPrice, getPersistedPrices } from "@/lib/pricePersistence";
 import { generatePriceMovement } from "@/lib/priceMovement";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
 
 export default function Trade() {
   const { symbol } = useParams();
@@ -58,10 +59,10 @@ export default function Trade() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
         {
           headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
             "Content-Type": "application/json",
           },
         },
