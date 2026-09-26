@@ -9,56 +9,49 @@ export default function Privacy() {
   const sections = [
     {
       icon: Database,
-      title: "Information We Collect",
-      content: `TradeHQ collects minimal information to provide our trading simulation services:
+      title: "Information TradeHQ Handles",
+      content: `Guest mode does not require an account. Practice portfolio data, trade history, journal entries, watchlists, course progress and preferences are primarily stored in your browser.
 
-• **Usage Data**: We collect anonymous usage statistics to improve our platform, including pages visited, features used, and session duration.
-• **Local Storage**: Your portfolio, trade history, and preferences are stored locally in your browser. We do not transmit this data to our servers.
-• **Device Information**: Basic device information (browser type, operating system) for compatibility and optimization purposes.
+If you create an optional account, the authentication service stores your email address and account credentials. TradeHQ also stores your chosen public username and may store profile fields such as country or bio together with aggregate simulated statistics used for public profiles, leaderboards and challenges.
 
-We do NOT collect:
-• Personal identification information (name, email, phone) unless voluntarily provided
-• Payment or financial information (our simulator uses virtual funds only)
-• Location data beyond country-level for analytics`
+If you submit a community review, TradeHQ stores the review, rating and optional display name. The review endpoint also stores a one-way hash derived from the request IP address so duplicate submissions can be limited without storing the raw IP in the reviews table.
+
+If you use an AI feature, the text you submit and the limited simulator context needed for that feature may be sent through TradeHQ's backend to an AI service provider to generate a response.
+
+Hosting, authentication and backend providers may process ordinary technical request data such as IP address, browser information and timestamps for delivery, security and abuse prevention.`
     },
     {
       icon: Lock,
-      title: "How We Use Your Information",
-      content: `We use the limited information we collect solely to:
+      title: "How Information Is Used",
+      content: `TradeHQ uses information to operate optional accounts, sync simulated statistics, display public profiles when applicable, moderate community reviews, provide requested AI features, keep the service secure and diagnose technical problems.
 
-• Provide and maintain our trading simulation service
-• Improve user experience and platform performance
-• Analyze usage patterns to enhance features
-• Ensure platform security and prevent abuse
+TradeHQ does not collect payment-card or brokerage credentials because it does not execute real-money trades. TradeHQ does not sell personal information.
 
-We do NOT:
-• Sell your data to third parties
-• Use your data for targeted advertising
-• Share your information with financial institutions`
+Public profile information is intentionally visible to other visitors. Do not put private or sensitive information in a public username, bio or review.`
     },
     {
       icon: Eye,
-      title: "Data Retention & Security",
-      content: `**Local Storage**: Your trading data is stored in your browser's local storage. You can clear this data at any time through your browser settings.
+      title: "Local Storage, Retention & Security",
+      content: `Guest-mode practice data is stored in browser local storage and can be removed by clearing this site's storage. Optional account, profile and review records are stored on the service backend until they are deleted under the account or moderation features that apply to them.
 
-**Analytics Data**: Anonymous analytics data is retained for up to 24 months for trend analysis.
-
-**Security Measures**: We implement industry-standard security practices including HTTPS encryption, secure hosting, and regular security audits.`
+TradeHQ uses HTTPS and service-provider access controls, but no online service can promise perfect security. Do not reuse an important password on any website.`
     },
     {
       icon: Globe,
-      title: "International Data Transfers",
-      content: `TradeHQ is hosted on global infrastructure. By using our service, you acknowledge that your anonymous usage data may be processed in countries outside your residence.
+      title: "Service Providers, International Processing & Advertising",
+      content: `TradeHQ uses third-party infrastructure for hosting, authentication, database functions and optional AI features. Those providers may process data in countries other than your own under their own legal and security obligations.
 
-For users in the European Economic Area (EEA), we comply with GDPR requirements. For California residents, we comply with CCPA requirements.`
+TradeHQ does not currently depend on a standalone behavioural-analytics SDK in the web application. Hosting and backend services may still create operational logs.
+
+If Google AdSense or another advertising service is enabled in the future, third-party vendors including Google may use cookies or similar storage to serve and measure ads. Google's advertising cookies can be used to serve ads based on visits to this and other sites. Visitors can manage personalized-ad settings through Google's Ads Settings. Where Google requires a certified consent-management platform for EEA, UK or Swiss traffic, TradeHQ will use one before serving applicable personalized ads.`
     }
   ];
 
   return (
     <>
       <Helmet>
-        <title>Privacy Policy & Terms of Service | TradingHQ Transparency</title>
-        <meta name="description" content="Read the official terms and privacy guidelines for TradingHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice." />
+        <title>Privacy Policy | TradeHQ</title>
+        <meta name="description" content="TradeHQ privacy policy: guest storage, optional accounts, public practice profiles, reviews, AI features, service providers and advertising-cookie disclosures." />
         <link rel="canonical" href="https://www.thetradehq.com/privacy" />
         <meta name="robots" content="index, follow" />
       </Helmet>
@@ -77,7 +70,7 @@ For users in the European Economic Area (EEA), we comply with GDPR requirements.
               Your privacy matters. TradeHQ is committed to protecting your data while providing an educational trading simulation.
             </p>
             <p className="text-sm text-muted-foreground mt-4">
-              Last Updated: January 26, 2026
+              Last Updated: September 26, 2026
             </p>
           </div>
 
@@ -90,23 +83,23 @@ For users in the European Economic Area (EEA), we comply with GDPR requirements.
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
                 <span className="text-profit">✓</span>
-                <span>No personal data collection required — use TradeHQ without signup</span>
+                <span>Guest mode works without an account; optional accounts store account data</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-profit">✓</span>
-                <span>All trading data stored locally in your browser</span>
+                <span>Guest practice data is primarily local; signed-in users can sync aggregate practice statistics</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-profit">✓</span>
-                <span>No real financial information ever collected</span>
+                <span>No payment-card or brokerage credentials are required for the simulator</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-profit">✓</span>
-                <span>GDPR and CCPA compliant</span>
+                <span>Privacy disclosures are kept aligned with the features currently used by TradeHQ</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-profit">✓</span>
-                <span>We never sell your data to third parties</span>
+                <span>TradeHQ does not sell personal information</span>
               </li>
             </ul>
           </div>
@@ -141,10 +134,7 @@ For users in the European Economic Area (EEA), we comply with GDPR requirements.
             </p>
             <div className="p-4 rounded-xl bg-muted/30 border border-border/30">
               <p className="text-sm">
-                <strong>Email:</strong> privacy@tradinghq.com
-              </p>
-              <p className="text-sm mt-2 text-muted-foreground">
-                We aim to respond to all privacy inquiries within 48 hours.
+                Use the <a href="/contact" className="underline text-primary">TradeHQ contact page</a> for privacy questions.
               </p>
             </div>
           </section>
@@ -155,24 +145,24 @@ For users in the European Economic Area (EEA), we comply with GDPR requirements.
             breadcrumbs={[{ label: "Privacy Policy" }]}
             faqs={[
               {
-                question: "Does TradeHQ collect personal data?",
-                answer:
-                  "No. TradeHQ requires no signup. Your portfolio and trade history are stored in your browser's local storage and never transmitted to our servers.",
-              },
-              {
-                question: "Is TradeHQ GDPR and CCPA compliant?",
-                answer:
-                  "Yes — because we collect no personal identifiers, we comply with both GDPR (EU) and CCPA (California) by design. You can clear all stored data at any time via your browser settings.",
-              },
-              {
-                question: "Does TradeHQ sell my data?",
-                answer:
-                  "No. We do not sell, rent or share user data with third parties. We use only anonymous, aggregate analytics to improve the platform.",
-              },
-              {
                 question: "Do I need an account to use TradeHQ?",
                 answer:
-                  "No. Open the site and start trading with $100,000 of virtual cash immediately — no email, no credit card, nothing required.",
+                  "No. Guest mode works without an account. Optional sign-in is used for features such as public profiles, leaderboards and challenges.",
+              },
+              {
+                question: "What is stored if I create an account?",
+                answer:
+                  "The authentication service stores your email and account credentials. TradeHQ also stores your public username and may sync aggregate simulated statistics for public-profile and leaderboard features.",
+              },
+              {
+                question: "Does TradeHQ sell personal information?",
+                answer:
+                  "No. TradeHQ does not sell personal information. It does use third-party infrastructure providers to operate hosting, authentication, backend and optional AI features.",
+              },
+              {
+                question: "What happens if advertising is added?",
+                answer:
+                  "If Google AdSense or another ad service is enabled, the privacy policy and consent controls will cover the cookies and data processing required by that service and applicable regions.",
               },
             ]}
           />
