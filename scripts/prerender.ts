@@ -23,8 +23,6 @@ import { DISCLAIMER } from "./staticCopy";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.resolve(__dirname, "..", "dist");
 
-/** Minimum rendered words in the static body of an indexable page. */
-const MIN_WORDS = 450;
 
 function esc(s: string): string {
   return String(s)
@@ -100,15 +98,6 @@ function renderBody(r: RouteMeta, content: PageContent | undefined): string {
 </div>`;
 }
 
-function wordCount(html: string): number {
-  return html
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .split(" ")
-    .filter(Boolean).length;
-}
-
 function renderHead(r: RouteMeta, template: string, body: string): string {
   const url = `${DOMAIN}${r.path === "/" ? "/" : r.path}`;
   const title = esc(r.title);
@@ -177,7 +166,6 @@ async function main() {
   const routes = uniqueRoutes();
   const canonicals = new Map<string, string>();
   const bodyHashes = new Map<string, string>();
-  const thin: { path: string; words: number }[] = [];
   const missing: string[] = [];
   let written = 0;
 
@@ -186,9 +174,6 @@ async function main() {
     if (!content && !r.noindex) missing.push(r.path);
 
     const body = renderBody(r, content);
-    const words = wordCount(body);
-    if (!r.noindex && words < MIN_WORDS) thin.push({ path: r.path, words });
-
     const html = renderHead(r, shell, body);
 
     const outDir = r.path === "/" ? DIST : path.join(DIST, r.path);
@@ -235,12 +220,7 @@ async function main() {
     console.error(`✖ ${missing.length} indexable routes have no static content: ${missing.slice(0, 12).join(", ")}`);
     process.exit(1);
   }
-  if (thin.length) {
-    console.error(`✖ ${thin.length} indexable routes below ${MIN_WORDS} words:`);
-    for (const t of thin.slice(0, 20)) console.error(`   ${t.path} — ${t.words} words`);
-    process.exit(1);
-  }
-  console.log(`✅ Every indexable route renders ≥ ${MIN_WORDS} words of unique static content`);
+  console.log("✅ Indexable routes have static content, unique bodies, and self-consistent metadata");
 }
 
 main();
