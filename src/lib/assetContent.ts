@@ -1,4 +1,4 @@
-// Unique SEO content for each asset - Anti-thin content blocks
+// Educational content used on asset practice pages.
 import { Asset } from './types';
 import { ASSETS } from './assets';
 
@@ -24,23 +24,11 @@ interface AssetStats {
   expenseRatio?: string;
 }
 
-// NEW: Executive Outlook for Google AI Overviews (50-60 words)
-interface ExecutiveOutlook {
-  summary: string;
-  lastUpdated: string;
-}
-
-// NEW: Institutional Drivers with Bull/Bear scenarios
-interface InstitutionalDrivers {
-  bull: string;
-  bear: string;
-}
-
-// Category intro text for SEO multiplier
+// Plain-language context by asset type
 export const CATEGORY_INTROS: Record<string, string> = {
   crypto: "Cryptocurrencies are decentralized digital assets known for 24/7 market cycles and high volatility.",
   stock: "Equities represent ownership in public companies and are driven by earnings, macro trends, and sector performance.",
-  etf: "ETFs provide diversified exposure to baskets of securities, offering lower risk than individual stock picking.",
+  etf: "ETFs hold baskets of securities. Broad funds can spread company-specific exposure, while sector and thematic funds can still be highly concentrated."
   forex: "Global currencies reflect macroeconomic health and geopolitical shifts, trading 24/5 across global markets.",
   commodity: "Commodities are raw materials and resources that reflect macroeconomic health and geopolitical shifts."
 };
@@ -55,128 +43,16 @@ interface AssetContent {
   strategy: string; // Block B: Simulator Strategy
   category: string;
   keywords: string[];
-  stats?: AssetStats; // Professional stats data
-  executiveOutlook?: ExecutiveOutlook; // NEW: For AI Overviews
-  institutionalDrivers?: InstitutionalDrivers; // NEW: Bull/Bear scenarios
-  sectorPillar?: string; // NEW: Topic cluster linking
+  stats?: AssetStats;
+  sectorPillar?: string;
 }
 
 // FAQ data for Google PAA (People Also Ask) targeting
-export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
-  btc: [
-    { question: "How can I practice trading Bitcoin without losing money?", answer: "Use a crypto simulator like TradeHQ. You get $100,000 in virtual funds to practice Bitcoin's price action with simulated charts — no financial risk." },
-    { question: "What is the best free Bitcoin trading simulator in 2026?", answer: "TradeHQ offers a free BTC simulator with $100K virtual cash, candlestick charts, and AI mentoring. No signup or credit card required — start in seconds." },
-    { question: "How to practice Bitcoin trading in Colombo as a student?", answer: "Students in Sri Lanka can use TradeHQ's free simulator to practice BTC trading with virtual money. Learn chart reading and risk management before using real capital." },
-    { question: "Is Bitcoin a good asset for beginner traders to practice?", answer: "Yes. Bitcoin has the most liquidity and educational resources of any crypto. Its clear support/resistance levels make it ideal for learning technical analysis basics." }
-  ],
-  eth: [
-    { question: "What is the best way to learn Ethereum trading?", answer: "Start by simulating trades on a platform that offers simulated charts. Focus on ETH/BTC correlation and gas fee trends before moving to real capital." },
-    { question: "How does Ethereum differ from Bitcoin for trading practice?", answer: "ETH has higher beta and reacts to DeFi and NFT sentiment. Practice trading ETH to learn how smart contract ecosystems drive price beyond simple supply/demand." },
-    { question: "Can students practice Ethereum trading for free?", answer: "Yes. TradeHQ gives you $100K virtual cash to practice ETH trades. Students in Colombo and worldwide can learn DeFi trading patterns without any cost." },
-    { question: "What indicators work best for Ethereum trading practice?", answer: "Focus on gas fees (network congestion), DeFi TVL changes, and the ETH/BTC ratio. These are unique to Ethereum and teach you cross-asset correlation analysis." }
-  ],
-  nvda: [
-    { question: "How do I trade the AI boom with a simulator?", answer: "NVDA is the primary AI stock. Practice identifying momentum breakouts and RSI overbought levels using $100K demo cash to learn tech cycles." },
-    { question: "Is NVIDIA stock good for beginner stock trading practice?", answer: "NVDA is excellent for beginners because it trends strongly with the AI narrative. Practice identifying trend continuation patterns and earnings-driven gaps." },
-    { question: "How to practice NVIDIA stock trading as a student in Sri Lanka?", answer: "Use TradeHQ's free simulator — no US brokerage needed. Practice NVDA with $100K virtual cash and learn semiconductor cycle analysis risk-free." },
-    { question: "What moves NVIDIA stock price the most?", answer: "Data center revenue growth, AI chip demand, and quarterly earnings drive NVDA. Practice correlating these catalysts with price action in the simulator." }
-  ],
-  aapl: [
-    { question: "Is Apple stock good for day trading practice?", answer: "Yes, AAPL is a favorite for beginners due to its high liquidity and predictable reactions to tech sector news and earnings reports." },
-    { question: "How to practice Apple stock trading without real money?", answer: "TradeHQ lets you trade AAPL with $100K virtual cash. Practice the 'buy the rumor, sell the news' pattern around product launches and earnings." },
-    { question: "What makes Apple stock move during earnings season?", answer: "iPhone revenue, Services growth, and guidance drive AAPL earnings moves. Practice reading pre-earnings positioning and post-earnings gap fills." },
-    { question: "Can students in Sri Lanka practice US stock trading for free?", answer: "Yes. TradeHQ simulates US stocks including AAPL with virtual cash. No brokerage account, ID verification, or minimum deposit required." }
-  ],
-  tsla: [
-    { question: "Why is Tesla stock so volatile in trading simulators?", answer: "Tesla's price is heavily driven by sentiment and macro-news. It is the perfect asset for practicing emotional discipline and stop-loss management." },
-    { question: "How to practice Tesla stock trading as a complete beginner?", answer: "Start on TradeHQ with $100K virtual cash. Trade small TSLA positions first — learn to set stop-losses before scaling up position sizes." },
-    { question: "What causes Tesla stock to gap up or down?", answer: "Elon Musk's statements, delivery numbers, FSD updates, and macro sentiment cause TSLA gaps. Practice gap-and-go and gap-fill strategies risk-free." },
-    { question: "Is Tesla stock too risky for student traders to practice?", answer: "No — a simulator removes real risk. TSLA's volatility actually makes it one of the best stocks to practice risk management and emotional discipline." }
-  ],
-  spy: [
-    { question: "Should beginners start with SPY or individual stocks?", answer: "Beginners should practice with SPY (S&P 500 ETF) first. It provides a 'market average' experience, making it easier to learn technical analysis basics." },
-    { question: "How to practice paper trading the S&P 500 for free?", answer: "Use TradeHQ's free simulator to trade SPY with $100K virtual cash. Learn to read market breadth, volume patterns, and moving averages risk-free." },
-    { question: "What is the best way to learn index ETF trading?", answer: "Start with SPY to understand how the overall market moves, then compare with QQQ (tech-heavy) to learn sector rotation and relative strength analysis." },
-    { question: "Can I practice SPY options strategies in a simulator?", answer: "TradeHQ focuses on spot trading for SPY. Practice identifying entry/exit points, trend direction, and risk management — foundational skills for any strategy." }
-  ],
-  sol: [
-    { question: "Is Solana trading harder than Bitcoin?", answer: "Solana is faster and often more volatile. Practice your 'entry and exit' speed in the simulator to account for Solana's aggressive price swings." },
-    { question: "How to practice Solana trading for free in 2026?", answer: "TradeHQ offers SOL trading with $100K virtual cash. Practice fast-moving crypto trades and learn to handle high-volatility altcoin price action." },
-    { question: "What drives Solana price movements?", answer: "Network activity, DeFi TVL, NFT minting volume, and ecosystem growth drive SOL. Practice correlating on-chain metrics with price action." },
-    { question: "Is Solana suitable for beginner crypto traders?", answer: "SOL's volatility can be challenging but educational. Start with small virtual positions and use tight stop-losses to practice risk management." }
-  ],
-  gold: [
-    { question: "How does Gold react during market crashes?", answer: "Gold often acts as a safe-haven. Use the TradeHQ simulator to watch how XAU/USD moves inversely to the stock market during high-volatility events." },
-    { question: "How to practice gold trading for free as a student?", answer: "TradeHQ provides $100K virtual cash to trade gold (XAU). Students can learn safe-haven dynamics and inflation hedging strategies risk-free." },
-    { question: "What factors drive gold prices in 2026?", answer: "Real interest rates, USD strength, central bank purchases, and geopolitical tensions drive gold. Practice correlating these macro factors with XAU charts." },
-    { question: "Is gold trading good for learning macro analysis?", answer: "Yes — gold responds to inflation data, Fed decisions, and geopolitical events. It's one of the best assets for developing macro-fundamental analysis skills." }
-  ],
-  amzn: [
-    { question: "When is the best time to trade Amazon stock?", answer: "Amazon often shows high volatility during 'Prime Day' and quarterly earnings. Practice the 'Buy the Rumor' strategy on these specific dates." },
-    { question: "How to practice Amazon stock trading without a brokerage?", answer: "Use TradeHQ's free simulator — no brokerage account needed. Trade AMZN with $100K virtual cash and learn earnings-driven price patterns." },
-    { question: "What drives Amazon stock price the most?", answer: "AWS cloud revenue, e-commerce growth, advertising income, and operating margins are key AMZN drivers. Practice reading these metrics before earnings." },
-    { question: "Can students practice trading Amazon stock for free?", answer: "Yes. TradeHQ simulates AMZN with virtual capital. Students worldwide can learn to trade one of the world's largest companies without financial risk." }
-  ],
-  eurusd: [
-    { question: "How do I learn Forex trading for free?", answer: "Use a $100,000 demo account to trade the EUR/USD pair. Focus on the overlap of the London and New York sessions for the most realistic practice." },
-    { question: "What is the best free forex simulator for beginners?", answer: "TradeHQ offers EUR/USD trading with $100K virtual cash. Practice currency pair analysis, pip calculations, and session-based trading strategies." },
-    { question: "How to practice forex trading without money in Sri Lanka?", answer: "TradeHQ is free for students in Sri Lanka and worldwide. Practice EUR/USD and GBP/USD with simulated charts — no deposit or signup required." },
-    { question: "What moves EUR/USD the most?", answer: "ECB and Fed interest rate decisions, inflation data, employment reports, and trade balance shifts drive EUR/USD. Practice fundamental analysis with these catalysts." }
-  ],
-  gbpusd: [
-    { question: "How can I practice GBP/USD forex trading for free?", answer: "TradeHQ provides $100K virtual cash to practice Cable (GBP/USD) trading. Focus on London session volatility and BOE vs Fed policy divergence." },
-    { question: "What is the best time to trade GBP/USD?", answer: "The London/New York overlap (1-4 PM GMT) offers peak GBP/USD liquidity. Practice during this window to experience realistic forex market conditions." },
-    { question: "Is GBP/USD good for beginner forex traders?", answer: "Yes — Cable is one of the most liquid forex pairs with clear technical levels. Its higher volatility vs EUR/USD teaches risk management faster." },
-    { question: "How to learn forex trading without money as a student?", answer: "Use TradeHQ's free forex simulator. Students can practice GBP/USD, EUR/USD, and more currency pairs with $100K demo capital — no signup required." }
-  ],
-  oil: [
-    { question: "How to practice crude oil trading for free?", answer: "TradeHQ lets you trade WTI crude oil with $100K virtual cash. Practice around EIA inventory reports and OPEC+ meetings risk-free." },
-    { question: "What factors drive crude oil prices?", answer: "OPEC+ production decisions, US inventory data, geopolitical tensions, and global demand forecasts drive oil. Practice correlating news with price action." },
-    { question: "Is oil trading suitable for beginner traders?", answer: "Oil can be volatile but educational. Start with small virtual positions and learn to read EIA reports and OPEC announcements before scaling up." },
-    { question: "How do geopolitical events affect oil prices?", answer: "Middle East tensions, sanctions, and shipping disruptions can spike oil prices. Practice identifying geopolitical catalysts and managing risk during news events." }
-  ],
-  msft: [
-    { question: "How to practice Microsoft stock trading for free?", answer: "TradeHQ offers MSFT trading with $100K virtual cash. Practice position sizing with MSFT's steady trends before moving to higher-volatility tech stocks." },
-    { question: "What drives Microsoft stock price?", answer: "Azure cloud growth, AI Copilot adoption, enterprise software renewals, and LinkedIn revenue drive MSFT. Practice reading these metrics pre-earnings." },
-    { question: "Is MSFT good for learning stock trading basics?", answer: "Yes — Microsoft's lower volatility makes it ideal for beginners learning chart reading, moving averages, and trend-following strategies." },
-    { question: "Can I practice trading US tech stocks from Sri Lanka?", answer: "Yes. TradeHQ simulates US stocks including MSFT, AAPL, and NVDA. Students anywhere can practice free with $100K virtual cash." }
-  ],
-  googl: [
-    { question: "How to practice trading Google stock for free?", answer: "Use TradeHQ to trade GOOGL with $100K virtual cash. Learn to identify breakout patterns around AI announcements and earnings reports." },
-    { question: "What moves Alphabet stock price the most?", answer: "Search ad revenue, YouTube growth, Google Cloud performance, and AI product launches drive GOOGL. Practice correlating these with chart patterns." },
-    { question: "Is Google stock good for practicing breakout trading?", answer: "Yes — GOOGL often consolidates then breaks out on AI news. Practice identifying consolidation ranges and volume-confirmed breakouts." },
-    { question: "How to learn AI stock trading as a student?", answer: "Start with GOOGL and NVDA on TradeHQ. Practice identifying how AI product announcements create momentum trades and gap patterns." }
-  ],
-  meta: [
-    { question: "How to practice META stock trading for free?", answer: "TradeHQ offers META trading with $100K virtual cash. Learn to correlate social media engagement metrics with price movements risk-free." },
-    { question: "What drives Meta Platforms stock price?", answer: "Ad revenue growth, user engagement (Reels, Threads), AI ad targeting improvements, and Reality Labs spending drive META's price action." },
-    { question: "Is META good for practicing earnings plays?", answer: "Yes — META has some of the most dramatic earnings reactions in tech. Practice identifying pre-earnings positioning and post-earnings gap strategies." },
-    { question: "How to learn social media stock analysis?", answer: "Start with META on TradeHQ. Practice tracking Daily Active Users, ad revenue per user, and engagement metrics as price drivers." }
-  ],
-  xrp: [
-    { question: "How to practice XRP trading for free?", answer: "TradeHQ provides $100K virtual cash to practice XRP trading. Learn how regulatory news and Ripple partnerships affect price action." },
-    { question: "Why does XRP move on regulatory news?", answer: "XRP's price is sensitive to SEC rulings, Ripple partnerships, and cross-border payment adoption. Practice news-driven trading strategies risk-free." },
-    { question: "Is XRP good for learning news-based trading?", answer: "Yes — XRP reacts sharply to legal and partnership news. Practice managing position size around uncertain news events without risking real money." },
-    { question: "How to practice crypto trading in Colombo?", answer: "Use TradeHQ's free simulator. Students in Colombo can trade XRP, BTC, ETH and 30+ cryptos with $100K virtual cash — no signup needed." }
-  ],
-  bnb: [
-    { question: "How to practice BNB trading for free?", answer: "Use TradeHQ to trade BNB with $100K virtual cash. Learn how exchange activity and token burns affect BNB's price patterns." },
-    { question: "What drives BNB token price?", answer: "Binance exchange volume, quarterly BNB burns, BNB Chain DeFi activity, and exchange regulatory news drive BNB price movements." },
-    { question: "Is BNB good for practicing exchange token analysis?", answer: "Yes — BNB teaches you how exchange tokens correlate with platform activity. Practice tracking volume trends and burn schedules as indicators." },
-    { question: "How does BNB compare to BTC for trading practice?", answer: "BNB is more correlated with exchange-specific events while BTC tracks macro sentiment. Practice both to learn different types of catalysts." }
-  ],
-  qqq: [
-    { question: "How to practice Nasdaq-100 ETF trading for free?", answer: "TradeHQ lets you trade QQQ with $100K virtual cash. Practice tech-focused index trading and learn sector rotation strategies risk-free." },
-    { question: "What is the difference between SPY and QQQ for practice?", answer: "SPY tracks the broad S&P 500 while QQQ is tech-heavy (Nasdaq-100). Practice comparing both to learn how sector concentration affects returns." },
-    { question: "Is QQQ good for beginners learning ETF trading?", answer: "Yes — QQQ provides concentrated tech exposure with high liquidity. Practice using the QQQ/SPY ratio as a risk-on/risk-off signal." },
-    { question: "How to learn tech sector trading as a student?", answer: "Start with QQQ on TradeHQ. It gives you exposure to AAPL, MSFT, NVDA, and GOOGL in one instrument — perfect for learning tech cycles." }
-  ]
-};
+export const ASSET_FAQS: Record<string, AssetFAQ[]> = {};
+
 
 // Get FAQs for an asset
 export function getAssetFAQs(assetId: string): AssetFAQ[] {
-  const handWritten = ASSET_FAQS[assetId];
-  if (handWritten && handWritten.length > 0) return handWritten;
   return generateAssetFAQs(assetId);
 }
 
@@ -188,53 +64,31 @@ export function generateAssetFAQs(assetId: string): AssetFAQ[] {
   const asset = ASSETS.find((a) => a.id === assetId);
   if (!asset) return [];
 
-  const name = asset.name;
-  const sym = asset.symbol;
-  const type = asset.type;
-  const content = ASSET_CONTENT[assetId];
+  const source = ASSET_CONTENT[assetId];
   const driver =
-    content?.stats?.primaryDriver ||
-    (type === "crypto"
-      ? "network adoption, regulatory news and overall crypto market sentiment"
-      : type === "stock"
-        ? "quarterly earnings, sector trends and macroeconomic conditions"
-        : type === "etf"
-          ? "the underlying index composition, fund flows and sector rotation"
-          : type === "forex"
-            ? "central bank policy, interest-rate differentials and macro releases"
-            : "global supply/demand, USD strength and geopolitical events");
-
-  const categoryLabel =
-    type === "crypto"
-      ? "cryptocurrency"
-      : type === "stock"
-        ? "stock"
-        : type === "etf"
-          ? "ETF"
-          : type === "forex"
-            ? "forex pair"
-            : "commodity";
+    source?.stats?.primaryDriver ||
+    (asset.type === "crypto"
+      ? "network activity, regulation, liquidity and broader digital-asset conditions"
+      : asset.type === "stock"
+        ? "company results, guidance, industry conditions and broader market expectations"
+        : asset.type === "etf"
+          ? "the fund's underlying holdings, weighting method and market conditions"
+          : asset.type === "forex"
+            ? "interest-rate expectations, central-bank policy and macroeconomic releases"
+            : "supply, demand, currency moves and market-specific events");
 
   return [
     {
-      question: `How can I practice trading ${name} (${sym}) for free?`,
-      answer: `Open the TradeHQ simulator, search for ${sym}, and place a buy or sell order using your $100,000 in virtual cash. There's no signup, no credit card and no real money at risk. (Educational simulation only — not financial advice.)`,
+      question: `How can I practise ${asset.name} (${asset.symbol}) on TradeHQ?`,
+      answer: `Open the TradeHQ simulator, select ${asset.symbol}, and use virtual funds to practise order entry, position sizing and post-trade review. No real money is involved.`,
     },
     {
-      question: `What drives ${name} price action?`,
-      answer: `${name} (${sym}) is primarily influenced by ${driver}. On TradeHQ you can practice reading these catalysts on simulated charts before risking real capital.`,
+      question: `What can affect ${asset.name} (${asset.symbol})?`,
+      answer: `Important influences can include ${driver}. These factors describe what to research; they do not predict the next price move.`,
     },
     {
-      question: `Is ${sym} a good ${categoryLabel} for beginner traders to study?`,
-      answer: `${sym} is one of the more widely-followed ${categoryLabel}s, which makes it a useful learning instrument because chart patterns, news flow and analyst commentary are all easy to find. Use the TradeHQ practice account to test entries and exits without financial risk.`,
-    },
-    {
-      question: `How does ${sym} compare to other ${categoryLabel}s on the simulator?`,
-      answer: `Open the Markets page to compare ${sym} side-by-side with other ${categoryLabel}s by price, 24h change and simulated volume. Practice rotating between assets to learn how correlations behave in different market conditions.`,
-    },
-    {
-      question: `Can I lose real money trading ${sym} on TradeHQ?`,
-      answer: `No. Every ${sym} trade on TradeHQ uses virtual currency only — your portfolio is stored in your browser and no real funds are ever at risk. The platform is designed purely for education and skill-building.`,
+      question: `Are TradeHQ prices suitable for real-money decisions?`,
+      answer: `No. TradeHQ is an educational simulator. Quotes may be live, cached, delayed or simulated depending on the asset and data availability, so they should not be treated as brokerage execution data.`,
     },
   ];
 }
@@ -293,14 +147,6 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       consensus: "Proof of Work",
       source: "CoinGecko"
     },
-    executiveOutlook: {
-      summary: "Bitcoin enters 2026 as the dominant digital asset with institutional adoption accelerating. ETF inflows, halving effects, and Layer 2 scaling (Lightning, Stacks) position BTC for potential new highs. Risk factors include regulatory uncertainty and macroeconomic headwinds.",
-      lastUpdated: "January 2026"
-    },
-    institutionalDrivers: {
-      bull: "Institutional ETF accumulation, post-halving supply shock, Lightning Network adoption, and sovereign nation treasury allocations drive bullish momentum.",
-      bear: "Fed rate decisions, regulatory crackdowns on self-custody, and potential ETF outflows during risk-off periods could pressure prices."
-    },
     sectorPillar: "crypto-defi"
   },
   eth: {
@@ -313,14 +159,6 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       marketCap: "live_sourced_at_runtime",
       consensus: "Proof of Stake",
       source: "CoinGecko"
-    },
-    executiveOutlook: {
-      summary: "Ethereum's 2026 outlook centers on Layer 2 ecosystem growth and institutional staking adoption. Proto-danksharding (EIP-4844) has reduced L2 costs dramatically, driving DeFi and NFT activity. Deflationary supply mechanics post-Merge continue to benefit long-term holders.",
-      lastUpdated: "January 2026"
-    },
-    institutionalDrivers: {
-      bull: "L2 scaling success, institutional staking yields, and growing RWA tokenization on Ethereum mainnet support price appreciation.",
-      bear: "Competition from Solana and alternative L1s, plus regulatory classification uncertainty, pose headwinds."
     },
     sectorPillar: "crypto-defi"
   },
@@ -822,93 +660,57 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
 };
 
-// CTR-optimized titles — Variant A (active): "Learn & Practice" benefit-first
+// Hand-edited titles for priority practice pages
 const CUSTOM_META_TITLES: Record<string, string> = {
-  btc: "Learn & Practice Bitcoin Trading Free — $100K Simulator | Simulated BTC Data 2026",
-  eth: "Learn & Practice Ethereum Trading Free — $100K Simulator | Simulated ETH Data 2026",
-  nvda: "Learn & Practice NVDA Trading Free — $100K Simulator | Simulated Data 2026",
-  aapl: "Learn & Practice Apple Stock Trading Free — $100K Simulator | 2026",
-  sol: "Learn & Practice Solana Trading Free — $100K Simulator | Simulated SOL Data 2026",
-  msft: "Learn & Practice MSFT Trading Free — $100K Simulator | Simulated Data 2026",
-  googl: "Learn & Practice GOOGL Trading Free — $100K Simulator | Simulated Data 2026",
-  amzn: "Learn & Practice AMZN Trading Free — $100K Simulator | Simulated Data 2026",
-  tsla: "Learn & Practice Tesla Trading Free — $100K Simulator | Simulated TSLA Data 2026",
-  meta: "Learn & Practice META Trading Free — $100K Simulator | Simulated Data 2026",
-  xrp: "Learn & Practice XRP Trading Free — $100K Simulator | Simulated Data 2026",
-  bnb: "Learn & Practice BNB Trading Free — $100K Simulator | Simulated Data 2026",
-  spy: "Learn & Practice SPY ETF Trading Free — $100K Simulator | Simulated Data 2026",
-  qqq: "Learn & Practice QQQ ETF Trading Free — $100K Simulator | Simulated Data 2026",
-  gold: "Learn & Practice Gold Trading Free — $100K Simulator | Simulated XAU Data 2026",
-  oil: "Learn & Practice Oil Trading Free — $100K Simulator | Simulated WTI Data 2026",
-  gbpusd: "Learn & Practice GBP/USD Forex Free — $100K Simulator | Simulated Data 2026"
+  btc: "Practice Bitcoin (BTC) Trading — $100K Virtual Simulator | TradeHQ",
+  eth: "Practice Ethereum (ETH) Trading — $100K Virtual Simulator | TradeHQ",
+  nvda: "Practice NVIDIA (NVDA) Trading — Virtual Simulator | TradeHQ",
+  aapl: "Practice Apple (AAPL) Trading — Virtual Simulator | TradeHQ",
+  sol: "Practice Solana (SOL) Trading — $100K Virtual Simulator | TradeHQ",
+  msft: "Practice Microsoft (MSFT) Trading — Virtual Simulator | TradeHQ",
+  googl: "Practice Alphabet (GOOGL) Trading — Virtual Simulator | TradeHQ",
+  amzn: "Practice Amazon (AMZN) Trading — Virtual Simulator | TradeHQ",
+  tsla: "Practice Tesla (TSLA) Trading — Virtual Simulator | TradeHQ",
+  meta: "Practice Meta (META) Trading — Virtual Simulator | TradeHQ",
+  xrp: "Practice XRP Trading — $100K Virtual Simulator | TradeHQ",
+  bnb: "Practice BNB Trading — $100K Virtual Simulator | TradeHQ",
+  spy: "Practice SPY ETF Trading — $100K Virtual Simulator | TradeHQ",
+  qqq: "Practice QQQ ETF Trading — $100K Virtual Simulator | TradeHQ",
+  gold: "Practice Gold Trading — $100K Virtual Simulator | TradeHQ",
+  oil: "Practice WTI Oil Trading — $100K Virtual Simulator | TradeHQ",
+  gbpusd: "Practice GBP/USD Forex — $100K Virtual Simulator | TradeHQ"
 };
 
-// Variant B titles for A/B testing (stored, not yet active — swap in after 7-day test)
-export const META_TITLE_VARIANTS_B: Record<string, string> = {
-  btc: "BTC 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  eth: "ETH 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  nvda: "NVDA 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  aapl: "AAPL 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  sol: "SOL 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  msft: "MSFT 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  googl: "GOOGL 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  amzn: "AMZN 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  tsla: "TSLA 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  meta: "META 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  xrp: "XRP 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  bnb: "BNB 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  spy: "SPY 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  qqq: "QQQ 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  gold: "Gold 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  oil: "Oil 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  gbpusd: "GBP/USD 2026 Simulated Analysis — Free Forex Simulator | TradeHQ"
-};
+// Alternate title map kept equal to the reviewed production copy
+export const META_TITLE_VARIANTS_B: Record<string, string> = { ...CUSTOM_META_TITLES };
 
-// Variant A descriptions (active): "Learn & practice" + "risk-free" / "strategy builder" hooks, ≤155 chars
+// Hand-edited descriptions for priority practice pages
 const CUSTOM_META_DESCRIPTIONS: Record<string, string> = {
-  btc: "Learn & practice Bitcoin trading risk-free with $100K virtual cash. Simulated BTC charts, AI strategy builder, no signup.",
-  eth: "Learn & practice Ethereum trading risk-free with $100K virtual cash. Simulated ETH charts, DeFi strategy builder. No signup.",
-  nvda: "Learn & practice NVIDIA stock trading risk-free with $100K virtual cash. Simulated charts, AI strategy builder. No signup.",
-  aapl: "Learn & practice Apple stock trading risk-free with $100K virtual cash. Earnings strategy builder, simulated charts. No signup.",
-  sol: "Learn & practice Solana trading risk-free with $100K virtual cash. Simulated SOL charts, strategy builder. No signup.",
-  msft: "Learn & practice Microsoft stock trading risk-free with $100K demo. Simulated charts, strategy builder. Start free today.",
-  googl: "Learn & practice Google stock trading risk-free with $100K demo cash. Simulated GOOGL charts, strategy builder. No signup.",
-  amzn: "Learn & practice Amazon stock trading risk-free with $100K demo cash. Simulated charts, strategy builder. No signup.",
-  tsla: "Learn & practice Tesla stock trading risk-free with $100K virtual cash. Simulated TSLA charts, strategy builder. No signup.",
-  meta: "Learn & practice META stock trading risk-free with $100K demo cash. Simulated charts, strategy builder. Start free.",
-  xrp: "Learn & practice XRP trading risk-free with $100K virtual cash. Simulated charts, strategy builder. No signup needed.",
-  bnb: "Learn & practice BNB trading risk-free with $100K demo cash. Simulated charts, strategy builder. Start free today.",
-  spy: "Learn & practice S&P 500 ETF trading risk-free with $100K demo. Simulated charts, strategy builder. No signup.",
-  qqq: "Learn & practice Nasdaq-100 ETF trading risk-free with $100K demo. Simulated charts, strategy builder. Start free.",
-  gold: "Learn & practice gold trading risk-free with $100K virtual cash. Simulated XAU charts, strategy builder. No signup.",
-  oil: "Learn & practice crude oil trading risk-free with $100K demo cash. Simulated WTI charts, strategy builder. No signup.",
-  gbpusd: "Learn & practice GBP/USD forex trading risk-free with $100K demo. Simulated charts, strategy builder. No signup."
+  btc: "Practise BTC with $100K virtual cash. Learn order mechanics and portfolio tracking with educational market data; no real money is involved.",
+  eth: "Practise ETH with $100K virtual cash. Explore order mechanics, portfolio tracking and Ethereum price drivers without using real money.",
+  nvda: "Practise NVDA with virtual cash and educational market data. Review order mechanics, position sizing and portfolio effects without real money.",
+  aapl: "Practise AAPL with virtual cash and educational market data. Learn order mechanics and portfolio tracking without using real money.",
+  sol: "Practise SOL with $100K virtual cash. Explore volatility, order mechanics and portfolio effects in an educational simulator.",
+  msft: "Practise MSFT with virtual cash. Learn order mechanics, position sizing and portfolio tracking in an educational simulator.",
+  googl: "Practise GOOGL with virtual cash. Explore order mechanics and portfolio tracking with educational market data.",
+  amzn: "Practise AMZN with virtual cash. Learn order mechanics, position sizing and portfolio effects without real money.",
+  tsla: "Practise TSLA with virtual cash. Explore volatility, order mechanics and portfolio effects in an educational simulator.",
+  meta: "Practise META with virtual cash. Learn order mechanics, position sizing and portfolio tracking without real money.",
+  xrp: "Practise XRP with $100K virtual cash. Explore order mechanics and market drivers in an educational simulator.",
+  bnb: "Practise BNB with $100K virtual cash. Explore order mechanics and market drivers in an educational simulator.",
+  spy: "Practise SPY with $100K virtual cash. Learn ETF order mechanics and portfolio tracking without using real money.",
+  qqq: "Practise QQQ with $100K virtual cash. Explore ETF concentration, order mechanics and portfolio tracking.",
+  gold: "Practise gold with $100K virtual cash. Explore macro price drivers and order mechanics in an educational simulator.",
+  oil: "Practise WTI oil with $100K virtual cash. Explore supply-demand drivers and order mechanics in an educational simulator.",
+  gbpusd: "Practise GBP/USD with $100K virtual cash. Explore currency-pair mechanics and macro drivers without real money."
 };
 
-// Variant B descriptions for A/B testing (CTA-first — swap in after 7-day test)
-export const META_DESC_VARIANTS_B: Record<string, string> = {
-  btc: "Start trading BTC now — $100K free virtual cash, simulated Bitcoin charts, AI mentor. No signup. Master crypto in 2026.",
-  eth: "Start trading ETH now — $100K free virtual cash, simulated Ethereum charts. No signup. Learn DeFi strategies free.",
-  nvda: "Start trading NVDA now — $100K free demo, simulated NVIDIA charts. No signup. Master AI stocks risk-free.",
-  aapl: "Start trading AAPL now — $100K free demo, simulated Apple charts. No signup. Practice earnings plays free.",
-  sol: "Start trading SOL now — $100K free demo, simulated Solana charts. No signup. Master fast crypto trading.",
-  msft: "Start trading MSFT now — $100K free demo, simulated charts. No signup. Practice cloud stock analysis.",
-  googl: "Start trading GOOGL now — $100K free demo, simulated charts. No signup. Practice AI stock analysis.",
-  amzn: "Start trading AMZN now — $100K free demo, simulated charts. No signup. Practice e-commerce stock plays.",
-  tsla: "Start trading TSLA now — $100K free demo, simulated Tesla charts. No signup. Master volatility trading.",
-  meta: "Start trading META now — $100K free demo, simulated charts. No signup. Practice social media stocks.",
-  xrp: "Start trading XRP now — $100K free demo, simulated charts. No signup. Practice crypto regulation plays.",
-  bnb: "Start trading BNB now — $100K free demo, simulated charts. No signup. Master exchange token trading.",
-  spy: "Start trading SPY now — $100K free demo, simulated S&P 500 charts. No signup. Practice index trading.",
-  qqq: "Start trading QQQ now — $100K free demo, simulated Nasdaq charts. No signup. Practice tech ETF trading.",
-  gold: "Start trading gold now — $100K free demo, simulated XAU charts. No signup. Practice safe-haven strategies.",
-  oil: "Start trading oil now — $100K free demo, simulated WTI charts. No signup. Practice energy trading.",
-  gbpusd: "Start forex trading now — $100K free demo, simulated GBP/USD charts. No signup. Practice currency pairs."
-};
+// Alternate description map kept equal to the reviewed production copy
+export const META_DESC_VARIANTS_B: Record<string, string> = { ...CUSTOM_META_DESCRIPTIONS };
 
-// Generate meta title - Institutional pattern for priority, fallback for others
+// Generate a concise, evergreen page title
 export function generateAssetMetaTitle(asset: Asset): string {
-  // Priority assets get institutional-grade titles
+  // Priority assets get hand-edited titles
   if (CUSTOM_META_TITLES[asset.id]) {
     return CUSTOM_META_TITLES[asset.id];
   }
@@ -918,8 +720,8 @@ export function generateAssetMetaTitle(asset: Asset): string {
   const label = asset.name && asset.name !== asset.symbol
     ? `${asset.name} (${asset.symbol})`
     : asset.symbol;
-  const title = `${label} — Market Analysis & 2026 Strategy | TradeHQ`;
-  return title.length > 60 ? `${label} Analysis | TradeHQ` : title;
+  const title = `Practice ${label} — Virtual Trading Simulator | TradeHQ`;
+  return title.length > 65 ? `${label} Simulator | TradeHQ` : title;
 }
 
 // Truncate meta description safely at 155 chars (no mid-sentence cuts)
@@ -941,9 +743,9 @@ export function truncateMetaDescription(text: string, maxLength: number = 155): 
   return text.slice(0, lastSpace) + '...';
 }
 
-// Generate meta description (120-155 chars) - Custom for top 5, fallback for others
+// Generate a concise meta description
 export function generateAssetMetaDescription(asset: Asset): string {
-  // Priority assets get custom CTR-optimized descriptions - ensure 155 char truncation
+  // Priority assets get hand-edited descriptions
   if (CUSTOM_META_DESCRIPTIONS[asset.id]) {
     return truncateMetaDescription(CUSTOM_META_DESCRIPTIONS[asset.id], 155);
   }
@@ -954,9 +756,9 @@ export function generateAssetMetaDescription(asset: Asset): string {
   
   let description: string;
   if (content) {
-    description = `Practice ${asset.symbol} trading risk-free. ${content.whatIs} Start with $100K virtual cash now.`;
+    description = `Practise ${asset.symbol} with virtual cash. ${content.whatIs} No real money is involved.`;
   } else {
-    description = `Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $100K demo cash, simulated charts, and AI mentoring. No signup needed!`;
+    description = `Practise ${asset.name} (${asset.symbol}) with $100K virtual cash in TradeHQ's educational simulator. No real money is involved.`;
   }
   
   // ALWAYS enforce 155 character limit
@@ -965,44 +767,57 @@ export function generateAssetMetaDescription(asset: Asset): string {
 
 // Generate 300+ word Market Strategic Outlook for SEO content
 export function generateMarketOutlook(asset: Asset): string {
-  const content = ASSET_CONTENT[asset.id];
-  const typeLabel = asset.type === 'crypto' ? 'cryptocurrency' 
-    : asset.type === 'etf' ? 'ETF' 
-    : asset.type === 'forex' ? 'currency pair'
-    : asset.type;
-  
-  // Introduction paragraph
-  const intro = `${asset.name} (${asset.symbol}) represents a ${content?.category || typeLabel} opportunity in the 2026 market environment. As global markets continue to evolve with technological advancement and shifting macroeconomic conditions, understanding ${asset.symbol}'s price dynamics becomes increasingly important for traders seeking to develop their skills.`;
-  
-  // Fundamentals paragraph
-  const fundamentals = content?.whatIs 
-    ? `${content.whatIs} This foundational understanding helps traders contextualize price movements and identify potential catalysts for volatility.`
-    : `${asset.name} is available for practice trading in the TradeHQ simulator. Understanding the fundamental drivers of this asset helps traders make more informed decisions about entry and exit points.`;
-  
-  // Strategy paragraph
-  const strategy = content?.strategy 
-    ? content.strategy
-    : `Develop your ${asset.symbol} trading strategy by analyzing chart patterns, support and resistance levels, and market sentiment indicators. Consider using multiple timeframes to confirm trends and identify optimal entry points. Technical analysis can be used as one way to describe price behaviour, but it does not guarantee better outcomes; compare any method against a simple baseline in the simulator.`;
-  
-  // Risk management paragraph
-  const riskManagement = `Risk management is a useful part of a ${asset.symbol} simulation. Compare several position sizes and predefined exit rules, and record how each choice changes drawdown and portfolio volatility. Treat percentage limits as test settings rather than universal real-money rules.`;
-  
-  // Practice advice paragraph
-  const practiceAdvice = `TradeHQ provides $100,000 in virtual capital to practise ${asset.symbol} trading. Use the simulator to test a written process, learn order mechanics, and review results over a larger sample. Paper trading can help with practice, but it cannot reproduce every feature of live execution or the emotions attached to real losses.`;
-  
-  // Educational disclaimer paragraph
-  const disclaimer = `This analysis is for educational purposes only. Past simulated performance does not guarantee future results. Market conditions can change rapidly, and all trading involves risk of loss. Always conduct your own research and consult a qualified financial advisor before making investment decisions. TradeHQ is a practice simulator designed to help you develop skills in a risk-free environment.`;
-  
-  return `${intro}\n\n${fundamentals}\n\n${strategy}\n\n${riskManagement}\n\n${practiceAdvice}\n\n${disclaimer}`;
+  const content = getAssetContent(asset.id);
+  const typeLabel =
+    asset.type === 'crypto' ? 'cryptocurrency' :
+    asset.type === 'etf' ? 'ETF' :
+    asset.type === 'forex' ? 'currency pair' :
+    asset.type;
+
+  const intro = `${asset.name} (${asset.symbol}) is available in TradeHQ as a ${content.category || typeLabel} practice instrument. This page is designed to explain what the asset represents, what can influence it, and how to use the simulator without treating current price movement as a forecast.`;
+  const fundamentals = `${content.whatIs} These characteristics provide context for a simulation, but they do not determine the next price move.`;
+  const practice = content.strategy;
+  const limits = `TradeHQ uses virtual capital. Quotes can be live, cached, delayed or simulated depending on the asset and data availability. Simulator fills, liquidity and emotional pressure can differ materially from real trading.`;
+  const review = `After a simulated trade, compare the original written reason with what actually happened. Record position size, exit rule and drawdown so the exercise teaches process rather than hindsight.`;
+
+  return `${intro}\n\n${fundamentals}\n\n${practice}\n\n${limits}\n\n${review}`;
 }
 
 // Get asset content or generate fallback
+function buildPracticeExercise(asset: Asset, source?: AssetContent): string {
+  const driver =
+    source?.stats?.primaryDriver ||
+    (asset.type === 'crypto' ? 'network activity, regulation and broader digital-asset conditions'
+      : asset.type === 'stock' ? 'company results, industry conditions and broader market expectations'
+      : asset.type === 'etf' ? 'underlying holdings, weighting and market conditions'
+      : asset.type === 'forex' ? 'interest-rate expectations, central-bank policy and macroeconomic releases'
+      : 'supply, demand, currency moves and market-specific events');
+
+  return `Practice exercise: before placing a simulated ${asset.symbol} order, write down one observable factor you want to track, such as ${driver}. Choose a virtual position size and an exit condition in advance, then review the result afterwards. This is a learning exercise, not a buy or sell signal.`;
+}
+
 export function getAssetContent(assetId: string): AssetContent {
-  return ASSET_CONTENT[assetId] || {
-    whatIs: `This asset is available for practice trading in the TradeHQ simulator. Learn its price patterns and develop your trading strategy without risking real money.`,
-    strategy: `Start with small position sizes to understand this asset's volatility. Use stop-losses and take-profit orders to build disciplined trading habits.`,
-    category: "Asset",
-    keywords: ["trading practice", "simulator", "demo trading"]
+  const asset = ASSETS.find((a) => a.id === assetId);
+  const source = ASSET_CONTENT[assetId];
+  if (!asset) {
+    return {
+      whatIs: "This instrument is available in TradeHQ for educational simulation.",
+      strategy: "Use virtual funds to practise order mechanics and review the result afterwards.",
+      category: "Asset",
+      keywords: ["trading practice", "simulator"],
+    };
+  }
+
+  const base: AssetContent = source || {
+    whatIs: `${asset.name} (${asset.symbol}) is available for educational practice in the TradeHQ simulator.`,
+    strategy: "",
+    category: asset.type,
+    keywords: ["trading practice", "simulator"],
+  };
+
+  return {
+    ...base,
+    strategy: buildPracticeExercise(asset, base),
   };
 }
 
