@@ -352,6 +352,19 @@ export function buildRoutes(): RouteMeta[] {
 
 
   // ---- Wiki glossary pages (/wiki/:slug) ----
+  const noindexGlossary = new Set([
+    "order-block",
+    "fair-value-gap",
+    "whale-manipulation",
+    "stop-loss-hunting",
+    "fibonacci-retracement",
+    "rsi-divergence",
+    "bollinger-band-squeeze",
+    "head-and-shoulders",
+    "double-bottom",
+    "elliott-wave-theory",
+    "wyckoff-method",
+  ]);
   routes.push({
     path: "/wiki",
     title: "Trading Glossary — Every Term Explained | TradeHQ Wiki",
@@ -364,12 +377,13 @@ export function buildRoutes(): RouteMeta[] {
   for (const g of extractGlossary()) {
     routes.push({
       path: `/wiki/${g.slug}`,
-      title: `${g.term} — Definition, Example & How to Trade It | TradeHQ Wiki`,
+      title: `${g.term} — Plain-English Definition | TradeHQ Wiki`,
       description: g.definition.length > 150 ? g.definition.slice(0, 147) + "..." : g.definition,
       h1: `${g.term} — Trading Wiki`,
       summary: `${g.definition}`,
       priority: "0.7",
       changefreq: "weekly",
+      noindex: noindexGlossary.has(g.slug),
     });
   }
 
