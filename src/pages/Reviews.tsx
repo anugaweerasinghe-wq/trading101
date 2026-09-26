@@ -108,46 +108,28 @@ export default function Reviews() {
     load();
   };
 
-  // Programmatic SEO: AggregateRating + Review JSON-LD
-  const jsonLd = useMemo(() => {
-    const base: Record<string, unknown> = {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      name: "TradeHQ — Free Trading Simulator",
-      description: "Practice stock, crypto, ETF and forex trading with $100,000 simulated cash. Free, no signup.",
-      url: "https://www.thetradehq.com/reviews",
-    };
-    if (stats.count > 0) {
-      base.aggregateRating = {
-        "@type": "AggregateRating",
-        ratingValue: stats.avg.toFixed(1),
-        reviewCount: stats.count,
-        bestRating: 5,
-        worstRating: 1,
-      };
-      base.review = reviews.slice(0, 20).map((r) => ({
-        "@type": "Review",
-        reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5 },
-        author: { "@type": "Person", name: r.name || "Anonymous Trader" },
-        datePublished: r.created_at,
-        reviewBody: r.content,
-      }));
-    }
-    return base;
-  }, [reviews, stats]);
+  // Neutral page schema only. Visitor identities are not independently verified,
+  // so TradeHQ intentionally does not publish self-serving Review/AggregateRating schema.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "TradeHQ Community Reviews",
+    description: "Reviews submitted by visitors about the TradeHQ educational simulator.",
+    url: "https://www.thetradehq.com/reviews",
+  };
 
   return (
     <>
       <Helmet>
-        <title>{`TradeHQ Reviews — ${stats.count > 0 ? `${stats.avg.toFixed(1)}/5 from ${stats.count} traders` : "Real Trader Feedback"} | TradeHQ`}</title>
+        <title>TradeHQ Community Reviews | TradeHQ</title>
         <meta
           name="description"
-          content={`Read ${stats.count || "real"} verified reviews from traders using TradeHQ's free $100,000 simulator. ${stats.count > 0 ? `Average rating ${stats.avg.toFixed(1)}/5.` : ""} Share your own experience.`}
+          content="Read community reviews submitted by visitors who used TradeHQ, and share feedback about the educational simulator. Reviewer identities are not independently verified."
         />
         <link rel="canonical" href="https://www.thetradehq.com/reviews" />
         <meta name="robots" content="index, follow, max-snippet:-1" />
         <meta property="og:title" content="TradeHQ Reviews — What Traders Say" />
-        <meta property="og:description" content="Real reviews from real traders using TradeHQ's free simulator." />
+        <meta property="og:description" content="Community reviews submitted by visitors about the TradeHQ educational simulator." />
         <meta property="og:url" content="https://www.thetradehq.com/reviews" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
@@ -160,11 +142,11 @@ export default function Reviews() {
           <header className="text-center mb-10 animate-fade-in">
             <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-primary/10 border border-primary/20">
               <ShieldCheck className="w-4 h-4 text-primary" />
-              <span className="text-xs font-medium text-primary">Verified Reviews</span>
+              <span className="text-xs font-medium text-primary">Community Reviews</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-3">What Traders Say About TradeHQ</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Honest feedback from real users of our free $100,000 trading simulator. One review per visitor — no fakes, no incentives.
+              Feedback submitted by visitors about the $100,000 practice simulator. Reviewer identities are not independently verified; submissions are moderated for spam and abuse.
             </p>
             {stats.count > 0 && (
               <div className="mt-5 inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-card border border-border">
