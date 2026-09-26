@@ -66,7 +66,7 @@ export default function NicheAsset() {
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonical} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="noindex, follow" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
@@ -94,7 +94,7 @@ export default function NicheAsset() {
               </span>
             </div>
             <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl">
-              Institutional-grade analysis and trading simulator for {niche.name}. Practice with $100K virtual cash, zero risk.
+              An educational practice page for {niche.name}. Use $100K virtual cash to explore order mechanics and price-driver concepts; no real money is involved.
             </p>
           </header>
 
