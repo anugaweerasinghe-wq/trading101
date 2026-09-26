@@ -190,6 +190,10 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
 
     const chart = createChart(containerRef.current, {
       height,
+      // lightweight-charts may inherit non-BCP-47 host locales such as
+      // "en-US@posix" in some environments. Pin a valid locale so tick
+      // formatting cannot throw and break the trading terminal.
+      localization: { locale: 'en-US' },
       layout: {
         background: { type: ColorType.Solid, color: '#0A0A0A' },
         textColor: '#737A87',
