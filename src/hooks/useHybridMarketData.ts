@@ -4,6 +4,7 @@
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Asset } from '@/lib/types';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/config';
 
 export interface HybridMarketPrice {
   price: number;
@@ -64,10 +65,10 @@ async function flushQueue() {
       batch.map(async ({ asset, resolve }) => {
         try {
           const resp = await fetch(
-            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+            `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
             {
               headers: {
-                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+                'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
                 'Content-Type': 'application/json',
               },
             }
