@@ -7,11 +7,25 @@ import { tradingGlossary } from "@/lib/tradingGlossary";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, BookOpen, Clock, Share2, Zap, CheckCircle2, Lightbulb, TrendingUp } from "lucide-react";
+import { ArrowRight, BookOpen, Clock, Share2, Zap, CheckCircle2, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import NotFound from "./NotFound";
 
 const DOMAIN = "https://www.thetradehq.com";
+
+const NOINDEX_GLOSSARY = new Set([
+  "order-block",
+  "fair-value-gap",
+  "whale-manipulation",
+  "stop-loss-hunting",
+  "fibonacci-retracement",
+  "rsi-divergence",
+  "bollinger-band-squeeze",
+  "head-and-shoulders",
+  "double-bottom",
+  "elliott-wave-theory",
+  "wyckoff-method",
+]);
 
 const WikiTerm = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -23,21 +37,7 @@ const WikiTerm = () => {
     .map((rs) => tradingGlossary.find((t) => t.slug === rs))
     .filter(Boolean);
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": `What is ${term.term}? | Complete Trading Guide 2026 | TradeHQ`,
-    "description": `Master ${term.term} in under ${term.readTime}. ${term.definition}`,
-    "author": { "@type": "Organization", "name": "TradeHQ" },
-    "publisher": {
-      "@type": "Organization",
-      "name": "TradeHQ",
-      "url": DOMAIN
-    },
-    "datePublished": "2026-02-01",
-    "dateModified": "2026-03-07",
-    "mainEntityOfPage": `${DOMAIN}/wiki/${term.slug}`
-  };
+  const noindex = NOINDEX_GLOSSARY.has(term.slug);
 
   const definedTermSchema = {
     "@context": "https://schema.org",
@@ -65,7 +65,7 @@ const WikiTerm = () => {
 
   const handleWhatsAppShare = () => {
     const text = encodeURIComponent(
-      `I just mastered "${term.term}" on TradingHQ! 🚀📈 Learn it here: ${DOMAIN}/wiki/${term.slug}`
+      `I read about "${term.term}" on TradeHQ. Learn it here: ${DOMAIN}/wiki/${term.slug}`
     );
     window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
   };
@@ -79,15 +79,15 @@ const WikiTerm = () => {
   return (
     <>
       <Helmet>
-        <title>What is {term.term}? | Complete Trading Guide 2026 | TradeHQ</title>
+        <title>What is {term.term}? | Plain-English Guide | TradeHQ</title>
         <meta
           name="description"
-          content={`Master ${term.term} in under ${term.readTime}. ${term.definition.substring(0, 140)}... Expert definition, pro tips & simulator practice.`}
+          content={`${term.definition.substring(0, 150)} Plain-language educational explanation and simulator context.`}
         />
         <link rel="canonical" href={`${DOMAIN}/wiki/${term.slug}`} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={`What is ${term.term}? | Complete Trading Guide 2026 | TradeHQ`} />
+        <meta property="og:title" content={`What is ${term.term}? | TradeHQ Glossary`} />
         <meta property="og:description" content={term.definition} />
         <meta property="og:url" content={`${DOMAIN}/wiki/${term.slug}`} />
         <meta property="og:image" content={`${DOMAIN}/og-image.png`} />
@@ -96,7 +96,6 @@ const WikiTerm = () => {
         <meta name="twitter:title" content={`What is ${term.term}? | TradeHQ`} />
         <meta name="twitter:description" content={term.definition} />
         <meta name="twitter:image" content={`${DOMAIN}/og-image.png`} />
-        <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(definedTermSchema)}</script>
       </Helmet>
@@ -130,24 +129,15 @@ const WikiTerm = () => {
             </h1>
           </motion.div>
 
-          {/* Expert Definition */}
+          {/* Detailed explanation */}
           <Card className="mt-8 p-6 md:p-8 bg-card border-border rounded-2xl backdrop-blur-md">
             <div className="flex items-center gap-2 mb-4">
               <BookOpen className="w-4 h-4 text-primary" />
-              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-muted-foreground">Expert Definition</h2>
+              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-muted-foreground">Detailed Explanation</h2>
             </div>
             <p className="text-sm md:text-base text-foreground/80 leading-relaxed whitespace-pre-line">
               {term.expertDefinition}
             </p>
-          </Card>
-
-          {/* Pro Tip Box */}
-          <Card className="mt-4 p-6 md:p-8 bg-primary/[0.04] border-primary/20 rounded-2xl">
-            <div className="flex items-center gap-2 mb-3">
-              <Lightbulb className="w-4 h-4 text-primary" />
-              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-primary">Pro Tip</h2>
-            </div>
-            <p className="text-sm text-foreground/80 leading-relaxed font-medium">{term.proTip}</p>
           </Card>
 
           {/* Key Points */}
@@ -166,14 +156,6 @@ const WikiTerm = () => {
             </ul>
           </Card>
 
-          {/* Student Perspective */}
-          <Card className="mt-4 p-6 md:p-8 bg-primary/[0.03] border-primary/10 rounded-2xl">
-            <h2 className="text-xs uppercase tracking-[0.15em] font-black text-primary mb-3">
-              💡 Why This Matters
-            </h2>
-            <p className="text-sm text-foreground/80 leading-relaxed italic">{term.studentPerspective}</p>
-          </Card>
-
           {/* Simulator CTA */}
           <Card className="mt-6 p-6 bg-card border-border rounded-2xl">
             <div className="flex items-center gap-3 mb-3">
@@ -181,7 +163,7 @@ const WikiTerm = () => {
               <h3 className="text-sm font-bold text-foreground">Apply This in the Simulator</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-4">
-              Practice identifying {term.term.toLowerCase()} patterns with $100,000 in virtual capital. Zero risk, real market data.
+              Use the simulator to observe how {term.term.toLowerCase()} is described in practice. The account uses virtual funds, and market data may be live, cached, delayed or simulated.
             </p>
             <Link to="/trade/BTC">
               <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-lg">
