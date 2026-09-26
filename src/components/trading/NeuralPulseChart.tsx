@@ -2,6 +2,7 @@ import { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import { createChart, IChartApi, ISeriesApi, LineStyle, ColorType } from "lightweight-charts";
 import { Asset } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
 
 interface NeuralPulseChartProps {
   asset: Asset;
@@ -76,10 +77,10 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
     
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=candles&days=${config.days}`,
+        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=candles&days=${config.days}`,
         {
           headers: {
-            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            "Authorization": `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
             "Content-Type": "application/json",
           },
         }
