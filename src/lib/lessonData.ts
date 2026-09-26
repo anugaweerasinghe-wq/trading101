@@ -265,7 +265,7 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "Pros: Executes instantly, guaranteed to fill",
+              "Pros: Prioritises fast execution over price control",
               "Cons: Price not guaranteed (can slip in fast markets)",
               "Best for: Liquid stocks, when speed matters more than price",
               "Example: You want to buy Tesla RIGHT NOW at whatever price",
@@ -273,7 +273,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "You see Tesla at $200 and place a market order to buy 10 shares. By the time it executes (milliseconds later), the price might be $200.50 or $199.50. You're guaranteed the shares but not the exact price.",
+            data: "You see Tesla at $200 and place a market order to buy 10 shares. By the time it executes (milliseconds later), the price might be $200.50 or $199.50. The order prioritises execution, but the exact fill price and even full execution can depend on liquidity, market halts, and venue rules.",
           },
           {
             type: "heading",
@@ -483,10 +483,10 @@ export const lessonData: Lesson[] = [
         explanation: "ETFs bundle multiple stocks together, giving you diversification in a single purchase. This helps reduce risk compared to buying individual stocks.",
       },
       {
-        question: "What type of order guarantees immediate execution?",
+        question: "Which order type prioritises immediate execution over price control?",
         options: ["Limit Order", "Stop Order", "Market Order", "Day Order"],
         correctAnswer: 2,
-        explanation: "Market orders execute immediately at the current market price. They guarantee execution but not the exact price.",
+        explanation: "Market orders are designed to execute as quickly as available liquidity allows, but the final price can differ and execution is not literally guaranteed in every market condition.",
       },
       {
         question: "When are US stock markets open for regular trading?",
@@ -1467,7 +1467,7 @@ export const lessonData: Lesson[] = [
               "Forces selling winners (locks in gains)",
               "Forces buying losers (buys dips)",
               "Removes emotional decision-making",
-              "Historically adds 0.5-1% annual return",
+              "Can restore a portfolio to its intended risk mix; return effects depend on market path, costs, and the chosen rule",
             ],
           },
           {
@@ -1492,7 +1492,7 @@ export const lessonData: Lesson[] = [
             type: "stat",
             value: "0.5-1%",
             label: "Additional Annual Return from Rebalancing",
-            data: "Studies show disciplined rebalancing adds meaningful returns over time by systematically buying low and selling high",
+            data: "Rebalancing is primarily a risk-control process. Its effect on returns varies by market path, trading costs, taxes, and the chosen thresholds.",
           },
           {
             type: "tip",
@@ -1949,8 +1949,8 @@ export const lessonData: Lesson[] = [
               "Bullish divergence: Price makes lower low, RSI makes higher low",
               "Bearish divergence: Price makes higher high, RSI makes lower high",
               "Works on RSI, MACD, and momentum oscillators",
-              "Most reliable at major support/resistance levels",
-              "Don't fight divergence - it's usually right",
+              "Potentially more informative when it aligns with other context such as trend and support/resistance",
+              "Divergence can fail or persist for a long time, so treat it as context rather than a prediction",
             ],
           },
           {
