@@ -162,7 +162,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "A plain-language trading glossary",
         p: [
-          `Every term used across TradeHQ's lessons, guides and strategy pages is defined here in plain English, with an expert-level explanation, a worked example and a practical tip for each entry. There are ${glossary.length} terms in the index, grouped by the part of trading they belong to.`,
+          `Every term used across TradeHQ's lessons, guides and strategy pages is defined here in plain English, with a longer explanation and related learning context. There are ${glossary.length} terms in the index, grouped by topic.`,
           "Definitions are written for people who are learning, not for people who already know. Where a term has a contested or marketing-inflated meaning, the entry says so rather than repeating the sales version.",
         ],
       },
@@ -176,7 +176,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         h: "Why a glossary matters more in trading than in most subjects",
         p: [
           "Trading vocabulary is unusually hostile to beginners because the same word often carries a precise technical meaning and a loose marketing meaning at the same time. 'Leverage' is a neutral description of borrowed exposure in a textbook and a sales pitch in an advertisement. 'Support' is a level where buyers previously appeared, not a floor that holds. Reading material without pinning down which meaning is in play is how people end up confident about something they have misunderstood.",
-          "Each entry here therefore gives a plain definition first, then a longer expert explanation of the mechanics, then the practical caveat that matters when you try to use the idea. Where a concept is popular but weakly evidenced, the entry says so instead of repeating the folklore.",
+          "Each entry gives a plain definition first and then a longer explanation of the mechanics. Popular charting concepts are presented as descriptive frameworks rather than guaranteed signals, and weakly evidenced claims are not treated as established facts.",
         ],
       },
       {
@@ -197,10 +197,8 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
     map.set(`/wiki/${g.slug}`, {
       sections: [
         { h: `What ${g.term} means`, p: [g.definition] },
-        { h: "In depth", p: splitParagraphs(g.expertDefinition) },
+        { h: "Detailed explanation", p: splitParagraphs(g.expertDefinition) },
         { h: "Key points", list: g.keyPoints },
-        { h: "Practical tip", p: [g.proTip] },
-        { h: "Why it matters when you are learning", p: [g.studentPerspective] },
         {
           h: `Practising ${g.term} on the simulator`,
           p: [
