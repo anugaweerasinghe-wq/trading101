@@ -175,7 +175,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)",
     description: `Practice stock, crypto, ETF, forex & commodities trading with ${BALANCE} virtual cash. No signup. AI mentor, simulated charts, portfolio tracking & 150+ assets. Free educational trading simulator.`,
     h1: "TradeHQ — Free Paper Trading Simulator",
-    summary: `Practice trading 150+ real assets with ${BALANCE} in virtual cash. No signup, no risk, no real money. An educational simulator for stocks, crypto, ETFs, forex and commodities — trusted by beginners learning the markets.`,
+    summary: `Practice simulated trading across 150+ assets with ${BALANCE} in virtual cash. No real money is involved. Learn order mechanics, portfolio tracking, and risk concepts across stocks, crypto, ETFs, forex and commodities.`,
     priority: "1.0",
     changefreq: "daily",
   });
@@ -192,10 +192,10 @@ export function buildRoutes(): RouteMeta[] {
 
   routes.push({
     path: "/markets",
-    title: "Live Markets — Stocks, Crypto, ETFs, Forex | TradeHQ",
+    title: "Practice Markets — Stocks, Crypto, ETFs, Forex | TradeHQ",
     description: `Browse 150+ simulated markets across stocks, crypto, ETFs, forex and commodities. Practice trading with ${BALANCE} virtual cash — free, no signup.`,
     h1: "Markets Overview",
-    summary: `Browse 150+ simulated markets across every major asset class. Movers, sentiment and sector clusters update throughout the day. Practice trading anything you see with ${BALANCE} virtual cash — free and no signup required.`,
+    summary: `Browse 150+ simulated markets across major asset classes. Explore movers, sentiment-style indicators and sector groupings, then practise with ${BALANCE} virtual cash. Data may be simulated or delayed and is for education only.`,
     priority: "0.9",
     changefreq: "daily",
   });
@@ -477,7 +477,7 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/courses",
     title: "Free Trading Courses 2026 — Options, Futures, Macro & Psychology | TradeHQ",
-    description: `Four structured, expert-written trading courses. Free lessons, quizzes and completion badges. Practice with ${BALANCE} virtual cash.`,
+    description: `Four structured trading courses with original lessons, quizzes and completion badges. Practise concepts with ${BALANCE} virtual cash.`,
     h1: "Structured Trading Courses",
     summary: `Four structured tracks — options, futures, macro reading, and trading psychology — each with quizzes and a completion badge. Practice everything with ${BALANCE} in virtual cash on TradeHQ.`,
     priority: "0.8",
