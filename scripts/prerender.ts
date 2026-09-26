@@ -123,41 +123,41 @@ function renderHead(r: RouteMeta, template: string, body: string): string {
 
   html = html.replace(
     /<meta\s[^>]*name=["']description["'][^>]*>/i,
-    `<meta data-static-head name="description" content="${desc}" />`
+    `<meta data-rh="true" name="description" content="${desc}" />`
   );
 
   // robots — replace existing, else inject
   if (/<meta\s[^>]*name=["']robots["'][^>]*>/i.test(html)) {
     html = html.replace(
       /<meta\s[^>]*name=["']robots["'][^>]*>/i,
-      `<meta data-static-head name="robots" content="${robots}" />`
+      `<meta data-rh="true" name="robots" content="${robots}" />`
     );
   } else {
-    html = html.replace(/<\/head>/i, `  <meta data-static-head name="robots" content="${robots}" />\n  </head>`);
+    html = html.replace(/<\/head>/i, `  <meta data-rh="true" name="robots" content="${robots}" />\n  </head>`);
   }
 
   html = html.replace(/<link\s+rel=["']canonical["'][^>]*>\s*/gi, "");
-  html = html.replace(/<\/head>/i, `  <link rel="canonical" href="${url}" />\n  </head>`);
+  html = html.replace(/<\/head>/i, `  <link data-rh="true" rel="canonical" href="${url}" />\n  </head>`);
 
   html = html.replace(
     /<meta\s[^>]*property=["']og:url["'][^>]*>/i,
-    `<meta data-static-head property="og:url" content="${url}" />`
+    `<meta data-rh="true" property="og:url" content="${url}" />`
   );
   html = html.replace(
     /<meta\s[^>]*property=["']og:title["'][^>]*>/i,
-    `<meta data-static-head property="og:title" content="${title}" />`
+    `<meta data-rh="true" property="og:title" content="${title}" />`
   );
   html = html.replace(
     /<meta\s[^>]*property=["']og:description["'][^>]*>/i,
-    `<meta data-static-head property="og:description" content="${desc}" />`
+    `<meta data-rh="true" property="og:description" content="${desc}" />`
   );
   html = html.replace(
     /<meta\s[^>]*name=["']twitter:title["'][^>]*>/i,
-    `<meta data-static-head name="twitter:title" content="${title}" />`
+    `<meta data-rh="true" name="twitter:title" content="${title}" />`
   );
   html = html.replace(
     /<meta\s[^>]*name=["']twitter:description["'][^>]*>/i,
-    `<meta data-static-head name="twitter:description" content="${desc}" />`
+    `<meta data-rh="true" name="twitter:description" content="${desc}" />`
   );
 
   html = html.replace(/<div\s+id=["']root["']><\/div>/i, `<div id="root">${body}</div>`);
@@ -172,6 +172,9 @@ async function main() {
     process.exit(1);
   }
   const shell = fs.readFileSync(shellPath, "utf-8");
+  const privateShell = shell.replace(/<meta\s[^>]*name=["']robots["'][^>]*>/i, '<meta data-rh="true" name="robots" content="noindex, follow" />');
+  fs.writeFileSync(path.join(DIST, "app.html"), privateShell);
+  fs.writeFileSync(path.join(DIST, "404.html"), '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found — TradeHQ</title><meta name="robots" content="noindex, follow"></head><body><main><h1>Page not found</h1><p>This address does not match a TradeHQ page.</p><a href="/">Home</a> · <a href="/learn">Learning centre</a></main></body></html>');
   const contentMap = await buildContentMap();
 
   const routes = uniqueRoutes();
@@ -240,7 +243,7 @@ async function main() {
     for (const t of thin.slice(0, 20)) console.error(`   ${t.path} — ${t.words} words`);
     process.exit(1);
   }
-  console.log(`✅ Every indexable route renders ≥ ${MIN_WORDS} words of unique static content`);
+  console.log(`✅ Every indexable route renders ≥ ${MIN_WORDS} words; this does not certify originality or accuracy`);
 }
 
 main();

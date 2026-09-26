@@ -1,3 +1,6 @@
+import { robotsForPath } from "@/lib/robots";
+import NotFound from "./NotFound";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/client";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -73,10 +76,10 @@ export default function TradeAsset() {
     if (!asset || typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) return asset;
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
         {
           headers: {
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
             'Content-Type': 'application/json',
           },
         }
@@ -204,7 +207,7 @@ export default function TradeAsset() {
 
   // Redirect if asset not found
   if (symbol && !findAssetBySymbol(symbol)) {
-    return <Navigate to="/trade" replace />;
+    return <NotFound />;
   }
 
   // Canonicalize URL casing: enforce lowercase asset id in the path.
@@ -396,7 +399,7 @@ export default function TradeAsset() {
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta name="theme-color" content={assetColor} />
         
         {/* GEO KEY SUMMARY SCHEMA */}

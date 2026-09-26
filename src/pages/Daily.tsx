@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -49,7 +50,7 @@ export default function Daily() {
         <title>Daily Trading Challenge — Build Your Streak | TradeHQ</title>
         <meta name="description" content="A new trading scenario every day. Pick long, short, or hold. Build your streak, unlock badges, learn one new pro insight every 24 hours. Free, no signup." />
         <link rel="canonical" href="https://www.thetradehq.com/daily" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:title" content="Daily Trading Challenge — TradeHQ" />
         <meta property="og:description" content="One new trading scenario per day. Build your streak. Free." />
         <meta property="og:url" content="https://www.thetradehq.com/daily" />

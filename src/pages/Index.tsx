@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Link } from "react-router-dom";
@@ -155,7 +156,7 @@ const Index = () => {
         <title>TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)</title>
         <meta name="description" content="Practice stocks, crypto, ETFs & forex with $100,000 virtual cash. Zero signup. AI mentor, live charts, leaderboard & 150+ assets. Best free trading simulator in 2026." />
         <link rel="canonical" href="https://www.thetradehq.com/" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)" />
         <meta property="og:description" content="Practice real trading risk-free with $100K virtual money. AI mentor + live charts. No signup needed. Start in seconds." />

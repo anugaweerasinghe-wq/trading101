@@ -1,3 +1,5 @@
+import { robotsForPath } from "@/lib/robots";
+import NotFound from "./NotFound";
 import { useParams, Navigate, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -84,7 +86,7 @@ export default function SectorPillar() {
   
   // Redirect if sector not found
   if (!sector) {
-    return <Navigate to="/markets" replace />;
+    return <NotFound />;
   }
 
   // Get assets for this sector
@@ -118,7 +120,7 @@ export default function SectorPillar() {
         <title>{sector.name} Trading Simulator | 2026 Strategy & Analysis | TradeHQ</title>
         <meta name="description" content={`Practice trading ${sector.name.toLowerCase()} assets with $100K virtual funds. ${sector.description.slice(0, 100)}...`} />
         <link rel="canonical" href={canonicalUrl} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:title" content={`${sector.name} Trading Simulator | TradeHQ`} />
         <meta property="og:description" content={sector.description} />
         <meta property="og:url" content={canonicalUrl} />

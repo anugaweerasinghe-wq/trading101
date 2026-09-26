@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
@@ -219,7 +220,7 @@ export default function Leaderboard() {
         <title>Leaderboard — Real TradeHQ Paper Traders Ranked by Return</title>
         <meta name="description" content="Live rankings of real TradeHQ members who opted in, ranked by percentage return on $100,000 of virtual practice capital. No bots, no demo data." />
         <link rel="canonical" href="https://www.thetradehq.com/leaderboard" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ Leaderboard — Real Paper Traders Ranked" />
         <meta property="og:description" content="Real members ranked by percentage return on $100K of virtual practice capital." />

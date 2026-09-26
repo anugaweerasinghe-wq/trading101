@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { useEffect, useState, useMemo } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -21,7 +22,7 @@ const REVIEWED = "2026-07-13";
 export default function CourseLesson() {
   const { trackSlug, lessonSlug } = useParams<{ trackSlug: string; lessonSlug: string }>();
   const found = trackSlug && lessonSlug ? getLesson(trackSlug, lessonSlug) : undefined;
-  if (!found) return <Navigate to="/courses" replace />;
+  if (!found) return <NotFound />;
   const { track, lesson, index } = found;
 
   const [answers, setAnswers] = useState<Record<number, number>>({});

@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { z } from "zod";
@@ -91,7 +92,7 @@ export default function Contact() {
           content="Contact TradeHQ for questions, feedback or partnership inquiries. Reach the team by email or phone — typical response within 48 hours."
         />
         <link rel="canonical" href={`${DOMAIN}/contact`} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Contact TradeHQ | Get in Touch" />
         <meta

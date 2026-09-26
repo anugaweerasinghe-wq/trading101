@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { Helmet } from "react-helmet-async";
 import { useParams, Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
@@ -66,7 +67,7 @@ export default function NicheAsset() {
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonical} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 

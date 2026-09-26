@@ -44,7 +44,7 @@ for (const route of routes) {
   const html = readFileSync(filePath, "utf-8");
   const title = pick(html, /<title>([\s\S]*?)<\/title>/i);
   const desc = pick(html, /<meta\s[^>]*name=["']description["']\s+content=["']([^"']+)["']/i);
-  const canonical = pick(html, /<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i);
+  const canonical = pick(html, /<link\s[^>]*rel=["']canonical["']\s+href=["']([^"']+)["']/i);
   const h1 = pick(html, /<h1[^>]*>([\s\S]*?)<\/h1>/i);
 
   const expectedCanonical = `${DOMAIN}${route === "/" ? "/" : route}`;

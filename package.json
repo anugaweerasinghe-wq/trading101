@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predev": "tsx scripts/generate-sitemap.ts",
+    "predev": "node --import tsx scripts/generate-sitemap.ts",
     "dev": "vite",
-    "prebuild": "tsx scripts/generate-sitemap.ts",
+    "prebuild": "node --import tsx scripts/generate-hosting.ts && node --import tsx scripts/generate-sitemap.ts",
     "build": "vite build",
-    "postbuild": "tsx scripts/prerender.ts && tsx scripts/generate-sitemap.ts && node scripts/verify-seo.mjs",
+    "postbuild": "node --import tsx scripts/prerender.ts && node --import tsx scripts/generate-sitemap.ts && node scripts/verify-seo.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"

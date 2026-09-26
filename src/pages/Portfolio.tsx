@@ -1,3 +1,5 @@
+import { robotsForPath } from "@/lib/robots";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/client";
 import { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -82,10 +84,10 @@ export default function Portfolio() {
   const fetchLivePrice = async (asset: typeof ASSETS[number]) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
         {
           headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
             "Content-Type": "application/json",
           },
         },
@@ -283,7 +285,7 @@ export default function Portfolio() {
           content="Practice portfolio tracker with analytics, trading journal, performance charts and milestone alerts. See simulated P&L, positions and risk metrics in one dashboard."
         />
         <link rel="canonical" href="https://www.thetradehq.com/portfolio" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
