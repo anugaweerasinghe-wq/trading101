@@ -280,7 +280,7 @@ export default function Portfolio() {
         </title>
         <meta
           name="description"
-          content="Real-time portfolio tracker with AI analytics, trading journal, performance charts, and milestone alerts. See your P&L, positions, and risk metrics instantly."
+          content="Practice portfolio tracker with analytics, trading journal, performance charts and milestone alerts. See simulated P&L, positions and risk metrics in one dashboard."
         />
         <link rel="canonical" href="https://www.thetradehq.com/portfolio" />
         <meta name="robots" content="index, follow" />
@@ -291,7 +291,7 @@ export default function Portfolio() {
         />
         <meta
           property="og:description"
-          content="Live P&L, AI insights, journal, and risk management for your $100K practice portfolio."
+          content="Simulated P&L, analytics, journal and risk-management tools for your $100K practice portfolio."
         />
         <meta property="og:url" content="https://www.thetradehq.com/portfolio" />
         <meta
@@ -545,12 +545,12 @@ export default function Portfolio() {
                 {
                   question: "What does the TradeHQ portfolio tracker show?",
                   answer:
-                    "It tracks every simulated position, realized and unrealized P&L, day change, max drawdown, Sharpe ratio and an AI-generated growth summary — based on real-time price data for the assets you hold.",
+                    "It tracks simulated positions, realized and unrealized P&L, day change, max drawdown, Sharpe ratio and an automated growth summary. Asset prices may be live, cached, delayed or simulated depending on data availability.",
                 },
                 {
                   question: "Are the portfolio statistics based on real prices?",
                   answer:
-                    "Yes. Held assets refresh from the live market data feed every 60 seconds, with status badges showing LIVE / CACHED / SIM coverage. (Educational simulation only — not financial advice.)",
+                    "Not always. TradeHQ can use live, cached, delayed or simulated quotes depending on the asset and data availability. Status badges indicate the source when available. The portfolio is an educational simulation, not a brokerage account.",
                 },
                 {
                   question: "How do I reset my virtual portfolio?",
