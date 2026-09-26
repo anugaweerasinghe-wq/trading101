@@ -1,10 +1,10 @@
 /**
  * Content-quality audit over the prerendered build output.
  *
- * Reports, for every indexable page: title/description length outside the
- * SERP display window, multiple H1s, word count, and the share of a page's
- * sentences that also appear on more than five other pages (a proxy for
- * template-heavy, low-value content). Run after `npm run build`.
+ * Reports, for every indexable page: title/description length, H1 count,
+ * and the share of sentences repeated across many pages. Word count is
+ * displayed only as a descriptive diagnostic; there is intentionally no
+ * minimum-word threshold because Google does not recommend one.
  */
 
 import { readFileSync, readdirSync, statSync } from "fs";
@@ -61,9 +61,4 @@ for (const [s, c] of [...sentCount.entries()].filter(([, c]) => c > 20).sort((a,
   console.log(`  ${c} × ${s.slice(0, 100)}`);
 }
 
-const buckets = {
-  under500: pages.filter((p) => p.words < 500).length,
-  under700: pages.filter((p) => p.words < 700).length,
-  under900: pages.filter((p) => p.words < 900).length,
-};
-console.log("\nword counts:", JSON.stringify(buckets), `of ${pages.length}`);
+console.log("\nword count is diagnostic only; no minimum threshold is enforced.");
