@@ -30,16 +30,16 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "What Is Paper Trading?",
         paragraphs: [
           "Paper trading is the practice of simulating trades without using real money. Instead of risking your hard-earned savings, you use virtual currency to buy and sell stocks, ETFs, cryptocurrencies, and other financial instruments. The term dates back to a time when aspiring traders would literally write their hypothetical trades on paper to track performance.",
-          "Today, paper trading is done digitally through platforms like TradeHQ, which provide simulated trading environments with real-time market data. You get all the experience of placing orders, reading charts, and managing a portfolio — without any financial risk. It is the single best way for a beginner to learn how markets actually work.",
+          "Today, paper trading is usually done digitally through simulated platforms. It can help beginners practise order entry, chart reading, record-keeping, and portfolio mechanics without risking real money. It is one practical way to learn how markets work, but it cannot reproduce every part of live trading, especially slippage, liquidity constraints, and the emotions attached to real losses.",
           "On TradeHQ, every user starts with $100,000 in virtual cash. You can trade over 150 assets including blue-chip stocks like Apple (AAPL), cryptocurrencies like Bitcoin (BTC), ETFs like SPY, forex pairs, and commodities like gold. Every trade you make is tracked, giving you a realistic portfolio experience."
         ]
       },
       {
         heading: "Why Beginners Should Paper Trade First",
         paragraphs: [
-          "Jumping straight into live trading is like learning to drive on a highway during rush hour. Paper trading gives you a controlled environment to make mistakes, learn from them, and build confidence. Studies show that traders who practice for at least 3 months before going live have significantly better long-term results.",
+          "Paper trading gives you a controlled environment to make mistakes, test a process, and learn the mechanics before real money is involved. There is no universal number of practice weeks or months that guarantees better results. A more useful goal is to practise until you can follow the same written process consistently across a meaningful sample of simulated trades.",
           "With paper trading you can test different strategies — day trading, swing trading, buy-and-hold — to see what fits your personality and schedule. You can learn to read candlestick charts, set stop-loss orders, and understand the emotional discipline required for successful trading, all without the stress of watching real money fluctuate.",
-          "Paper trading also teaches you about risk management. You'll learn concepts like position sizing (never risking more than 2% of your portfolio on a single trade), diversification across asset classes, and the importance of having a trading plan before you click the buy button."
+          "Paper trading can also be used to practise risk management. You can test position sizing, predefined exit rules, diversification, and the discipline of writing a trading plan before placing an order. Any percentage risk limit should be treated as a practice parameter, not a universal rule."
         ]
       },
       {
@@ -55,7 +55,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       { href: "/trade", label: "Start paper trading with $100,000 virtual cash" },
       { href: "/trade/aapl", label: "Practice trading Apple (AAPL)" },
       { href: "/trade/btc", label: "Practice trading Bitcoin (BTC)" },
-      { href: "/learn/how-to-read-stock-charts", label: "Learn how to read stock charts" },
+      { href: "/learn/article/how-to-read-stock-charts", label: "Learn how to read stock charts" },
     ],
   },
   {
@@ -93,8 +93,8 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     relatedLinks: [
       { href: "/trade/nvda", label: "Practice reading NVIDIA (NVDA) charts" },
       { href: "/trade/eth", label: "Analyze Ethereum (ETH) price action" },
-      { href: "/learn/trading-strategies-for-beginners", label: "5 trading strategies for beginners" },
-      { href: "/learn/what-is-paper-trading", label: "What is paper trading?" },
+      { href: "/learn/article/trading-strategies-for-beginners", label: "5 trading strategies for beginners" },
+      { href: "/learn/article/what-is-paper-trading", label: "What is paper trading?" },
     ],
   },
   {
@@ -133,7 +133,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       { href: "/trade/btc", label: "Practice trading Bitcoin (BTC)" },
       { href: "/trade/aapl", label: "Practice trading Apple (AAPL)" },
       { href: "/markets", label: "Explore all 150+ tradeable assets" },
-      { href: "/learn/how-to-build-a-portfolio", label: "How to build a balanced portfolio" },
+      { href: "/learn/article/how-to-build-a-portfolio", label: "How to build a balanced portfolio" },
     ],
   },
   {
@@ -173,7 +173,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       { href: "/trade", label: "Start testing strategies with $100K virtual cash" },
       { href: "/trade/tsla", label: "Practice swing trading Tesla (TSLA)" },
       { href: "/trade/sol", label: "Trade Solana (SOL) momentum" },
-      { href: "/learn/how-to-read-stock-charts", label: "How to read stock charts" },
+      { href: "/learn/article/how-to-read-stock-charts", label: "How to read stock charts" },
     ],
   },
   {
@@ -211,8 +211,8 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     relatedLinks: [
       { href: "/trade/spy", label: "Practice trading the S&P 500 ETF (SPY)" },
       { href: "/trade/qqq", label: "Trade the Nasdaq 100 ETF (QQQ)" },
-      { href: "/learn/how-to-build-a-portfolio", label: "How to build a balanced portfolio" },
-      { href: "/learn/crypto-vs-stocks", label: "Crypto vs stocks comparison" },
+      { href: "/learn/article/how-to-build-a-portfolio", label: "How to build a balanced portfolio" },
+      { href: "/learn/article/crypto-vs-stocks", label: "Crypto vs stocks comparison" },
     ],
   },
   {
@@ -251,7 +251,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       { href: "/portfolio", label: "View and manage your virtual portfolio" },
       { href: "/trade/spy", label: "Add S&P 500 ETF (SPY) to your portfolio" },
       { href: "/trade/btc", label: "Add Bitcoin (BTC) to your portfolio" },
-      { href: "/learn/stock-market-index-etfs", label: "Understanding ETFs and indexes" },
+      { href: "/learn/article/stock-market-index-etfs", label: "Understanding ETFs and indexes" },
     ],
   },
   {
@@ -266,15 +266,15 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Most beginner traders obsess over finding the perfect stock or crypto to buy. But professional traders know the truth: risk management is far more important than any single trade idea. You can be wrong on 60% of your trades and still be profitable if your winners are larger than your losers — and that's entirely a function of risk management.",
           "Risk management is a set of rules and strategies designed to limit your potential losses on any single trade and across your entire portfolio. Without it, a single bad trade can wipe out weeks or months of gains. With it, you can survive losing streaks, preserve capital, and stay in the game long enough for your edge to play out.",
-          "On TradeHQ, you can practice risk management techniques with $100,000 in virtual cash. Experiment with different position sizes, stop-loss levels, and risk-reward ratios — and see firsthand how they impact your portfolio over dozens of trades. This is the single most valuable skill you can develop before trading with real money."
+          "On TradeHQ, you can practise risk-management ideas with $100,000 in virtual cash. Experiment with different position sizes, exit rules, and reward-to-risk assumptions, then review how each choice changes drawdown and variability over a larger sample of trades. The aim is to build a repeatable process, not to discover a guaranteed formula."
         ]
       },
       {
-        heading: "Position Sizing and the 2% Rule",
+        heading: "Position Sizing With a Predefined Risk Limit",
         paragraphs: [
-          "Position sizing determines how much of your portfolio you allocate to a single trade. The most widely recommended rule is the 2% rule: never risk more than 2% of your total portfolio on any single trade. With a $100,000 account, that means your maximum loss per trade should be $200.",
-          "To calculate position size, you need three numbers: your account size, your risk percentage (e.g., 2%), and your stop-loss distance. If you're buying a stock at $100 with a stop-loss at $95, your risk per share is $5. With a $200 maximum risk, you'd buy 40 shares ($200 ÷ $5 = 40 shares, or a $4,000 position).",
-          "The 2% rule ensures that even a string of 10 consecutive losing trades only costs you about 18% of your account — painful but recoverable. Compare that to risking 10% per trade, where 10 losses would destroy 65% of your portfolio. Practice calculating position sizes on TradeHQ until it becomes second nature."
+          "Position sizing determines how much of your portfolio you expose to a single trade. Percentage-based limits such as 1% or 2% are common educational examples, but they are not universal prescriptions. On a $100,000 practice account, a 1% risk budget would be $1,000 and a 2% budget would be $2,000.",
+          "To calculate an illustrative position size, use three inputs: account size, a chosen practice risk budget, and the distance between entry and exit. For example, if a practice account is $100,000, the chosen risk budget is 1% ($1,000), and a hypothetical entry is $100 with an exit at $95, the risk per share is $5. Dividing $1,000 by $5 gives 200 shares, or a $20,000 position. This is arithmetic for simulation, not a recommendation for real-money trading.",
+          "Smaller predefined risk budgets reduce the damage from a losing streak, while larger ones make drawdowns compound much faster. Use the simulator to compare several fixed-risk assumptions and record the resulting drawdowns rather than treating any single percentage as a magic number."
         ]
       },
       {
@@ -288,9 +288,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     ],
     relatedLinks: [
       { href: "/trade", label: "Practice risk management with $100K virtual cash" },
-      { href: "/learn/trading-strategies-for-beginners", label: "5 beginner trading strategies" },
+      { href: "/learn/article/trading-strategies-for-beginners", label: "5 beginner trading strategies" },
       { href: "/trade/btc", label: "Practice stop-losses on Bitcoin (BTC)" },
-      { href: "/learn/how-to-read-stock-charts", label: "How to read stock charts" },
+      { href: "/learn/article/how-to-read-stock-charts", label: "How to read stock charts" },
     ],
   },
   {
@@ -312,8 +312,8 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "What Is a Limit Order?",
         paragraphs: [
           "A limit order lets you set the exact price at which you want to buy or sell. A buy limit order executes only at your specified price or lower; a sell limit order executes only at your specified price or higher. Unlike market orders, limit orders give you price control but don't guarantee execution.",
-          "For example, if Bitcoin is trading at $68,000 and you want to buy at $65,000, you place a buy limit order at $65,000. If the price drops to that level, your order fills automatically. If it never reaches $65,000, your order remains open until you cancel it or it expires.",
-          "Limit orders are preferred by most experienced traders because they prevent overpaying. They're especially useful for setting entries at support levels, taking profit at resistance levels, or buying dips in volatile markets. The trade-off is that you might miss a trade entirely if the price never reaches your limit."
+          "For example, if Bitcoin is trading at $68,000 and you want to buy at $65,000, you place a buy limit order at $65,000. If the market reaches that level, the order becomes eligible to fill, subject to available liquidity and order priority. If it never reaches $65,000, the order remains open until you cancel it or it expires.",
+          "Limit orders can be useful when price control matters more than immediate execution. They are commonly used for planned entries and exits, but the trade-off is that the order may not fill at all, or may fill only partially, if there is not enough matching liquidity."
         ]
       },
       {
@@ -328,7 +328,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     relatedLinks: [
       { href: "/trade/nvda", label: "Practice order types on NVIDIA (NVDA)" },
       { href: "/trade/sol", label: "Test limit orders on Solana (SOL)" },
-      { href: "/learn/risk-management-in-trading", label: "Risk management guide" },
+      { href: "/learn/article/risk-management-in-trading", label: "Risk management guide" },
       { href: "/wiki/limit-order-vs-market-order", label: "Glossary: Limit vs Market Order" },
     ],
   },
