@@ -122,7 +122,7 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     keywords: ["fomo", "fear", "greed", "psychology", "emotion", "discipline", "revenge"],
     title: "Trading Psychology",
     answer:
-      "The market is a mirror for your emotions. **80% of trading success is psychology**, 20% is strategy.\n\n" +
+      "Trading decisions can be affected by emotion, attention and cognitive bias. Psychology matters, but there is no credible universal percentage that separates psychology from strategy.\n\n" +
       "**The 4 killers:**\n" +
       "• **FOMO** — chasing pumps. The trade is already over by the time you see it.\n" +
       "• **Revenge trading** — doubling down after a loss to 'win back'. This is how accounts die.\n" +
@@ -137,10 +137,9 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     answer:
       "**Don't put all your eggs in one basket** — but don't put them in 50 baskets either.\n\n" +
       "**Practical allocation for $100K:**\n" +
-      "• 60% large-cap stocks/ETFs (SPY, QQQ).\n" +
-      "• 20% growth or thematic (tech, AI).\n" +
-      "• 10% crypto/alternative (BTC, ETH).\n" +
-      "• 10% cash / short-term bonds (dry powder).\n\n" +
+      "• There is no universal allocation that fits everyone.\n" +
+      "• In TradeHQ, compare concentrated and diversified practice portfolios and observe how volatility and drawdown change.\n" +
+      "• Treat any example allocation as a simulation scenario, not a recommendation for real money.\n\n" +
       "True diversification means uncorrelated assets — owning 10 tech stocks isn't diversified, it's one bet 10 times.",
   },
   {
@@ -150,8 +149,8 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     answer:
       "**Leverage amplifies both gains AND losses.** 10x leverage means a 10% adverse move = -100% (liquidation).\n\n" +
       "**Reality:**\n" +
-      "• ~80% of retail traders using high leverage blow their accounts within 12 months.\n" +
-      "• Pros use leverage carefully — usually 2–3x, never 50x.\n" +
+      "• High leverage can make even small market moves produce very large gains or losses; loss rates vary widely by product, market and trader.\n" +
+      "• The leverage a platform offers is not a recommendation. In simulation, compare how leverage changes drawdown and liquidation distance before using it as a learning tool.\n" +
       "• In TradeHQ, practice cash-account discipline first. If you can't make money unlevered, leverage will only speed up the loss.\n\n" +
       "**Rule:** If you're new, stay unlevered for the first 100 trades.",
   },
