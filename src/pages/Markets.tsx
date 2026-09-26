@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { TradingSidebar } from "@/components/trading/TradingSidebar";
@@ -126,7 +127,7 @@ export default function Markets() {
         <title>Practice Markets — Stocks, Crypto, ETFs & Forex | TradeHQ</title>
         <meta name="description" content="Browse 150+ practice markets across stocks, crypto, ETFs, forex and commodities. Quotes may be simulated, cached or delayed. Trade with $100K virtual cash." />
         <link rel="canonical" href="https://www.thetradehq.com/markets" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Practice Markets — 150+ Stocks, Crypto, ETFs & Forex | TradeHQ" />
         <meta property="og:description" content="Explore simulated, cached or delayed market data across stocks, crypto, ETFs, forex and commodities." />

@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -85,7 +86,7 @@ const WikiTerm = () => {
           content={`Master ${term.term} in under ${term.readTime}. ${term.definition.substring(0, 140)}... Expert definition, pro tips & simulator practice.`}
         />
         <link rel="canonical" href={`${DOMAIN}/wiki/${term.slug}`} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={`What is ${term.term}? | Complete Trading Guide 2026 | TradeHQ`} />
         <meta property="og:description" content={term.definition} />

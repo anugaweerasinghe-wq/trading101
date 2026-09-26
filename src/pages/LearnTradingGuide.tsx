@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { useState, useMemo } from "react";
 import { Navigation } from "@/components/Navigation";
 import { CompoundCalculator } from "@/components/CompoundCalculator";
@@ -95,7 +96,7 @@ const LearnTradingGuide = () => {
         <title>Learn Trading Strategy | Free Educational Guide for Beginners</title>
         <meta name="description" content="From Pips to Portfolio management, master the art of trading. Our structured guides cover technical analysis, success psychology, and market mechanics for future-proof traders." />
         <link rel="canonical" href={`${DOMAIN}/learn-trading-guide`} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>

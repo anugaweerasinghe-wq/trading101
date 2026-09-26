@@ -1,0 +1,2333 @@
+[
+  {
+    "path": ".gitignore",
+    "bytes": 306,
+    "lines": 29,
+    "sha256": "9a237ef9cc19843f75623c7f997a5342460f91d108cd983c77d756befdaab619",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": ".lovable/plan/challenge-mode-completion-full-site-content-audit-domain-mig-2026-08-04.md",
+    "bytes": 5389,
+    "lines": 56,
+    "sha256": "0065699d28474fa01db2da1daee51074a1fc5ef65d8b061012101794fa48c782",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": ".lovable/plan/fix-discovered-currently-not-indexed-pages-2026-08-09.md",
+    "bytes": 3820,
+    "lines": 47,
+    "sha256": "307d928157f53a1ceb6f5a08bae8f032bd0954b8d333db769fdcbca68986dbcf",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": ".lovable/plan/fix-indexing-adsense-rejection-at-the-root-cause-2026-09-02.md",
+    "bytes": 5034,
+    "lines": 59,
+    "sha256": "ab6ed255c44c2bb284a24360a7f4ba614675544a6ec3d4d89e249494c493294d",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": ".lovable/plan/tradehq-quality-pass-mobile-menu-fix-and-a-deep-rewrite-of-3-2026-09-06.md",
+    "bytes": 4273,
+    "lines": 55,
+    "sha256": "0f194b461e14e7b7c670f2a290023cf4bb02c86c1882ab19d80d650fb77c89ae",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "README.md",
+    "bytes": 2141,
+    "lines": 73,
+    "sha256": "717d2c84c7b974d00765439a603b36e90ab5cf8b473c0bd1411d39524ffb9d7f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "bun.lock",
+    "bytes": 136848,
+    "lines": 1090,
+    "sha256": "b0a732968ad5f1e3005ae57e0468cbf7d6b3dcd81ad7e9c72b8dd22735393d5c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "bun.lockb",
+    "bytes": 201126,
+    "lines": null,
+    "sha256": "0365405bfcc1de49a70cd23a13bf97bc2c474a9c470b3e8158f214951111bd16",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "components.json",
+    "bytes": 414,
+    "lines": 20,
+    "sha256": "9820835141c54e5b5dfbb68b3c3790db73c9ebfb967884ae3fccd058d698a1a6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "eslint.config.js",
+    "bytes": 765,
+    "lines": 26,
+    "sha256": "c55264234fef783629810643d995cd522c3adaeb60e7157906310607292015a3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "index.html",
+    "bytes": 6790,
+    "lines": 127,
+    "sha256": "02482fd350fab063344b7420c41c5589edecdd173d46f1ff8d9b190275ea4555",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "package-lock.json",
+    "bytes": 267876,
+    "lines": 7615,
+    "sha256": "f659df832d44232269f51796b0e54f98ece7774ce6a125e060abbaa4e8cc6193",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "package.json",
+    "bytes": 3137,
+    "lines": 92,
+    "sha256": "c802ba2f16169a6f0f1511a18a9e11dfd63ab8a93402249d44c66bec2da4c705",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "postcss.config.js",
+    "bytes": 81,
+    "lines": 6,
+    "sha256": "e32657baf631d7c5f4dc67b4b2ee0ec8e7d5b3c41860e09cddce7c0377cd80bc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/14_day_report.md",
+    "bytes": 2078,
+    "lines": 80,
+    "sha256": "b179e7843b53ee2fd0eb59e0f8e3da77d93cd013812b30570e5c20d71d9041a9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/7_day_turbo_report.md",
+    "bytes": 2775,
+    "lines": 110,
+    "sha256": "4f2700a3c7373d7ac7548e4ec9705ec6036a17c62dacf7b3a4f501947a61f4b2",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/asset_keystatistics_report.json",
+    "bytes": 5082,
+    "lines": 87,
+    "sha256": "de2cdd74fc767fbee1e2ebb58daeb40be564eb5efd73527ee1ef8b1dc4cc0222",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/audio/long-road-ahead-kevin-macleod.mp3",
+    "bytes": 5847166,
+    "lines": null,
+    "sha256": "91997574f6b18918a6e93e543c42b047ae7179d2643b2a4d706e5338ad75eef7",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "public/change_log.csv",
+    "bytes": 9958,
+    "lines": 53,
+    "sha256": "15a70400805970156e66db7a0e9b23c47e80f5147b6ed58521581082cb47ba46",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/final_qa_report.txt",
+    "bytes": 3937,
+    "lines": 81,
+    "sha256": "8242866b042d07cfc57411c2bb761ec3c918694bb032934cbce6401cdfda4f07",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/link_slug_validation_report.csv",
+    "bytes": 1021,
+    "lines": 29,
+    "sha256": "a41cf44a54ca25c1a7b75cddf75706f5945aef7f9e98c223376da35306fb3b7d",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/list_of_updated_urls.csv",
+    "bytes": 3521,
+    "lines": 22,
+    "sha256": "83fae079505fde94208ac18c4f0281ee575ea1803bcd57f87be291d635c5cb4e",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/list_of_urls.csv",
+    "bytes": 2219,
+    "lines": 33,
+    "sha256": "38d6539becb17734b722dda15379b7bcb7aa9290b0f96b4a71493a08417d11c7",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/llms.txt",
+    "bytes": 3574,
+    "lines": 59,
+    "sha256": "4cd2182a4127cf51e6fe49221f91fd52f53de246773ca5135eb68fac890ffd50",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/logo.png",
+    "bytes": 379643,
+    "lines": null,
+    "sha256": "3080be1deb89b5ada2c1e572da9eb69afb0d7b0f6a14f12772acbda7a94c21f2",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "public/logo.svg",
+    "bytes": 987,
+    "lines": 20,
+    "sha256": "70788d5699fe0ac4764c0874d70183af612021f73cdc92965ceb3237d86e26ae",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/manifest.json",
+    "bytes": 853,
+    "lines": 33,
+    "sha256": "1d965fd3ee1c9962e578ba9ec14234a60d500f6b653b7cea04186f8f0ee8a165",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/meta_ab_test_plan.txt",
+    "bytes": 2173,
+    "lines": 44,
+    "sha256": "f67d4113039c9a879bd69633136e7bbd05b2e22b71e35bd85c7d75dc8a2e2857",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/meta_turbo_variants.csv",
+    "bytes": 10916,
+    "lines": 55,
+    "sha256": "461fbc29ad960f6fe5f95f5fd00c9f64c8438b8dca32debb4b13ffe9775b84e8",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/meta_variants.csv",
+    "bytes": 6721,
+    "lines": 18,
+    "sha256": "64f04044309515aa14ff59aabe01c2bb5895d335bd31e21c8adf0f16fbe0aef7",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/monitoring_plan.csv",
+    "bytes": 1632,
+    "lines": 11,
+    "sha256": "3bd4db1c7e530145a6e809a787e42f65727a113a38d327e12e914af71068944f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/notify_team.txt",
+    "bytes": 1710,
+    "lines": 39,
+    "sha256": "84235cf649f1c237168fb871c25881b7dd4dead3eb7cc4e7141e8d5ed338325f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/og-image.png",
+    "bytes": 39562,
+    "lines": null,
+    "sha256": "506adf0039e30ea8da71b36c35c812ff43166fedbb62922cad16c031c7987b97",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "public/og_image_status.csv",
+    "bytes": 1645,
+    "lines": 18,
+    "sha256": "043e62650942b1d825111e205605c3d647a904ecf9b546773cc18b8e4da7ed8c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/owner_approval_request.txt",
+    "bytes": 2146,
+    "lines": 44,
+    "sha256": "3f8528cc0f9cbb6b4cf63acc1246d75c2be5b2d2c651f34b29792d6b6000c3c5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/placeholder.svg",
+    "bytes": 3253,
+    "lines": 1,
+    "sha256": "64badf7aabda0b9630b87020ffb6095cb858ccbcf66b355c2aa08b1063954d3b",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/rich_results_turbo_log.csv",
+    "bytes": 4127,
+    "lines": 35,
+    "sha256": "b33011e61c1098bcb92ea45887d6dbb1a2a44388b87d63a973d1c3c166b699c3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/rich_results_validation_log.csv",
+    "bytes": 3776,
+    "lines": 35,
+    "sha256": "5d706b925906d8a1a17ae099c1017674492b4a4bd37f417b8ea1c2b98583963f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/robots.txt",
+    "bytes": 962,
+    "lines": 63,
+    "sha256": "df0b38a7909fab9e7a3ec778bfc24b5fc8a51ed1d17ef1cddc3f3c3bd9380738",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/search_console_submission_instructions.md",
+    "bytes": 3142,
+    "lines": 86,
+    "sha256": "9b671757e46c55f024221f5a70c30536a66cc35111d050fd7841901b7583fa75",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/seo_audit.json",
+    "bytes": 10141,
+    "lines": 236,
+    "sha256": "cfaa5cda28e2faf27c71ae2b1d08fc34dc6bf3b77f9c268d2f54a4eb93f63c92",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "public/sitemap.xml",
+    "bytes": 19331,
+    "lines": 150,
+    "sha256": "55da7a92e15eb004bb808d430ab5faac87c847fec1231ffba23e812867f64cef",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/audit-content.mjs",
+    "bytes": 2958,
+    "lines": 69,
+    "sha256": "6c63efb97bb10b9c5e53d4cbc30c8cc67b4bdfce18891a6b2c74508600eda4ac",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/content.ts",
+    "bytes": 38375,
+    "lines": 655,
+    "sha256": "2de59c27ba61b543fcd42e3b754449432d8ebe2e0ed47537e78cf3515c1a0efd",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/dataEntry.ts",
+    "bytes": 653,
+    "lines": 13,
+    "sha256": "361c8573820823af182e64dfc05a24e943ae0a8cfedb292d8ab52bc5b580da7d",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/generate-sitemap.ts",
+    "bytes": 1307,
+    "lines": 38,
+    "sha256": "45097feca6770ebf96c152a985daa4681b7692e76024df53c937b346f911956f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/gsc-submit.md",
+    "bytes": 2231,
+    "lines": 31,
+    "sha256": "62d3f626d65c142c11c2e39015bb856060f93032d847fb89cb3610180f7267eb",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/loadData.ts",
+    "bytes": 1334,
+    "lines": 48,
+    "sha256": "5376707df187e3f91e8dd0fb360e0986114546a03e25c7bc8cc84df1c0be783a",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/prerender.ts",
+    "bytes": 9547,
+    "lines": 246,
+    "sha256": "474c854c6d00a296a6ee625dd8a2ad89118445d5cb56b8f225de9a91ef6d6c16",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/routes.ts",
+    "bytes": 27061,
+    "lines": 583,
+    "sha256": "0f38108f8d63165dbada53be48030d6eff608b0dd58a5369eab09f768b45d5de",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/staticCopy.ts",
+    "bytes": 26453,
+    "lines": 511,
+    "sha256": "c1c486706f1f3b4ca3d9a933163dde9cb677c61ae38df14c53953f3f2fe38555",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/staticCopyExtra.ts",
+    "bytes": 26024,
+    "lines": 417,
+    "sha256": "5a731acabf9059135b94d4e50b5c1c8e4a85b33c842712ead1ed56538048f0d2",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/submit-indexnow.ts",
+    "bytes": 1845,
+    "lines": 41,
+    "sha256": "ffbd3bff99497cf928052bf4b5b16e076f756859b1da081eaef6db9ef7a6c430",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/verify-build.js",
+    "bytes": 1499,
+    "lines": 55,
+    "sha256": "587d5c5271464d965a1c0a5582201b8b7ee1edf669317c05a5bbb77f5dc073f8",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "scripts/verify-seo.mjs",
+    "bytes": 4025,
+    "lines": 116,
+    "sha256": "c0e33b0a5806e3725423801d6944bbb1c1bc1dd9cda6dcb0736263a4b289f467",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/App.css",
+    "bytes": 1,
+    "lines": 1,
+    "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/App.tsx",
+    "bytes": 9047,
+    "lines": 174,
+    "sha256": "eea37f3162a3a4dac4211c2040de0e68cb1b08943f26933e5edeea32f5e6d5e5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/assets/course-diversification.jpg",
+    "bytes": 63032,
+    "lines": null,
+    "sha256": "98493dcfc905f83aa0dbc19c71cdfc30aafde27984c3fb2bc3b6ec9650553012",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/course-goals.jpg",
+    "bytes": 62086,
+    "lines": null,
+    "sha256": "484fc2aff2700c6e18be591d879b78bc42f14c5348ebc9a3b9064b1f5bafce30",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/course-market-trends.jpg",
+    "bytes": 67991,
+    "lines": null,
+    "sha256": "8f882be2c2a31348fc2ba2161282a063a750eb26f82b6bf77b03847c1e1183cb",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/course-risk-management.jpg",
+    "bytes": 46788,
+    "lines": null,
+    "sha256": "ea3afafdccbb2635cf0db895de62d30e0eb2ba8ba2e00bf5ba6ba276dc95a346",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/course-technical-analysis.jpg",
+    "bytes": 148257,
+    "lines": null,
+    "sha256": "912be542e12b37cfd997b98149567904a4827660683087cd0507e10272739cfc",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/course-trading-basics.jpg",
+    "bytes": 75376,
+    "lines": null,
+    "sha256": "33ba35b3b2abbb7d752ed2f76bf714c6cff70a5b6368f2f10ebe58ceb59805aa",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/courses/futures-hero.jpg",
+    "bytes": 71934,
+    "lines": null,
+    "sha256": "fdfc322fb408762117f1faf1b7da62a3331d11e6b2acd05ea09bfb1b49f0232f",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/courses/macro-hero.jpg",
+    "bytes": 39980,
+    "lines": null,
+    "sha256": "99703532b588ca1a25b70b1d3d16e12979c81dcd3be13aa000ce306d45ff1dac",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/courses/options-hero.jpg",
+    "bytes": 26987,
+    "lines": null,
+    "sha256": "fa79f00164549e03779f72e34b83f9400812223005f15fbab21fc4b128c13b12",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/courses/psychology-hero.jpg",
+    "bytes": 36358,
+    "lines": null,
+    "sha256": "8de79c325023dce16273734ec2267fa60c9d2fe15104773b98ea973ed081045b",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-asset-allocation-chart.jpg",
+    "bytes": 65763,
+    "lines": null,
+    "sha256": "2a52c1dc4752e0e6973d291e94ef99961fc96b235a6af07283bc132fb05422ca",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-candlestick.jpg",
+    "bytes": 59115,
+    "lines": null,
+    "sha256": "64f084c32e9b10eaa1461c1854a4b66cd79fd0fc15cb237ab9e770463d02197e",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-etf-diversification.jpg",
+    "bytes": 78587,
+    "lines": null,
+    "sha256": "9736b366aa19ebb0a972dc0c346271eab00093c471830dfa845212f9eec61d1a",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-goals-roadmap.jpg",
+    "bytes": 85731,
+    "lines": null,
+    "sha256": "86160d16bccf60626075b41e53a474ac886ae020207536f93ac61d07e788505c",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-market-trends-arrows.jpg",
+    "bytes": 77994,
+    "lines": null,
+    "sha256": "025a672b324f7a227efa29856617270d34f9b29af7206a16804cdd650838bff4",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-moving-averages.jpg",
+    "bytes": 59265,
+    "lines": null,
+    "sha256": "4f455696ed9af08505954be67adc9bef60cf102d31fe0fd45b8d254f81307cc2",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-order-types.jpg",
+    "bytes": 92376,
+    "lines": null,
+    "sha256": "61bff30f7e6f7ea263b2604c702d545be25f3a4da5ec8c58654dfa836949c120",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-portfolio-allocation.jpg",
+    "bytes": 84508,
+    "lines": null,
+    "sha256": "1f4bc27fa7b7071bd4e4b7dd21b08886a03550986232d255a0a7088d72d5a3d8",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-risk-management.jpg",
+    "bytes": 73723,
+    "lines": null,
+    "sha256": "a8cd128357f1ae0e5f4b7f16d54b05f9096fa9699eb59d7e6dff0b2a2a70dd6b",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-risk-shield.jpg",
+    "bytes": 69189,
+    "lines": null,
+    "sha256": "3fe28f5e658f0f342bf7bbb090bff4ff93beb29de21ca39a606dffef805b7589",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-stocks-basics.jpg",
+    "bytes": 125719,
+    "lines": null,
+    "sha256": "013269a4784c219d4f92a7bf62704f071fc86179bcc1e6df2ee6a1ed22bb94dd",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-support-resistance.jpg",
+    "bytes": 76468,
+    "lines": null,
+    "sha256": "e173dd998a16ececa3e633d20972d3d8f1ec666d3382e824806a10ef8b4f5fb1",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-technical-indicators.jpg",
+    "bytes": 73351,
+    "lines": null,
+    "sha256": "adf18d460709f89b234fef492deb36666943b709b7b215a39e017fa10e441d2b",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/lesson-trading-workspace.jpg",
+    "bytes": 199877,
+    "lines": null,
+    "sha256": "31bea0c4f323fc11ab7831c5955ac62191d6b73f38dcf915031bbe5836a05b66",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/assets/tradehq-logo.png",
+    "bytes": 379643,
+    "lines": null,
+    "sha256": "3080be1deb89b5ada2c1e572da9eb69afb0d7b0f6a14f12772acbda7a94c21f2",
+    "coverage": "binary: inventory only; provenance requires owner confirmation"
+  },
+  {
+    "path": "src/components/AIAssistant.tsx",
+    "bytes": 5652,
+    "lines": 168,
+    "sha256": "4384bd350b8df12b1e51dc3cc7c6af97f5c652be7063526bee42a941037ea143",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/AIReadySummary.tsx",
+    "bytes": 4283,
+    "lines": 128,
+    "sha256": "e7854b12b3eeba8ef52c2dcc40b82fe18d52bcfd74d929b6337256660a75f8c9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/AssetCard.tsx",
+    "bytes": 3412,
+    "lines": 93,
+    "sha256": "1e9cc0e99dab0b56847b7207c9a7f2311d04c35981bd52f032e183722de5beb0",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/AssetDetailDialog.tsx",
+    "bytes": 10573,
+    "lines": 237,
+    "sha256": "fc356a02a9cb3d57714255022485e09dec84342dec29190a540cd9f750ea976d",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/AssetFAQSection.tsx",
+    "bytes": 1731,
+    "lines": 56,
+    "sha256": "591ee6c158da212773ad0e3eb3673c06e4f929ddfd604def708535208790f61a",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/AssetIntelligence.tsx",
+    "bytes": 15408,
+    "lines": 372,
+    "sha256": "ebf112ec913f15bb9b8ba8bc7ad3df260a5537e941e92dfc7e3c28dd7897fe5c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/BackgroundMusic.tsx",
+    "bytes": 2789,
+    "lines": 93,
+    "sha256": "31fefd39b474f210e204538d717595ab49cf50f6c28b001d62187f307a3fb94d",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/Breadcrumb.tsx",
+    "bytes": 2431,
+    "lines": 82,
+    "sha256": "96c15b8fbcd91b9e6c44384934bc3cba548c4a3b3189c486f869a9ba0e3cf882",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/CompoundCalculator.tsx",
+    "bytes": 6150,
+    "lines": 153,
+    "sha256": "4c0872ea0c475d3517c7ca102264157b30f7fb6b49ae131ad2b343e49dd44a7e",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ContextualLinks.tsx",
+    "bytes": 8964,
+    "lines": 205,
+    "sha256": "93957e40014e6d42107378a8b1f4d3bc4ba067cb249914d3f181ecb3b664124e",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/CredibilityFooter.tsx",
+    "bytes": 8231,
+    "lines": 159,
+    "sha256": "9a293c19d9b4d1b995e862f279e1d125cc6a205d7b66173f292a05ca08bb04dc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/DepthChart.tsx",
+    "bytes": 3717,
+    "lines": 112,
+    "sha256": "bf689953ec0abd849c3afffc8a8bf918af060c0f73c01dd1912e7828d4c613d4",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/EducationalDisclaimer.tsx",
+    "bytes": 1961,
+    "lines": 71,
+    "sha256": "8d42bcd49b7202bf2068d597bfec2ad300173f5c937b73e011bef77212b230cc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/GEOKeyTakeaways.tsx",
+    "bytes": 3477,
+    "lines": 83,
+    "sha256": "4f5c1217a678541060f153688ad1ca3ec6efc5b891c0e825f5a5d5d1abe623cc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/GuidedNextLesson.tsx",
+    "bytes": 3428,
+    "lines": 85,
+    "sha256": "ba65ec2872904d98a602860d8600e1bf16ea089b813b09b24eb59a9a166703fa",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/Hero.tsx",
+    "bytes": 2365,
+    "lines": 48,
+    "sha256": "1ced206cf7dfd065f7daaeb9942708271f351c921c4439921f095cb70a1a45b7",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/HowItWorks.tsx",
+    "bytes": 2353,
+    "lines": 62,
+    "sha256": "c10f4157784231fddee2fbb0e3e3a16489c326c4ed16c722825eef619a498da3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/LearningProgressTracker.tsx",
+    "bytes": 8664,
+    "lines": 247,
+    "sha256": "8d68cb6a5cea686a2704a16e9ccb3d1cae67d3ec27d50cf4816833c2a572038c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/LiveStatusIndicator.tsx",
+    "bytes": 2643,
+    "lines": 68,
+    "sha256": "c1431af6096b37043b6bc0316ff0c76f5ff9f22a3638b29f1c290a2783e0f1e5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/MarketClusters.tsx",
+    "bytes": 6730,
+    "lines": 172,
+    "sha256": "27cc3b5418f42209f3e9c8e0167bc552cdcd5f4de0bc71aa62622497bdcdf406",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/MarketSentimentTicker.tsx",
+    "bytes": 4562,
+    "lines": 113,
+    "sha256": "9be02d5c8e09d449c711c95cf70dad88566cc9d57c591c645cb1a7abe465fc5e",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/MarketStats.tsx",
+    "bytes": 2175,
+    "lines": 50,
+    "sha256": "7d318b9203bfb02cef28ec1802735dc241c72e3462b18620e0615df0599c3020",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/MarketTrends2026.tsx",
+    "bytes": 6492,
+    "lines": 152,
+    "sha256": "07f805507b6ef1b64e12ec636c2d0424c9df24bd4c5143852790549314b673c4",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/MegaFooter.tsx",
+    "bytes": 12356,
+    "lines": 298,
+    "sha256": "fce96b7d109b173b075d6d7dfd90abd1411c35245362fce2c45212da3b30ac17",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/MobileBottomNav.tsx",
+    "bytes": 2374,
+    "lines": 68,
+    "sha256": "32cda9560ca27e4d72c083a0c3549289028346cd46305aba7e5acd2b7f419b21",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/Navigation.tsx",
+    "bytes": 7595,
+    "lines": 196,
+    "sha256": "5172e3b988e28efc93a5c99f3f92842a2bc76156d793e8807da00efc6e5328a6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/NewsletterSignup.tsx",
+    "bytes": 1296,
+    "lines": 35,
+    "sha256": "52632f33fc3d858625fff6e11624e6728e312adcd7af38f489633077fd41ab67",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/OrderBook.tsx",
+    "bytes": 4615,
+    "lines": 119,
+    "sha256": "bbbd8b7a741bb16b64c6a915025468be032aee28f54f2edf2e85132adb5071fc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/PageTransition.tsx",
+    "bytes": 1194,
+    "lines": 45,
+    "sha256": "c2a7dbe14e6f9031c5793a47f69f3a8696aad72e0d047da7cb5c759a98aec693",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/PortfolioAnalytics.tsx",
+    "bytes": 10341,
+    "lines": 233,
+    "sha256": "be723581551c99c313ca95efc42c6715e96882199a93ffee034689ef868a29b9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/PortfolioChart.tsx",
+    "bytes": 4913,
+    "lines": 133,
+    "sha256": "65777e5f149a3d0c10360daaeeb3a20020a2d3be8f7a0bae5feac003b8b1b164",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/PremiumFAQ.tsx",
+    "bytes": 6058,
+    "lines": 130,
+    "sha256": "f8522be88ec2f232e5bbbf049484703b05b89344b2e5703dea7e0d716c53dce1",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/PremiumFeatures.tsx",
+    "bytes": 5111,
+    "lines": 117,
+    "sha256": "c059f23a90187d9ef67350303c411ccf3996cc9c8ca34cda30d930fbdf7fe591",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/PremiumHero.tsx",
+    "bytes": 7798,
+    "lines": 175,
+    "sha256": "1129b7fa2a88a7bd4b57c72a6c6db38f2054ecb9281e3573e05016d42628b00e",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/PriceTicker.tsx",
+    "bytes": 1866,
+    "lines": 52,
+    "sha256": "1225e60860118d0dbf51d2b32d8311006a96f3f45bd5fa0ff9f7ff632ab1db15",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/QuickLinksFooter.tsx",
+    "bytes": 1903,
+    "lines": 48,
+    "sha256": "f5202f4fb76333bd095985507df4bd90efc33e85ae09a0b62a849daad2889775",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/Quiz.tsx",
+    "bytes": 5217,
+    "lines": 152,
+    "sha256": "5e26b03123ae2cac6a5b1bda2f8ad2c481060a94b2fb58c2727d5736f645637c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/RecentAnalysis.tsx",
+    "bytes": 3565,
+    "lines": 87,
+    "sha256": "8959258fcee9646cb53ff0765573cf250f6f2b96495f7f0cac3e8f59a6fa9b59",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/RelatedAssets.tsx",
+    "bytes": 4006,
+    "lines": 111,
+    "sha256": "503fad8c7514a0ca75634c3d5783dd728cfbd4bede7aebfb953f3785ea99a022",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/RelatedMarkets.tsx",
+    "bytes": 3891,
+    "lines": 104,
+    "sha256": "ef1852d85b391a5816edde80501dc217836c53987f0d76db32ce720ddc66e4f9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/RiskManagement.tsx",
+    "bytes": 5694,
+    "lines": 142,
+    "sha256": "0fbfa9395e2be5a83ff9fbf0ef00c5456ca0738eceea60fd2744a34b6b030dbb",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/SEOHead.tsx",
+    "bytes": 2080,
+    "lines": 66,
+    "sha256": "b0b631fbf7a175acec06f3e94309ffc12b675cbed41b1a672360dfd31bdab3db",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/SEOSection.tsx",
+    "bytes": 3158,
+    "lines": 115,
+    "sha256": "656599c6a054209cccea2540a10cf88c34c9dc5b6b0736786b3fd80a8ab367f2",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/SocialProofTicker.tsx",
+    "bytes": 953,
+    "lines": 35,
+    "sha256": "a07bf5def3bd26f197de3a1dc0f1811493b9e46d114fa68576642f9a3683519d",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/SocialShare.tsx",
+    "bytes": 3334,
+    "lines": 122,
+    "sha256": "9fbda4609146632583b6b12f0e9a74df11223956f479468a098d84f7a8dfd2ed",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ThemeToggle.tsx",
+    "bytes": 999,
+    "lines": 37,
+    "sha256": "44d1f158ce261547f56af5f21d18b0a1efe0a48ddf08bb27fea3361a36e6ec11",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/TopAssetsGrid.tsx",
+    "bytes": 5055,
+    "lines": 129,
+    "sha256": "df067b872e70a6437a0b11d96fe9817df3b358ad74eec5567ef40af6a2a87d28",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/TradeAnalytics.tsx",
+    "bytes": 11838,
+    "lines": 310,
+    "sha256": "963ea42d2789dbcb6cb5b7fc48afdba5c8aa5a196e3918c3da0b04a20ccdcf0b",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/TradeDialog.tsx",
+    "bytes": 10720,
+    "lines": 285,
+    "sha256": "1338a6f4e78072ca5cdea2bcaf1f0229cd90fad83e4920114297dceab188bd15",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/TradeHistory.tsx",
+    "bytes": 7548,
+    "lines": 186,
+    "sha256": "6afda79091c3115de18c738743bcce6ae34a544981250245200a9f8d7a2ea939",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/TradingJournal.tsx",
+    "bytes": 11488,
+    "lines": 250,
+    "sha256": "d59d1d298eb2c6da8750725005596093fc26fdc29f356727ce0500d5092ed6a6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/TradingProfitCalculator.tsx",
+    "bytes": 5430,
+    "lines": 136,
+    "sha256": "a56753f67730634d53497acd329de8729520b10e463fc47e05b16115286a5463",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/TradingStrengthMeter.tsx",
+    "bytes": 6557,
+    "lines": 165,
+    "sha256": "f6672c381b57651049fefe8b0d8be6e7c25053c5c1c03b2f79cd298a5ae1f5d9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/WatchlistPanel.tsx",
+    "bytes": 2878,
+    "lines": 78,
+    "sha256": "1ddf3f2e28bef7af513e970953369570ea4d16f4489b628aa9f6259ccb188939",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/WhatIsTradeHQ.tsx",
+    "bytes": 4510,
+    "lines": 119,
+    "sha256": "a45bea4cd3e44675c7f752bc2527e731e6ac4e4ba7f0207af2570e4402a381b8",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/badges/StreakBadge.tsx",
+    "bytes": 1519,
+    "lines": 45,
+    "sha256": "ef0249549022eb6edab87127236c9cb0314b182f343eaefa89a18c3a6ec4efd5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/brand/BrandMark.tsx",
+    "bytes": 2666,
+    "lines": 71,
+    "sha256": "d7aa8f9ba08cc14d003c605a96a7d60610097797ef644a7a965e399fbf779a10",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/home/DailyChallengeCard.tsx",
+    "bytes": 5008,
+    "lines": 116,
+    "sha256": "f4803c01dbc1e409a7000a3c648d3b4582d39c19303f67088e17e7076ee6a6bd",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/home/MarketPulse.tsx",
+    "bytes": 9683,
+    "lines": 225,
+    "sha256": "1c0a3262ea340fa37615c2f13e5bb82226f3ff711cb844474d653755c60ec1aa",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/portfolio/AIInsightSummary.tsx",
+    "bytes": 4727,
+    "lines": 147,
+    "sha256": "ecf6291ced5a260275a5fd44259bcc70c1f5672c26ce4ad844bcce22fdd1f5dc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/portfolio/PositionsTable.tsx",
+    "bytes": 7455,
+    "lines": 226,
+    "sha256": "40825301d5a7c7718b7c998c54df9d5f5e09bdc09755ee52d6ed47427ca4de23",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/portfolio/ScenarioBuilder.tsx",
+    "bytes": 13593,
+    "lines": 286,
+    "sha256": "54b728b8c0c2db5959004722d555a476924673e0eece1dc60375c23b11cd3c71",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/retention/ContinueBanner.tsx",
+    "bytes": 3414,
+    "lines": 89,
+    "sha256": "25ea6f293b222edb4000196ec319f9b935e8a274f12c16ad90eeef428d77ce73",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/retention/PushNotificationPrompt.tsx",
+    "bytes": 2661,
+    "lines": 77,
+    "sha256": "d78d60b7f6c3c39232e5789ad70456433b22c5dee820acdaebc3fe51cd3e1550",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/retention/WatchlistAlerts.tsx",
+    "bytes": 2697,
+    "lines": 64,
+    "sha256": "92957ba767f20f14bac2b9163d3b5f521ab0ec18ccb31add913ba5b8fc8002b5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/retention/WeeklyRecap.tsx",
+    "bytes": 1978,
+    "lines": 49,
+    "sha256": "b81ce017337976d4142d0d5b0d5e379f52992ea87a64236b19e948df38502cdc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/seo/AIAnswerBlock.tsx",
+    "bytes": 1739,
+    "lines": 51,
+    "sha256": "ef6d7ee864193749fa9b9accc90c481698cd4e905b69cef34f3dbd0aef4a2988",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/seo/Breadcrumbs.tsx",
+    "bytes": 1376,
+    "lines": 42,
+    "sha256": "6a7d6880ff51057cd89f35ce6f9386e541ec539bcbc2e860f866a3fd2e6a75a3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/seo/RelatedContent.tsx",
+    "bytes": 1550,
+    "lines": 49,
+    "sha256": "f8f8a5cf7840632bc34895f083c5d033aed5276bad8fbc81c1a944a0ca10bd46",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/AIMentor.tsx",
+    "bytes": 11521,
+    "lines": 285,
+    "sha256": "898eda2e669086b23b4732857105a344449e263ef4e8286cb0b08e00f48cd68d",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/AssetContextCard.tsx",
+    "bytes": 3535,
+    "lines": 102,
+    "sha256": "d424093df9e7fbbff62f38524ffa60cdd3370923395e00b376edd8661f3778c8",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/AssetSearchDropdown.tsx",
+    "bytes": 7787,
+    "lines": 203,
+    "sha256": "57048b353ea4faacf3f5a499860956dd79dbb24a990c6c21cace7b0c2946bd38",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/AssetTable.tsx",
+    "bytes": 10059,
+    "lines": 286,
+    "sha256": "635fc5722ed4f6b16484053c83d3bdea72477c1e3e05657574bb99823e5f1208",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/AssetTableSkeleton.tsx",
+    "bytes": 1012,
+    "lines": 29,
+    "sha256": "5123206042e1f12a54695a50c30d6645bb0fdd997bc184f86cb9be800b05aac4",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/CandlestickChart.tsx",
+    "bytes": 10347,
+    "lines": 288,
+    "sha256": "33fe4ca3ef18f8b45269a5a009f303f72e90a6e0f0a42896e130f30802ea88ef",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/ChartSkeleton.tsx",
+    "bytes": 2072,
+    "lines": 59,
+    "sha256": "9934e3f2f9a56e9d66dedbb293db9d9f42eea2067e45d549593acc6ed0f3cbf6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/GhostJournalToggle.tsx",
+    "bytes": 1580,
+    "lines": 51,
+    "sha256": "41bd3fd16b8491b25df8bda549c9408e8a6aaa9cc1eef161d674c088c58ac896",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/GlowStatusBar.tsx",
+    "bytes": 2512,
+    "lines": 61,
+    "sha256": "b0e3ce005311e0af797ea348dd7d827fccf7ab7b6f1cee421df39d1d2af9c746",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/LiveDataToggle.tsx",
+    "bytes": 6505,
+    "lines": 207,
+    "sha256": "1dbddf9a53ce58b2efd253a23ce87fab686aac091eaa4eb1c7f7d326f1030ac2",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/MarketInsightPanel.tsx",
+    "bytes": 4640,
+    "lines": 158,
+    "sha256": "131f9eb0c67f352f56f588acdedfbffc1085b04dbea021f87e58e4a2296981b0",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/MinimalistAreaChart.tsx",
+    "bytes": 11082,
+    "lines": 298,
+    "sha256": "c8ff2eb54d7c4229a463f99374385737e04cde0c0ecfcf6b9193b7b0a7b17ba5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/MinimalistOrderPanel.tsx",
+    "bytes": 9347,
+    "lines": 291,
+    "sha256": "dc7e690ee02d103abeba9f94c4172c9b85f379d37ed115133e41f3df8a94d597",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/MinimalistPortfolioBar.tsx",
+    "bytes": 5996,
+    "lines": 151,
+    "sha256": "3beaaf8f69effe88e946d776009e0a8c0ee5dbd80bedf81bbf539849309d3930",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/MobileOrderDrawer.tsx",
+    "bytes": 9311,
+    "lines": 199,
+    "sha256": "6ab3715e94a881c5a03577c48f880d9a47f59c7f4e562cc4cc9c4e5f100d7af9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/NeuralPulseChart.tsx",
+    "bytes": 11201,
+    "lines": 313,
+    "sha256": "e870d04658eaced96ace00f3d5f982da97dd7823b2f46da274898f109069ebfc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/OrderPanel.tsx",
+    "bytes": 9810,
+    "lines": 271,
+    "sha256": "654c09008e9881edd92bba81faeaefbea7388d539e06dece0048e8c9a014cb4c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/PortfolioHeader.tsx",
+    "bytes": 3214,
+    "lines": 100,
+    "sha256": "8b61a293cb478da85fb3ee8a9c79a80fee29f18b9375dbd42b020f18953b9b6f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/ProOrderBook.tsx",
+    "bytes": 7212,
+    "lines": 213,
+    "sha256": "fa8eb9c6220f309ee23456cf3325c222ccb2a0c7568b4b671668c2c464fe7117",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/RevengeTradingBlocker.tsx",
+    "bytes": 4566,
+    "lines": 134,
+    "sha256": "b055e53cc6bc9e587a5effe339e25998c72befc59983b8ebcd5f26bab7bfd70f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/TradingSidebar.tsx",
+    "bytes": 2909,
+    "lines": 80,
+    "sha256": "8090c33409fdd8da186e89ec42e5469215b7a97cfa7c80f485042a75913e30ec",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/trading/TradingTerminal.tsx",
+    "bytes": 13450,
+    "lines": 302,
+    "sha256": "4ef1bc3845971198b9eb47cee1a10836dcde94b2b54700ae31e76d8223d837a0",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/accordion.tsx",
+    "bytes": 1976,
+    "lines": 52,
+    "sha256": "9587b5ca80cf0aa68bc2a4e6baacebbe07eab14e1c66c6b6420033aeca9219d1",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/alert-dialog.tsx",
+    "bytes": 4313,
+    "lines": 104,
+    "sha256": "c8b01137c7552e63c9ccf2c38ef92e5417bd6616b6980d56d3015db027465283",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/alert.tsx",
+    "bytes": 1546,
+    "lines": 43,
+    "sha256": "6352c232d36b2aeb20cce9692fecd98a472c8bb0b8c3f8a45446c433382e2da7",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/aspect-ratio.tsx",
+    "bytes": 143,
+    "lines": 5,
+    "sha256": "d72c73d629e37995a0a71647d851d68d6fdcd7ec120797f36ab83a8ee89f2cab",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/avatar.tsx",
+    "bytes": 1365,
+    "lines": 38,
+    "sha256": "4a8bc00e5514912c54d414e207266fa100906aec2754d590adcc8ccc46d4c5c9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/badge.tsx",
+    "bytes": 1089,
+    "lines": 29,
+    "sha256": "b851d9ba385c4d60de471c5f43da38067298bbcc3470807e992acb224041c75c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/breadcrumb.tsx",
+    "bytes": 2687,
+    "lines": 90,
+    "sha256": "e5589a54c1ed42101bb24cd67bbc72469fbfbe6b694c46e006424375ad77183e",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/button.tsx",
+    "bytes": 1877,
+    "lines": 47,
+    "sha256": "1ba85454cbee9557bc1a6cb70b235d051675d8b1eba3b88453c2a7243df4ffb6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/calendar.tsx",
+    "bytes": 2563,
+    "lines": 54,
+    "sha256": "845a0b0fdec33d8d49ab8ed05dd29a12c10b5bbcf60f24d0b9fc0a731ab18621",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/card.tsx",
+    "bytes": 1785,
+    "lines": 43,
+    "sha256": "bdfb74248321c52e89c2129d9d8088a56a3e33dd7850a7c9b0563a7b5ac937a0",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/carousel.tsx",
+    "bytes": 6249,
+    "lines": 224,
+    "sha256": "561cab7fcb619deed3532d027cbf18ef8e3ebae9def4206b0d36bd22b8474c3a",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/chart.tsx",
+    "bytes": 9987,
+    "lines": 303,
+    "sha256": "a759d32aa240fa6e929f204b04252e45d6ae458558eebd37dccf4ae9e05ab5e2",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/checkbox.tsx",
+    "bytes": 1053,
+    "lines": 26,
+    "sha256": "178f8177bedb1704b4dd3e748f4826848981c8af43178c04e1a276a7f017cf1f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/collapsible.tsx",
+    "bytes": 320,
+    "lines": 9,
+    "sha256": "fbe07841b794e0d7d08e87ddaaafadf1dc0c63ecc8389cd2c5b4a0a3f5500df1",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/command.tsx",
+    "bytes": 4821,
+    "lines": 132,
+    "sha256": "2b640fee593528d494ca19b2888db68a396a96950ea0bb6f1b50536e26e26019",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/context-menu.tsx",
+    "bytes": 7191,
+    "lines": 178,
+    "sha256": "2d294c5e421c41b817f1644f2d54bfdde628cffae2682e69ca504ae754739ad6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/dialog.tsx",
+    "bytes": 3761,
+    "lines": 95,
+    "sha256": "8e755711b3fd5e8d7339baea7627da546293fe2df1a88775729c2857e0de4b57",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/drawer.tsx",
+    "bytes": 2941,
+    "lines": 87,
+    "sha256": "3739cdfc80503412db604efb3ac0149db5f7cd5fec18508839d18dec195720e1",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/dropdown-menu.tsx",
+    "bytes": 7260,
+    "lines": 179,
+    "sha256": "b1ede0a4144b64853dc7ba62d184c09df479482eada86f936ce5b3d0b67a9a19",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/form.tsx",
+    "bytes": 4014,
+    "lines": 129,
+    "sha256": "7f6f3b157f0c08880937ae41d5e61647703c7163c3d8444656de711fb0576faf",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/hover-card.tsx",
+    "bytes": 1193,
+    "lines": 27,
+    "sha256": "8d606e166ef5f9bc4fc3efb1f6ce2f4bb376177a2c6fef16f67f87ad2d13d005",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/input-otp.tsx",
+    "bytes": 2166,
+    "lines": 61,
+    "sha256": "a301658db5430d30108004cf05cb9469457a882f93dc057097f777ade4ca5423",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/input.tsx",
+    "bytes": 799,
+    "lines": 22,
+    "sha256": "aacef8933fe99ab553e12a82c874a23c97e2b5602eb6f00018454fa0a8d4f7f2",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/label.tsx",
+    "bytes": 696,
+    "lines": 17,
+    "sha256": "d5dc9497cbb28a5401b864bd44a15f010c302584fbe8e07e015dbe443f103753",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/menubar.tsx",
+    "bytes": 7863,
+    "lines": 207,
+    "sha256": "9a44756ba91e4c486b30574910b72f58c136c7a9281ccf0c13bf366962c7cdaf",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/navigation-menu.tsx",
+    "bytes": 5030,
+    "lines": 120,
+    "sha256": "92736fbbe66e31d1b981d10436f9048c76f4b91d8b89e93b679ef2eb54204770",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/pagination.tsx",
+    "bytes": 2683,
+    "lines": 81,
+    "sha256": "ac9da1e191c3485524c1e8d8cdbe0b9fa4ea2729c9554f796e2516485c839260",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/popover.tsx",
+    "bytes": 1239,
+    "lines": 29,
+    "sha256": "ee5f78ece57c9e8eb5f9b4186e2bb9ebe46b69b52f03f1edd9a601883bc64772",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/progress.tsx",
+    "bytes": 765,
+    "lines": 23,
+    "sha256": "bdc4847f05de3aea1276966e0df9b4a293297f0ca7d7b430a1cb16cf5626728f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/radio-group.tsx",
+    "bytes": 1447,
+    "lines": 36,
+    "sha256": "995ec983735b204597f11ae5dd22ba0175dfc633da2ddecf222847bbca387adb",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/resizable.tsx",
+    "bytes": 1696,
+    "lines": 37,
+    "sha256": "a31af34c14c7c86612d1c2e51c90da59e0edae37dab5210bc1dd2c91dc2f3edd",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/scroll-area.tsx",
+    "bytes": 1608,
+    "lines": 38,
+    "sha256": "998181a10164aa6e508210064ba61b2f772a92958d7bb2141867007f0ebd9783",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/select.tsx",
+    "bytes": 5575,
+    "lines": 143,
+    "sha256": "a2b62120a033b36c8d6c4a1693aa9231645fa69251740e15eacec24c1eea4d82",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/separator.tsx",
+    "bytes": 698,
+    "lines": 20,
+    "sha256": "6c271e740c3d7b54947bb727383e5355788f0176b7b683c3bb970cad9883dded",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/sheet.tsx",
+    "bytes": 4197,
+    "lines": 107,
+    "sha256": "e7d726b34d0f3214f597a844c7f2c4fc869933f7433eddb74e7fd2eb92500be3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/sidebar.tsx",
+    "bytes": 22837,
+    "lines": 637,
+    "sha256": "5754b54ecb6151d7a138426a44a1057a4937ac5a173dfbd1f596a6c9d75b851b",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/skeleton.tsx",
+    "bytes": 234,
+    "lines": 7,
+    "sha256": "a229c310b9cbcb01ddd5e580865a6f14a19061aff7f6a97ef82a40b6a83583a4",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/slider.tsx",
+    "bytes": 1065,
+    "lines": 23,
+    "sha256": "b81a683197551322cd8f13653bc955ad4c3bca6fe62376d33acb2bcd04361d02",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/sonner.tsx",
+    "bytes": 906,
+    "lines": 27,
+    "sha256": "90d66a6a2edaba69dbf05cf7952d45eb7f85a21c1e00a4d841c087274d88c063",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/switch.tsx",
+    "bytes": 1147,
+    "lines": 27,
+    "sha256": "99cda942c2d215d8f25dd33ae06ed1278bcf912b262ed0e907b04f35881ac507",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/table.tsx",
+    "bytes": 2694,
+    "lines": 72,
+    "sha256": "fab18d9eeb84781f534330ff4b2c2cbe3a93f9bdf5c449debff2f682a83a4876",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/tabs.tsx",
+    "bytes": 1897,
+    "lines": 53,
+    "sha256": "b313d08a8c85e586a282b615cf30ce0b6ec1eca3ea92149b731f14b4082f4d71",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/textarea.tsx",
+    "bytes": 751,
+    "lines": 21,
+    "sha256": "2f5b24d28dc5c41817ca69653a396adcb2fe495200f8184777d086a62fc70461",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/toast.tsx",
+    "bytes": 4798,
+    "lines": 111,
+    "sha256": "8f4db67ae4633904c3cccee6629a1061472bb23f5368e5b7e72a306cc494f9d3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/toaster.tsx",
+    "bytes": 730,
+    "lines": 24,
+    "sha256": "600d661340ddc3ee7b5f9088684e1b3072cf60c9275b2f84bf4860dc29fe0fba",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/toggle-group.tsx",
+    "bytes": 1714,
+    "lines": 49,
+    "sha256": "a3ea231230c8fff22ff6e0b457e71addf961fe1f80deaba0c80d17e649d34bf3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/toggle.tsx",
+    "bytes": 1416,
+    "lines": 37,
+    "sha256": "fb0f786bce638fd414f220e31ad3c902f5c6e25eee9c95ac955cacd50638d6ff",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/tooltip.tsx",
+    "bytes": 1155,
+    "lines": 28,
+    "sha256": "bd9361649477cf9496f4b48415a2eafb9ae1ebca81af58a29b61b1516adc88c1",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/components/ui/use-toast.ts",
+    "bytes": 82,
+    "lines": 3,
+    "sha256": "d48c4c490e5101aa42ceed9b8ca49642d66152ba11daf7ee6c29bee0f5172c37",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/hooks/use-mobile.tsx",
+    "bytes": 576,
+    "lines": 19,
+    "sha256": "21eff740f9e5c965c7f0782925a7e8f67ddfcdf0f58b6613550f99c3e1c454e9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/hooks/use-toast.ts",
+    "bytes": 3935,
+    "lines": 186,
+    "sha256": "0602ac84d95719f2a27075ce60333db73128e09c0b07365dce7f9c77441c9d7c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/hooks/useAuth.tsx",
+    "bytes": 2323,
+    "lines": 87,
+    "sha256": "6ed7f31a292ae9749ce8efb2442fefddfe9ad5fb18975ee49c8c32fa7661f15c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/hooks/useHybridMarketData.ts",
+    "bytes": 5905,
+    "lines": 195,
+    "sha256": "56c7c0e6401b1595dce70be84b7f03419daa552f5574c75537a8818350293d20",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/hooks/useKeyboardShortcuts.ts",
+    "bytes": 689,
+    "lines": 25,
+    "sha256": "0c1271e26f07742e6b2f72c27948c5edd5c12f4056269e15d45215459307cec3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/hooks/useLiveMarketData.ts",
+    "bytes": 9264,
+    "lines": 299,
+    "sha256": "d31c64b0d6ada884e6a8301bec2d1cb08feb918f7639127d927665fc75740588",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/index.css",
+    "bytes": 15576,
+    "lines": 589,
+    "sha256": "0bbc88a9b5cec9d7a76015a1e263ea3eb78f1a2bf79de558972cdfc58231e993",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/integrations/lovable/index.ts",
+    "bytes": 964,
+    "lines": 38,
+    "sha256": "ff6990c9a3d111edb6efff4171c1ef971b5481a25d2af0bf2134d321cc0ba369",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/integrations/supabase/client.ts",
+    "bytes": 665,
+    "lines": 18,
+    "sha256": "c1a7ebcf29c80b16d0cf29acd06793cbce839496596593ae2c1e7134bac574fe",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/integrations/supabase/previewAuthStorage.ts",
+    "bytes": 4336,
+    "lines": 88,
+    "sha256": "634c0f279327b7c79f6e38b54b7ab4ae3737f0d6c3a660d8ac02a9659be48a0f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/integrations/supabase/types.ts",
+    "bytes": 9948,
+    "lines": 352,
+    "sha256": "3f4da01c0288e9feab7704dd970dc90ca913496a46ced039148ea31977b85397",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/assetContent.ts",
+    "bytes": 69776,
+    "lines": 1029,
+    "sha256": "20bd3a6e5d05ba172d456cfc54f81d6acf97a3e678ce68c062b1646042c5c801",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/assets.ts",
+    "bytes": 24950,
+    "lines": 1403,
+    "sha256": "b108fabf1546893f8a6254b678866d85926260a3831d2d7c4d6fb286d1da42a3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/authRedirect.ts",
+    "bytes": 1241,
+    "lines": 37,
+    "sha256": "0d134f92b3630a21da1c53b78dfc966b6bfdfb627aed7d56da6218375bd2c7c5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/constants.ts",
+    "bytes": 444,
+    "lines": 11,
+    "sha256": "fc5c9349f1b62dca657ef26c25268943ceec88ce713c23aae0904954bf23e758",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/countryGuides.ts",
+    "bytes": 18984,
+    "lines": 205,
+    "sha256": "ef063285f2a61cbda005c29480d0032eda446d8bfeb1b62f656333dee396ae67",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/courseProgress.ts",
+    "bytes": 2888,
+    "lines": 98,
+    "sha256": "cadd538824fad4b0faaa1abbc0b74950648b3f28d4fa3f5122a661dacff8f6d2",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/coursesData.ts",
+    "bytes": 78229,
+    "lines": 858,
+    "sha256": "2b44280949d8ba9264910681f851b175ed4768731544f7573e544fc12ef4a049",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/dailyChallenge.ts",
+    "bytes": 32242,
+    "lines": 588,
+    "sha256": "3593c1c384fa963e6aa7366182f310b37104a90f3109b8afb3c96464cbe35563",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/favorites.ts",
+    "bytes": 946,
+    "lines": 35,
+    "sha256": "bc37030ef68b1689fd66903b5734b6b8183966d1491004ea20ef34d7bfa855a6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/lastVisit.ts",
+    "bytes": 1287,
+    "lines": 42,
+    "sha256": "6c20a13b202e392f906ed686b03f201da84d63caaa87dfe0e1fd2c2b82418039",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/learnArticles.ts",
+    "bytes": 38167,
+    "lines": 374,
+    "sha256": "b565371172d1bb19f66ab05ba4a4b7eeffb8111e5ad387169f146c88f3b18605",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/lessonData.ts",
+    "bytes": 86121,
+    "lines": 2140,
+    "sha256": "587589a7d0855991a07e57911537d18883d9ad467f4a7c37cf0fdb04498dc6ea",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/marketData.ts",
+    "bytes": 3683,
+    "lines": 112,
+    "sha256": "69c5c5298b99d95025d22840dfd1526e1b7b4197908821c1a59175d578c3c486",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/nicheData.ts",
+    "bytes": 3976,
+    "lines": 63,
+    "sha256": "b9eeb3a3384669103949f951f912752096e5142ed900aa5b7e2ac520168b73ab",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/notifications.ts",
+    "bytes": 4223,
+    "lines": 135,
+    "sha256": "384102306efac0cb13051c4cc0ef08bae513e18c78bef40cfe7492eb941da38f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/orderBook.ts",
+    "bytes": 3225,
+    "lines": 122,
+    "sha256": "1e25c1c6704808bd85d4e7177ecadc671312e72d11c78587596e67aed0b329a5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/orderTypes.ts",
+    "bytes": 2844,
+    "lines": 107,
+    "sha256": "b4f1f28cce22ef7b188d4b5de7977d75f2da218adbba349ed9452ab103fa996a",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/pendingRedirect.ts",
+    "bytes": 956,
+    "lines": 33,
+    "sha256": "567ebca3b2eb1601dafcc3cd36775ea0c22dba089c3564b10319d2fdecc9f9cb",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/portfolio.ts",
+    "bytes": 10364,
+    "lines": 321,
+    "sha256": "6e4c380d5c5de771a21beca3eca9566200255ab56ce59fe2904edfdd8c439cd8",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/portfolioHistory.ts",
+    "bytes": 4144,
+    "lines": 133,
+    "sha256": "01913317f3325ba80bf18ef5f8029f0d4e483e6d5bf2877118982041a69a3466",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/priceMovement.ts",
+    "bytes": 674,
+    "lines": 22,
+    "sha256": "ace251a4b5aab7e01f5159eb19c2a6f0d030dd51814d8e444f091b48410ca831",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/pricePersistence.ts",
+    "bytes": 1616,
+    "lines": 65,
+    "sha256": "dfb77fdf130025f2b0a95b869055da56f483a83d7b930c47bccb8a72e7f8e0c7",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/priceSimulation.ts",
+    "bytes": 4799,
+    "lines": 158,
+    "sha256": "c6e715bc47100af75da3b8cae10ff3deb44826985a10963f54cd48656c053621",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/pushNotifications.ts",
+    "bytes": 2586,
+    "lines": 78,
+    "sha256": "059a0ad111668660c453af6153faec0e68323cd12c7dc7d7466003b64411efb3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/scenarioEngine.ts",
+    "bytes": 5136,
+    "lines": 176,
+    "sha256": "dffd6c381fd489c7af89118fdcf9ec2f9d408fbb7700ccdc549a287af1f58c46",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/seoData.ts",
+    "bytes": 61781,
+    "lines": 630,
+    "sha256": "f0b0aee7776c48e3fdfec2cecc405e0532cc27434c229b53f792fcac5652a0a7",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/smartMentor.ts",
+    "bytes": 20849,
+    "lines": 398,
+    "sha256": "c6fc3b47475afa598addcdfe0afd569a5c14f150c38c63cac5cd144b984f6f2b",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/traderSync.ts",
+    "bytes": 1743,
+    "lines": 50,
+    "sha256": "541425f952afd4999244e4113cf40d26c8fd874301d29055d8f5938bbd2cf911",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/tradingGlossary.ts",
+    "bytes": 148309,
+    "lines": 850,
+    "sha256": "b5a40403275ad3af9d1307bcbc93f604e507add2cb322b56184fb0295f5ec8ed",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/tradingJournal.ts",
+    "bytes": 1670,
+    "lines": 73,
+    "sha256": "393a6ac2273a187995d1222bafbb538b679cfbfcf93fd12a1ade218e2e9ccd50",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/types.ts",
+    "bytes": 1306,
+    "lines": 76,
+    "sha256": "fe1b900ff2724b73194a89d75ee949d50594fe10112ea76880fcdb0e9307461c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/utils.ts",
+    "bytes": 169,
+    "lines": 6,
+    "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/watchlistDiff.ts",
+    "bytes": 1841,
+    "lines": 59,
+    "sha256": "3058eea02653d581af84e68d409b4b72d3d55a3a85e6ae76ea8711820af269c4",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/lib/weeklyRecap.ts",
+    "bytes": 1412,
+    "lines": 40,
+    "sha256": "4b8f7149e8afe4ead0a51e9566749ee1ad5970b2367aad7e0bc87f2c9b5bc014",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/main.tsx",
+    "bytes": 773,
+    "lines": 25,
+    "sha256": "41ff71a8e2df6a1e145be0022b79935a748439786cba18b7093f997c071d2028",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/AIMentor.tsx",
+    "bytes": 11783,
+    "lines": 234,
+    "sha256": "31aa7c7c0e781194764aeeb379c859a9cbcd2096fa720d2412e1273fd2de9e90",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/About.tsx",
+    "bytes": 9009,
+    "lines": 174,
+    "sha256": "12bc2e41abe58dce3392806bf8ac44c6bf96cf5f2de4941798385d4f4f5bb1d6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/AdminEditor.tsx",
+    "bytes": 12381,
+    "lines": 351,
+    "sha256": "f477d2866200ff0ab4b2f46e4efaa11c970dd3b7cd6513bd154b721a784a66eb",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/AdminReviews.tsx",
+    "bytes": 8067,
+    "lines": 208,
+    "sha256": "21c4ca53c5fcec1dfefda4c90781a32177ad53c97b9dfec598b5c396cd99407b",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/AdminValidator.tsx",
+    "bytes": 4178,
+    "lines": 107,
+    "sha256": "a9fb9e6ca2262199ef9b8d697f646bbc71bf101caaa44e75a1358b9045c60b15",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Auth.tsx",
+    "bytes": 9798,
+    "lines": 243,
+    "sha256": "6fbc1ff93a65c2a38a39f551a546ae7a594edaed319fffb25231f8b0b740b5be",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Challenge.tsx",
+    "bytes": 24075,
+    "lines": 564,
+    "sha256": "b8e3cd3844e8a57aa511f207a784d627f9e2a8bb35f432cb7580656726a28b92",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Compare.tsx",
+    "bytes": 12328,
+    "lines": 227,
+    "sha256": "64a65c51d3afc74684edf3030b194e41dc4eedf4adc4b4a50195465ba5d14dcf",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Contact.tsx",
+    "bytes": 16051,
+    "lines": 334,
+    "sha256": "e1801a8e12eb687a713c833dbe3729c340276320aa525e7e5e112704122f0aa1",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/CountryGuide.tsx",
+    "bytes": 12323,
+    "lines": 252,
+    "sha256": "cb05b7e58951dcdab66d696025879ef2d8c054e568f9e0cac537fb464ff67be6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/CourseLesson.tsx",
+    "bytes": 13064,
+    "lines": 313,
+    "sha256": "518330be3b3f8c4efd3d38598b18e9de76ec96140540d7136df3cd1540653272",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/CourseTrack.tsx",
+    "bytes": 7429,
+    "lines": 166,
+    "sha256": "a14a55f8e792ecc7aeb76df855133e4cfa030973e285197b1cb9c83ef05f777b",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Courses.tsx",
+    "bytes": 22727,
+    "lines": 460,
+    "sha256": "8f8c7b7c8f7d448a587e2db4a9bdbda58fb1442e3d5097f24adcd10cc8fcedba",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Daily.tsx",
+    "bytes": 19591,
+    "lines": 369,
+    "sha256": "35d1ebdca711dd3c6836a290d351f20d7b6218493b3eb7e0aa615c6f37962332",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/HowToTrade.tsx",
+    "bytes": 10374,
+    "lines": 205,
+    "sha256": "4aebdcaded32a2322f14177d625df4fdfdbcaeeaab266d68ab2235d8857dc5ab",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Index.tsx",
+    "bytes": 19410,
+    "lines": 361,
+    "sha256": "b8dc59d6d3674d8701820d19b8f82e0488d095197db0bfdb4fa7257469dee2e9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Leaderboard.tsx",
+    "bytes": 22065,
+    "lines": 478,
+    "sha256": "2b9237f3f551c8b24026a4127f75cf280f1337eeac3728c360c80883d20a4f60",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Learn.tsx",
+    "bytes": 32323,
+    "lines": 471,
+    "sha256": "3fa987aa6b2c57f5bce5ad15cdffa81f3db477fdfc8de31fbed7cfa7ac134720",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/LearnArticle.tsx",
+    "bytes": 8306,
+    "lines": 174,
+    "sha256": "53095651815d7bee9f5f7ed81a0ea771b824ce956943c5eec68a7e4336b1bfe9",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/LearnTradingGuide.tsx",
+    "bytes": 19238,
+    "lines": 371,
+    "sha256": "018bc18974b85779f86c08809b6dae37e792c2e7dff4b5f4f4ecd1e29707b5c1",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/LessonDetail.tsx",
+    "bytes": 14495,
+    "lines": 300,
+    "sha256": "099f89bb634b70b281aec1ca9f787d2509cb4fe8da3143fa8122a6c28bd3ecf4",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Markets.tsx",
+    "bytes": 22863,
+    "lines": 443,
+    "sha256": "39bc5b7483694ba92c1c8baa5947df0fc436e1f3dcac9b911c634eedd74f787d",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/NicheAsset.tsx",
+    "bytes": 7611,
+    "lines": 177,
+    "sha256": "b77b01d44f0299da0312cb0e1dcbb09a422655b1dae466d0598a25fd3c3eb057",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/NotFound.tsx",
+    "bytes": 2628,
+    "lines": 61,
+    "sha256": "2caaad29487e8c067ef8151123ebfa092b48c940c71fb12824fe4e46e56cc7f4",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Portfolio.tsx",
+    "bytes": 22781,
+    "lines": 575,
+    "sha256": "6414744fb3a9de32f27dee59d88a94826859ddd2f297624edd73a310d41d1228",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Privacy.tsx",
+    "bytes": 8584,
+    "lines": 186,
+    "sha256": "359b37876e287913f4bc1c9c80bfdb9ba7f89c091bad43c7a4df8d7b2d58b543",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/PublicTrader.tsx",
+    "bytes": 7957,
+    "lines": 195,
+    "sha256": "996ecf425635d43f6d81eb378076b909b812ea9507200fc01627070850d4d5dc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/ResetPassword.tsx",
+    "bytes": 4218,
+    "lines": 106,
+    "sha256": "50fa649a8edf3a01fb3f603e864b1bbce455b76eb16552959b3a4bf85de8fe9b",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Reviews.tsx",
+    "bytes": 11280,
+    "lines": 260,
+    "sha256": "364d97cb6fc595030dc7c179e38d15be0afd03b23769027458761bbafb0496cf",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Roadmap.tsx",
+    "bytes": 10066,
+    "lines": 148,
+    "sha256": "3df480b50f89658f2bb5ee9ec61967c32f90382ae5f96c93ff05c3e55ef19d19",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/SEOAudit.tsx",
+    "bytes": 9750,
+    "lines": 205,
+    "sha256": "47240378477a3aa48aaffb85443de21dbc9db344126f5295ac47bf0ce3011c3a",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/SectorPillar.tsx",
+    "bytes": 12838,
+    "lines": 284,
+    "sha256": "db53d7e9596ad0c51d231a79ff095105b610efb4456b5e56d3e470c24660319a",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Strategy.tsx",
+    "bytes": 11905,
+    "lines": 227,
+    "sha256": "a4843670e9522967b1528306ff49cce3995f60e5ad230f0ad8d24617fd6d5e21",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Terms.tsx",
+    "bytes": 10632,
+    "lines": 221,
+    "sha256": "c66f954f176fa0acb783a78196e3aa723abe8df9efc3956b509d5b3aae4fd9a5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/Trade.tsx",
+    "bytes": 19755,
+    "lines": 539,
+    "sha256": "96d5ab5f1deff7de9589ba5b552319e62092d06fb4e9154b9a3c581c375a0f32",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/TradeAsset.tsx",
+    "bytes": 24170,
+    "lines": 597,
+    "sha256": "d273f230229544946a466edcd67f4a9dd044abbc7467ee7929d95763a54b87a8",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/TraderProfile.tsx",
+    "bytes": 7761,
+    "lines": 163,
+    "sha256": "661ade8cba467ba3750c7efe999a467ec8ec326a63f8ad09e645dcbde8e6f047",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/WikiIndex.tsx",
+    "bytes": 4521,
+    "lines": 100,
+    "sha256": "854e4c86f2f1599a084c6b021d5128cc737426b5609afbc120984b27ba6762b1",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/pages/WikiTerm.tsx",
+    "bytes": 10415,
+    "lines": 232,
+    "sha256": "fc9bc9fbf4d5a8f22ca75c880ba7564e6531a6b6545dd14df29a134035bf86d6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "src/vite-env.d.ts",
+    "bytes": 38,
+    "lines": 1,
+    "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/config.toml",
+    "bytes": 240,
+    "lines": 13,
+    "sha256": "c29fdfda18b4199bf9c8e090b21ea574423136b089edee9230231c4f2bbc6559",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/admin-reviews/index.ts",
+    "bytes": 2798,
+    "lines": 71,
+    "sha256": "de08db5b23faaf7ea7a741d987a074a2c7985b398aaa5fee579d73dbb28863ea",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/ai-chat/index.ts",
+    "bytes": 5075,
+    "lines": 144,
+    "sha256": "2ec94a58ad66ea88b68afdf2f5fa4df5978739fb69cd66bfb2704b1dc5b22ec8",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/analyze-trading-psychology/index.ts",
+    "bytes": 3064,
+    "lines": 98,
+    "sha256": "6c70b5f3bf2e36bc07e9d0b06c10f38ae6830ec58c24879b9e5521cbd9a4013b",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/live-market-data/index.ts",
+    "bytes": 13099,
+    "lines": 337,
+    "sha256": "6cc5117ccf9ddef065a74dae5d2d895cdc96ec350508bf180f92250b2ee19f3f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/market-analysis/index.ts",
+    "bytes": 3987,
+    "lines": 124,
+    "sha256": "d4db4dc277c35aac5f0016958ca0882f0db600311c675f1dc4f81552c67f8eb5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/scenario-parser/index.ts",
+    "bytes": 5587,
+    "lines": 147,
+    "sha256": "ca20b38853468b34ded443abed61f06ad29ed31ac5a15b9329930be2ced9ba17",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/send-newsletter/index.ts",
+    "bytes": 6621,
+    "lines": 153,
+    "sha256": "aaaac06ee07270a51afd3cd95074ab074db6c38b7e82d10b0d6b66ce711a88dd",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/submit-review/index.ts",
+    "bytes": 2730,
+    "lines": 78,
+    "sha256": "f598846fbd4f3a93c555230a9d12e08f4d284f4dbe628250a8c1cfb836dd32c3",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/trading-advisor/index.ts",
+    "bytes": 7810,
+    "lines": 178,
+    "sha256": "013b9aae6be434acfa4827025fe1ed4580d719a5855f2559cc047a60228705a6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/trading-mentor/index.ts",
+    "bytes": 4152,
+    "lines": 113,
+    "sha256": "f2e0348e2e92580ab704ad42c7ee9bc68a9737467c9ba33e9e259f992b8806d7",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/functions/verify-admin-key/index.ts",
+    "bytes": 1105,
+    "lines": 35,
+    "sha256": "5a7a412f1fae85591b9020b6b1228de3d903b52838886a893260e6d26bc77a29",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/migrations/20260312140918_497b713d-9fe7-4fc6-aea6-091f8723d9c6.sql",
+    "bytes": 1537,
+    "lines": 42,
+    "sha256": "0a08c17588516deb525527ea1671a7d2f638e30dc26b24ea243efac402ce01cf",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/migrations/20260406064647_408956a4-ae5e-4127-9a6d-ba51b5a831a6.sql",
+    "bytes": 124,
+    "lines": 2,
+    "sha256": "c9c3101a102e03be70151ad9939d0d86b096481986266ded049519f64d50ffa2",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/migrations/20260407100157_ab39b996-3345-4ed6-bde6-0dc22d90b6bf.sql",
+    "bytes": 283,
+    "lines": 13,
+    "sha256": "cb6ef59a840ea81883d46fb3b2aa646db8adbb49e636797c1e00e5946bbcb23d",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/migrations/20260603143338_security_lockdown.sql",
+    "bytes": 1077,
+    "lines": 26,
+    "sha256": "b585d727b3ca5f25cf120310ee22eda6a699ceb540b83e39dc0dd227487ed420",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/migrations/20260610151910_4c7658ff-770a-42b2-8725-2c9d8fe96252.sql",
+    "bytes": 692,
+    "lines": 21,
+    "sha256": "03a6a7cc5e7fe4f49f31bfbeb6ba473de607aeb06c6edc4ce700c22d227e50dc",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/migrations/20260802024211_00f706fa-25c6-4a1e-9f9e-17b13547e1b7.sql",
+    "bytes": 5242,
+    "lines": 150,
+    "sha256": "c1e8d1dc5a43e6c3566f75aff6064fcf5e96b40c735d118651d6a84ef62c7d81",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "supabase/migrations/20260802024236_0ce0226d-ce84-49c6-ae6e-74982f1ac8a8.sql",
+    "bytes": 443,
+    "lines": 6,
+    "sha256": "6b0c698a74b2e184b2ac6419da8fffc5613ebe21d0650ad588b3443847c1faa5",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "tailwind.config.ts",
+    "bytes": 6710,
+    "lines": 186,
+    "sha256": "faf4b44442d43e73ecf86ed93379d7dc2d6059265f8a91c227bd7c5ee38fd500",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "tsconfig.app.json",
+    "bytes": 635,
+    "lines": 32,
+    "sha256": "b358b1b595f2c31d2d4461046fa57ae416283072909bcfa13feb14d41124978c",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "tsconfig.json",
+    "bytes": 396,
+    "lines": 24,
+    "sha256": "406e63e666958bb699aae6562e561a0cec963ee3dfe771c644ace7d97304974f",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "tsconfig.node.json",
+    "bytes": 481,
+    "lines": 22,
+    "sha256": "a96b9ba5e40d95b92adf56431fdf9cbe25b5c2557621f0666615bff6889dfc50",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "vercel.json",
+    "bytes": 689,
+    "lines": 24,
+    "sha256": "7e482866ee61547dc4f1f99aae9351706904e593fb37716c1921d1bd58d04756",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  },
+  {
+    "path": "vite.config.ts",
+    "bytes": 669,
+    "lines": 23,
+    "sha256": "31d5d4f04ca0c442bce16f96d97c94d05e588737b1b54f79aeb0ca1023b460c6",
+    "coverage": "text: inventoried and included in repository scans; not individually certified"
+  }
+]

@@ -1,3 +1,4 @@
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/client";
 /**
  * Hybrid Data Engine - Staggered viewport-aware market data fetching
  * with localStorage cache (60s TTL) and LiveSim (±0.01% every 3s)
@@ -64,10 +65,10 @@ async function flushQueue() {
       batch.map(async ({ asset, resolve }) => {
         try {
           const resp = await fetch(
-            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+            `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
             {
               headers: {
-                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+                'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
                 'Content-Type': 'application/json',
               },
             }

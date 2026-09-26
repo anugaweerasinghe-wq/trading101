@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -12,7 +13,7 @@ import { STRATEGIES, SITE_DOMAIN } from "@/lib/seoData";
 export default function Strategy() {
   const { slug } = useParams<{ slug: string }>();
   const s = STRATEGIES.find((x) => x.slug === slug);
-  if (!s) return <Navigate to="/strategy" replace />;
+  if (!s) return <NotFound />;
 
   const title = `${s.name} Strategy — How It Works, When to Use It | TradeHQ`;
   const description = `${s.name}: ${s.oneLiner} Step-by-step rules, win-rate expectations and a worked example. Practise it free with $100K virtual cash. (Educational simulation only — not financial advice.)`;

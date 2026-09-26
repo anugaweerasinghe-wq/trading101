@@ -107,7 +107,7 @@ export default function PublicTrader() {
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={`${SITE_DOMAIN}/trader/${username}`} />
-        <meta name="robots" content={data ? "index, follow" : "noindex, follow"} />
+        <meta name="robots" content="noindex, follow" />
         {schema && <script type="application/ld+json">{JSON.stringify(schema)}</script>}
       </Helmet>
 

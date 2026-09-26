@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -12,7 +13,7 @@ import { COMPARE_PAIRS, SITE_DOMAIN } from "@/lib/seoData";
 export default function Compare() {
   const { slug } = useParams<{ slug: string }>();
   const pair = COMPARE_PAIRS.find((p) => p.slug === slug);
-  if (!pair) return <Navigate to="/compare" replace />;
+  if (!pair) return <NotFound />;
 
   const title = `${pair.a.name} vs ${pair.b.name} — Which Should You Trade in 2026? | TradeHQ`;
   const description = `${pair.a.name} vs ${pair.b.name}: side-by-side comparison on returns, volatility, use case and risk. Practise both risk-free with $100K virtual cash on TradeHQ. (Educational simulation only — not financial advice.)`;

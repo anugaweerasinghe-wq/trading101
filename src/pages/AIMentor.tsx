@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { useState, useRef, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -65,7 +66,7 @@ export default function AIMentor() {
         <title>Smart Trading Mentor — Free Strategy, Risk & Psychology Coach | TradeHQ</title>
         <meta name="description" content="Chat with TradeHQ's Smart Mentor — a curated knowledge engine covering stop-losses, RSI, position sizing, psychology, crypto, ETFs and more. Free, instant, no signup." />
         <link rel="canonical" href="https://www.thetradehq.com/ai-mentor" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Smart Trading Mentor — Your Free Trading Coach | TradeHQ" />
         <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Curated by expert traders. Free on TradeHQ." />

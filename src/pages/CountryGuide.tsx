@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -14,7 +15,7 @@ const DOMAIN = "https://www.thetradehq.com";
 export default function CountryGuide() {
   const { country } = useParams<{ country: string }>();
   const guide = country ? getCountryGuide(country) : undefined;
-  if (!guide) return <Navigate to="/learn" replace />;
+  if (!guide) return <NotFound />;
 
   const path = `/learn/country/${guide.slug}`;
   const title = `Learn Trading in ${guide.country} — Free Guide for ${guide.country} Students | TradeHQ`;

@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { Helmet } from "react-helmet-async";
 import { SITE_DOMAIN } from "@/lib/constants";
 
@@ -38,9 +39,9 @@ export function SEOHead({
       <link rel="alternate" hrefLang="en" href={url} />
       <link rel="alternate" hrefLang="x-default" href={url} />
       {noindex ? (
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="noindex, follow" />
       ) : (
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+        <meta name="robots" content={robotsForPath(path)} />
       )}
 
       {/* Open Graph */}

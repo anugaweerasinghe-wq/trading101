@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
@@ -51,7 +52,7 @@ export default function About() {
           content="TradeHQ is an educational paper trading simulator built to help beginners learn how markets work through practice — not real money. Created by Anuga Weerasinghe."
         />
         <link rel="canonical" href={`${DOMAIN}/about`} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="About TradeHQ | Educational Paper Trading Simulator" />
         <meta

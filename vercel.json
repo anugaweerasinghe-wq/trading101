@@ -1,24 +1,1758 @@
 {
-  "headers": [
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "routes": [
     {
-      "source": "/sitemap.xml",
-      "headers": [
-        { "key": "Content-Type", "value": "application/xml" }
-      ]
+      "src": "^/learn/how-to-read-stock-charts/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/learn/article/how-to-read-stock-charts"
+      }
     },
     {
-      "source": "/robots.txt",
-      "headers": [
-        { "key": "Content-Type", "value": "text/plain" }
-      ]
+      "src": "^/learn/trading-strategies-for-beginners/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/learn/article/trading-strategies-for-beginners"
+      }
+    },
+    {
+      "src": "^/learn/what-is-paper-trading/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/learn/article/what-is-paper-trading"
+      }
+    },
+    {
+      "src": "^/learn/how-to-build-a-portfolio/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/learn/article/how-to-build-a-portfolio"
+      }
+    },
+    {
+      "src": "^/learn/crypto-vs-stocks/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/learn/article/crypto-vs-stocks"
+      }
+    },
+    {
+      "src": "^/learn/stock-market-index-etfs/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/learn/article/stock-market-index-etfs"
+      }
+    },
+    {
+      "src": "^/learn/risk-management-in-trading/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/learn/article/risk-management-in-trading"
+      }
+    },
+    {
+      "src": "^/$",
+      "dest": "/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/?$",
+      "dest": "/trade/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/markets/?$",
+      "dest": "/markets/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/portfolio/?$",
+      "dest": "/portfolio/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/?$",
+      "dest": "/learn/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn-trading-guide/?$",
+      "dest": "/learn-trading-guide/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/leaderboard/?$",
+      "dest": "/leaderboard/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/ai-mentor/?$",
+      "dest": "/ai-mentor/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/daily/?$",
+      "dest": "/daily/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/reviews/?$",
+      "dest": "/reviews/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/roadmap/?$",
+      "dest": "/roadmap/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/about/?$",
+      "dest": "/about/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/contact/?$",
+      "dest": "/contact/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/challenge/?$",
+      "dest": "/challenge/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/privacy/?$",
+      "dest": "/privacy/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/terms/?$",
+      "dest": "/terms/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/btc/?$",
+      "dest": "/trade/btc/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/eth/?$",
+      "dest": "/trade/eth/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/sol/?$",
+      "dest": "/trade/sol/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/bnb/?$",
+      "dest": "/trade/bnb/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/xrp/?$",
+      "dest": "/trade/xrp/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/ada/?$",
+      "dest": "/trade/ada/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/doge/?$",
+      "dest": "/trade/doge/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/avax/?$",
+      "dest": "/trade/avax/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/dot/?$",
+      "dest": "/trade/dot/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/matic/?$",
+      "dest": "/trade/matic/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/link/?$",
+      "dest": "/trade/link/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ltc/?$",
+      "dest": "/trade/ltc/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/shib/?$",
+      "dest": "/trade/shib/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/uni/?$",
+      "dest": "/trade/uni/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/atom/?$",
+      "dest": "/trade/atom/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/algo/?$",
+      "dest": "/trade/algo/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ftm/?$",
+      "dest": "/trade/ftm/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/near/?$",
+      "dest": "/trade/near/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/icp/?$",
+      "dest": "/trade/icp/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/xlm/?$",
+      "dest": "/trade/xlm/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/vet/?$",
+      "dest": "/trade/vet/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/fil/?$",
+      "dest": "/trade/fil/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/hbar/?$",
+      "dest": "/trade/hbar/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/apt/?$",
+      "dest": "/trade/apt/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/arb/?$",
+      "dest": "/trade/arb/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/op/?$",
+      "dest": "/trade/op/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/inj/?$",
+      "dest": "/trade/inj/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/sui/?$",
+      "dest": "/trade/sui/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/sei/?$",
+      "dest": "/trade/sei/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/tia/?$",
+      "dest": "/trade/tia/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/aapl/?$",
+      "dest": "/trade/aapl/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/msft/?$",
+      "dest": "/trade/msft/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/googl/?$",
+      "dest": "/trade/googl/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/amzn/?$",
+      "dest": "/trade/amzn/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/nvda/?$",
+      "dest": "/trade/nvda/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/tsla/?$",
+      "dest": "/trade/tsla/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/meta/?$",
+      "dest": "/trade/meta/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/nflx/?$",
+      "dest": "/trade/nflx/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/amd/?$",
+      "dest": "/trade/amd/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/crm/?$",
+      "dest": "/trade/crm/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/intc/?$",
+      "dest": "/trade/intc/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/orcl/?$",
+      "dest": "/trade/orcl/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/adbe/?$",
+      "dest": "/trade/adbe/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/csco/?$",
+      "dest": "/trade/csco/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/avgo/?$",
+      "dest": "/trade/avgo/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/txn/?$",
+      "dest": "/trade/txn/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/qcom/?$",
+      "dest": "/trade/qcom/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/now/?$",
+      "dest": "/trade/now/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ibm/?$",
+      "dest": "/trade/ibm/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/uber/?$",
+      "dest": "/trade/uber/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/shop/?$",
+      "dest": "/trade/shop/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/snow/?$",
+      "dest": "/trade/snow/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/pltr/?$",
+      "dest": "/trade/pltr/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/coin/?$",
+      "dest": "/trade/coin/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/spot/?$",
+      "dest": "/trade/spot/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/sq/?$",
+      "dest": "/trade/sq/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/pypl/?$",
+      "dest": "/trade/pypl/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/twlo/?$",
+      "dest": "/trade/twlo/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/docu/?$",
+      "dest": "/trade/docu/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/zm/?$",
+      "dest": "/trade/zm/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/roku/?$",
+      "dest": "/trade/roku/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/net/?$",
+      "dest": "/trade/net/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ddog/?$",
+      "dest": "/trade/ddog/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/mdb/?$",
+      "dest": "/trade/mdb/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/crwd/?$",
+      "dest": "/trade/crwd/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/zs/?$",
+      "dest": "/trade/zs/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/panw/?$",
+      "dest": "/trade/panw/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/okta/?$",
+      "dest": "/trade/okta/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/wday/?$",
+      "dest": "/trade/wday/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/veev/?$",
+      "dest": "/trade/veev/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/jpm/?$",
+      "dest": "/trade/jpm/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/v/?$",
+      "dest": "/trade/v/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ma/?$",
+      "dest": "/trade/ma/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/bac/?$",
+      "dest": "/trade/bac/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/wfc/?$",
+      "dest": "/trade/wfc/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/gs/?$",
+      "dest": "/trade/gs/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ms/?$",
+      "dest": "/trade/ms/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/unh/?$",
+      "dest": "/trade/unh/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/jnj/?$",
+      "dest": "/trade/jnj/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/pfe/?$",
+      "dest": "/trade/pfe/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/mrna/?$",
+      "dest": "/trade/mrna/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/abbv/?$",
+      "dest": "/trade/abbv/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/lly/?$",
+      "dest": "/trade/lly/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/wmt/?$",
+      "dest": "/trade/wmt/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/cost/?$",
+      "dest": "/trade/cost/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/hd/?$",
+      "dest": "/trade/hd/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/low/?$",
+      "dest": "/trade/low/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/tgt/?$",
+      "dest": "/trade/tgt/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/sbux/?$",
+      "dest": "/trade/sbux/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/mcd/?$",
+      "dest": "/trade/mcd/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ko/?$",
+      "dest": "/trade/ko/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/pep/?$",
+      "dest": "/trade/pep/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/dis/?$",
+      "dest": "/trade/dis/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/nke/?$",
+      "dest": "/trade/nke/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/xom/?$",
+      "dest": "/trade/xom/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/cvx/?$",
+      "dest": "/trade/cvx/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ba/?$",
+      "dest": "/trade/ba/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/cat/?$",
+      "dest": "/trade/cat/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/de/?$",
+      "dest": "/trade/de/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/spy/?$",
+      "dest": "/trade/spy/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/qqq/?$",
+      "dest": "/trade/qqq/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/iwm/?$",
+      "dest": "/trade/iwm/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/dia/?$",
+      "dest": "/trade/dia/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/voo/?$",
+      "dest": "/trade/voo/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/arkk/?$",
+      "dest": "/trade/arkk/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/vti/?$",
+      "dest": "/trade/vti/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ivv/?$",
+      "dest": "/trade/ivv/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/agg/?$",
+      "dest": "/trade/agg/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/ief/?$",
+      "dest": "/trade/ief/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/tlt/?$",
+      "dest": "/trade/tlt/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/gld/?$",
+      "dest": "/trade/gld/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/slv/?$",
+      "dest": "/trade/slv/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/uso/?$",
+      "dest": "/trade/uso/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/xlf/?$",
+      "dest": "/trade/xlf/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/xlk/?$",
+      "dest": "/trade/xlk/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/xle/?$",
+      "dest": "/trade/xle/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/xlv/?$",
+      "dest": "/trade/xlv/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/smh/?$",
+      "dest": "/trade/smh/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/soxx/?$",
+      "dest": "/trade/soxx/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/eurusd/?$",
+      "dest": "/trade/eurusd/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/gbpusd/?$",
+      "dest": "/trade/gbpusd/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/usdjpy/?$",
+      "dest": "/trade/usdjpy/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/usdchf/?$",
+      "dest": "/trade/usdchf/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/audusd/?$",
+      "dest": "/trade/audusd/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/usdcad/?$",
+      "dest": "/trade/usdcad/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/nzdusd/?$",
+      "dest": "/trade/nzdusd/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/eurgbp/?$",
+      "dest": "/trade/eurgbp/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/eurjpy/?$",
+      "dest": "/trade/eurjpy/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/gbpjpy/?$",
+      "dest": "/trade/gbpjpy/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/usdhkd/?$",
+      "dest": "/trade/usdhkd/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/usdsgd/?$",
+      "dest": "/trade/usdsgd/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/usdmxn/?$",
+      "dest": "/trade/usdmxn/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/usdzar/?$",
+      "dest": "/trade/usdzar/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/usdtry/?$",
+      "dest": "/trade/usdtry/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/gold/?$",
+      "dest": "/trade/gold/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/silver/?$",
+      "dest": "/trade/silver/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/oil/?$",
+      "dest": "/trade/oil/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/trade/natgas/?$",
+      "dest": "/trade/natgas/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/copper/?$",
+      "dest": "/trade/copper/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/platinum/?$",
+      "dest": "/trade/platinum/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/palladium/?$",
+      "dest": "/trade/palladium/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/brent/?$",
+      "dest": "/trade/brent/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/wheat/?$",
+      "dest": "/trade/wheat/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/corn/?$",
+      "dest": "/trade/corn/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/soybean/?$",
+      "dest": "/trade/soybean/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/coffee/?$",
+      "dest": "/trade/coffee/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/sugar/?$",
+      "dest": "/trade/sugar/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/cotton/?$",
+      "dest": "/trade/cotton/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trade/aluminum/?$",
+      "dest": "/trade/aluminum/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/wiki/?$",
+      "dest": "/wiki/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/short-squeeze/?$",
+      "dest": "/wiki/short-squeeze/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/golden-cross/?$",
+      "dest": "/wiki/golden-cross/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/death-cross/?$",
+      "dest": "/wiki/death-cross/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/liquidation-cascade/?$",
+      "dest": "/wiki/liquidation-cascade/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/fibonacci-retracement/?$",
+      "dest": "/wiki/fibonacci-retracement/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/rsi-divergence/?$",
+      "dest": "/wiki/rsi-divergence/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/macd-histogram/?$",
+      "dest": "/wiki/macd-histogram/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/bollinger-band-squeeze/?$",
+      "dest": "/wiki/bollinger-band-squeeze/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/order-block/?$",
+      "dest": "/wiki/order-block/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/fair-value-gap/?$",
+      "dest": "/wiki/fair-value-gap/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/bull-trap/?$",
+      "dest": "/wiki/bull-trap/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/bear-trap/?$",
+      "dest": "/wiki/bear-trap/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/whale-manipulation/?$",
+      "dest": "/wiki/whale-manipulation/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/support-and-resistance/?$",
+      "dest": "/wiki/support-and-resistance/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/candlestick-patterns/?$",
+      "dest": "/wiki/candlestick-patterns/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/head-and-shoulders/?$",
+      "dest": "/wiki/head-and-shoulders/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/double-bottom/?$",
+      "dest": "/wiki/double-bottom/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/macd/?$",
+      "dest": "/wiki/macd/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/limit-order-vs-market-order/?$",
+      "dest": "/wiki/limit-order-vs-market-order/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/stop-loss-hunting/?$",
+      "dest": "/wiki/stop-loss-hunting/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/leverage-trading/?$",
+      "dest": "/wiki/leverage-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/fomo/?$",
+      "dest": "/wiki/fomo/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/fud/?$",
+      "dest": "/wiki/fud/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/hodl-strategy/?$",
+      "dest": "/wiki/hodl-strategy/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/satoshi-nakamoto/?$",
+      "dest": "/wiki/satoshi-nakamoto/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/margin-call/?$",
+      "dest": "/wiki/margin-call/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/liquidation-price/?$",
+      "dest": "/wiki/liquidation-price/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/dollar-cost-averaging/?$",
+      "dest": "/wiki/dollar-cost-averaging/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/swing-trading/?$",
+      "dest": "/wiki/swing-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/day-trading/?$",
+      "dest": "/wiki/day-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/scalping/?$",
+      "dest": "/wiki/scalping/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/volume-profile/?$",
+      "dest": "/wiki/volume-profile/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/vwap/?$",
+      "dest": "/wiki/vwap/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/ichimoku-cloud/?$",
+      "dest": "/wiki/ichimoku-cloud/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/elliott-wave-theory/?$",
+      "dest": "/wiki/elliott-wave-theory/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/wyckoff-method/?$",
+      "dest": "/wiki/wyckoff-method/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/market-maker/?$",
+      "dest": "/wiki/market-maker/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/dark-pool/?$",
+      "dest": "/wiki/dark-pool/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/slippage/?$",
+      "dest": "/wiki/slippage/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/impermanent-loss/?$",
+      "dest": "/wiki/impermanent-loss/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/yield-farming/?$",
+      "dest": "/wiki/yield-farming/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/flash-crash/?$",
+      "dest": "/wiki/flash-crash/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/circuit-breaker/?$",
+      "dest": "/wiki/circuit-breaker/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/pump-and-dump/?$",
+      "dest": "/wiki/pump-and-dump/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/paper-trading/?$",
+      "dest": "/wiki/paper-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/risk-reward-ratio/?$",
+      "dest": "/wiki/risk-reward-ratio/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/drawdown/?$",
+      "dest": "/wiki/drawdown/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/backtesting/?$",
+      "dest": "/wiki/backtesting/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/wiki/correlation-trading/?$",
+      "dest": "/wiki/correlation-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/article/what-is-paper-trading/?$",
+      "dest": "/learn/article/what-is-paper-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/article/how-to-read-stock-charts/?$",
+      "dest": "/learn/article/how-to-read-stock-charts/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/article/crypto-vs-stocks/?$",
+      "dest": "/learn/article/crypto-vs-stocks/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/article/trading-strategies-for-beginners/?$",
+      "dest": "/learn/article/trading-strategies-for-beginners/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/article/stock-market-index-etfs/?$",
+      "dest": "/learn/article/stock-market-index-etfs/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/article/how-to-build-a-portfolio/?$",
+      "dest": "/learn/article/how-to-build-a-portfolio/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/article/risk-management-in-trading/?$",
+      "dest": "/learn/article/risk-management-in-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/article/market-orders-vs-limit-orders/?$",
+      "dest": "/learn/article/market-orders-vs-limit-orders/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/article/technical-indicators-rsi-macd-moving-averages/?$",
+      "dest": "/learn/article/technical-indicators-rsi-macd-moving-averages/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/compare/bitcoin-vs-ethereum/?$",
+      "dest": "/compare/bitcoin-vs-ethereum/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/compare/tesla-vs-nvidia/?$",
+      "dest": "/compare/tesla-vs-nvidia/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/compare/bitcoin-vs-gold/?$",
+      "dest": "/compare/bitcoin-vs-gold/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/compare/apple-vs-microsoft/?$",
+      "dest": "/compare/apple-vs-microsoft/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/compare/ethereum-vs-solana/?$",
+      "dest": "/compare/ethereum-vs-solana/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/compare/stocks-vs-crypto/?$",
+      "dest": "/compare/stocks-vs-crypto/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/compare/nvidia-vs-amd/?$",
+      "dest": "/compare/nvidia-vs-amd/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/compare/forex-vs-stocks/?$",
+      "dest": "/compare/forex-vs-stocks/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/compare/?$",
+      "dest": "/compare/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/how-to-trade/btc/?$",
+      "dest": "/how-to-trade/btc/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/how-to-trade/eth/?$",
+      "dest": "/how-to-trade/eth/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/how-to-trade/tsla/?$",
+      "dest": "/how-to-trade/tsla/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/how-to-trade/nvda/?$",
+      "dest": "/how-to-trade/nvda/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/how-to-trade/spy/?$",
+      "dest": "/how-to-trade/spy/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/how-to-trade/sol/?$",
+      "dest": "/how-to-trade/sol/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/how-to-trade/?$",
+      "dest": "/how-to-trade/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/strategy/scalping/?$",
+      "dest": "/strategy/scalping/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/strategy/swing-trading/?$",
+      "dest": "/strategy/swing-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/strategy/day-trading/?$",
+      "dest": "/strategy/day-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/strategy/dca-dollar-cost-averaging/?$",
+      "dest": "/strategy/dca-dollar-cost-averaging/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/strategy/rsi-strategy/?$",
+      "dest": "/strategy/rsi-strategy/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/strategy/macd-strategy/?$",
+      "dest": "/strategy/macd-strategy/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/strategy/?$",
+      "dest": "/strategy/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/?$",
+      "dest": "/courses/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/options-trading-fundamentals/?$",
+      "dest": "/courses/options-trading-fundamentals/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/options-trading-fundamentals/what-is-an-option/?$",
+      "dest": "/courses/options-trading-fundamentals/what-is-an-option/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/options-trading-fundamentals/the-greeks-delta-gamma-theta-vega/?$",
+      "dest": "/courses/options-trading-fundamentals/the-greeks-delta-gamma-theta-vega/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/options-trading-fundamentals/defined-risk-spreads/?$",
+      "dest": "/courses/options-trading-fundamentals/defined-risk-spreads/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/options-trading-fundamentals/implied-volatility-and-earnings/?$",
+      "dest": "/courses/options-trading-fundamentals/implied-volatility-and-earnings/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/options-trading-fundamentals/options-risk-management/?$",
+      "dest": "/courses/options-trading-fundamentals/options-risk-management/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/futures-and-derivatives/?$",
+      "dest": "/courses/futures-and-derivatives/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/futures-and-derivatives/what-is-a-futures-contract/?$",
+      "dest": "/courses/futures-and-derivatives/what-is-a-futures-contract/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/futures-and-derivatives/margin-and-leverage-in-futures/?$",
+      "dest": "/courses/futures-and-derivatives/margin-and-leverage-in-futures/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/futures-and-derivatives/contango-and-backwardation/?$",
+      "dest": "/courses/futures-and-derivatives/contango-and-backwardation/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/futures-and-derivatives/hedging-with-futures/?$",
+      "dest": "/courses/futures-and-derivatives/hedging-with-futures/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/futures-and-derivatives/micro-futures-for-beginners/?$",
+      "dest": "/courses/futures-and-derivatives/micro-futures-for-beginners/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/macro-reading-for-traders/?$",
+      "dest": "/courses/macro-reading-for-traders/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/macro-reading-for-traders/reading-cpi-and-inflation/?$",
+      "dest": "/courses/macro-reading-for-traders/reading-cpi-and-inflation/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/macro-reading-for-traders/the-fed-and-fomc-cycle/?$",
+      "dest": "/courses/macro-reading-for-traders/the-fed-and-fomc-cycle/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/macro-reading-for-traders/the-yield-curve-and-recession/?$",
+      "dest": "/courses/macro-reading-for-traders/the-yield-curve-and-recession/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/macro-reading-for-traders/the-dollar-index-dxy/?$",
+      "dest": "/courses/macro-reading-for-traders/the-dollar-index-dxy/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/macro-reading-for-traders/putting-macro-signals-together/?$",
+      "dest": "/courses/macro-reading-for-traders/putting-macro-signals-together/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/trading-psychology-mastery/?$",
+      "dest": "/courses/trading-psychology-mastery/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/trading-psychology-mastery/cognitive-biases-in-trading/?$",
+      "dest": "/courses/trading-psychology-mastery/cognitive-biases-in-trading/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/trading-psychology-mastery/revenge-trading-and-tilt/?$",
+      "dest": "/courses/trading-psychology-mastery/revenge-trading-and-tilt/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/trading-psychology-mastery/the-trading-journal/?$",
+      "dest": "/courses/trading-psychology-mastery/the-trading-journal/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/trading-psychology-mastery/discipline-and-daily-rituals/?$",
+      "dest": "/courses/trading-psychology-mastery/discipline-and-daily-rituals/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/courses/trading-psychology-mastery/handling-drawdowns/?$",
+      "dest": "/courses/trading-psychology-mastery/handling-drawdowns/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/country/?$",
+      "dest": "/learn/country/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/country/sri-lanka/?$",
+      "dest": "/learn/country/sri-lanka/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/country/india/?$",
+      "dest": "/learn/country/india/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/country/philippines/?$",
+      "dest": "/learn/country/philippines/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/country/pakistan/?$",
+      "dest": "/learn/country/pakistan/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/learn/country/nigeria/?$",
+      "dest": "/learn/country/nigeria/index.html",
+      "headers": {}
+    },
+    {
+      "src": "^/(auth|reset-password)/?$",
+      "dest": "/app.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/admin/(seo-audit|validator|editor|reviews)/?$",
+      "dest": "/app.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/trader/[^/]+/?$",
+      "dest": "/app.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/challenge/[^/]+/?$",
+      "dest": "/app.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/learn/(1|2|3|4|5|6)/?$",
+      "dest": "/app.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "src": "^/sectors/(ai-tech|crypto-defi|mega-cap|tech-giants|forex-currencies|commodities|etf-indices)/?$",
+      "dest": "/app.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, follow"
+      }
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/404.html",
+      "status": 404
     }
-  ],
-  "rewrites": [
-    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
-    { "source": "/robots.txt", "destination": "/robots.txt" },
-    { "source": "/manifest.json", "destination": "/manifest.json" },
-    { "source": "/favicon.ico", "destination": "/favicon.ico" },
-    { "source": "/og-image.png", "destination": "/og-image.png" },
-    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

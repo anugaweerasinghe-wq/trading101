@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
@@ -60,7 +61,7 @@ For users in the European Economic Area (EEA), we comply with GDPR requirements.
         <title>Privacy Policy & Terms of Service | TradingHQ Transparency</title>
         <meta name="description" content="Read the official terms and privacy guidelines for TradingHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice." />
         <link rel="canonical" href="https://www.thetradehq.com/privacy" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
       </Helmet>
 
       <div className="min-h-screen bg-background">

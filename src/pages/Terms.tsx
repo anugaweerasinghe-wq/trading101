@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
@@ -91,7 +92,7 @@ Users may not copy, modify, distribute, or create derivative works without expli
         <title>Terms of Service | TradeHQ Educational Simulator</title>
         <meta name="description" content="Read the Terms of Service for TradeHQ — an educational paper trading simulator. No brokerage, no financial advice, no real money at risk." />
         <link rel="canonical" href="https://www.thetradehq.com/terms" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Terms of Service | TradeHQ Educational Simulator" />
         <meta property="og:description" content="Educational-use terms for TradeHQ — no brokerage, no financial advice, no real money at risk." />

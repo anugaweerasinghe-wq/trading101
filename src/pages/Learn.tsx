@@ -1,3 +1,4 @@
+import { robotsForPath } from "@/lib/robots";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
@@ -100,7 +101,7 @@ export default function Learn() {
         <title>Learn Trading 2026 — Free Beginner to Advanced Guides | TradeHQ</title>
         <meta name="description" content="Free trading education 2026: stocks, crypto, technical analysis & risk management. Practice everything with $100K virtual cash. No signup required — TradeHQ." />
         <link rel="canonical" href="https://www.thetradehq.com/learn" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={robotsForPath()} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Learn Trading 2026 — Free Beginner to Advanced Guides" />
         <meta property="og:description" content="Master trading with free beginner-to-advanced lessons. Practice instantly with $100K virtual cash. No signup required." />
