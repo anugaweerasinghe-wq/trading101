@@ -9,5 +9,5 @@ export { courseTracks } from "../src/lib/coursesData";
 export { COMPARE_PAIRS, HOWTO_ASSETS, STRATEGIES } from "../src/lib/seoData";
 export { COUNTRY_GUIDES } from "../src/lib/countryGuides";
 export { LEARN_ARTICLES } from "../src/lib/learnArticles";
-export { ASSET_CONTENT, ASSET_FAQS, CATEGORY_INTROS } from "../src/lib/assetContent";
+export { ASSET_CONTENT, ASSET_FAQS, CATEGORY_INTROS, getAssetContent, getAssetFAQs } from "../src/lib/assetContent";
 export { ASSETS } from "../src/lib/assets";
