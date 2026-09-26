@@ -1,0 +1,82 @@
+name: Production live browser smoke
+
+on:
+  push:
+    branches:
+      - production-live-smoke-2026-09-26
+
+jobs:
+  live-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install browser test dependency
+        run: |
+          npm ci
+          npm install --no-save @playwright/test@1.55.0
+          npx playwright install chromium
+
+      - name: Verify production actually boots
+        run: |
+          node --input-type=module <<'EOF'
+          import { chromium } from '@playwright/test';
+
+          const browser = await chromium.launch({ headless: true });
+          const routes = ['/', '/markets', '/trade', '/about', '/privacy'];
+          const failures = [];
+
+          for (const route of routes) {
+            const page = await browser.newPage();
+            const pageErrors = [];
+            page.on('pageerror', (err) => pageErrors.push(String(err?.stack || err)));
+
+            let response;
+            try {
+              response = await page.goto('https://www.thetradehq.com' + route, {
+                waitUntil: 'domcontentloaded',
+                timeout: 30000,
+              });
+              await page.waitForTimeout(3500);
+
+              const bodyText = (await page.locator('body').innerText()).trim();
+              const rootText = (await page.locator('#root').innerText()).trim();
+              const prerenderShellCount = await page.locator('#prerender-seo').count();
+
+              console.log('\nROUTE', route);
+              console.log('HTTP', response?.status());
+              console.log('body chars', bodyText.length);
+              console.log('root chars', rootText.length);
+              console.log('prerender shell count', prerenderShellCount);
+              console.log('page errors', JSON.stringify(pageErrors, null, 2));
+              console.log('root preview', rootText.slice(0, 300));
+
+              if (!response || !response.ok()) failures.push(route + ': HTTP failure');
+              if (pageErrors.length) failures.push(route + ': uncaught page error');
+              if (prerenderShellCount !== 0) failures.push(route + ': React did not replace prerender shell');
+              if (rootText.length < 100) failures.push(route + ': root appears blank');
+            } catch (err) {
+              failures.push(route + ': ' + String(err));
+            } finally {
+              await page.close();
+            }
+          }
+
+          await browser.close();
+
+          if (failures.length) {
+            console.error('\nPRODUCTION SMOKE FAILURES');
+            for (const f of failures) console.error('-', f);
+            process.exit(1);
+          }
+
+          console.log('\nProduction browser smoke passed on all tested routes.');
+          EOF
