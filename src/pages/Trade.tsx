@@ -297,8 +297,8 @@ export default function Trade() {
     : "Free Trading Simulator — Buy Stocks, ETFs & Crypto with $100K | TradeHQ";
 
   const pageDescription = symbol
-    ? `Practice trading ${symbol.toUpperCase()} with $100,000 virtual cash. Real-time charts, AI mentor & zero risk. No signup required — TradeHQ 2026.`
-    : "Use our free trading simulator to buy stocks, ETFs, and crypto with $100K virtual money. Real-time practice, zero risk. No signup required.";
+    ? `Practice trading ${symbol.toUpperCase()} with $100,000 virtual cash. Charts may use live, cached, delayed or simulated data. No real money is involved.`
+    : "Use our free trading simulator to practise stocks, ETFs and crypto with $100K virtual money. Market data may be live, cached, delayed or simulated. No real money is involved.";
 
   const pageUrl = `https://www.thetradehq.com/trade${
     symbol ? `/${symbol.toLowerCase()}` : ""
@@ -512,7 +512,7 @@ export default function Trade() {
               {
                 question: "Are the prices on the trading simulator real?",
                 answer:
-                  "We pull live market data for the most-traded crypto, stock, ETF, forex and commodity assets and refresh quotes every 60 seconds. Less-liquid assets fall back to cached or simulated prices and are clearly labelled with LIVE / CACHED / SIM badges.",
+                  "Data availability differs by asset. TradeHQ may use live, cached, delayed or simulated quotes, and the interface labels the source when available. Treat all prices as educational rather than execution-quality brokerage data.",
               },
               {
                 question: "What can I trade on TradeHQ?",
