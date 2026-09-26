@@ -23,7 +23,7 @@ TradeHQ is a trading simulation platform for educational purposes only. No real 
 
 **NO GUARANTEES**: Past performance in our simulation does not guarantee future real-world results. Market simulations may not accurately reflect actual market conditions.
 
-**EDUCATIONAL PURPOSE**: TradeHQ is designed solely for educational and entertainment purposes. Users should consult qualified financial advisors before making real investment decisions.`
+**EDUCATIONAL PURPOSE**: TradeHQ is designed solely for educational and entertainment purposes. TradeHQ does not provide instructions or recommendations for real-money investment decisions.`
     },
     {
       icon: Scale,
@@ -112,7 +112,7 @@ Users may not copy, modify, distribute, or create derivative works without expli
               Please read these terms carefully before using TradeHQ. By using our service, you agree to these terms.
             </p>
             <p className="text-sm text-muted-foreground mt-4">
-              Effective Date: January 26, 2026
+              Effective Date: September 26, 2026
             </p>
           </div>
 
@@ -125,8 +125,8 @@ Users may not copy, modify, distribute, or create derivative works without expli
             <p className="text-sm text-muted-foreground leading-relaxed">
               <strong className="text-foreground">TradeHQ is a SIMULATION platform.</strong> No real money is involved. 
               All "trades" are executed with virtual currency that has no real-world value. This platform is for 
-              educational and entertainment purposes only. Nothing on TradeHQ constitutes financial advice. 
-              Always consult a licensed financial advisor before making real investment decisions.
+              educational and practice purposes only. Nothing on TradeHQ constitutes financial advice or a
+              recommendation to buy or sell a real financial product.
             </p>
           </div>
 
@@ -165,9 +165,9 @@ Users may not copy, modify, distribute, or create derivative works without expli
           <section className="mt-8 glass-liquid-card p-6">
             <h2 className="text-xl font-semibold mb-4">8. Governing Law</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              These Terms shall be governed by and construed in accordance with applicable laws, without regard 
-              to conflict of law principles. Any disputes arising from these Terms shall be resolved through 
-              binding arbitration or in courts of competent jurisdiction.
+              These Terms are subject to the laws and mandatory consumer protections that apply to the Service
+              and to the person using it. This page is not legal advice and does not waive rights that cannot
+              lawfully be waived.
             </p>
           </section>
 
@@ -179,7 +179,7 @@ Users may not copy, modify, distribute, or create derivative works without expli
             </p>
             <div className="p-4 rounded-xl bg-muted/30 border border-border/30">
               <p className="text-sm">
-                <strong>Email:</strong> legal@tradinghq.com
+                Use the <a href="/contact" className="underline text-primary">TradeHQ contact page</a>.
               </p>
             </div>
           </section>
@@ -197,7 +197,7 @@ Users may not copy, modify, distribute, or create derivative works without expli
               {
                 question: "Does TradeHQ provide financial advice?",
                 answer:
-                  "No. Nothing on TradeHQ — including AI Mentor responses, market analysis or sector commentary — constitutes financial, investment, legal or tax advice. Always consult a qualified advisor for real-money decisions.",
+                  "No. Nothing on TradeHQ — including AI Mentor responses, market analysis or sector commentary — constitutes financial, investment, legal or tax advice or a recommendation to buy or sell a real financial product.",
               },
               {
                 question: "Can I use TradeHQ commercially?",
