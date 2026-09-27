@@ -22,7 +22,7 @@ export function TradingJournal({ trades }: TradingJournalProps) {
   const journalTrades = getJournalEntries(trades);
   const emotionalBreakdown = getEmotionalBreakdown(trades);
 
-  const analyzeWithAI = async () => {
+  const analyzeJournalPatterns = async () => {
     setLoading(true);
     // Deterministic rule-based analysis — no AI credits required.
     setTimeout(() => {
@@ -32,15 +32,15 @@ export function TradingJournal({ trades }: TradingJournalProps) {
       const totalEntries = journalTrades.length;
       const insights: string[] = [];
       if (emotionLabel === "fear" || emotionLabel === "anxious") {
-        insights.push("You journal most often when fearful — this often correlates with exits at local lows. Set rules before entry, not during stress.");
+        insights.push("Fear/anxious appears most frequently in the journal labels. Compare outcomes across those entries before inferring any relationship.");
       } else if (emotionLabel === "greed" || emotionLabel === "fomo") {
-        insights.push("FOMO/greed is your dominant emotion. Use a 5-minute cool-down rule before any new entry.");
+        insights.push("Greed/FOMO appears most frequently in the journal labels. The label frequency alone does not establish that it caused an outcome.");
       } else if (emotionLabel === "confident") {
-        insights.push("High confidence detected — watch for overconfidence after wins (the recency bias trap).");
+        insights.push("Confidence appears most frequently in the journal labels. Compare results and context before drawing a conclusion about performance.");
       } else {
-        insights.push("Balanced emotional spread. Keep journaling — patterns emerge after 30+ entries.");
+        insights.push("No strong emotion label dominates this simple frequency summary.");
       }
-      if (totalEntries < 10) insights.push(`Only ${totalEntries} journaled trades — log at least 20 for reliable patterns.`);
+      if (totalEntries < 10) insights.push(`Only ${totalEntries} journaled trades are available, so the sample is small and descriptive only.`);
       const computed: JournalAnalysis = {
         totalTrades: totalEntries,
         emotionalPatterns: Object.entries(emotionalBreakdown).map(([emotion, frequency]) => ({
@@ -50,11 +50,11 @@ export function TradingJournal({ trades }: TradingJournalProps) {
           frequency: frequency as number,
           recommendation: `Logged ${frequency} times`,
         })),
-        mostSuccessfulEmotion: emotionLabel,
-        leastSuccessfulEmotion: emotionLabel === "fear" ? "fear" : "fomo",
+        mostSuccessfulEmotion: "not measured",
+        leastSuccessfulEmotion: "not measured",
         commonMistakes: insights,
-        strengths: ["You're journaling — most traders don't.", "Self-awareness is the first edge."],
-        aiInsights: `Across ${totalEntries} journaled trades, your dominant emotion is "${emotionLabel}". ${insights[0]}\n\nRecommendations:\n• Write a 1-line thesis before every entry.\n• Set stop-loss + target *before* placing the trade.\n• Review every Friday — what worked, what didn't.`,
+        strengths: ["Journal entries create a record that can be reviewed later.", "Consistent notes make it easier to compare assumptions across simulated trades."],
+        aiInsights: `Rule-based journal summary: across ${totalEntries} journaled trades, the most frequent emotion label is "${emotionLabel}". ${insights[0]}\n\nFor a cleaner comparison, keep note fields consistent and review simulated outcomes without treating the emotion label as proof of cause.`,
         lastUpdated: new Date(),
       };
       setAnalysis(computed);
@@ -72,9 +72,9 @@ export function TradingJournal({ trades }: TradingJournalProps) {
             {journalTrades.length} trades with journal entries
           </p>
         </div>
-        <Button onClick={analyzeWithAI} disabled={loading || journalTrades.length === 0} size="lg">
+        <Button onClick={analyzeJournalPatterns} disabled={loading || journalTrades.length === 0} size="lg">
           <Brain className="w-5 h-5 mr-2" />
-          {loading ? "Analyzing..." : "AI Analysis"}
+          {loading ? "Analyzing..." : "Analyze Patterns"}
         </Button>
       </div>
 
@@ -82,7 +82,7 @@ export function TradingJournal({ trades }: TradingJournalProps) {
         <TabsList className="grid w-full max-w-md grid-cols-3">
           <TabsTrigger value="entries">Entries</TabsTrigger>
           <TabsTrigger value="emotions">Emotions</TabsTrigger>
-          <TabsTrigger value="insights">AI Insights</TabsTrigger>
+          <TabsTrigger value="insights">Pattern Summary</TabsTrigger>
         </TabsList>
 
         <TabsContent value="entries" className="space-y-4">
@@ -180,9 +180,9 @@ export function TradingJournal({ trades }: TradingJournalProps) {
             <Card className="p-12 text-center">
               <Brain className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
               <p className="text-xl text-muted-foreground mb-4">
-                Run AI analysis to get insights on your trading psychology
+                Run the rule-based summary to review journal-label frequencies
               </p>
-              <Button onClick={analyzeWithAI} disabled={loading || journalTrades.length === 0}>
+              <Button onClick={analyzeJournalPatterns} disabled={loading || journalTrades.length === 0}>
                 <Sparkles className="w-5 h-5 mr-2" />
                 Analyze Now
               </Button>
@@ -222,7 +222,7 @@ export function TradingJournal({ trades }: TradingJournalProps) {
               <Card className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <Sparkles className="w-6 h-6 text-primary" />
-                  <h3 className="text-xl font-bold">AI Insights</h3>
+                  <h3 className="text-xl font-bold">Rule-Based Pattern Summary</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">{analysis.aiInsights}</p>
               </Card>
@@ -234,7 +234,7 @@ export function TradingJournal({ trades }: TradingJournalProps) {
                     <div key={i} className="p-4 bg-muted/50 rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <Badge variant="outline">{pattern.emotion}</Badge>
-                        <span className="text-sm">Win Rate: {pattern.winRate.toFixed(1)}%</span>
+                        <span className="text-sm">Entries: {pattern.frequency}</span>
                       </div>
                       <p className="text-sm text-muted-foreground">{pattern.recommendation}</p>
                     </div>
