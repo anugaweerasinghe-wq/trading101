@@ -165,6 +165,7 @@ export default function Trade() {
 
       if (isMounted.current) {
         setAssets(allUpdated);
+        setPortfolio((current) => updatePositionPrices(current, allUpdated));
         setLiveAssetIds(newLiveIds);
       }
     } catch (err) {
@@ -198,6 +199,7 @@ export default function Trade() {
       if (!isMounted.current) return;
 
       setAssets(hydratedAssets);
+      setPortfolio(updatePositionPrices(getPortfolio(), hydratedAssets));
 
       if (symbol) {
         const match = hydratedAssets.find(
@@ -211,7 +213,6 @@ export default function Trade() {
       setIsLoading(false);
     }, 400);
 
-    setPortfolio(updatePositionPrices(portfolio));
     setFavorites(getFavorites());
 
     return () => {
@@ -382,13 +383,15 @@ export default function Trade() {
                   typeof livePrice === "number" &&
                   livePrice > 0
                 ) {
-                  setAssets((prev) =>
-                    prev.map((a) =>
+                  setAssets((prev) => {
+                    const nextAssets = prev.map((a) =>
                       a.id === selectedAsset.id
                         ? { ...a, price: livePrice }
                         : a,
-                    ),
-                  );
+                    );
+                    setPortfolio((current) => updatePositionPrices(current, nextAssets));
+                    return nextAssets;
+                  });
                 }
               }}
             />
