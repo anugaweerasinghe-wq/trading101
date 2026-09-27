@@ -36,7 +36,8 @@ import {
   generateStudentUseSection,
   isInSeedSet,
   getAssetColor,
-  getAssetFAQs
+  getAssetFAQs,
+  ASSET_FAQS
 } from "@/lib/assetContent";
 import { AlertTriangle, Wifi, WifiOff, Clock } from "lucide-react";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
@@ -227,6 +228,11 @@ export default function TradeAsset() {
     ? `https://www.thetradehq.com/trade/${selectedAsset.id}`
     : "https://www.thetradehq.com/trade";
   const assetColor = selectedAsset ? getAssetColor(selectedAsset.id) : '#00FFFF';
+  // Keep runtime robots aligned with scripts/routes.ts: only authored
+  // editorial + authored FAQ asset pages are indexable.
+  const isIndexableAsset = selectedAsset
+    ? Boolean(assetContent && ASSET_FAQS[selectedAsset.id]?.length)
+    : false;
 
   // --- CLEAN SCHEMA: No fake ratings, proper nesting ---
   // GEOKeySummary - neutral, factual, machine-readable for AI Overviews
@@ -397,7 +403,7 @@ export default function TradeAsset() {
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content={isIndexableAsset ? "index, follow" : "noindex, follow"} />
         <meta name="theme-color" content={assetColor} />
         
         {/* GEO KEY SUMMARY SCHEMA */}
