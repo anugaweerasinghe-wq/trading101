@@ -11,6 +11,7 @@ import { AIReadySummary } from "@/components/AIReadySummary";
 import { GEOKeyTakeaways } from "@/components/GEOKeyTakeaways";
 import { TradingStrengthMeter } from "@/components/TradingStrengthMeter";
 import { ContextualLinks } from "@/components/ContextualLinks";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
 
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
@@ -73,10 +74,10 @@ export default function TradeAsset() {
     if (!asset || typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) return asset;
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
+        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
         {
           headers: {
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
             'Content-Type': 'application/json',
           },
         }
