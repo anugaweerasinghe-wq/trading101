@@ -16,9 +16,6 @@ import {
   getPortfolio,
   updatePositionPrices,
   savePortfolio,
-  canClaimWeeklyBonus,
-  getTimeUntilNextBonus,
-  claimWeeklyBonus,
 } from "@/lib/portfolio";
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
 import { ASSETS } from "@/lib/assets";
@@ -34,8 +31,7 @@ import {
   Wallet,
   DollarSign,
   PieChart,
-  Gift,
-  Bell,
+   Bell,
   BellOff,
   Activity,
   Clock,
@@ -68,7 +64,6 @@ export default function Portfolio() {
   const [secondsAgo, setSecondsAgo] = useState(0);
   const assetsRef = useRef(assets);
   const isMounted = useRef(true);
-  const [canClaim, setCanClaim] = useState(canClaimWeeklyBonus());
   const [notificationsEnabled, setNotificationsEnabled] = useState(
     typeof Notification !== "undefined" &&
       Notification.permission === "granted",
@@ -240,24 +235,6 @@ export default function Portfolio() {
     return minutes >= 570 && minutes < 960;
   })();
 
-  const handleClaimBonus = () => {
-    const result = claimWeeklyBonus(portfolio);
-
-    if (result.success && result.portfolio) {
-      setPortfolio(result.portfolio);
-      setCanClaim(false);
-      toast({
-        title: "Weekly Bonus Claimed!",
-        description: result.message,
-      });
-    } else {
-      toast({
-        title: "Cannot Claim Bonus",
-        description: result.message,
-        variant: "destructive",
-      });
-    }
-  };
 
   const handleToggleNotifications = async () => {
     if (notificationsEnabled) {
@@ -397,17 +374,7 @@ export default function Portfolio() {
                     {notificationsEnabled ? "Alerts On" : "Alerts"}
                   </Button>
 
-                  <Button
-                    onClick={handleClaimBonus}
-                    disabled={!canClaim}
-                    size="sm"
-                    className="gap-1.5 text-xs font-bold bg-primary hover:bg-primary/90 text-black disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100"
-                    style={canClaim ? { color: '#000', boxShadow: '0 0 18px hsl(168 100% 50% / 0.35)' } : undefined}
-                  >
-                    <Gift className="w-4 h-4" />
-                    {canClaim ? "Claim Bonus" : `${getTimeUntilNextBonus()}`}
-                  </Button>
-                </div>
+               </div>
               </div>
             </header>
 
@@ -570,11 +537,6 @@ export default function Portfolio() {
                   question: "How do I reset my virtual portfolio?",
                   answer:
                     "Your portfolio is stored locally in your browser. Clear your browser's site data for www.thetradehq.com to reset back to the default $100,000 starting balance.",
-                },
-                {
-                  question: "What is the weekly bonus?",
-                  answer:
-                    "Once every 7 days you can claim a virtual cash top-up to keep practicing different strategies without running out of capital. Purely educational — no real money involved.",
                 },
               ]}
             />
