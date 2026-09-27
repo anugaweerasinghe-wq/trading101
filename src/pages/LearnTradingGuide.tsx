@@ -50,10 +50,6 @@ const LearnTradingGuide = () => {
   const today = new Date().toDateString();
   const dayIndex = new Date().getDay();
   const challenge = DAILY_CHALLENGES[dayIndex % DAILY_CHALLENGES.length];
-  const sentimentValue = Math.round(seededRandom(today) * 100);
-  const sentimentLabel = sentimentValue < 25 ? "Extreme Fear" : sentimentValue < 45 ? "Fear" : sentimentValue < 55 ? "Neutral" : sentimentValue < 75 ? "Greed" : "Extreme Greed";
-  const sentimentColor = sentimentValue < 30 ? "bg-red-500" : sentimentValue < 50 ? "bg-amber-500" : sentimentValue < 70 ? "bg-emerald-500" : "bg-emerald-400";
-
   const [challengeAnswer, setChallengeAnswer] = useState<number | null>(null);
   const isCorrect = challengeAnswer === challenge.correct;
 
@@ -291,27 +287,19 @@ const LearnTradingGuide = () => {
                 )}
               </Card>
 
-              {/* Sentiment Gauge */}
+              {/* Practice lens — deliberately not presented as current market data */}
               <Card className="p-5 bg-white/[0.02] border-white/5 rounded-2xl flex flex-col">
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp className="w-4 h-4 text-emerald-500" />
-                  <h3 className="text-xs uppercase tracking-[0.15em] font-black text-white">Market Sentiment</h3>
+                  <h3 className="text-xs uppercase tracking-[0.15em] font-black text-white">Practice Lens</h3>
                 </div>
-                <div className="flex-1 flex flex-col items-center justify-center gap-3">
-                  <div className="relative w-8 h-32 bg-white/5 rounded-full overflow-hidden border border-white/10">
-                    <motion.div
-                      className={`absolute bottom-0 left-0 right-0 ${sentimentColor} rounded-full`}
-                      initial={{ height: 0 }}
-                      animate={{ height: `${sentimentValue}%` }}
-                      transition={{ duration: 1.2, ease: "easeOut" }}
-                    />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-black text-white">{sentimentValue}</p>
-                    <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-slate-500">{sentimentLabel}</p>
-                  </div>
+                <div className="flex-1 flex flex-col justify-center">
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    Today's challenge is a hypothetical learning scenario. Use it to compare evidence,
+                    uncertainty and risk controls rather than treating a generated score as current market sentiment.
+                  </p>
                 </div>
-                <p className="text-[9px] text-slate-600 text-center mt-2">Visual indicator only · Not financial advice</p>
+                <p className="text-[9px] text-slate-600 text-center mt-3">Educational exercise · not a live indicator or trading signal</p>
               </Card>
             </div>
 
