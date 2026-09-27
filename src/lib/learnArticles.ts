@@ -99,9 +99,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   },
   {
     slug: "crypto-vs-stocks",
-    title: "Crypto vs Stocks: Which Should You Practice Trading First?",
-    summary: "Crypto and stocks have different risk profiles, trading hours, and volatility. Here's how to decide which to practice first as a beginner.",
-    metaDescription: "Crypto vs stocks — which should beginners practice first? Compare volatility, risk, and trading hours. Practice both free on TradeHQ.",
+    title: "Crypto vs Stocks: Comparing Two Practice Markets",
+    summary: "Crypto and stocks differ in market structure, trading hours and volatility. Compare both in a virtual-money environment without turning the comparison into a suitability recommendation.",
+    metaDescription: "Compare crypto and stocks by market structure, volatility and trading hours, then explore both with virtual money on TradeHQ.",
     readTime: "5 min read",
     sections: [
       {
@@ -109,7 +109,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Stocks represent ownership in real companies. When you buy Apple stock, you own a tiny piece of a trillion-dollar technology company that generates revenue, pays dividends, and is regulated by the SEC. Stock markets operate Monday through Friday during set hours (9:30 AM to 4:00 PM ET for the NYSE).",
           "Cryptocurrencies are decentralized digital assets that trade 24/7, 365 days a year. There's no closing bell, no holidays, and often no central authority governing their issuance. This means crypto prices can make dramatic moves at any hour — on a Sunday night, during a holiday, or while you sleep.",
-          "The biggest difference for beginners is volatility. Bitcoin might move 5-10% in a single day, while a large-cap stock like Microsoft typically moves less than 2%. This makes crypto exciting but also more dangerous for inexperienced traders. Paper trading on TradeHQ lets you experience both markets without any real risk."
+          "Volatility can differ substantially between a crypto asset and a large-cap stock, and those differences also change over time. TradeHQ can be used to compare simulated price paths without assuming a fixed daily range or that one market is more suitable for a particular person."
         ]
       },
       {
@@ -125,7 +125,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Crypto markets never close, so you can practice trading whenever it fits your schedule. The higher volatility means more frequent trading opportunities, which accelerates the learning process — you'll see the results of your decisions faster. Crypto also has lower barriers to entry, with many assets priced under $1.",
           "The crypto ecosystem introduces you to concepts like blockchain technology, decentralized finance (DeFi), and tokenomics — knowledge that's increasingly relevant in 2026 as traditional finance and crypto continue to converge. Understanding both worlds makes you a more versatile trader.",
-          "Our recommendation: start with both. TradeHQ gives you access to 150+ assets across stocks, crypto, ETFs, forex, and commodities. Practice trading a few blue-chip stocks and major cryptocurrencies simultaneously to see which market fits your trading style and risk tolerance."
+          "One simulation exercise is to place stocks and crypto side-by-side and record differences in volatility, market hours and drawdown. That comparison is educational only; it does not determine which asset class is suitable for real money."
         ]
       }
     ],
@@ -139,33 +139,33 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   {
     slug: "trading-strategies-for-beginners",
     title: "5 Trading Strategies You Can Test Risk-Free on a Simulator",
-    summary: "From buy-and-hold to momentum trading — explore five proven strategies you can practice with virtual money before risking real capital.",
+    summary: "Explore five commonly discussed approaches and test their assumptions with virtual money. The examples are practice frameworks, not proven profit formulas.",
     metaDescription: "5 beginner-friendly trading strategies to practice risk-free. Test momentum, swing, and value trading with $100K virtual cash on TradeHQ.",
     readTime: "7 min read",
     sections: [
       {
         heading: "1. Buy and Hold (The Warren Buffett Approach)",
         paragraphs: [
-          "Buy and hold is the simplest strategy: purchase quality assets and hold them for the long term, ignoring short-term price fluctuations. Warren Buffett's Berkshire Hathaway has averaged 20% annual returns over decades using this approach. The idea is that great companies increase in value over time, and patient investors are rewarded.",
+          "Buy-and-hold means maintaining a position over a long period rather than reacting to each short-term price move. Historical examples can illustrate the approach, but no company, ETF or holding period guarantees a particular return.",
           "On TradeHQ, you can practice buying blue-chip stocks like Apple (AAPL) or index ETFs like SPY and tracking their performance over weeks or months. This strategy teaches you to think long-term and avoid the emotional trap of selling during temporary dips. It also helps you understand the power of compound growth.",
-          "The key to successful buy-and-hold investing is selecting the right assets. Focus on companies with strong fundamentals: consistent revenue growth, healthy profit margins, competitive advantages (moats), and capable management. Use TradeHQ's AI Mentor to get analysis on any asset before you commit."
+          "A simulation can compare fundamentals such as revenue growth, margins and business concentration with later price behavior. TradeHQ does not determine the 'right' asset or provide a recommendation to commit real money."
         ]
       },
       {
         heading: "2. Swing Trading (Capturing Multi-Day Moves)",
         paragraphs: [
           "Swing trading involves holding positions for several days to weeks, aiming to capture medium-term price moves. Unlike day trading, you don't need to watch screens all day — you can analyze charts in the evening, set your orders, and check back the next day. This makes it ideal for people with day jobs.",
-          "The typical swing trading approach uses technical analysis to identify assets that are about to make a significant move. Look for stocks near support levels with bullish candlestick patterns, or assets breaking out above resistance on high volume. Set a stop-loss below your entry point and a profit target 2-3x your risk.",
+          "Swing-trading exercises often use chart patterns, support/resistance zones and predefined exits. In the simulator, record both successes and failures and compare several exit assumptions instead of treating a pattern or a fixed reward-to-risk multiple as a predictive rule.",
           "Practice swing trading on TradeHQ with volatile assets like Tesla (TSLA) or Solana (SOL). Track your entry points, stop-losses, and targets in the built-in trading journal. After 20-30 trades, analyze your win rate and average profit/loss to refine your strategy."
         ]
       },
       {
         heading: "3. Momentum Trading, 4. Mean Reversion, and 5. Dollar-Cost Averaging",
         paragraphs: [
-          "Momentum trading follows the trend: buy assets that are going up and sell assets that are going down. The theory is that trends tend to persist. Use moving averages and RSI to confirm momentum direction. On TradeHQ, sort assets by 24-hour change to find momentum candidates.",
-          "Mean reversion is the opposite philosophy — it assumes that prices eventually return to their average. When an asset drops significantly below its 50-day moving average, mean reversion traders buy, expecting a bounce. When it spikes well above, they sell. This strategy works best in range-bound markets.",
-          "Dollar-cost averaging (DCA) is the most passive strategy: invest a fixed amount at regular intervals regardless of price. This smooths out volatility over time and removes the emotional decision of timing the market. On TradeHQ, practice DCA by buying a small amount of Bitcoin or SPY every simulated week and compare your results to lump-sum investing.",
-          "The best strategy is the one that fits your personality, schedule, and risk tolerance. Use TradeHQ's paper trading simulator to test all five strategies side-by-side. After several weeks of practice, you'll know which approach feels natural and produces the most consistent results for your style."
+          "Momentum strategies test the hypothesis that recent relative strength can persist. A simulator can rank assets by recent change and compare what happened afterward, including cases where momentum reversed; moving averages and RSI do not confirm a future outcome.",
+          "Mean-reversion strategies test the hypothesis that prices can move back toward a reference average after an unusually large deviation. In practice, deviations can continue or the reference average can shift, so the simulator should be used to test the assumption rather than turn a moving-average distance into a buy or sell instruction.",
+          "Dollar-cost averaging is the practice of allocating the same hypothetical amount at regular intervals. It changes purchase timing but does not guarantee lower risk or better returns. In TradeHQ, compare a simulated recurring-purchase schedule with other timing assumptions.",
+          "Use TradeHQ to test these approaches side-by-side under the same assumptions. Several weeks of simulated results can reveal how the rules behaved in that sample, but they do not establish future profitability or personal suitability."
         ]
       }
     ],
