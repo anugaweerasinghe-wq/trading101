@@ -124,6 +124,7 @@ export default function TradeAsset() {
         return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
       });
       setAssets(hydratedAssets);
+      setPortfolio(updatePositionPrices(getPortfolio(), hydratedAssets));
       setSelectedAsset(targetAsset ? (cached[targetAsset.id] ? { ...targetAsset, price: cached[targetAsset.id].price, change: cached[targetAsset.id].change, changePercent: cached[targetAsset.id].changePercent } : targetAsset) : null);
       if (targetAsset && cached[targetAsset.id]) {
         setDataSource(cached[targetAsset.id].source === 'live' ? 'live' : cached[targetAsset.id].source === 'delayed' ? 'delayed' : 'cached');
@@ -131,8 +132,6 @@ export default function TradeAsset() {
       setIsLoading(false);
     }, 600);
 
-    const updated = updatePositionPrices(portfolio);
-    setPortfolio(updated);
     setFavorites(getFavorites());
 
     return () => {
@@ -159,7 +158,11 @@ export default function TradeAsset() {
           } else if (quote.status === 'simulated') {
             persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'simulated');
           }
-          setAssets(prev => prev.map(a => a.id === updated.id ? updated : a));
+          setAssets(prev => {
+            const nextAssets = prev.map(a => a.id === updated.id ? updated : a);
+            setPortfolio(current => updatePositionPrices(current, nextAssets));
+            return nextAssets;
+          });
           setDataSource(quote.status);
         }
         setLastUpdated(new Date());
@@ -174,10 +177,14 @@ export default function TradeAsset() {
     // Micro-fluctuation: ±0.01% anchored to current price (visual liveness only)
     const microInterval = setInterval(() => {
       if (!isMounted.current) return;
-      setAssets(prev => prev.map(asset => {
-        const movement = generatePriceMovement(asset.price);
-        return { ...asset, price: movement.price };
-      }));
+      setAssets(prev => {
+        const nextAssets = prev.map(asset => {
+          const movement = generatePriceMovement(asset.price);
+          return { ...asset, price: movement.price };
+        });
+        setPortfolio(current => updatePositionPrices(current, nextAssets));
+        return nextAssets;
+      });
     }, 3000);
 
     return () => {
