@@ -6,5 +6,4 @@ SET portfolio_value = 100000,
     trades = 0,
     win_rate = 0,
     max_drawdown = 0,
-    badges = 0,
     updated_at = now();
