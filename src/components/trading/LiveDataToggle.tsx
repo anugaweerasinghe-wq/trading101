@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Wifi, WifiOff, RefreshCw, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Asset } from "@/lib/types";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
 
 interface LiveDataToggleProps {
   asset: Asset | null;
@@ -50,10 +51,10 @@ export function LiveDataToggle({ asset, onLiveDataReceived }: LiveDataToggleProp
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/live-market-data?assetId=${currentAsset.id}&type=${currentAsset.type}&basePrice=${currentAsset.price}&dataType=quote`,
+        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${currentAsset.id}&type=${currentAsset.type}&basePrice=${currentAsset.price}&dataType=quote`,
         {
           headers: {
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
             'Content-Type': 'application/json',
           },
         }
