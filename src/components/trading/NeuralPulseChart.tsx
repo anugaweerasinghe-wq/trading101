@@ -190,6 +190,7 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
 
     const chart = createChart(containerRef.current, {
       height,
+      localization: { locale: 'en-US' },
       layout: {
         background: { type: ColorType.Solid, color: '#0A0A0A' },
         textColor: '#737A87',
