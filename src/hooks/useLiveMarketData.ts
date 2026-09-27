@@ -2,6 +2,13 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Asset } from '@/lib/types';
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/config';
 
+export interface MarketDataProvenance {
+  status: 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider';
+  provider: string;
+  fetchedAt: string;
+  note?: string;
+}
+
 export interface LiveMarketData {
   price: number;
   change24h: number;
@@ -12,6 +19,7 @@ export interface LiveMarketData {
   marketCap?: number;
   lastUpdated: string;
   source: 'live' | 'simulated';
+  provenance?: MarketDataProvenance;
 }
 
 export interface CandleData {
@@ -119,7 +127,9 @@ export function useLiveMarketData(
             volume24h: typeof data.volume24h === 'number' ? data.volume24h : 0,
             marketCap: typeof data.marketCap === 'number' ? data.marketCap : undefined,
             lastUpdated: data.lastUpdated || new Date().toISOString(),
-            source: data.source || 'simulated',
+            // Only provider data explicitly marked realtime may surface as "live".
+            source: (result.provenance?.status ?? data.provenance?.status) === 'realtime' ? 'live' : 'simulated',
+            provenance: result.provenance ?? data.provenance,
           };
           setLiveData(marketData);
           setLastFetch(new Date());
@@ -191,6 +201,7 @@ export function useLiveCandleData(
   const { refreshInterval = 60000, enabled = true } = options; // 1 minute for candles
   
   const [candles, setCandles] = useState<CandleData[]>([]);
+  const [provenance, setProvenance] = useState<MarketDataProvenance | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
@@ -228,13 +239,19 @@ export function useLiveCandleData(
 
       if (isMounted.current && result.success && Array.isArray(result.data)) {
         setCandles(result.data);
+        setProvenance(result.provenance ?? null);
       }
     } catch (err) {
       console.error('Candle data fetch error:', err);
       if (isMounted.current) {
         setError(err instanceof Error ? err.message : 'Failed to fetch candles');
-        // Generate fallback candles
+        // Generate fallback candles and label them explicitly as simulated.
         setCandles(generateFallbackCandles(asset.price));
+        setProvenance({
+          status: 'simulated',
+          provider: 'TradeHQ simulation',
+          fetchedAt: new Date().toISOString(),
+        });
       }
     } finally {
       fetchInProgress.current = false;
@@ -266,6 +283,8 @@ export function useLiveCandleData(
     candles,
     isLoading,
     error,
+    provenance,
+    source: provenance?.status === 'provider' ? 'provider' : 'simulated',
     refetch: fetchCandles,
   };
 }
