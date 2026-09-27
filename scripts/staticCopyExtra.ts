@@ -19,11 +19,11 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Common questions",
       list: [
         "Is TradeHQ free? Yes, entirely. There is no paid tier, no trial and no card required.",
-        "Do I need an account? No. Practice trading, courses and the glossary all work without signing up; an account is only needed for public profiles, duels and cross-device sync.",
+        "Do I need an account? No. Core practice trading, courses and the glossary work without signing up. An account is used for optional profile/community features and syncing selected summary practice statistics; the full browser-held portfolio is not presented as cross-device synced.",
         "Is the money real? No. Every balance, order and result is simulated, and the platform holds no funds.",
-        "Are the prices real? They are based on public market data and refreshed periodically, with a simulation layer between refreshes. They are not a live trading feed.",
+        "Are the prices real? Provenance varies by instrument and feature: values can be realtime provider data, delayed or previous-close provider data, cached data, a proxy, or explicitly simulated. Check the label on the relevant page rather than assuming one source for everything.",
         "Does TradeHQ give advice? No. There are no signals, price targets or recommendations anywhere on the site.",
-        "Where is my data? Portfolio, journal and progress are stored in your own browser unless you create an account.",
+        "Where is my data? Core simulator state such as portfolio and journal data is primarily browser-held. Optional accounts can store profile information and selected summary practice statistics; reviews, contact messages and service-provider data flows are described in the Privacy Policy.",
       ],
     },
   ],
@@ -33,7 +33,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Order types, and when each one matters",
       list: [
         "Market order: fills immediately at the shown simulated price. Simple, but in a fast market the price you see is not always the price you get — in real trading this gap is called slippage.",
-        "Limit order: only fills at your price or better. It protects the entry price but may never fill at all, which is itself a lesson worth learning on practice capital.",
+        "Limit-order concept: a real limit order waits for a specified price or better, but TradeHQ's current quick order flow does not maintain a pending limit-order book. Where limit controls are not fully simulated, the UI should not imply that a queued limit order exists.",
         "Closing a position: selling what you hold, or buying back a short. The realised result lands in the portfolio history for review.",
       ],
     },
@@ -72,8 +72,8 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Unrealised P&L: what an open position is worth right now versus what you paid. It is not money until you close.",
         "Realised P&L: the result of trades you have actually closed. This is the number that measures decisions you finished making.",
         "Win rate: the share of closed trades that made money. Useless without the average size of wins and losses next to it.",
-        "Sharpe ratio: a rough measure of return relative to volatility. Higher means smoother, not necessarily larger, returns.",
-        "Maximum drawdown: the largest fall from a peak in your equity curve. The single most useful number for judging whether an approach is survivable.",
+        "Return-series metrics: measures such as Sharpe require a properly sampled return series and explicit conventions. TradeHQ's current portfolio card does not manufacture a Sharpe ratio from the cross-section of open positions.",
+        "Maximum drawdown: the largest peak-to-trough decline in the locally recorded simulator snapshot history. Its value depends on how and when snapshots were recorded.",
       ],
     },
     {
@@ -132,7 +132,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Why we show it at all",
       p: [
         "Competition is a blunt but effective tool for habit formation. A visible ranking makes people return, and returning is what builds the daily review habit that actually improves results. That is the entire justification for the leaderboard, and it is why the ranking carries no reward.",
-        "It also serves as a live demonstration of variance. Watch the top of the board over a few weeks: names change constantly, and the traders who stay near the top are usually not the ones who spiked fastest. That lesson is difficult to teach in a lesson and obvious in a table.",
+        "The board can be used to observe how submitted simulator statistics differ across public accounts, but those figures originate in client-held state and are not independently verified performance records.",
       ],
     },
     {
@@ -149,7 +149,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Do I have to appear here? No. Publishing is opt-in and can be switched off at any time.",
         "Is there a prize? No. There is no money, no entry fee and nothing to win.",
         "Can I see someone's trades? Only the summary statistics they chose to publish, never their journal.",
-        "How often does it update? Rankings refresh as published portfolios change; short-term positions move constantly.",
+        "How often does it update? Rankings change when participating users sync updated summary practice statistics; the board is not a continuously verified market-performance feed.",
         "Why is the top return so large? Usually concentration and leverage-like sizing, not a repeatable method — check the drawdown column before being impressed.",
       ],
     },
@@ -169,7 +169,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "How it works and what it costs",
       p: [
-        "The mentor runs on large language models through the site's backend, with a fallback chain so an outage at one provider does not take the feature down. It is free to use and there is no message quota for normal use.",
+        "The mentor calls the site's AI chat backend when available and falls back to a static educational topic library if that request fails. Availability and usage controls can change; the site does not promise unlimited model usage.",
         "Conversations are used to produce your answer and are not sold or used to build an advertising profile. Because language models can be confidently wrong, every substantive answer should be checked against the linked lessons or an authoritative source before you rely on it.",
       ],
     },
@@ -195,7 +195,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "How the streak is counted",
       p: [
-        "A streak advances once per calendar day in your own local time zone, so completing a challenge late one evening and early the next morning still counts as two consecutive days. The counter lives in your browser, which means clearing site data resets it and using a different device starts a separate count unless you have an account.",
+        "The challenge and streak state are browser-based. Clearing site data can reset local streak information, and a different device can have different local state. TradeHQ does not currently describe this as full cross-device streak synchronization.",
         "There is no penalty for missing a day beyond the counter resetting, and there is no reward for a long streak other than the habit itself. Nothing about the challenge involves money, prizes or entry fees.",
       ],
     },
@@ -283,8 +283,8 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Recently shipped",
       list: [
         "Four structured course tracks with quizzes, cited sources and completion badges.",
-        "A full trading glossary with expert-level explanations and related-term navigation.",
-        "Localised country guides covering regulators, market access and realistic starting capital.",
+        "A trading glossary with plain-language and extended educational explanations plus related-term navigation.",
+        "Localised country guides with dated regulator/source links and general market-access context; they do not prescribe a universal starting-capital amount.",
         "Optional public trader profiles and a 30-day practice duel against a friend.",
         "Daily challenges with a local-time streak counter, plus journal and portfolio analytics.",
       ],
@@ -292,7 +292,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "In progress",
       list: [
-        "Deeper portfolio analytics, including per-strategy expectancy rather than only account-level metrics.",
+        "Deeper portfolio analysis using clearly defined return histories and assumptions rather than nonstandard proxy metrics.",
         "More structured course tracks covering risk management and market microstructure.",
         "Wider glossary coverage, with each entry linked to the lesson where the concept is applied.",
         "Better mobile layouts for the charting and order areas.",
@@ -339,7 +339,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       list: [
         "My portfolio disappeared — this almost always means browser data was cleared, or you are on a different device or browser. Without an account, practice data lives only in the browser that created it.",
         "How do I reset my practice balance? There is a reset control in the portfolio area; it returns the account to $100,000 in virtual cash and clears open positions.",
-        "A price looks wrong — quotes refresh periodically and are simulated between refreshes, so they will not match a live broker feed exactly.",
+        "A price looks wrong — check the page's provenance label first. Depending on the instrument, TradeHQ may show realtime, delayed/previous-close, cached, proxy or simulated data, and none should be assumed to be an execution-quality broker quote.",
         "Can I use TradeHQ on my phone? Yes, the whole site works on mobile browsers; there is no app to install.",
         "Do you have an affiliate or partnership programme? No.",
       ],
@@ -353,7 +353,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Response times and expectations",
       p: [
-        "TradeHQ is maintained by one person, so replies typically arrive within two business days and occasionally take longer during heavy development weeks. There is no phone line and no live chat. If you have not heard back within a week, sending the message again is reasonable rather than rude.",
+        "TradeHQ does not promise a fixed support-response SLA. Use the contact form for product, content-correction or privacy questions; response times can vary.",
       ],
     },
   ],
@@ -362,7 +362,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Cookies and analytics",
       p: [
-        "TradeHQ uses local storage rather than tracking cookies for the practice account itself. Where analytics are used, they are limited to aggregate page-level measurement so we can see which lessons are read and which pages break — not to build profiles of individuals or to follow visitors across other websites.",
+        "Core simulator state uses browser storage, while optional account/community features and third-party services can involve server-side processing. Advertising and analytics behavior depends on the providers and consent/configuration in use; see the main Privacy Policy for the current data-flow description.",
       ],
     },
     {
@@ -377,13 +377,13 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Children and jurisdiction",
       p: [
-        "TradeHQ is not directed at children and asks for no financial information from anyone. Because the service holds no funds and executes no trades, it is not a financial services provider in any jurisdiction; local financial regulation applies to the broker you eventually use, not to this simulator.",
+        "TradeHQ is not directed at children and asks for no financial information from anyone. TradeHQ describes itself as a virtual-money educational simulator and does not execute or custody real-money trades. This page does not make a blanket legal-status determination for every jurisdiction.",
       ],
     },
     {
       h: "Changes and contact",
       p: [
-        "No data is sold, and there is no advertising network profiling built into the practice tools. Analytics are used only to see which pages are read and where people give up, which is what drives the roadmap.",
+        "TradeHQ's Privacy Policy describes browser storage, optional account/community data, service providers and advertising. This crawler-visible summary does not claim that all advertising or analytics processing is non-personalized.",
         "If this policy changes materially, the updated text appears on this page. Questions about what is stored, requests for a copy of account data, and deletion requests all go through the contact page and are handled by the person who maintains the site rather than an automated system.",
       ],
     },
@@ -394,7 +394,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "No advisory relationship",
       p: [
         "Using this site creates no advisory, fiduciary or brokerage relationship of any kind. Lessons, glossary entries, comparisons, strategy walkthroughs and AI mentor responses are general educational information published to the public at large, with no knowledge of your circumstances, objectives, tax position or risk tolerance.",
-        "Before trading real money, consider seeking advice from a professional licensed in your own jurisdiction. Trading involves the risk of losing more than you invest when leverage is used, and most retail accounts trading leveraged products lose money.",
+        "Real-money trading and leveraged products can involve substantial losses, including losses amplified by leverage. TradeHQ does not use a blanket retail-loss percentage here; product-specific risk disclosures should be checked at the regulated provider or official source.",
       ],
     },
     {

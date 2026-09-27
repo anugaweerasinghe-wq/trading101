@@ -262,15 +262,15 @@ export default function SectorPillar() {
               },
               {
                 question: `Can I trade ${sector.name} assets risk-free?`,
-                answer: `Yes — every TradeHQ trade is fully simulated. Practice ${sector.name} strategies with virtual funds and zero real risk. (Educational simulation only — not financial advice.)`,
+                answer: `Every TradeHQ order is virtual-money practice rather than a real-money transaction. Simulator results do not reproduce all execution, liquidity or emotional risks of a real account. (Educational simulation only.)`,
               },
               {
                 question: `How do I research ${sector.name} before trading?`,
-                answer: `Click an asset to see live price data, technical indicators, AI-mentor analysis and a per-asset FAQ. Combine this with the Learning Center articles and Trading Glossary linked above.`,
+                answer: `Click an asset to see its currently displayed simulator/reference data, chart tools, educational mentor access and per-asset FAQ. Data provenance varies by instrument, so check the page label for realtime, delayed, cached, proxy or simulated status.`,
               },
               {
-                question: `Are ${sector.name} prices live on TradeHQ?`,
-                answer: `The most-liquid ${sector.name} assets refresh every 60 seconds from public market APIs and are tagged LIVE. Less-liquid tickers fall back to cached prices with small micro-fluctuations and are tagged SIM.`,
+                question: `What data does TradeHQ show for ${sector.name} assets?`,
+                answer: `Provenance varies by instrument and feature. TradeHQ can display realtime provider data, delayed or previous-close provider data, cached values, proxies or explicitly simulated data. The relevant page label is the source of truth.`,
               },
             ]}
           />
