@@ -172,6 +172,9 @@ export default function Daily() {
               <h2 className="text-2xl md:text-[34px] font-bold mb-4 text-foreground leading-[1.15] tracking-tight">
                 {challenge.scenario}
               </h2>
+              <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground mb-2">
+                Hypothetical exercise inputs — not current market data, verified forecasts, or trading signals
+              </p>
               <p className="text-[15px] md:text-base text-foreground/75 mb-8 leading-relaxed max-w-3xl">
                 {challenge.context}
               </p>
