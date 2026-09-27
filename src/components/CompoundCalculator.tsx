@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 interface CalculatorResult {
   finalValue: number;
   totalProfit: number;
-  totalFees: number;
+  totalAssumedCosts: number;
   netProfit: number;
   yearlyBreakdown: { year: number; value: number; profit: number }[];
 }
@@ -19,17 +19,17 @@ export function CompoundCalculator() {
   const [initialInvestment, setInitialInvestment] = useState(100000);
   const [monthlyContribution, setMonthlyContribution] = useState(500);
   const [annualReturn, setAnnualReturn] = useState(12);
-  const [tradingFeePct, setTradingFeePct] = useState(0.1);
+  const [annualCostPct, setAnnualCostPct] = useState(0.1);
   const [years, setYears] = useState(10);
 
   const result = useMemo<CalculatorResult>(() => {
     const monthlyRate = annualReturn / 100 / 12;
-    const feeRate = tradingFeePct / 100;
+    const monthlyCostRate = annualCostPct / 100 / 12;
     const months = years * 12;
     
     let balance = initialInvestment;
     let totalContributions = initialInvestment;
-    let totalFees = 0;
+    let totalAssumedCosts = 0;
     const yearlyBreakdown: { year: number; value: number; profit: number }[] = [];
 
     for (let month = 1; month <= months; month++) {
@@ -37,9 +37,9 @@ export function CompoundCalculator() {
       totalContributions += monthlyContribution;
       const growth = balance * monthlyRate;
       balance += growth;
-      const fee = Math.abs(growth) * feeRate;
-      balance -= fee;
-      totalFees += fee;
+      const assumedCost = Math.max(0, balance) * monthlyCostRate;
+      balance -= assumedCost;
+      totalAssumedCosts += assumedCost;
 
       if (month % 12 === 0) {
         yearlyBreakdown.push({
@@ -53,11 +53,11 @@ export function CompoundCalculator() {
     return {
       finalValue: balance,
       totalProfit: balance - totalContributions,
-      totalFees,
+      totalAssumedCosts,
       netProfit: balance - totalContributions,
       yearlyBreakdown
     };
-  }, [initialInvestment, monthlyContribution, annualReturn, tradingFeePct, years]);
+  }, [initialInvestment, monthlyContribution, annualReturn, annualCostPct, years]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -73,7 +73,7 @@ export function CompoundCalculator() {
       {/* Header - Micro Size */}
       <div className="flex items-center gap-2 mb-6 border-b border-white/5 pb-2">
         <Calculator className="w-3.5 h-3.5 text-emerald-500" />
-        <h3 className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Live Projection</h3>
+        <h3 className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Hypothetical Projection</h3>
       </div>
 
       <div className="flex flex-col gap-5 flex-1">
@@ -101,11 +101,11 @@ export function CompoundCalculator() {
 
         <div className="space-y-3">
           <div className="flex justify-between text-[9px] font-black text-emerald-500/80 uppercase">
-            <span>Return: {annualReturn}%</span>
-            <span>Fees: {tradingFeePct}%</span>
+            <span>Annual return assumption: {annualReturn}%</span>
+            <span>Annual cost assumption: {annualCostPct}%</span>
           </div>
           <Slider value={[annualReturn]} onValueChange={([v]) => setAnnualReturn(v)} max={30} step={0.5} className="py-1" />
-          <Slider value={[tradingFeePct]} onValueChange={([v]) => setTradingFeePct(v)} max={1} step={0.01} className="py-1" />
+          <Slider value={[annualCostPct]} onValueChange={([v]) => setAnnualCostPct(v)} max={3} step={0.05} className="py-1" />
         </div>
 
         {/* Results */}
@@ -124,10 +124,10 @@ export function CompoundCalculator() {
           </div>
         </div>
 
-        {/* Broker Fees */}
+        {/* Simplified annual cost assumption */}
         <div className="px-2.5 py-1.5 bg-red-500/5 border border-red-500/10 rounded-lg flex justify-between items-center">
-          <span className="text-[8px] uppercase font-bold text-slate-500">Broker Fees:</span>
-          <span className="text-[10px] font-black text-red-400">-{formatCurrency(result.totalFees)}</span>
+          <span className="text-[8px] uppercase font-bold text-slate-500">Assumed Costs:</span>
+          <span className="text-[10px] font-black text-red-400">-{formatCurrency(result.totalAssumedCosts)}</span>
         </div>
 
         {/* Growth Chart - expands to fill remaining space */}
@@ -140,6 +140,10 @@ export function CompoundCalculator() {
             />
           ))}
         </div>
+
+        <p className="text-[8px] leading-relaxed text-slate-500">
+          This calculator compounds a constant annual return assumption and applies a simplified annual cost drag monthly. It does not model broker-specific commissions, spreads, taxes, slippage, changing returns, or market risk.
+        </p>
 
         <Button 
           className="w-full h-8 bg-emerald-500 hover:bg-emerald-400 text-black text-[9px] font-black uppercase tracking-[0.15em]" 
