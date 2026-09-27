@@ -33,35 +33,35 @@ export const tradingGlossary: GlossaryTerm[] = [
   {
     slug: "golden-cross",
     term: "Golden Cross",
-    definition: "A golden cross is a bullish technical signal that occurs when a short-term moving average (typically the 50-day) crosses above a long-term moving average (typically the 200-day).",
-    expertDefinition: "The golden cross is one of the most widely followed bullish technical signals in all of financial markets. It occurs when a shorter-period moving average crosses above a longer-period moving average, with the most commonly referenced version being the 50-day simple moving average (SMA) crossing above the 200-day SMA. This crossover indicates that recent price momentum has shifted to the upside relative to the longer-term trend, suggesting the beginning of a potential sustained uptrend. The signal carries weight precisely because so many market participants — from retail traders to algorithmic trading systems at major institutions — monitor it. When a golden cross occurs on a major index like the S&P 500 or on Bitcoin, it generates significant media coverage and can become a self-fulfilling prophecy as traders position accordingly. Historically, golden crosses on the S&P 500 have preceded average gains of 6.3% over the following 3 months, though this varies significantly by market regime. There are three phases to a golden cross formation: first, the existing downtrend exhausts itself and selling pressure diminishes; second, the shorter moving average begins to curve upward as recent prices rise; third, the actual crossover occurs and the shorter MA rises above the longer MA. Volume confirmation is important — a golden cross accompanied by rising volume is considered more reliable than one occurring on declining volume. Traders should note that the golden cross is a lagging indicator by nature, since moving averages are calculated from historical data. By the time the cross occurs, the initial phase of the new uptrend may have already played out. This is why many professional traders use the golden cross as confirmation of a trend change rather than as an entry signal, often combining it with other indicators like RSI, MACD, or price action at key support levels.",
-    proTip: "Don't buy blindly on the cross — it's a lagging signal. Instead, wait for the golden cross to form, then look for a pullback to the 50-day MA as your entry. This gives you confirmation PLUS a better risk-reward ratio.",
+    definition: "A golden cross is a moving-average crossover in which a shorter-term average, commonly the 50-day, moves above a longer-term average such as the 200-day.",
+    expertDefinition: "A golden cross describes a relationship between two moving averages calculated from historical prices. It is often interpreted as evidence that recent momentum has strengthened relative to the longer-term trend, but it is a lagging observation rather than a forecast. Different assets, time periods and market regimes can produce very different outcomes after the same crossover, and false signals occur. Volume, trend structure and other context can be studied alongside the crossover, but none turns it into a guaranteed entry signal.",
+    proTip: "Treat the crossover as a chart observation. When practising, record what happened after past examples and compare the result across different assets and market regimes rather than assuming the pattern predicts the next move.",
     difficulty: "Novice",
     readTime: "3 min",
     category: "Technical Analysis",
     keyPoints: [
       "50-day MA crossing above the 200-day MA is the classic setup",
       "Considered a lagging indicator — confirms trends already underway",
-      "Often triggers algorithmic buying from institutional systems"
+      "Lagging indicator based on historical prices; outcomes vary by market regime"
     ],
-    studentPerspective: "The golden cross is one of the first indicators beginners learn. It's simple to spot on any chart and provides a clear directional bias.",
+    studentPerspective: "The golden cross is easy to identify on a chart, which makes it useful for learning how moving-average crossovers are constructed and how lagging indicators can generate false signals.",
     relatedTerms: ["death-cross", "macd", "support-and-resistance"]
   },
   {
     slug: "death-cross",
     term: "Death Cross",
-    definition: "A death cross is the bearish counterpart to the golden cross. It occurs when the 50-day moving average crosses below the 200-day moving average, signaling deteriorating momentum.",
-    expertDefinition: "The death cross is a bearish technical signal that forms when a shorter-period moving average crosses below a longer-period moving average — most commonly the 50-day SMA crossing below the 200-day SMA. This pattern indicates that recent price momentum is weakening relative to the longer-term trend and historically has preceded periods of sustained selling pressure and increased volatility. The psychological impact of a death cross is substantial. When it occurs on major assets like the S&P 500, Bitcoin, or blue-chip stocks, financial media coverage intensifies, institutional risk models flag the signal, and retail sentiment deteriorates. This collective behavioral response can accelerate selling and create a feedback loop that deepens the decline. Historical analysis reveals that death crosses on the S&P 500 have preceded meaningful corrections, including the 2008 financial crisis, the COVID crash of March 2020, and the 2022 bear market. However, not all death crosses lead to crashes — some produce false signals, particularly in range-bound or choppy markets. Between 1950 and 2025, approximately 35% of S&P 500 death crosses were followed by a reversal within 3 months, making it imperfect as a standalone signal. The most reliable death crosses share common characteristics: they occur after a prolonged advance (suggesting exhaustion), volume increases during the decline, and both moving averages are sloping downward at the time of the cross. A death cross where the 200-day MA is still rising is considered less bearish because it suggests the longer trend may still be intact. Professional portfolio managers typically use death crosses to reduce exposure, tighten stop losses, and increase hedging through options rather than liquidating positions entirely. The signal is most useful as a risk management tool that triggers heightened caution rather than as a direct sell signal.",
-    proTip: "Not every death cross leads to a crash. Check the slope of the 200-day MA — if it's still rising, the signal is weaker. Use it to reduce position sizes by 25-50% rather than panic-selling everything.",
+    definition: "A death cross is a moving-average crossover in which a shorter-term average, commonly the 50-day, moves below a longer-term average such as the 200-day.",
+    expertDefinition: "A death cross describes weakening recent price momentum relative to a longer moving average. Because both averages are calculated from historical prices, the signal is lagging and can appear after a decline is already well underway. Some examples are followed by further declines and others by reversals or sideways trading, so the pattern does not establish a future outcome on its own. When studying it, compare the surrounding trend, volatility and volume instead of treating the crossover as a direct sell instruction.",
+    proTip: "Use historical examples to study how often the same crossover leads to different outcomes. The educational value is in understanding trend measurement and lag, not in assuming a crossover predicts a crash.",
     difficulty: "Novice",
     readTime: "3 min",
     category: "Technical Analysis",
     keyPoints: [
       "50-day MA crossing below the 200-day MA triggers the signal",
-      "Historically preceded major market downturns like 2008 and 2020",
-      "Best used in combination with volume analysis for confirmation"
+      "Can occur before continued declines, reversals or sideways periods",
+      "Context such as trend, volatility and volume can be compared, but does not guarantee an outcome"
     ],
-    studentPerspective: "Recognizing a death cross early can help you protect your portfolio by reducing risk before a potential downturn accelerates.",
+    studentPerspective: "Recognizing the pattern helps you understand how short- and long-term averages interact; it should not be treated as a standalone forecast.",
     relatedTerms: ["golden-cross", "rsi-divergence", "stop-loss-hunting"]
   },
   {
@@ -101,18 +101,18 @@ export const tradingGlossary: GlossaryTerm[] = [
   {
     slug: "rsi-divergence",
     term: "RSI Divergence",
-    definition: "RSI divergence occurs when the Relative Strength Index moves opposite to price, signaling weakening momentum and potential reversal.",
-    expertDefinition: "RSI divergence is a powerful reversal signal that occurs when the Relative Strength Index (RSI) — a momentum oscillator measuring the speed and magnitude of recent price changes on a scale of 0 to 100 — moves in the opposite direction of the price action. This disagreement between price and momentum often precedes significant trend reversals and is considered one of the most reliable signals in technical analysis when applied correctly. There are two primary types of RSI divergence. Bullish divergence occurs when price makes a lower low while the RSI simultaneously makes a higher low. This indicates that despite price reaching new depths, the selling momentum is actually weakening — fewer sellers are participating in the decline. This weakening bearish momentum often precedes a reversal to the upside. Bearish divergence is the mirror image: price makes a higher high while RSI makes a lower high, suggesting that buying momentum is fading despite new price highs. Hidden divergence is a subtler variant used for trend continuation rather than reversal. Hidden bullish divergence occurs when price makes a higher low while RSI makes a lower low — suggesting the uptrend is still intact despite temporary momentum weakness. Hidden bearish divergence shows price making a lower high while RSI makes a higher high. The reliability of RSI divergence varies significantly by timeframe. Divergences on higher timeframes (4-hour, daily, weekly) are substantially more reliable than those on lower timeframes (1-minute, 5-minute, 15-minute). The standard RSI period setting is 14, though some traders use 21 for smoother signals on higher timeframes or 9 for faster signals on lower timeframes. Critical to understanding: divergence is a warning signal, not a timing signal. A divergence can persist through multiple price swings before the actual reversal occurs. Professional traders use divergence to prepare for a potential reversal, then rely on price action confirmation — such as a break of a trendline or a key support/resistance level — for the actual entry.",
-    proTip: "Divergence on the weekly chart is rare but extremely powerful. When you spot it, switch to the daily chart for your entry timing. Combine with a break of structure (trendline break or support/resistance flip) for confirmation.",
+    definition: "RSI divergence occurs when price and the Relative Strength Index move in different directions, showing that price direction and measured momentum are not aligned.",
+    expertDefinition: "RSI divergence compares price swings with a momentum oscillator. Bullish divergence is commonly described as price making a lower low while RSI makes a higher low; bearish divergence is the reverse. These patterns can be used to study changes in momentum, but a divergence can persist, disappear or be followed by continued price movement in the same direction. Results vary across assets, timeframes and parameter settings, so divergence is better understood as descriptive context than as a reliable reversal forecast.",
+    proTip: "When practising, annotate divergences on historical charts and record both reversals and failures. This helps show why an indicator pattern is evidence to examine rather than a guaranteed timing signal.",
     difficulty: "Intermediate",
     readTime: "4 min",
     category: "Technical Analysis",
     keyPoints: [
       "Bullish divergence: price lower low + RSI higher low",
       "Bearish divergence: price higher high + RSI lower high",
-      "Most reliable on higher timeframes (4H, Daily, Weekly)"
+      "Behavior varies across assets, timeframes and RSI settings"
     ],
-    studentPerspective: "RSI divergence is one of the most reliable reversal signals. Learning to spot it gives you an edge in timing market turning points.",
+    studentPerspective: "RSI divergence is useful for learning the difference between price direction and momentum, including how apparent signals can fail.",
     relatedTerms: ["macd-histogram", "bollinger-band-squeeze", "support-and-resistance"]
   },
   {
@@ -237,18 +237,18 @@ export const tradingGlossary: GlossaryTerm[] = [
   {
     slug: "support-and-resistance",
     term: "Support and Resistance",
-    definition: "Support is a price floor where buying prevents decline; resistance is a ceiling where selling prevents advance. The bedrock concepts of all technical analysis.",
-    expertDefinition: "Support and resistance are the most fundamental concepts in technical analysis, forming the foundation upon which virtually every other chart pattern, indicator, and trading strategy is built. Support is a price level or zone where historical buying interest has been strong enough to halt or reverse a decline, creating a 'floor' under price. Resistance is a price level or zone where selling interest has been sufficient to halt or reverse an advance, creating a 'ceiling' above price. The formation of support and resistance is rooted in market psychology and the collective memory of market participants. When price bounces from a level multiple times, traders begin to anchor to that level — those who missed the previous bounce place buy orders there, and those who sold prematurely look for another chance to buy. This concentration of orders creates genuine supply and demand imbalances that reinforce the level. The principle of polarity states that when a support level is definitively broken, it tends to become resistance, and when a resistance level is broken, it tends to become support. This role reversal occurs because the psychological anchoring shifts: traders who bought at former support and are now underwater will look to sell at breakeven when price returns to that level, turning their former buying zone into a selling zone. Support and resistance can be identified through several methods: horizontal levels based on historical price reactions, trendlines connecting swing highs or lows, moving averages (particularly the 20, 50, and 200-period), Fibonacci retracement levels, psychological round numbers ($10, $100, $1,000), and volume profile levels (the point of control where the most volume has traded). The strength of a support or resistance level depends on multiple factors: the number of times it has been tested (more tests = stronger level until it breaks), the volume traded at that level, how recently it was formed, and whether it aligns with other confluence factors. Multi-timeframe analysis is crucial — a support level visible on the daily chart is far more significant than one only visible on the 5-minute chart.",
-    proTip: "The more times a support or resistance level is tested, the more likely it is to eventually break. Counterintuitively, the 4th or 5th test of a level is more likely to result in a breakout than the 2nd or 3rd test, because each test absorbs available orders at that level.",
+    definition: "Support and resistance are charting terms for price areas where past trading has repeatedly stalled or reversed. They are descriptive zones, not guaranteed floors or ceilings.",
+    expertDefinition: "Support and resistance mark areas where traders have observed previous changes in price direction or trading activity. They can be drawn from prior highs and lows, trendlines, moving averages, round numbers or volume-based tools. Different analysts may choose different levels, and a level can hold, break or become irrelevant as market conditions change. The commonly discussed polarity idea — former support becoming resistance or vice versa — is a charting convention rather than a certainty. Multi-timeframe comparison can provide context, but no number of prior touches guarantees how price will behave on the next test.",
+    proTip: "Draw zones rather than exact lines when practising and record examples where a level held, broke or was ignored. That makes the exercise about observation instead of prediction.",
     difficulty: "Novice",
     readTime: "3 min",
     category: "Technical Analysis",
     keyPoints: [
-      "Support = price floor where buyers step in; Resistance = price ceiling",
-      "Broken support becomes resistance and vice versa (polarity principle)",
-      "Strongest levels have multiple touches and high-volume reactions"
+      "Support/resistance mark areas of past price reaction rather than guaranteed floors or ceilings",
+      "Former support can sometimes act as resistance and vice versa",
+      "Repeated touches or volume can be studied as context, but do not guarantee the next reaction"
     ],
-    studentPerspective: "Support and resistance is the bedrock of all chart analysis. Master this before anything else — every other pattern builds on it.",
+    studentPerspective: "Support and resistance are common charting concepts that are useful for practising how traders describe prior price reactions and uncertainty.",
     relatedTerms: ["fibonacci-retracement", "order-block", "candlestick-patterns"]
   },
   {
