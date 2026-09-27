@@ -12,9 +12,9 @@ import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 import { Swords, Share2, Loader2, Clock, Trophy, Copy, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { computeLocalStats, syncStats } from "@/lib/traderSync";
+import { syncStats } from "@/lib/traderSync";
 import { setPendingPath } from "@/lib/pendingRedirect";
-import { SITE_DOMAIN, STARTING_BALANCE, STARTING_BALANCE_LABEL } from "@/lib/constants";
+import { SITE_DOMAIN, STARTING_BALANCE } from "@/lib/constants";
 
 interface Duel {
   id: string;
@@ -149,13 +149,8 @@ export default function Challenge() {
     setBusy(true);
     try {
       await syncStats(user.id);
-      const stats = computeLocalStats();
       const newCode = makeCode();
-      const { error } = await supabase.from("duels").insert({
-        code: newCode,
-        creator_id: user.id,
-        creator_start_value: stats.portfolio_value,
-      });
+      const { error } = await supabase.rpc("create_practice_duel", { p_code: newCode });
       if (error) throw error;
       toast.success("Challenge created — share the link with your friend.");
       navigate(`/challenge/${newCode}`);
@@ -175,21 +170,9 @@ export default function Challenge() {
     setBusy(true);
     try {
       await syncStats(user.id);
-      const stats = computeLocalStats();
-      const { data, error } = await supabase
-        .from("duels")
-        .update({
-          opponent_id: user.id,
-          opponent_start_value: stats.portfolio_value,
-          status: "active",
-          starts_at: new Date().toISOString(),
-          ends_at: new Date(Date.now() + 30 * 86_400_000).toISOString(),
-        })
-        .eq("id", duel.id)
-        .is("opponent_id", null)
-        .select();
+      const { data: joined, error } = await supabase.rpc("join_practice_duel", { p_duel_id: duel.id });
       if (error) throw error;
-      if (!data || data.length === 0) {
+      if (!joined) {
         toast.error("Someone already took this seat.");
       } else {
         toast.success("You joined the duel. 30 days on the clock.");
@@ -202,7 +185,7 @@ export default function Challenge() {
     }
   };
 
-  const shareText = `Join my 30-day TradeHQ practice trading duel. We both start from equal virtual capital and the scoreboard tracks who is ahead. ${SHARE_LINE}`;
+  const shareText = `Join my 30-day TradeHQ practice trading duel. Each side is measured from its own recorded starting value. Scores are client-synced simulated stats, not verified investment performance. ${SHARE_LINE}`;
 
   const share = async () => {
     try {
@@ -253,7 +236,7 @@ export default function Challenge() {
     ? "30-day practice trading duel | TradeHQ"
     : "Challenge a friend — 30-day practice trading duel | TradeHQ";
   const description =
-    "Challenge a friend to a 30-day paper trading duel on TradeHQ. Both traders start from equal virtual capital and the scoreboard tracks who is ahead. Free, no real money.";
+    "Challenge a friend to a 30-day paper-trading exercise on TradeHQ. Each side is measured from its own recorded starting value; scores are client-synced simulated stats.";
 
   return (
     <>
@@ -283,8 +266,8 @@ export default function Challenge() {
             </h1>
             <p className="text-sm text-muted-foreground mt-3 max-w-xl mx-auto">
               Send a link, both of you trade the simulator for 30 days, and the scoreboard
-              tracks who is ahead by percentage return. Every TradeHQ account starts from{" "}
-              {STARTING_BALANCE_LABEL} of virtual capital. No real money is ever involved.
+              compares client-synced percentage change from each participant's own recorded starting value.
+              Scores are simulated and not independently verified. No real money is involved.
             </p>
           </header>
 
@@ -316,8 +299,8 @@ export default function Challenge() {
                     30-day practice duel
                   </h2>
                   <ul className="text-sm text-muted-foreground space-y-1.5 mb-6 max-w-sm mx-auto text-left">
-                    <li>• Both sides trade virtual capital — {STARTING_BALANCE_LABEL} is the standard practice balance.</li>
-                    <li>• Scoring is percentage return from each trader's recorded starting line, so nobody gets a head start.</li>
+                    <li>• Both sides use the virtual-money simulator; actual recorded starting values can differ.</li>
+                    <li>• Scoring compares percentage change from each trader's own recorded starting line.</li>
                     <li>• The duel runs for 30 days from the moment you accept.</li>
                     <li>• A free account is only needed so both scores can be tracked.</li>
                   </ul>
@@ -397,7 +380,7 @@ export default function Challenge() {
                         ? "— the duel ended tied."
                         : "so far."
                       : isFinished
-                        ? "won this duel."
+                        ? "finished ahead in the synced practice figures."
                         : "is currently ahead."}
                   </p>
                 )}
@@ -521,9 +504,9 @@ export default function Challenge() {
 
               <section className="mt-10 grid gap-4 md:grid-cols-3">
                 {[
-                  { t: "1. Create a link", b: "Your current simulated balance is recorded as your starting line, so neither side gets a head start." },
+                  { t: "1. Create a link", b: "Your current client-synced simulated balance is recorded as your starting line." },
                   { t: "2. Your friend joins", b: "They sign in, and their starting balance is recorded the moment they accept." },
-                  { t: "3. 30 days of trading", b: "Both scores update whenever either of you syncs. Percentage return decides who is ahead." },
+                  { t: "3. 30 days of practice", b: "Both scores update when either participant syncs browser-held practice stats. The comparison is not independently verified." },
                 ].map((s) => (
                   <div key={s.t} className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
                     <h3 className="font-semibold text-sm mb-2">{s.t}</h3>
@@ -538,7 +521,7 @@ export default function Challenge() {
                   A duel compares percentage change, not dollar totals. If you begin a duel at
                   $104,000 of simulated equity and finish at $109,200, your duel score is
                   +5.0% — the $4,000 you were already up before the duel started does not count.
-                  Your friend is measured the same way from their own starting line.
+                  Your friend is measured the same way from their own starting line. Because these figures originate in client-held simulator state, they are practice data rather than audited results.
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   Nothing is reset when a duel begins. Your practice portfolio, journal and
