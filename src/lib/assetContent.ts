@@ -67,36 +67,36 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
     { question: "How can I practice trading Bitcoin without losing money?", answer: "Use a crypto simulator like TradeHQ. You get $100,000 in virtual funds to practice Bitcoin's price action with simulated charts — no financial risk." },
     { question: "What does TradeHQ's Bitcoin practice simulator include?", answer: "TradeHQ offers a free BTC practice simulator with $100K virtual cash, simulated candlestick charts, and educational tools. Core simulator use does not require signup or a credit card." },
     { question: "How to practice Bitcoin trading in Colombo as a student?", answer: "Students in Sri Lanka can use TradeHQ's free simulator to practice BTC trading with virtual money. Learn chart reading and risk management before using real capital." },
-    { question: "Is Bitcoin a good asset for beginner traders to practice?", answer: "Yes. Bitcoin has the most liquidity and educational resources of any crypto. Its clear support/resistance levels make it ideal for learning technical analysis basics." }
+    { question: "Can beginners use Bitcoin for trading practice?", answer: "Bitcoin can be used to practise order mechanics and volatility observation, but its price can move sharply. Treat support/resistance and other chart tools as descriptive practice concepts rather than reliable predictions." }
   ],
   eth: [
     { question: "What is the best way to learn Ethereum trading?", answer: "Start by simulating trades on a platform that offers simulated charts. Focus on ETH/BTC correlation and gas fee trends before moving to real capital." },
     { question: "How does Ethereum differ from Bitcoin for trading practice?", answer: "ETH has higher beta and reacts to DeFi and NFT sentiment. Practice trading ETH to learn how smart contract ecosystems drive price beyond simple supply/demand." },
     { question: "Can students practice Ethereum trading for free?", answer: "Yes. TradeHQ gives you $100K virtual cash to practice ETH trades. Students in Colombo and worldwide can learn DeFi trading patterns without any cost." },
-    { question: "What indicators work best for Ethereum trading practice?", answer: "Focus on gas fees (network congestion), DeFi TVL changes, and the ETH/BTC ratio. These are unique to Ethereum and teach you cross-asset correlation analysis." }
+    { question: "What Ethereum-specific metrics can I compare in a simulator?", answer: "Gas fees, network activity, DeFi TVL and the ETH/BTC ratio are examples of metrics you can observe alongside simulated price action. None is a guaranteed trading signal." }
   ],
   nvda: [
     { question: "How do I trade the AI boom with a simulator?", answer: "NVDA is the primary AI stock. Practice identifying momentum breakouts and RSI overbought levels using $100K demo cash to learn tech cycles." },
-    { question: "Is NVIDIA stock good for beginner stock trading practice?", answer: "NVDA is excellent for beginners because it trends strongly with the AI narrative. Practice identifying trend continuation patterns and earnings-driven gaps." },
+    { question: "What can beginners learn by simulating NVIDIA trades?", answer: "NVDA can be used to study earnings gaps, semiconductor-cycle narratives and volatility. The exercise is to compare outcomes, not assume a trend will continue." },
     { question: "How to practice NVIDIA stock trading as a student in Sri Lanka?", answer: "Use TradeHQ's free simulator — no US brokerage needed. Practice NVDA with $100K virtual cash and learn semiconductor cycle analysis risk-free." },
     { question: "What moves NVIDIA stock price the most?", answer: "Data center revenue growth, AI chip demand, and quarterly earnings drive NVDA. Practice correlating these catalysts with price action in the simulator." }
   ],
   aapl: [
-    { question: "Is Apple stock good for day trading practice?", answer: "Yes, AAPL is a favorite for beginners due to its high liquidity and predictable reactions to tech sector news and earnings reports." },
-    { question: "How to practice Apple stock trading without real money?", answer: "TradeHQ lets you trade AAPL with $100K virtual cash. Practice the 'buy the rumor, sell the news' pattern around product launches and earnings." },
+    { question: "What can Apple stock be used to practise?", answer: "AAPL can be used to study how a large, liquid stock behaves around earnings and product news. Reactions are not predictable, so compare multiple examples rather than treating an event as a signal." },
+    { question: "How can I practise Apple stock trading without real money?", answer: "TradeHQ lets you simulate AAPL trades with $100K virtual cash. You can compare price behavior around product launches and earnings without treating 'buy the rumor, sell the news' as a rule." },
     { question: "What makes Apple stock move during earnings season?", answer: "iPhone revenue, Services growth, and guidance drive AAPL earnings moves. Practice reading pre-earnings positioning and post-earnings gap fills." },
     { question: "Can students in Sri Lanka practice US stock trading for free?", answer: "Yes. TradeHQ simulates US stocks including AAPL with virtual cash. No brokerage account, ID verification, or minimum deposit required." }
   ],
   tsla: [
-    { question: "Why is Tesla stock so volatile in trading simulators?", answer: "Tesla's price is heavily driven by sentiment and macro-news. It is the perfect asset for practicing emotional discipline and stop-loss management." },
-    { question: "How to practice Tesla stock trading as a complete beginner?", answer: "Start on TradeHQ with $100K virtual cash. Trade small TSLA positions first — learn to set stop-losses before scaling up position sizes." },
+    { question: "Why can Tesla be volatile in a trading simulator?", answer: "TSLA can react strongly to company news, delivery data and broader market conditions. In a simulator, that volatility can be used to study position sizing and decision-making without assuming one risk-control rule is universally correct." },
+    { question: "How can a beginner practise with Tesla in TradeHQ?", answer: "Use virtual positions to compare how different position sizes and predefined exit assumptions change simulated drawdown. This is a practice exercise, not a real-money sizing recommendation." },
     { question: "What causes Tesla stock to gap up or down?", answer: "Elon Musk's statements, delivery numbers, FSD updates, and macro sentiment cause TSLA gaps. Practice gap-and-go and gap-fill strategies risk-free." },
-    { question: "Is Tesla stock too risky for student traders to practice?", answer: "No — a simulator removes real risk. TSLA's volatility actually makes it one of the best stocks to practice risk management and emotional discipline." }
+    { question: "Can students use Tesla for simulator practice?", answer: "Yes. Because no real money is used, TSLA can be included in a simulation to observe volatility and decision-making. Simulated results do not establish that the asset is suitable for a real portfolio." }
   ],
   spy: [
-    { question: "Should beginners start with SPY or individual stocks?", answer: "Beginners should practice with SPY (S&P 500 ETF) first. It provides a 'market average' experience, making it easier to learn technical analysis basics." },
+    { question: "How does practising with SPY differ from an individual stock?", answer: "SPY tracks a broad US equity index, while an individual stock adds company-specific risk. Comparing both in a simulator can help learners observe those differences without prescribing which one they should use with real money." },
     { question: "How to practice paper trading the S&P 500 for free?", answer: "Use TradeHQ's free simulator to trade SPY with $100K virtual cash. Learn to read market breadth, volume patterns, and moving averages risk-free." },
-    { question: "What is the best way to learn index ETF trading?", answer: "Start with SPY to understand how the overall market moves, then compare with QQQ (tech-heavy) to learn sector rotation and relative strength analysis." },
+    { question: "How can I compare index ETFs in a simulator?", answer: "One practice exercise is to compare SPY with a more technology-heavy ETF such as QQQ and record how their simulated returns and drawdowns differ across the same period." },
     { question: "Can I practice SPY options strategies in a simulator?", answer: "TradeHQ focuses on spot trading for SPY. Practice identifying entry/exit points, trend direction, and risk management — foundational skills for any strategy." }
   ],
   sol: [
@@ -106,13 +106,13 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
     { question: "Is Solana suitable for beginner crypto traders?", answer: "SOL's volatility can be challenging but educational. Start with small virtual positions and use tight stop-losses to practice risk management." }
   ],
   gold: [
-    { question: "How does Gold react during market crashes?", answer: "Gold often acts as a safe-haven. Use the TradeHQ simulator to watch how XAU/USD moves inversely to the stock market during high-volatility events." },
+    { question: "How can gold behave during equity stress?", answer: "Gold is often discussed as a defensive asset, but its relationship with equities and the US dollar varies by period. Use the simulator to compare scenarios rather than assuming an inverse relationship." },
     { question: "How to practice gold trading for free as a student?", answer: "TradeHQ provides $100K virtual cash to trade gold (XAU). Students can learn safe-haven dynamics and inflation hedging strategies risk-free." },
-    { question: "What factors drive gold prices in 2026?", answer: "Real interest rates, USD strength, central bank purchases, and geopolitical tensions drive gold. Practice correlating these macro factors with XAU charts." },
-    { question: "Is gold trading good for learning macro analysis?", answer: "Yes — gold responds to inflation data, Fed decisions, and geopolitical events. It's one of the best assets for developing macro-fundamental analysis skills." }
+    { question: "What factors can influence gold prices?", answer: "Real interest rates, US-dollar moves, central-bank demand and geopolitical conditions are commonly monitored alongside gold. Their effects can differ across periods, so they should be studied as context rather than fixed signals." },
+    { question: "Can gold be used to practise macro analysis?", answer: "Gold can be used to compare how inflation expectations, rates, currencies and geopolitical events coincide with price changes. The relationships are not stable enough to treat one factor as a guaranteed direction signal." }
   ],
   amzn: [
-    { question: "When is the best time to trade Amazon stock?", answer: "Amazon often shows high volatility during 'Prime Day' and quarterly earnings. Practice the 'Buy the Rumor' strategy on these specific dates." },
+    { question: "When can Amazon show unusual volatility?", answer: "AMZN can move around earnings and company-specific events such as major sales periods. A simulator can be used to compare those event windows without assuming a repeatable 'buy the rumor' outcome." },
     { question: "How to practice Amazon stock trading without a brokerage?", answer: "Use TradeHQ's free simulator — no brokerage account needed. Trade AMZN with $100K virtual cash and learn earnings-driven price patterns." },
     { question: "What drives Amazon stock price the most?", answer: "AWS cloud revenue, e-commerce growth, advertising income, and operating margins are key AMZN drivers. Practice reading these metrics before earnings." },
     { question: "Can students practice trading Amazon stock for free?", answer: "Yes. TradeHQ simulates AMZN with virtual capital. Students worldwide can learn to trade one of the world's largest companies without financial risk." }
@@ -125,8 +125,8 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   ],
   gbpusd: [
     { question: "How can I practice GBP/USD forex trading for free?", answer: "TradeHQ provides $100K virtual cash to practice Cable (GBP/USD) trading. Focus on London session volatility and BOE vs Fed policy divergence." },
-    { question: "What is the best time to trade GBP/USD?", answer: "The London/New York overlap (1-4 PM GMT) offers peak GBP/USD liquidity. Practice during this window to experience realistic forex market conditions." },
-    { question: "Is GBP/USD good for beginner forex traders?", answer: "Yes — Cable is one of the most liquid forex pairs with clear technical levels. Its higher volatility vs EUR/USD teaches risk management faster." },
+    { question: "How do trading sessions affect GBP/USD?", answer: "Liquidity and volatility can vary across London, New York and overlap periods, with daylight-saving changes affecting local clock times. Use the simulator to compare session behavior rather than treating one fixed time window as a recommendation." },
+    { question: "What can beginners compare with GBP/USD?", answer: "GBP/USD can be compared with another major pair such as EUR/USD to observe differences in volatility and session behavior. Technical levels are subjective and should not be treated as guaranteed boundaries." },
     { question: "How to learn forex trading without money as a student?", answer: "Use TradeHQ's free forex simulator. Students can practice GBP/USD, EUR/USD, and more currency pairs with $100K demo capital — no signup required." }
   ],
   oil: [
@@ -138,13 +138,13 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   msft: [
     { question: "How to practice Microsoft stock trading for free?", answer: "TradeHQ offers MSFT trading with $100K virtual cash. Practice position sizing with MSFT's steady trends before moving to higher-volatility tech stocks." },
     { question: "What drives Microsoft stock price?", answer: "Azure cloud growth, AI Copilot adoption, enterprise software renewals, and LinkedIn revenue drive MSFT. Practice reading these metrics pre-earnings." },
-    { question: "Is MSFT good for learning stock trading basics?", answer: "Yes — Microsoft's lower volatility makes it ideal for beginners learning chart reading, moving averages, and trend-following strategies." },
+    { question: "What can learners practise with MSFT?", answer: "MSFT can be used to practise reading charts, comparing moving averages and observing earnings-related moves. Historical volatility can change, so the asset is not labelled 'ideal' for every learner." },
     { question: "Can I practice trading US tech stocks from Sri Lanka?", answer: "Yes. TradeHQ simulates US stocks including MSFT, AAPL, and NVDA. Students anywhere can practice free with $100K virtual cash." }
   ],
   googl: [
     { question: "How to practice trading Google stock for free?", answer: "Use TradeHQ to trade GOOGL with $100K virtual cash. Learn to identify breakout patterns around AI announcements and earnings reports." },
     { question: "What moves Alphabet stock price the most?", answer: "Search ad revenue, YouTube growth, Google Cloud performance, and AI product launches drive GOOGL. Practice correlating these with chart patterns." },
-    { question: "Is Google stock good for practicing breakout trading?", answer: "Yes — GOOGL often consolidates then breaks out on AI news. Practice identifying consolidation ranges and volume-confirmed breakouts." },
+    { question: "What can learners study with GOOGL?", answer: "GOOGL can be used to mark consolidation ranges and compare how price reacted around earnings or product news. A breakout pattern does not guarantee continuation." },
     { question: "How to learn AI stock trading as a student?", answer: "Start with GOOGL and NVDA on TradeHQ. Practice identifying how AI product announcements create momentum trades and gap patterns." }
   ],
   meta: [
@@ -294,8 +294,8 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       source: "CoinGecko"
     },
     executiveOutlook: {
-      summary: "Bitcoin enters 2026 as the dominant digital asset with institutional adoption accelerating. ETF inflows, halving effects, and Layer 2 scaling (Lightning, Stacks) position BTC for potential new highs. Risk factors include regulatory uncertainty and macroeconomic headwinds.",
-      lastUpdated: "January 2026"
+      summary: "Bitcoin is a large, volatile digital asset whose price can be affected by market liquidity, investor demand, regulation, macro conditions and developments in the broader crypto ecosystem. These factors are context for study, not a price forecast.",
+      lastUpdated: "September 2026"
     },
     institutionalDrivers: {
       bull: "Institutional ETF accumulation, post-halving supply shock, Lightning Network adoption, and sovereign nation treasury allocations drive bullish momentum.",
@@ -315,8 +315,8 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       source: "CoinGecko"
     },
     executiveOutlook: {
-      summary: "Ethereum's 2026 outlook centers on Layer 2 ecosystem growth and institutional staking adoption. Proto-danksharding (EIP-4844) has reduced L2 costs dramatically, driving DeFi and NFT activity. Deflationary supply mechanics post-Merge continue to benefit long-term holders.",
-      lastUpdated: "January 2026"
+      summary: "Ethereum is a smart-contract network whose market behavior can be studied alongside network activity, Layer 2 usage, staking, fees, competition and broader crypto-market conditions. None of those variables guarantees a particular return.",
+      lastUpdated: "September 2026"
     },
     institutionalDrivers: {
       bull: "L2 scaling success, institutional staking yields, and growing RWA tokenization on Ethereum mainnet support price appreciation.",
@@ -376,7 +376,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   aapl: {
     whatIs: "Apple Inc. is the world's most valuable company, known for the iPhone, Mac, iPad, and its rapidly growing services ecosystem. It commands premium pricing and fierce customer loyalty across all product lines.",
-    strategy: "AAPL is a bellwether for tech sentiment and consumer spending. Practice trading around product launches and earnings—master the 'buy the rumor, sell the news' pattern. (Educational simulation only — not financial advice.)",
+    strategy: "Practice comparing AAPL price behavior before and after earnings or product events. Record both continuation and reversal examples instead of treating 'buy the rumor, sell the news' as a rule. (Educational simulation only.)",
     category: "Technology Stock",
     keywords: ["Apple stock trading", "AAPL simulator", "tech stocks", "iPhone", "services"],
     stats: {
@@ -412,7 +412,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   googl: {
     whatIs: "Alphabet, the parent company of Google, dominates search, digital advertising, YouTube, and cloud services. Its AI investments (Gemini, DeepMind) position it as a leader in the next computing paradigm.",
-    strategy: "Practice trading breakouts above resistance during positive AI announcements. Monitor advertising revenue trends and YouTube growth as key metrics. (Educational simulation only — not financial advice.)",
+    strategy: "Practice marking consolidation ranges around earnings or product announcements and record whether apparent breakouts continued or failed. Advertising, cloud and YouTube metrics can be studied as context. (Educational simulation only.)",
     category: "Technology Stock",
     keywords: ["Google stock trading", "GOOGL simulator", "search advertising", "AI", "YouTube"],
     stats: {
@@ -479,7 +479,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   // ===== FOREX =====
   gbpusd: {
     whatIs: "The 'Cable' pair, representing the exchange rate between the British Pound Sterling and US Dollar. Named after the transatlantic telegraph cable, it's one of the most liquid and volatile major currency pairs.",
-    strategy: "Simulate trading during the London/New York session overlap (1-4 PM GMT) for maximum liquidity and volatility. Monitor BOE and Fed policy divergence. (Educational simulation only — not financial advice.)",
+    strategy: "Compare simulated GBP/USD behavior across London, New York and overlap periods, noting that local clock times shift with daylight-saving rules. BOE and Fed policy can be tracked as macro context. (Educational simulation only.)",
     category: "Forex",
     keywords: ["GBP/USD trading", "Cable practice", "British Pound", "forex major", "currency trading"],
     stats: {
@@ -493,7 +493,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   // ===== ADDITIONAL ASSETS (Existing) =====
   ada: {
     whatIs: "Cardano (ADA) is a proof-of-stake blockchain platform founded by Ethereum co-founder Charles Hoskinson. It emphasizes peer-reviewed research, formal verification methods, and sustainable scalability.",
-    strategy: "Cardano moves in longer cycles—ideal for practicing swing trading. Hold positions for 3-7 days and use the 50-day moving average as your guide. (Educational simulation only — not financial advice.)",
+    strategy: "Use ADA to compare hypothetical holding periods and moving-average observations, then record how often those assumptions succeeded or failed. No fixed 3-7 day period or moving average is treated as a rule. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["Cardano trading", "ADA simulator", "proof-of-stake", "smart contracts"],
     stats: {
@@ -505,7 +505,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   doge: {
     whatIs: "Dogecoin (DOGE) started as a meme cryptocurrency but has grown into a widely-accepted payment method. It features fast transaction times, low fees, and a passionate community.",
-    strategy: "DOGE is highly sensitive to social media sentiment. Practice monitoring volume spikes and avoid FOMO-driven entries—wait for pullbacks to support levels. (Educational simulation only — not financial advice.)",
+    strategy: "Use DOGE to observe how price, volume and social-media attention can move together or diverge. Compare multiple examples instead of treating a pullback or support level as an entry instruction. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["Dogecoin trading", "DOGE practice", "meme coin", "payments"],
     stats: {
