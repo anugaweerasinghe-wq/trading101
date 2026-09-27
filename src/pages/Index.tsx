@@ -32,7 +32,7 @@ const homeFaqSchema = {
     {
       "@type": "Question",
       name: "Is TradeHQ completely free?",
-      acceptedAnswer: { "@type": "Answer", text: "Yes, TradeHQ is 100% free. You get $100,000 in virtual capital with weekly refills. There are no hidden fees, premium tiers, or credit card requirements." },
+      acceptedAnswer: { "@type": "Answer", text: "Yes, TradeHQ is free to use. You get $100,000 in virtual practice capital with no credit card required for simulated trading." },
     },
     {
       "@type": "Question",
