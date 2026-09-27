@@ -14,8 +14,8 @@ export default function Compare() {
   const pair = COMPARE_PAIRS.find((p) => p.slug === slug);
   if (!pair) return <Navigate to="/compare" replace />;
 
-  const title = `${pair.a.name} vs ${pair.b.name} — Which Should You Trade in 2026? | TradeHQ`;
-  const description = `${pair.a.name} vs ${pair.b.name}: side-by-side comparison on returns, volatility, use case and risk. Practise both risk-free with $100K virtual cash on TradeHQ. (Educational simulation only — not financial advice.)`;
+  const title = `${pair.a.name} vs ${pair.b.name} — Structural Comparison | TradeHQ`;
+  const description = `${pair.a.name} vs ${pair.b.name}: side-by-side educational comparison of structure, market drivers and risk characteristics. Practise both with $100K in virtual cash on TradeHQ.`;
   const url = `${SITE_DOMAIN}/compare/${pair.slug}`;
 
   return (
@@ -52,8 +52,8 @@ export default function Compare() {
           </header>
 
           <AIAnswerBlock
-            question={`${pair.a.name} vs ${pair.b.name}: which should you trade in 2026?`}
-            answer={`${pair.verdict} Both ${pair.a.name} and ${pair.b.name} are tradable free on TradeHQ with $100,000 virtual cash — no signup, no real-money risk. (Educational simulation only — not financial advice.)`}
+            question={`${pair.a.name} vs ${pair.b.name}: what is structurally different?`}
+            answer={`${pair.verdict} Both are available in TradeHQ's virtual-money simulator for side-by-side practice. The comparison does not select a preferred asset.`}
             className="mb-8"
           />
 
@@ -87,7 +87,7 @@ export default function Compare() {
           </Card>
 
           <Card className="p-6 mb-8 bg-gradient-to-br from-emerald-500/5 to-rose-500/5 border-white/10">
-            <h2 className="text-xl font-semibold mb-2">The verdict</h2>
+            <h2 className="text-xl font-semibold mb-2">Comparison lens</h2>
             <p className="text-base text-muted-foreground">{pair.verdict}</p>
             <p className="mt-3 text-xs text-muted-foreground/70 italic">(Educational simulation only — not financial advice.)</p>
           </Card>
@@ -118,13 +118,11 @@ export default function Compare() {
           <Card className="p-6 mb-8">
             <h2 className="text-xl font-semibold mb-2">How to settle it for yourself</h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Rather than picking a side from an article, run both. Open the practice terminal, take a
-              position of the same risk — not the same dollar amount — in {pair.a.symbol} and{" "}
-              {pair.b.symbol}, and hold them for at least 30 days while logging how each behaves on
-              red days, on news days and overnight. The portfolio analytics will show you the
-              volatility difference and the drawdown you would actually have sat through, which is the
-              only part of this comparison that changes how you invest. Nothing here is a
-              recommendation to buy either one.
+              Rather than treating the article as a ranking, test both in the simulator under the
+              same documented assumptions. Keep the virtual position-size rule, observation window
+              and review method consistent, then compare volatility, drawdown and event sensitivity.
+              A short simulation does not establish personal suitability or future performance, and
+              nothing here is a recommendation to buy either one.
             </p>
           </Card>
 
@@ -146,7 +144,7 @@ export default function Compare() {
               { label: `${pair.a.name} vs ${pair.b.name}` },
             ]}
             faqs={[
-              { question: `Is ${pair.a.name} better than ${pair.b.name}?`, answer: `${pair.verdict} You can practise both on TradeHQ with $100,000 virtual cash before committing real capital.` },
+              { question: `Is ${pair.a.name} better than ${pair.b.name}?`, answer: `TradeHQ does not rank one as universally better. ${pair.verdict} Use the simulator to compare the two under the same hypothetical assumptions.` },
               { question: `Can I trade ${pair.a.name} and ${pair.b.name} on TradeHQ for free?`, answer: `Yes — both ${pair.a.name} and ${pair.b.name} are tradable on the TradeHQ practice simulator with no signup required.` },
               { question: `Which is more volatile, ${pair.a.name} or ${pair.b.name}?`, answer: pair.bullets.find((b) => /volatil/i.test(b)) ?? `Volatility differs by asset class — use the practice account to feel it without risking real money.` },
             ]}
@@ -161,7 +159,7 @@ export default function Compare() {
 
 export function CompareIndex() {
   const title = "Asset Comparisons — Crypto, Stocks & ETFs Side-by-Side | TradeHQ";
-  const description = "Compare Bitcoin vs Ethereum, Tesla vs Nvidia, stocks vs crypto and more. Side-by-side breakdowns of returns, risk and use cases. Practise both sides risk-free.";
+  const description = "Compare Bitcoin vs Ethereum, Tesla vs Nvidia, stocks vs crypto and more. Side-by-side educational breakdowns of structure, market drivers and risk characteristics.";
   return (
     <>
       <Helmet>
@@ -177,19 +175,16 @@ export function CompareIndex() {
 
           <section className="mb-10 max-w-3xl space-y-4">
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Most "X vs Y" questions are really questions about risk tolerance and time horizon. Two
-              assets rarely do the same job: one may be a slow compounding holding suited to a decade,
-              the other a volatile position that can halve in a quarter. Each comparison below sets out
-              what the two instruments actually are, where their returns come from, how differently they
-              behave in a drawdown, and the mistakes people commonly make when treating them as
-              interchangeable.
+              Most "X vs Y" questions mix together several different issues: what each instrument
+              represents, what can move its price, how its market operates, and how volatile it has
+              been. Each comparison below separates those structural questions without deciding what
+              anyone should buy or which asset is personally suitable.
             </p>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              A useful habit when reading any comparison: convert the claim into a position size. If one
-              asset is four times as volatile as the other, an equal dollar allocation is not an equal
-              bet — it is a concentrated position in the riskier one with a token holding in the other.
-              Comparing annualised volatility and worst historical drawdown before comparing returns is
-              what turns a comparison into a decision.
+              A useful practice habit is to hold the assumptions constant. Use the same virtual
+              observation window and documented sizing rule, then compare how the two instruments
+              behaved. Historical volatility and drawdown can provide context, but they do not determine
+              a future outcome or a real-world allocation.
             </p>
             <p className="text-xs text-muted-foreground/70 italic">
               (Educational simulation only — not financial advice.)
@@ -212,11 +207,10 @@ export function CompareIndex() {
           <section className="mt-10 max-w-3xl">
             <h2 className="text-xl font-semibold mb-3">Test the comparison instead of arguing about it</h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Every asset named on these pages is available in the practice terminal with $100,000 of
-              virtual cash. Take both sides of a comparison at matched risk, hold them for a month, and
-              read the portfolio analytics afterwards: the volatility gap, the largest drawdown, and how
-              each one behaved on the days the market fell. Thirty days of watching that is worth more
-              than any amount of reading, and it costs nothing because none of it is real money.
+              Every supported asset named on these pages can be explored with virtual cash. Apply the
+              same hypothetical rules to both sides and compare the resulting simulator analytics.
+              A one-month or any other short practice sample is educational only and should not be
+              treated as proof of expected returns or suitability.
             </p>
           </section>
         </main>
