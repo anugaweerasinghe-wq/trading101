@@ -54,108 +54,87 @@
     },
     {
       "src": "^/$",
-      "dest": "/index.html",
-      "headers": {}
+      "dest": "/index.html"
     },
     {
       "src": "^/trade/?$",
-      "dest": "/trade/index.html",
-      "headers": {}
+      "dest": "/trade/index.html"
     },
     {
       "src": "^/markets/?$",
-      "dest": "/markets/index.html",
-      "headers": {}
+      "dest": "/markets/index.html"
     },
     {
       "src": "^/portfolio/?$",
-      "dest": "/portfolio/index.html",
-      "headers": {}
+      "dest": "/portfolio/index.html"
     },
     {
       "src": "^/learn/?$",
-      "dest": "/learn/index.html",
-      "headers": {}
+      "dest": "/learn/index.html"
     },
     {
       "src": "^/learn-trading-guide/?$",
-      "dest": "/learn-trading-guide/index.html",
-      "headers": {}
+      "dest": "/learn-trading-guide/index.html"
     },
     {
       "src": "^/leaderboard/?$",
-      "dest": "/leaderboard/index.html",
-      "headers": {}
+      "dest": "/leaderboard/index.html"
     },
     {
       "src": "^/ai-mentor/?$",
-      "dest": "/ai-mentor/index.html",
-      "headers": {}
+      "dest": "/ai-mentor/index.html"
     },
     {
       "src": "^/daily/?$",
-      "dest": "/daily/index.html",
-      "headers": {}
+      "dest": "/daily/index.html"
     },
     {
       "src": "^/reviews/?$",
-      "dest": "/reviews/index.html",
-      "headers": {}
+      "dest": "/reviews/index.html"
     },
     {
       "src": "^/roadmap/?$",
-      "dest": "/roadmap/index.html",
-      "headers": {}
+      "dest": "/roadmap/index.html"
     },
     {
       "src": "^/about/?$",
-      "dest": "/about/index.html",
-      "headers": {}
+      "dest": "/about/index.html"
     },
     {
       "src": "^/contact/?$",
-      "dest": "/contact/index.html",
-      "headers": {}
+      "dest": "/contact/index.html"
     },
     {
       "src": "^/challenge/?$",
-      "dest": "/challenge/index.html",
-      "headers": {}
+      "dest": "/challenge/index.html"
     },
     {
       "src": "^/privacy/?$",
-      "dest": "/privacy/index.html",
-      "headers": {}
+      "dest": "/privacy/index.html"
     },
     {
       "src": "^/terms/?$",
-      "dest": "/terms/index.html",
-      "headers": {}
+      "dest": "/terms/index.html"
     },
     {
       "src": "^/trade/btc/?$",
-      "dest": "/trade/btc/index.html",
-      "headers": {}
+      "dest": "/trade/btc/index.html"
     },
     {
       "src": "^/trade/eth/?$",
-      "dest": "/trade/eth/index.html",
-      "headers": {}
+      "dest": "/trade/eth/index.html"
     },
     {
       "src": "^/trade/sol/?$",
-      "dest": "/trade/sol/index.html",
-      "headers": {}
+      "dest": "/trade/sol/index.html"
     },
     {
       "src": "^/trade/bnb/?$",
-      "dest": "/trade/bnb/index.html",
-      "headers": {}
+      "dest": "/trade/bnb/index.html"
     },
     {
       "src": "^/trade/xrp/?$",
-      "dest": "/trade/xrp/index.html",
-      "headers": {}
+      "dest": "/trade/xrp/index.html"
     },
     {
       "src": "^/trade/ada/?$",
@@ -334,38 +313,31 @@
     },
     {
       "src": "^/trade/aapl/?$",
-      "dest": "/trade/aapl/index.html",
-      "headers": {}
+      "dest": "/trade/aapl/index.html"
     },
     {
       "src": "^/trade/msft/?$",
-      "dest": "/trade/msft/index.html",
-      "headers": {}
+      "dest": "/trade/msft/index.html"
     },
     {
       "src": "^/trade/googl/?$",
-      "dest": "/trade/googl/index.html",
-      "headers": {}
+      "dest": "/trade/googl/index.html"
     },
     {
       "src": "^/trade/amzn/?$",
-      "dest": "/trade/amzn/index.html",
-      "headers": {}
+      "dest": "/trade/amzn/index.html"
     },
     {
       "src": "^/trade/nvda/?$",
-      "dest": "/trade/nvda/index.html",
-      "headers": {}
+      "dest": "/trade/nvda/index.html"
     },
     {
       "src": "^/trade/tsla/?$",
-      "dest": "/trade/tsla/index.html",
-      "headers": {}
+      "dest": "/trade/tsla/index.html"
     },
     {
       "src": "^/trade/meta/?$",
-      "dest": "/trade/meta/index.html",
-      "headers": {}
+      "dest": "/trade/meta/index.html"
     },
     {
       "src": "^/trade/nflx/?$",
@@ -803,13 +775,11 @@
     },
     {
       "src": "^/trade/spy/?$",
-      "dest": "/trade/spy/index.html",
-      "headers": {}
+      "dest": "/trade/spy/index.html"
     },
     {
       "src": "^/trade/qqq/?$",
-      "dest": "/trade/qqq/index.html",
-      "headers": {}
+      "dest": "/trade/qqq/index.html"
     },
     {
       "src": "^/trade/iwm/?$",
@@ -939,13 +909,11 @@
     },
     {
       "src": "^/trade/eurusd/?$",
-      "dest": "/trade/eurusd/index.html",
-      "headers": {}
+      "dest": "/trade/eurusd/index.html"
     },
     {
       "src": "^/trade/gbpusd/?$",
-      "dest": "/trade/gbpusd/index.html",
-      "headers": {}
+      "dest": "/trade/gbpusd/index.html"
     },
     {
       "src": "^/trade/usdjpy/?$",
@@ -1040,8 +1008,7 @@
     },
     {
       "src": "^/trade/gold/?$",
-      "dest": "/trade/gold/index.html",
-      "headers": {}
+      "dest": "/trade/gold/index.html"
     },
     {
       "src": "^/trade/silver/?$",
@@ -1052,8 +1019,7 @@
     },
     {
       "src": "^/trade/oil/?$",
-      "dest": "/trade/oil/index.html",
-      "headers": {}
+      "dest": "/trade/oil/index.html"
     },
     {
       "src": "^/trade/natgas/?$",
@@ -1141,568 +1107,455 @@
     },
     {
       "src": "^/wiki/?$",
-      "dest": "/wiki/index.html",
-      "headers": {}
+      "dest": "/wiki/index.html"
     },
     {
       "src": "^/wiki/short-squeeze/?$",
-      "dest": "/wiki/short-squeeze/index.html",
-      "headers": {}
+      "dest": "/wiki/short-squeeze/index.html"
     },
     {
       "src": "^/wiki/golden-cross/?$",
-      "dest": "/wiki/golden-cross/index.html",
-      "headers": {}
+      "dest": "/wiki/golden-cross/index.html"
     },
     {
       "src": "^/wiki/death-cross/?$",
-      "dest": "/wiki/death-cross/index.html",
-      "headers": {}
+      "dest": "/wiki/death-cross/index.html"
     },
     {
       "src": "^/wiki/liquidation-cascade/?$",
-      "dest": "/wiki/liquidation-cascade/index.html",
-      "headers": {}
+      "dest": "/wiki/liquidation-cascade/index.html"
     },
     {
       "src": "^/wiki/fibonacci-retracement/?$",
-      "dest": "/wiki/fibonacci-retracement/index.html",
-      "headers": {}
+      "dest": "/wiki/fibonacci-retracement/index.html"
     },
     {
       "src": "^/wiki/rsi-divergence/?$",
-      "dest": "/wiki/rsi-divergence/index.html",
-      "headers": {}
+      "dest": "/wiki/rsi-divergence/index.html"
     },
     {
       "src": "^/wiki/macd-histogram/?$",
-      "dest": "/wiki/macd-histogram/index.html",
-      "headers": {}
+      "dest": "/wiki/macd-histogram/index.html"
     },
     {
       "src": "^/wiki/bollinger-band-squeeze/?$",
-      "dest": "/wiki/bollinger-band-squeeze/index.html",
-      "headers": {}
+      "dest": "/wiki/bollinger-band-squeeze/index.html"
     },
     {
       "src": "^/wiki/order-block/?$",
-      "dest": "/wiki/order-block/index.html",
-      "headers": {}
+      "dest": "/wiki/order-block/index.html"
     },
     {
       "src": "^/wiki/fair-value-gap/?$",
-      "dest": "/wiki/fair-value-gap/index.html",
-      "headers": {}
+      "dest": "/wiki/fair-value-gap/index.html"
     },
     {
       "src": "^/wiki/bull-trap/?$",
-      "dest": "/wiki/bull-trap/index.html",
-      "headers": {}
+      "dest": "/wiki/bull-trap/index.html"
     },
     {
       "src": "^/wiki/bear-trap/?$",
-      "dest": "/wiki/bear-trap/index.html",
-      "headers": {}
+      "dest": "/wiki/bear-trap/index.html"
     },
     {
       "src": "^/wiki/whale-manipulation/?$",
-      "dest": "/wiki/whale-manipulation/index.html",
-      "headers": {}
+      "dest": "/wiki/whale-manipulation/index.html"
     },
     {
       "src": "^/wiki/support-and-resistance/?$",
-      "dest": "/wiki/support-and-resistance/index.html",
-      "headers": {}
+      "dest": "/wiki/support-and-resistance/index.html"
     },
     {
       "src": "^/wiki/candlestick-patterns/?$",
-      "dest": "/wiki/candlestick-patterns/index.html",
-      "headers": {}
+      "dest": "/wiki/candlestick-patterns/index.html"
     },
     {
       "src": "^/wiki/head-and-shoulders/?$",
-      "dest": "/wiki/head-and-shoulders/index.html",
-      "headers": {}
+      "dest": "/wiki/head-and-shoulders/index.html"
     },
     {
       "src": "^/wiki/double-bottom/?$",
-      "dest": "/wiki/double-bottom/index.html",
-      "headers": {}
+      "dest": "/wiki/double-bottom/index.html"
     },
     {
       "src": "^/wiki/macd/?$",
-      "dest": "/wiki/macd/index.html",
-      "headers": {}
+      "dest": "/wiki/macd/index.html"
     },
     {
       "src": "^/wiki/limit-order-vs-market-order/?$",
-      "dest": "/wiki/limit-order-vs-market-order/index.html",
-      "headers": {}
+      "dest": "/wiki/limit-order-vs-market-order/index.html"
     },
     {
       "src": "^/wiki/stop-loss-hunting/?$",
-      "dest": "/wiki/stop-loss-hunting/index.html",
-      "headers": {}
+      "dest": "/wiki/stop-loss-hunting/index.html"
     },
     {
       "src": "^/wiki/leverage-trading/?$",
-      "dest": "/wiki/leverage-trading/index.html",
-      "headers": {}
+      "dest": "/wiki/leverage-trading/index.html"
     },
     {
       "src": "^/wiki/fomo/?$",
-      "dest": "/wiki/fomo/index.html",
-      "headers": {}
+      "dest": "/wiki/fomo/index.html"
     },
     {
       "src": "^/wiki/fud/?$",
-      "dest": "/wiki/fud/index.html",
-      "headers": {}
+      "dest": "/wiki/fud/index.html"
     },
     {
       "src": "^/wiki/hodl-strategy/?$",
-      "dest": "/wiki/hodl-strategy/index.html",
-      "headers": {}
+      "dest": "/wiki/hodl-strategy/index.html"
     },
     {
       "src": "^/wiki/satoshi-nakamoto/?$",
-      "dest": "/wiki/satoshi-nakamoto/index.html",
-      "headers": {}
+      "dest": "/wiki/satoshi-nakamoto/index.html"
     },
     {
       "src": "^/wiki/margin-call/?$",
-      "dest": "/wiki/margin-call/index.html",
-      "headers": {}
+      "dest": "/wiki/margin-call/index.html"
     },
     {
       "src": "^/wiki/liquidation-price/?$",
-      "dest": "/wiki/liquidation-price/index.html",
-      "headers": {}
+      "dest": "/wiki/liquidation-price/index.html"
     },
     {
       "src": "^/wiki/dollar-cost-averaging/?$",
-      "dest": "/wiki/dollar-cost-averaging/index.html",
-      "headers": {}
+      "dest": "/wiki/dollar-cost-averaging/index.html"
     },
     {
       "src": "^/wiki/swing-trading/?$",
-      "dest": "/wiki/swing-trading/index.html",
-      "headers": {}
+      "dest": "/wiki/swing-trading/index.html"
     },
     {
       "src": "^/wiki/day-trading/?$",
-      "dest": "/wiki/day-trading/index.html",
-      "headers": {}
+      "dest": "/wiki/day-trading/index.html"
     },
     {
       "src": "^/wiki/scalping/?$",
-      "dest": "/wiki/scalping/index.html",
-      "headers": {}
+      "dest": "/wiki/scalping/index.html"
     },
     {
       "src": "^/wiki/volume-profile/?$",
-      "dest": "/wiki/volume-profile/index.html",
-      "headers": {}
+      "dest": "/wiki/volume-profile/index.html"
     },
     {
       "src": "^/wiki/vwap/?$",
-      "dest": "/wiki/vwap/index.html",
-      "headers": {}
+      "dest": "/wiki/vwap/index.html"
     },
     {
       "src": "^/wiki/ichimoku-cloud/?$",
-      "dest": "/wiki/ichimoku-cloud/index.html",
-      "headers": {}
+      "dest": "/wiki/ichimoku-cloud/index.html"
     },
     {
       "src": "^/wiki/elliott-wave-theory/?$",
-      "dest": "/wiki/elliott-wave-theory/index.html",
-      "headers": {}
+      "dest": "/wiki/elliott-wave-theory/index.html"
     },
     {
       "src": "^/wiki/wyckoff-method/?$",
-      "dest": "/wiki/wyckoff-method/index.html",
-      "headers": {}
+      "dest": "/wiki/wyckoff-method/index.html"
     },
     {
       "src": "^/wiki/market-maker/?$",
-      "dest": "/wiki/market-maker/index.html",
-      "headers": {}
+      "dest": "/wiki/market-maker/index.html"
     },
     {
       "src": "^/wiki/dark-pool/?$",
-      "dest": "/wiki/dark-pool/index.html",
-      "headers": {}
+      "dest": "/wiki/dark-pool/index.html"
     },
     {
       "src": "^/wiki/slippage/?$",
-      "dest": "/wiki/slippage/index.html",
-      "headers": {}
+      "dest": "/wiki/slippage/index.html"
     },
     {
       "src": "^/wiki/impermanent-loss/?$",
-      "dest": "/wiki/impermanent-loss/index.html",
-      "headers": {}
+      "dest": "/wiki/impermanent-loss/index.html"
     },
     {
       "src": "^/wiki/yield-farming/?$",
-      "dest": "/wiki/yield-farming/index.html",
-      "headers": {}
+      "dest": "/wiki/yield-farming/index.html"
     },
     {
       "src": "^/wiki/flash-crash/?$",
-      "dest": "/wiki/flash-crash/index.html",
-      "headers": {}
+      "dest": "/wiki/flash-crash/index.html"
     },
     {
       "src": "^/wiki/circuit-breaker/?$",
-      "dest": "/wiki/circuit-breaker/index.html",
-      "headers": {}
+      "dest": "/wiki/circuit-breaker/index.html"
     },
     {
       "src": "^/wiki/pump-and-dump/?$",
-      "dest": "/wiki/pump-and-dump/index.html",
-      "headers": {}
+      "dest": "/wiki/pump-and-dump/index.html"
     },
     {
       "src": "^/wiki/paper-trading/?$",
-      "dest": "/wiki/paper-trading/index.html",
-      "headers": {}
+      "dest": "/wiki/paper-trading/index.html"
     },
     {
       "src": "^/wiki/risk-reward-ratio/?$",
-      "dest": "/wiki/risk-reward-ratio/index.html",
-      "headers": {}
+      "dest": "/wiki/risk-reward-ratio/index.html"
     },
     {
       "src": "^/wiki/drawdown/?$",
-      "dest": "/wiki/drawdown/index.html",
-      "headers": {}
+      "dest": "/wiki/drawdown/index.html"
     },
     {
       "src": "^/wiki/backtesting/?$",
-      "dest": "/wiki/backtesting/index.html",
-      "headers": {}
+      "dest": "/wiki/backtesting/index.html"
     },
     {
       "src": "^/wiki/correlation-trading/?$",
-      "dest": "/wiki/correlation-trading/index.html",
-      "headers": {}
+      "dest": "/wiki/correlation-trading/index.html"
     },
     {
       "src": "^/learn/article/what-is-paper-trading/?$",
-      "dest": "/learn/article/what-is-paper-trading/index.html",
-      "headers": {}
+      "dest": "/learn/article/what-is-paper-trading/index.html"
     },
     {
       "src": "^/learn/article/how-to-read-stock-charts/?$",
-      "dest": "/learn/article/how-to-read-stock-charts/index.html",
-      "headers": {}
+      "dest": "/learn/article/how-to-read-stock-charts/index.html"
     },
     {
       "src": "^/learn/article/crypto-vs-stocks/?$",
-      "dest": "/learn/article/crypto-vs-stocks/index.html",
-      "headers": {}
+      "dest": "/learn/article/crypto-vs-stocks/index.html"
     },
     {
       "src": "^/learn/article/trading-strategies-for-beginners/?$",
-      "dest": "/learn/article/trading-strategies-for-beginners/index.html",
-      "headers": {}
+      "dest": "/learn/article/trading-strategies-for-beginners/index.html"
     },
     {
       "src": "^/learn/article/stock-market-index-etfs/?$",
-      "dest": "/learn/article/stock-market-index-etfs/index.html",
-      "headers": {}
+      "dest": "/learn/article/stock-market-index-etfs/index.html"
     },
     {
       "src": "^/learn/article/how-to-build-a-portfolio/?$",
-      "dest": "/learn/article/how-to-build-a-portfolio/index.html",
-      "headers": {}
+      "dest": "/learn/article/how-to-build-a-portfolio/index.html"
     },
     {
       "src": "^/learn/article/risk-management-in-trading/?$",
-      "dest": "/learn/article/risk-management-in-trading/index.html",
-      "headers": {}
+      "dest": "/learn/article/risk-management-in-trading/index.html"
     },
     {
       "src": "^/learn/article/market-orders-vs-limit-orders/?$",
-      "dest": "/learn/article/market-orders-vs-limit-orders/index.html",
-      "headers": {}
+      "dest": "/learn/article/market-orders-vs-limit-orders/index.html"
     },
     {
       "src": "^/learn/article/technical-indicators-rsi-macd-moving-averages/?$",
-      "dest": "/learn/article/technical-indicators-rsi-macd-moving-averages/index.html",
-      "headers": {}
+      "dest": "/learn/article/technical-indicators-rsi-macd-moving-averages/index.html"
     },
     {
       "src": "^/compare/bitcoin-vs-ethereum/?$",
-      "dest": "/compare/bitcoin-vs-ethereum/index.html",
-      "headers": {}
+      "dest": "/compare/bitcoin-vs-ethereum/index.html"
     },
     {
       "src": "^/compare/tesla-vs-nvidia/?$",
-      "dest": "/compare/tesla-vs-nvidia/index.html",
-      "headers": {}
+      "dest": "/compare/tesla-vs-nvidia/index.html"
     },
     {
       "src": "^/compare/bitcoin-vs-gold/?$",
-      "dest": "/compare/bitcoin-vs-gold/index.html",
-      "headers": {}
+      "dest": "/compare/bitcoin-vs-gold/index.html"
     },
     {
       "src": "^/compare/apple-vs-microsoft/?$",
-      "dest": "/compare/apple-vs-microsoft/index.html",
-      "headers": {}
+      "dest": "/compare/apple-vs-microsoft/index.html"
     },
     {
       "src": "^/compare/ethereum-vs-solana/?$",
-      "dest": "/compare/ethereum-vs-solana/index.html",
-      "headers": {}
+      "dest": "/compare/ethereum-vs-solana/index.html"
     },
     {
       "src": "^/compare/stocks-vs-crypto/?$",
-      "dest": "/compare/stocks-vs-crypto/index.html",
-      "headers": {}
+      "dest": "/compare/stocks-vs-crypto/index.html"
     },
     {
       "src": "^/compare/nvidia-vs-amd/?$",
-      "dest": "/compare/nvidia-vs-amd/index.html",
-      "headers": {}
+      "dest": "/compare/nvidia-vs-amd/index.html"
     },
     {
       "src": "^/compare/forex-vs-stocks/?$",
-      "dest": "/compare/forex-vs-stocks/index.html",
-      "headers": {}
+      "dest": "/compare/forex-vs-stocks/index.html"
     },
     {
       "src": "^/compare/?$",
-      "dest": "/compare/index.html",
-      "headers": {}
+      "dest": "/compare/index.html"
     },
     {
       "src": "^/how-to-trade/btc/?$",
-      "dest": "/how-to-trade/btc/index.html",
-      "headers": {}
+      "dest": "/how-to-trade/btc/index.html"
     },
     {
       "src": "^/how-to-trade/eth/?$",
-      "dest": "/how-to-trade/eth/index.html",
-      "headers": {}
+      "dest": "/how-to-trade/eth/index.html"
     },
     {
       "src": "^/how-to-trade/tsla/?$",
-      "dest": "/how-to-trade/tsla/index.html",
-      "headers": {}
+      "dest": "/how-to-trade/tsla/index.html"
     },
     {
       "src": "^/how-to-trade/nvda/?$",
-      "dest": "/how-to-trade/nvda/index.html",
-      "headers": {}
+      "dest": "/how-to-trade/nvda/index.html"
     },
     {
       "src": "^/how-to-trade/spy/?$",
-      "dest": "/how-to-trade/spy/index.html",
-      "headers": {}
+      "dest": "/how-to-trade/spy/index.html"
     },
     {
       "src": "^/how-to-trade/sol/?$",
-      "dest": "/how-to-trade/sol/index.html",
-      "headers": {}
+      "dest": "/how-to-trade/sol/index.html"
     },
     {
       "src": "^/how-to-trade/?$",
-      "dest": "/how-to-trade/index.html",
-      "headers": {}
+      "dest": "/how-to-trade/index.html"
     },
     {
       "src": "^/strategy/scalping/?$",
-      "dest": "/strategy/scalping/index.html",
-      "headers": {}
+      "dest": "/strategy/scalping/index.html"
     },
     {
       "src": "^/strategy/swing-trading/?$",
-      "dest": "/strategy/swing-trading/index.html",
-      "headers": {}
+      "dest": "/strategy/swing-trading/index.html"
     },
     {
       "src": "^/strategy/day-trading/?$",
-      "dest": "/strategy/day-trading/index.html",
-      "headers": {}
+      "dest": "/strategy/day-trading/index.html"
     },
     {
       "src": "^/strategy/dca-dollar-cost-averaging/?$",
-      "dest": "/strategy/dca-dollar-cost-averaging/index.html",
-      "headers": {}
+      "dest": "/strategy/dca-dollar-cost-averaging/index.html"
     },
     {
       "src": "^/strategy/rsi-strategy/?$",
-      "dest": "/strategy/rsi-strategy/index.html",
-      "headers": {}
+      "dest": "/strategy/rsi-strategy/index.html"
     },
     {
       "src": "^/strategy/macd-strategy/?$",
-      "dest": "/strategy/macd-strategy/index.html",
-      "headers": {}
+      "dest": "/strategy/macd-strategy/index.html"
     },
     {
       "src": "^/strategy/?$",
-      "dest": "/strategy/index.html",
-      "headers": {}
+      "dest": "/strategy/index.html"
     },
     {
       "src": "^/courses/?$",
-      "dest": "/courses/index.html",
-      "headers": {}
+      "dest": "/courses/index.html"
     },
     {
       "src": "^/courses/options-trading-fundamentals/?$",
-      "dest": "/courses/options-trading-fundamentals/index.html",
-      "headers": {}
+      "dest": "/courses/options-trading-fundamentals/index.html"
     },
     {
       "src": "^/courses/options-trading-fundamentals/what-is-an-option/?$",
-      "dest": "/courses/options-trading-fundamentals/what-is-an-option/index.html",
-      "headers": {}
+      "dest": "/courses/options-trading-fundamentals/what-is-an-option/index.html"
     },
     {
       "src": "^/courses/options-trading-fundamentals/the-greeks-delta-gamma-theta-vega/?$",
-      "dest": "/courses/options-trading-fundamentals/the-greeks-delta-gamma-theta-vega/index.html",
-      "headers": {}
+      "dest": "/courses/options-trading-fundamentals/the-greeks-delta-gamma-theta-vega/index.html"
     },
     {
       "src": "^/courses/options-trading-fundamentals/defined-risk-spreads/?$",
-      "dest": "/courses/options-trading-fundamentals/defined-risk-spreads/index.html",
-      "headers": {}
+      "dest": "/courses/options-trading-fundamentals/defined-risk-spreads/index.html"
     },
     {
       "src": "^/courses/options-trading-fundamentals/implied-volatility-and-earnings/?$",
-      "dest": "/courses/options-trading-fundamentals/implied-volatility-and-earnings/index.html",
-      "headers": {}
+      "dest": "/courses/options-trading-fundamentals/implied-volatility-and-earnings/index.html"
     },
     {
       "src": "^/courses/options-trading-fundamentals/options-risk-management/?$",
-      "dest": "/courses/options-trading-fundamentals/options-risk-management/index.html",
-      "headers": {}
+      "dest": "/courses/options-trading-fundamentals/options-risk-management/index.html"
     },
     {
       "src": "^/courses/futures-and-derivatives/?$",
-      "dest": "/courses/futures-and-derivatives/index.html",
-      "headers": {}
+      "dest": "/courses/futures-and-derivatives/index.html"
     },
     {
       "src": "^/courses/futures-and-derivatives/what-is-a-futures-contract/?$",
-      "dest": "/courses/futures-and-derivatives/what-is-a-futures-contract/index.html",
-      "headers": {}
+      "dest": "/courses/futures-and-derivatives/what-is-a-futures-contract/index.html"
     },
     {
       "src": "^/courses/futures-and-derivatives/margin-and-leverage-in-futures/?$",
-      "dest": "/courses/futures-and-derivatives/margin-and-leverage-in-futures/index.html",
-      "headers": {}
+      "dest": "/courses/futures-and-derivatives/margin-and-leverage-in-futures/index.html"
     },
     {
       "src": "^/courses/futures-and-derivatives/contango-and-backwardation/?$",
-      "dest": "/courses/futures-and-derivatives/contango-and-backwardation/index.html",
-      "headers": {}
+      "dest": "/courses/futures-and-derivatives/contango-and-backwardation/index.html"
     },
     {
       "src": "^/courses/futures-and-derivatives/hedging-with-futures/?$",
-      "dest": "/courses/futures-and-derivatives/hedging-with-futures/index.html",
-      "headers": {}
+      "dest": "/courses/futures-and-derivatives/hedging-with-futures/index.html"
     },
     {
       "src": "^/courses/futures-and-derivatives/micro-futures-for-beginners/?$",
-      "dest": "/courses/futures-and-derivatives/micro-futures-for-beginners/index.html",
-      "headers": {}
+      "dest": "/courses/futures-and-derivatives/micro-futures-for-beginners/index.html"
     },
     {
       "src": "^/courses/macro-reading-for-traders/?$",
-      "dest": "/courses/macro-reading-for-traders/index.html",
-      "headers": {}
+      "dest": "/courses/macro-reading-for-traders/index.html"
     },
     {
       "src": "^/courses/macro-reading-for-traders/reading-cpi-and-inflation/?$",
-      "dest": "/courses/macro-reading-for-traders/reading-cpi-and-inflation/index.html",
-      "headers": {}
+      "dest": "/courses/macro-reading-for-traders/reading-cpi-and-inflation/index.html"
     },
     {
       "src": "^/courses/macro-reading-for-traders/the-fed-and-fomc-cycle/?$",
-      "dest": "/courses/macro-reading-for-traders/the-fed-and-fomc-cycle/index.html",
-      "headers": {}
+      "dest": "/courses/macro-reading-for-traders/the-fed-and-fomc-cycle/index.html"
     },
     {
       "src": "^/courses/macro-reading-for-traders/the-yield-curve-and-recession/?$",
-      "dest": "/courses/macro-reading-for-traders/the-yield-curve-and-recession/index.html",
-      "headers": {}
+      "dest": "/courses/macro-reading-for-traders/the-yield-curve-and-recession/index.html"
     },
     {
       "src": "^/courses/macro-reading-for-traders/the-dollar-index-dxy/?$",
-      "dest": "/courses/macro-reading-for-traders/the-dollar-index-dxy/index.html",
-      "headers": {}
+      "dest": "/courses/macro-reading-for-traders/the-dollar-index-dxy/index.html"
     },
     {
       "src": "^/courses/macro-reading-for-traders/putting-macro-signals-together/?$",
-      "dest": "/courses/macro-reading-for-traders/putting-macro-signals-together/index.html",
-      "headers": {}
+      "dest": "/courses/macro-reading-for-traders/putting-macro-signals-together/index.html"
     },
     {
       "src": "^/courses/trading-psychology-mastery/?$",
-      "dest": "/courses/trading-psychology-mastery/index.html",
-      "headers": {}
+      "dest": "/courses/trading-psychology-mastery/index.html"
     },
     {
       "src": "^/courses/trading-psychology-mastery/cognitive-biases-in-trading/?$",
-      "dest": "/courses/trading-psychology-mastery/cognitive-biases-in-trading/index.html",
-      "headers": {}
+      "dest": "/courses/trading-psychology-mastery/cognitive-biases-in-trading/index.html"
     },
     {
       "src": "^/courses/trading-psychology-mastery/revenge-trading-and-tilt/?$",
-      "dest": "/courses/trading-psychology-mastery/revenge-trading-and-tilt/index.html",
-      "headers": {}
+      "dest": "/courses/trading-psychology-mastery/revenge-trading-and-tilt/index.html"
     },
     {
       "src": "^/courses/trading-psychology-mastery/the-trading-journal/?$",
-      "dest": "/courses/trading-psychology-mastery/the-trading-journal/index.html",
-      "headers": {}
+      "dest": "/courses/trading-psychology-mastery/the-trading-journal/index.html"
     },
     {
       "src": "^/courses/trading-psychology-mastery/discipline-and-daily-rituals/?$",
-      "dest": "/courses/trading-psychology-mastery/discipline-and-daily-rituals/index.html",
-      "headers": {}
+      "dest": "/courses/trading-psychology-mastery/discipline-and-daily-rituals/index.html"
     },
     {
       "src": "^/courses/trading-psychology-mastery/handling-drawdowns/?$",
-      "dest": "/courses/trading-psychology-mastery/handling-drawdowns/index.html",
-      "headers": {}
+      "dest": "/courses/trading-psychology-mastery/handling-drawdowns/index.html"
     },
     {
       "src": "^/learn/country/?$",
-      "dest": "/learn/country/index.html",
-      "headers": {}
+      "dest": "/learn/country/index.html"
     },
     {
       "src": "^/learn/country/sri-lanka/?$",
-      "dest": "/learn/country/sri-lanka/index.html",
-      "headers": {}
+      "dest": "/learn/country/sri-lanka/index.html"
     },
     {
       "src": "^/learn/country/india/?$",
-      "dest": "/learn/country/india/index.html",
-      "headers": {}
+      "dest": "/learn/country/india/index.html"
     },
     {
       "src": "^/learn/country/philippines/?$",
-      "dest": "/learn/country/philippines/index.html",
-      "headers": {}
+      "dest": "/learn/country/philippines/index.html"
     },
     {
       "src": "^/learn/country/pakistan/?$",
-      "dest": "/learn/country/pakistan/index.html",
-      "headers": {}
+      "dest": "/learn/country/pakistan/index.html"
     },
     {
       "src": "^/learn/country/nigeria/?$",
-      "dest": "/learn/country/nigeria/index.html",
-      "headers": {}
+      "dest": "/learn/country/nigeria/index.html"
     },
     {
       "src": "^/(auth|reset-password)/?$",
