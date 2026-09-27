@@ -18,7 +18,7 @@ export function PremiumFAQ() {
     },
     {
       question: "Is TradeHQ completely free?",
-      answer: "Yes, TradeHQ is 100% free to use. You get $100,000 in virtual capital to practice trading with no signup required. We also provide weekly $100K refills so you can continue learning indefinitely. No hidden fees or premium tiers."
+      answer: "Yes, TradeHQ is free to use. You get $100,000 in virtual practice capital with no signup required. There are no paid simulator tiers or real-money deposits required for paper trading."
     },
     {
       question: "What is paper trading?",

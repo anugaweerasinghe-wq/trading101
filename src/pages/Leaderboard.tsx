@@ -39,12 +39,12 @@ const LEADERBOARD_FAQS = [
   {
     question: "Is the TradeHQ leaderboard real?",
     answer:
-      "Yes. Every entry belongs to a real person who created a free account and chose to make their profile public. There are no demo or bot traders. All figures are simulated practice results from virtual money. (Educational simulation only — not financial advice.)",
+      "Each displayed row is tied to a public TradeHQ account, but the performance figures are synced from that user's browser-held simulator state and are not independently verified. Treat this as a community practice board, not an audited performance record.",
   },
   {
     question: "How do I climb the leaderboard?",
     answer:
-      "Trade your $100,000 of virtual cash to grow your portfolio percentage return. Traders are ranked by total percentage return, so account size never matters — only discipline does. You need at least 5 recorded trades before you are listed.",
+      "Public accounts with at least 5 recorded practice trades can sync browser-held summary statistics. The board sorts those submitted percentage-return values; they are simulated and not independently verified.",
   },
   {
     question: "Do I need an account to compete?",
@@ -54,7 +54,7 @@ const LEADERBOARD_FAQS = [
   {
     question: "What data does TradeHQ store if I sign up?",
     answer:
-      "Only your email address, the username you choose, and your simulated practice statistics (virtual portfolio value, percentage return, trade count and win rate). No payment details, no brokerage connections and no real financial data are ever collected.",
+      "Optional accounts use authentication data and can store a username, profile fields and selected simulated practice statistics. TradeHQ does not require brokerage credentials or a real-money deposit to use the simulator. See the Privacy Policy for the full data-flow description.",
   },
   {
     question: "Can I stay private?",
@@ -197,8 +197,8 @@ export default function Leaderboard() {
           : "Stats synced to the leaderboard.",
       );
       await load();
-    } catch {
-      toast.error("Could not sync your stats. Please try again.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not sync your stats. Please try again.");
     } finally {
       setSyncing(false);
     }
@@ -216,21 +216,21 @@ export default function Leaderboard() {
   return (
     <>
       <Helmet>
-        <title>Leaderboard — Real TradeHQ Paper Traders Ranked by Return</title>
-        <meta name="description" content="Live rankings of real TradeHQ members who opted in, ranked by percentage return on $100,000 of virtual practice capital. No bots, no demo data." />
+        <title>Community Practice Board — Client-Synced TradeHQ Stats</title>
+        <meta name="description" content="Community practice board of public TradeHQ accounts using client-synced simulated statistics. Values are not independently verified performance records." />
         <link rel="canonical" href="https://www.thetradehq.com/leaderboard" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="TradeHQ Leaderboard — Real Paper Traders Ranked" />
-        <meta property="og:description" content="Real members ranked by percentage return on $100K of virtual practice capital." />
+        <meta property="og:title" content="TradeHQ Community Practice Board" />
+        <meta property="og:description" content="Public TradeHQ accounts sorted by client-synced simulated percentage return. Stats are not independently verified." />
         <meta property="og:url" content="https://www.thetradehq.com/leaderboard" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="TradeHQ Leaderboard — Real Paper Traders Ranked" />
-        <meta name="twitter:description" content="Real members ranked by percentage return on $100K of virtual practice capital." />
+        <meta name="twitter:title" content="TradeHQ Community Practice Board" />
+        <meta name="twitter:description" content="Public TradeHQ accounts sorted by client-synced simulated percentage return. Stats are not independently verified." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
@@ -253,15 +253,15 @@ export default function Leaderboard() {
             <div className="text-center mb-12">
               <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Real members only
+                Client-synced practice stats
               </Badge>
               <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
                 TradeHQ Leaderboard
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Every trader below is a real member who opted in to a public profile.
-                No bots and no demo entries. Everyone starts with {STARTING_BALANCE_LABEL} of
-                virtual practice capital and is ranked by percentage return.
+                Rows below come from public accounts that synced summary statistics from their browser-held
+                simulator. The figures are simulated, user-controlled at source and not independently verified.
+                The table sorts submitted percentage return; it should not be read as an audited performance ranking.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 {user ? (
@@ -328,9 +328,9 @@ export default function Leaderboard() {
                   <Users className="w-10 h-10 text-primary/60 mx-auto mb-4" />
                   <h2 className="text-lg font-semibold mb-2">No public traders yet — be the first</h2>
                   <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
-                    We removed all simulated placeholder traders. This board now fills up
-                    only with real members who create a free account, make their profile
-                    public and record at least {MIN_TRADES_TO_RANK} practice trades.
+                    This board displays public accounts that have synced at least {MIN_TRADES_TO_RANK}
+                    practice trades. Submitted performance statistics originate in browser-held
+                    simulator state and are not independently verified.
                   </p>
                   <Link to={user ? "/trade" : "/auth"}>
                     <Button className="!text-black font-bold rounded-xl">
@@ -390,8 +390,8 @@ export default function Leaderboard() {
                     <h2 className="text-lg font-semibold mb-2">No public duels yet</h2>
                     <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
                       Duels are 30-day head-to-head practice challenges between two members.
-                      Both sides are scored on percentage return from their own recorded
-                      starting balance, so nobody begins with an advantage.
+                      Both sides are compared by percentage change from their own recorded starting balance.
+                      Scores are client-synced practice statistics and are not independently verified.
                     </p>
                     <Link to="/challenge">
                       <Button className="!text-black font-bold rounded-xl">

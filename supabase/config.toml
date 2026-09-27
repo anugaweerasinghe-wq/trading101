@@ -1,13 +1,13 @@
 project_id = "bpzedtifdjbfrojlkano"
 
 [functions.market-analysis]
-verify_jwt = false
+verify_jwt = true
 
 [functions.trading-advisor]
-verify_jwt = false
+verify_jwt = true
 
 [functions.analyze-trading-psychology]
-verify_jwt = false
+verify_jwt = true
 
 [functions.live-market-data]
 verify_jwt = false

@@ -1,5 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
-import { getPortfolio, calculateRealizedPnL, calculateMaxDrawdown } from "@/lib/portfolio";
+import { getPortfolio, calculateRealizedPnL, calculateMaxDrawdown, calculateClosedTradeStats } from "@/lib/portfolio";
 import { STARTING_BALANCE } from "@/lib/constants";
 import { loadProgress } from "@/lib/courseProgress";
 import { courseTracks } from "@/lib/coursesData";
@@ -13,15 +13,14 @@ export interface LocalStats {
   badges: number;
 }
 
-/** Minimum activity before a trader is listed publicly — keeps the board honest. */
+/** Minimum activity before a client-synced practice row is displayed. */
 export const MIN_TRADES_TO_RANK = 5;
 
 export function computeLocalStats(): LocalStats {
   const p = getPortfolio();
   const start = STARTING_BALANCE;
   const pnlPct = ((p.totalValue - start) / start) * 100;
-  const sells = p.trades.filter((t) => t.type === "sell");
-  const wins = sells.filter((t) => t.total > 0).length;
+  const closed = calculateClosedTradeStats(p);
   const progress = loadProgress();
   const badges = courseTracks.filter((t) => progress.tracks[t.slug]?.badgeEarnedAt).length;
 
@@ -29,7 +28,7 @@ export function computeLocalStats(): LocalStats {
     portfolio_value: Math.round(p.totalValue * 100) / 100,
     pnl_pct: Math.round(pnlPct * 100) / 100,
     trades: p.trades.length,
-    win_rate: sells.length > 0 ? Math.round((wins / sells.length) * 100) : 0,
+    win_rate: closed.winRate,
     max_drawdown: Math.round(calculateMaxDrawdown() * 100) / 100,
     badges,
   };
@@ -41,6 +40,11 @@ export function computeRealizedPnL(): number {
 
 /** Push the browser-held practice stats to the signed-in user's row. */
 export async function syncStats(userId: string) {
+  if (typeof window !== "undefined" && localStorage.getItem("tradesandbox_last_bonus")) {
+    throw new Error(
+      "This browser portfolio used the retired weekly cash-refill feature. Reset the local simulator before syncing comparable leaderboard stats.",
+    );
+  }
   const stats = computeLocalStats();
   const { error } = await supabase
     .from("trader_stats")

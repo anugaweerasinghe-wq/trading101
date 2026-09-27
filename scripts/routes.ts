@@ -105,10 +105,12 @@ function extractLearnArticles(): { slug: string; title: string; metaDescription:
 
 function extractNicheSymbols(): string[] {
   const src = readSrc("src/lib/nicheData.ts");
+  const match = src.match(/export const NICHE_SYMBOLS:[^=]*=\s*\[([\s\S]*?)\];/);
+  if (!match) return [];
   const symbols = new Set<string>();
-  const re = /["']([A-Z0-9]{2,10})["']\s*:/g;
+  const re = /["']([A-Z0-9-]{2,12})["']/g;
   let m: RegExpExecArray | null;
-  while ((m = re.exec(src)) !== null) symbols.add(m[1]);
+  while ((m = re.exec(match[1])) !== null) symbols.add(m[1]);
   return Array.from(symbols);
 }
 
@@ -233,9 +235,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/leaderboard",
     title: "Trader Leaderboard — Top Practice Portfolios | TradeHQ",
-    description: `See who is winning on TradeHQ this week. Ranked by simulated P&L, win rate and Sharpe ratio. Free practice account — join with ${BALANCE} virtual cash.`,
+    description: `Community practice board for public TradeHQ accounts. Client-synced simulated portfolio statistics are sorted by submitted percentage return and are not independently verified.`,
     h1: "Trader Leaderboard",
-    summary: `See how the community's simulated portfolios stack up on P&L, win rate and Sharpe ratio. Join with a free practice account seeded with ${BALANCE}.`,
+    summary: `Public accounts can opt in to display client-synced simulated portfolio statistics. These browser-originated figures are not audited performance records.`,
     priority: "0.7",
     changefreq: "daily",
   });
@@ -265,7 +267,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "TradeHQ Reviews — What Traders Are Saying | TradeHQ",
     description: `Read honest reviews from TradeHQ practice traders. Free educational simulator with ${BALANCE} virtual cash — no signup.`,
     h1: "TradeHQ Reviews",
-    summary: `Honest, community-submitted reviews of the TradeHQ practice simulator. TradeHQ is a free educational sandbox with ${BALANCE} virtual cash and no brokerage relationship.`,
+    summary: `Community-submitted reviews of the TradeHQ practice simulator. Submissions are moderated and duplicate-limited but are not independently verified.`,
     priority: "0.6",
     changefreq: "weekly",
   });
@@ -285,7 +287,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "About TradeHQ — Built by Anuga Weerasinghe | TradeHQ",
     description: `TradeHQ is a free educational trading simulator built by Anuga Weerasinghe. No brokerage, no real money, no signup — just ${BALANCE} virtual cash to learn with.`,
     h1: "About TradeHQ",
-    summary: `TradeHQ is a free educational trading simulator built by Anuga Weerasinghe. It is not a brokerage. There is no real money, no signup, and no advertising trackers. Every practice account starts with ${BALANCE} virtual cash.`,
+    summary: `TradeHQ is a free educational trading simulator built by Anuga Weerasinghe. It is not a brokerage and uses virtual money. Core simulator features work without signup; the site also uses third-party services including advertising.`,
     priority: "0.6",
     changefreq: "monthly",
   });
@@ -303,9 +305,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/challenge",
     title: `Challenge a Friend — 30-Day ${BALANCE} Practice Duel | TradeHQ`,
-    description: `Challenge a friend to a 30-day practice trading duel. Both traders start with ${BALANCE} virtual cash. Free, educational, no real money.`,
+    description: `Challenge a friend to a 30-day simulated trading exercise. Each side is measured from its own recorded starting value; scores are client-synced and not independently verified.`,
     h1: "Challenge a Friend",
-    summary: `Create a shareable invite and run a 30-day practice trading duel. Both sides start from ${BALANCE} in virtual cash and the leaderboard tracks who is ahead. Educational simulation only — not financial advice.`,
+    summary: `Create a shareable invite for a 30-day practice duel. Each participant is measured from their own recorded starting value, using client-synced simulated statistics. Educational simulation only.`,
     priority: "0.6",
     changefreq: "weekly",
   });
@@ -315,7 +317,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "Privacy Policy | TradeHQ",
     description: `TradeHQ privacy policy. What we store (locally in your browser), what we send to the server, and what we never do. Free educational trading simulator.`,
     h1: "Privacy Policy",
-    summary: `TradeHQ stores your portfolio, journal, watchlist and streaks locally in your browser. We do not sell data, run ad trackers, or run behavioural profiling. Full policy below.`,
+    summary: `Core simulator state is primarily browser-stored. Optional accounts, public profiles, reviews, contact submissions and third-party advertising involve server-side or provider processing; see the full policy for details.`,
     priority: "0.3",
     changefreq: "monthly",
   });
@@ -389,7 +391,7 @@ export function buildRoutes(): RouteMeta[] {
   // ---- Niche asset pages (/niche/:symbol) ----
   for (const sym of extractNicheSymbols()) {
     routes.push({
-      path: `/niche/${sym}`,
+      path: `/niche/${sym.toLowerCase()}`,
       title: `${sym} Deep Dive — Chart, Analysis & Paper Trade | TradeHQ`,
       description: `In-depth ${sym} analysis with practice trading. ${BALANCE} virtual cash, no signup. Educational simulation only — not financial advice.`,
       h1: `${sym} — Deep Dive`,

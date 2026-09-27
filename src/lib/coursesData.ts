@@ -747,7 +747,7 @@ const psychologyTrack: CourseTrack = {
         "## Ghost journaling",
         "TradeHQ ghost-journals every simulated trade automatically — no discipline required. You get the review value without the friction of manual entry.",
         "## The 100-trade rule",
-        "Don't judge a strategy on fewer than 100 trades. Statistical noise dominates below that. A strategy with 55% win rate and 1.5:1 payoff can easily have a 15-trade losing streak without any degradation in edge.",
+        "A larger sample can reduce noise, but there is no universal trade count that proves an edge. Under a simple independent model with a 55% win probability over 100 trades, the chance of at least one 10-loss run is about 1.7%, while a 15-loss run is about 0.03%; real trades may not be independent or identically distributed.",
         DISC,
       ],
       keyTakeaways: [
@@ -764,7 +764,7 @@ const psychologyTrack: CourseTrack = {
         { question: "Minimum sample size for judging a strategy:", options: ["10", "30", "100", "1,000"], correctAnswer: 2, explanation: "Below ~100, noise dominates." },
         { question: "Most useful weekly review action:", options: ["Read news", "Sort by setup + per-setup expectancy", "Add indicators", "Trade more"], correctAnswer: 1, explanation: "Reveals which setups drive P&L." },
         { question: "Minimum viable journal entry has ~", options: ["1 field", "10 fields", "50 fields", "100 fields"], correctAnswer: 1, explanation: "About ten fields hit the sweet spot." },
-        { question: "How many consecutive losses can a 55% strategy have without indicating broken edge?", options: ["1-2", "3-5", "10-15", "Never should lose"], correctAnswer: 2, explanation: "15-trade losing streaks are statistically unremarkable." },
+        { question: "Under an independent 55%-win model over 100 trades, the chance of at least one 15-loss run is closest to:", options: ["0.03%", "3%", "15%", "55%"], correctAnswer: 0, explanation: "The probability is about 0.030% under that specific independent-trade model. Real trading outcomes need not satisfy those assumptions." },
       ],
     },
     {
@@ -809,7 +809,7 @@ const psychologyTrack: CourseTrack = {
       readingMinutes: 8,
       body: [
         "## Drawdown is math, not failure",
-        "A 55% win-rate, 1.5:1 payoff strategy — objectively excellent — will still have 8-15 trade losing streaks that produce 10-15% drawdowns. This is not a broken strategy. It is a mathematically expected feature of trading a positive-expectancy system with variance.",
+        "Win rate and payoff ratio alone do not determine drawdown; position risk and dependence between trades also matter. Under a simple independent 55%-win model over 100 trades, an 8-loss run occurs at least once about 8.4% of the time, while a 15-loss run is about 0.03%. Translate any losing run into drawdown only after stating the risk-per-trade model.",
         "## The size-down protocol",
         "The pro response to a 10% drawdown is not to trade harder. It is to cut position size by 50% until the account recovers by half the drawdown, then step back to normal size. This 'de-leverage' rule single-handedly saves careers.",
         "## The rulebook lock",

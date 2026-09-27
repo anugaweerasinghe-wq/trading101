@@ -415,12 +415,12 @@ export default function Markets() {
             {
               question: "What does the TradeHQ Markets dashboard show?",
               answer:
-                "The markets dashboard tracks live prices, 24h % change and volume for 130+ crypto, stock, ETF, forex and commodity assets — all sortable by sector and category.",
+                "The markets dashboard shows simulated practice prices, percentage change and estimated volume across crypto, stocks, ETFs, forex and commodities. Values on this page are generated for the simulator and are not execution-quality market quotes.",
             },
             {
               question: "How often does market data refresh?",
               answer:
-                "We refresh quotes for the most-liquid assets every 60 seconds via free public market APIs. Less-liquid assets are anchored to a real cached price and given small micro-fluctuations between refreshes for visual liveness.",
+                "This dashboard updates its simulated practice prices every few seconds for visual feedback. Provider-backed, delayed or cached data may be used elsewhere on TradeHQ and is labelled separately when available.",
             },
             {
               question: "Can I trade directly from the Markets page?",

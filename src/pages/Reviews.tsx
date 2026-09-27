@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Star, Quote, ShieldCheck } from "lucide-react";
+import { Star, Quote, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
@@ -108,46 +108,26 @@ export default function Reviews() {
     load();
   };
 
-  // Programmatic SEO: AggregateRating + Review JSON-LD
-  const jsonLd = useMemo(() => {
-    const base: Record<string, unknown> = {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      name: "TradeHQ — Free Trading Simulator",
-      description: "Practice stock, crypto, ETF and forex trading with $100,000 simulated cash. Free, no signup.",
-      url: "https://www.thetradehq.com/reviews",
-    };
-    if (stats.count > 0) {
-      base.aggregateRating = {
-        "@type": "AggregateRating",
-        ratingValue: stats.avg.toFixed(1),
-        reviewCount: stats.count,
-        bestRating: 5,
-        worstRating: 1,
-      };
-      base.review = reviews.slice(0, 20).map((r) => ({
-        "@type": "Review",
-        reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5 },
-        author: { "@type": "Person", name: r.name || "Anonymous Trader" },
-        datePublished: r.created_at,
-        reviewBody: r.content,
-      }));
-    }
-    return base;
-  }, [reviews, stats]);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "TradeHQ Community Reviews",
+    description: "User-submitted reviews of the TradeHQ educational trading simulator. Reviews are moderated but not independently verified.",
+    url: "https://www.thetradehq.com/reviews",
+  };
 
   return (
     <>
       <Helmet>
-        <title>{`TradeHQ Reviews — ${stats.count > 0 ? `${stats.avg.toFixed(1)}/5 from ${stats.count} traders` : "Real Trader Feedback"} | TradeHQ`}</title>
+        <title>{`TradeHQ Community Reviews${stats.count > 0 ? ` — ${stats.count} submissions` : ""} | TradeHQ`}</title>
         <meta
           name="description"
-          content={`Read ${stats.count || "real"} verified reviews from traders using TradeHQ's free $100,000 simulator. ${stats.count > 0 ? `Average rating ${stats.avg.toFixed(1)}/5.` : ""} Share your own experience.`}
+          content={`Read user-submitted reviews of TradeHQ's educational trading simulator. Reviews are moderated but are not independently verified. ${stats.count > 0 ? `Visible submissions currently average ${stats.avg.toFixed(1)}/5.` : ""}`}
         />
         <link rel="canonical" href="https://www.thetradehq.com/reviews" />
         <meta name="robots" content="index, follow, max-snippet:-1" />
         <meta property="og:title" content="TradeHQ Reviews — What Traders Say" />
-        <meta property="og:description" content="Real reviews from real traders using TradeHQ's free simulator." />
+        <meta property="og:description" content="User-submitted community reviews of the TradeHQ educational simulator. Submissions are not independently verified." />
         <meta property="og:url" content="https://www.thetradehq.com/reviews" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
@@ -159,12 +139,12 @@ export default function Reviews() {
         <main className="pt-24 pb-16 container mx-auto px-4 max-w-5xl">
           <header className="text-center mb-10 animate-fade-in">
             <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-primary/10 border border-primary/20">
-              <ShieldCheck className="w-4 h-4 text-primary" />
-              <span className="text-xs font-medium text-primary">Verified Reviews</span>
+              <MessageSquare className="w-4 h-4 text-primary" />
+              <span className="text-xs font-medium text-primary">Community Reviews</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-3">What Traders Say About TradeHQ</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Honest feedback from real users of our free $100,000 trading simulator. One review per visitor — no fakes, no incentives.
+              User-submitted feedback about the free $100,000 practice simulator. Submissions are moderated and duplicate-limited, but identity and usage are not independently verified.
             </p>
             {stats.count > 0 && (
               <div className="mt-5 inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-card border border-border">
@@ -215,7 +195,7 @@ export default function Reviews() {
               <Card className="p-5">
                 <h2 className="font-semibold mb-1">Share your experience</h2>
                 <p className="text-xs text-muted-foreground mb-4">
-                  One review per visitor, forever. Name is optional.
+                  Duplicate submissions are limited using browser/server abuse controls. Name is optional; reviews are not independently verified.
                 </p>
 
                 {submitted ? (

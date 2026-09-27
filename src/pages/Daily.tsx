@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { Link } from "react-router-dom";
-import { Flame, Trophy, Check, X, ArrowRight, Sparkles, TrendingUp, Brain, Lock } from "lucide-react";
+import { Flame, Trophy, Check, ArrowRight, Sparkles, TrendingUp, Brain, Lock } from "lucide-react";
 import {
   getTodayChallenge,
   getStreak,
@@ -33,8 +33,10 @@ export default function Daily() {
 
   const handleSubmit = (decision: ChallengeDecision) => {
     if (submitted) return;
-    const opt = challenge.options.find((o) => o.value === decision)!;
-    const next = recordChallenge(challenge.id, decision, opt.correct);
+    // The directional scenario is a reflection exercise, not a forecast quiz.
+    // Completing the reasoning step advances the streak; no market direction is
+    // presented as objectively correct.
+    const next = recordChallenge(challenge.id, decision, true);
     setSelected(decision);
     setSubmitted(true);
     setStreak(next);
@@ -47,7 +49,7 @@ export default function Daily() {
     <>
       <Helmet>
         <title>Daily Trading Challenge — Build Your Streak | TradeHQ</title>
-        <meta name="description" content="A new trading scenario every day. Pick long, short, or hold. Build your streak, unlock badges, learn one new pro insight every 24 hours. Free, no signup." />
+        <meta name="description" content="A new simulated market scenario every day. Compare long, short and hold reasoning, build a streak, and practise decision-making without treating any direction as a guaranteed answer." />
         <link rel="canonical" href="https://www.thetradehq.com/daily" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Daily Trading Challenge — TradeHQ" />
@@ -98,7 +100,7 @@ export default function Daily() {
                 Today's Trading Scenario
               </h1>
               <p className="text-foreground/70 max-w-xl mx-auto text-[15px] leading-relaxed">
-                A fresh real-world setup every UTC midnight. Pick your move, learn one pro-grade insight, and grow your streak.
+                A fresh simulated setup every day. Pick a response, compare the trade-offs, and grow your streak — no direction is treated as a guaranteed forecast.
               </p>
             </header>
 
@@ -170,6 +172,9 @@ export default function Daily() {
               <h2 className="text-2xl md:text-[34px] font-bold mb-4 text-foreground leading-[1.15] tracking-tight">
                 {challenge.scenario}
               </h2>
+              <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground mb-2">
+                Hypothetical exercise inputs — not current market data, verified forecasts, or trading signals
+              </p>
               <p className="text-[15px] md:text-base text-foreground/75 mb-8 leading-relaxed max-w-3xl">
                 {challenge.context}
               </p>
@@ -178,8 +183,6 @@ export default function Daily() {
               <div className="space-y-2.5 mb-6">
                 {challenge.options.map((opt) => {
                   const isSelected = selected === opt.value;
-                  const showCorrect = submitted && opt.correct;
-                  const showWrong = submitted && isSelected && !opt.correct;
                   return (
                     <button
                       key={opt.value}
@@ -188,24 +191,22 @@ export default function Daily() {
                       className={cn(
                         "group w-full text-left p-4 md:p-5 rounded-2xl border transition-all duration-200 active:scale-[0.98]",
                         !submitted && "bg-white/[0.03] border-white/[0.08] hover:border-primary/50 hover:bg-primary/[0.06] hover:translate-x-0.5 cursor-pointer",
-                        showCorrect && "bg-success/10 border-success/50 shadow-[0_0_24px_-4px_hsl(157_100%_44%/0.3)]",
-                        showWrong && "bg-destructive/10 border-destructive/50",
-                        submitted && !isSelected && !opt.correct && "bg-white/[0.02] border-white/[0.04] opacity-40",
+                        submitted && isSelected && "bg-primary/10 border-primary/40",
+                        submitted && !isSelected && "bg-white/[0.02] border-white/[0.04] opacity-55",
                       )}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1">
                           <div className="text-[15px] font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">{opt.label}</div>
-                          {submitted && <div className="text-xs text-foreground/65 leading-relaxed">{opt.rationale}</div>}
+                          {submitted && isSelected && (
+                            <div className="text-xs text-foreground/65 leading-relaxed">
+                              Your stated reasoning: {opt.rationale}
+                            </div>
+                          )}
                         </div>
-                        {showCorrect && (
-                          <div className="w-7 h-7 rounded-full bg-success/20 border border-success/50 flex items-center justify-center flex-shrink-0">
-                            <Check className="w-4 h-4 text-success" />
-                          </div>
-                        )}
-                        {showWrong && (
-                          <div className="w-7 h-7 rounded-full bg-destructive/20 border border-destructive/50 flex items-center justify-center flex-shrink-0">
-                            <X className="w-4 h-4 text-destructive" />
+                        {submitted && isSelected && (
+                          <div className="w-7 h-7 rounded-full bg-primary/20 border border-primary/50 flex items-center justify-center flex-shrink-0">
+                            <Check className="w-4 h-4 text-primary" />
                           </div>
                         )}
                       </div>
@@ -227,9 +228,11 @@ export default function Daily() {
                     <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
                       <Brain className="w-4 h-4 text-primary" />
                     </div>
-                    <div className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Pro Insight</div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Decision Review</div>
                   </div>
-                  <p className="text-[15px] text-foreground leading-relaxed">{challenge.insight}</p>
+                  <p className="text-[15px] text-foreground leading-relaxed">
+                      This snapshot does not establish one objectively correct market direction. Compare what evidence would support each option, what evidence would invalidate it, and how uncertainty changes a simulated position. Treat the exercise as process practice, not a trading signal.
+                    </p>
                 </div>
               )}
 

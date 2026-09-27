@@ -168,10 +168,13 @@ export function executeTrade(
   }
 }
 
-export function updatePositionPrices(portfolio: Portfolio): Portfolio {
+export function updatePositionPrices(
+  portfolio: Portfolio,
+  currentAssets: Asset[] = ASSETS,
+): Portfolio {
   const newPortfolio = { ...portfolio };
   newPortfolio.positions = newPortfolio.positions.map((position) => {
-    const currentAsset = ASSETS.find((a) => a.id === position.asset.id);
+    const currentAsset = currentAssets.find((a) => a.id === position.asset.id);
     if (currentAsset) {
       const currentValue = currentAsset.price * position.quantity;
       const totalCost = position.avgPrice * position.quantity;
@@ -193,64 +196,57 @@ export function updatePositionPrices(portfolio: Portfolio): Portfolio {
   return newPortfolio;
 }
 
-const WEEKLY_BONUS_KEY = 'tradesandbox_last_bonus';
-const WEEKLY_BONUS_AMOUNT = 100000;
-const WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
-
-export function canClaimWeeklyBonus(): boolean {
-  const lastClaim = localStorage.getItem(WEEKLY_BONUS_KEY);
-  if (!lastClaim) return true;
-  
-  const timeSinceLastClaim = Date.now() - parseInt(lastClaim);
-  return timeSinceLastClaim >= WEEK_IN_MS;
-}
-
-export function getTimeUntilNextBonus(): string {
-  const lastClaim = localStorage.getItem(WEEKLY_BONUS_KEY);
-  if (!lastClaim) return 'Available now';
-  
-  const timeSinceLastClaim = Date.now() - parseInt(lastClaim);
-  const timeRemaining = WEEK_IN_MS - timeSinceLastClaim;
-  
-  if (timeRemaining <= 0) return 'Available now';
-  
-  const days = Math.floor(timeRemaining / (24 * 60 * 60 * 1000));
-  const hours = Math.floor((timeRemaining % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-  
-  if (days > 0) {
-    return `${days}d ${hours}h remaining`;
-  }
-  return `${hours}h remaining`;
-}
-
-export function claimWeeklyBonus(portfolio: Portfolio): { success: boolean; message: string; portfolio?: Portfolio } {
-  if (!canClaimWeeklyBonus()) {
-    return {
-      success: false,
-      message: `Weekly bonus already claimed. Next bonus in ${getTimeUntilNextBonus()}`,
-    };
-  }
-
-  const newPortfolio = { ...portfolio };
-  newPortfolio.cash += WEEKLY_BONUS_AMOUNT;
-  newPortfolio.totalValue += WEEKLY_BONUS_AMOUNT;
-
-  localStorage.setItem(WEEKLY_BONUS_KEY, Date.now().toString());
-  savePortfolio(newPortfolio);
-
-  return {
-    success: true,
-    message: `Claimed $${WEEKLY_BONUS_AMOUNT.toLocaleString()} weekly bonus!`,
-    portfolio: newPortfolio,
-  };
-}
-
 /**
  * Lifetime realized P&L: for each SELL trade, value gained relative to
  * the average cost basis at the time. We approximate using current avgPrice
  * of remaining position when available, else the sell price itself (0 P&L).
  * To keep it simple and correct, we walk trades chronologically per asset.
  */
+export function calculateClosedTradeStats(portfolio: Portfolio): { sells: number; wins: number; winRate: number } {
+  const positions = new Map<string, { quantity: number; avgUnitCost: number }>();
+  let sells = 0;
+  let wins = 0;
+
+  const trades = [...portfolio.trades].sort(
+    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
+  );
+
+  for (const trade of trades) {
+    const state = positions.get(trade.assetId) ?? { quantity: 0, avgUnitCost: 0 };
+    if (trade.quantity <= 0) continue;
+
+    if (trade.type === "buy") {
+      // Buy totals include the simulator fee, so this cost basis includes fees.
+      const unitCost = trade.total / trade.quantity;
+      const nextQuantity = state.quantity + trade.quantity;
+      state.avgUnitCost =
+        nextQuantity > 0
+          ? (state.avgUnitCost * state.quantity + unitCost * trade.quantity) / nextQuantity
+          : 0;
+      state.quantity = nextQuantity;
+      positions.set(trade.assetId, state);
+      continue;
+    }
+
+    if (state.quantity <= 0) continue;
+    const closedQuantity = Math.min(trade.quantity, state.quantity);
+    // Sell totals are net of the simulator fee.
+    const unitProceeds = trade.total / trade.quantity;
+    const realized = (unitProceeds - state.avgUnitCost) * closedQuantity;
+    sells += 1;
+    if (realized > 0) wins += 1;
+    state.quantity = Math.max(0, state.quantity - closedQuantity);
+    if (state.quantity === 0) state.avgUnitCost = 0;
+    positions.set(trade.assetId, state);
+  }
+
+  return {
+    sells,
+    wins,
+    winRate: sells > 0 ? Math.round((wins / sells) * 100) : 0,
+  };
+}
+
 export function calculateRealizedPnL(portfolio: Portfolio): number {
   const byAsset = new Map<string, Trade[]>();
   // Sort ascending

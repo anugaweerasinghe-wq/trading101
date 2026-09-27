@@ -67,7 +67,7 @@ export function LiveDataToggle({ asset, onLiveDataReceived }: LiveDataToggleProp
       const result = await response.json();
 
       if (result.success && result.data && typeof result.data.price === 'number' && !isNaN(result.data.price)) {
-        const isLive = result.data.source === 'live';
+        const isLive = (result.provenance?.status ?? result.data.provenance?.status) === 'realtime';
         setIsConnected(isLive);
         setLastUpdate(new Date());
         

@@ -1,18 +1,21 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { Card } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, TrendingUp, Award, Share2, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import { getPortfolio, calculateRealizedPnL, calculateMaxDrawdown } from "@/lib/portfolio";
+import { getPortfolio, calculateRealizedPnL, calculateMaxDrawdown, calculateClosedTradeStats } from "@/lib/portfolio";
 import { STARTING_BALANCE_LABEL } from "@/lib/constants";
 import { loadProgress } from "@/lib/courseProgress";
 import { courseTracks } from "@/lib/coursesData";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const DOMAIN = "https://www.thetradehq.com";
 
@@ -25,9 +28,7 @@ function useTraderStats() {
     const realized = calculateRealizedPnL(p);
     const maxDD = calculateMaxDrawdown();
     const trades = p.trades.length;
-    const sells = p.trades.filter((t) => t.type === "sell").length;
-    const wins = p.trades.filter((t) => t.type === "sell" && t.total > 0).length;
-    const winRate = sells > 0 ? Math.round((wins / sells) * 100) : 0;
+    const winRate = calculateClosedTradeStats(p).winRate;
 
     const progress = loadProgress();
     const badges = courseTracks
@@ -40,13 +41,35 @@ function useTraderStats() {
 
 export default function TraderProfile() {
   const s = useTraderStats();
+  const { user, profile, refreshProfile } = useAuth();
+  const [visibilityBusy, setVisibilityBusy] = useState(false);
+
+  const setPublicVisibility = async (isPublic: boolean) => {
+    if (!user || visibilityBusy) return;
+    setVisibilityBusy(true);
+    const { error } = await supabase
+      .from("profiles")
+      .update({ is_public: isPublic })
+      .eq("id", user.id);
+    if (error) {
+      toast.error("Could not update profile visibility.");
+    } else {
+      await refreshProfile();
+      toast.success(isPublic ? "Public profile enabled." : "Profile is now private.");
+    }
+    setVisibilityBusy(false);
+  };
   const path = "/trader/me";
   const title = "My Trader Profile — Practice Portfolio Stats | TradeHQ";
-  const description = "Public snapshot of my TradeHQ practice trading — P&L, win rate, and completed courses. Educational simulation only, not financial advice.";
+  const description = "Local snapshot of TradeHQ practice statistics. Signed-in users can choose whether their backend profile is public. Educational simulation only, not financial advice.";
 
   const share = async () => {
-    const url = `${window.location.origin}/trader/me`;
-    const text = `My TradeHQ practice portfolio: ${s.totalPnLPct >= 0 ? "+" : ""}${s.totalPnLPct.toFixed(1)}% on a ${STARTING_BALANCE_LABEL} virtual account · ${s.trades} trades · ${s.winRate}% win rate. Educational simulation only.`;
+    if (!profile?.is_public || !profile.username) {
+      toast.error("Turn on public profile visibility before sharing a public profile link.");
+      return;
+    }
+    const url = `${window.location.origin}/trader/${encodeURIComponent(profile.username)}`;
+    const text = `My TradeHQ practice portfolio: ${s.totalPnLPct >= 0 ? "+" : ""}${s.totalPnLPct.toFixed(1)}% on a ${STARTING_BALANCE_LABEL} virtual account · ${s.trades} trades · ${s.winRate}% win rate. Client-synced simulated stats; not independently verified.`;
     try {
       if (navigator.share) {
         await navigator.share({ title: "My TradeHQ trader profile", text, url });
@@ -78,22 +101,43 @@ export default function TraderProfile() {
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-xs uppercase tracking-widest text-emerald-400 mb-3">
-                  <Trophy className="h-3 w-3" /> Public trader profile
+                  <Trophy className="h-3 w-3" /> Practice profile
                 </div>
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight">My TradeHQ profile</h1>
                 <p className="text-sm text-muted-foreground mt-2 max-w-xl">
-                  A shareable snapshot of my paper-trading track record on TradeHQ. All figures are
-                  simulated. Educational simulation only — not financial advice.
+                  A local snapshot of this browser's paper-trading record. All figures are simulated.
+                  Public account visibility is optional and controlled below. Educational simulation only — not financial advice.
                 </p>
               </div>
               <button
                 onClick={share}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 text-black font-semibold hover:bg-emerald-400 transition"
+                disabled={!profile?.is_public}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 text-black font-semibold hover:bg-emerald-400 transition disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                <Share2 className="w-4 h-4" /> Share profile
+                <Share2 className="w-4 h-4" /> Share public profile
               </button>
             </div>
           </header>
+
+          {user && profile && (
+            <Card className="p-5 mb-8 bg-white/[0.02] border-white/10">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="font-semibold">Public profile visibility</h2>
+                  <p className="text-xs text-muted-foreground mt-1 max-w-xl">
+                    New profiles start private. Turn this on only if you want your username, profile details
+                    and selected practice statistics to be discoverable on TradeHQ's public community pages.
+                  </p>
+                </div>
+                <Switch
+                  checked={profile.is_public}
+                  disabled={visibilityBusy}
+                  onCheckedChange={setPublicVisibility}
+                  aria-label="Public profile visibility"
+                />
+              </div>
+            </Card>
+          )}
 
           <section className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
             {[

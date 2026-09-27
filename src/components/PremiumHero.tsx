@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Brain, Sparkles, TrendingUp, Shield, Zap, Activity } from "lucide-react";
+import { ArrowRight, Brain, Sparkles, TrendingUp, Shield, Activity } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -149,7 +149,6 @@ export function PremiumHero() {
             { label: 'Tradeable Assets', value: '150+', icon: TrendingUp, glow: 'hsl(180 70% 50% / 0.1)' },
             { label: 'Virtual Capital', value: '$100K', icon: Shield, glow: 'hsl(152 60% 42% / 0.1)' },
             { label: 'AI Mentoring', value: 'Free', icon: Sparkles, glow: 'hsl(280 60% 55% / 0.1)' },
-            { label: 'Weekly Refill', value: '$100K', icon: Zap, glow: 'hsl(38 75% 50% / 0.1)' },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}

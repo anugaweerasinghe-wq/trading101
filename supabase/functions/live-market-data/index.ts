@@ -64,6 +64,15 @@ const COMMODITY_MAP: Record<string, string> = {
   'silver': 'silver-token',
 };
 
+type DataStatus = 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider';
+
+interface DataProvenance {
+  status: DataStatus;
+  provider: string;
+  fetchedAt: string;
+  note?: string;
+}
+
 interface MarketData {
   price: number;
   change24h: number;
@@ -73,7 +82,9 @@ interface MarketData {
   volume24h: number;
   marketCap?: number;
   lastUpdated: string;
+  /** Legacy compatibility field. Use provenance.status for user-facing labels. */
   source: 'live' | 'simulated';
+  provenance: DataProvenance;
 }
 
 interface CandleData {
@@ -114,6 +125,11 @@ async function fetchCryptoData(assetId: string): Promise<MarketData | null> {
       marketCap: coin.usd_market_cap ?? 0,
       lastUpdated: new Date().toISOString(),
       source: 'live',
+      provenance: {
+        status: 'realtime',
+        provider: 'CoinGecko',
+        fetchedAt: new Date().toISOString(),
+      },
     };
   } catch (error) {
     console.error(`Crypto fetch error ${assetId}:`, error);
@@ -159,6 +175,12 @@ async function fetchStockData(assetId: string): Promise<MarketData | null> {
             price: r.c, change24h: change, changePercent24h: (change / r.o) * 100,
             high24h: r.h, low24h: r.l, volume24h: r.v,
             lastUpdated: new Date().toISOString(), source: 'live',
+            provenance: {
+              status: 'previous_close',
+              provider: 'Polygon',
+              fetchedAt: new Date().toISOString(),
+              note: 'Previous trading day aggregate; not a realtime quote.',
+            },
           };
         }
       }
@@ -185,6 +207,12 @@ async function fetchStockData(assetId: string): Promise<MarketData | null> {
           low24h: parseFloat(q['04. low'] || String(price)),
           volume24h: parseFloat(q['06. volume'] || '0'),
           lastUpdated: new Date().toISOString(), source: 'live',
+          provenance: {
+            status: 'delayed',
+            provider: 'Alpha Vantage',
+            fetchedAt: new Date().toISOString(),
+            note: 'Provider quote may be delayed or end-of-day depending on entitlement.',
+          },
         };
       }
     }
@@ -213,6 +241,12 @@ async function fetchForexData(assetId: string): Promise<MarketData | null> {
           price, change24h: simChange, changePercent24h: (simChange / price) * 100,
           high24h: price * 1.001, low24h: price * 0.999, volume24h: 0,
           lastUpdated: new Date().toISOString(), source: 'live',
+          provenance: {
+            status: 'mixed',
+            provider: 'Alpha Vantage + TradeHQ simulation',
+            fetchedAt: new Date().toISOString(),
+            note: 'Exchange rate is provider-sourced; change/high/low fields are simulated.',
+          },
         };
       }
     }
@@ -229,6 +263,11 @@ function generateSimulatedData(basePrice: number, type: string): MarketData {
     high24h: basePrice * (1 + volatility), low24h: basePrice * (1 - volatility),
     volume24h: Math.floor(Math.random() * 1000000000),
     lastUpdated: new Date().toISOString(), source: 'simulated',
+    provenance: {
+      status: 'simulated',
+      provider: 'TradeHQ simulation',
+      fetchedAt: new Date().toISOString(),
+    },
   };
 }
 
@@ -275,13 +314,27 @@ serve(async (req) => {
     console.log(`Fetching ${dataType} for ${assetId} (type: ${assetType}, days: ${days})`);
 
     let data: MarketData | CandleData[] | null = null;
+    let candleProvenance: DataProvenance | null = null;
 
     if (dataType === 'candles') {
       if (assetType === 'crypto' && CRYPTO_ID_MAP[assetId]) {
         data = await fetchCryptoCandles(assetId, days);
+        if (Array.isArray(data) && data.length > 0) {
+          candleProvenance = {
+            status: 'provider',
+            provider: 'CoinGecko OHLC',
+            fetchedAt: new Date().toISOString(),
+            note: 'Historical provider candles; interval depends on provider range rules.',
+          };
+        }
       }
       if (!data || (Array.isArray(data) && data.length === 0)) {
         data = generateSimulatedCandles(basePrice || 100, Math.min(days * 4, 500));
+        candleProvenance = {
+          status: 'simulated',
+          provider: 'TradeHQ simulation',
+          fetchedAt: new Date().toISOString(),
+        };
       }
     } else {
       if (assetType === 'crypto') {
@@ -309,6 +362,12 @@ serve(async (req) => {
                   high24h: p * 1.01, low24h: p * 0.99,
                   volume24h: coinData[coinId].usd_24h_vol ?? 0,
                   lastUpdated: new Date().toISOString(), source: 'live' as const,
+                  provenance: {
+                    status: 'proxy',
+                    provider: 'CoinGecko token proxy',
+                    fetchedAt: new Date().toISOString(),
+                    note: 'Token proxy is not the same instrument as traditional spot commodity data.',
+                  },
                 };
               }
             }
@@ -323,7 +382,14 @@ serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ success: true, data, assetId }),
+      JSON.stringify({
+        success: true,
+        data,
+        assetId,
+        provenance: dataType === 'candles'
+          ? candleProvenance
+          : (!Array.isArray(data) ? data?.provenance ?? null : null),
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: unknown) {

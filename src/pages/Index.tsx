@@ -32,7 +32,7 @@ const homeFaqSchema = {
     {
       "@type": "Question",
       name: "Is TradeHQ completely free?",
-      acceptedAnswer: { "@type": "Answer", text: "Yes, TradeHQ is 100% free. You get $100,000 in virtual capital with weekly refills. There are no hidden fees, premium tiers, or credit card requirements." },
+      acceptedAnswer: { "@type": "Answer", text: "Yes, TradeHQ is free to use. You get $100,000 in virtual practice capital with no credit card required for simulated trading." },
     },
     {
       "@type": "Question",
@@ -153,12 +153,12 @@ const Index = () => {
     <>
       <Helmet>
         <title>TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)</title>
-        <meta name="description" content="Practice stocks, crypto, ETFs & forex with $100,000 virtual cash. Zero signup. AI mentor, live charts, leaderboard & 150+ assets. Best free trading simulator in 2026." />
+        <meta name="description" content="Practice stocks, crypto, ETFs & forex with $100,000 virtual cash. Zero signup. AI mentor, simulated charts, leaderboard & 150+ assets. Free educational trading simulator." />
         <link rel="canonical" href="https://www.thetradehq.com/" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)" />
-        <meta property="og:description" content="Practice real trading risk-free with $100K virtual money. AI mentor + live charts. No signup needed. Start in seconds." />
+        <meta property="og:description" content="Practice simulated trading with $100K virtual money. AI mentor + simulated charts. No signup needed. Start in seconds." />
         <meta property="og:url" content="https://www.thetradehq.com/" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />

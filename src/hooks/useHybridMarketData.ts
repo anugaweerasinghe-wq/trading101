@@ -76,16 +76,20 @@ async function flushQueue() {
           if (!resp.ok) throw new Error(`${resp.status}`);
           const result = await resp.json();
           if (result.success && result.data && typeof result.data.price === 'number') {
+            const status = result.provenance?.status ?? result.data.provenance?.status;
+            const normalizedSource: HybridMarketPrice['source'] =
+              status === 'realtime' ? 'live' :
+              status === 'simulated' ? 'simulated' : 'delayed';
             const d: HybridMarketPrice = {
               price: result.data.price,
               change24h: result.data.change24h ?? 0,
               changePercent24h: result.data.changePercent24h ?? 0,
-              high24h: result.data.high24h ?? result.data.price * 1.02,
-              low24h: result.data.low24h ?? result.data.price * 0.98,
+              high24h: result.data.high24h ?? result.data.price,
+              low24h: result.data.low24h ?? result.data.price,
               volume24h: result.data.volume24h ?? 0,
-              source: result.data.source ?? 'live',
-              lastUpdated: new Date().toISOString(),
-              isDelayed: false,
+              source: normalizedSource,
+              lastUpdated: result.data.lastUpdated ?? new Date().toISOString(),
+              isDelayed: normalizedSource !== 'live',
             };
             setCachedPrice(asset.id, d);
             resolve(d);

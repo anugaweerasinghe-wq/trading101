@@ -217,7 +217,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_practice_duel: {
+        Args: { p_code: string }
+        Returns: string
+      }
+      join_practice_duel: {
+        Args: { p_duel_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

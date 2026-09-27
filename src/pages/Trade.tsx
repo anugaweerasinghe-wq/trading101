@@ -47,14 +47,14 @@ export default function Trade() {
     assetsRef.current = assets;
   }, [assets]);
 
-  const fetchLivePrice = async (asset: Asset): Promise<Asset> => {
+  const fetchLivePrice = async (asset: Asset): Promise<{ asset: Asset; status: "live" | "delayed" | "simulated" | "cached" }> => {
     if (
       !asset ||
       typeof asset.price !== "number" ||
       isNaN(asset.price) ||
       asset.price <= 0
     ) {
-      return asset;
+      return { asset, status: "cached" };
     }
 
     try {
@@ -77,23 +77,32 @@ export default function Trade() {
           typeof result.data.price === "number" &&
           result.data.price > 0
         ) {
+          const provenanceStatus = result.provenance?.status ?? result.data.provenance?.status;
+          const status = provenanceStatus === "realtime"
+            ? "live"
+            : provenanceStatus === "simulated"
+              ? "simulated"
+              : "delayed";
           return {
-            ...asset,
-            price: result.data.price,
-            change:
-              typeof result.data.change24h === "number"
-                ? result.data.change24h
-                : asset.change,
-            changePercent:
-              typeof result.data.changePercent24h === "number"
-                ? result.data.changePercent24h
-                : asset.changePercent,
+            asset: {
+              ...asset,
+              price: result.data.price,
+              change:
+                typeof result.data.change24h === "number"
+                  ? result.data.change24h
+                  : asset.change,
+              changePercent:
+                typeof result.data.changePercent24h === "number"
+                  ? result.data.changePercent24h
+                  : asset.changePercent,
+            },
+            status,
           };
         }
       }
     } catch (_err) {}
 
-    return asset;
+    return { asset, status: "cached" };
   };
 
   const simulatePrice = (asset: Asset): Asset => {
@@ -120,10 +129,15 @@ export default function Trade() {
 
         const results = await Promise.allSettled(
           batch.map(async (asset) => {
-            const updated = await fetchLivePrice(asset);
-            const gotLive = updated.price !== asset.price;
-            if (gotLive) {
-              persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'live');
+            const quote = await fetchLivePrice(asset);
+            const updated = quote.asset;
+            const gotLive = quote.status === "live";
+            if (quote.status === "live") {
+              persistPrice(updated.id, updated.price, updated.change, updated.changePercent, "live");
+            } else if (quote.status === "delayed") {
+              persistPrice(updated.id, updated.price, updated.change, updated.changePercent, "delayed");
+            } else if (quote.status === "simulated") {
+              persistPrice(updated.id, updated.price, updated.change, updated.changePercent, "simulated");
             }
             return { asset: updated, gotLive };
           })
@@ -151,6 +165,7 @@ export default function Trade() {
 
       if (isMounted.current) {
         setAssets(allUpdated);
+        setPortfolio((current) => updatePositionPrices(current, allUpdated));
         setLiveAssetIds(newLiveIds);
       }
     } catch (err) {
@@ -184,6 +199,7 @@ export default function Trade() {
       if (!isMounted.current) return;
 
       setAssets(hydratedAssets);
+      setPortfolio(updatePositionPrices(getPortfolio(), hydratedAssets));
 
       if (symbol) {
         const match = hydratedAssets.find(
@@ -197,7 +213,6 @@ export default function Trade() {
       setIsLoading(false);
     }, 400);
 
-    setPortfolio(updatePositionPrices(portfolio));
     setFavorites(getFavorites());
 
     return () => {
@@ -368,13 +383,15 @@ export default function Trade() {
                   typeof livePrice === "number" &&
                   livePrice > 0
                 ) {
-                  setAssets((prev) =>
-                    prev.map((a) =>
+                  setAssets((prev) => {
+                    const nextAssets = prev.map((a) =>
                       a.id === selectedAsset.id
                         ? { ...a, price: livePrice }
                         : a,
-                    ),
-                  );
+                    );
+                    setPortfolio((current) => updatePositionPrices(current, nextAssets));
+                    return nextAssets;
+                  });
                 }
               }}
             />
