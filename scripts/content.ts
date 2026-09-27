@@ -310,7 +310,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "Head-to-head comparisons",
         p: [
-          "Comparison pages answer the question beginners actually ask: given two instruments that look similar, which one should I learn on first? Each page explains what each side really is, where they differ structurally, when one is the better learning vehicle, and the mistakes people make when they treat them as interchangeable.",
+          "Comparison pages explain how two instruments differ in structure, market drivers and risk. They are designed to support side-by-side simulator exercises rather than choose a winner or tell a learner which asset to use.",
         ],
       },
       {
@@ -320,16 +320,16 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "Why comparison beats a ranking",
         p: [
-          "There is no such thing as the best asset to trade, only assets that suit different tolerances, schedules and levels of experience. A pair of instruments that look interchangeable on a price chart can differ completely in what moves them, when they are liquid, how far they typically travel in a day, and how badly they punish a mis-sized position. That is what these pages compare.",
-          "None of them tell you what to buy, and none of them predict which side will perform better. The verdict section answers a narrower and more useful question: which of the two is the better vehicle for learning a particular skill, and under what circumstances the other one becomes the better choice.",
+          "Two instruments that look similar on a chart can represent very different legal claims, market structures and sources of risk. These pages compare those differences without inferring personal suitability from age, experience, schedule or a short simulation sample.",
+          "None of them tell you what to buy or predict which side will perform better. The comparison-lens section summarizes the structural difference without ranking either instrument.",
         ],
       },
       {
         h: "How to use a comparison",
         list: [
-          "Read both deep-dive sections before looking at the verdict, so you form a view of each instrument on its own terms first.",
-          "Practise both sides in the simulator for a week before deciding which suits you.",
-          "Note that 'better' here means better to learn on, never better to buy — no page here recommends an instrument.",
+          "Read both deep-dive sections before the comparison lens so each instrument is understood on its own terms first.",
+          "Practise both sides under the same hypothetical assumptions and compare the recorded results.",
+          "No page here treats a short simulator result as proof that one instrument is better or personally suitable.",
           "Check the mistakes section even if you think the comparison is obvious; the obvious version is usually where the error lives.",
           DISCLAIMER,
         ],
@@ -345,12 +345,12 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: `${p.a.name}: ${p.a.tag}`, p: [p.deepDive[0]] },
         { h: `${p.b.name}: ${p.b.tag}`, p: [p.deepDive[1] || p.deepDive[0]] },
         { h: "Key differences", list: p.bullets },
-        { h: "Which to practise first", p: [p.verdict] },
+        { h: "Comparison lens", p: [p.verdict] },
         { h: "Common mistakes with this comparison", list: p.mistakes },
         {
           h: "Practise both sides",
           p: [
-            `Rather than picking on paper, trade both in the simulator with identical position sizes for a few weeks and compare how each behaves in your own hands. ${DISCLAIMER}`,
+            `Rather than picking a winner, apply the same documented virtual assumptions to both and compare the resulting volatility, drawdown and event sensitivity. A short simulator sample is not a recommendation or forecast. ${DISCLAIMER}`,
           ],
         },
       ],
