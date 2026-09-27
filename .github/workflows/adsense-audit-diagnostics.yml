@@ -1,0 +1,33 @@
+name: AdSense audit diagnostics
+
+on:
+  push:
+    branches:
+      - adsense-quality-audit-record-2026-09-27
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Production build
+        run: npm run build
+
+      - name: Content-quality audit
+        run: node scripts/audit-content.mjs
+
+      - name: ESLint diagnostic
+        continue-on-error: true
+        run: npm run lint
