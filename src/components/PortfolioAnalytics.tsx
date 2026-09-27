@@ -3,7 +3,7 @@ import { Portfolio } from "@/lib/types";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { TrendingUp, Target, Shield, Award, TrendingDown } from "lucide-react";
+import { TrendingUp, Target, Shield, TrendingDown } from "lucide-react";
 import { calculateMaxDrawdown, calculateRealizedPnL } from "@/lib/portfolio";
 
 interface PortfolioAnalyticsProps {
@@ -14,23 +14,15 @@ const COLORS = ['hsl(45 100% 51%)', 'hsl(142 71% 45%)', 'hsl(217 91% 60%)', 'hsl
 
 export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
   const analytics = useMemo(() => {
-    const totalInvested = portfolio.positions.reduce((sum, p) => sum + (p.avgPrice * p.quantity), 0);
-    const currentValue = portfolio.positions.reduce((sum, p) => sum + p.currentValue, 0);
-    const totalReturn = currentValue - totalInvested;
-    const returnPercent = totalInvested > 0 ? (totalReturn / totalInvested) * 100 : 0;
+    const totalCostBasis = portfolio.positions.reduce((sum, p) => sum + (p.avgPrice * p.quantity), 0);
+    const openPositionsValue = portfolio.positions.reduce((sum, p) => sum + p.currentValue, 0);
+    const unrealizedPnL = openPositionsValue - totalCostBasis;
+    const unrealizedPct = totalCostBasis > 0 ? (unrealizedPnL / totalCostBasis) * 100 : 0;
 
-    // Calculate Sharpe Ratio (simplified)
-    const returns = portfolio.positions.map(p => p.profitLossPercent);
-    const avgReturn = returns.reduce((a, b) => a + b, 0) / (returns.length || 1);
-    const stdDev = Math.sqrt(returns.reduce((sum, r) => sum + Math.pow(r - avgReturn, 2), 0) / (returns.length || 1));
-    const sharpeRatio = stdDev !== 0 ? (avgReturn / stdDev) : 0;
+    // These are OPEN-position counts, not a closed-trade win rate.
+    const positiveOpenPositions = portfolio.positions.filter(p => p.profitLoss > 0).length;
+    const negativeOpenPositions = portfolio.positions.filter(p => p.profitLoss < 0).length;
 
-    // Win/Loss ratio
-    const winners = portfolio.positions.filter(p => p.profitLoss > 0).length;
-    const losers = portfolio.positions.filter(p => p.profitLoss < 0).length;
-    const winRate = portfolio.positions.length > 0 ? (winners / portfolio.positions.length) * 100 : 0;
-
-    // Sector allocation
     const allocation = portfolio.positions.reduce((acc, p) => {
       const type = p.asset.type;
       acc[type] = (acc[type] || 0) + p.currentValue;
@@ -40,90 +32,77 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
     const allocationData = Object.entries(allocation).map(([name, value]) => ({
       name: name.toUpperCase(),
       value,
-      percentage: (value / currentValue) * 100
+      percentage: openPositionsValue > 0 ? (value / openPositionsValue) * 100 : 0,
     }));
 
-    // Diversification score (0-100)
-    const diversificationScore = Math.min(
-      100,
-      (Object.keys(allocation).length * 20) + // Sector diversity
-      (portfolio.positions.length * 5) // Number of positions
-    );
+    const largestPositionWeight = openPositionsValue > 0
+      ? Math.max(0, ...portfolio.positions.map(p => (p.currentValue / openPositionsValue) * 100))
+      : 0;
 
     const maxDrawdown = calculateMaxDrawdown();
     const realizedPnL = calculateRealizedPnL(portfolio);
+    const cashPct = portfolio.totalValue > 0 ? (portfolio.cash / portfolio.totalValue) * 100 : 0;
 
     return {
-      totalInvested,
-      currentValue,
-      totalReturn,
-      returnPercent,
-      sharpeRatio,
-      winRate,
-      winners,
-      losers,
+      totalCostBasis,
+      openPositionsValue,
+      unrealizedPnL,
+      unrealizedPct,
+      positiveOpenPositions,
+      negativeOpenPositions,
       allocationData,
-      diversificationScore,
+      assetClassCount: Object.keys(allocation).length,
+      largestPositionWeight,
       maxDrawdown,
       realizedPnL,
+      cashPct,
     };
   }, [portfolio]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-      {/* Performance Metrics */}
       <Card className="p-6 bg-card/50 backdrop-blur-sm">
         <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-primary" />
-          Performance Metrics
+          Practice Portfolio Metrics
         </h3>
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Total Return</span>
-            <span className={`text-xl font-bold ${analytics.totalReturn >= 0 ? 'text-success' : 'text-destructive'}`}>
-              {analytics.totalReturn >= 0 ? '+' : ''}${analytics.totalReturn.toFixed(2)} ({analytics.returnPercent.toFixed(2)}%)
+            <span className="text-muted-foreground">Open-position unrealized P&amp;L</span>
+            <span className={`text-xl font-bold ${analytics.unrealizedPnL >= 0 ? 'text-success' : 'text-destructive'}`}>
+              {analytics.unrealizedPnL >= 0 ? '+' : ''}${analytics.unrealizedPnL.toFixed(2)} ({analytics.unrealizedPct.toFixed(2)}%)
             </span>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Sharpe Ratio</span>
-            <span className="text-xl font-bold">{analytics.sharpeRatio.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Win Rate</span>
-            <span className="text-xl font-bold text-success">{analytics.winRate.toFixed(1)}%</span>
-          </div>
           <div className="flex justify-between items-center text-sm">
-            <span className="text-muted-foreground">Winners / Losers</span>
+            <span className="text-muted-foreground">Positive / negative open positions</span>
             <span className="font-medium">
-              <span className="text-success">{analytics.winners}</span> / <span className="text-destructive">{analytics.losers}</span>
+              <span className="text-success">{analytics.positiveOpenPositions}</span> / <span className="text-destructive">{analytics.negativeOpenPositions}</span>
             </span>
           </div>
           <div className="flex justify-between items-center pt-2 border-t border-border">
             <span className="text-muted-foreground flex items-center gap-1.5">
-              <TrendingDown className="w-3.5 h-3.5" /> Max Drawdown
+              <TrendingDown className="w-3.5 h-3.5" /> Max drawdown in local snapshot history
             </span>
             <span className="text-base font-semibold text-destructive tabular-nums">
               -{analytics.maxDrawdown.toFixed(2)}%
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Realized P&amp;L (Lifetime)</span>
-            <span
-              className={`text-base font-semibold tabular-nums ${
-                analytics.realizedPnL >= 0 ? "text-success" : "text-destructive"
-              }`}
-            >
+            <span className="text-muted-foreground">Realized P&amp;L from recorded trades</span>
+            <span className={`text-base font-semibold tabular-nums ${analytics.realizedPnL >= 0 ? "text-success" : "text-destructive"}`}>
               {analytics.realizedPnL >= 0 ? "+" : ""}${analytics.realizedPnL.toFixed(2)}
             </span>
           </div>
         </div>
+        <p className="mt-5 text-xs text-muted-foreground/70 leading-relaxed">
+          TradeHQ does not label a cross-section of current positions as a Sharpe ratio. A standard Sharpe calculation needs a return series, a time interval and a risk-free-rate convention that this card does not currently have.
+        </p>
       </Card>
 
-      {/* Portfolio Allocation */}
       <Card className="p-6 bg-card/50 backdrop-blur-sm">
         <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
           <Target className="w-5 h-5 text-primary" />
-          Asset Allocation
+          Open-Position Allocation
         </h3>
         {analytics.allocationData.length > 0 ? (
           <div className="flex items-center gap-6">
@@ -142,7 +121,7 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip 
+                <Tooltip
                   formatter={(value: number) => `$${value.toFixed(2)}`}
                   contentStyle={{ backgroundColor: 'hsl(0 0% 8%)', border: '1px solid hsl(0 0% 20%)' }}
                 />
@@ -164,68 +143,50 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
             </div>
           </div>
         ) : (
-          <p className="text-muted-foreground text-center py-8">No positions yet</p>
+          <p className="text-muted-foreground text-center py-8">No open positions yet</p>
         )}
       </Card>
 
-      {/* Diversification Score */}
       <Card className="p-6 bg-card/50 backdrop-blur-sm">
         <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
           <Shield className="w-5 h-5 text-primary" />
-          Diversification Score
+          Concentration Snapshot
         </h3>
-        <div className="text-center">
-          <div className="relative inline-flex items-center justify-center">
-            <div className="text-6xl font-bold text-gradient-gold">{analytics.diversificationScore}</div>
-            <span className="absolute -bottom-2 text-sm text-muted-foreground">/100</span>
+        <div className="space-y-4 text-sm">
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Open positions</span>
+            <span className="font-medium">{portfolio.positions.length}</span>
           </div>
-          <p className="mt-6 text-muted-foreground">
-            {analytics.diversificationScore >= 80 && "Excellent diversification!"}
-            {analytics.diversificationScore >= 60 && analytics.diversificationScore < 80 && "Good diversification"}
-            {analytics.diversificationScore >= 40 && analytics.diversificationScore < 60 && "Moderate diversification"}
-            {analytics.diversificationScore < 40 && "Consider diversifying more"}
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Asset classes represented</span>
+            <span className="font-medium">{analytics.assetClassCount}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Largest open position</span>
+            <span className="font-medium">{analytics.largestPositionWeight.toFixed(1)}% of invested value</span>
+          </div>
+          <p className="pt-3 border-t border-border text-xs text-muted-foreground/70 leading-relaxed">
+            These are descriptive concentration measures. Position count and asset-class count alone do not measure correlation or prove that a portfolio is diversified.
           </p>
         </div>
       </Card>
 
-      {/* Risk Assessment */}
       <Card className="p-6 bg-card/50 backdrop-blur-sm">
-        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <Award className="w-5 h-5 text-primary" />
-          Risk Assessment
-        </h3>
+        <h3 className="text-xl font-bold mb-6">Metric Notes</h3>
         <div className="space-y-4">
           <div>
             <div className="flex justify-between mb-2">
-              <span className="text-muted-foreground">Portfolio Volatility</span>
-              <span className="font-medium">
-                {Math.abs(analytics.sharpeRatio) < 0.5 && "Low"}
-                {Math.abs(analytics.sharpeRatio) >= 0.5 && Math.abs(analytics.sharpeRatio) < 1.5 && "Medium"}
-                {Math.abs(analytics.sharpeRatio) >= 1.5 && "High"}
-              </span>
+              <span className="text-muted-foreground">Cash share</span>
+              <span className="font-medium">{analytics.cashPct.toFixed(1)}%</span>
             </div>
-            <Progress 
-              value={Math.min(100, Math.abs(analytics.sharpeRatio) * 40)} 
-              className="h-2"
-            />
+            <Progress value={Math.max(0, Math.min(100, analytics.cashPct))} className="h-2" />
           </div>
-          <div>
-            <div className="flex justify-between mb-2">
-              <span className="text-muted-foreground">Cash Reserve</span>
-              <span className="font-medium">{((portfolio.cash / portfolio.totalValue) * 100).toFixed(1)}%</span>
-            </div>
-            <Progress 
-              value={(portfolio.cash / portfolio.totalValue) * 100} 
-              className="h-2"
-            />
-          </div>
-          <div className="pt-4 border-t border-border">
-            <p className="text-sm text-muted-foreground">
-              {portfolio.cash / portfolio.totalValue > 0.5 && "High cash reserve - consider more investments"}
-              {portfolio.cash / portfolio.totalValue <= 0.5 && portfolio.cash / portfolio.totalValue > 0.2 && "Healthy cash balance"}
-              {portfolio.cash / portfolio.totalValue <= 0.2 && "Low cash reserve - be cautious"}
-            </p>
-          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Cash share is shown as a fact, not graded as healthy or unhealthy. Max drawdown uses TradeHQ's locally recorded portfolio snapshots, so it can differ from a continuously sampled real brokerage equity curve.
+          </p>
+          <p className="text-xs text-muted-foreground/70 leading-relaxed">
+            Values are simulator metrics and depend on the price provenance and local history available to this browser.
+          </p>
         </div>
       </Card>
     </div>
