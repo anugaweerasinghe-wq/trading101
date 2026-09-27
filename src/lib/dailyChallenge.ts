@@ -535,7 +535,7 @@ const BONUS_BANK: BonusQuestion[] = [
   {
     id: 3, prompt: "What's the '2% rule' in risk management?",
     options: [
-      { label: "Never risk more than 2% of your account on one trade", correct: true, explain: "Caps drawdown — even 10 losing trades only dent you 20%." },
+      { label: "Use 2% of current equity as this lesson's example risk budget", correct: true, explain: "If 2% is recalculated from remaining equity, 10 consecutive full-risk losses leave about 81.7% of the starting balance — roughly an 18.3% drawdown before other effects." },
       { label: "Always target 2% profit per trade", correct: false, explain: "Profit targets aren't the rule — risk per trade is." },
       { label: "Trade only 2% of the day", correct: false, explain: "Not a real risk concept." },
     ],
