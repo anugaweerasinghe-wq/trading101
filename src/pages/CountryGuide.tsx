@@ -77,7 +77,7 @@ export default function CountryGuide() {
                 {guide.regulator.name}
               </a>
               <p className="text-xs text-muted-foreground mt-2">
-                Only real-money brokers are regulated. TradeHQ is not.
+                Check this regulator's current rules and registers for real-money services. TradeHQ is presented here as a virtual-money educational simulator.
               </p>
             </Card>
             <Card className="p-5 bg-white/[0.02] border-white/10">
@@ -100,7 +100,7 @@ export default function CountryGuide() {
           </section>
 
           <section className="mb-10">
-            <h2 className="text-2xl font-bold mb-3">How much capital do you really need?</h2>
+            <h2 className="text-2xl font-bold mb-3">Real-account minimums and fees vary</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">{guide.startingCapital}</p>
           </section>
 
@@ -138,6 +138,22 @@ export default function CountryGuide() {
               ))}
             </ul>
             <p className="text-xs text-muted-foreground mt-3 italic">{guide.taxNote}</p>
+          </section>
+
+          <section className="mb-10 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <h2 className="text-lg font-semibold mb-2">Regulatory sources and review date</h2>
+            <p className="text-xs text-muted-foreground mb-3">
+              Reviewed {guide.reviewedAt}. Rules and provider status can change; use these official sources to verify the current position.
+            </p>
+            <ul className="space-y-1.5 text-sm">
+              {guide.regulatorySources.map((source) => (
+                <li key={source.url}>
+                  <a href={source.url} target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">
+                    {source.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </section>
 
           <section className="mb-10">
@@ -214,7 +230,7 @@ export function CountryGuideIndex() {
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Learn trading in your country</h1>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              Local regulator, local exchange, local tax context — plus the same free $100,000 virtual practice account.
+              Local regulator and exchange context, clearly dated sources, and a free $100,000 virtual practice account. Legal and tax rules should always be re-checked at the official source.
             </p>
           </header>
           <div className="grid md:grid-cols-2 gap-4">
