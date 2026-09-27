@@ -55,7 +55,7 @@ export default function TradeAsset() {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [dataSource, setDataSource] = useState<'live' | 'cached' | 'simulated'>('simulated');
+  const [dataSource, setDataSource] = useState<'live' | 'delayed' | 'cached' | 'simulated'>('simulated');
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const { toast } = useToast();
    
@@ -71,8 +71,8 @@ export default function TradeAsset() {
   }, []);
 
   // Fetch live price for a single asset via edge function
-  const fetchLivePrice = useCallback(async (asset: Asset): Promise<Asset> => {
-    if (!asset || typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) return asset;
+  const fetchLivePrice = useCallback(async (asset: Asset): Promise<{ asset: Asset; status: 'live' | 'delayed' | 'simulated' | 'cached' }> => {
+    if (!asset || typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) return { asset, status: 'cached' };
     try {
       const response = await fetch(
         `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
@@ -86,18 +86,27 @@ export default function TradeAsset() {
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data && typeof result.data.price === 'number' && result.data.price > 0) {
+          const provenanceStatus = result.provenance?.status ?? result.data.provenance?.status;
+          const status = provenanceStatus === 'realtime'
+            ? 'live'
+            : provenanceStatus === 'simulated'
+              ? 'simulated'
+              : 'delayed';
           return {
-            ...asset,
-            price: result.data.price,
-            change: typeof result.data.change24h === 'number' ? result.data.change24h : asset.change,
-            changePercent: typeof result.data.changePercent24h === 'number' ? result.data.changePercent24h : asset.changePercent,
+            asset: {
+              ...asset,
+              price: result.data.price,
+              change: typeof result.data.change24h === 'number' ? result.data.change24h : asset.change,
+              changePercent: typeof result.data.changePercent24h === 'number' ? result.data.changePercent24h : asset.changePercent,
+            },
+            status,
           };
         }
       }
     } catch (_err) {
       // silently fall back
     }
-    return asset;
+    return { asset, status: 'cached' };
   }, []);
 
   useEffect(() => {
@@ -116,6 +125,9 @@ export default function TradeAsset() {
       });
       setAssets(hydratedAssets);
       setSelectedAsset(targetAsset ? (cached[targetAsset.id] ? { ...targetAsset, price: cached[targetAsset.id].price, change: cached[targetAsset.id].change, changePercent: cached[targetAsset.id].changePercent } : targetAsset) : null);
+      if (targetAsset && cached[targetAsset.id]) {
+        setDataSource(cached[targetAsset.id].source === 'live' ? 'live' : cached[targetAsset.id].source === 'delayed' ? 'delayed' : 'cached');
+      }
       setIsLoading(false);
     }, 600);
 
@@ -136,12 +148,19 @@ export default function TradeAsset() {
     // Fetch real price for selected asset
     const fetchSelected = async () => {
       if (!selectedAsset || !isMounted.current) return;
-      const updated = await fetchLivePrice(selectedAsset);
+      const quote = await fetchLivePrice(selectedAsset);
+      const updated = quote.asset;
       if (isMounted.current) {
-        if (updated.price !== selectedAsset.price) {
-          persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'live');
+        if (updated.price !== selectedAsset.price || quote.status !== 'cached') {
+          if (quote.status === 'live') {
+            persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'live');
+          } else if (quote.status === 'delayed') {
+            persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'delayed');
+          } else if (quote.status === 'simulated') {
+            persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'simulated');
+          }
           setAssets(prev => prev.map(a => a.id === updated.id ? updated : a));
-          setDataSource('live');
+          setDataSource(quote.status);
         }
         setLastUpdated(new Date());
       }
@@ -465,7 +484,7 @@ export default function TradeAsset() {
                     : 'bg-muted/50 text-muted-foreground border border-muted-foreground/20'
                 }`}>
                   {dataSource === 'live' ? <Wifi className="w-3 h-3" /> : <WifiOff className="w-3 h-3" />}
-                  {dataSource === 'live' ? 'Live Data' : dataSource === 'cached' ? 'Cached' : 'Simulated'}
+                  {dataSource === 'live' ? 'Live Data' : dataSource === 'delayed' ? 'Provider reference' : dataSource === 'cached' ? 'Cached' : 'Simulated'}
                 </span>
                 {lastUpdated && (
                   <span className="inline-flex items-center gap-1 text-muted-foreground">
