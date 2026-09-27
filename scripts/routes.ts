@@ -105,10 +105,12 @@ function extractLearnArticles(): { slug: string; title: string; metaDescription:
 
 function extractNicheSymbols(): string[] {
   const src = readSrc("src/lib/nicheData.ts");
+  const match = src.match(/export const NICHE_SYMBOLS:[^=]*=\s*\[([\s\S]*?)\];/);
+  if (!match) return [];
   const symbols = new Set<string>();
-  const re = /["']([A-Z0-9]{2,10})["']\s*:/g;
+  const re = /["']([A-Z0-9-]{2,12})["']/g;
   let m: RegExpExecArray | null;
-  while ((m = re.exec(src)) !== null) symbols.add(m[1]);
+  while ((m = re.exec(match[1])) !== null) symbols.add(m[1]);
   return Array.from(symbols);
 }
 
@@ -389,7 +391,7 @@ export function buildRoutes(): RouteMeta[] {
   // ---- Niche asset pages (/niche/:symbol) ----
   for (const sym of extractNicheSymbols()) {
     routes.push({
-      path: `/niche/${sym}`,
+      path: `/niche/${sym.toLowerCase()}`,
       title: `${sym} Deep Dive — Chart, Analysis & Paper Trade | TradeHQ`,
       description: `In-depth ${sym} analysis with practice trading. ${BALANCE} virtual cash, no signup. Educational simulation only — not financial advice.`,
       h1: `${sym} — Deep Dive`,
