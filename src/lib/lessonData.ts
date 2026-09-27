@@ -556,7 +556,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "You have $100,000 to trade. If you put all $100,000 into one stock and it drops 50%, you now have $5,000. Even if your next trade doubles, you're still at $100,000 - back to where you started!",
+            data: "You have $100,000 to trade. If you put all $100,000 into one stock and it drops 50%, you now have $50,000. A 100% gain from $50,000 is required just to return to $100,000.",
           },
           {
             type: "heading",
@@ -564,21 +564,21 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Never risk more than 2% of your total capital on any single trade. This gives you 50 chances to be wrong before you're out of money!",
+            data: "For this lesson's hypothetical example, use a 2% risk budget per trade. If the budget is recalculated from current equity after each loss, the dollar amount falls as the account falls; it does not mean you have exactly 50 losses before reaching zero.",
           },
           {
             type: "list",
             data: [
-              "$100,000 account = Risk maximum $200 per trade",
-              "$50,000 account = Risk maximum $1,000 per trade",
-              "$100,000 account = Risk maximum $2,000 per trade",
-              "Conservative traders use 1% rule instead",
-              "Aggressive traders might use 3%, but never more",
+              "$100,000 account at 2% = $2,000 risk budget",
+              "$50,000 account at 2% = $1,000 risk budget",
+              "$25,000 account at 2% = $500 risk budget",
+              "The percentage is a modelling choice, not a universal rule",
+              "Lower or higher risk changes the drawdown path",
             ],
           },
           {
             type: "tip",
-            data: "The 2% rule refers to how much you're willing to LOSE, not how much you invest. If you buy $2,000 worth of stock with a stop-loss that risks $200, you're following the 2% rule perfectly.",
+            data: "A percentage risk budget refers to the amount at risk if the exit is reached, not the position's full notional value. On a $100,000 practice account, a 2% example budget is $2,000.",
           },
           {
             type: "heading",
@@ -590,7 +590,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Account: $100,000 | Risk per trade: 2% = $200 | Stock price: $100 | Stop-loss: $95 | Risk per share: $5 | Position size: $200 ÷ $5 = 40 shares. Buy 40 shares at $100 = $4,000 investment, but only $200 at risk!",
+            data: "Account: $100,000 | Example risk budget: 2% = $2,000 | Stock price: $100 | Exit level: $95 | Risk per share: $5 | Position size: $2,000 ÷ $5 = 400 shares. A 400-share position has $40,000 notional value, with $2,000 at risk if filled at the assumed exit price.",
           },
           {
             type: "list",
@@ -613,8 +613,8 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "10 losses in a row = -20% (painful but recoverable)",
-              "20 losses in a row = -33% (extremely unlikely)",
+              "10 consecutive 2%-of-current-equity losses leave about 81.7% of starting equity (about -18.3%)",
+              "20 consecutive 2%-of-current-equity losses leave about 66.8% (about -33.2%)",
               "You can be wrong many times and still survive",
               "Small losses, big winners = profitable long-term",
               "Protects you from emotional decisions",
@@ -937,7 +937,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "$100,000 account: $6,000 in SPY and QQQ ETFs (core). $4,000 spread across AAPL, TSLA, NVDA, MSFT (satellites). Safe base with growth potential.",
+            data: "Illustrative $100,000 allocation: $60,000 in broad-market ETFs as a core and $40,000 across individual stocks as satellites. This is an example of the 60/40 split above, not a universal allocation recommendation.",
           },
           {
             type: "heading",
@@ -985,9 +985,9 @@ export const lessonData: Lesson[] = [
     quiz: [
       {
         question: "According to the 2% rule, how much should you risk per trade on a $100,000 account?",
-        options: ["$100", "$200", "$500", "$1,000"],
-        correctAnswer: 1,
-        explanation: "The 2% rule means you risk 2% of your total capital per trade. 2% of $100,000 = $200.",
+        options: ["$500", "$1,000", "$2,000", "$5,000"],
+        correctAnswer: 2,
+        explanation: "In this lesson's 2% example, 0.02 × $100,000 = $2,000.",
       },
       {
         question: "What is the main purpose of a stop-loss order?",
@@ -1329,7 +1329,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "$100,000 portfolio: $6,000 in SPY/QQQ gives you exposure to 500+ companies with two purchases. That's instant diversification!",
+            data: "Illustrative $100,000 portfolio: $60,000 in broad-market ETFs would represent a 60% foundation. ETF diversification depends on the funds' actual holdings and overlap.",
           },
           {
             type: "heading",
@@ -1761,7 +1761,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Trader A: 80% win rate, avg win $100, avg loss $400, profit factor 0.5 = LOSING. Trader B: 40% win rate, avg win $300, avg loss $100, profit factor 2.0 = WINNING. Quality over quantity!",
+            data: "Trader A: 80% wins averaging $100 and 20% losses averaging $400 gives gross profit factor 1.0 before costs (80×$100 ÷ 20×$400 in a 100-trade illustration). Trader B: 40% wins averaging $300 and 60% losses averaging $100 gives profit factor 2.0. Win rate alone does not determine profitability.",
           },
           {
             type: "highlight",
