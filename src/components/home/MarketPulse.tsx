@@ -126,7 +126,7 @@ export function MarketPulse() {
         </div>
         <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider">
           <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-          Live • refresh 30s
+          Simulator • refresh 30s
         </div>
       </div>
 
@@ -155,7 +155,7 @@ export function MarketPulse() {
           </div>
           <div className="mt-3 text-sm font-bold" style={{ color: sentiment.color }}>{sentiment.label}</div>
           <p className="text-[11px] text-muted-foreground text-center mt-1 max-w-[200px]">
-            Live momentum across 30 major assets
+            Simulator momentum across 30 major assets
           </p>
         </div>
 
@@ -218,7 +218,7 @@ export function MarketPulse() {
       </div>
 
       <p className="text-[10px] text-muted-foreground/60 text-center mt-4">
-        Educational simulation only — not financial advice. {tick > 0 ? `· updated ${tick * 30}s` : ""}
+        Educational simulation only — not financial advice. Prices shown here come from the simulator's persisted practice data. {tick > 0 ? `· refreshed ${tick * 30}s` : ""}
       </p>
     </div>
   );
