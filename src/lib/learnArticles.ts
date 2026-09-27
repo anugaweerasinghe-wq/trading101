@@ -196,13 +196,13 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "An ETF is a fund that holds a basket of securities (stocks, bonds, commodities) and trades on an exchange like a regular stock. SPY tracks the S&P 500, QQQ tracks the Nasdaq 100, and DIA tracks the Dow Jones. When you buy one share of SPY, you effectively own a tiny piece of all 500 companies in the S&P 500.",
           "ETFs offer instant diversification at a low cost. Instead of buying 500 individual stocks, you buy one ETF. Most ETFs have very low expense ratios (annual fees), often under 0.1%. They also trade throughout the day at real-time prices, unlike mutual funds which only trade once at market close.",
-          "On TradeHQ, you can practice trading popular ETFs like SPY, QQQ, DIA, and ARKK. This lets you learn about market-wide movements without picking individual stocks — a strategy many professional investors recommend for beginners."
+          "On TradeHQ, you can compare ETFs such as SPY, QQQ, DIA and ARKK to observe differences in concentration, sector exposure and simulated volatility without treating an ETF choice as a recommendation."
         ]
       },
       {
         heading: "Building a Portfolio with ETFs",
         paragraphs: [
-          "A classic beginner portfolio might allocate 60% to a broad market ETF (SPY), 20% to a growth/tech ETF (QQQ), and 20% to individual stocks or crypto you want to learn about. This gives you diversified market exposure while still allowing you to practice active trading on a portion of your portfolio.",
+          "For a simulation exercise, choose two or more hypothetical allocation mixes and compare their concentration and drawdown. A 60/20/20 split can be one test case, not a 'beginner portfolio' recommendation.",
           "ETFs are also excellent for learning about different sectors and asset classes. Want exposure to the semiconductor industry? There's an ETF for that. Interested in international markets, clean energy, or real estate? ETFs cover virtually every market segment imaginable.",
           "Use TradeHQ to build a virtual portfolio with ETFs and track its performance against individual stock picks. This exercise teaches you about correlation, diversification benefits, and the trade-off between concentrated bets and broad market exposure. Practice this strategy risk-free before committing real capital."
         ]
@@ -225,9 +225,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "The Foundation: Asset Allocation",
         paragraphs: [
-          "Asset allocation is the process of dividing your portfolio among different asset classes — stocks, bonds, crypto, commodities, and cash. Research consistently shows that asset allocation is the single most important factor in long-term portfolio performance, more impactful than individual stock selection or market timing.",
-          "A common framework for beginners is the 60/30/10 split: 60% in stocks or stock ETFs for growth, 30% in bonds or stable assets for protection, and 10% in higher-risk opportunities like crypto or individual stock picks. On TradeHQ, you can experiment with different allocations to see how they perform.",
-          "Your ideal allocation depends on your goals, time horizon, and risk tolerance. A 25-year-old saving for retirement can afford more risk (80% stocks, 20% bonds) than a 55-year-old approaching retirement (40% stocks, 60% bonds). Paper trading helps you discover your true risk tolerance before real money is on the line."
+          "Asset allocation is the process of dividing a portfolio among different asset classes — stocks, bonds, crypto, commodities and cash. It changes the mix of risks and returns, but its contribution varies by assets, time period and methodology, so this guide does not call it the single most important factor.",
+          "In the simulator, a 60/30/10 split can be used as one arbitrary comparison case alongside other allocations. The percentages are experiment inputs, not a recommended real-money mix.",
+          "Real-world allocation choices depend on many personal and financial factors that a simulator cannot determine. Age alone does not establish an appropriate stock/bond mix, and simulated comfort with losses is not the same as real-world risk capacity."
         ]
       },
       {
@@ -235,14 +235,14 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Diversification means spreading investments across different assets so that poor performance in one area doesn't devastate your entire portfolio. If you own only tech stocks and the tech sector drops 30%, your whole portfolio suffers. But if tech is just 25% of a diversified portfolio, the impact is cushioned.",
           "Effective diversification happens across multiple dimensions: asset classes (stocks, crypto, commodities), sectors (technology, healthcare, energy), geographies (US, international), and company sizes (large-cap, mid-cap, small-cap). ETFs make diversification simple — SPY gives you 500 stocks in one trade.",
-          "On TradeHQ, build a portfolio that spans multiple asset types. Buy some stocks (AAPL, NVDA), add crypto exposure (BTC, ETH), include an ETF for broad market coverage (SPY), and maybe add a commodity like gold for hedging. Track how each piece contributes to your overall performance."
+          "For a diversification exercise, build several virtual portfolios with different combinations of stocks, crypto, ETFs and commodities, then compare concentration, correlation and drawdown. The examples are simulation inputs, not a suggested real portfolio."
         ]
       },
       {
         heading: "Rebalancing and Ongoing Management",
         paragraphs: [
           "Over time, your portfolio allocation will drift as some assets outperform others. If your crypto holdings surge 50% while stocks grow 10%, crypto becomes a larger percentage of your portfolio than you intended — increasing your risk. Rebalancing means periodically selling some winners and buying more of the underperformers to maintain your target allocation.",
-          "Most financial advisors recommend rebalancing quarterly or when any asset class drifts more than 5% from its target allocation. This disciplined approach forces you to sell high and buy low — the opposite of what emotional traders do. It's counterintuitive but mathematically sound.",
+          "Rebalancing can be calendar-based, threshold-based or not used at all. Quarterly and 5% drift rules are examples rather than universal standards, and their effects depend on market path, costs, taxes and the chosen allocation.",
           "Practice rebalancing on TradeHQ by setting a target allocation at the start, then checking your portfolio monthly. Use the portfolio analytics feature to see how your allocations have shifted and make adjustment trades. This exercise builds the discipline you'll need when managing real investments. Remember: successful investing is a marathon, not a sprint."
         ]
       }
@@ -257,14 +257,14 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   {
     slug: "risk-management-in-trading",
     title: "What Is Risk Management in Trading? The Complete Beginner's Guide",
-    summary: "Risk management is the difference between surviving and blowing up your account. Learn position sizing, stop-losses, and the 2% rule every trader needs.",
-    metaDescription: "Master risk management in trading: position sizing, stop-loss strategies, risk-reward ratios, and the 2% rule. Free guide with practice tools on TradeHQ.",
+    summary: "Explore position sizing, predefined exits and reward-to-risk arithmetic through simulation. Percentage limits are test assumptions, not universal rules.",
+    metaDescription: "Explore trading risk-management concepts with virtual money: position sizing, exit assumptions and reward-to-risk arithmetic without a universal percentage rule.",
     readTime: "6 min read",
     sections: [
       {
         heading: "Why Risk Management Matters More Than Stock Picks",
         paragraphs: [
-          "Most beginner traders obsess over finding the perfect stock or crypto to buy. But professional traders know the truth: risk management is far more important than any single trade idea. You can be wrong on 60% of your trades and still be profitable if your winners are larger than your losers — and that's entirely a function of risk management.",
+          "Risk management changes how a sequence of gains and losses affects an account. Profitability depends on win frequency, average gains and losses, costs, sizing and the order of outcomes; no single percentage or setup guarantees survival.",
           "Risk management is a set of rules and strategies designed to limit your potential losses on any single trade and across your entire portfolio. Without it, a single bad trade can wipe out weeks or months of gains. With it, you can survive losing streaks, preserve capital, and stay in the game long enough for your edge to play out.",
           "On TradeHQ, you can practise risk-management ideas with $100,000 in virtual cash. Experiment with different position sizes, exit rules, and reward-to-risk assumptions, then review how each choice changes drawdown and variability over a larger sample of trades. The aim is to build a repeatable process, not to discover a guaranteed formula."
         ]
@@ -280,9 +280,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "Stop-Losses and Risk-Reward Ratios",
         paragraphs: [
-          "A stop-loss is a predetermined price level at which you exit a losing trade. Setting a stop-loss before entering a trade removes emotion from the equation — you know exactly how much you can lose before you click buy. Common stop-loss methods include fixed percentage (e.g., 5% below entry), support level-based, or ATR-based (Average True Range).",
-          "The risk-reward ratio compares your potential loss to your potential gain. A 1:2 risk-reward ratio means you risk $1 to potentially make $2. Professional traders typically aim for at least 1:2 or 1:3 ratios. With a 1:3 ratio, you only need to win 25% of your trades to break even — and anything above that is pure profit.",
-          "Combine position sizing, stop-losses, and favorable risk-reward ratios into a complete risk management system. On TradeHQ, practice setting stop-losses on every trade, tracking your risk-reward ratios in the trading journal, and calculating your win rate over 50+ trades. This data-driven approach is what separates consistent traders from gamblers."
+          "A stop-loss is an instruction or assumption to exit at or around a specified level, but real execution can differ because of gaps, liquidity and slippage. In the simulator, fixed-percentage, chart-based and volatility-based exits can be compared as alternative assumptions.",
+          "The reward-to-risk ratio compares a planned gain with a planned loss. A 1:2 ratio means a target twice the size of the assumed loss. Break-even win-rate arithmetic also depends on transaction costs, slippage and whether actual wins and losses match the planned amounts, so no minimum ratio is treated here as a professional standard.",
+          "Use the simulator to compare combinations of position sizing, exit assumptions and reward-to-risk targets, then calculate results over a documented sample. The exercise is to understand how assumptions interact, not to certify a system or predict real-money performance."
         ]
       }
     ],
