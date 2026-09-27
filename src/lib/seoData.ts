@@ -524,7 +524,7 @@ export const STRATEGIES: Strategy[] = [
       mistakes: [
         "Trading the midday lull out of boredom. Range contracts, stops get hit by noise, and the day's profit from the open is handed back.",
         "Using a fixed dollar stop instead of a structural one. The stop should sit where the idea is wrong — below VWAP, below the opening range — not at an arbitrary loss you find comfortable.",
-        "Ignoring the daily loss limit. Two full stops in a session is a signal to close the platform; a third is almost always emotional rather than analytical.",
+        "Changing risk limits after losses without a predefined rule. In a simulation, choose a daily-loss threshold as an experiment parameter and document what happens when it is reached; no fixed number of stopped trades proves an emotional state.",
       ],
       math:
         "A 52% win rate at 1:1.5 gives (0.52 x 1.5) - (0.48 x 1) = +0.30R per trade. Five trades a day at 0.5% risk on $100,000 is $250 risk per trade, so roughly $375 of expected value a day before commissions and slippage — and slippage on market orders in fast conditions is routinely a quarter of that. Track your actual fills in the simulator's journal rather than assuming the mid-price.",
