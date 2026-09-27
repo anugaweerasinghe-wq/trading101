@@ -136,8 +136,8 @@ export default function Auth() {
               {mode === "signin" ? "Welcome back" : "Create your free account"}
             </h1>
             <p className="text-sm text-muted-foreground mt-2">
-              An account only adds the leaderboard, a public profile and friend
-              challenges. Trading, courses and tools never require one.
+              An account adds optional community features such as the leaderboard, profile visibility and friend
+              challenges. New profiles start private; trading, courses and tools never require an account.
             </p>
           </div>
 
@@ -156,7 +156,7 @@ export default function Auth() {
                 <form onSubmit={submit} className="space-y-4">
                   {mode === "signup" && (
                     <div className="space-y-1.5">
-                      <Label htmlFor="username">Public username</Label>
+                      <Label htmlFor="username">Username</Label>
                       <Input
                         id="username"
                         value={username}
@@ -228,8 +228,8 @@ export default function Auth() {
           </Card>
 
           <p className="text-2xs text-muted-foreground mt-6 text-center leading-relaxed">
-            We store only your email, your chosen username and your simulated
-            practice statistics. No real money, no brokerage links, no payment
+            If you create an account, we store authentication details, your chosen username and selected simulated
+            practice statistics. Profiles start private and can be made public from your profile page. No real money, no brokerage links, no payment
             details. Every balance on TradeHQ is virtual and starts at{" "}
             {STARTING_BALANCE_LABEL}. (Educational simulation only — not financial
             advice.) See our{" "}
