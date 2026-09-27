@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, TrendingUp, Award, Share2, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import { getPortfolio, calculateRealizedPnL, calculateMaxDrawdown } from "@/lib/portfolio";
+import { getPortfolio, calculateRealizedPnL, calculateMaxDrawdown, calculateClosedTradeStats } from "@/lib/portfolio";
 import { STARTING_BALANCE_LABEL } from "@/lib/constants";
 import { loadProgress } from "@/lib/courseProgress";
 import { courseTracks } from "@/lib/coursesData";
@@ -28,9 +28,7 @@ function useTraderStats() {
     const realized = calculateRealizedPnL(p);
     const maxDD = calculateMaxDrawdown();
     const trades = p.trades.length;
-    const sells = p.trades.filter((t) => t.type === "sell").length;
-    const wins = p.trades.filter((t) => t.type === "sell" && t.total > 0).length;
-    const winRate = sells > 0 ? Math.round((wins / sells) * 100) : 0;
+    const winRate = calculateClosedTradeStats(p).winRate;
 
     const progress = loadProgress();
     const badges = courseTracks
