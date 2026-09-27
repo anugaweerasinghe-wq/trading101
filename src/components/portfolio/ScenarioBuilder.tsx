@@ -18,7 +18,6 @@ import {
   ComposedChart,
 } from "recharts";
 import { runScenario, type ScenarioResult, type Shock } from "@/lib/scenarioEngine";
-import { supabase } from "@/integrations/supabase/client";
 import type { Portfolio, Asset } from "@/lib/types";
 
 const EXAMPLES = [
@@ -30,9 +29,8 @@ const EXAMPLES = [
 
 interface Props {
   portfolio: Portfolio;
-  /** Live ticking asset list (same source as the Trade page). When provided,
-   *  position prices are overridden with their live counterparts so the
-   *  scenario engine simulates from the exact real-time price. */
+  /** Current displayed asset list from the trading UI. Depending on the
+   * instrument, values may be realtime, delayed, cached or simulated. */
   liveAssets?: Asset[];
 }
 
@@ -45,7 +43,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
   const [horizonDays, setHorizonDays] = useState<number>(30);
   const { toast } = useToast();
 
-  // Build a live-price-synced portfolio snapshot — matches the Trade page exactly.
+  // Build a snapshot from the prices currently displayed by the trading UI.
   const livePortfolio = (() => {
     if (!liveAssets || liveAssets.length === 0) return portfolio;
     const liveById = new Map(liveAssets.map((a) => [a.id, a]));
@@ -74,7 +72,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
     if (!hasPositions) {
       toast({
         title: "No positions yet",
-        description: "Buy some assets first so the scenario has something to simulate.",
+        description: "Add virtual positions first so the scenario has something to model.",
         variant: "destructive",
       });
       return;
@@ -138,10 +136,10 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         </div>
         <div>
           <h2 className="text-lg font-semibold flex items-center gap-2">
-            AI Scenario Builder
+            Scenario Builder
             <Badge variant="outline" className="text-2xs border-primary/30 text-primary">Beta</Badge>
           </h2>
-          <p className="text-2xs text-muted-foreground">Ask "What if…?" and see your portfolio under risk bands.</p>
+          <p className="text-2xs text-muted-foreground">Enter a hypothetical shock and inspect model-generated ranges. These are not forecasts or confidence intervals for real markets.</p>
         </div>
       </div>
 
@@ -198,21 +196,21 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
                 <TrendingDown className="w-3 h-3 text-destructive" />
-                <p className="text-2xs text-muted-foreground">Worst (P5)</p>
+                <p className="text-2xs text-muted-foreground">Model 5th percentile</p>
               </div>
               <p className="text-base font-bold tabular-nums mt-1 text-destructive">{fmt(result.worstCase)}</p>
             </Card>
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
                 <TrendingUp className="w-3 h-3 text-success" />
-                <p className="text-2xs text-muted-foreground">Best (P95)</p>
+                <p className="text-2xs text-muted-foreground">Model 95th percentile</p>
               </div>
               <p className="text-base font-bold tabular-nums mt-1 text-success">{fmt(result.bestCase)}</p>
             </Card>
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
                 <AlertTriangle className="w-3 h-3 text-warning" />
-                <p className="text-2xs text-muted-foreground">Loss Probability</p>
+                <p className="text-2xs text-muted-foreground">Simulated loss frequency</p>
               </div>
               <p className="text-base font-bold tabular-nums mt-1">{result.probabilityOfLoss.toFixed(0)}%</p>
             </Card>
@@ -277,7 +275,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
           )}
 
           <p className="text-2xs text-muted-foreground/70 text-center">
-            Based on {1000} Monte Carlo paths • Shocks: {shocks.length ? shocks.map((s) => `${s.symbol} ${s.shockPercent >= 0 ? "+" : ""}${s.shockPercent}%`).join(", ") : "none"} • Horizon {horizonDays} days
+            {1000} model paths under TradeHQ's scenario assumptions • User shock: {shocks.length ? shocks.map((s) => `${s.symbol} ${s.shockPercent >= 0 ? "+" : ""}${s.shockPercent}%`).join(", ") : "none"} • Horizon {horizonDays} days • Percentiles and loss frequency describe this model run only; they are not market forecasts.
           </p>
         </div>
       )}
