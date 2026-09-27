@@ -168,10 +168,13 @@ export function executeTrade(
   }
 }
 
-export function updatePositionPrices(portfolio: Portfolio): Portfolio {
+export function updatePositionPrices(
+  portfolio: Portfolio,
+  currentAssets: Asset[] = ASSETS,
+): Portfolio {
   const newPortfolio = { ...portfolio };
   newPortfolio.positions = newPortfolio.positions.map((position) => {
-    const currentAsset = ASSETS.find((a) => a.id === position.asset.id);
+    const currentAsset = currentAssets.find((a) => a.id === position.asset.id);
     if (currentAsset) {
       const currentValue = currentAsset.price * position.quantity;
       const totalCost = position.avgPrice * position.quantity;
