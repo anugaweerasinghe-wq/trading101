@@ -202,6 +202,51 @@ export function updatePositionPrices(
  * of remaining position when available, else the sell price itself (0 P&L).
  * To keep it simple and correct, we walk trades chronologically per asset.
  */
+export function calculateClosedTradeStats(portfolio: Portfolio): { sells: number; wins: number; winRate: number } {
+  const positions = new Map<string, { quantity: number; avgUnitCost: number }>();
+  let sells = 0;
+  let wins = 0;
+
+  const trades = [...portfolio.trades].sort(
+    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
+  );
+
+  for (const trade of trades) {
+    const state = positions.get(trade.assetId) ?? { quantity: 0, avgUnitCost: 0 };
+    if (trade.quantity <= 0) continue;
+
+    if (trade.type === "buy") {
+      // Buy totals include the simulator fee, so this cost basis includes fees.
+      const unitCost = trade.total / trade.quantity;
+      const nextQuantity = state.quantity + trade.quantity;
+      state.avgUnitCost =
+        nextQuantity > 0
+          ? (state.avgUnitCost * state.quantity + unitCost * trade.quantity) / nextQuantity
+          : 0;
+      state.quantity = nextQuantity;
+      positions.set(trade.assetId, state);
+      continue;
+    }
+
+    if (state.quantity <= 0) continue;
+    const closedQuantity = Math.min(trade.quantity, state.quantity);
+    // Sell totals are net of the simulator fee.
+    const unitProceeds = trade.total / trade.quantity;
+    const realized = (unitProceeds - state.avgUnitCost) * closedQuantity;
+    sells += 1;
+    if (realized > 0) wins += 1;
+    state.quantity = Math.max(0, state.quantity - closedQuantity);
+    if (state.quantity === 0) state.avgUnitCost = 0;
+    positions.set(trade.assetId, state);
+  }
+
+  return {
+    sells,
+    wins,
+    winRate: sells > 0 ? Math.round((wins / sells) * 100) : 0,
+  };
+}
+
 export function calculateRealizedPnL(portfolio: Portfolio): number {
   const byAsset = new Map<string, Trade[]>();
   // Sort ascending
