@@ -70,21 +70,21 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "A stock chart is a visual representation of a security's price movement over time. The x-axis shows time (minutes, hours, days, or years) and the y-axis shows price. The most common chart types are line charts, bar charts, and candlestick charts. Candlestick charts are the most popular among traders because they show four key data points: open, high, low, and close prices.",
           "Each candlestick represents a specific time period. A green (or hollow) candle means the closing price was higher than the opening price — the asset went up. A red (or filled) candle means it went down. The body of the candle shows the open-to-close range, while the thin lines above and below (called wicks or shadows) show the high and low.",
-          "Learning to read candlestick patterns is foundational. Patterns like Doji (indecision), Hammer (potential reversal), and Engulfing (strong momentum shift) give traders clues about what might happen next. On TradeHQ, you can practice identifying these patterns on real market data without risking any money."
+          "Candlestick patterns are descriptive labels for combinations of open, high, low and close prices. Patterns such as Doji, Hammer and Engulfing can be used to practise recognizing chart structure, but they do not determine what price will do next. On TradeHQ, you can practise identifying them on simulated charts without risking real money."
         ]
       },
       {
         heading: "Support, Resistance, and Trend Lines",
         paragraphs: [
-          "Support is a price level where a stock tends to stop falling and bounce back up — think of it as a floor. Resistance is the opposite — a ceiling where the price tends to stop rising and pull back. Identifying these levels helps you decide when to buy (near support) and when to sell (near resistance).",
-          "Trend lines connect two or more price points and extend into the future to act as a line of support or resistance. An uptrend line connects higher lows, while a downtrend line connects lower highs. When a stock breaks through a support or resistance level with high volume, it often signals the start of a new trend.",
-          "Volume is the number of shares or contracts traded in a given period. High volume confirms the strength of a price move — a breakout on high volume is more reliable than one on low volume. Always check volume alongside price to avoid false signals."
+          "Support and resistance are charting terms for areas where price has previously stalled or reversed. They are often drawn as zones rather than exact floors or ceilings, and they can fail or shift as market conditions change.",
+          "Trend lines connect selected price points to describe historical direction. An uptrend line commonly connects higher lows, while a downtrend line connects lower highs. A break through a previously watched zone can be compared with volume and later price behavior, but it does not guarantee that a new trend will continue.",
+          "Volume is the number of shares or contracts traded in a given period. Traders often compare volume with price moves for context, but higher volume does not make a breakout certain or eliminate false signals."
         ]
       },
       {
         heading: "Key Technical Indicators for Beginners",
         paragraphs: [
-          "Moving averages smooth out price data to identify trends. The 50-day moving average (MA) and 200-day MA are widely watched. When the 50-day crosses above the 200-day (a Golden Cross), it signals bullish momentum. The opposite (Death Cross) signals bearish momentum. These are simple but powerful tools for timing entries and exits.",
+          "Moving averages smooth historical price data to describe trend direction. The 50-day and 200-day averages are widely watched; their crossovers are commonly labelled Golden Cross and Death Cross. Because moving averages lag price, these patterns describe past momentum and do not guarantee future direction.",
           "The Relative Strength Index (RSI) measures momentum on a scale of 0 to 100. An RSI above 70 suggests the asset is overbought (potentially due for a pullback), while below 30 suggests it's oversold (potentially due for a bounce). MACD (Moving Average Convergence Divergence) is another momentum indicator that shows the relationship between two moving averages.",
           "Practice reading charts on TradeHQ by opening any asset page — for example, NVIDIA (NVDA) or Ethereum (ETH). Study the candlestick patterns, identify support and resistance levels, and watch how indicators confirm or contradict price action. The more charts you study, the better your pattern recognition becomes."
         ]
@@ -343,7 +343,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "Moving Averages: The Foundation of Trend Analysis",
         paragraphs: [
           "Moving averages (MAs) smooth out price data to reveal the underlying trend. The two most common types are the Simple Moving Average (SMA), which gives equal weight to all prices in the period, and the Exponential Moving Average (EMA), which gives more weight to recent prices and reacts faster to changes.",
-          "The 50-day and 200-day moving averages are the most widely watched levels on Wall Street. When the 50-day MA crosses above the 200-day MA, it forms a 'Golden Cross' — a bullish signal that has historically preceded major rallies. The opposite, a 'Death Cross' (50 crossing below 200), signals bearish momentum and potential downtrends.",
+          "The 50-day and 200-day moving averages are commonly watched reference periods. A 50-day move above the 200-day is called a 'Golden Cross', while the reverse is called a 'Death Cross'. Both are lagging descriptions of historical price momentum, and either can be followed by continuation, reversal or sideways trading.",
           "Traders also use shorter moving averages (9 EMA, 21 EMA) for quicker signals on lower timeframes. When price is above the moving average, the trend is generally bullish; when below, bearish. On TradeHQ, overlay moving averages on any asset chart to see how they align with price action and practice identifying trend direction."
         ]
       },
@@ -351,8 +351,8 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "RSI: Measuring Momentum and Overbought/Oversold Conditions",
         paragraphs: [
           "The Relative Strength Index (RSI) is a momentum oscillator that measures the speed and magnitude of price changes on a scale of 0 to 100. Developed by J. Welles Wilder, RSI compares the average gains and losses over a 14-period window to determine whether an asset is overbought (above 70) or oversold (below 30).",
-          "When RSI rises above 70, it suggests the asset may be overheated and due for a pullback — but it doesn't mean you should immediately sell. In strong uptrends, RSI can stay above 70 for extended periods. The most reliable RSI signals come from divergences: when price makes a new high but RSI makes a lower high, it warns of weakening momentum.",
-          "RSI is particularly useful for timing entries in trending markets. During an uptrend, buy when RSI pulls back to 40-50 (not oversold, but showing a temporary dip in momentum). During a downtrend, look for RSI to bounce to 50-60 for short entries. Practice these RSI strategies on TradeHQ assets like ETH, AAPL, or NVDA."
+          "RSI readings above 70 are commonly labelled overbought and readings below 30 oversold, but those labels do not mean a reversal must occur. Strong trends can keep RSI at extreme readings for long periods, and divergences can persist or fail.",
+          "A useful practice exercise is to compare RSI readings with later price behavior across different assets and market regimes. Record examples where the same reading was followed by a reversal, continuation or no clear move so the indicator is treated as context rather than a timing rule."
         ]
       },
       {
