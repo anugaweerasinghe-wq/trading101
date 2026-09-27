@@ -3,7 +3,8 @@ import type { Portfolio, AssetType } from "./types";
 export interface Shock {
   symbol: string;
   shockPercent: number; // total % over horizon, e.g. -30
-  confidence: number;
+  /** Parser metadata only. This is NOT statistical confidence and is not used by the simulation engine. */
+  confidence?: number;
 }
 
 export interface ScenarioResult {
@@ -17,7 +18,9 @@ export interface ScenarioResult {
   worstCase: number;
   bestCase: number;
   deltaPercent: number;
+  /** Share of this model run's paths finishing below the starting simulator value. Not a real-market probability forecast. */
   probabilityOfLoss: number;
+  modelAssumptions: string[];
   perAsset: Array<{
     symbol: string;
     name: string;
@@ -37,6 +40,7 @@ export interface ScenarioResult {
   }>;
 }
 
+// Illustrative fixed DAILY volatility assumptions used only by the scenario sandbox.
 const DAILY_VOL: Record<AssetType, number> = {
   crypto: 0.04,
   stock: 0.015,
@@ -44,6 +48,15 @@ const DAILY_VOL: Record<AssetType, number> = {
   commodity: 0.012,
   forex: 0.006,
 };
+
+export const SCENARIO_MODEL_ASSUMPTIONS = [
+  "User-entered shock is spread as a constant log drift across the selected horizon.",
+  "Daily volatility uses fixed TradeHQ sandbox values by broad asset type, not current implied or realized volatility.",
+  "Asset shocks are simulated independently; cross-asset correlations are not modeled.",
+  "Random path shocks use a normal distribution and do not model jumps, fat tails, liquidity gaps or regime changes.",
+  "Cash is held constant and the model excludes taxes, dividends, financing costs, spread and slippage.",
+  "Percentiles and loss frequency describe this model run only; they are not confidence intervals or market forecasts.",
+] as const;
 
 // Box-Muller standard normal
 function randn(): number {
@@ -66,6 +79,7 @@ export function runScenario(
   paths = 1000,
 ): ScenarioResult {
   const days = Math.max(1, Math.min(365, Math.round(horizonDays || 30)));
+  const pathCount = Math.max(100, Math.min(5000, Math.round(paths || 1000)));
   const shockMap = new Map<string, number>();
   shocks.forEach((s) => {
     if (s?.symbol) shockMap.set(s.symbol.toUpperCase(), s.shockPercent / 100);
@@ -74,7 +88,7 @@ export function runScenario(
   const currentValue = portfolio.totalValue;
   const cash = portfolio.cash;
 
-  // Per-asset annualized drift derived from total shock spread evenly daily
+  // User shock is treated as a terminal scenario assumption and spread evenly as daily log drift.
   const positions = portfolio.positions.map((p) => {
     const totalShock = shockMap.get(p.asset.symbol.toUpperCase()) ?? 0;
     // Convert total return over horizon to log-drift per day
@@ -84,7 +98,8 @@ export function runScenario(
     return { p, dailyDrift, dailySigma, totalShock };
   });
 
-  // Run Monte Carlo, recording band each day from a subsample
+  // Run an illustrative Monte Carlo-style sandbox. Fixed sigma and independent normal shocks
+  // are simplifying assumptions, not calibrated forecasts.
   const bandCheckpoints = Math.min(days, 30);
   const checkpointEvery = Math.max(1, Math.floor(days / bandCheckpoints));
   const dailyValuesByDay: number[][] = [];
@@ -92,7 +107,7 @@ export function runScenario(
 
   const finalValues: number[] = [];
 
-  for (let path = 0; path < paths; path++) {
+  for (let path = 0; path < pathCount; path++) {
     const prices = positions.map((x) => x.p.asset.price);
     for (let d = 0; d < days; d++) {
       for (let i = 0; i < positions.length; i++) {
@@ -144,7 +159,7 @@ export function runScenario(
     });
   }
 
-  // Per-asset expected (deterministic given drift)
+  // Deterministic terminal value implied by the user's shock assumption; not an expected market price.
   const perAsset = positions.map(({ p, totalShock }) => {
     const expectedPrice = p.asset.price * (1 + totalShock);
     return {
@@ -170,6 +185,7 @@ export function runScenario(
     bestCase: p95,
     deltaPercent: ((expected - currentValue) / currentValue) * 100,
     probabilityOfLoss,
+    modelAssumptions: [...SCENARIO_MODEL_ASSUMPTIONS],
     perAsset,
     bands,
   };
