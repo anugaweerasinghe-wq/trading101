@@ -28,6 +28,41 @@ jobs:
       - name: Content-quality audit
         run: node scripts/audit-content.mjs
 
+      - name: Indexable word-count distribution
+        run: |
+          node --input-type=module <<'EOF'
+          import { readdirSync, readFileSync, statSync } from 'node:fs';
+          function walk(dir, out=[]) {
+            for (const f of readdirSync(dir)) {
+              const p = dir + '/' + f;
+              if (statSync(p).isDirectory()) walk(p, out);
+              else if (f === 'index.html') out.push(p);
+            }
+            return out;
+          }
+          const rows=[];
+          for (const f of walk('dist')) {
+            const html=readFileSync(f,'utf8');
+            if (/name=["']robots["'][^>]*content=["']noindex/i.test(html)) continue;
+            const route='/' + f.replace(/^dist\//,'').replace(/index\.html$/,'').replace(/\/$/,'');
+            const body=((html.match(/<body[\s\S]*<\/body>/i)||[''])[0])
+              .replace(/<script[\s\S]*?<\/script>/gi,' ')
+              .replace(/<style[\s\S]*?<\/style>/gi,' ')
+              .replace(/<[^>]+>/g,' ')
+              .replace(/&[a-z#0-9]+;/gi,' ')
+              .replace(/\s+/g,' ').trim();
+            const words=(body.match(/\b[\p{L}\p{N}'’-]+\b/gu)||[]).length;
+            rows.push({route,words});
+          }
+          rows.sort((a,b)=>a.words-b.words);
+          console.log('INDEXABLE_WORD_COUNTS');
+          console.log('pages=' + rows.length);
+          console.log('min=' + rows[0]?.words + ' median=' + rows[Math.floor(rows.length/2)]?.words + ' max=' + rows.at(-1)?.words);
+          console.log('under300=' + rows.filter(r=>r.words<300).length);
+          console.log('under400=' + rows.filter(r=>r.words<400).length);
+          console.log('lowest30=' + JSON.stringify(rows.slice(0,30)));
+          EOF
+
       - name: ESLint diagnostic
         continue-on-error: true
         run: npm run lint
