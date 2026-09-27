@@ -64,8 +64,12 @@ export default function TraderProfile() {
   const description = "Local snapshot of TradeHQ practice statistics. Signed-in users can choose whether their backend profile is public. Educational simulation only, not financial advice.";
 
   const share = async () => {
-    const url = `${window.location.origin}/trader/me`;
-    const text = `My TradeHQ practice portfolio: ${s.totalPnLPct >= 0 ? "+" : ""}${s.totalPnLPct.toFixed(1)}% on a ${STARTING_BALANCE_LABEL} virtual account · ${s.trades} trades · ${s.winRate}% win rate. Educational simulation only.`;
+    if (!profile?.is_public || !profile.username) {
+      toast.error("Turn on public profile visibility before sharing a public profile link.");
+      return;
+    }
+    const url = `${window.location.origin}/trader/${encodeURIComponent(profile.username)}`;
+    const text = `My TradeHQ practice portfolio: ${s.totalPnLPct >= 0 ? "+" : ""}${s.totalPnLPct.toFixed(1)}% on a ${STARTING_BALANCE_LABEL} virtual account · ${s.trades} trades · ${s.winRate}% win rate. Client-synced simulated stats; not independently verified.`;
     try {
       if (navigator.share) {
         await navigator.share({ title: "My TradeHQ trader profile", text, url });
@@ -107,9 +111,10 @@ export default function TraderProfile() {
               </div>
               <button
                 onClick={share}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 text-black font-semibold hover:bg-emerald-400 transition"
+                disabled={!profile?.is_public}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 text-black font-semibold hover:bg-emerald-400 transition disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                <Share2 className="w-4 h-4" /> Share profile
+                <Share2 className="w-4 h-4" /> Share public profile
               </button>
             </div>
           </header>
