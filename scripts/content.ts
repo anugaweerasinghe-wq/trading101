@@ -334,6 +334,13 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
           DISCLAIMER,
         ],
       },
+      {
+        h: "What a fair comparison controls for",
+        p: [
+          "A useful comparison holds as many assumptions constant as possible. Use the same observation window, the same virtual position-sizing rule, and the same review method before comparing outcomes. Otherwise a difference in result may come from the setup rather than from the instruments themselves.",
+          "Also separate structural facts from changing market statistics. Trading hours, legal claims, custody model and network design can be relatively durable, while volatility, yields, fees, margins and correlations can change over time. When a comparison depends on a current figure, verify it at a primary or provider source before treating it as current.",
+        ],
+      },
     ],
     links: pairs.map((p) => ({ href: `/compare/${p.slug}`, label: `${p.a.name} vs ${p.b.name}` })),
   });
@@ -351,6 +358,14 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
           h: "Practise both sides",
           p: [
             `Rather than picking a winner, apply the same documented virtual assumptions to both and compare the resulting volatility, drawdown and event sensitivity. A short simulator sample is not a recommendation or forecast. ${DISCLAIMER}`,
+          ],
+        },
+        {
+          h: "How to interpret the comparison",
+          p: [
+            "Keep the test conditions consistent. If one side uses a different date range, different virtual position size, or a different exit rule, the result is not a clean comparison. Record those assumptions before the exercise so they can be reviewed afterward.",
+            "Separate durable structure from changing statistics. Market hours, ownership rights, custody model and network design describe what an instrument is. Volatility, yield, fees, margins, valuation multiples and correlations are measurements that can change. A current figure should be checked at its original source before it is treated as current.",
+            "A simulator can reveal how a rule behaved in one sample, but it cannot determine personal suitability, future returns or the correct real-money allocation. Use the exercise to understand differences and uncertainty rather than to manufacture a winner.",
           ],
         },
       ],
