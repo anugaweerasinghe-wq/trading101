@@ -65,12 +65,12 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
   const chartRef = useRef<IChartApi | null>(null);
   const [range, setRange] = useState<TimeRange>('1M');
   const [liveData, setLiveData] = useState<OHLCData[] | null>(null);
-  const [dataSource, setDataSource] = useState<'live' | 'fallback'>('fallback');
+  const [dataSource, setDataSource] = useState<'provider' | 'simulated'>('simulated');
   const [isLoadingData, setIsLoadingData] = useState(false);
 
   const config = RANGE_CONFIG[range];
 
-  // Fetch real-time candle data from edge function
+  // Fetch provider-backed or explicitly simulated candle history from edge function
   const fetchLiveCandles = useCallback(async () => {
     if (!asset) return;
     setIsLoadingData(true);
@@ -119,7 +119,7 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
 
           if (formatted.length > 2) {
             setLiveData(formatted);
-            setDataSource('live');
+            setDataSource(result.provenance?.status === 'provider' ? 'provider' : 'simulated');
             setIsLoadingData(false);
             return;
           }
@@ -158,7 +158,7 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
               }
               if (formatted.length > 2) {
                 setLiveData(formatted);
-                setDataSource('live');
+                setDataSource('provider');
                 setIsLoadingData(false);
                 return;
               }
@@ -172,7 +172,7 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
 
     // Final fallback: simulated data
     setLiveData(null);
-    setDataSource('fallback');
+    setDataSource('simulated');
     setIsLoadingData(false);
   }, [asset?.id, asset?.type, asset?.price, config.days]);
 
@@ -272,11 +272,11 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
           </span>
           <span className={cn(
             "text-xs px-2 py-0.5 rounded-full font-medium",
-            dataSource === 'live' 
+            dataSource === 'provider' 
               ? "bg-emerald-500/10 text-emerald-400" 
               : "bg-amber-500/10 text-amber-400"
           )}>
-            {dataSource === 'live' ? '● Live Data' : '● Simulated'}
+            {dataSource === 'provider' ? '● Provider history' : '● Simulated'}
           </span>
           {isLoadingData && (
             <span className="text-[10px] text-muted-foreground animate-pulse">Loading...</span>
