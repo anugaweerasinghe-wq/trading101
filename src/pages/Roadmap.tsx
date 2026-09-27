@@ -17,13 +17,13 @@ interface RoadmapItem {
 const ITEMS: RoadmapItem[] = [
   { icon: BookOpenCheck, title: "Expanded Learning Courses", desc: "Four structured tracks — options, futures, macro reading and trading psychology — each with quizzes and a completion badge. Now live at /courses.", status: "shipped", eta: "Shipped Jul 2026" },
   { icon: GraduationCap, title: "Guided Learning Pathways", desc: "Personalised next-lesson suggestions based on what you've already studied. Live on the Learn hub — the 'Picked for you' card resumes your last lesson or points you to the best starting point.", status: "shipped", eta: "Shipped Jul 2026" },
-  { icon: Bell, title: "Daily Streak + Practice Reminders", desc: "Streak tracker on the daily challenge and opt-in browser notifications for returning learners. Fully free, no signup required.", status: "shipped", eta: "Shipped Jul 2026" },
-  { icon: Trophy, title: "Public Trader Profiles", desc: "Shareable profile at /trader/me showing your simulated P&L, win rate, drawdown and course badges. Copy or share the link anywhere.", status: "shipped", eta: "Shipped Jul 2026" },
+  { icon: Bell, title: "Daily Streak + Practice Reminders", desc: "The local daily-challenge streak is live. Browser reminder delivery is still being repaired and verified, so reminders are not marked shipped yet.", status: "in-progress", eta: "No committed date" },
+  { icon: Trophy, title: "Public Trader Profiles", desc: "Signed-in users can opt into a public profile at /trader/{username}. Displayed practice statistics are client-synced and are not independently verified performance records.", status: "shipped", eta: "Shipped Jul 2026" },
   { icon: Globe2, title: "Localised Country Pages", desc: "Free tailored guides for Sri Lanka, India, Philippines, Pakistan and Nigeria — local regulator, exchange, tax notes and student angle. Live under /learn/country.", status: "shipped", eta: "Shipped Jul 2026" },
-  { icon: UserCircle2, title: "Optional Email + Google Sign-In", desc: "Create a free account to sync your practice stats and appear on the leaderboard. Still 100% optional — guest mode stays forever and every page works signed out.", status: "shipped", eta: "Shipped Aug 2026" },
-  { icon: Users2, title: "Challenge a Friend", desc: "Share an invite link and run a 30-day head-to-head practice duel. Both sides are scored on percentage return from their own recorded starting balance, with a live scoreboard and a Duels tab on the leaderboard.", status: "shipped", eta: "Shipped Aug 2026" },
-  { icon: LineChart, title: "Realistic Portfolio Projections", desc: "See where your simulated equity curve trends if your current win rate, R-multiple and frequency continue — powered by your real trade history.", status: "planned", eta: "Aug 2026" },
-  { icon: BarChart3, title: "Embeddable Live Price Widgets", desc: "Drop a TradeHQ live BTC, ETH or SPY widget into any blog or notion page — free, no API key.", status: "planned", eta: "Oct 2026" },
+  { icon: UserCircle2, title: "Optional Email + Google Sign-In", desc: "Create an optional account for profile/community features and to sync selected summary practice statistics. Core simulator features remain available in guest mode; this is not full cross-device portfolio synchronization.", status: "shipped", eta: "Shipped Aug 2026" },
+  { icon: Users2, title: "Challenge a Friend", desc: "Share an invite link for a 30-day virtual-money duel. The comparison uses client-synced percentage-change statistics from each participant's recorded starting value; updates depend on syncs and are not independently verified.", status: "shipped", eta: "Shipped Aug 2026" },
+  { icon: LineChart, title: "History-Based Portfolio Analysis", desc: "Potential future work: analysis based on a sufficiently documented simulator history. The current Scenario Builder is an assumption-driven sandbox, not a forecast based on your trade history.", status: "planned", eta: "No committed date" },
+  { icon: BarChart3, title: "Embeddable Practice Price Widgets", desc: "Potential future widgets would preserve the same provenance labels used by TradeHQ — realtime, delayed, cached or simulated depending on the instrument and provider.", status: "planned", eta: "No committed date" },
 ];
 
 const STATUS_STYLES: Record<RoadmapItem["status"], string> = {
@@ -42,7 +42,7 @@ const STATUS_LABEL: Record<RoadmapItem["status"], string> = {
 
 export default function Roadmap() {
   const title = "TradeHQ Roadmap — What's Coming Next | Future Updates";
-  const description = "Sneak peek at upcoming TradeHQ features: expanded courses, optional sign-in, realistic portfolio projections, public trader profiles and more — all free.";
+  const description = "Current TradeHQ feature status and potential future improvements, with shipped, in-progress and planned items clearly separated.";
   return (
     <>
       <Helmet>
@@ -72,7 +72,7 @@ export default function Roadmap() {
               The Future of TradeHQ
             </h1>
             <p className="mt-5 text-lg text-muted-foreground max-w-2xl mx-auto">
-              We're building the world's most rewarding practice-trading experience — and keeping it 100% free, forever. Here's what's on deck.
+              This page records what exists now, what is still being repaired, and what is only planned. Planned items and dates are not commitments.
             </p>
           </header>
 
@@ -106,13 +106,11 @@ export default function Roadmap() {
           <section className="mt-12 max-w-3xl mx-auto space-y-4">
             <h2 className="text-2xl font-semibold">What the statuses actually mean</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              "Shipped" means the feature is live on this site right now and you can use it without an
-              account — not that it is finished forever. Shipped items still get refined as people use
-              them, and the date shown is when the first working version went live rather than when
-              the idea started. "Planned" means the work is specified and intended, with a target
-              month that is an estimate rather than a commitment; because TradeHQ is built by one
-              person and given away free, a planned date can slip when something more useful takes
-              priority. Nothing on this page is a promise of a paid feature, because there are none.
+              "Shipped" means a working version exists in the current product; some shipped features
+              still require an account or user action. "In progress" means part of the feature exists
+              but the advertised behavior is not yet fully verified. "Planned" describes an idea or
+              intended improvement, not a delivery promise. Dates shown for shipped items are historical
+              labels; future items use no committed date unless one can actually be supported.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Items reach the list in one of two ways. Most come from watching where people get stuck:
@@ -123,11 +121,9 @@ export default function Roadmap() {
               considered.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Two things will not appear on this roadmap. There will be no real-money trading, because
-              the moment a site handles funds it becomes a regulated broker and stops being an
-              educational tool. And there will be no signals, trade alerts or recommendations, because
-              telling people what to buy is precisely the failure mode this project was built to
-              replace with practice.
+              TradeHQ's current product scope excludes real-money order execution, custody and deposits.
+              The roadmap also does not promise trading signals or personalized buy/sell recommendations;
+              the product is intended for virtual-money practice and education.
             </p>
             <p className="text-xs text-muted-foreground/60 italic">(Educational simulation only — not financial advice.)</p>
           </section>
