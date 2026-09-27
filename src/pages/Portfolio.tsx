@@ -63,7 +63,7 @@ export default function Portfolio() {
       return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
     });
   });
-  const [dataStatus, setDataStatus] = useState<"live" | "cached" | "simulated">("cached");
+  const [dataStatus, setDataStatus] = useState<"live" | "delayed" | "cached" | "simulated">("cached");
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [secondsAgo, setSecondsAgo] = useState(0);
   const assetsRef = useRef(assets);
@@ -94,17 +94,23 @@ export default function Portfolio() {
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data && typeof result.data.price === "number" && result.data.price > 0) {
+          const provenanceStatus = result.provenance?.status ?? result.data.provenance?.status;
+          const normalizedStatus = provenanceStatus === "realtime"
+            ? "live"
+            : provenanceStatus === "simulated"
+              ? "simulated"
+              : "delayed";
           return {
             ...asset,
             price: result.data.price,
             change: typeof result.data.change24h === "number" ? result.data.change24h : asset.change,
             changePercent: typeof result.data.changePercent24h === "number" ? result.data.changePercent24h : asset.changePercent,
-            _live: true as const,
+            _status: normalizedStatus as "live" | "delayed" | "simulated",
           };
         }
       }
     } catch (_err) {}
-    return { ...asset, _live: false as const };
+    return { ...asset, _status: "cached" as const };
   };
 
   // Refresh held positions in staggered batches of 5
@@ -114,6 +120,7 @@ export default function Portfolio() {
     const heldAssets = assetsRef.current.filter((a) => heldIds.has(a.id));
     const batchSize = 5;
     let anyLive = false;
+    let anyDelayed = false;
     const updates = new Map<string, typeof ASSETS[number]>();
 
     for (let i = 0; i < heldAssets.length; i += batchSize) {
@@ -123,11 +130,16 @@ export default function Portfolio() {
       results.forEach((r) => {
         if (r.status === "fulfilled") {
           const u = r.value;
-          if (u._live) {
+          if (u._status === "live") {
             anyLive = true;
             persistPrice(u.id, u.price, u.change, u.changePercent, "live");
+          } else if (u._status === "delayed") {
+            anyDelayed = true;
+            persistPrice(u.id, u.price, u.change, u.changePercent, "delayed");
+          } else if (u._status === "simulated") {
+            persistPrice(u.id, u.price, u.change, u.changePercent, "simulated");
           }
-          const { _live, ...clean } = u;
+          const { _status, ...clean } = u;
           updates.set(u.id, clean as typeof ASSETS[number]);
         }
       });
@@ -137,11 +149,11 @@ export default function Portfolio() {
     if (!isMounted.current) return;
     const newAssets = assetsRef.current.map((a) => updates.get(a.id) ?? a);
     setAssets(newAssets);
-    setDataStatus(anyLive ? "live" : "cached");
+    setDataStatus(anyLive ? "live" : anyDelayed ? "delayed" : "cached");
     setLastUpdated(new Date());
 
-    // Recompute portfolio with fresh prices
-    const fresh = updatePositionPrices(getPortfolio());
+    // Recompute portfolio from the same freshly fetched prices shown in the UI.
+    const fresh = updatePositionPrices(getPortfolio(), newAssets);
     setPortfolio(fresh);
     savePortfolio(fresh);
     const positionsValue = fresh.positions.reduce((s, p) => s + p.currentValue, 0);
@@ -162,7 +174,7 @@ export default function Portfolio() {
     isMounted.current = true;
     const initPortfolio = async () => {
       let updated = await updatePortfolioOverTime(portfolio);
-      updated = updatePositionPrices(updated);
+      updated = updatePositionPrices(updated, assetsRef.current);
       setPortfolio(updated);
       savePortfolio(updated);
       initializeMilestones(updated.totalValue);
@@ -176,13 +188,14 @@ export default function Portfolio() {
 
     // Visual micro-fluctuation every 3s for liveness, anchored to last real price
     const microInterval = setInterval(() => {
-      setAssets((prev) =>
-        prev.map((a) => {
+      setAssets((prev) => {
+        const nextAssets = prev.map((a) => {
           const m = generatePriceMovement(a.price);
           return { ...a, price: m.price, change: m.change, changePercent: m.changePercent };
-        }),
-      );
-      setPortfolio((prev) => updatePositionPrices(prev));
+        });
+        setPortfolio((currentPortfolio) => updatePositionPrices(currentPortfolio, nextAssets));
+        return nextAssets;
+      });
     }, 3000);
 
     // "Updated Xs ago" ticker
@@ -349,7 +362,7 @@ export default function Portfolio() {
                           dataStatus === "live" ? "bg-success animate-pulse" : "bg-current",
                         )}
                       />
-                      {dataStatus === "live" ? "Live Data" : dataStatus === "cached" ? "Cached" : "Simulated"}
+                      {dataStatus === "live" ? "Live Data" : dataStatus === "delayed" ? "Provider reference" : dataStatus === "cached" ? "Cached" : "Simulated"}
                     </span>
                     <span className="inline-flex items-center gap-1 text-2xs text-muted-foreground">
                       <Clock className="w-3 h-3" />
