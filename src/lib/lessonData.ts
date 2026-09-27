@@ -893,7 +893,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "For a $100,000 account, hold 5-8 positions maximum. Too few = too much risk. Too many = can't manage effectively. Find the sweet spot.",
+            data: "For a diversification exercise, compare portfolios with different numbers of positions and concentrations. There is no universal 5-8 position maximum; diversification depends on what the positions actually contain and how they move together.",
           },
           {
             type: "heading",
@@ -923,16 +923,16 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "A balanced approach for most traders:",
+            data: "One hypothetical core-satellite structure to test in the simulator:",
           },
           {
             type: "list",
             data: [
-              "Core (60-70%): Safe ETFs like SPY, QQQ for steady growth",
-              "Satellite (30-40%): Individual stocks for higher returns",
-              "Core provides stability",
-              "Satellites provide excitement and outperformance",
-              "Adjust percentages based on risk tolerance",
+              "Example core: a broad-market ETF allocation chosen for the simulation",
+              "Example satellite: a smaller set of individual assets",
+              "Compare concentration and drawdown across several percentage splits",
+              "Broad ETFs still carry market risk and can fall substantially",
+              "Treat every percentage as a test input, not a suitability recommendation",
             ],
           },
           {
@@ -945,16 +945,16 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Crypto is high-risk, high-reward. Allocate carefully:",
+            data: "Crypto can be highly volatile. Compare hypothetical allocations rather than prescribing one:",
           },
           {
             type: "list",
             data: [
-              "Beginners: 5-10% maximum in crypto",
-              "Moderate: 10-20% if you understand the risks",
-              "Aggressive: Up to 30% (not recommended)",
-              "Split between BTC (safer) and ETH/alts (riskier)",
-              "Never more than you can afford to lose completely",
+              "Test several virtual crypto weights and compare portfolio drawdown",
+              "A larger crypto weight generally increases exposure to crypto-specific volatility",
+              "BTC, ETH and other tokens have different risk drivers; none is labelled 'safe'",
+              "Record how concentration affects simulated outcomes",
+              "No percentage here is a real-money recommendation",
             ],
           },
           {
@@ -963,21 +963,21 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Set it and forget it doesn't work. Rebalance regularly:",
+            data: "Rebalancing is one portfolio-management method. Compare different schedules and thresholds:",
           },
           {
             type: "list",
             data: [
-              "Review monthly or quarterly",
-              "Sell winners that grew too large (take profits)",
-              "Add to losers if thesis still valid",
-              "Maintain target allocation percentages",
-              "Adapt to changing market conditions",
+              "Calendar-based reviews are one option",
+              "Threshold-based reviews are another option",
+              "Rebalancing can involve selling or buying to restore a chosen test allocation",
+              "Costs, taxes and market path can change the result",
+              "A no-rebalancing baseline is useful for comparison",
             ],
           },
           {
             type: "tip",
-            data: "If one position grows to more than 25% of your portfolio, consider taking some profits and rebalancing. This locks in gains and reduces concentration risk.",
+            data: "Use concentration thresholds such as 25% only as simulation examples. Compare how different thresholds change concentration, turnover and drawdown rather than treating one threshold as a universal action rule.",
           },
         ],
       },
@@ -1007,10 +1007,10 @@ export const lessonData: Lesson[] = [
         explanation: "With a 1:3 ratio, you only need to win 25% of trades to break even. Anything above 25% becomes profitable!",
       },
       {
-        question: "What percentage of your portfolio should you typically hold in cryptocurrency as a beginner?",
-        options: ["50%", "30%", "5-10%", "90%"],
+        question: "Which statement best describes a crypto allocation in this simulation lesson?",
+        options: ["5-10% is universally correct", "30% is universally correct", "The percentage is a test input whose risk should be compared", "90% is always required"],
         correctAnswer: 2,
-        explanation: "Beginners should limit crypto exposure to 5-10% due to its high volatility and risk. Only invest what you can afford to lose.",
+        explanation: "There is no universal beginner percentage. In a simulator, compare several allocations and observe how concentration changes volatility and drawdown.",
       },
       {
         question: "What does diversification protect you from?",
@@ -1246,9 +1246,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "90%",
-            label: "Of Portfolio Returns Determined by Asset Allocation",
-            data: "Research shows asset allocation explains 90% of a portfolio's performance variance - stock picking matters far less than most think",
+            value: "Variable",
+            label: "Allocation Shapes Portfolio Risk",
+            data: "The contribution of asset allocation depends on the assets, period and methodology; this lesson does not assign a universal percentage of performance to it.",
           },
           {
             type: "heading",
@@ -1256,45 +1256,45 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Choose your allocation based on age, risk tolerance, and time horizon:",
+            data: "Compare hypothetical allocations using clearly stated assumptions rather than assigning a mix from age alone:",
           },
           {
             type: "example",
-            data: "Aggressive (Age 20-35): 80% stocks, 15% crypto, 5% bonds. You have time to recover from downturns and capture maximum growth.",
+            data: "Scenario A: a higher-equity/higher-volatility mix. Record its simulated drawdown and concentration without labelling it suitable for an age group.",
           },
           {
             type: "example",
-            data: "Moderate (Age 35-55): 60% stocks, 30% bonds, 10% alternatives. Balanced between growth and stability as you build wealth.",
+            data: "Scenario B: a more mixed allocation. Compare its simulated variability with Scenario A under the same market path.",
           },
           {
             type: "example",
-            data: "Conservative (Age 55+): 40% stocks, 50% bonds, 10% cash. Preserve capital while generating income for retirement.",
+            data: "Scenario C: a lower-equity hypothetical mix. This is an experiment setting, not a retirement recommendation.",
           },
           {
             type: "highlight",
-            data: "Your age and goals determine your allocation. Young investors can afford more risk. Older investors need more stability.",
+            data: "Age by itself does not determine an appropriate allocation. Real-world suitability depends on financial circumstances a simulator cannot assess.",
           },
           {
             type: "heading",
-            data: "The 100-Minus-Age Rule",
+            data: "Testing the 100-Minus-Age Heuristic",
           },
           {
             type: "text",
-            data: "A simple rule of thumb for stock allocation:",
+            data: "A historical rule of thumb that can be tested, not treated as a recommendation:",
           },
           {
             type: "list",
             data: [
-              "Subtract your age from 100 = % in stocks",
-              "Age 25: 75% stocks, 25% bonds/cash",
-              "Age 50: 50% stocks, 50% bonds/cash",
-              "Age 70: 30% stocks, 70% bonds/cash",
-              "Adjust based on risk tolerance",
+              "100 minus age has been used as a simplified stock-allocation heuristic",
+              "It ignores income, liabilities, goals, taxes and other circumstances",
+              "Compare it with alternative hypothetical mixes in the simulator",
+              "Record differences in drawdown and concentration",
+              "Do not infer real-world suitability from the result",
             ],
           },
           {
             type: "tip",
-            data: "Review your allocation annually, but don't chase performance. Stick to your plan and rebalance when allocations drift more than 5% from targets.",
+            data: "For simulation, compare calendar-based, threshold-based and no-rebalancing approaches. A 5% drift threshold is one possible test input, not a standard.",
           },
         ],
       },
@@ -1303,11 +1303,11 @@ export const lessonData: Lesson[] = [
         content: [
           {
             type: "highlight",
-            data: "Each asset class serves a different purpose - ETFs for stability, stocks for growth, crypto for moonshots. The magic is in the mix.",
+            data: "Asset classes have different structures and risks. The exercise is to compare mixes rather than assign each class a guaranteed role.",
           },
           {
             type: "text",
-            data: "Each asset class serves a different purpose in your portfolio. Combine them strategically for optimal risk-adjusted returns without putting all your eggs in one basket.",
+            data: "Different assets can contribute different risk exposures. Compare hypothetical mixes in the simulator without claiming an 'optimal' allocation.",
           },
           {
             type: "heading",
@@ -1315,7 +1315,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "ETFs should form 50-70% of most portfolios. They provide instant diversification and reduce single-stock risk.",
+            data: "Broad ETFs can reduce single-company concentration, but ETF composition and overlap matter. Use 50-70% only as one hypothetical range to compare, not a recommendation.",
           },
           {
             type: "list",
@@ -1337,7 +1337,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Allocate 20-40% to individual stocks for potential outperformance. Pick quality companies you understand:",
+            data: "For one simulation case, assign a chosen percentage to individual stocks and compare the concentration with an ETF-heavy case:",
           },
           {
             type: "list",
@@ -1345,15 +1345,15 @@ export const lessonData: Lesson[] = [
               "Blue chips: AAPL, MSFT, GOOGL (stability + growth)",
               "Growth stocks: TSLA, NVDA (higher risk, higher reward)",
               "Dividend payers: JNJ, PG (income generation)",
-              "Limit to 5-8 individual positions",
-              "Focus on companies with competitive advantages",
+              "Compare several position counts rather than imposing a universal 5-8 limit",
+              "Record the assumptions used to choose each company",
             ],
           },
           {
             type: "stat",
-            value: "5-15%",
-            label: "Recommended Crypto Allocation Maximum",
-            data: "Crypto is exciting but volatile. Limit exposure to what you can afford to lose completely",
+            value: "Variable",
+            label: "Crypto Allocation Test Range",
+            data: "Choose several hypothetical weights and compare how crypto-specific volatility changes the simulated portfolio.",
           },
           {
             type: "heading",
@@ -1361,21 +1361,21 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Allocate 5-15% maximum to crypto. It's speculative but offers asymmetric upside:",
+            data: "Compare several hypothetical crypto weights; this lesson does not set a maximum or promise asymmetric upside:",
           },
           {
             type: "list",
             data: [
-              "Bitcoin: Digital gold, most established",
-              "Ethereum: Smart contract platform leader",
-              "Altcoins: Higher risk, higher reward potential",
-              "Only invest what you can lose 100%",
-              "Never FOMO into crypto during mania phases",
+              "Bitcoin: large crypto asset with its own market and network risks",
+              "Ethereum: smart-contract network with different drivers",
+              "Other tokens can have very different liquidity and risk profiles",
+              "Compare concentration and drawdown in the simulator",
+              "No token allocation is recommended here",
             ],
           },
           {
             type: "tip",
-            data: "Use the core-satellite approach: 60-70% in ETFs (core), 20-30% in individual stocks (satellites), 5-15% in crypto (speculation). This balances stability with growth potential.",
+            data: "Use core-satellite percentages only as hypothetical test cases. Compare several splits and a simple benchmark to see how concentration and volatility change.",
           },
         ],
       },
@@ -1442,11 +1442,11 @@ export const lessonData: Lesson[] = [
         content: [
           {
             type: "highlight",
-            data: "Rebalancing is the only strategy that forces you to sell high and buy low systematically. It's discipline automated.",
+            data: "Rebalancing is one method for restoring a portfolio to a chosen target mix; it can add turnover and does not guarantee better returns.",
           },
           {
             type: "text",
-            data: "Markets move, and so should your portfolio. Rebalancing maintains your target allocation and forces you to buy low and sell high - the secret to long-term wealth.",
+            data: "Rebalancing restores a chosen allocation after market moves. Its effect on returns depends on the market path, costs, taxes and the rule used.",
           },
           {
             type: "heading",
@@ -1490,13 +1490,13 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "0.5-1%",
-            label: "Additional Annual Return from Rebalancing",
+            value: "Variable",
+            label: "Return Effect of Rebalancing",
             data: "Rebalancing is primarily a risk-control process. Its effect on returns varies by market path, trading costs, taxes, and the chosen thresholds.",
           },
           {
             type: "tip",
-            data: "Use the 5/25 rule: Rebalance when any position drifts 5% from target OR grows to 25%+ of portfolio. This captures both small drifts and concentration risk.",
+            data: "The 5/25 rule is one threshold heuristic to test. Compare it with other thresholds and a no-rebalancing baseline rather than treating it as a standard.",
           },
         ],
       },
@@ -1514,10 +1514,10 @@ export const lessonData: Lesson[] = [
         explanation: "Asset allocation is the most important factor in determining your long-term returns and overall portfolio risk.",
       },
       {
-        question: "How often should you typically rebalance your portfolio?",
-        options: ["Daily", "Weekly", "Quarterly or when allocation drifts significantly", "Never"],
+        question: "Which statement about rebalancing is most accurate for this lesson?",
+        options: ["Daily is always best", "A 5% threshold is universal", "Different schedules and thresholds can be compared", "Rebalancing always raises returns"],
         correctAnswer: 2,
-        explanation: "Quarterly rebalancing or when your allocation drifts 5%+ from targets strikes a good balance between maintenance and transaction costs.",
+        explanation: "Calendar, threshold and no-rebalancing approaches can all be compared; no single schedule or threshold is universally correct.",
       },
     ],
   },
@@ -1752,11 +1752,11 @@ export const lessonData: Lesson[] = [
             type: "list",
             data: [
               "Total Return: Overall profit/loss percentage over time",
-              "Win Rate: Percentage of winning trades (aim for 45%+)",
-              "Average Win vs Average Loss: Your edge (target 2:1 or better)",
-              "Max Drawdown: Largest peak-to-valley decline (keep under 20%)",
-              "Sharpe Ratio: Risk-adjusted returns (higher is better)",
-              "Profit Factor: Gross profit ÷ gross loss (target 1.5+)",
+              "Win Rate: Percentage of closed trades that were profitable",
+              "Average Win vs Average Loss: Compare payoff size with win frequency",
+              "Max Drawdown: Largest peak-to-valley decline in the sample",
+              "Sharpe Ratio: One risk-adjusted-return metric with important assumptions",
+              "Profit Factor: Gross profit ÷ gross loss; interpret it with sample size and costs",
             ],
           },
           {
@@ -1765,7 +1765,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "highlight",
-            data: "Track your Maximum Drawdown religiously. If you drop more than 20% from peak equity, stop trading and reassess your strategy - something is broken.",
+            data: "Track maximum drawdown as a descriptive risk metric. A 20% threshold can be tested as a simulation rule, but exceeding it does not by itself prove a strategy is broken or prescribe a real-money action.",
           },
           {
             type: "heading",
