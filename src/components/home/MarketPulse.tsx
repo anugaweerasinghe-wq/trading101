@@ -4,18 +4,18 @@ import { ASSETS } from "@/lib/assets";
 import { getPersistedPrices } from "@/lib/pricePersistence";
 import { cn } from "@/lib/utils";
 
-type Sentiment = "Extreme Fear" | "Fear" | "Neutral" | "Greed" | "Extreme Greed";
+type MomentumBand = "Very Weak" | "Weak" | "Neutral" | "Strong" | "Very Strong";
 
-function sentimentLabel(score: number): { label: Sentiment; color: string } {
-  if (score < 20) return { label: "Extreme Fear", color: "#FF4560" };
-  if (score < 40) return { label: "Fear", color: "#FF8A65" };
+function momentumLabel(score: number): { label: MomentumBand; color: string } {
+  if (score < 20) return { label: "Very Weak", color: "#FF4560" };
+  if (score < 40) return { label: "Weak", color: "#FF8A65" };
   if (score < 60) return { label: "Neutral", color: "#FFB74D" };
-  if (score < 80) return { label: "Greed", color: "#66BB6A" };
-  return { label: "Extreme Greed", color: "#00E396" };
+  if (score < 80) return { label: "Strong", color: "#66BB6A" };
+  return { label: "Very Strong", color: "#00E396" };
 }
 
-// Compute a fear/greed index from the top-20 asset momentum
-function computeFearGreed(prices: Record<string, { changePercent: number }>): number {
+// TradeHQ practice metric: maps simulator percentage changes to a 0-100 momentum score.
+function computePracticeMomentum(prices: Record<string, { changePercent: number }>): number {
   const sample = ASSETS.slice(0, 30);
   const changes = sample
     .map((a) => prices[a.id]?.changePercent ?? a.changePercent ?? 0)
@@ -68,7 +68,7 @@ function formatTimeLeft(min: number): string {
 }
 
 /**
- * Market Pulse — Fear/Greed dial + global market clock + movers.
+ * Market Pulse — simulator momentum dial + global market clock + movers.
  * Designed as the homepage "habit" widget — users check it daily.
  */
 export function MarketPulse() {
@@ -84,8 +84,8 @@ export function MarketPulse() {
     return () => clearInterval(i);
   }, []);
 
-  const score = useMemo(() => computeFearGreed(prices), [prices]);
-  const sentiment = sentimentLabel(score);
+  const score = useMemo(() => computePracticeMomentum(prices), [prices]);
+  const sentiment = momentumLabel(score);
 
   // Movers
   const ranked = ASSETS.map((a) => {
@@ -131,7 +131,7 @@ export function MarketPulse() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {/* Fear & Greed dial */}
+        {/* Simulator momentum dial */}
         <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-black/40 border border-white/[0.04]">
           <div className="relative w-[180px] h-[180px]">
             <svg viewBox="0 0 180 180" className="w-full h-full -rotate-[135deg]">
@@ -150,12 +150,12 @@ export function MarketPulse() {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <div className="text-4xl font-bold tabular-nums text-foreground" style={{ color: sentiment.color }}>{score}</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">Fear & Greed</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">Practice Momentum</div>
             </div>
           </div>
           <div className="mt-3 text-sm font-bold" style={{ color: sentiment.color }}>{sentiment.label}</div>
           <p className="text-[11px] text-muted-foreground text-center mt-1 max-w-[200px]">
-            Simulator momentum across 30 major assets
+            TradeHQ-derived score from simulator price changes; not an external sentiment index
           </p>
         </div>
 
