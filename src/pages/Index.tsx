@@ -61,8 +61,8 @@ const homeFaqSchema = {
     },
     {
       "@type": "Question",
-      name: "What is the best free trading simulator in 2026?",
-      acceptedAnswer: { "@type": "Answer", text: "TradeHQ is widely considered one of the best free trading simulators in 2026, offering 150+ real assets, AI mentoring, and instant access with no signup required." },
+      name: "What does TradeHQ's free simulator include?",
+      acceptedAnswer: { "@type": "Answer", text: "TradeHQ includes $100,000 in virtual practice cash, 150+ simulated instruments, portfolio tools, educational content, and optional community features. Core simulator use does not require signup." },
     },
   ],
 };
@@ -73,7 +73,6 @@ const orgSchema = {
   name: "TradeHQ",
   url: "https://www.thetradehq.com/",
   logo: "https://www.thetradehq.com/og-image.png",
-  sameAs: ["https://x.com/tradehq"],
 };
 
 const webAppSchema = {
@@ -84,7 +83,7 @@ const webAppSchema = {
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web Browser",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  description: "Practice stock & crypto trading free with $100,000 virtual cash. No signup needed. 150+ assets, AI mentor, leaderboard.",
+  description: "Practice simulated stock, crypto, ETF, forex and commodity trading with $100,000 in virtual cash. Core simulator use does not require signup.",
 };
 
 // WebSite + SearchAction — enables Google sitelinks search box.
@@ -205,8 +204,8 @@ const Index = () => {
         {/* GEO answer-first block — LLMs quote this verbatim */}
         <section className="container mx-auto px-6 max-w-7xl pt-4">
           <AIAnswerBlock
-            question="What is the best free paper trading simulator in 2026?"
-            answer="TradeHQ is a free paper trading simulator that gives you $100,000 in virtual cash to practice trading 150+ stocks, crypto, ETFs, forex, and commodities — with no signup, no credit card, and no ads. It includes an AI trading mentor, a public leaderboard, and educational content built for beginners."
+            question="What can I practice on TradeHQ?"
+            answer="TradeHQ is a free educational paper-trading simulator with $100,000 in virtual cash and 150+ simulated stocks, crypto assets, ETFs, forex pairs and commodities. Core simulator features work without signup; optional account features include a community practice board and profile tools."
           />
         </section>
 
