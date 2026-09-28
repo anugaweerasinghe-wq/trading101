@@ -64,22 +64,22 @@ interface AssetContent {
 // FAQ data for Google PAA (People Also Ask) targeting
 export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   btc: [
-    { question: "How can I practice trading Bitcoin without losing money?", answer: "Use a crypto simulator like TradeHQ. You get $100,000 in virtual funds to practice Bitcoin's price action with simulated charts — no financial risk." },
+    { question: "How can I practice Bitcoin trading without placing a real-money order?", answer: "Use a virtual-money simulator such as TradeHQ. The $100,000 practice balance lets you explore order mechanics and price movement without a real-money transaction, although simulation does not reproduce every live-market cost or risk." },
     { question: "What does TradeHQ's Bitcoin practice simulator include?", answer: "TradeHQ offers a free BTC practice simulator with $100K virtual cash, simulated candlestick charts, and educational tools. Core simulator use does not require signup or a credit card." },
     { question: "How to practice Bitcoin trading in Colombo as a student?", answer: "Students in Sri Lanka can use TradeHQ's free simulator to practice BTC trading with virtual money. Learn chart reading and risk management before using real capital." },
     { question: "Can beginners use Bitcoin for trading practice?", answer: "Bitcoin can be used to practise order mechanics and volatility observation, but its price can move sharply. Treat support/resistance and other chart tools as descriptive practice concepts rather than reliable predictions." }
   ],
   eth: [
-    { question: "What is the best way to learn Ethereum trading?", answer: "Start by simulating trades on a platform that offers simulated charts. Focus on ETH/BTC correlation and gas fee trends before moving to real capital." },
-    { question: "How does Ethereum differ from Bitcoin for trading practice?", answer: "ETH has higher beta and reacts to DeFi and NFT sentiment. Practice trading ETH to learn how smart contract ecosystems drive price beyond simple supply/demand." },
-    { question: "Can students practice Ethereum trading for free?", answer: "Yes. TradeHQ gives you $100K virtual cash to practice ETH trades. Students in Colombo and worldwide can learn DeFi trading patterns without any cost." },
+    { question: "How can Ethereum be studied in a trading simulator?", answer: "Use virtual trades to compare ETH price behavior with network metrics and with other crypto assets. Correlations and gas-fee relationships change over time, so record observations rather than treating them as fixed signals." },
+    { question: "How does Ethereum differ from Bitcoin for trading practice?", answer: "Ethereum and Bitcoin have different network designs, issuance rules and application ecosystems. A simulator can be used to compare their volatility and co-movement without assuming that one narrative mechanically drives price." },
+    { question: "Can students practice Ethereum trading for free?", answer: "TradeHQ provides virtual cash for ETH practice without a brokerage deposit. The exercise can cover order mechanics and volatility observation; it does not establish a profitable DeFi or trading pattern." },
     { question: "What Ethereum-specific metrics can I compare in a simulator?", answer: "Gas fees, network activity, DeFi TVL and the ETH/BTC ratio are examples of metrics you can observe alongside simulated price action. None is a guaranteed trading signal." }
   ],
   nvda: [
-    { question: "How do I trade the AI boom with a simulator?", answer: "NVDA is the primary AI stock. Practice identifying momentum breakouts and RSI overbought levels using $100K demo cash to learn tech cycles." },
+    { question: "How can NVIDIA be studied in a simulator?", answer: "Use NVDA as one example of a semiconductor company with AI-related exposure. Compare earnings periods, volatility and broad technology-market moves without assuming a breakout or indicator reading predicts the next move." },
     { question: "What can beginners learn by simulating NVIDIA trades?", answer: "NVDA can be used to study earnings gaps, semiconductor-cycle narratives and volatility. The exercise is to compare outcomes, not assume a trend will continue." },
-    { question: "How to practice NVIDIA stock trading as a student in Sri Lanka?", answer: "Use TradeHQ's free simulator — no US brokerage needed. Practice NVDA with $100K virtual cash and learn semiconductor cycle analysis risk-free." },
-    { question: "What moves NVIDIA stock price the most?", answer: "Data center revenue growth, AI chip demand, and quarterly earnings drive NVDA. Practice correlating these catalysts with price action in the simulator." }
+    { question: "How can a student practise NVIDIA stock mechanics?", answer: "TradeHQ's virtual-money simulator can be used to explore NVDA order mechanics without opening a US brokerage account. Simulator outcomes do not reproduce every real-market execution cost, tax or liquidity condition." },
+    { question: "What factors can affect NVIDIA stock?", answer: "Earnings, guidance, semiconductor demand, customer spending, competition, supply constraints and broader market conditions can all matter. Their importance changes over time, so no single catalyst should be treated as a guaranteed driver." }
   ],
   aapl: [
     { question: "What can Apple stock be used to practise?", answer: "AAPL can be used to study how a large, liquid stock behaves around earnings and product news. Reactions are not predictable, so compare multiple examples rather than treating an event as a signal." },

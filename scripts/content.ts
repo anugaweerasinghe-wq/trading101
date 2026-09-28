@@ -199,7 +199,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: `What ${g.term} means`, p: [g.definition] },
         { h: "In depth", p: splitParagraphs(g.expertDefinition) },
         { h: "Key points", list: g.keyPoints },
-        { h: "Practical tip", p: [g.proTip] },
+        { h: "Study note", p: [g.proTip] },
         { h: "Why it matters when you are learning", p: [g.studentPerspective] },
         {
           h: `Practising ${g.term} on the simulator`,
@@ -451,10 +451,10 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         h: "Testing a strategy without fooling yourself",
         list: [
           "Write the rules down before you start. Rules remembered after the fact always look better than they were.",
-          "Take at least thirty trades before drawing any conclusion, and keep the size constant throughout.",
+          "Choose a sample and sizing rule before reviewing results, then explain why that sample is large enough for the question being tested.",
           "Record every trade the rules generated, including the ones you chose to skip, and why you skipped them.",
           "Judge the method by expectancy and drawdown together, never by the best week.",
-          "Expect any method to have losing stretches long enough to make you doubt it — that is the normal condition, not a malfunction.",
+          "Record losing and winning stretches without assuming either proves that the method is broken or successful.",
           "Re-test in a different market environment before trusting it; a method tuned to a calm trending month often fails the first volatile one.",
         ],
       },
@@ -476,7 +476,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         {
           h: "Practising it safely",
           p: [
-            `Run this method for at least thirty simulated trades with fixed sizing before judging it, and record every trade in the journal. A handful of winners proves nothing. ${DISCLAIMER}`,
+            `Define the simulator rules, sample window and sizing assumption before reviewing outcomes, then record every qualifying trade. A short run cannot establish future profitability. ${DISCLAIMER}`,
           ],
         },
       ],

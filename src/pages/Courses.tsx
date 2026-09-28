@@ -42,8 +42,8 @@ const WHY_TRUST = [
   },
   {
     icon: FileText,
-    title: "Every claim sourced",
-    body: "Statistics and definitions cite public sources: SEC, CFTC, Investopedia, FRED and CME Group. Sources are printed at the bottom of every lesson.",
+    title: "Source links for key claims",
+    body: "Lessons include public references for many definitions and time-sensitive claims. Source coverage varies by lesson, so readers should verify important or changing figures at the linked primary source.",
   },
   {
     icon: Users,
