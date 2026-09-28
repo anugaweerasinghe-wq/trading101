@@ -295,16 +295,15 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   },
   {
     slug: "market-orders-vs-limit-orders",
-    title: "Market Orders vs Limit Orders: Which Should You Use and When?",
-    summary: "Understanding order types is essential before placing your first trade. Learn the difference between market and limit orders, and when to use each one.",
-    metaDescription: "Market orders vs limit orders explained for beginners. Learn about slippage, fill guarantees, and when to use each order type. Practice free on TradeHQ.",
+    title: "Market Orders vs Limit Orders: How Their Execution Differs",
+    summary: "Understand how market and limit orders differ in immediacy, price control, fill risk and slippage.",
+    metaDescription: "Market orders vs limit orders explained for beginners: compare price control, fill risk, liquidity and slippage with virtual-money practice.",
     readTime: "5 min read",
     sections: [
       {
         heading: "What Is a Market Order?",
         paragraphs: [
-          "A market order is the simplest type of trade: you tell your broker to buy or sell an asset immediately at the best available price. Market orders are virtually guaranteed to execute, but the exact price you get may differ slightly from what you see on your screen — especially in fast-moving or illiquid markets.",
-          "A market order prioritizes immediacy over price control by trading against available liquidity. The final fill can differ from the displayed quote, and execution is not guaranteed under every condition because markets can halt, orders can be rejected, or liquidity can disappear. Whether a market or limit order is appropriate depends on the execution objective and venue.",
+          "A market order asks for execution against available liquidity and prioritizes immediacy over price control. The final fill can differ from the displayed quote, and execution is not guaranteed under every condition because markets can halt, orders can be rejected, or liquidity can disappear. The trade-off depends on the execution objective and venue.",
           "The downside is slippage: the difference between the expected price and the actual fill price. In highly liquid markets like Apple (AAPL) or Bitcoin (BTC), slippage is usually pennies. But in thinly traded altcoins or penny stocks, slippage can be significant. On TradeHQ, you can observe how market orders execute instantly on different asset types."
         ]
       },
@@ -319,9 +318,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "When to Use Each Order Type",
         paragraphs: [
-          "Use market orders when: you need immediate execution, the asset is highly liquid (major stocks, BTC, ETH), you're cutting a losing position and can't afford to wait, or the spread between bid and ask is very tight. In these situations, the cost of slippage is minimal compared to the risk of not executing.",
-          "Use limit orders when: you want to buy at a specific support level, you're not in a hurry to enter, the asset has wide bid-ask spreads, or you want to set a take-profit level in advance. Limit orders also work well for scaling into positions — placing multiple buy limits at different price levels.",
-          "On TradeHQ, practice using both order types on different assets. Try market orders on liquid stocks like NVDA, and limit orders on more volatile crypto assets like SOL or AVAX. Track which order type gives you better average fill prices over 20+ trades and develop your own preference based on real experience."
+          "Market orders prioritize immediacy and accept price uncertainty; limit orders prioritize a worst acceptable price and accept non-execution or partial-fill risk. Liquidity, spread, order size, volatility and venue rules affect both.",
+          "In a simulation exercise, compare several hypothetical spreads and liquidity conditions using the same virtual order size. Record fill assumptions and slippage separately instead of treating support levels or asset categories as instructions for which order type to use.",
+          "TradeHQ's current quick-order simulation does not reproduce a full live order book or every pending-order behavior, so simulator fills should not be treated as evidence that one order type will achieve better real-market execution."
         ]
       }
     ],
@@ -335,7 +334,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   {
     slug: "technical-indicators-rsi-macd-moving-averages",
     title: "How to Use Technical Indicators: RSI, MACD, and Moving Averages Explained",
-    summary: "Technical indicators help traders identify trends, momentum, and potential reversals. Master the three most popular indicators used by professionals worldwide.",
+    summary: "Technical indicators transform historical price data to describe trend and momentum. Learn how RSI, MACD and moving averages are calculated and where their interpretations can fail.",
     metaDescription: "Learn how to use RSI, MACD, and Moving Averages for trading. Understand overbought/oversold signals, crossovers, and trend confirmation. Free practice on TradeHQ.",
     readTime: "7 min read",
     sections: [
@@ -359,8 +358,8 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "MACD: Combining Trend and Momentum Signals",
         paragraphs: [
           "The Moving Average Convergence Divergence (MACD) is a versatile indicator that shows the relationship between two exponential moving averages — typically the 12-period and 26-period EMAs. The MACD line is the difference between these two EMAs, and the signal line is a 9-period EMA of the MACD line. The histogram shows the gap between them.",
-          "The classic MACD signal is the crossover: when the MACD line crosses above the signal line, it's bullish; when it crosses below, it's bearish. The histogram makes these crossovers easy to spot — bars turning from negative to positive indicate building bullish momentum. MACD works best in trending markets and can generate false signals in sideways conditions.",
-          "For best results, combine all three indicators: use moving averages to identify the overall trend, RSI to gauge momentum and overbought/oversold conditions, and MACD crossovers for entry timing. No single indicator is perfect — they work best as a team. On TradeHQ, practice analyzing assets with all three indicators simultaneously and record your observations in the trading journal."
+          "A MACD-line crossover is commonly labelled bullish when it moves above the signal line and bearish when it moves below, but those labels describe the indicator relationship rather than guarantee price direction. Histogram bars show the changing difference between the lines and can whipsaw in different regimes.",
+          "For practice, compare RSI, moving averages and MACD separately and together across several historical windows. Define the interpretation before viewing later prices and record both confirming and conflicting signals rather than using the indicators as an entry-timing formula."
         ]
       }
     ],

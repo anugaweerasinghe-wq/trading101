@@ -14,11 +14,11 @@ export interface CountryGuide {
   studentAngle: string;
   /** How residents actually get access to markets, in practical terms. */
   marketAccess: string;
-  /** Realistic starting capital framed in local currency. */
+  /** Real-money access/cost note; this field does not prescribe an amount. */
   startingCapital: string;
   /** Assets that are locally relevant to follow while learning. */
   localAssets: string[];
-  /** A concrete practice plan for the first three months. */
+  /** Simulation-only study ideas; not a fixed schedule or suitability recommendation. */
   practicePlan: string;
   faqs: { q: string; a: string }[];
 }
@@ -47,7 +47,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
     taxNote:
       "This guide does not state a Sri Lankan tax rate or universal tax treatment. Tax treatment can depend on the instrument and circumstances; verify the current position with the relevant authority or a qualified local professional.",
     studentAngle:
-      "Perfect fit for A/L Economics and university finance students. Use the free courses to build a portfolio of documented paper-trade case studies for your CV.",
+      "A/L Economics and university finance students can use the simulator to document market-mechanics case studies. The guide does not claim the activity improves employability or is a perfect fit for every student.",
     marketAccess:
       "For locally listed securities, verify current CSE/SEC Sri Lanka account-opening and intermediary requirements with a licensed stockbroker. Access to foreign securities and outward payments can involve separate banking and foreign-exchange rules, so verify the current position with an authorised bank and relevant authorities before acting. TradeHQ itself is only a simulator and requires no brokerage account.",
     startingCapital:
@@ -59,7 +59,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
       "US large-cap technology, which is what most locally available international platforms actually offer",
     ],
     practicePlan:
-      "A workable first quarter: in month one, complete the Trading Psychology track and place no more than three simulated trades a week, writing down the reason for each before you know the result. In month two, add the Macro Reading track and start following the CBSL policy announcements alongside US CPI releases, noting how USD/LKR reacts. In month three, run a single strategy consistently for thirty days and review the drawdown rather than the return. Because US market hours fall late in the Sri Lankan evening, use daily charts and pre-placed orders instead of trying to trade live after midnight.",
+      "A simulation-only study plan can compare psychology, macro releases and a documented hypothetical setup over several weeks. Record the assumptions before viewing outcomes, compare both gains and drawdowns, and choose observation times that fit your schedule rather than treating a fixed trade count, timeframe or session as correct.",
     faqs: [
       { q: "What should Sri Lankan users know about regulation?", a: "TradeHQ is an educational simulator and does not execute real-money trades. Financial-market rules can change, so for questions about investing, brokerage access or local regulation, check current guidance from the Securities and Exchange Commission of Sri Lanka and other relevant authorities." },
       { q: "Can I convert my paper gains to real money?", a: "No. TradeHQ paper gains are simulated only. Any real-money investing uses a separate provider and is subject to that provider's current requirements and the applicable Sri Lankan rules." },
@@ -86,7 +86,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
     taxNote:
       "Tax treatment depends on the instrument and current Indian rules. TradeHQ does not state a tax rate; verify current official guidance or use a qualified tax professional.",
     studentAngle:
-      "Ideal for CA, CFA and MBA candidates. Complete the Trading Psychology and Macro Reading tracks first — they are the two topics Indian colleges rarely teach.",
+      "CA, CFA and MBA candidates can use the simulator as an optional supplement for market-mechanics practice. This guide does not rank TradeHQ topics against Indian curricula or prescribe a course order.",
     marketAccess:
       "Indian securities access uses regulated intermediaries and applicable KYC/account requirements. Requirements vary by product and provider, and international investing/remittance adds separate RBI, tax and provider rules. Verify the current official requirements before treating any document list or remittance figure as universal.",
     startingCapital:
@@ -125,7 +125,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
     taxNote:
       "This page does not state a Philippine tax rate. Tax treatment changes and can depend on the transaction; verify current official guidance or consult a qualified local professional.",
     studentAngle:
-      "Great for senior high and college finance students. Use the Macro Reading track to understand how Fed decisions ripple into the PHP exchange rate and OFW remittances.",
+      "Senior high and college finance students can use the Macro Reading material to compare monetary-policy news with USD/PHP observations. A policy announcement does not mechanically determine the exchange rate or remittance value.",
     marketAccess:
       "For PSE-listed securities, consult current PSE/SEC Philippines records and the chosen trading participant's onboarding requirements. Be cautious with platforms or investment solicitations whose authorization cannot be verified. TradeHQ does not require a brokerage account because it does not execute real-money trades.",
     startingCapital:
@@ -137,7 +137,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
       "US large-caps, the most common first international exposure for Filipino investors",
     ],
     practicePlan:
-      "First quarter: month one on Trading Psychology and a simple journal habit. Month two on Macro Reading, tracking how Fed decisions move USD/PHP and therefore the peso value of remittances and imported goods. Month three on consistency — the same setup, the same 1% risk, thirty simulated trades, then a written review. With the US session opening late at night in Manila, the daily timeframe is the realistic choice for anyone with school or work in the morning.",
+      "A simulation-only study plan can compare psychology notes, macro releases and a repeated hypothetical setup without assigning a universal risk percentage or minimum trade count. Because global market hours differ from local schedules, choose a timeframe and review routine that can be followed consistently.",
     faqs: [
       { q: "Do I need to register with SEC Philippines to use TradeHQ?", a: "No. TradeHQ is a free educational simulator with no real money. Registration is only required for real broker accounts." },
       { q: "Can Filipino students under 18 use TradeHQ?", a: "Yes. TradeHQ has no age gate because there is no real money. Real broker accounts typically require 18+." },
@@ -178,7 +178,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
       "Global oil prices, given their outsized effect on the Pakistani import bill",
     ],
     practicePlan:
-      "First quarter: begin with Trading Psychology, then move to Macro Reading with attention to how SBP policy decisions and oil prices interact with the rupee. In month three, run thirty simulated trades on one setup with fixed risk and review the largest drawdown rather than the best trade. Because international sessions run late locally, plan trades in advance on the daily chart rather than watching intraday.",
+      "A simulation-only study plan can compare psychology, SBP policy news, oil-price observations and a documented hypothetical setup. Record the rule and sample before reviewing results, and choose a timeframe that fits the learner's schedule rather than prescribing a fixed number of trades or a daily-chart routine.",
     faqs: [
       { q: "Can I use TradeHQ without a Pakistani bank account?", a: "Yes. TradeHQ never asks for any payment or bank details — it is 100% free and simulated." },
       { q: "Do you cover PSX-listed shares?", a: "Not yet. The current catalogue focuses on US and global tickers. Local coverage is on the roadmap." },
@@ -207,7 +207,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
     taxNote:
       "Nigeria's tax framework changed materially for 2026. This guide therefore does not state a capital-gains rate or universal treatment; verify current official guidance or consult a qualified local professional.",
     studentAngle:
-      "Ideal for finance, accounting and economics students. Use the Macro Reading track to understand how oil prices and USD/NGN shifts affect the entire economy.",
+      "Finance, accounting and economics students can use the Macro Reading track to compare oil-price and USD/NGN movements with Nigerian macroeconomic data. Those relationships can change and should not be described as determining the entire economy.",
     marketAccess:
       "For real-money services, verify the operator and the specific activity it is authorized to perform using SEC Nigeria's current register. The SEC has continued to warn about unregistered online investment schemes in 2026. This page does not generalize that every app offering foreign shares, fractional shares or FX access has the same legal status.",
     startingCapital:

@@ -37,7 +37,7 @@ const homeFaqSchema = {
     {
       "@type": "Question",
       name: "What is paper trading?",
-      acceptedAnswer: { "@type": "Answer", text: "Paper trading is simulated trading using virtual money instead of real capital. It lets you practice buying and selling financial instruments risk-free to build skills before investing real money." },
+      acceptedAnswer: { "@type": "Answer", text: "Paper trading is simulated trading using virtual money instead of real capital. It lets you practise order and portfolio mechanics without placing a real-money order, but it does not reproduce every live-market cost, fill or emotional factor." },
     },
     {
       "@type": "Question",
@@ -52,12 +52,12 @@ const homeFaqSchema = {
     {
       "@type": "Question",
       name: "Is there a leaderboard or competition?",
-      acceptedAnswer: { "@type": "Answer", text: "Yes! TradeHQ features a leaderboard ranking virtual traders by portfolio performance. Start with $100,000 and compete to reach the top." },
+      acceptedAnswer: { "@type": "Answer", text: "TradeHQ has an optional community leaderboard based on client-synced simulated summary statistics. Those figures are practice data and are not independently verified performance records." },
     },
     {
       "@type": "Question",
       name: "Do I need to create an account?",
-      acceptedAnswer: { "@type": "Answer", text: "No. TradeHQ requires no signup, no email, and no account creation. Your portfolio is stored locally in your browser so you can start trading instantly." },
+      acceptedAnswer: { "@type": "Answer", text: "Core simulator use does not require an account. Optional profile, leaderboard and community features can require sign-in, while the main practice portfolio remains primarily browser-held." },
     },
     {
       "@type": "Question",
@@ -151,12 +151,12 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)</title>
+        <title>TradeHQ — Free Paper Trading Simulator | $100K Virtual Cash</title>
         <meta name="description" content="Practice stocks, crypto, ETFs & forex with $100,000 virtual cash. Zero signup. AI mentor, simulated charts, leaderboard & 150+ assets. Free educational trading simulator." />
         <link rel="canonical" href="https://www.thetradehq.com/" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)" />
+        <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator | $100K Virtual Cash" />
         <meta property="og:description" content="Practice simulated trading with $100K virtual money. AI mentor + simulated charts. No signup needed. Start in seconds." />
         <meta property="og:url" content="https://www.thetradehq.com/" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
@@ -164,7 +164,7 @@ const Index = () => {
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="TradeHQ — Free Paper Trading Simulator 2026" />
+        <meta name="twitter:title" content="TradeHQ — Free Paper Trading Simulator" />
         <meta name="twitter:description" content="Practice stocks & crypto with $100K virtual cash. No signup. AI mentor included." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(homeFaqSchema)}</script>
