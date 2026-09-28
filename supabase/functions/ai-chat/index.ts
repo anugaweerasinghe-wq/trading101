@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { consumeRateLimit, decodeJwtSubject, getBearerToken } from "../_shared/rateLimit.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -8,16 +9,31 @@ const corsHeaders = {
 
 interface ChatRequest {
   message: string;
-  system?: string;
   history?: { role: "user" | "assistant"; content: string }[];
 }
 
-const DEFAULT_SYSTEM = `You are TradeHQ's AI Trading Mentor — friendly, concise, expert. Rules:
-- Keep answers under 120 words unless complex.
-- No markdown headers, no bullet asterisks. Plain conversational prose with line breaks.
-- Only discuss trading, investing, markets, risk, psychology. Politely redirect off-topic.
-- Always end with: (Educational simulation only — not financial advice.)
-- Never give specific buy/sell signals or guarantees.`;
+const DEFAULT_SYSTEM = `You are TradeHQ's educational market mentor. Be concise and factual.
+- Discuss market mechanics, investing concepts, risk, psychology, and the TradeHQ simulator.
+- Do not provide personalized buy/sell instructions, allocations, price targets, guarantees, or expected-return promises.
+- Distinguish hypothetical examples from observed facts.
+- Keep answers under 120 words unless the concept genuinely needs more context.
+- End with: (Educational simulation only — not financial advice.)`;
+
+function cleanHistory(value: unknown): ChatRequest["history"] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((item) =>
+      item &&
+      (item.role === "user" || item.role === "assistant") &&
+      typeof item.content === "string"
+    )
+    .slice(-8)
+    .map((item) => ({
+      role: item.role as "user" | "assistant",
+      content: item.content.trim().slice(0, 1200),
+    }))
+    .filter((item) => item.content.length > 0);
+}
 
 async function tryGeminiDirect(req: ChatRequest, key: string): Promise<string> {
   const contents = [
@@ -33,9 +49,9 @@ async function tryGeminiDirect(req: ChatRequest, key: string): Promise<string> {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        systemInstruction: { parts: [{ text: req.system ?? DEFAULT_SYSTEM }] },
+        systemInstruction: { parts: [{ text: DEFAULT_SYSTEM }] },
         contents,
-        generationConfig: { maxOutputTokens: 400, temperature: 0.7 },
+        generationConfig: { maxOutputTokens: 400, temperature: 0.5 },
       }),
     },
   );
@@ -48,7 +64,7 @@ async function tryGeminiDirect(req: ChatRequest, key: string): Promise<string> {
 
 async function tryGroq(req: ChatRequest, key: string): Promise<string> {
   const messages = [
-    { role: "system", content: req.system ?? DEFAULT_SYSTEM },
+    { role: "system", content: DEFAULT_SYSTEM },
     ...(req.history ?? []),
     { role: "user", content: req.message },
   ];
@@ -62,7 +78,7 @@ async function tryGroq(req: ChatRequest, key: string): Promise<string> {
       model: "llama-3.3-70b-versatile",
       messages,
       max_tokens: 400,
-      temperature: 0.7,
+      temperature: 0.5,
     }),
   });
   if (!res.ok) throw new Error(`groq ${res.status}`);
@@ -74,7 +90,7 @@ async function tryGroq(req: ChatRequest, key: string): Promise<string> {
 
 async function tryLovable(req: ChatRequest, key: string): Promise<string> {
   const messages = [
-    { role: "system", content: req.system ?? DEFAULT_SYSTEM },
+    { role: "system", content: DEFAULT_SYSTEM },
     ...(req.history ?? []),
     { role: "user", content: req.message },
   ];
@@ -88,6 +104,7 @@ async function tryLovable(req: ChatRequest, key: string): Promise<string> {
       model: "google/gemini-2.5-flash",
       messages,
       max_tokens: 400,
+      temperature: 0.5,
     }),
   });
   if (!res.ok) throw new Error(`lovable ${res.status}`);
@@ -101,13 +118,52 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const body: ChatRequest = await req.json();
-    if (!body?.message || typeof body.message !== "string" || body.message.length > 4000) {
+    const token = getBearerToken(req);
+    const userId = token ? decodeJwtSubject(token) : null;
+    if (!userId) {
+      return new Response(JSON.stringify({ error: "Authentication required" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const burst = await consumeRateLimit("ai-chat:5m", userId, 15, 300);
+    if (!burst.allowed) {
+      return new Response(JSON.stringify({ error: "Too many mentor requests. Please try again shortly." }), {
+        status: 429,
+        headers: {
+          ...corsHeaders,
+          "Content-Type": "application/json",
+          "Retry-After": String(burst.retryAfterSeconds),
+        },
+      });
+    }
+
+    const daily = await consumeRateLimit("ai-chat:day", userId, 120, 86400);
+    if (!daily.allowed) {
+      return new Response(JSON.stringify({ error: "Daily mentor request limit reached." }), {
+        status: 429,
+        headers: {
+          ...corsHeaders,
+          "Content-Type": "application/json",
+          "Retry-After": String(daily.retryAfterSeconds),
+        },
+      });
+    }
+
+    const raw = await req.json();
+    const message = typeof raw?.message === "string" ? raw.message.trim() : "";
+    if (!message || message.length > 2000) {
       return new Response(JSON.stringify({ error: "Invalid message" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
+    const body: ChatRequest = {
+      message,
+      history: cleanHistory(raw?.history),
+    };
 
     const gemini = Deno.env.get("GEMINI_API_KEY");
     const groq = Deno.env.get("GROQ_API_KEY");
@@ -123,7 +179,11 @@ serve(async (req) => {
       try {
         const text = await p.run();
         return new Response(JSON.stringify({ text, provider: p.name }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+            "X-RateLimit-Remaining": String(Math.min(burst.remaining, daily.remaining)),
+          },
         });
       } catch (e) {
         lastErr = `${p.name}: ${(e as Error).message}`;
@@ -131,13 +191,15 @@ serve(async (req) => {
       }
     }
 
-    return new Response(JSON.stringify({ error: "All AI providers failed", detail: lastErr }), {
+    console.error("All AI providers failed", lastErr);
+    return new Response(JSON.stringify({ error: "Mentor service is temporarily unavailable" }), {
       status: 503,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
-    return new Response(JSON.stringify({ error: (e as Error).message }), {
-      status: 500,
+    console.error("ai-chat error", e);
+    return new Response(JSON.stringify({ error: "Mentor service is temporarily unavailable" }), {
+      status: 503,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }

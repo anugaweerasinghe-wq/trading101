@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { consumeRateLimit, getClientIp } from "../_shared/rateLimit.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -297,16 +298,51 @@ serve(async (req) => {
   }
 
   try {
+    const clientIp = getClientIp(req);
+    const limit = await consumeRateLimit("live-market-data:minute", clientIp, 600, 60);
+    if (!limit.allowed) {
+      return new Response(
+        JSON.stringify({ error: 'Too many market-data requests. Please retry shortly.', success: false }),
+        {
+          status: 429,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+            'Retry-After': String(limit.retryAfterSeconds),
+          },
+        },
+      );
+    }
+
     const url = new URL(req.url);
     const assetId = url.searchParams.get('assetId')?.toLowerCase();
     const assetType = url.searchParams.get('type')?.toLowerCase();
     const dataType = url.searchParams.get('dataType') || 'quote';
     const basePrice = parseFloat(url.searchParams.get('basePrice') || '0');
-    const days = parseInt(url.searchParams.get('days') || '1', 10);
+    const rawDays = parseInt(url.searchParams.get('days') || '1', 10);
+    const days = Number.isFinite(rawDays) ? Math.min(365, Math.max(1, rawDays)) : 1;
 
     if (!assetId) {
       return new Response(
         JSON.stringify({ error: 'assetId is required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    if (!['quote', 'candles'].includes(dataType)) {
+      return new Response(
+        JSON.stringify({ error: 'Unsupported dataType', success: false }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    if (assetType && !['crypto', 'stock', 'etf', 'forex', 'commodity'].includes(assetType)) {
+      return new Response(
+        JSON.stringify({ error: 'Unsupported asset type', success: false }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    if (!Number.isFinite(basePrice) || basePrice < 0 || basePrice > 1_000_000_000) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid basePrice', success: false }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }

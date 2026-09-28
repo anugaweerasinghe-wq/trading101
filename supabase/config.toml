@@ -1,5 +1,8 @@
 project_id = "bpzedtifdjbfrojlkano"
 
+[functions.ai-chat]
+verify_jwt = true
+
 [functions.market-analysis]
 verify_jwt = true
 
