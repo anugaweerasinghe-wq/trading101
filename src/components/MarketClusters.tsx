@@ -29,8 +29,8 @@ interface Cluster {
 const MARKET_CLUSTERS: Cluster[] = [
   {
     id: "ai-revolution",
-    name: "🤖 AI Revolution",
-    description: "Companies powering the artificial intelligence boom",
+    name: "AI & Semiconductors",
+    description: "Large technology and semiconductor companies with AI-related exposure",
     icon: Cpu,
     color: "text-purple-400",
     bgColor: "bg-purple-500/10",
@@ -38,8 +38,8 @@ const MARKET_CLUSTERS: Cluster[] = [
   },
   {
     id: "digital-gold",
-    name: "💎 Digital Gold",
-    description: "Leading cryptocurrencies and blockchain assets",
+    name: "Digital Assets",
+    description: "Crypto assets and blockchain-network tokens",
     icon: Coins,
     color: "text-orange-400",
     bgColor: "bg-orange-500/10",
@@ -47,8 +47,8 @@ const MARKET_CLUSTERS: Cluster[] = [
   },
   {
     id: "blue-chip-giants",
-    name: "🏛️ Blue Chip Giants",
-    description: "America's most valuable and stable companies",
+    name: "Large-Cap Equities",
+    description: "Large US-listed companies and broad-market exposure",
     icon: Building2,
     color: "text-blue-400",
     bgColor: "bg-blue-500/10",
@@ -56,7 +56,7 @@ const MARKET_CLUSTERS: Cluster[] = [
   },
   {
     id: "global-markets",
-    name: "🌍 Global Markets",
+    name: "Global FX",
     description: "Major forex pairs and international exposure",
     icon: Globe,
     color: "text-green-400",
@@ -65,8 +65,8 @@ const MARKET_CLUSTERS: Cluster[] = [
   },
   {
     id: "hard-assets",
-    name: "⚡ Hard Assets",
-    description: "Commodities that hedge against uncertainty",
+    name: "Commodities",
+    description: "Commodity reference exposures used for simulator practice",
     icon: Gem,
     color: "text-yellow-400",
     bgColor: "bg-yellow-500/10",
@@ -81,26 +81,26 @@ export function MarketClusters({ assets }: MarketClustersProps) {
 
   return (
     <section className="space-y-6" aria-label="Market Clusters">
-      {/* SEO State of the Market 2026 Intro */}
+      {/* Evergreen market-cluster practice intro */}
       <article className="bg-gradient-to-br from-primary/10 via-background to-accent/10 rounded-2xl border border-primary/20 p-6">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-primary" />
           </div>
           <h2 className="text-xl font-bold text-foreground">
-            State of the Market 2026: Practice Trading Guide
+            Market Cluster Practice Guide
           </h2>
         </div>
         
         <div className="prose prose-sm prose-invert max-w-none">
           <p className="text-muted-foreground leading-relaxed mb-3">
-            The 2026 trading landscape is defined by three mega-trends: the <strong>AI infrastructure buildout</strong> driving semiconductor and cloud stocks to unprecedented valuations, the <strong>Bitcoin institutional adoption cycle</strong> following ETF approvals and corporate treasury allocations, and <strong>central bank policy divergence</strong> creating forex volatility not seen since 2022.
+            These clusters group instruments by broad economic or market theme. The labels are educational shortcuts rather than forecasts: companies, crypto assets, currencies and commodities can behave very differently even when they appear in the same cluster.
           </p>
           <p className="text-muted-foreground leading-relaxed mb-3">
-            For practice traders, this environment offers exceptional learning opportunities. Technology stocks like NVIDIA (NVDA) and Microsoft (MSFT) exhibit high-conviction trends ideal for momentum strategy practice. Cryptocurrencies including Bitcoin (BTC) and Ethereum (ETH) provide 24/7 market access to refine entry and exit timing. Blue-chip names like Apple (AAPL) and Amazon (AMZN) teach patience and earnings-based positioning.
+            Use the simulator to compare how instruments respond to the same hypothetical observation window. Technology equities, crypto assets, currency pairs and large-cap stocks have different trading hours, volatility patterns and market drivers; none is labelled an inherently better practice opportunity.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            TradeHQ's $100,000 virtual portfolio lets you simulate professional positioning across all five asset clusters below—from the AI Revolution to Hard Assets—without risking real capital. Master chart patterns, develop emotional discipline, and build your 2026 strategy playbook before committing real funds.
+            TradeHQ's $100,000 virtual portfolio lets you compare supported instruments across the five clusters below without placing real-money orders. Record the assumptions you use and treat simulator outcomes as educational examples rather than evidence of future performance.
           </p>
         </div>
       </article>

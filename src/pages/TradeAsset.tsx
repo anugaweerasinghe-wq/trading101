@@ -475,10 +475,10 @@ export default function TradeAsset() {
           {selectedAsset && (
             <header className="pb-2">
               <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2 tracking-tight">
-                {selectedAsset.name} — Practice Trading Simulator 2026
+                {selectedAsset.name} — Practice Trading Simulator
               </h1>
               <p className="text-sm text-muted-foreground mb-2 max-w-3xl">
-                Master {selectedAsset.symbol} trading with $100,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
+                Explore {selectedAsset.symbol} with $100,000 in virtual capital. Practise chart reading, position sizing and simulator order mechanics without placing a real-money order.
               </p>
               {/* Data trust signal */}
               <div className="flex items-center gap-3 text-xs">
@@ -572,7 +572,7 @@ export default function TradeAsset() {
                 {generateStudentUseSection(selectedAsset)}
               </p>
               <p className="text-xs text-muted-foreground/60 mt-3 italic">
-                Student perspective: Practice {selectedAsset.symbol} trading as a beginner in Colombo or anywhere — build skills risk-free.
+                Practice note: simulator results depend on the displayed data source and do not reproduce every cost, liquidity constraint or emotional factor of real-money trading.
               </p>
             </section>
           )}
@@ -581,7 +581,7 @@ export default function TradeAsset() {
           {selectedAsset && (
             <section className="mt-8 p-6 bg-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/[0.06]">
               <h2 className="text-lg font-bold text-foreground mb-4 tracking-tight">
-                {selectedAsset.symbol} Simulated Market Analysis — Educational Overview 2026
+                {selectedAsset.symbol} Simulated Market Analysis — Educational Overview
               </h2>
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                 {generateMarketOutlook(selectedAsset).split('\n\n').map((paragraph, index) => (

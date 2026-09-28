@@ -103,6 +103,17 @@ function extractLearnArticles(): { slug: string; title: string; metaDescription:
   return results;
 }
 
+function extractLegacyLessons(): { id: string; title: string; description: string }[] {
+  const src = readSrc("src/lib/lessonData.ts");
+  const results: { id: string; title: string; description: string }[] = [];
+  const re = /id:\s*(\d+),\s*\n\s*title:\s*"([^"]+)",\s*\n\s*category:\s*"[^"]+",\s*\n\s*description:\s*"([^"]+)"/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(src)) !== null) {
+    results.push({ id: m[1], title: m[2], description: m[3] });
+  }
+  return results;
+}
+
 function extractNicheSymbols(): string[] {
   const src = readSrc("src/lib/nicheData.ts");
   const match = src.match(/export const NICHE_SYMBOLS:[^=]*=\s*\[([\s\S]*?)\];/);
@@ -222,10 +233,25 @@ export function buildRoutes(): RouteMeta[] {
     changefreq: "weekly",
   });
 
+  // Legacy numeric lessons remain accessible in-app, but are explicitly
+  // governed by the route manifest and kept noindex until each is separately
+  // reviewed against the current content/quality standard.
+  for (const lesson of extractLegacyLessons()) {
+    routes.push({
+      path: `/learn/${lesson.id}`,
+      title: `${lesson.title} — Legacy Practice Lesson | TradeHQ`,
+      description: lesson.description,
+      h1: lesson.title,
+      summary: `Legacy interactive lesson retained for existing learners. It remains outside the searchable lesson catalogue while its examples and quiz content are being reviewed against the current TradeHQ standard.`,
+      noindex: true,
+      changefreq: "monthly",
+    });
+  }
+
   routes.push({
     path: "/learn-trading-guide",
-    title: "Complete Beginner Trading Guide 2026 | TradeHQ",
-    description: `The full beginner's trading guide for 2026. Learn how markets work, how to place orders and how to manage risk — then practice with ${BALANCE} virtual cash.`,
+    title: "Complete Beginner Trading Guide | TradeHQ",
+    description: `A beginner trading guide covering market mechanics, order types and risk concepts, with virtual-money practice on supported TradeHQ instruments.`,
     h1: "The Complete Beginner Trading Guide",
     summary: `A single long-form guide that walks a complete beginner from zero to placing their first informed trade. Covers order types, chart reading, risk sizing, and psychology. Practice everything with ${BALANCE} in virtual cash on the free simulator.`,
     priority: "0.9",
@@ -478,10 +504,10 @@ export function buildRoutes(): RouteMeta[] {
   // ---- Structured course tracks (/courses, /courses/:track, /courses/:track/:lesson) ----
   routes.push({
     path: "/courses",
-    title: "Free Trading Courses 2026 — Options, Futures, Macro & Psychology | TradeHQ",
+    title: "Free Trading Courses — Options, Futures, Macro & Psychology | TradeHQ",
     description: `Four structured trading courses with original lessons, quizzes and completion badges. Practise concepts with ${BALANCE} virtual cash.`,
     h1: "Structured Trading Courses",
-    summary: `Four structured tracks — options, futures, macro reading, and trading psychology — each with quizzes and a completion badge. Practice everything with ${BALANCE} in virtual cash on TradeHQ.`,
+    summary: `Four structured tracks cover options, futures, macro reading and trading psychology. Supported spot instruments can be explored with ${BALANCE} in virtual cash; TradeHQ does not currently simulate options or futures contracts.`,
     priority: "0.8",
     changefreq: "weekly",
   });

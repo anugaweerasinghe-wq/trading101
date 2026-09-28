@@ -82,10 +82,10 @@ export default function LessonDetail() {
   return (
     <>
       <Helmet>
-        <title>{lesson.title} — Free Trading Course | TradeHQ 2026</title>
+        <title>{lesson.title} — Legacy Practice Lesson | TradeHQ</title>
         <meta name="description" content={`Learn ${lesson.title.toLowerCase()}. ${lesson.description} Free interactive course with quiz.`} />
         <link rel="canonical" href={`https://www.thetradehq.com/learn/${lessonId}`} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="noindex, follow" />
       </Helmet>
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -110,6 +110,9 @@ export default function LessonDetail() {
               <h1 className="text-5xl md:text-6xl font-bold mb-4 leading-tight">{lesson.title}</h1>
               <p className="text-2xl text-muted-foreground leading-relaxed max-w-4xl">
                 {lesson.description}
+              </p>
+              <p className="mt-4 text-sm text-muted-foreground max-w-4xl">
+                Legacy lesson: this page remains available to learners but is excluded from search indexing while its examples and quiz content are reviewed against the current TradeHQ standard.
               </p>
             </div>
 

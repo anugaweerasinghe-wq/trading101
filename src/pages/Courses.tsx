@@ -27,9 +27,9 @@ import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 const DOMAIN = "https://www.thetradehq.com";
 
 const LEARNING_OUTCOMES = [
-  "Read an options chain, understand strike/expiry and price defined-risk spreads with confidence",
-  "Explain how futures margin, contango and backwardation work — and when a spot ETF is safer",
-  "Translate CPI, Fed decisions, the yield curve and DXY moves into a tradable market view",
+  "Explain the fields in an options chain, including strike, expiry and the mechanics of defined-risk spreads",
+  "Explain futures margin, contango and backwardation, and compare derivatives exposure with spot or fund structures",
+  "Explain how inflation releases, central-bank decisions, yield curves and currency indexes can affect markets",
   "Recognise your own emotional biases (FOMO, revenge, overconfidence) before they cost money",
   "Design a written trading plan with position sizing, risk-per-trade and a journaling routine",
 ];
@@ -53,7 +53,7 @@ const WHY_TRUST = [
   {
     icon: Award,
     title: "Practice, not preaching",
-    body: "Every concept is paired with a matching paper trade you can execute immediately with $100,000 virtual cash. Learning without practice does not stick.",
+    body: "Supported spot instruments can be explored with $100,000 in virtual cash. Options and futures lessons use educational examples because TradeHQ does not currently simulate derivative contracts.",
   },
 ];
 
@@ -61,7 +61,7 @@ const HOW_IT_WORKS = [
   { step: "1", title: "Pick a track", body: "Choose the topic that matches your level. Beginners typically start with Trading Psychology or Macro Reading." },
   { step: "2", title: "Read the lesson", body: "Each lesson is 8–14 minutes. Written in plain English with real examples and printed sources." },
   { step: "3", title: "Take the quiz", body: "A 4–6 question knowledge check. Explanations for every answer — you learn from mistakes." },
-  { step: "4", title: "Practice it live", body: "Every lesson links to a matching simulated trade so you use what you just learned with zero real money at risk." },
+  { step: "4", title: "Apply the concept", body: "Use a supported spot instrument in the simulator where relevant. Options and futures contract mechanics remain conceptual exercises rather than executable derivative trades." },
   { step: "5", title: "Earn the badge", body: "Complete every lesson in a track to earn a permanent completion badge on your practice profile." },
 ];
 
@@ -84,7 +84,7 @@ const FAQ = [
   },
   {
     q: "What do I get for completing a track?",
-    a: "A permanent completion badge that shows on your practice profile, and — more importantly — the ability to explain the concept and paper trade it responsibly. There is no real-money certification.",
+    a: "A local completion badge and a record of the lesson checks you completed. The badge is educational only, is not a professional certification, and does not prove real-world trading ability.",
   },
   {
     q: "Where does the content come from?",
@@ -100,9 +100,9 @@ export default function Courses() {
   const progress = loadProgress();
   const resume = progress.lastLesson;
 
-  const title = "Free Trading Courses 2026 — Options, Futures, Macro & Psychology | TradeHQ";
+  const title = "Free Trading Courses — Options, Futures, Macro & Psychology | TradeHQ";
   const description =
-    "Four expert-written, structured trading courses covering options, futures, macro reading and trading psychology. Free lessons, quizzes and completion badges. Practice with $100,000 virtual cash on TradeHQ.";
+    "Four structured educational courses covering options, futures, macro reading and trading psychology, with lessons, quizzes and local completion badges. Supported spot instruments can be explored with $100,000 virtual cash.";
 
   const itemListSchema = {
     "@context": "https://schema.org",
@@ -179,17 +179,16 @@ export default function Courses() {
           {/* Hero */}
           <header className="my-10 text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-xs uppercase tracking-widest text-emerald-400 mb-5">
-              <GraduationCap className="h-3 w-3" /> Structured TradeHQ Courses · 2026 Edition
+              <GraduationCap className="h-3 w-3" /> Structured TradeHQ Courses
             </div>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-br from-white via-emerald-200 to-emerald-400 bg-clip-text text-transparent leading-[1.05]">
               Learn to Trade — Properly
             </h1>
             <p className="mt-5 text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Four structured, expert-written courses on the topics that actually decide whether a
-              trader survives their first year: options, futures, macro reading and psychology.
-              Twenty full-length lessons. Quizzes, sources, completion badges, and a
+              Four creator-written educational courses cover options, futures, macro reading and
+              trading psychology. Twenty lessons include quizzes and source links. A
               <span className="text-emerald-400 font-semibold"> $100,000 virtual practice account</span>
-              so you can apply every concept the moment you learn it.
+              is available for supported spot instruments; derivative contract mechanics remain conceptual.
             </p>
             <p className="mt-4 text-sm text-muted-foreground/80 max-w-2xl mx-auto italic">
               Educational simulation only — not financial, investment, legal or tax advice.
@@ -214,7 +213,7 @@ export default function Courses() {
           <AIAnswerBlock
             className="mb-12"
             question="Are TradeHQ's free trading courses any good?"
-            answer="TradeHQ offers four structured, expert-written trading courses — Options Fundamentals, Futures & Derivatives, Macro Reading, and Trading Psychology — with 20 lessons total, quizzes, cited public sources (SEC, CFTC, FRED, CME) and completion badges. Every concept can be practised immediately on a free $100,000 virtual account with no signup. Written by TradeHQ creator Anuga Weerasinghe; educational simulation only, not financial advice."
+            answer="TradeHQ offers four structured educational courses — Options Fundamentals, Futures & Derivatives, Macro Reading, and Trading Psychology — with 20 lessons, quizzes, source links and local completion badges. Supported spot instruments can be explored in the $100,000 virtual simulator; TradeHQ does not currently execute options or futures contracts. Written by TradeHQ creator Anuga Weerasinghe; educational simulation only."
           />
 
           {resume && (
