@@ -133,6 +133,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       p: [
         "Competition is a blunt but effective tool for habit formation. A visible ranking makes people return, and returning is what builds the daily review habit that actually improves results. That is the entire justification for the leaderboard, and it is why the ranking carries no reward.",
         "The board can be used to observe how submitted simulator statistics differ across public accounts, but those figures originate in client-held state and are not independently verified performance records.",
+        "Treat leaderboard position as a snapshot of submitted simulator data, not a measure of skill, suitability, or expected real-money performance. Short histories and concentrated virtual positions can move rankings sharply.",
       ],
     },
     {
@@ -197,6 +198,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       p: [
         "The challenge and streak state are browser-based. Clearing site data can reset local streak information, and a different device can have different local state. TradeHQ does not currently describe this as full cross-device streak synchronization.",
         "There is no penalty for missing a day beyond the counter resetting, and there is no reward for a long streak other than the habit itself. Nothing about the challenge involves money, prizes or entry fees.",
+        "Challenge results are educational checks rather than credentials or performance forecasts. A correct answer records completion of that prompt; it does not establish investing ability or predict trading outcomes.",
       ],
     },
     {
@@ -354,6 +356,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Response times and expectations",
       p: [
         "TradeHQ does not promise a fixed support-response SLA. Use the contact form for product, content-correction or privacy questions; response times can vary.",
+        "For a technical report, include the page path, what you expected to happen, what actually happened, and the browser or device category when relevant. Do not send passwords, authentication tokens, or financial-account credentials.",
       ],
     },
   ],
