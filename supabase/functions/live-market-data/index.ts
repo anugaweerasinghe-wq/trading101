@@ -78,8 +78,8 @@ interface MarketData {
   price: number;
   change24h: number;
   changePercent24h: number;
-  high24h: number;
-  low24h: number;
+  high24h?: number;
+  low24h?: number;
   volume24h: number;
   marketCap?: number;
   lastUpdated: string;
@@ -104,7 +104,7 @@ async function fetchCryptoData(assetId: string): Promise<MarketData | null> {
 
   try {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_high_24h=true&include_low_24h=true&include_market_cap=true`,
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_market_cap=true`,
       { headers: { 'Accept': 'application/json' } }
     );
 
@@ -120,8 +120,6 @@ async function fetchCryptoData(assetId: string): Promise<MarketData | null> {
       price,
       change24h: price * (changePct / 100),
       changePercent24h: changePct,
-      high24h: coin.usd_high_24h ?? price * 1.02,
-      low24h: coin.usd_low_24h ?? price * 0.98,
       volume24h: coin.usd_24h_vol ?? 0,
       marketCap: coin.usd_market_cap ?? 0,
       lastUpdated: new Date().toISOString(),
@@ -395,14 +393,13 @@ serve(async (req) => {
                   price: p,
                   change24h: p * ((coinData[coinId].usd_24h_change ?? 0) / 100),
                   changePercent24h: coinData[coinId].usd_24h_change ?? 0,
-                  high24h: p * 1.01, low24h: p * 0.99,
                   volume24h: coinData[coinId].usd_24h_vol ?? 0,
                   lastUpdated: new Date().toISOString(), source: 'live' as const,
                   provenance: {
                     status: 'proxy',
                     provider: 'CoinGecko token proxy',
                     fetchedAt: new Date().toISOString(),
-                    note: 'Token proxy is not the same instrument as traditional spot commodity data.',
+                    note: 'Token proxy is not the same instrument as traditional spot commodity data. 24h high/low are omitted because this endpoint does not source them.',
                   },
                 };
               }
