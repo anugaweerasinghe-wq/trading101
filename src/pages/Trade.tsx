@@ -463,7 +463,7 @@ export default function Trade() {
                     return (
                       <Link
                         key={asset.id}
-                        to={`/trade/${asset.symbol.toLowerCase()}`}
+                        to={`/trade/${asset.id}`}
                         className="group relative glass-tactile rounded-xl p-4 border-chrome hover:border-primary/30 transition-all duration-200 hover:scale-[1.03]"
                       >
                         <div className="flex items-center justify-between mb-2">

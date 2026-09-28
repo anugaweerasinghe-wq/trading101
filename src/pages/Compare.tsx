@@ -8,11 +8,17 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { COMPARE_PAIRS, SITE_DOMAIN } from "@/lib/seoData";
+import { ASSETS } from "@/lib/assets";
 
 export default function Compare() {
   const { slug } = useParams<{ slug: string }>();
   const pair = COMPARE_PAIRS.find((p) => p.slug === slug);
   if (!pair) return <Navigate to="/compare" replace />;
+
+  const resolveTradeAssetId = (symbol: string) =>
+    ASSETS.find((asset) => asset.symbol.toUpperCase() === symbol.toUpperCase())?.id ?? null;
+  const tradeAssetA = resolveTradeAssetId(pair.a.symbol);
+  const tradeAssetB = resolveTradeAssetId(pair.b.symbol);
 
   const title = `${pair.a.name} vs ${pair.b.name} — Structural Comparison | TradeHQ`;
   const description = `${pair.a.name} vs ${pair.b.name}: side-by-side educational comparison of structure, market drivers and risk characteristics. Practise both with $100K in virtual cash on TradeHQ.`;
@@ -61,16 +67,28 @@ export default function Compare() {
             <Card className="p-6 border-emerald-500/20">
               <div className="text-xs text-emerald-400 mb-1">{pair.a.tag}</div>
               <div className="text-2xl font-bold">{pair.a.name} <span className="text-muted-foreground text-base">({pair.a.symbol})</span></div>
-              <Link to={`/trade/${pair.a.symbol.toLowerCase()}`}>
-                <Button variant="outline" size="sm" className="mt-4">Practise {pair.a.symbol} <ArrowRight className="ml-2 h-3 w-3" /></Button>
-              </Link>
+              {tradeAssetA ? (
+                <Link to={`/trade/${tradeAssetA}`}>
+                  <Button variant="outline" size="sm" className="mt-4">Practise {pair.a.symbol} <ArrowRight className="ml-2 h-3 w-3" /></Button>
+                </Link>
+              ) : (
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Category-level comparison — no single TradeHQ instrument represents this side.
+                </p>
+              )}
             </Card>
             <Card className="p-6 border-rose-500/20">
               <div className="text-xs text-rose-400 mb-1">{pair.b.tag}</div>
               <div className="text-2xl font-bold">{pair.b.name} <span className="text-muted-foreground text-base">({pair.b.symbol})</span></div>
-              <Link to={`/trade/${pair.b.symbol.toLowerCase()}`}>
-                <Button variant="outline" size="sm" className="mt-4">Practise {pair.b.symbol} <ArrowRight className="ml-2 h-3 w-3" /></Button>
-              </Link>
+              {tradeAssetB ? (
+                <Link to={`/trade/${tradeAssetB}`}>
+                  <Button variant="outline" size="sm" className="mt-4">Practise {pair.b.symbol} <ArrowRight className="ml-2 h-3 w-3" /></Button>
+                </Link>
+              ) : (
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Category-level comparison — no single TradeHQ instrument represents this side.
+                </p>
+              )}
             </Card>
           </div>
 
