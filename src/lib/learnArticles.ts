@@ -47,7 +47,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Getting started is simple: visit TradeHQ, and you'll have $100,000 in virtual cash ready to trade immediately — no signup or credit card required. Browse over 150 assets, read the AI-generated market analysis, place your first simulated trade, and start tracking your portfolio performance.",
           "As you gain experience, use the AI Mentor feature to get personalized strategy recommendations. Review your trade history, analyze what worked and what didn't, and continuously refine your approach. The goal isn't to make money — it's to build the skills and discipline you'll need when you eventually trade with real capital.",
-          "Many professional traders still use paper trading to test new strategies before deploying real capital. It's not just for beginners — it's a lifelong tool for any serious market participant. Start your paper trading journey today and build the foundation for long-term financial success."
+          "Paper trading is also used to test rule changes and platform mechanics without placing real-money orders. It can be useful at different experience levels, but simulator results do not establish future profitability or financial success."
         ]
       }
     ],
@@ -154,7 +154,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "2. Swing Trading (Capturing Multi-Day Moves)",
         paragraphs: [
-          "Swing trading involves holding positions for several days to weeks, aiming to capture medium-term price moves. Unlike day trading, you don't need to watch screens all day — you can analyze charts in the evening, set your orders, and check back the next day. This makes it ideal for people with day jobs.",
+          "Swing trading usually refers to positions held for several days to weeks. It may require less continuous screen time than some intraday approaches, but positions remain exposed to overnight gaps, news and changing liquidity, so no schedule makes it universally suitable.",
           "Swing-trading exercises often use chart patterns, support/resistance zones and predefined exits. In the simulator, record both successes and failures and compare several exit assumptions instead of treating a pattern or a fixed reward-to-risk multiple as a predictive rule.",
           "Practice swing trading on TradeHQ with volatile assets like Tesla (TSLA) or Solana (SOL). Track your entry points, stop-losses, and targets in the built-in trading journal. After 20-30 trades, analyze your win rate and average profit/loss to refine your strategy."
         ]
@@ -304,7 +304,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "What Is a Market Order?",
         paragraphs: [
           "A market order is the simplest type of trade: you tell your broker to buy or sell an asset immediately at the best available price. Market orders are virtually guaranteed to execute, but the exact price you get may differ slightly from what you see on your screen — especially in fast-moving or illiquid markets.",
-          "The advantage of market orders is speed and certainty of execution. When you absolutely need to get into or out of a position right now — for example, cutting a loss or jumping on a breaking news catalyst — a market order is the right choice. You sacrifice price precision for guaranteed execution.",
+          "A market order prioritizes immediacy over price control by trading against available liquidity. The final fill can differ from the displayed quote, and execution is not guaranteed under every condition because markets can halt, orders can be rejected, or liquidity can disappear. Whether a market or limit order is appropriate depends on the execution objective and venue.",
           "The downside is slippage: the difference between the expected price and the actual fill price. In highly liquid markets like Apple (AAPL) or Bitcoin (BTC), slippage is usually pennies. But in thinly traded altcoins or penny stocks, slippage can be significant. On TradeHQ, you can observe how market orders execute instantly on different asset types."
         ]
       },
