@@ -18,12 +18,13 @@ import {
   ComposedChart,
 } from "recharts";
 import { runScenario, SCENARIO_MODEL_ASSUMPTIONS, type ScenarioResult, type Shock } from "@/lib/scenarioEngine";
+import { parseScenarioPrompt } from "@/lib/scenarioPrompt";
 import type { Portfolio, Asset } from "@/lib/types";
 
 const EXAMPLES = [
   "What if BTC drops 30%?",
   "ETH gains 50% in 30 days",
-  "Tech stocks crash 20%",
+  "All stocks drop 20%",
   "Crypto rallies 40% over 60 days",
 ];
 
@@ -81,38 +82,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
     setLoading(true);
     setResult(null);
     try {
-      const holdings = livePortfolio.positions.map((p) => ({
-        symbol: p.asset.symbol,
-        name: p.asset.name,
-        type: p.asset.type,
-        quantity: p.quantity,
-        currentPrice: p.asset.price,
-      }));
-
-      // Deterministic regex-based scenario parser — no AI credits required.
-      const lower = finalPrompt.toLowerCase();
-      const pctMatch = lower.match(/(-?\d+(?:\.\d+)?)\s*%/);
-      const daysMatch = lower.match(/(\d+)\s*(day|week|month)/);
-      const dropMatch = /drop|crash|fall|down|plunge|dump/.test(lower);
-      const pumpMatch = /pump|rally|surge|moon|up|rise/.test(lower);
-      const pct = pctMatch ? Number(pctMatch[1]) : (dropMatch ? -20 : pumpMatch ? 20 : -10);
-      const signedPct = dropMatch && pct > 0 ? -pct : pct;
-      let horizon = 30;
-      if (daysMatch) {
-        const n = Number(daysMatch[1]);
-        const unit = daysMatch[2];
-        horizon = unit === "week" ? n * 7 : unit === "month" ? n * 30 : n;
-      }
-      // Try to match a specific symbol from holdings, otherwise apply to all
-      const targetSymbol = holdings.find(h => lower.includes(h.symbol.toLowerCase()) || lower.includes(h.name.toLowerCase()))?.symbol;
-      const shocks: Shock[] = targetSymbol
-        ? [{ symbol: targetSymbol, shockPercent: signedPct, confidence: 0.7 }]
-        : holdings.map(h => ({ symbol: h.symbol, shockPercent: signedPct, confidence: 0.7 }));
-      const parsed = {
-        shocks,
-        horizonDays: horizon,
-        narrative: `Modeled a ${signedPct >= 0 ? "+" : ""}${signedPct}% move on ${targetSymbol ?? "your full portfolio"} over ${horizon} days. (Deterministic scenario — no AI required.)`,
-      };
+      const parsed = parseScenarioPrompt(finalPrompt, livePortfolio.positions.map(p => p.asset));
       setShocks(parsed.shocks ?? []);
       setHorizonDays(parsed.horizonDays ?? 30);
       setNarrative(parsed.narrative ?? "");
@@ -148,7 +118,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         <ul className="list-disc pl-4 space-y-1">
           {SCENARIO_MODEL_ASSUMPTIONS.map((assumption) => <li key={assumption}>{assumption}</li>)}
         </ul>
-        <p className="mt-2">The prompt uses simple text matching, not AI interpretation. Check the applied shock and horizon shown with the results.</p>
+        <p className="mt-2">Use one exact held ticker/name, an asset class (crypto, stocks, ETFs, forex or commodities), or “all holdings”, followed by a move such as “drops 30% in 30 days”. The default horizon is 30 days; supported horizons are 1–365 days and shocks are greater than -100% through +1000%. This is a limited text parser, not AI interpretation. Check the applied holdings and horizon below.</p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-2 mt-4">

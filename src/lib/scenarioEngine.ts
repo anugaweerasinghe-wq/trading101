@@ -1,6 +1,7 @@
 import type { Portfolio, AssetType } from "./types";
 
 export interface Shock {
+  assetId?: string; // Stable ID prevents duplicate tickers from affecting unrelated holdings.
   symbol: string;
   shockPercent: number; // total % over horizon, e.g. -30
   /** Parser metadata only. This is NOT statistical confidence and is not used by the simulation engine. */
@@ -78,11 +79,18 @@ export function runScenario(
   horizonDays: number,
   paths = 1000,
 ): ScenarioResult {
-  const days = Math.max(1, Math.min(365, Math.round(horizonDays || 30)));
+  if (!Number.isInteger(horizonDays) || horizonDays < 1 || horizonDays > 365) {
+    throw new Error("Scenario horizon must be an integer from 1 to 365 days.");
+  }
+  const days = horizonDays;
   const pathCount = Math.max(100, Math.min(5000, Math.round(paths || 1000)));
   const shockMap = new Map<string, number>();
   shocks.forEach((s) => {
-    if (s?.symbol) shockMap.set(s.symbol.toUpperCase(), s.shockPercent / 100);
+    if (!Number.isFinite(s.shockPercent) || s.shockPercent <= -100 || s.shockPercent > 1000) {
+      throw new Error("Scenario shock must be greater than -100% and no more than +1000%.");
+    }
+    if (s.assetId) shockMap.set(`id:${s.assetId}`, s.shockPercent / 100);
+    else if (s.symbol) shockMap.set(`symbol:${s.symbol.toUpperCase()}`, s.shockPercent / 100);
   });
 
   const currentValue = portfolio.totalValue;
@@ -90,9 +98,9 @@ export function runScenario(
 
   // User shock is treated as a terminal scenario assumption and spread evenly as daily log drift.
   const positions = portfolio.positions.map((p) => {
-    const totalShock = shockMap.get(p.asset.symbol.toUpperCase()) ?? 0;
+    const totalShock = shockMap.get(`id:${p.asset.id}`) ?? shockMap.get(`symbol:${p.asset.symbol.toUpperCase()}`) ?? 0;
     // Convert total return over horizon to log-drift per day
-    const totalLog = Math.log(1 + Math.max(-0.99, totalShock));
+    const totalLog = Math.log(1 + totalShock);
     const dailyDrift = totalLog / days;
     const dailySigma = DAILY_VOL[p.asset.type] ?? 0.02;
     return { p, dailyDrift, dailySigma, totalShock };
