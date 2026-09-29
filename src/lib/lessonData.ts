@@ -1547,9 +1547,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "95%",
-            label: "Of Day Traders Lose Money Long-Term",
-            data: "Academic studies show the vast majority of day traders underperform buy-and-hold strategies after costs",
+            value: "Dataset-dependent",
+            label: "Trading Outcomes Need Context",
+            data: "A loss rate depends on the market, population, period and costs studied. This lesson does not claim a universal day-trader failure percentage.",
           },
           {
             type: "heading",
@@ -1572,7 +1572,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Day trader Sarah monitors charts 8 hours daily, makes 20+ trades weekly, needs 55%+ win rate to overcome fees. One emotional mistake can wipe out weeks of profits.",
+            data: "Hypothetical trader Sarah records a frequent-trading simulation. Her break-even win rate depends on average gains, average losses and costs, so a fixed 55% threshold cannot be inferred from trading frequency alone.",
           },
           {
             type: "heading",
@@ -1599,11 +1599,11 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "highlight",
-            data: "Be honest with yourself: Do you have 8+ hours daily to dedicate to trading? Can you handle the stress? If not, long-term investing is your path to wealth.",
+            data: "Compare the time commitment and turnover of different hypothetical holding periods. A time budget alone does not determine a suitable real-money strategy or a path to wealth.",
           },
           {
             type: "tip",
-            data: "Start with long-term investing. Once you're consistently profitable for 6+ months, consider adding swing trading. Only attempt day trading if you've mastered swing trading and can commit full-time.",
+            data: "Compare longer and shorter holding periods as separate simulation exercises. Six profitable months or any other fixed practice period does not establish real-money readiness.",
           },
         ],
       },
@@ -1626,18 +1626,18 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "Beginners: 5-10% monthly returns are EXCELLENT",
-              "Intermediate: 10-15% monthly with experience (rare)",
-              "Professionals: 15-25% monthly (extremely rare)",
-              "S&P 500 average: ~10% annually (not monthly!)",
-              "Warren Buffett career average: 20% annually",
+              "A simulation return assumption is a test input, not a beginner income target",
+              "Experience does not establish a predictable monthly return",
+              "No professional monthly-return range is asserted without a defined dataset",
+              "Historical comparisons require a named index, period and treatment of dividends and costs",
+              "A selected historical track record is not a forecast for another investor",
             ],
           },
           {
             type: "stat",
-            value: "20-30%",
-            label: "Annual Returns That Beat 95% of Funds",
-            data: "If you can consistently achieve 20-30% annual returns, you're outperforming virtually all professional money managers",
+            value: "Hypothetical",
+            label: "Return Assumptions Are Not Targets",
+            data: "Compare several assumed returns, including losses, without presenting one figure as achievable for a learner or superior to a fund population.",
           },
           {
             type: "highlight",
@@ -1779,8 +1779,8 @@ export const lessonData: Lesson[] = [
             type: "list",
             data: [
               "Am I following my trading rules consistently?",
-              "Are my losses controlled (2% rule)?",
-              "Is my risk-reward ratio 1:2 or better?",
+              "Did the losses stay within the virtual risk rule documented for this exercise?",
+              "How did payoff size and win frequency combine after assumed costs?",
               "Am I trading too much (overtrading)?",
               "Am I trading too little (missing opportunities)?",
               "What was my biggest mistake this month?",
@@ -1793,19 +1793,19 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "1.5+",
-            label: "Target Profit Factor for Consistent Success",
-            data: "A profit factor above 1.5 means you make $1.50 for every $1 lost - a strong edge that compounds over time",
+            value: "1.5 example",
+            label: "Interpreting a Sample Profit Factor",
+            data: "A profit factor of 1.5 means gross profits were $1.50 per $1 of gross losses in the sample. It does not prove a persistent edge; sample size and costs matter.",
           },
         ],
       },
     ],
     quiz: [
       {
-        question: "What is a realistic monthly return target for beginner traders?",
-        options: ["50-100%", "20-30%", "5-10%", "2-3%"],
+        question: "How should a monthly return percentage be used in a simulation?",
+        options: ["As guaranteed income", "As a beginner standard", "As a hypothetical input rather than an expected return", "As proof of skill"],
         correctAnswer: 2,
-        explanation: "5-10% monthly returns are excellent for beginners and actually beat most professional fund managers over time!",
+        explanation: "A chosen return is an assumption for an exercise, not a forecast, skill benchmark or promise of repeatable performance.",
       },
       {
         question: "What is the most important reason to keep a trading journal?",

@@ -17,7 +17,7 @@ import {
   YAxis,
   ComposedChart,
 } from "recharts";
-import { runScenario, type ScenarioResult, type Shock } from "@/lib/scenarioEngine";
+import { runScenario, SCENARIO_MODEL_ASSUMPTIONS, type ScenarioResult, type Shock } from "@/lib/scenarioEngine";
 import type { Portfolio, Asset } from "@/lib/types";
 
 const EXAMPLES = [
@@ -143,6 +143,14 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         </div>
       </div>
 
+      <div className="mt-4 rounded-lg border border-white/10 p-3 text-xs text-muted-foreground">
+        <h3 className="font-semibold text-foreground mb-2">Model assumptions</h3>
+        <ul className="list-disc pl-4 space-y-1">
+          {SCENARIO_MODEL_ASSUMPTIONS.map((assumption) => <li key={assumption}>{assumption}</li>)}
+        </ul>
+        <p className="mt-2">The prompt uses simple text matching, not AI interpretation. Check the applied shock and horizon shown with the results.</p>
+      </div>
+
       <div className="flex flex-col sm:flex-row gap-2 mt-4">
         <Input
           value={prompt}
@@ -187,7 +195,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         <div className="mt-6 space-y-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
-              <p className="text-2xs text-muted-foreground">Expected Value</p>
+              <p className="text-2xs text-muted-foreground">Model mean value</p>
               <p className="text-base font-bold tabular-nums mt-1">{fmt(result.expected)}</p>
               <p className={cn("text-2xs tabular-nums", result.deltaPercent >= 0 ? "text-success" : "text-destructive")}>
                 {result.deltaPercent >= 0 ? "+" : ""}{result.deltaPercent.toFixed(2)}%
@@ -251,7 +259,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
                 <span>Asset</span>
                 <span className="text-right">Qty</span>
                 <span className="text-right">Now</span>
-                <span className="text-right">Expected</span>
+                <span className="text-right">Shock price</span>
                 <span className="text-right">Shock</span>
               </div>
               {result.perAsset.map((a) => (

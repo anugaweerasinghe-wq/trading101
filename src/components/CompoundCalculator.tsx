@@ -101,8 +101,8 @@ export function CompoundCalculator() {
 
         <div className="space-y-3">
           <div className="flex justify-between text-[9px] font-black text-emerald-500/80 uppercase">
-            <span>Annual return assumption: {annualReturn}%</span>
-            <span>Annual cost assumption: {annualCostPct}%</span>
+            <span>Nominal annual return: {annualReturn}%</span>
+            <span>Nominal annual cost: {annualCostPct}%</span>
           </div>
           <Slider value={[annualReturn]} onValueChange={([v]) => setAnnualReturn(v)} max={30} step={0.5} className="py-1" />
           <Slider value={[annualCostPct]} onValueChange={([v]) => setAnnualCostPct(v)} max={3} step={0.05} className="py-1" />
@@ -142,7 +142,7 @@ export function CompoundCalculator() {
         </div>
 
         <p className="text-[8px] leading-relaxed text-slate-500">
-          This calculator compounds a constant annual return assumption and applies a simplified annual cost drag monthly. It does not model broker-specific commissions, spreads, taxes, slippage, changing returns, or market risk.
+          Each nominal annual percentage is divided by 12. Monthly contributions are added before that month's growth and cost deduction. For example, a 12% nominal return compounds to about 12.68% over a year before costs, with no contributions. It does not model broker-specific commissions, spreads, taxes, slippage, changing returns, or market risk.
         </p>
 
         <Button 
