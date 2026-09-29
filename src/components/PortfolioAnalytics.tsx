@@ -1,3 +1,4 @@
+import { getPortfolioHistory } from "@/lib/portfolioHistory";
 import { useMemo } from "react";
 import { Portfolio } from "@/lib/types";
 import { Card } from "@/components/ui/card";
@@ -54,6 +55,7 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
       assetClassCount: Object.keys(allocation).length,
       largestPositionWeight,
       maxDrawdown,
+      snapshotCount: getPortfolioHistory().length,
       realizedPnL,
       cashPct,
     };
@@ -84,7 +86,7 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
               <TrendingDown className="w-3.5 h-3.5" /> Max drawdown in local snapshot history
             </span>
             <span className="text-base font-semibold text-destructive tabular-nums">
-              -{analytics.maxDrawdown.toFixed(2)}%
+              {analytics.snapshotCount >= 2 ? `-${analytics.maxDrawdown.toFixed(2)}%` : "Insufficient history"}
             </span>
           </div>
           <div className="flex justify-between items-center">
@@ -95,7 +97,7 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
           </div>
         </div>
         <p className="mt-5 text-xs text-muted-foreground/70 leading-relaxed">
-          TradeHQ does not label a cross-section of current positions as a Sharpe ratio. A standard Sharpe calculation needs a return series, a time interval and a risk-free-rate convention that this card does not currently have.
+          Drawdown uses recent locally recorded simulator values only, which may use cached, delayed or simulated prices. Older unverified history is preserved in your browser but excluded; this is not a complete lifetime performance record. TradeHQ does not label a cross-section of current positions as a Sharpe ratio. A standard Sharpe calculation needs a return series, a time interval and a risk-free-rate convention that this card does not currently have.
         </p>
       </Card>
 

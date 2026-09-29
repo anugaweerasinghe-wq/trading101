@@ -1,29 +1,39 @@
 import { PortfolioSnapshot, Portfolio } from './types';
 
-const HISTORY_KEY = 'tradesandbox_history';
+// The legacy tradesandbox_history key is deliberately left untouched: older
+// releases mixed generated backfill with actual observations without tags.
+const HISTORY_KEY = 'tradehq_observed_history_v1';
 
-export function getPortfolioHistory(): PortfolioSnapshot[] {
-  const stored = localStorage.getItem(HISTORY_KEY);
-  if (stored) {
+function readStoredHistory(): PortfolioSnapshot[] | null {
+  try {
+    const stored = localStorage.getItem(HISTORY_KEY);
+    if (!stored) return [];
     const history = JSON.parse(stored);
-    return history.map((snapshot: PortfolioSnapshot) => ({
-      ...snapshot,
-      timestamp: new Date(snapshot.timestamp),
-    }));
-  }
-  return [];
+    return Array.isArray(history) ? history : null;
+  } catch { return null; }
+}
+
+function validSnapshot(snapshot: PortfolioSnapshot): boolean {
+  return !!snapshot && Number.isFinite(new Date(snapshot.timestamp).getTime()) &&
+    [snapshot.totalValue, snapshot.cash, snapshot.positionsValue].every(value => Number.isFinite(value) && value >= 0);
+}
+
+/** Only observations recorded by this version; never infer legacy provenance. */
+export function getPortfolioHistory(): PortfolioSnapshot[] {
+  return (readStoredHistory() ?? []).filter(validSnapshot).map(snapshot => ({
+    ...snapshot, timestamp: new Date(snapshot.timestamp),
+  })).sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
 }
 
 export function addPortfolioSnapshot(snapshot: PortfolioSnapshot): void {
-  const history = getPortfolioHistory();
+  if (!validSnapshot(snapshot)) return;
+  const history = readStoredHistory();
+  // Preserve unreadable storage rather than overwriting it with an empty series.
+  if (history === null) return;
   history.push(snapshot);
-
-  // Keep only the latest locally observed snapshots.
-  if (history.length > 500) {
-    history.shift();
-  }
-
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  // Retain the existing 500-observation rolling window for the new series only.
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-500))); }
+  catch { /* Unavailable/full storage must not interrupt a virtual trade. */ }
 }
 
 export function recordSnapshot(cash: number, positionsValue: number): void {

@@ -5,27 +5,26 @@ import { TrendingUp, TrendingDown, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { INITIAL_CASH } from "@/lib/assets";
 
 export function PortfolioChart() {
   const history = getPortfolioHistory();
   const [stopLossPercent, setStopLossPercent] = useState(10);
   const [showStopLoss, setShowStopLoss] = useState(true);
 
-  // Add initial point if no history
-  const data = history.length > 0 
-    ? history.map(snapshot => ({
-        time: new Date(snapshot.timestamp).toLocaleDateString(),
-        value: snapshot.totalValue,
-      }))
-    : [
-        { time: 'Start', value: INITIAL_CASH }
-      ];
-
-  const initialValue = data[0]?.value || INITIAL_CASH;
-  const currentValue = data[data.length - 1]?.value || INITIAL_CASH;
+  if (history.length === 0) {
+    return <Card className="p-6 bg-card/50 backdrop-blur-sm">
+      <h3 className="text-lg font-semibold">Portfolio Performance</h3>
+      <p className="mt-2 text-sm text-muted-foreground">No observations recorded yet. Older unverified history remains stored in this browser but is excluded because it may contain generated points.</p>
+    </Card>;
+  }
+  const data = history.map(snapshot => ({
+    time: new Date(snapshot.timestamp).toLocaleString(),
+    value: snapshot.totalValue,
+  }));
+  const initialValue = data[0].value;
+  const currentValue = data[data.length - 1].value;
   const change = currentValue - initialValue;
-  const changePercent = ((change / initialValue) * 100).toFixed(2);
+  const changePercent = (initialValue > 0 ? (change / initialValue) * 100 : 0).toFixed(2);
   const isPositive = change >= 0;
   
   // Calculate stop-loss line (below initial value)
@@ -67,6 +66,7 @@ export function PortfolioChart() {
         )}
       </div>
 
+      <p className="mb-3 text-xs text-muted-foreground">Recent locally recorded simulator values only; prices may be cached, delayed or simulated. Older unverified history is preserved but excluded. The stop-loss line is a visual reference and does not execute orders.</p>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <XAxis 
