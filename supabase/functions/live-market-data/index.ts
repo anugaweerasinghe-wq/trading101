@@ -2,6 +2,8 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { consumeRateLimit, getClientIp } from "../_shared/rateLimit.ts";
 
+import { absoluteQuoteChange } from "../_shared/quoteMath.ts";
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -71,6 +73,7 @@ interface DataProvenance {
   status: DataStatus;
   provider: string;
   fetchedAt: string;
+  providerAsOf?: string;
   note?: string;
 }
 
@@ -104,7 +107,7 @@ async function fetchCryptoData(assetId: string): Promise<MarketData | null> {
 
   try {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_market_cap=true`,
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_market_cap=true&include_last_updated_at=true`,
       { headers: { 'Accept': 'application/json' } }
     );
 
@@ -114,19 +117,23 @@ async function fetchCryptoData(assetId: string): Promise<MarketData | null> {
     if (!coin || !coin.usd) return null;
 
     const price = coin.usd;
-    const changePct = coin.usd_24h_change ?? 0;
+    const changePct = coin.usd_24h_change;
+    const change = absoluteQuoteChange(price, changePct);
+    if (change === null) return null;
 
     return {
       price,
-      change24h: price * (changePct / 100),
+      change24h: change,
       changePercent24h: changePct,
       volume24h: coin.usd_24h_vol ?? 0,
       marketCap: coin.usd_market_cap ?? 0,
       lastUpdated: new Date().toISOString(),
       source: 'live',
       provenance: {
-        status: 'realtime',
+        status: 'provider',
         provider: 'CoinGecko',
+        providerAsOf: Number.isFinite(coin.last_updated_at) && coin.last_updated_at > 0 ? new Date(coin.last_updated_at * 1000).toISOString() : undefined,
+        note: 'Provider snapshot; refresh and cache intervals apply. Fetch time is not the time of a market trade.',
         fetchedAt: new Date().toISOString(),
       },
     };
@@ -177,8 +184,9 @@ async function fetchStockData(assetId: string): Promise<MarketData | null> {
             provenance: {
               status: 'previous_close',
               provider: 'Polygon',
+              providerAsOf: Number.isFinite(r.t) ? new Date(r.t).toISOString() : undefined,
               fetchedAt: new Date().toISOString(),
-              note: 'Previous trading day aggregate; not a realtime quote.',
+              note: 'Previous trading day aggregate; change is open-to-close, not a rolling 24-hour change. Provider time is the start of the aggregate window.',
             },
           };
         }
@@ -202,8 +210,8 @@ async function fetchStockData(assetId: string): Promise<MarketData | null> {
           price,
           change24h: parseFloat(q['09. change'] || '0'),
           changePercent24h: parseFloat((q['10. change percent'] || '0%').replace('%', '')),
-          high24h: parseFloat(q['03. high'] || String(price)),
-          low24h: parseFloat(q['04. low'] || String(price)),
+          high24h: q['03. high'] ? parseFloat(q['03. high']) : undefined,
+          low24h: q['04. low'] ? parseFloat(q['04. low']) : undefined,
           volume24h: parseFloat(q['06. volume'] || '0'),
           lastUpdated: new Date().toISOString(), source: 'live',
           provenance: {
@@ -382,26 +390,30 @@ serve(async (req) => {
           const coinId = COMMODITY_MAP[assetId];
           try {
             const response = await fetch(
-              `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true`,
+              `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_last_updated_at=true`,
               { headers: { 'Accept': 'application/json' } }
             );
             if (response.ok) {
               const coinData = await response.json();
               if (coinData[coinId]) {
                 const p = coinData[coinId].usd;
-                data = {
-                  price: p,
-                  change24h: p * ((coinData[coinId].usd_24h_change ?? 0) / 100),
-                  changePercent24h: coinData[coinId].usd_24h_change ?? 0,
-                  volume24h: coinData[coinId].usd_24h_vol ?? 0,
-                  lastUpdated: new Date().toISOString(), source: 'live' as const,
-                  provenance: {
-                    status: 'proxy',
-                    provider: 'CoinGecko token proxy',
-                    fetchedAt: new Date().toISOString(),
-                    note: 'Token proxy is not the same instrument as traditional spot commodity data. 24h high/low are omitted because this endpoint does not source them.',
-                  },
-                };
+                const change = absoluteQuoteChange(p, coinData[coinId].usd_24h_change);
+                if (change !== null) {
+                  data = {
+                    price: p,
+                    change24h: change,
+                    changePercent24h: coinData[coinId].usd_24h_change,
+                    volume24h: coinData[coinId].usd_24h_vol ?? 0,
+                    lastUpdated: new Date().toISOString(), source: 'live' as const,
+                    provenance: {
+                      status: 'proxy',
+                      provider: 'CoinGecko token proxy',
+                      providerAsOf: Number.isFinite(coinData[coinId].last_updated_at) && coinData[coinId].last_updated_at > 0 ? new Date(coinData[coinId].last_updated_at * 1000).toISOString() : undefined,
+                      fetchedAt: new Date().toISOString(),
+                      note: 'Token proxy is not the same instrument as traditional spot commodity data. 24h high/low are omitted because this endpoint does not source them.',
+                    },
+                  };
+                }
               }
             }
           } catch (e) { console.error('Commodity fetch error:', e); }

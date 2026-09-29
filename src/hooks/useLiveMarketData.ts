@@ -6,6 +6,7 @@ export interface MarketDataProvenance {
   status: 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider';
   provider: string;
   fetchedAt: string;
+  providerAsOf?: string;
   note?: string;
 }
 

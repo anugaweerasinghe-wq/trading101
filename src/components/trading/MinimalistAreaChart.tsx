@@ -9,7 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Wifi, WifiOff, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 
 interface MinimalistAreaChartProps {
   asset: Asset;
@@ -63,12 +63,12 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
     : 100;
   
   // Live market data hooks
-  const { liveData, isLive, refetch: refetchQuote } = useLiveMarketData(asset, {
+  const { liveData, refetch: refetchQuote } = useLiveMarketData(asset, {
     refreshInterval: 30000, // 30 seconds
     enabled: !!asset,
   });
   
-  const { candles, isLoading: candlesLoading, refetch: refetchCandles } = useLiveCandleData(asset, {
+  const { candles, provenance: candleProvenance, isLoading: candlesLoading, refetch: refetchCandles } = useLiveCandleData(asset, {
     refreshInterval: 60000, // 1 minute for candle updates
     enabled: !!asset,
   });
@@ -163,23 +163,8 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-semibold">{asset.symbol}</h2>
-              {/* Live indicator */}
-              <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                isLive 
-                  ? 'bg-profit/20 text-profit' 
-                  : 'bg-muted text-muted-foreground'
-              }`}>
-                {isLive ? (
-                  <>
-                    <Wifi className="w-3 h-3" />
-                    LIVE
-                  </>
-                ) : (
-                  <>
-                    <WifiOff className="w-3 h-3" />
-                    SIM
-                  </>
-                )}
+              <div className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-muted text-muted-foreground">
+                Quote: {liveData?.provenance?.status === 'simulated' ? 'Simulated' : liveData?.provenance ? 'Provider snapshot' : 'Unverified'}
               </div>
             </div>
             <p className="text-sm text-muted-foreground">{asset.name}</p>
@@ -284,14 +269,10 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
         </ResponsiveContainer>
       </div>
 
-      {/* Footer with data source info */}
-      <div className="px-4 pb-2 flex items-center justify-between text-[10px] text-muted-foreground">
-        <span>
-          {isLive ? 'Data: CoinGecko / Alpha Vantage' : 'Simulated market data'}
-        </span>
-        <span>
-          1-min intervals • Auto-refresh 30s
-        </span>
+      <div className="px-4 pb-2 space-y-1 text-[10px] text-muted-foreground">
+        <p>Quote: {liveData?.provenance?.provider || 'Unverified snapshot'}. {liveData?.provenance?.note}</p>
+        <p>Chart: {candles.length > 0 && candleProvenance?.status === 'provider' ? candleProvenance.provider : 'TradeHQ simulation'}. {candles.length > 0 && candleProvenance?.note}</p>
+        <p>Quote refresh requested every 30s; history every 60s. Caching and provider intervals apply.</p>
       </div>
     </div>
   );
