@@ -595,29 +595,29 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "Step 1: Determine your risk amount (2% of account)",
+              "Step 1: Choose a hypothetical risk amount (2% in this example)",
               "Step 2: Set your stop-loss price",
               "Step 3: Calculate risk per share (entry - stop)",
               "Step 4: Divide risk amount by risk per share",
-              "Step 5: That's how many shares to buy",
+              "Step 5: This is the modeled share quantity before costs and execution constraints",
             ],
           },
           {
             type: "heading",
-            data: "Why This Works",
+            data: "What the Example Shows",
           },
           {
             type: "text",
-            data: "Even professional traders are wrong 40-50% of the time. The 2% rule ensures that losing streaks don't wipe you out:",
+            data: "This fixed-percentage example illustrates compounding losses. It assumes every exit fills at the modeled loss and ignores fees; it does not establish professional win rates or prevent severe drawdowns:",
           },
           {
             type: "list",
             data: [
               "10 consecutive 2%-of-current-equity losses leave about 81.7% of starting equity (about -18.3%)",
               "20 consecutive 2%-of-current-equity losses leave about 66.8% (about -33.2%)",
-              "You can be wrong many times and still survive",
-              "Small losses, big winners = profitable long-term",
-              "Protects you from emotional decisions",
+              "Losses reduce the account even when the percentage stays fixed",
+              "Profitability also depends on win frequency, actual fills and costs",
+              "A written process can help review decisions; it cannot remove emotion or risk",
             ],
           },
         ],
@@ -627,39 +627,39 @@ export const lessonData: Lesson[] = [
         content: [
           {
             type: "highlight",
-            data: "A stop-loss is not a sign of defeat - it's a sign of discipline. It's your automated risk manager working 24/7.",
+            data: "A stop is an order trigger, not insurance against losses. Its operation depends on the order type, venue and trading session.",
           },
           {
             type: "text",
-            data: "Every trade needs two critical levels set before you enter: where you'll exit if you're wrong (stop-loss) and where you'll exit if you're right (take-profit). Without these, you're gambling.",
+            data: "This lesson compares planned exits with actual execution. An exit plan can be recorded in the journal, but conceptual order examples do not establish which order types TradeHQ currently supports.",
           },
           {
             type: "stat",
-            value: "95%",
-            label: "Of Successful Traders Use Stop-Losses",
-            data: "The most consistent winners in trading never let losses run wild",
+            value: "Trigger ≠ fill",
+            label: "Stop-order execution",
+            data: "No trader-usage percentage is asserted here. A stop-market order can fill away from its trigger.",
           },
           {
             type: "heading",
-            data: "Stop-Loss Orders: Your Safety Net",
+            data: "Stop Orders and Execution Risk",
           },
           {
             type: "text",
-            data: "A stop-loss is an automatic order that sells your position when the price drops to a specific level. It limits your loss on a trade.",
+            data: "For a long position, a sell stop-market order becomes a market order when triggered. The eventual fill can differ from the stop price.",
           },
           {
             type: "list",
             data: [
-              "Set BEFORE you enter the trade, not after",
-              "Based on technical levels, not emotions",
-              "Prevents small losses from becoming big losses",
-              "Removes emotion from the decision",
-              "Non-negotiable for every trade",
+              "Record the intended trigger and order type",
+              "Compare different hypothetical trigger distances",
+              "Price gaps and thin liquidity can increase the realized loss",
+              "Automatic triggering does not guarantee the execution price",
+              "A stop-limit order controls its limit price but may not fill",
             ],
           },
           {
             type: "example",
-            data: "You buy Tesla at $200 with a stop-loss at $190. If Tesla drops to $190, you automatically sell. Maximum loss: $10 per share. Even if Tesla crashes to $150 overnight, you're out at $190.",
+            data: "Hypothetical purchase at $200 with a $190 sell-stop trigger: a fill at $190 loses $10 per share before costs. If the market gaps to $150 and the order fills there, the loss is $50. The trigger does not cap the loss at $10.",
           },
           {
             type: "heading",
@@ -667,7 +667,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Don't place stops randomly! Use technical analysis:",
+            data: "Possible simulation parameters include the following; none guarantees a favorable outcome:",
           },
           {
             type: "list",
@@ -681,15 +681,15 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Place stops just beyond key levels, not exactly on them. If support is at $100, place your stop at $99.50. This prevents getting stopped out by brief price spikes.",
+            data: "Compare hypothetical triggers at different distances from a chart level. A wider distance changes loss per share and a tighter distance changes sensitivity to price noise; neither prevents an unfavorable fill.",
           },
           {
             type: "heading",
-            data: "Take-Profit Targets: Lock In Gains",
+            data: "Take-Profit Targets and Fill Assumptions",
           },
           {
             type: "text",
-            data: "Take-profit orders automatically sell when you've reached your profit goal. They prevent you from getting greedy and giving back gains.",
+            data: "A take-profit level expresses a planned exit. Reaching a displayed price does not prove that a real order would fill in full.",
           },
           {
             type: "list",
@@ -698,34 +698,34 @@ export const lessonData: Lesson[] = [
               "Near previous highs",
               "Based on risk-reward ratio (we'll cover next)",
               "Can use multiple targets (scale out)",
-              "Better to take some profit than watch it disappear",
+              "Compare partial exits with a single-exit baseline",
             ],
           },
           {
             type: "example",
-            data: "You buy at $200 with targets at $220 (sell 50%) and $240 (sell remaining 50%). If the stock hits $220, you lock in some profit. If it reverses, you've secured gains instead of hoping it goes higher.",
+            data: "Hypothetical scaling example: buy two shares at $200, sell one at $220 and the other at $240. If both fills occur, profit is $60 before costs. If only the first fills, the remaining share still carries price risk.",
           },
           {
             type: "heading",
-            data: "Trailing Stops: Lock In Profits Automatically",
+            data: "Trailing Stops: Moving Triggers",
           },
           {
             type: "text",
-            data: "A trailing stop moves up with the price, locking in profits while giving the trade room to grow:",
+            data: "For a long position, a trailing sell-stop trigger follows favorable price moves at a specified distance:",
           },
           {
             type: "list",
             data: [
               "Follows the price up automatically",
-              "Never moves down (locks in gains)",
+              "The trigger normally does not move down when the market falls",
               "Set as percentage or dollar amount",
-              "Great for trending markets",
+              "Can trigger during temporary reversals",
               "Example: 10% trailing stop on winning trades",
             ],
           },
           {
             type: "example",
-            data: "Buy at $100 with 10% trailing stop ($90). Price rises to $150, stop moves to $135. If price drops to $135, you sell with $35 profit per share locked in!",
+            data: "Hypothetical purchase at $100 with a 10% trailing trigger: at a $150 high, the trigger is $135. A fill at $135 would realize $35 before costs, but a gap or slippage can produce a different result.",
           },
         ],
       },
@@ -739,13 +739,13 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "The risk-reward ratio is the secret to profitable trading. You don't need to win 90% of trades - you just need your winners to be bigger than your losers.",
+            data: "A planned payoff ratio compares an assumed gain with an assumed loss. Profitability depends on how often each outcome occurs, actual payoff sizes and costs.",
           },
           {
             type: "stat",
             value: "1:3",
-            label: "Ideal Minimum Risk-Reward Ratio",
-            data: "Risk $1 to make $3 - this ratio allows profitability even with a 30% win rate",
+            label: "Hypothetical Risk-to-Reward Ratio",
+            data: "Assuming every win earns $3 and every loss costs $1, a 30% win rate gives +$0.20 average per trade before costs.",
           },
           {
             type: "heading",
@@ -765,16 +765,16 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "With proper risk-reward ratios, you can be profitable even with a low win rate:",
+            data: "For a simplified two-outcome model with constant payoff sizes and no costs:",
           },
           {
             type: "list",
             data: [
               "1:1 ratio requires 50% win rate to break even",
-              "1:2 ratio requires 33% win rate to break even",
+              "1:2 ratio requires 33⅓% win rate to break even",
               "1:3 ratio requires 25% win rate to break even",
-              "You can lose 70% of trades and still profit with 1:3!",
-              "Focus on finding high-reward, low-risk setups",
+              "A 30% win rate with actual 1:3 payoffs has positive arithmetic expectancy before costs",
+              "A target ratio alone says nothing about the probability of reaching the target",
             ],
           },
           {
@@ -783,7 +783,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Never take a trade with less than 1:2 risk-reward. Ideally, aim for 1:3 or better. If you can't identify a setup with favorable risk-reward, wait for a better opportunity.",
+            data: "Compare several payoff and win-rate assumptions in a simulation. There is no universal minimum ratio, and a more distant target may be reached less often.",
           },
           {
             type: "heading",
@@ -818,12 +818,12 @@ export const lessonData: Lesson[] = [
               "Step 2: Set stop-loss (your risk)",
               "Step 3: Identify target (your reward)",
               "Step 4: Calculate ratio: Reward ÷ Risk",
-              "Step 5: If ratio is less than 2, reconsider the trade",
+              "Step 5: State the assumed win frequency and costs before interpreting the ratio",
             ],
           },
           {
             type: "example",
-            data: "Entry: $50 | Stop: $48 | Target: $56 | Risk: $2 | Reward: $6 | Ratio: $6 ÷ $2 = 3:1. Excellent trade setup!",
+            data: "Hypothetical entry: $50 | Exit: $48 | Target: $56 | Assumed loss: $2 | Assumed gain: $6 | Reward/risk: 3, or risk-to-reward 1:3. This calculation does not establish a profitable setup.",
           },
           {
             type: "heading",
@@ -831,15 +831,15 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Different trading styles require different ratios:",
+            data: "Compare model inputs instead of assigning a required ratio to each style:",
           },
           {
             type: "list",
             data: [
-              "Day trading: Minimum 1:2 (fast-paced, many trades)",
-              "Swing trading: Minimum 1:3 (fewer trades, longer holds)",
-              "Position trading: Can accept 1:5+ (patient, large moves)",
-              "Scalping: Often 1:1 but very high win rate needed",
+              "A 1:1 payoff model breaks even at 50% wins before costs",
+              "A 1:2 payoff model breaks even at 33⅓% wins before costs",
+              "A 1:3 payoff model breaks even at 25% wins before costs",
+              "Costs increase the win rate needed for any fixed payoff model",
             ],
           },
         ],
@@ -984,7 +984,7 @@ export const lessonData: Lesson[] = [
     ],
     quiz: [
       {
-        question: "According to the 2% rule, how much should you risk per trade on a $100,000 account?",
+        question: "In the hypothetical 2% example, what is the risk budget on a $100,000 account?",
         options: ["$500", "$1,000", "$2,000", "$5,000"],
         correctAnswer: 2,
         explanation: "In this lesson's 2% example, 0.02 × $100,000 = $2,000.",
@@ -998,13 +998,13 @@ export const lessonData: Lesson[] = [
           "To calculate position size",
         ],
         correctAnswer: 1,
-        explanation: "A stop-loss automatically exits your position at a predetermined price to limit your losses if the trade goes against you.",
+        explanation: "A stop is intended to manage an exit, but its trigger price is not a guaranteed fill price. A stop-limit order may remain unfilled.",
       },
       {
-        question: "With a 1:3 risk-reward ratio, what minimum win rate do you need to be profitable?",
+        question: "With fixed 1:3 loss-to-gain payoffs and no costs, what win rate breaks even?",
         options: ["50%", "40%", "33%", "25%"],
         correctAnswer: 3,
-        explanation: "With a 1:3 ratio, you only need to win 25% of trades to break even. Anything above 25% becomes profitable!",
+        explanation: "At 25% wins, 0.25 × 3 minus 0.75 × 1 equals zero. Costs and differing realized payoffs change the break-even calculation.",
       },
       {
         question: "Which statement best describes a crypto allocation in this simulation lesson?",
