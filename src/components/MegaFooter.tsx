@@ -13,8 +13,6 @@ import {
   LineChart,
   Globe,
   Gem,
-  Twitter,
-  Linkedin,
   Github,
   Shield,
   Award,
@@ -176,15 +174,13 @@ export function MegaFooter() {
               <BrandMark size="lg" />
             </Link>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-              An AI-powered trading simulator for 2026. Practice with $100K virtual capital
-              and master stocks, crypto, forex, and commodities risk-free.
+              An educational trading simulator with $100K in virtual capital. Explore stocks,
+              crypto, forex and commodities without placing real-money orders.
             </p>
 
             <div className="flex items-center gap-3">
               {[
-                { href: "https://twitter.com/tradinghq", icon: Twitter, label: "Twitter" },
-                { href: "https://linkedin.com/company/tradinghq", icon: Linkedin, label: "LinkedIn" },
-                { href: "https://github.com/tradinghq", icon: Github, label: "GitHub" },
+                { href: "https://github.com/anugaweerasinghe-wq/trading101", icon: Github, label: "TradeHQ source on GitHub" },
               ].map((social) => (
                 <a
                   key={social.label}

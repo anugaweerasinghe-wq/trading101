@@ -126,30 +126,30 @@ export const MENTOR_TOPICS: MentorTopic[] = [
       "• **Revenge trading** — doubling down after a loss to 'win back'. This is how accounts die.\n" +
       "• **Anchoring** — refusing to sell because 'I'll wait until it gets back to my entry'.\n" +
       "• **Confirmation bias** — only reading news that supports your position.\n\n" +
-      "**Cure:** Journal every trade. Set rules *before* you enter. TradeHQ's Ghost Journal and Revenge Blocker are built for this exact reason.",
+      "**Practice reflection:** Record the reasoning behind simulated decisions and compare it with a predefined process. A journal is a review tool, not a cure or a guarantee of better results.",
   },
   {
     id: "diversification",
     keywords: ["diversif", "portfolio allocation", "asset allocation"],
     title: "Diversification",
     answer:
-      "**Don't put all your eggs in one basket** — but don't put them in 50 baskets either.\n\n" +
-      "**Practical allocation for $100K:**\n" +
+      "**Diversification** spreads exposure across different holdings; counting holdings alone does not measure it.\n\n" +
+      "**A simulation comparison:**\n" +
       "• There is no universal allocation that fits everyone.\n" +
       "• In TradeHQ, compare concentrated and diversified practice portfolios and observe how volatility and drawdown change.\n" +
       "• Treat any example allocation as a simulation scenario, not a recommendation for real money.\n\n" +
-      "True diversification means uncorrelated assets — owning 10 tech stocks isn't diversified, it's one bet 10 times.",
+      "Diversification depends on overlapping exposures and correlations, which can change. Several technology stocks may share common risks even though they are different companies.",
   },
   {
     id: "leverage",
     keywords: ["leverage", "margin", "10x", "100x", "liquidation"],
     title: "Leverage & Margin",
     answer:
-      "**Leverage amplifies both gains AND losses.** 10x leverage means a 10% adverse move = -100% (liquidation).\n\n" +
+      "**Leverage amplifies gains and losses.** In a simplified constant-exposure example, 10x leverage and a 10% adverse move consume the starting equity before costs. Actual liquidation can occur earlier and depends on product and broker rules.\n\n" +
       "**Reality:**\n" +
       "• High leverage can make even small market moves produce very large gains or losses; loss rates vary widely by product, market and trader.\n" +
       "• The leverage a platform offers is not a recommendation. In simulation, compare how leverage changes drawdown and liquidation distance before using it as a learning tool.\n" +
-      "• In TradeHQ, compare unlevered and hypothetical leveraged scenarios to see how leverage changes drawdown and liquidation distance.\n\n" +
+      "• TradeHQ does not provide a futures-margin or liquidation engine. Leveraged examples are conceptual calculations, not executable contract simulations.\n\n" +
       "No fixed number of practice trades makes leverage suitable or safe.",
   },
   {
@@ -170,7 +170,7 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     keywords: ["etf", "spy", "qqq", "index fund", "vti"],
     title: "ETFs & Index Funds",
     answer:
-      "**ETFs** track baskets of assets — instant diversification, low fees.\n\n" +
+      "**ETFs** are exchange-traded funds. Holdings, concentration, strategy and fees vary by fund; the label alone does not establish diversification or low cost.\n\n" +
       "**Examples to compare in simulation:**\n" +
       "• **SPY / VOO** — S&P 500 exposure.\n" +
       "• **QQQ** — Nasdaq-100 exposure with heavier technology concentration.\n" +
@@ -191,7 +191,7 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     keywords: ["compound", "compounding", "interest"],
     title: "Compounding",
     answer:
-      "Compounding is the **8th wonder of the world** (Einstein, allegedly).\n\n" +
+      "Compounding means later percentage changes apply to a balance that includes earlier gains or losses.\n\n" +
       "**Illustrative $100K scenario at an assumed constant 10% annual return:**\n" +
       "• 10 years → about $259K\n" +
       "• 20 years → about $673K\n" +
@@ -217,11 +217,11 @@ const FALLBACK_RESPONSE =
   "**Technicals:** RSI, moving averages, candlestick patterns, support/resistance.\n" +
   "**Psychology:** FOMO, revenge trading, discipline.\n" +
   "**Markets:** bull/bear markets, leverage, crypto, ETFs.\n\n" +
-  "Try rephrasing, or pick a topic chip below — I'll give you a deep, actionable answer.";
+  "Try rephrasing, or pick a topic chip below for an educational explanation.";
 
 /**
  * Match an input string to the best-fit mentor topic.
- * Returns an expert canned answer + disclaimer, or a friendly fallback.
+ * Returns a static educational answer plus disclaimer, or a topic prompt.
  */
 export function getSmartMentorReply(input: string): string {
   const text = input.toLowerCase().trim();
@@ -362,7 +362,7 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
     if (ctx.topPosition && ctx.topPosition.weightPct > 30) {
       lines.push(`**Concentration observation:** ${ctx.topPosition.symbol} is ${ctx.topPosition.weightPct.toFixed(0)}% of the simulated portfolio. Compare this with alternative hypothetical concentration limits rather than assuming one universal threshold.`);
     }
-    if (ctx.positionsCount === 1) lines.push(`One position means the simulated portfolio is fully concentrated in a single holding.`);
+    if (ctx.positionsCount === 1) lines.push(`There is one open holding; the invested portion is concentrated in that holding. Cash may still represent part of the total portfolio.`);
     if (ctx.positionsCount > 15) lines.push(`${ctx.positionsCount} positions can reduce single-name concentration, but diversification depends on overlap and correlation rather than the count alone.`);
     if (lines.length === 1) lines.push(`No single concentration flag was triggered by these simple rules. This is descriptive, not a suitability assessment.`);
     return lines.join("\n") + DISCLAIMER;
@@ -370,8 +370,8 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
 
   // Trade history
   if (/trade history|recent trades|review my trades|patterns/.test(text)) {
-    if (ctx.tradesCount === 0) return "You haven't placed any trades yet. Start with a small position on a familiar asset, journal your reasoning, and we'll review patterns once you have 10+ trades." + DISCLAIMER;
-    if (ctx.tradesCount < 10) return `You have ${ctx.tradesCount} trades — too few for pattern analysis. Aim for 20-30 closed trades before drawing conclusions.${ctx.winRate !== null ? ` Current win rate: ${ctx.winRate.toFixed(0)}%.` : ""}` + DISCLAIMER;
+    if (ctx.tradesCount === 0) return "No simulated trades are recorded in the supplied summary. A journal can document the assumptions and outcomes of a practice exercise; no fixed number of trades proves an edge." + DISCLAIMER;
+    if (ctx.tradesCount < 10) return `The supplied summary contains ${ctx.tradesCount} trades. A small sample supports only limited observations; there is no universal minimum that makes a pattern reliable.${ctx.winRate !== null ? ` Current win rate: ${ctx.winRate.toFixed(0)}%.` : ""}` + DISCLAIMER;
     const wr = ctx.winRate ?? 0;
     return `**Trade history review** (${ctx.tradesCount} trades, ${wr.toFixed(0)}% win rate):\n\n• Win rate alone does not establish performance; average gains, average losses, costs and sample size also matter.\n• Track average win and average loss in the journal.\n• Look for patterns, but treat them as hypotheses to test rather than proof of an edge.` + DISCLAIMER;
   }

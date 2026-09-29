@@ -328,7 +328,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         h: "How to use a comparison",
         list: [
           "Read both deep-dive sections before the comparison lens so each instrument is understood on its own terms first.",
-          "Practise both sides under the same hypothetical assumptions and compare the recorded results.",
+          "For supported individual instruments, use the same hypothetical assumptions and compare the recorded results. Broad categories are educational comparisons, not single tradable assets.",
           "No page here treats a short simulator result as proof that one instrument is better or personally suitable.",
           "Check the mistakes section even if you think the comparison is obvious; the obvious version is usually where the error lives.",
           DISCLAIMER,
@@ -355,9 +355,9 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: "Comparison lens", p: [p.verdict] },
         { h: "Common mistakes with this comparison", list: p.mistakes },
         {
-          h: "Practise both sides",
+          h: "Practice scope",
           p: [
-            `Rather than picking a winner, apply the same documented virtual assumptions to both and compare the resulting volatility, drawdown and event sensitivity. A short simulator sample is not a recommendation or forecast. ${DISCLAIMER}`,
+            `For supported individual instruments, apply the same documented virtual assumptions and compare the resulting volatility, drawdown and event sensitivity. Broad categories such as forex or stocks are not single tradable instruments; select a supported example from Markets. A short simulator sample is not a recommendation or forecast. ${DISCLAIMER}`,
           ],
         },
         {

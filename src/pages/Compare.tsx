@@ -21,7 +21,7 @@ export default function Compare() {
   const tradeAssetB = resolveTradeAssetId(pair.b.symbol);
 
   const title = `${pair.a.name} vs ${pair.b.name} — Structural Comparison | TradeHQ`;
-  const description = `${pair.a.name} vs ${pair.b.name}: side-by-side educational comparison of structure, market drivers and risk characteristics. Practise both with $100K in virtual cash on TradeHQ.`;
+  const description = `${pair.a.name} vs ${pair.b.name}: side-by-side educational comparison of structure, market drivers and risk characteristics. Explore supported instruments with virtual cash on TradeHQ.`;
   const url = `${SITE_DOMAIN}/compare/${pair.slug}`;
 
   return (
@@ -162,8 +162,10 @@ export default function Compare() {
               { label: `${pair.a.name} vs ${pair.b.name}` },
             ]}
             faqs={[
-              { question: `Is ${pair.a.name} better than ${pair.b.name}?`, answer: `TradeHQ does not rank one as universally better. ${pair.verdict} Use the simulator to compare the two under the same hypothetical assumptions.` },
-              { question: `Can I trade ${pair.a.name} and ${pair.b.name} on TradeHQ for free?`, answer: `Yes — both ${pair.a.name} and ${pair.b.name} are tradable on the TradeHQ practice simulator with no signup required.` },
+              { question: `Is ${pair.a.name} better than ${pair.b.name}?`, answer: `TradeHQ does not rank one as universally better. ${pair.verdict} Compare supported instruments under the same hypothetical assumptions; category-level comparisons describe market structure.` },
+              { question: `Can I trade ${pair.a.name} and ${pair.b.name} on TradeHQ for free?`, answer: tradeAssetA && tradeAssetB
+                ? `Both named instruments are available for virtual-money practice without signup. No real-money orders are placed.`
+                : `This page includes broad asset categories. A category such as forex or stocks is not a single tradable instrument. Browse Markets to choose a supported instrument for virtual-money practice.` },
               { question: `Which is more volatile, ${pair.a.name} or ${pair.b.name}?`, answer: pair.bullets.find((b) => /volatil/i.test(b)) ?? `Volatility differs by asset class — use the practice account to feel it without risking real money.` },
             ]}
             faqHeading="Comparison FAQ"
