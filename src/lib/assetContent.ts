@@ -101,7 +101,7 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   ],
   sol: [
     { question: "Is Solana trading harder than Bitcoin?", answer: "Solana is faster and often more volatile. Practice your 'entry and exit' speed in the simulator to account for Solana's aggressive price swings." },
-    { question: "How to practice Solana trading for free in 2026?", answer: "TradeHQ offers SOL trading with $100K virtual cash. Practice fast-moving crypto trades and learn to handle high-volatility altcoin price action." },
+    { question: "How can I practise Solana trading with virtual money?", answer: "TradeHQ offers SOL trading with $100K virtual cash. Practice fast-moving crypto trades and learn to handle high-volatility altcoin price action." },
     { question: "What drives Solana price movements?", answer: "Network activity, DeFi TVL, NFT minting volume, and ecosystem growth drive SOL. Practice correlating on-chain metrics with price action." },
     { question: "Is Solana suitable for beginner crypto traders?", answer: "SOL's volatility can be challenging but educational. Start with small virtual positions and use tight stop-losses to practice risk management." }
   ],
@@ -305,7 +305,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   eth: {
     whatIs: "The foundation for DeFi and smart contracts. Ethereum powers thousands of decentralized applications, NFT marketplaces, and layer-2 scaling solutions. Its transition to Proof of Stake made it more energy-efficient.",
-    strategy: "Practice trading ETH/BTC ratios or position around network upgrade cycles. Focus on gas fee trends and DeFi TVL as leading indicators. (Educational simulation only — not financial advice.)",
+    strategy: "Compare ETH price changes with network activity and upgrade announcements across several periods. Gas fees and DeFi activity are context to investigate, not established leading signals. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["Ethereum trading", "ETH simulator", "smart contracts", "DeFi", "Web3", "staking"],
     stats: {
@@ -326,13 +326,13 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   sol: {
     whatIs: "A high-performance blockchain built for mass adoption with sub-second finality and minimal transaction costs. Solana hosts a growing ecosystem of DeFi, NFTs, and consumer applications competing with Ethereum.",
-    strategy: "Test entries during high-volatility sessions to understand network throughput impact. Monitor validator performance and network congestion as trading signals. (Educational simulation only — not financial advice.)",
+    strategy: "Compare price and volume around independently sourced network events. Record instances where network activity and token prices diverge rather than treating congestion or validator metrics as trading signals. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["Solana trading", "SOL practice", "fast blockchain", "high TPS", "DeFi"],
     stats: {
       assetClass: "Cryptocurrency",
       marketCap: "live_sourced_at_runtime",
-      TPS: "50,000+",
+      throughput: "Varies by network conditions and measurement method",
       source: "CoinGecko"
     }
   },
@@ -350,7 +350,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   bnb: {
     whatIs: "BNB is the native token of the Binance ecosystem, powering the BNB Chain and providing trading fee discounts on the world's largest crypto exchange. It's used for DeFi, payments, and token burns.",
-    strategy: "BNB often correlates with Binance exchange activity and token burn announcements. Practice identifying accumulation patterns before major platform updates. (Educational simulation only — not financial advice.)",
+    strategy: "Compare price behavior around exchange and token-supply announcements. Record both positive and negative outcomes instead of assuming accumulation before an update. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["BNB trading", "Binance coin", "exchange token", "BNB Chain"],
     stats: {
@@ -364,7 +364,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   // ===== TECHNOLOGY STOCKS =====
   nvda: {
     whatIs: "The undisputed leader in AI computing and GPUs. NVIDIA powers data centers, gaming, autonomous vehicles, and generative AI models. Its chips are essential infrastructure for the AI revolution.",
-    strategy: "Educational example: Practice trend-following with risk management and RSI-based pullback entries. Monitor AI chip demand and data center spending as leading indicators. (Educational simulation only — not financial advice.)",
+    strategy: "Compare several hypothetical exit and position-size rules over the same observation period. Semiconductor demand and company disclosures are research context, not guaranteed leading price signals. (Educational simulation only.)",
     category: "Technology Stock",
     keywords: ["NVIDIA stock trading", "NVDA simulator", "AI chips", "GPU", "data centers", "semiconductor"],
     stats: {
@@ -388,7 +388,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   msft: {
     whatIs: "A technology giant leading in cloud computing (Azure), enterprise software (Office 365), and AI development (Copilot, OpenAI partnership). Microsoft's diversified business model provides stability and growth.",
-    strategy: "Practice position sizing with MSFT's relatively lower volatility before trading high-beta tech stocks. Focus on Azure growth metrics and enterprise AI adoption. (Educational simulation only — not financial advice.)",
+    strategy: "Compare Microsoft with other software companies over the same window. Measure volatility in that sample rather than assuming Microsoft is always less volatile. (Educational simulation only.)",
     category: "Technology Stock",
     keywords: ["Microsoft stock trading", "MSFT practice", "cloud computing", "Azure", "enterprise AI"],
     stats: {
@@ -435,7 +435,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
     }
   },
   nflx: {
-    whatIs: "The world's largest streaming entertainment service with 280M+ subscribers globally. Netflix produces award-winning original content and is expanding into live sports, gaming, and ad-supported tiers.",
+    whatIs: "Netflix provides streaming entertainment. Its business can be studied through company disclosures about revenue, audience engagement, content spending and advertising.",
     strategy: "Practice earnings plays to understand volatility around subscriber growth and retention reports. Focus on content spending ROI and international expansion. (Educational simulation only — not financial advice.)",
     category: "Technology Stock",
     keywords: ["Netflix stock trading", "NFLX practice", "streaming", "entertainment", "content"],
@@ -450,7 +450,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   // ===== ETFs =====
   spy: {
     whatIs: "The world's most traded ETF, tracking the S&P 500 index—500 of America's largest public companies. SPY is the benchmark for U.S. equity performance and a cornerstone of passive investing strategies.",
-    strategy: "Practice reading market sentiment through SPY before trading individual stocks. Use SPY options data and volume to gauge institutional positioning. (Educational simulation only — not financial advice.)",
+    strategy: "Compare broad equity-index exposure with an individual stock under the same virtual sizing and observation rules. TradeHQ does not execute SPY options contracts. (Educational simulation only.)",
     category: "ETF",
     keywords: ["SPY ETF trading", "S&P 500 practice", "index fund", "benchmark", "passive investing"],
     stats: {
@@ -517,7 +517,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   avax: {
     whatIs: "Avalanche (AVAX) is a layer-1 blockchain platform known for its speed and low transaction costs. It uses a unique consensus mechanism and supports multiple virtual machines for flexibility.",
-    strategy: "AVAX is a strong performer during altcoin seasons. Practice identifying BTC dominance drops as signals to rotate into AVAX positions. (Educational simulation only — not financial advice.)",
+    strategy: "Compare AVAX with Bitcoin over several selected periods and record changing relative returns. A change in Bitcoin dominance is not an instruction to rotate a portfolio. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["Avalanche trading", "AVAX simulator", "layer-1 blockchain", "DeFi"],
     stats: {
@@ -529,7 +529,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   dot: {
     whatIs: "Polkadot (DOT) is a multi-chain protocol that enables different blockchains to connect and communicate. It aims to create a decentralized web where users control their own data.",
-    strategy: "DOT moves with DeFi and interoperability narratives. Practice building positions during consolidation periods and taking profits at resistance levels. (Educational simulation only — not financial advice.)",
+    strategy: "Record hypothetical consolidation and breakout observations for DOT, including failed examples. Describe exit assumptions in advance without treating resistance as a profit-taking instruction. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["Polkadot trading", "DOT practice", "multi-chain", "interoperability"],
     stats: {
@@ -541,7 +541,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   matic: {
     whatIs: "Polygon (MATIC) is an Ethereum scaling solution that provides faster and cheaper transactions. It has become a leading layer-2 network for DeFi, gaming, and NFT applications.",
-    strategy: "MATIC often leads Ethereum moves. Practice using MATIC as a leading indicator and building correlated positions across both assets. (Educational simulation only — not financial advice.)",
+    strategy: "Compare the displayed Polygon reference instrument with ETH over a stated sample. Correlation and lead-lag relationships can change; a chart does not prove that one token predicts the other. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["Polygon trading", "MATIC simulator", "layer-2 scaling", "Ethereum"],
     stats: {
@@ -553,7 +553,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   link: {
     whatIs: "Chainlink (LINK) is the leading decentralized oracle network, connecting smart contracts with real-world data. It's essential infrastructure for DeFi applications requiring price feeds and external data.",
-    strategy: "LINK often rallies on major DeFi integrations. Practice tracking partnership announcements and positioning before confirmations hit mainstream news. (Educational simulation only — not financial advice.)",
+    strategy: "Compare price behavior before and after publicly available integration announcements. An announcement does not establish the direction or size of a later move. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["Chainlink trading", "LINK practice", "oracle network", "DeFi infrastructure"],
     stats: {
@@ -565,7 +565,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   ltc: {
     whatIs: "Litecoin (LTC) is one of the oldest cryptocurrencies, created as a 'lighter' version of Bitcoin. It offers faster transaction confirmations (2.5 min blocks) and uses the Scrypt hashing algorithm.",
-    strategy: "LTC is a stable mover compared to altcoins. Practice using it as a safe haven during high-volatility periods while learning technical analysis basics. (Educational simulation only — not financial advice.)",
+    strategy: "Compare Litecoin volatility and drawdown with other crypto assets over a stated period. Do not assume it is stable or provides safe-haven protection. (Educational simulation only.)",
     category: "Cryptocurrency",
     keywords: ["Litecoin trading", "LTC simulator", "Bitcoin alternative", "faster transactions"],
     stats: {
@@ -576,8 +576,8 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
     }
   },
   tsla: {
-    whatIs: "Tesla Inc. is the world's most valuable automaker, leading in electric vehicles, energy storage, and AI-powered autonomous driving. Known for high volatility driven by CEO Elon Musk's statements.",
-    strategy: "TSLA is the ultimate volatility trainer. Practice managing emotions during rapid price swings and never allocate more than 5% of your portfolio to a single high-beta position. (Educational simulation only — not financial advice.)",
+    whatIs: "Tesla manufactures electric vehicles and energy products. Its shares can respond to company disclosures, competition, product developments and broader market conditions; market-value rankings change.",
+    strategy: "Compare several virtual position weights and observe how TSLA price moves affect the simulated portfolio. A 5% allocation is not a universal limit or a real-money recommendation. (Educational simulation only.)",
     category: "Technology Stock",
     keywords: ["Tesla stock trading", "TSLA practice", "electric vehicles", "EV stocks"],
     stats: {
@@ -589,7 +589,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   amd: {
     whatIs: "Advanced Micro Devices (AMD) designs CPUs and GPUs competing directly with Intel and NVIDIA. It's a key player in gaming, data centers, and AI acceleration hardware.",
-    strategy: "AMD often moves with NVDA but with higher beta. Practice identifying divergences when AMD underperforms or outperforms its competitor for relative value plays. (Educational simulation only — not financial advice.)",
+    strategy: "Compare AMD and NVIDIA over the same dates and measure relative movement in that sample. Their relationship can change; divergence does not establish a profitable relative-value trade. (Educational simulation only.)",
     category: "Technology Stock",
     keywords: ["AMD stock trading", "AMD simulator", "semiconductor", "CPU", "GPU"],
     stats: {
@@ -613,7 +613,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   intc: {
     whatIs: "Intel Corporation is a semiconductor giant known for PC processors. It's undergoing a major transformation to compete in AI and regain manufacturing leadership with its foundry services.",
-    strategy: "INTC is a turnaround story—practice patience and longer holding periods. Use it to learn about value investing vs. growth investing approaches. (Educational simulation only — not financial advice.)",
+    strategy: "Compare different hypothetical holding periods around company disclosures. A turnaround narrative does not guarantee recovery or make a longer holding period suitable. (Educational simulation only.)",
     category: "Technology Stock",
     keywords: ["Intel stock trading", "INTC simulator", "processors", "foundry"],
     stats: {
@@ -637,7 +637,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   v: {
     whatIs: "Visa operates the world's largest electronic payments network, processing billions of transactions annually. It benefits from the global shift from cash to digital payments.",
-    strategy: "Practice long-term position building with this steady compounder. Focus on cross-border transaction volumes and digital payment adoption trends. (Educational simulation only — not financial advice.)",
+    strategy: "Compare virtual holding periods and drawdowns around payment-volume disclosures. Business growth does not guarantee steady share-price compounding. (Educational simulation only.)",
     category: "Financial Stock",
     keywords: ["Visa stock trading", "V simulator", "payments", "fintech"],
     stats: {
@@ -649,7 +649,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   ma: {
     whatIs: "Mastercard is the second-largest payment processor globally, operating in over 210 countries. It continues growing with digital payment adoption and fintech partnerships.",
-    strategy: "MA moves similarly to V—practice pair trading strategies. When one outperforms, consider rebalancing between the two to learn mean reversion. (Educational simulation only — not financial advice.)",
+    strategy: "Compare Mastercard and Visa over a defined period. Relative returns can diverge without subsequently reverting, so no rebalancing action is implied. (Educational simulation only.)",
     category: "Financial Stock",
     keywords: ["Mastercard stock trading", "MA practice", "credit cards", "payments"],
     stats: {
@@ -661,7 +661,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   qqq: {
     whatIs: "Tracks the Nasdaq-100 index, heavily weighted toward technology stocks including Apple, Microsoft, NVIDIA, and Amazon. Provides concentrated tech exposure for growth-focused investors.",
-    strategy: "Compare QQQ vs SPY performance to gauge tech sentiment and sector rotation. Use the QQQ/SPY ratio as a risk-on/risk-off indicator. (Educational simulation only — not financial advice.)",
+    strategy: "Compare QQQ and SPY under the same dates and virtual position weights. Their ratio describes relative price movement, not a dependable risk-on or risk-off instruction. (Educational simulation only.)",
     category: "ETF",
     keywords: ["QQQ ETF trading", "Nasdaq practice", "tech ETF", "growth stocks"],
     stats: {
@@ -674,7 +674,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   iwm: {
     whatIs: "iShares Russell 2000 ETF tracks small-cap U.S. stocks. It's often used to gauge risk appetite, domestic economic health, and breadth of market rallies.",
-    strategy: "IWM leads during risk-on rallies. Practice using IWM as a leading indicator—when small caps outperform, it often signals broader market strength. (Educational simulation only — not financial advice.)",
+    strategy: "Compare small-cap and large-cap index exposure over several samples. Small-cap outperformance does not by itself predict a broader market rally. (Educational simulation only.)",
     category: "ETF",
     keywords: ["IWM ETF trading", "small-cap practice", "Russell 2000"],
     stats: {
@@ -687,7 +687,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   dia: {
     whatIs: "SPDR Dow Jones Industrial Average ETF tracks the 30 blue-chip stocks in the Dow Jones. It represents established, dividend-paying companies across diverse sectors.",
-    strategy: "DIA is defensive compared to QQQ. Practice rotating between DIA and QQQ based on economic cycles to learn sector allocation strategies. (Educational simulation only — not financial advice.)",
+    strategy: "Compare DIA and QQQ concentration and drawdown under the same assumptions. Index composition alone does not establish a permanently defensive role or a rotation rule. (Educational simulation only.)",
     category: "ETF",
     keywords: ["DIA ETF trading", "Dow Jones practice", "blue chips"],
     stats: {
@@ -700,7 +700,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   voo: {
     whatIs: "Vanguard S&P 500 ETF is a low-cost alternative to SPY, tracking the same S&P 500 index. Popular for long-term investors due to its minimal expense ratio.",
-    strategy: "VOO is identical to SPY for price action. Practice comparing bid-ask spreads between VOO and SPY to understand liquidity's impact on execution quality. (Educational simulation only — not financial advice.)",
+    strategy: "Compare the structures of funds tracking the same index. Real-world spreads and execution can differ, and simulator results do not reproduce every venue or liquidity condition. (Educational simulation only.)",
     category: "ETF",
     keywords: ["VOO ETF trading", "Vanguard practice", "low-cost index"],
     stats: {
@@ -713,7 +713,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   arkk: {
     whatIs: "ARK Innovation ETF is actively managed by Cathie Wood, focusing on disruptive innovation across genomics, AI, fintech, autonomous vehicles, and blockchain technology.",
-    strategy: "ARKK is extremely volatile—high risk, high reward. Practice position sizing discipline and never allocate more than 3% of your portfolio to high-beta ETFs. (Educational simulation only — not financial advice.)",
+    strategy: "Compare how different virtual weights in a concentrated fund affect simulated drawdown. A 3% weight is one possible experiment input, not a universal maximum. (Educational simulation only.)",
     category: "ETF",
     keywords: ["ARKK ETF trading", "innovation practice", "Cathie Wood", "disruptive tech"],
     stats: {
@@ -750,7 +750,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   usdchf: {
     whatIs: "USD/CHF is the exchange rate between the US Dollar and Swiss Franc. The Swiss Franc is considered a safe-haven currency during market turbulence and geopolitical uncertainty.",
-    strategy: "USD/CHF inversely correlates with market fear. Practice using it as a hedge indicator—when stocks fall, CHF often strengthens. (Educational simulation only — not financial advice.)",
+    strategy: "Compare USD/CHF with other instruments across several stressed and calmer periods. Currency correlations change, so a hedge relationship should not be assumed. (Educational simulation only.)",
     category: "Forex",
     keywords: ["USD/CHF trading", "Swiss Franc practice", "safe haven"],
     stats: {
@@ -773,20 +773,20 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
     }
   },
   gold: {
-    whatIs: "The ultimate safe-haven asset with 5,000 years of monetary history. Gold is used to hedge against inflation, currency devaluation, and geopolitical uncertainty. Central banks hold it as a reserve asset.",
+    whatIs: "Gold is a precious metal used in jewellery, industry and investment products. It is often discussed in relation to inflation, currencies and uncertainty, but those relationships vary and do not guarantee protection from losses.",
     strategy: "Educational example: Analyze gold price action during periods of high CPI data, Fed policy shifts, or stock market volatility. Focus on real yields as a key driver. (Educational simulation only — not financial advice.)",
     category: "Commodity",
     keywords: ["gold trading", "XAU practice", "precious metals", "safe haven", "inflation hedge"],
     stats: {
       assetClass: "Commodity",
       marketCap: "live_sourced_at_runtime",
-      correlation: "Inverse to USD",
+      correlation: "Varies by period and market conditions",
       source: "COMEX"
     }
   },
   silver: {
     whatIs: "Both a precious metal and industrial commodity, used in electronics, solar panels, medicine, and as a store of value. Silver is more volatile than gold and often amplifies gold's movements.",
-    strategy: "Practice trading the gold-silver ratio—when historically high (>80), silver often outperforms. Monitor industrial demand from solar and electronics sectors. (Educational simulation only — not financial advice.)",
+    strategy: "Observe the gold-silver ratio over a specified period and record both widening and narrowing. A ratio above 80 does not establish that silver will outperform. (Educational simulation only.)",
     category: "Commodity",
     keywords: ["silver trading", "XAG practice", "precious metals", "industrial"],
     stats: {
@@ -810,7 +810,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
   },
   copper: {
     whatIs: "Copper is called 'Dr. Copper' because its price is considered a leading indicator of economic health. It's essential for construction, electronics, EVs, and renewable energy infrastructure.",
-    strategy: "Copper leads economic cycles. Practice using copper as a leading indicator—strength often precedes broader market rallies. Monitor China construction data. (Educational simulation only — not financial advice.)",
+    strategy: "Compare copper prices with dated economic releases and distinguish publication dates from observation periods. Coincidence in one sample does not establish a reliable leading indicator. (Educational simulation only.)",
     category: "Commodity",
     keywords: ["copper trading", "HG practice", "industrial metals", "economic indicator"],
     stats: {
@@ -824,70 +824,70 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
 
 // CTR-optimized titles — Variant A (active): "Learn & Practice" benefit-first
 const CUSTOM_META_TITLES: Record<string, string> = {
-  btc: "Learn & Practice Bitcoin Trading Free — $100K Simulator | Simulated BTC Data 2026",
-  eth: "Learn & Practice Ethereum Trading Free — $100K Simulator | Simulated ETH Data 2026",
-  nvda: "Learn & Practice NVDA Trading Free — $100K Simulator | Simulated Data 2026",
-  aapl: "Learn & Practice Apple Stock Trading Free — $100K Simulator | 2026",
-  sol: "Learn & Practice Solana Trading Free — $100K Simulator | Simulated SOL Data 2026",
-  msft: "Learn & Practice MSFT Trading Free — $100K Simulator | Simulated Data 2026",
-  googl: "Learn & Practice GOOGL Trading Free — $100K Simulator | Simulated Data 2026",
-  amzn: "Learn & Practice AMZN Trading Free — $100K Simulator | Simulated Data 2026",
-  tsla: "Learn & Practice Tesla Trading Free — $100K Simulator | Simulated TSLA Data 2026",
-  meta: "Learn & Practice META Trading Free — $100K Simulator | Simulated Data 2026",
-  xrp: "Learn & Practice XRP Trading Free — $100K Simulator | Simulated Data 2026",
-  bnb: "Learn & Practice BNB Trading Free — $100K Simulator | Simulated Data 2026",
-  spy: "Learn & Practice SPY ETF Trading Free — $100K Simulator | Simulated Data 2026",
-  qqq: "Learn & Practice QQQ ETF Trading Free — $100K Simulator | Simulated Data 2026",
-  gold: "Learn & Practice Gold Trading Free — $100K Simulator | Simulated XAU Data 2026",
-  oil: "Learn & Practice Oil Trading Free — $100K Simulator | Simulated WTI Data 2026",
-  gbpusd: "Learn & Practice GBP/USD Forex Free — $100K Simulator | Simulated Data 2026"
+  btc: "Learn & Practice Bitcoin Trading Free — $100K Simulator | Simulated BTC Data",
+  eth: "Learn & Practice Ethereum Trading Free — $100K Simulator | Simulated ETH Data",
+  nvda: "Learn & Practice NVDA Trading Free — $100K Simulator | Simulated Data",
+  aapl: "Learn & Practice Apple Stock Trading Free — $100K Simulator",
+  sol: "Learn & Practice Solana Trading Free — $100K Simulator | Simulated SOL Data",
+  msft: "Learn & Practice MSFT Trading Free — $100K Simulator | Simulated Data",
+  googl: "Learn & Practice GOOGL Trading Free — $100K Simulator | Simulated Data",
+  amzn: "Learn & Practice AMZN Trading Free — $100K Simulator | Simulated Data",
+  tsla: "Learn & Practice Tesla Trading Free — $100K Simulator | Simulated TSLA Data",
+  meta: "Learn & Practice META Trading Free — $100K Simulator | Simulated Data",
+  xrp: "Learn & Practice XRP Trading Free — $100K Simulator | Simulated Data",
+  bnb: "Learn & Practice BNB Trading Free — $100K Simulator | Simulated Data",
+  spy: "Learn & Practice SPY ETF Trading Free — $100K Simulator | Simulated Data",
+  qqq: "Learn & Practice QQQ ETF Trading Free — $100K Simulator | Simulated Data",
+  gold: "Learn & Practice Gold Trading Free — $100K Simulator | Simulated XAU Data",
+  oil: "Learn & Practice Oil Trading Free — $100K Simulator | Simulated WTI Data",
+  gbpusd: "Learn & Practice GBP/USD Forex Free — $100K Simulator | Simulated Data"
 };
 
 // Variant B titles for A/B testing (stored, not yet active — swap in after 7-day test)
 export const META_TITLE_VARIANTS_B: Record<string, string> = {
-  btc: "BTC 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  eth: "ETH 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  nvda: "NVDA 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  aapl: "AAPL 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  sol: "SOL 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  msft: "MSFT 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  googl: "GOOGL 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  amzn: "AMZN 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  tsla: "TSLA 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  meta: "META 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  xrp: "XRP 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  bnb: "BNB 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  spy: "SPY 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  qqq: "QQQ 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  gold: "Gold 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  oil: "Oil 2026 Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
-  gbpusd: "GBP/USD 2026 Simulated Analysis — Free Forex Simulator | TradeHQ"
+  btc: "BTC Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  eth: "ETH Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  nvda: "NVDA Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  aapl: "AAPL Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  sol: "SOL Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  msft: "MSFT Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  googl: "GOOGL Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  amzn: "AMZN Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  tsla: "TSLA Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  meta: "META Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  xrp: "XRP Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  bnb: "BNB Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  spy: "SPY Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  qqq: "QQQ Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  gold: "Gold Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  oil: "Oil Simulated Analysis — Free $100K Trading Simulator | TradeHQ",
+  gbpusd: "GBP/USD Simulated Analysis — Free Forex Simulator | TradeHQ"
 };
 
-// Variant A descriptions (active): "Learn & practice" + "risk-free" / "strategy builder" hooks, ≤155 chars
+// Variant A descriptions (active): "Learn & practice" + "risk-free" / "practice tools" hooks, ≤155 chars
 const CUSTOM_META_DESCRIPTIONS: Record<string, string> = {
-  btc: "Learn & practice Bitcoin trading risk-free with $100K virtual cash. Simulated BTC charts, AI strategy builder, no signup.",
-  eth: "Learn & practice Ethereum trading risk-free with $100K virtual cash. Simulated ETH charts, DeFi strategy builder. No signup.",
-  nvda: "Learn & practice NVIDIA stock trading risk-free with $100K virtual cash. Simulated charts, AI strategy builder. No signup.",
-  aapl: "Learn & practice Apple stock trading risk-free with $100K virtual cash. Earnings strategy builder, simulated charts. No signup.",
-  sol: "Learn & practice Solana trading risk-free with $100K virtual cash. Simulated SOL charts, strategy builder. No signup.",
-  msft: "Learn & practice Microsoft stock trading risk-free with $100K demo. Simulated charts, strategy builder. Start free today.",
-  googl: "Learn & practice Google stock trading risk-free with $100K demo cash. Simulated GOOGL charts, strategy builder. No signup.",
-  amzn: "Learn & practice Amazon stock trading risk-free with $100K demo cash. Simulated charts, strategy builder. No signup.",
-  tsla: "Learn & practice Tesla stock trading risk-free with $100K virtual cash. Simulated TSLA charts, strategy builder. No signup.",
-  meta: "Learn & practice META stock trading risk-free with $100K demo cash. Simulated charts, strategy builder. Start free.",
-  xrp: "Learn & practice XRP trading risk-free with $100K virtual cash. Simulated charts, strategy builder. No signup needed.",
-  bnb: "Learn & practice BNB trading risk-free with $100K demo cash. Simulated charts, strategy builder. Start free today.",
-  spy: "Learn & practice S&P 500 ETF trading risk-free with $100K demo. Simulated charts, strategy builder. No signup.",
-  qqq: "Learn & practice Nasdaq-100 ETF trading risk-free with $100K demo. Simulated charts, strategy builder. Start free.",
-  gold: "Learn & practice gold trading risk-free with $100K virtual cash. Simulated XAU charts, strategy builder. No signup.",
-  oil: "Learn & practice crude oil trading risk-free with $100K demo cash. Simulated WTI charts, strategy builder. No signup.",
-  gbpusd: "Learn & practice GBP/USD forex trading risk-free with $100K demo. Simulated charts, strategy builder. No signup."
+  btc: "Learn & practice Bitcoin trading risk-free with $100K virtual cash. Simulated BTC charts, educational tools, no signup.",
+  eth: "Learn & practice Ethereum trading risk-free with $100K virtual cash. Simulated ETH charts, educational tools. No signup.",
+  nvda: "Learn & practice NVIDIA stock trading risk-free with $100K virtual cash. Simulated charts, educational tools. No signup.",
+  aapl: "Learn & practice Apple stock trading risk-free with $100K virtual cash. earnings study notes, simulated charts. No signup.",
+  sol: "Learn & practice Solana trading risk-free with $100K virtual cash. Simulated SOL charts, practice tools. No signup.",
+  msft: "Learn & practice Microsoft stock trading risk-free with $100K demo. Simulated charts, practice tools. Start free today.",
+  googl: "Learn & practice Google stock trading risk-free with $100K demo cash. Simulated GOOGL charts, practice tools. No signup.",
+  amzn: "Learn & practice Amazon stock trading risk-free with $100K demo cash. Simulated charts, practice tools. No signup.",
+  tsla: "Learn & practice Tesla stock trading risk-free with $100K virtual cash. Simulated TSLA charts, practice tools. No signup.",
+  meta: "Learn & practice META stock trading risk-free with $100K demo cash. Simulated charts, practice tools. Start free.",
+  xrp: "Learn & practice XRP trading risk-free with $100K virtual cash. Simulated charts, practice tools. No signup needed.",
+  bnb: "Learn & practice BNB trading risk-free with $100K demo cash. Simulated charts, practice tools. Start free today.",
+  spy: "Learn & practice S&P 500 ETF trading risk-free with $100K demo. Simulated charts, practice tools. No signup.",
+  qqq: "Learn & practice Nasdaq-100 ETF trading risk-free with $100K demo. Simulated charts, practice tools. Start free.",
+  gold: "Learn & practice gold trading risk-free with $100K virtual cash. Simulated XAU charts, practice tools. No signup.",
+  oil: "Learn & practice crude oil trading risk-free with $100K demo cash. Simulated WTI charts, practice tools. No signup.",
+  gbpusd: "Learn & practice GBP/USD forex trading risk-free with $100K demo. Simulated charts, practice tools. No signup."
 };
 
 // Variant B descriptions for A/B testing (CTA-first — swap in after 7-day test)
 export const META_DESC_VARIANTS_B: Record<string, string> = {
-  btc: "Start trading BTC now — $100K free virtual cash, simulated Bitcoin charts, AI mentor. No signup. Master crypto in 2026.",
+  btc: "Start trading BTC now — $100K free virtual cash, simulated Bitcoin charts, AI mentor. No signup. Explore crypto mechanics.",
   eth: "Start trading ETH now — $100K free virtual cash, simulated Ethereum charts. No signup. Learn DeFi strategies free.",
   nvda: "Start trading NVDA now — $100K free demo, simulated NVIDIA charts. No signup. Master AI stocks risk-free.",
   aapl: "Start trading AAPL now — $100K free demo, simulated Apple charts. No signup. Practice earnings plays free.",
@@ -918,7 +918,7 @@ export function generateAssetMetaTitle(asset: Asset): string {
   const label = asset.name && asset.name !== asset.symbol
     ? `${asset.name} (${asset.symbol})`
     : asset.symbol;
-  const title = `${label} — Market Analysis & 2026 Strategy | TradeHQ`;
+  const title = `${label} — Educational Overview & Practice | TradeHQ`;
   return title.length > 60 ? `${label} Analysis | TradeHQ` : title;
 }
 

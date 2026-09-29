@@ -287,13 +287,13 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Four structured course tracks with quizzes, cited sources and completion badges.",
         "A trading glossary with plain-language and extended educational explanations plus related-term navigation.",
         "Localised country guides with dated regulator/source links and general market-access context; they do not prescribe a universal starting-capital amount.",
-        "Optional public trader profiles and a 30-day practice duel against a friend.",
         "Daily challenges with a local-time streak counter, plus journal and portfolio analytics.",
       ],
     },
     {
       h: "In progress",
       list: [
+        "Production backend verification for optional sign-in, public profiles and friend duels. Their implementation exists, but availability is not confirmed.",
         "Deeper portfolio analysis using clearly defined return histories and assumptions rather than nonstandard proxy metrics.",
         "More structured course tracks covering risk management and market microstructure.",
         "Wider glossary coverage, with each entry linked to the lesson where the concept is applied.",
