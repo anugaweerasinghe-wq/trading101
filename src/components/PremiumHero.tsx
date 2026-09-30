@@ -112,7 +112,7 @@ export function PremiumHero() {
               style={{ boxShadow: '0 0 40px hsl(168 100% 50% / 0.45), 0 0 80px hsl(168 100% 50% / 0.18)', color: '#000' }}
             >
               <span className="relative z-10 flex items-center text-black font-bold tracking-tight">
-                Start Trading Free →
+                Start Trading Free
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1.5 transition-transform text-black" />
               </span>
             </Button>
