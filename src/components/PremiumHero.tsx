@@ -143,7 +143,7 @@ export function PremiumHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl mx-auto"
         >
           {[
             { label: 'Tradeable Assets', value: '150+', icon: TrendingUp, glow: 'hsl(180 70% 50% / 0.1)' },
