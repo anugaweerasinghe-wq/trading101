@@ -28,6 +28,8 @@ TradeHQ is a virtual-money simulator. It does not require a deposit, payment car
 
 TradeHQ also loads Google AdSense on the site. Advertising-related processing, cookies and personalization can depend on Google's settings, consent requirements and the user's region. This policy does not claim that all advertising is non-personalized.
 
+TradeHQ uses Amplitude for product analytics and, where enabled, session replay to understand how visitors use the site and improve usability. Session replay may capture interactions such as clicks and navigation, subject to configured masking/privacy controls and applicable consent choices.
+
 TradeHQ does not present the simulator as a bank or brokerage and does not share simulated portfolio data with financial institutions for trade execution.`
     },
     {
@@ -73,7 +75,7 @@ You can use guest mode for core simulator features, avoid publishing a profile, 
               Your privacy matters. TradeHQ is committed to protecting your data while providing an educational trading simulation.
             </p>
             <p className="text-sm text-muted-foreground mt-4">
-              Last Updated: September 27, 2026
+              Last Updated: September 30, 2026
             </p>
           </div>
 
