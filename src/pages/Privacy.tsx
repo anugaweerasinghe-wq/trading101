@@ -12,12 +12,12 @@ export default function Privacy() {
       title: "Information TradeHQ Handles",
       content: `You can use the core simulator without creating an account. TradeHQ nevertheless handles different categories of data depending on the features you choose:
 
-• **Browser-stored simulator data**: portfolio positions, trade history, watchlists, course/streak state and other practice settings are primarily stored in your browser.
-• **Optional account data**: if you create an account, the authentication service processes your email or provider identity. TradeHQ can also store your username, country, bio and account identifier.
-• **Practice statistics**: signed-in users can sync selected summary statistics used for profile, leaderboard and challenge features. This is not the same as uploading a complete brokerage statement or real-money trading record.
-• **Public profile data**: profile information and practice statistics are shown publicly only when the profile is set to public.
-• **Reviews and messages**: information you submit in a review or contact form is sent to the service so it can be displayed, moderated or answered. Review abuse controls may store a salted hash derived from network information to limit duplicate submissions.
-• **Technical and advertising data**: hosting, security and advertising services can receive technical information such as IP address, browser/device information, request logs, cookies or similar identifiers according to their configuration and your applicable consent choices.
+• Browser-stored simulator data: portfolio positions, trade history, watchlists, course/streak state and other practice settings are primarily stored in your browser.
+• Optional account data: if you create an account, the authentication service processes your email or provider identity. TradeHQ can also store your username, country, bio and account identifier.
+• Practice statistics: signed-in users can sync selected summary statistics used for profile, leaderboard and challenge features. This is not the same as uploading a complete brokerage statement or real-money trading record.
+• Public profile data: profile information and practice statistics are shown publicly only when the profile is set to public.
+• Reviews and messages: information you submit in a review or contact form is sent to the service so it can be displayed, moderated or answered. Review abuse controls may store a salted hash derived from network information to limit duplicate submissions.
+• Technical and advertising data: hosting, security and advertising services can receive technical information such as IP address, browser/device information, request logs, cookies or similar identifiers according to their configuration and your applicable consent choices.
 
 TradeHQ is a virtual-money simulator. It does not require a deposit, payment card or brokerage account to place simulated trades.`
     },
@@ -35,11 +35,11 @@ TradeHQ does not present the simulator as a bank or brokerage and does not share
     {
       icon: Eye,
       title: "Storage, Visibility & Security",
-      content: `**Local browser storage**: core simulator state can remain on the device and can be removed by clearing this site's browser storage.
+      content: `Local browser storage: core simulator state can remain on the device and can be removed by clearing this site's browser storage.
 
-**Account and community data**: optional authentication/profile information, selected synced statistics, reviews and contact submissions can be stored on TradeHQ's backend or its service providers. Public visibility is controlled separately from whether data is stored.
+Account and community data: optional authentication/profile information, selected synced statistics, reviews and contact submissions can be stored on TradeHQ's backend or its service providers. Public visibility is controlled separately from whether data is stored.
 
-**Security**: TradeHQ uses hosted infrastructure and access controls intended to protect stored data, but no online service can promise absolute security. Security or privacy claims on this page should be read as descriptions of the current product, not as a certification.`
+Security: TradeHQ uses hosted infrastructure and access controls intended to protect stored data, but no online service can promise absolute security. Security or privacy claims on this page should be read as descriptions of the current product, not as a certification.`
     },
     {
       icon: Globe,
