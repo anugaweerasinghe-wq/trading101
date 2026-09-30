@@ -26,11 +26,11 @@ interface AIMentorProps {
 }
 
 const quickPrompts = [
-  { icon: Wallet, text: "My portfolio", prompt: "Show me a full analysis of my portfolio — positions, P&L, and suggestions for improvement." },
-  { icon: TrendingUp, text: "Analyze this asset", prompt: "Analyze the current market conditions for the asset I'm viewing right now." },
-  { icon: Shield, text: "Risk assessment", prompt: "What's the risk level of my current portfolio? Am I overexposed anywhere?" },
+  { icon: Wallet, text: "Portfolio summary", prompt: "Summarize my simulated portfolio positions and P&L, and explain the concentration measures without recommending changes." },
+  { icon: TrendingUp, text: "Asset context", prompt: "Explain the currently displayed simulator data and the market concepts relevant to this asset without making a forecast or buy/sell call." },
+  { icon: Shield, text: "Concentration review", prompt: "Describe the concentration of my simulated portfolio and explain what the displayed risk metrics do and do not measure." },
   { icon: BarChart3, text: "Trade history", prompt: "Review my recent trade history and tell me what patterns you see." },
-  { icon: Lightbulb, text: "What should I do?", prompt: "Based on my portfolio and current market conditions, what action should I consider next?" },
+  { icon: Lightbulb, text: "Compare rules", prompt: "Show me two hypothetical simulator rules I could compare, without recommending a real-money action." },
 ];
 
 export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
@@ -39,7 +39,7 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
     {
       id: '1',
       role: 'assistant',
-      content: "Hey! I'm your Neural Trading Mentor. I have full access to your portfolio — ask me about your positions, P&L, win rate, or any trading question. What do you need?",
+      content: "Hey! I'm the TradeHQ Mentor. I can summarize the simulated portfolio data available on this page and explain market concepts. I won't choose a real-money trade, allocation, or next action for you.",
       timestamp: new Date(),
     },
   ]);

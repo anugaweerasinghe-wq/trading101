@@ -17,22 +17,21 @@ import {
   YAxis,
   ComposedChart,
 } from "recharts";
-import { runScenario, type ScenarioResult, type Shock } from "@/lib/scenarioEngine";
-import { supabase } from "@/integrations/supabase/client";
+import { runScenario, SCENARIO_MODEL_ASSUMPTIONS, type ScenarioResult, type Shock } from "@/lib/scenarioEngine";
+import { parseScenarioPrompt } from "@/lib/scenarioPrompt";
 import type { Portfolio, Asset } from "@/lib/types";
 
 const EXAMPLES = [
   "What if BTC drops 30%?",
   "ETH gains 50% in 30 days",
-  "Tech stocks crash 20%",
+  "All stocks drop 20%",
   "Crypto rallies 40% over 60 days",
 ];
 
 interface Props {
   portfolio: Portfolio;
-  /** Live ticking asset list (same source as the Trade page). When provided,
-   *  position prices are overridden with their live counterparts so the
-   *  scenario engine simulates from the exact real-time price. */
+  /** Current displayed asset list from the trading UI. Depending on the
+   * instrument, values may be realtime, delayed, cached or simulated. */
   liveAssets?: Asset[];
 }
 
@@ -45,7 +44,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
   const [horizonDays, setHorizonDays] = useState<number>(30);
   const { toast } = useToast();
 
-  // Build a live-price-synced portfolio snapshot — matches the Trade page exactly.
+  // Build a snapshot from the prices currently displayed by the trading UI.
   const livePortfolio = (() => {
     if (!liveAssets || liveAssets.length === 0) return portfolio;
     const liveById = new Map(liveAssets.map((a) => [a.id, a]));
@@ -74,7 +73,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
     if (!hasPositions) {
       toast({
         title: "No positions yet",
-        description: "Buy some assets first so the scenario has something to simulate.",
+        description: "Add virtual positions first so the scenario has something to model.",
         variant: "destructive",
       });
       return;
@@ -83,38 +82,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
     setLoading(true);
     setResult(null);
     try {
-      const holdings = livePortfolio.positions.map((p) => ({
-        symbol: p.asset.symbol,
-        name: p.asset.name,
-        type: p.asset.type,
-        quantity: p.quantity,
-        currentPrice: p.asset.price,
-      }));
-
-      // Deterministic regex-based scenario parser — no AI credits required.
-      const lower = finalPrompt.toLowerCase();
-      const pctMatch = lower.match(/(-?\d+(?:\.\d+)?)\s*%/);
-      const daysMatch = lower.match(/(\d+)\s*(day|week|month)/);
-      const dropMatch = /drop|crash|fall|down|plunge|dump/.test(lower);
-      const pumpMatch = /pump|rally|surge|moon|up|rise/.test(lower);
-      const pct = pctMatch ? Number(pctMatch[1]) : (dropMatch ? -20 : pumpMatch ? 20 : -10);
-      const signedPct = dropMatch && pct > 0 ? -pct : pct;
-      let horizon = 30;
-      if (daysMatch) {
-        const n = Number(daysMatch[1]);
-        const unit = daysMatch[2];
-        horizon = unit === "week" ? n * 7 : unit === "month" ? n * 30 : n;
-      }
-      // Try to match a specific symbol from holdings, otherwise apply to all
-      const targetSymbol = holdings.find(h => lower.includes(h.symbol.toLowerCase()) || lower.includes(h.name.toLowerCase()))?.symbol;
-      const shocks: Shock[] = targetSymbol
-        ? [{ symbol: targetSymbol, shockPercent: signedPct, confidence: 0.7 }]
-        : holdings.map(h => ({ symbol: h.symbol, shockPercent: signedPct, confidence: 0.7 }));
-      const parsed = {
-        shocks,
-        horizonDays: horizon,
-        narrative: `Modeled a ${signedPct >= 0 ? "+" : ""}${signedPct}% move on ${targetSymbol ?? "your full portfolio"} over ${horizon} days. (Deterministic scenario — no AI required.)`,
-      };
+      const parsed = parseScenarioPrompt(finalPrompt, livePortfolio.positions.map(p => p.asset));
       setShocks(parsed.shocks ?? []);
       setHorizonDays(parsed.horizonDays ?? 30);
       setNarrative(parsed.narrative ?? "");
@@ -138,11 +106,19 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         </div>
         <div>
           <h2 className="text-lg font-semibold flex items-center gap-2">
-            AI Scenario Builder
+            Scenario Builder
             <Badge variant="outline" className="text-2xs border-primary/30 text-primary">Beta</Badge>
           </h2>
-          <p className="text-2xs text-muted-foreground">Ask "What if…?" and see your portfolio under risk bands.</p>
+          <p className="text-2xs text-muted-foreground">Enter a hypothetical shock and inspect model-generated ranges. These are not forecasts or confidence intervals for real markets.</p>
         </div>
+      </div>
+
+      <div className="mt-4 rounded-lg border border-white/10 p-3 text-xs text-muted-foreground">
+        <h3 className="font-semibold text-foreground mb-2">Model assumptions</h3>
+        <ul className="list-disc pl-4 space-y-1">
+          {SCENARIO_MODEL_ASSUMPTIONS.map((assumption) => <li key={assumption}>{assumption}</li>)}
+        </ul>
+        <p className="mt-2">Use one exact held ticker/name, an asset class (crypto, stocks, ETFs, forex or commodities), or “all holdings”, followed by a move such as “drops 30% in 30 days”. The default horizon is 30 days; supported horizons are 1–365 days and shocks are greater than -100% through +1000%. This is a limited text parser, not AI interpretation. Check the applied holdings and horizon below.</p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-2 mt-4">
@@ -189,7 +165,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         <div className="mt-6 space-y-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
-              <p className="text-2xs text-muted-foreground">Expected Value</p>
+              <p className="text-2xs text-muted-foreground">Model mean value</p>
               <p className="text-base font-bold tabular-nums mt-1">{fmt(result.expected)}</p>
               <p className={cn("text-2xs tabular-nums", result.deltaPercent >= 0 ? "text-success" : "text-destructive")}>
                 {result.deltaPercent >= 0 ? "+" : ""}{result.deltaPercent.toFixed(2)}%
@@ -198,21 +174,21 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
                 <TrendingDown className="w-3 h-3 text-destructive" />
-                <p className="text-2xs text-muted-foreground">Worst (P5)</p>
+                <p className="text-2xs text-muted-foreground">Model 5th percentile</p>
               </div>
               <p className="text-base font-bold tabular-nums mt-1 text-destructive">{fmt(result.worstCase)}</p>
             </Card>
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
                 <TrendingUp className="w-3 h-3 text-success" />
-                <p className="text-2xs text-muted-foreground">Best (P95)</p>
+                <p className="text-2xs text-muted-foreground">Model 95th percentile</p>
               </div>
               <p className="text-base font-bold tabular-nums mt-1 text-success">{fmt(result.bestCase)}</p>
             </Card>
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
                 <AlertTriangle className="w-3 h-3 text-warning" />
-                <p className="text-2xs text-muted-foreground">Loss Probability</p>
+                <p className="text-2xs text-muted-foreground">Simulated loss frequency</p>
               </div>
               <p className="text-base font-bold tabular-nums mt-1">{result.probabilityOfLoss.toFixed(0)}%</p>
             </Card>
@@ -253,7 +229,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
                 <span>Asset</span>
                 <span className="text-right">Qty</span>
                 <span className="text-right">Now</span>
-                <span className="text-right">Expected</span>
+                <span className="text-right">Shock price</span>
                 <span className="text-right">Shock</span>
               </div>
               {result.perAsset.map((a) => (
@@ -277,7 +253,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
           )}
 
           <p className="text-2xs text-muted-foreground/70 text-center">
-            Based on {1000} Monte Carlo paths • Shocks: {shocks.length ? shocks.map((s) => `${s.symbol} ${s.shockPercent >= 0 ? "+" : ""}${s.shockPercent}%`).join(", ") : "none"} • Horizon {horizonDays} days
+            {1000} model paths under TradeHQ's scenario assumptions • User shock: {shocks.length ? shocks.map((s) => `${s.symbol} ${s.shockPercent >= 0 ? "+" : ""}${s.shockPercent}%`).join(", ") : "none"} • Horizon {horizonDays} days • Percentiles and loss frequency describe this model run only; they are not market forecasts.
           </p>
         </div>
       )}

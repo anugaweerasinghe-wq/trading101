@@ -199,7 +199,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: `What ${g.term} means`, p: [g.definition] },
         { h: "In depth", p: splitParagraphs(g.expertDefinition) },
         { h: "Key points", list: g.keyPoints },
-        { h: "Practical tip", p: [g.proTip] },
+        { h: "Study note", p: [g.proTip] },
         { h: "Why it matters when you are learning", p: [g.studentPerspective] },
         {
           h: `Practising ${g.term} on the simulator`,
@@ -310,7 +310,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "Head-to-head comparisons",
         p: [
-          "Comparison pages answer the question beginners actually ask: given two instruments that look similar, which one should I learn on first? Each page explains what each side really is, where they differ structurally, when one is the better learning vehicle, and the mistakes people make when they treat them as interchangeable.",
+          "Comparison pages explain how two instruments differ in structure, market drivers and risk. They are designed to support side-by-side simulator exercises rather than choose a winner or tell a learner which asset to use.",
         ],
       },
       {
@@ -320,18 +320,25 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "Why comparison beats a ranking",
         p: [
-          "There is no such thing as the best asset to trade, only assets that suit different tolerances, schedules and levels of experience. A pair of instruments that look interchangeable on a price chart can differ completely in what moves them, when they are liquid, how far they typically travel in a day, and how badly they punish a mis-sized position. That is what these pages compare.",
-          "None of them tell you what to buy, and none of them predict which side will perform better. The verdict section answers a narrower and more useful question: which of the two is the better vehicle for learning a particular skill, and under what circumstances the other one becomes the better choice.",
+          "Two instruments that look similar on a chart can represent very different legal claims, market structures and sources of risk. These pages compare those differences without inferring personal suitability from age, experience, schedule or a short simulation sample.",
+          "None of them tell you what to buy or predict which side will perform better. The comparison-lens section summarizes the structural difference without ranking either instrument.",
         ],
       },
       {
         h: "How to use a comparison",
         list: [
-          "Read both deep-dive sections before looking at the verdict, so you form a view of each instrument on its own terms first.",
-          "Practise both sides in the simulator for a week before deciding which suits you.",
-          "Note that 'better' here means better to learn on, never better to buy — no page here recommends an instrument.",
+          "Read both deep-dive sections before the comparison lens so each instrument is understood on its own terms first.",
+          "For supported individual instruments, use the same hypothetical assumptions and compare the recorded results. Broad categories are educational comparisons, not single tradable assets.",
+          "No page here treats a short simulator result as proof that one instrument is better or personally suitable.",
           "Check the mistakes section even if you think the comparison is obvious; the obvious version is usually where the error lives.",
           DISCLAIMER,
+        ],
+      },
+      {
+        h: "What a fair comparison controls for",
+        p: [
+          "A useful comparison holds as many assumptions constant as possible. Use the same observation window, the same virtual position-sizing rule, and the same review method before comparing outcomes. Otherwise a difference in result may come from the setup rather than from the instruments themselves.",
+          "Also separate structural facts from changing market statistics. Trading hours, legal claims, custody model and network design can be relatively durable, while volatility, yields, fees, margins and correlations can change over time. When a comparison depends on a current figure, verify it at a primary or provider source before treating it as current.",
         ],
       },
     ],
@@ -345,12 +352,20 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: `${p.a.name}: ${p.a.tag}`, p: [p.deepDive[0]] },
         { h: `${p.b.name}: ${p.b.tag}`, p: [p.deepDive[1] || p.deepDive[0]] },
         { h: "Key differences", list: p.bullets },
-        { h: "Which to practise first", p: [p.verdict] },
+        { h: "Comparison lens", p: [p.verdict] },
         { h: "Common mistakes with this comparison", list: p.mistakes },
         {
-          h: "Practise both sides",
+          h: "Practice scope",
           p: [
-            `Rather than picking on paper, trade both in the simulator with identical position sizes for a few weeks and compare how each behaves in your own hands. ${DISCLAIMER}`,
+            `For supported individual instruments, apply the same documented virtual assumptions and compare the resulting volatility, drawdown and event sensitivity. Broad categories such as forex or stocks are not single tradable instruments; select a supported example from Markets. A short simulator sample is not a recommendation or forecast. ${DISCLAIMER}`,
+          ],
+        },
+        {
+          h: "How to interpret the comparison",
+          p: [
+            "Keep the test conditions consistent. If one side uses a different date range, different virtual position size, or a different exit rule, the result is not a clean comparison. Record those assumptions before the exercise so they can be reviewed afterward.",
+            "Separate durable structure from changing statistics. Market hours, ownership rights, custody model and network design describe what an instrument is. Volatility, yield, fees, margins, valuation multiples and correlations are measurements that can change. A current figure should be checked at its original source before it is treated as current.",
+            "A simulator can reveal how a rule behaved in one sample, but it cannot determine personal suitability, future returns or the correct real-money allocation. Use the exercise to understand differences and uncertainty rather than to manufacture a winner.",
           ],
         },
       ],
@@ -436,10 +451,10 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         h: "Testing a strategy without fooling yourself",
         list: [
           "Write the rules down before you start. Rules remembered after the fact always look better than they were.",
-          "Take at least thirty trades before drawing any conclusion, and keep the size constant throughout.",
+          "Choose a sample and sizing rule before reviewing results, then explain why that sample is large enough for the question being tested.",
           "Record every trade the rules generated, including the ones you chose to skip, and why you skipped them.",
           "Judge the method by expectancy and drawdown together, never by the best week.",
-          "Expect any method to have losing stretches long enough to make you doubt it — that is the normal condition, not a malfunction.",
+          "Record losing and winning stretches without assuming either proves that the method is broken or successful.",
           "Re-test in a different market environment before trusting it; a method tuned to a calm trending month often fails the first volatile one.",
         ],
       },
@@ -461,7 +476,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         {
           h: "Practising it safely",
           p: [
-            `Run this method for at least thirty simulated trades with fixed sizing before judging it, and record every trade in the journal. A handful of winners proves nothing. ${DISCLAIMER}`,
+            `Define the simulator rules, sample window and sizing assumption before reviewing outcomes, then record every qualifying trade. A short run cannot establish future profitability. ${DISCLAIMER}`,
           ],
         },
       ],

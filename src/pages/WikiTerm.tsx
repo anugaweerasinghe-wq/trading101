@@ -130,22 +130,22 @@ const WikiTerm = () => {
             </h1>
           </motion.div>
 
-          {/* Expert Definition */}
+          {/* In-depth explanation */}
           <Card className="mt-8 p-6 md:p-8 bg-card border-border rounded-2xl backdrop-blur-md">
             <div className="flex items-center gap-2 mb-4">
               <BookOpen className="w-4 h-4 text-primary" />
-              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-muted-foreground">Expert Definition</h2>
+              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-muted-foreground">In-Depth Explanation</h2>
             </div>
             <p className="text-sm md:text-base text-foreground/80 leading-relaxed whitespace-pre-line">
               {term.expertDefinition}
             </p>
           </Card>
 
-          {/* Pro Tip Box */}
+          {/* Study note */}
           <Card className="mt-4 p-6 md:p-8 bg-primary/[0.04] border-primary/20 rounded-2xl">
             <div className="flex items-center gap-2 mb-3">
               <Lightbulb className="w-4 h-4 text-primary" />
-              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-primary">Pro Tip</h2>
+              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-primary">Study Note</h2>
             </div>
             <p className="text-sm text-foreground/80 leading-relaxed font-medium">{term.proTip}</p>
           </Card>
@@ -178,10 +178,10 @@ const WikiTerm = () => {
           <Card className="mt-6 p-6 bg-card border-border rounded-2xl">
             <div className="flex items-center gap-3 mb-3">
               <TrendingUp className="w-5 h-5 text-primary" />
-              <h3 className="text-sm font-bold text-foreground">Apply This in the Simulator</h3>
+              <h3 className="text-sm font-bold text-foreground">Explore This in the Simulator</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-4">
-              Practice identifying {term.term.toLowerCase()} patterns with $100,000 in virtual capital. Zero risk, real market data.
+              Practice identifying {term.term.toLowerCase()} concepts with $100,000 in virtual capital. Simulator data may be provider-backed, delayed or simulated depending on the instrument.
             </p>
             <Link to="/trade/BTC">
               <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-lg">

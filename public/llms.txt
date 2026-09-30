@@ -1,36 +1,42 @@
 # TradeHQ
 
-> TradeHQ is a free, no-signup paper-trading simulator for stocks, crypto, ETFs, forex, and commodities. Beginners get $100,000 in virtual cash, an AI mentor, live-style charts, and a public leaderboard to practice trading without risking real money.
+> TradeHQ is a free educational paper-trading simulator for stocks, crypto, ETFs, forex and commodities. Core simulator use starts with $100,000 in virtual cash and does not require a brokerage deposit.
 
-TradeHQ is an educational simulator (not a brokerage). All prices are simulated for practice. Content is written and maintained by Anuga Weerasinghe. TradeHQ does not provide financial advice.
+TradeHQ is not a brokerage and does not execute real-money orders. Market-data provenance varies by feature and instrument: a value may be realtime provider data, delayed or previous-close provider data, cached data, a proxy, or explicitly simulated data. User-facing labels should be checked on the relevant page rather than assuming every value is live or every value is simulated.
+
+The TradeHQ Mentor uses an AI chat service when available and a static educational topic-library fallback when that service is unavailable. It is not a personalized investment-advice or price-prediction service.
+
+Community leaderboard, public-profile and duel statistics are simulated practice statistics synced from client-held state and are not independently audited performance records.
 
 ## Core pages
 
-- [Home](https://www.thetradehq.com/): What TradeHQ is, how the free simulator works, key features.
-- [Trade](https://www.thetradehq.com/trade): Live-style trading terminal with 150+ practice assets.
-- [Markets](https://www.thetradehq.com/markets): Full asset universe — stocks, crypto, ETFs, forex, commodities.
-- [Portfolio](https://www.thetradehq.com/portfolio): Virtual portfolio, P&L, Sharpe ratio, drawdown analytics.
-- [Leaderboard](https://www.thetradehq.com/leaderboard): Public ranking of virtual traders by return.
-- [AI Mentor](https://www.thetradehq.com/ai-mentor): AI-powered trading coach for beginners.
-- [About](https://www.thetradehq.com/about): Mission, creator, transparency.
-- [Contact](https://www.thetradehq.com/contact): How to reach the TradeHQ team.
+- [Home](https://www.thetradehq.com/): Product overview and entry points to the virtual-money simulator.
+- [Trade](https://www.thetradehq.com/trade): Practice trading terminal for supported simulated instruments; data provenance varies by instrument.
+- [Markets](https://www.thetradehq.com/markets): Simulator market browser across stocks, crypto, ETFs, forex and commodities.
+- [Portfolio](https://www.thetradehq.com/portfolio): Virtual positions, recorded trades, P&L, allocation and local-history drawdown metrics.
+- [Leaderboard](https://www.thetradehq.com/leaderboard): Community board using client-synced simulated statistics that are not independently verified.
+- [TradeHQ Mentor](https://www.thetradehq.com/ai-mentor): Educational Q&A using an AI service when available and a static fallback otherwise.
+- [About](https://www.thetradehq.com/about): Mission and product transparency.
+- [Contact](https://www.thetradehq.com/contact): Contact and correction channel.
 
-## Learn (courses & guides)
+## Learn
 
-- [Learn hub](https://www.thetradehq.com/learn): Free structured trading courses for beginners.
-- [Trading Guide 2026](https://www.thetradehq.com/learn-trading-guide): Comprehensive beginner-to-intermediate trading guide.
-- [Structured Courses](https://www.thetradehq.com/courses): Four YMYL-compliant tracks with quizzes and completion badges.
-- [Options Trading Fundamentals](https://www.thetradehq.com/courses/options-trading-fundamentals): Calls, puts, Greeks, spreads and risk.
-- [Futures & Derivatives](https://www.thetradehq.com/courses/futures-and-derivatives): Contracts, margin, contango/backwardation, hedging.
-- [Macro Reading for Traders](https://www.thetradehq.com/courses/macro-reading-for-traders): CPI, FOMC, yield curve, DXY.
-- [Trading Psychology Mastery](https://www.thetradehq.com/courses/trading-psychology-mastery): Biases, tilt, journaling, discipline, drawdowns.
-- [Roadmap](https://www.thetradehq.com/roadmap): Upcoming TradeHQ features and improvements.
+- [Learn hub](https://www.thetradehq.com/learn): Structured educational material and simulator exercises.
+- [Trading Guide](https://www.thetradehq.com/learn-trading-guide): Beginner-to-intermediate educational guide.
+- [Structured Courses](https://www.thetradehq.com/courses): Course tracks with quizzes and completion badges.
+- [Options Trading Fundamentals](https://www.thetradehq.com/courses/options-trading-fundamentals): Educational coverage of calls, puts, Greeks, spreads and risk.
+- [Futures & Derivatives](https://www.thetradehq.com/courses/futures-and-derivatives): Educational coverage of contracts, margin, term structure and hedging.
+- [Macro Reading for Traders](https://www.thetradehq.com/courses/macro-reading-for-traders): Educational coverage of inflation, central banks, yield curves and currencies.
+- [Trading Psychology](https://www.thetradehq.com/courses/trading-psychology-mastery): Biases, journaling and drawdown concepts.
+- [Roadmap](https://www.thetradehq.com/roadmap): Current feature status plus in-progress and planned items.
 
-## Wiki (defined terms)
+## Wiki
 
-- [Trading Wiki](https://www.thetradehq.com/wiki/short-squeeze): Plain-English definitions of 50+ trading concepts (short squeeze, RSI, MACD, order block, Fibonacci retracement, etc.).
+- [Trading Wiki](https://www.thetradehq.com/wiki/short-squeeze): Plain-English educational definitions of trading and market concepts.
 
 ## Comparisons
+
+Comparison pages explain structural differences and do not choose a universally better asset or provide a buy recommendation.
 
 - [Bitcoin vs Ethereum](https://www.thetradehq.com/compare/bitcoin-vs-ethereum)
 - [Tesla vs Nvidia](https://www.thetradehq.com/compare/tesla-vs-nvidia)
@@ -38,22 +44,18 @@ TradeHQ is an educational simulator (not a brokerage). All prices are simulated 
 - [Stocks vs Crypto](https://www.thetradehq.com/compare/stocks-vs-crypto)
 - [All comparisons](https://www.thetradehq.com/compare)
 
-## How-to guides
+## How-to and strategy pages
 
-- [How to trade Bitcoin](https://www.thetradehq.com/how-to-trade/btc)
-- [How to trade Tesla](https://www.thetradehq.com/how-to-trade/tsla)
-- [How to trade Nvidia](https://www.thetradehq.com/how-to-trade/nvda)
+These pages are simulator exercises and educational descriptions. Hypothetical calculations use stated assumptions and are not claims of expected performance.
+
+- [How to practice with Bitcoin](https://www.thetradehq.com/how-to-trade/btc)
+- [How to practice with Tesla](https://www.thetradehq.com/how-to-trade/tsla)
+- [How to practice with Nvidia](https://www.thetradehq.com/how-to-trade/nvda)
 - [All how-to guides](https://www.thetradehq.com/how-to-trade)
+- [Strategy examples](https://www.thetradehq.com/strategy)
 
-## Strategies
-
-- [Scalping](https://www.thetradehq.com/strategy/scalping)
-- [Swing trading](https://www.thetradehq.com/strategy/swing-trading)
-- [Dollar-cost averaging (DCA)](https://www.thetradehq.com/strategy/dca)
-- [All strategies](https://www.thetradehq.com/strategy)
-
-## Optional
+## Policies and feedback
 
 - [Privacy policy](https://www.thetradehq.com/privacy)
 - [Terms of use](https://www.thetradehq.com/terms)
-- [Reviews](https://www.thetradehq.com/reviews)
+- [Community reviews](https://www.thetradehq.com/reviews)

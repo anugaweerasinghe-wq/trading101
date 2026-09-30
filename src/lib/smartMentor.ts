@@ -1,11 +1,9 @@
 /**
  * Smart Mentor — rule-based knowledge engine.
  *
- * Zero AI credits. Matches user input against a curated topic library
- * (trading concepts, risk, psychology, technicals, asset basics) and
- * returns expert-quality canned answers with educational disclaimers.
- *
- * Replaces the previous LLM-backed trading-mentor edge function.
+ * Local fallback knowledge engine. Matches user input against a static topic
+ * library when the AI chat backend is unavailable and returns educational
+ * explanations with clear simulator disclaimers.
  */
 
 export interface MentorTopic {
@@ -24,37 +22,37 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     keywords: ["stop loss", "stop-loss", "stoploss", "sl ", "protective stop"],
     title: "Stop-Loss Orders",
     answer:
-      "A **stop-loss** is a pre-set exit order that closes your position once price hits a chosen level — capping the loss.\n\n" +
-      "**How to set one:**\n" +
-      "• Risk only 1–2% of your portfolio per trade.\n" +
-      "• Place the stop below a structural level (recent swing low, moving average) — not at a round number where everyone else parks theirs.\n" +
-      "• On $100K capital, that's $1K–$2K max risk per trade.\n\n" +
-      "**Pro insight:** A stop-loss isn't a failure — it's the cost of being in the game. Traders who skip stops blow up eventually; the math is brutal (a 50% drawdown needs a 100% gain to recover).",
+      "A **stop-loss** is an instruction to exit a position when price reaches a chosen level. In real markets, gaps and slippage can cause execution away from that level.\n\n" +
+      "**Simulation exercise:**\n" +
+      "• Pick several hypothetical risk budgets instead of assuming one universal percentage.\n" +
+      "• Compare fixed-percentage, chart-based and volatility-based exit rules.\n" +
+      "• Record how each rule changes simulated drawdown, average loss and turnover.\n\n" +
+      "A 50% loss requires a 100% gain on the remaining capital to recover, which is arithmetic rather than a recommendation for where any stop should be placed.",
   },
   {
     id: "dca",
     keywords: ["dollar cost", "dca", "dollar-cost", "averaging"],
     title: "Dollar-Cost Averaging (DCA)",
     answer:
-      "**DCA** = investing a fixed amount on a fixed schedule (e.g. $200 every Friday) regardless of price.\n\n" +
-      "**Why it works:**\n" +
-      "• Removes emotion — you buy mechanically.\n" +
-      "• Averages your entry price across cycles.\n" +
-      "• Beats most beginners who try to time the market.\n\n" +
-      "**Trade-off:** In a strong uptrend, lump-sum investing usually beats DCA mathematically — but DCA wins on discipline and psychology, which is what kills most retail portfolios.",
+      "**DCA** means contributing a fixed hypothetical amount on a fixed schedule regardless of price.\n\n" +
+      "**What to compare in the simulator:**\n" +
+      "• Recurring purchases change the timing of entries.\n" +
+      "• The average purchase price depends on the path prices take.\n" +
+      "• A recurring schedule can be compared with a lump-sum assumption using the same asset and time period.\n\n" +
+      "Neither method is guaranteed to outperform; the result depends on market path, costs, taxes and the assumptions used.",
   },
   {
     id: "risk-management",
     keywords: ["risk management", "manage risk", "position size", "position sizing", "how much should i risk"],
     title: "Risk Management Basics",
     answer:
-      "Risk management is the **#1 differentiator** between traders who survive and traders who blow up.\n\n" +
-      "**The 4 rules:**\n" +
-      "1. **1-2% rule** — never risk more than 1–2% of total capital on one trade. On $100K, that's $1–2K max.\n" +
-      "2. **Always use a stop-loss** — define your exit before you enter.\n" +
-      "3. **Risk:reward ≥ 1:2** — only take trades where potential reward is at least 2× the risk.\n" +
-      "4. **Diversify** — no single asset should be >20% of your portfolio.\n\n" +
-      "Practice this in TradeHQ first. If you can't be disciplined with simulated $100K, you won't be disciplined with real $1K.",
+      "Risk management describes how position size, exits, concentration and losses affect a portfolio over time. There is no single percentage or reward-to-risk rule that is correct for everyone.\n\n" +
+      "**Simulation ideas:**\n" +
+      "1. Compare several virtual risk budgets per trade.\n" +
+      "2. Compare predefined exits with no exit rule and record slippage assumptions separately.\n" +
+      "3. Compare different reward-to-risk targets instead of assuming 1:2 is mandatory.\n" +
+      "4. Compare concentrated and diversified portfolios using the same market path.\n\n" +
+      "The purpose is to understand how assumptions change simulated drawdown and variability, not to prescribe a real-money allocation.",
   },
   {
     id: "bull-market",
@@ -66,7 +64,7 @@ export const MENTOR_TOPICS: MentorTopic[] = [
       "• Higher highs and higher lows on the chart.\n" +
       "• Strong economic data (GDP growth, low unemployment).\n" +
       "• Investor optimism and increasing volume.\n\n" +
-      "**Trading approach:** 'Buy the dip' works in bull markets. Pullbacks to 20/50-day moving averages are typical entry zones. Stay long, trust the trend, don't try to short a bull.",
+      "**Study approach:** Compare how pullbacks, moving averages and trend continuation behaved across several historical-style examples. A bull-market label does not guarantee that a dip will recover or identify an entry point.",
   },
   {
     id: "bear-market",
@@ -74,12 +72,12 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     title: "Bear Markets",
     answer:
       "A **bear market** = a 20%+ decline from recent highs, lasting weeks or months.\n\n" +
-      "**What to do:**\n" +
-      "• Reduce position sizes — volatility spikes.\n" +
-      "• Cash is a position. Holding cash in a downtrend isn't 'missing out' — it's discipline.\n" +
-      "• Look at defensive sectors (utilities, consumer staples) and gold.\n" +
-      "• If you DCA, bear markets are where future returns are built — but only if you stay solvent.\n\n" +
-      "**Most retail traders lose money in bears by averaging down on losers.** Don't.",
+      "**What to study:**\n" +
+      "• Compare how volatility changed during different drawdowns.\n" +
+      "• Test several virtual cash and position-size assumptions.\n" +
+      "• Compare sectors and assets without assuming one will always be defensive.\n" +
+      "• Record how recurring-purchase assumptions behaved through declines and recoveries.\n\n" +
+      "A bear-market label describes a decline; it does not prescribe what someone should buy, sell or hold.",
   },
   {
     id: "rsi",
@@ -87,10 +85,10 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     title: "RSI (Relative Strength Index)",
     answer:
       "**RSI** is a momentum oscillator scaled 0–100 measuring speed and change of price moves.\n\n" +
-      "• **>70** = overbought (potential pullback)\n" +
-      "• **<30** = oversold (potential bounce)\n" +
-      "• **50** = neutral / trend reset\n\n" +
-      "**Reality check:** RSI alone is not a buy/sell signal. In strong trends, RSI can stay overbought (or oversold) for weeks. Use it with price action, volume, and support/resistance — not as a standalone trigger.",
+      "• **>70** is commonly labelled overbought.\n" +
+      "• **<30** is commonly labelled oversold.\n" +
+      "• **50** is the midpoint of the scale.\n\n" +
+      "**Reality check:** RSI describes recent momentum; it does not establish that a pullback or bounce will occur. Compare outcomes across different assets, timeframes and regimes.",
   },
   {
     id: "moving-average",
@@ -112,10 +110,10 @@ export const MENTOR_TOPICS: MentorTopic[] = [
       "**Candlesticks** show open/high/low/close in one symbol — body = open-to-close, wicks = high/low.\n\n" +
       "**Must-know patterns:**\n" +
       "• **Doji** — open ≈ close. Indecision. Common at trend reversals.\n" +
-      "• **Hammer** — small body, long lower wick. Bullish reversal at support.\n" +
-      "• **Shooting star** — small body, long upper wick. Bearish reversal at resistance.\n" +
-      "• **Bullish/Bearish engulfing** — one candle fully engulfs the prior. Strong reversal signal.\n\n" +
-      "Patterns only work in context. A hammer at resistance ≠ a hammer at support.",
+      "• **Hammer** — small body with a long lower wick.\n" +
+      "• **Shooting star** — small body with a long upper wick.\n" +
+      "• **Engulfing pattern** — one candle body covers the prior candle body.\n\n" +
+      "These are visual labels, not guaranteed reversal signals. Compare both successful and failed examples in context.",
   },
   {
     id: "psychology",
@@ -128,81 +126,78 @@ export const MENTOR_TOPICS: MentorTopic[] = [
       "• **Revenge trading** — doubling down after a loss to 'win back'. This is how accounts die.\n" +
       "• **Anchoring** — refusing to sell because 'I'll wait until it gets back to my entry'.\n" +
       "• **Confirmation bias** — only reading news that supports your position.\n\n" +
-      "**Cure:** Journal every trade. Set rules *before* you enter. TradeHQ's Ghost Journal and Revenge Blocker are built for this exact reason.",
+      "**Practice reflection:** Record the reasoning behind simulated decisions and compare it with a predefined process. A journal is a review tool, not a cure or a guarantee of better results.",
   },
   {
     id: "diversification",
     keywords: ["diversif", "portfolio allocation", "asset allocation"],
     title: "Diversification",
     answer:
-      "**Don't put all your eggs in one basket** — but don't put them in 50 baskets either.\n\n" +
-      "**Practical allocation for $100K:**\n" +
+      "**Diversification** spreads exposure across different holdings; counting holdings alone does not measure it.\n\n" +
+      "**A simulation comparison:**\n" +
       "• There is no universal allocation that fits everyone.\n" +
       "• In TradeHQ, compare concentrated and diversified practice portfolios and observe how volatility and drawdown change.\n" +
       "• Treat any example allocation as a simulation scenario, not a recommendation for real money.\n\n" +
-      "True diversification means uncorrelated assets — owning 10 tech stocks isn't diversified, it's one bet 10 times.",
+      "Diversification depends on overlapping exposures and correlations, which can change. Several technology stocks may share common risks even though they are different companies.",
   },
   {
     id: "leverage",
     keywords: ["leverage", "margin", "10x", "100x", "liquidation"],
     title: "Leverage & Margin",
     answer:
-      "**Leverage amplifies both gains AND losses.** 10x leverage means a 10% adverse move = -100% (liquidation).\n\n" +
+      "**Leverage amplifies gains and losses.** In a simplified constant-exposure example, 10x leverage and a 10% adverse move consume the starting equity before costs. Actual liquidation can occur earlier and depends on product and broker rules.\n\n" +
       "**Reality:**\n" +
       "• High leverage can make even small market moves produce very large gains or losses; loss rates vary widely by product, market and trader.\n" +
       "• The leverage a platform offers is not a recommendation. In simulation, compare how leverage changes drawdown and liquidation distance before using it as a learning tool.\n" +
-      "• In TradeHQ, practice cash-account discipline first. If you can't make money unlevered, leverage will only speed up the loss.\n\n" +
-      "**Rule:** If you're new, stay unlevered for the first 100 trades.",
+      "• TradeHQ does not provide a futures-margin or liquidation engine. Leveraged examples are conceptual calculations, not executable contract simulations.\n\n" +
+      "No fixed number of practice trades makes leverage suitable or safe.",
   },
   {
     id: "crypto-basics",
     keywords: ["bitcoin", "btc", "ethereum", "eth", "crypto", "altcoin", "defi"],
     title: "Crypto Basics",
     answer:
-      "**Crypto is the most volatile mainstream asset class.** 10–20% daily moves are normal.\n\n" +
-      "**Core tiers:**\n" +
-      "• **BTC/ETH** — large-cap, behave like risk-on tech stocks. Lower-risk tier (still volatile).\n" +
-      "• **Top-50 alts** (SOL, BNB, XRP) — higher beta, real projects.\n" +
-      "• **Anything else** — speculative. Treat as 90%-loss-possible.\n\n" +
-      "Cycles matter: crypto rotates capital ~every 4 years (BTC halving). Position sizing matters more than picking the winner.",
+      "Crypto assets can be highly volatile, and the range of outcomes differs substantially across tokens and periods.\n\n" +
+      "**Useful comparisons:**\n" +
+      "• Market capitalization and liquidity.\n" +
+      "• Network design and token issuance.\n" +
+      "• Custody, venue and smart-contract risks.\n" +
+      "• Historical drawdowns and correlation with other risk assets.\n\n" +
+      "A market-cap ranking or halving cycle does not guarantee future returns or make one token a safer real-money choice.",
   },
   {
     id: "etfs",
     keywords: ["etf", "spy", "qqq", "index fund", "vti"],
     title: "ETFs & Index Funds",
     answer:
-      "**ETFs** track baskets of assets — instant diversification, low fees.\n\n" +
-      "**Beginner-friendly:**\n" +
-      "• **SPY / VOO** — S&P 500. The default 'own America' bet.\n" +
-      "• **QQQ** — Nasdaq-100. Tech-heavy.\n" +
-      "• **VTI** — total US market.\n" +
-      "• **VT** — total world market.\n\n" +
-      "Warren Buffett's recommendation for 99% of investors: just DCA into a broad index ETF. It outperforms ~85% of active fund managers over 10+ years.",
+      "**ETFs** are exchange-traded funds. Holdings, concentration, strategy and fees vary by fund; the label alone does not establish diversification or low cost.\n\n" +
+      "**Examples to compare in simulation:**\n" +
+      "• **SPY / VOO** — S&P 500 exposure.\n" +
+      "• **QQQ** — Nasdaq-100 exposure with heavier technology concentration.\n" +
+      "• **VTI** — broad US equity-market exposure.\n" +
+      "• **VT** — broad global equity-market exposure.\n\n" +
+      "ETF diversification depends on the underlying holdings and overlap; this mentor does not recommend a specific fund or contribution schedule.",
   },
   {
     id: "tax",
     keywords: ["tax", "capital gains", "wash sale", "tax loss"],
     title: "Trading & Taxes",
     answer:
-      "Taxes vary wildly by country — but the universals:\n\n" +
-      "• **Short-term gains** (held <1 year) are usually taxed as regular income (higher rate).\n" +
-      "• **Long-term gains** (>1 year) usually get preferential rates.\n" +
-      "• **Tax-loss harvesting** — selling losers to offset winners is legal in most jurisdictions.\n" +
-      "• **Wash sale rules** (US) — you can't claim a loss if you re-buy the same asset within 30 days.\n\n" +
-      "**Speak to a local accountant** — this is not tax advice, just trading-101 framing.",
+      "Tax treatment varies by country, instrument, account type and current law. Holding-period rules, loss offsets and anti-avoidance rules are not universal.\n\n" +
+      "Use current official tax guidance for the relevant jurisdiction or ask a qualified local professional. TradeHQ does not calculate personal tax liability.",
   },
   {
     id: "compounding",
     keywords: ["compound", "compounding", "interest"],
     title: "Compounding",
     answer:
-      "Compounding is the **8th wonder of the world** (Einstein, allegedly).\n\n" +
-      "**$100K at 10% annual return:**\n" +
-      "• 10 years → $259K\n" +
-      "• 20 years → $673K\n" +
-      "• 30 years → $1.74M\n" +
-      "• 40 years → $4.53M\n\n" +
-      "**The lesson:** Time in market > timing the market. Use TradeHQ's Compound Calculator to model your own scenarios.",
+      "Compounding means later percentage changes apply to a balance that includes earlier gains or losses.\n\n" +
+      "**Illustrative $100K scenario at an assumed constant 10% annual return:**\n" +
+      "• 10 years → about $259K\n" +
+      "• 20 years → about $673K\n" +
+      "• 30 years → about $1.74M\n" +
+      "• 40 years → about $4.53M\n\n" +
+      "The 10% rate is an input, not a forecast. Use the compound calculator to compare several assumed rates and horizons.",
   },
 ];
 
@@ -222,11 +217,11 @@ const FALLBACK_RESPONSE =
   "**Technicals:** RSI, moving averages, candlestick patterns, support/resistance.\n" +
   "**Psychology:** FOMO, revenge trading, discipline.\n" +
   "**Markets:** bull/bear markets, leverage, crypto, ETFs.\n\n" +
-  "Try rephrasing, or pick a topic chip below — I'll give you a deep, actionable answer.";
+  "Try rephrasing, or pick a topic chip below for an educational explanation.";
 
 /**
  * Match an input string to the best-fit mentor topic.
- * Returns an expert canned answer + disclaimer, or a friendly fallback.
+ * Returns a static educational answer plus disclaimer, or a topic prompt.
  */
 export function getSmartMentorReply(input: string): string {
   const text = input.toLowerCase().trim();
@@ -356,8 +351,8 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
       );
     }
     const cashPct = (ctx.cash / ctx.totalValue) * 100;
-    if (cashPct > 80) lines.push(`\n**Observation:** You're sitting on heavy cash (${cashPct.toFixed(0)}%) — consider DCAing into a few positions.`);
-    else if (cashPct < 5) lines.push(`\n**Observation:** Almost fully invested. Keep some dry powder (5-15%) for opportunities.`);
+    if (cashPct > 80) lines.push(`\n**Observation:** Cash represents ${cashPct.toFixed(0)}% of this simulated portfolio. Compare how different hypothetical cash weights affect drawdown and participation.`);
+    else if (cashPct < 5) lines.push(`\n**Observation:** Cash is below 5% of this simulated portfolio. That is a concentration observation, not a recommendation to change it.`);
     return lines.join("\n") + DISCLAIMER;
   }
 
@@ -365,32 +360,31 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
   if (/risk|overexposed|exposure|concentration/.test(text)) {
     const lines = ["**Risk assessment:**"];
     if (ctx.topPosition && ctx.topPosition.weightPct > 30) {
-      lines.push(`⚠️ **Concentration risk** — ${ctx.topPosition.symbol} is ${ctx.topPosition.weightPct.toFixed(0)}% of your book. Rule of thumb: no single asset >20%.`);
+      lines.push(`**Concentration observation:** ${ctx.topPosition.symbol} is ${ctx.topPosition.weightPct.toFixed(0)}% of the simulated portfolio. Compare this with alternative hypothetical concentration limits rather than assuming one universal threshold.`);
     }
-    if (ctx.positionsCount === 1) lines.push(`⚠️ Only one position — that's not a portfolio, it's a bet.`);
-    if (ctx.positionsCount > 15) lines.push(`⚠️ ${ctx.positionsCount} positions — likely over-diversified. You can't track that many edges.`);
-    if (lines.length === 1) lines.push(`✓ Allocation looks reasonable. Maintain 1-2% risk per trade and 5-15% cash reserve.`);
+    if (ctx.positionsCount === 1) lines.push(`There is one open holding; the invested portion is concentrated in that holding. Cash may still represent part of the total portfolio.`);
+    if (ctx.positionsCount > 15) lines.push(`${ctx.positionsCount} positions can reduce single-name concentration, but diversification depends on overlap and correlation rather than the count alone.`);
+    if (lines.length === 1) lines.push(`No single concentration flag was triggered by these simple rules. This is descriptive, not a suitability assessment.`);
     return lines.join("\n") + DISCLAIMER;
   }
 
   // Trade history
   if (/trade history|recent trades|review my trades|patterns/.test(text)) {
-    if (ctx.tradesCount === 0) return "You haven't placed any trades yet. Start with a small position on a familiar asset, journal your reasoning, and we'll review patterns once you have 10+ trades." + DISCLAIMER;
-    if (ctx.tradesCount < 10) return `You have ${ctx.tradesCount} trades — too few for pattern analysis. Aim for 20-30 closed trades before drawing conclusions.${ctx.winRate !== null ? ` Current win rate: ${ctx.winRate.toFixed(0)}%.` : ""}` + DISCLAIMER;
+    if (ctx.tradesCount === 0) return "No simulated trades are recorded in the supplied summary. A journal can document the assumptions and outcomes of a practice exercise; no fixed number of trades proves an edge." + DISCLAIMER;
+    if (ctx.tradesCount < 10) return `The supplied summary contains ${ctx.tradesCount} trades. A small sample supports only limited observations; there is no universal minimum that makes a pattern reliable.${ctx.winRate !== null ? ` Current win rate: ${ctx.winRate.toFixed(0)}%.` : ""}` + DISCLAIMER;
     const wr = ctx.winRate ?? 0;
-    const verdict = wr >= 55 ? "above average" : wr >= 45 ? "average" : "below average";
-    return `**Trade history review** (${ctx.tradesCount} trades, ${wr.toFixed(0)}% win rate — ${verdict}):\n\n• Win rate alone is misleading without R-multiple. A 40% win rate with 3:1 winners beats 60% with 1:1.\n• Track avg-win / avg-loss in your journal.\n• Look for time-of-day or asset-class patterns.` + DISCLAIMER;
+    return `**Trade history review** (${ctx.tradesCount} trades, ${wr.toFixed(0)}% win rate):\n\n• Win rate alone does not establish performance; average gains, average losses, costs and sample size also matter.\n• Track average win and average loss in the journal.\n• Look for patterns, but treat them as hypotheses to test rather than proof of an edge.` + DISCLAIMER;
   }
 
   // What should I do
   if (/what should i (do|buy|sell|trade)|next move|next action/.test(text)) {
-    return "I won't give you specific buy/sell calls — that's the line between mentor and signal-seller. What I will say:\n\n1. Define your edge in one sentence.\n2. Size positions so a stop-out costs ≤1-2% of book.\n3. Pre-write your exit (target + stop) before entry.\n4. Journal *why* — entries with no reason are gambling." + DISCLAIMER;
+    return "I won't give you a buy, sell, allocation or sizing instruction. For simulation, write down the assumptions you want to test, choose a virtual sizing rule, define how the scenario ends, and journal why you chose those parameters. Then compare the result with an alternative rule rather than treating one setup as correct." + DISCLAIMER;
   }
 
   // Selected asset analysis
   if (ctx.selectedSymbol && /this asset|analyze.*asset|current asset|this coin|this stock/.test(text)) {
     const dir = (ctx.selectedChangePct ?? 0) >= 0 ? "up" : "down";
-    return `**${ctx.selectedSymbol}** — ${dir} ${Math.abs(ctx.selectedChangePct ?? 0).toFixed(2)}% today.\n\nWithout giving a call, here's a framework:\n• Mark the higher-timeframe trend (daily, weekly).\n• Identify the nearest support and resistance.\n• Define risk:reward before entering — minimum 1:2.\n• If the chart confuses you, pass. Cash is a position.` + DISCLAIMER;
+    return `**${ctx.selectedSymbol}** — ${dir} ${Math.abs(ctx.selectedChangePct ?? 0).toFixed(2)}% in the current simulator reading.\n\nFor practice, describe the higher-timeframe trend, mark any support/resistance zones as subjective observations, and compare several hypothetical exit and reward-to-risk assumptions. No minimum ratio or buy/sell action is implied.` + DISCLAIMER;
   }
 
   // Fall back to topic engine

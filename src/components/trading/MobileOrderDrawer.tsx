@@ -5,9 +5,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
-import { DollarSign, Loader2, ChevronUp, ChevronDown } from "lucide-react";
+import { Loader2, ChevronUp, ChevronDown } from "lucide-react";
 import {
   Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger,
 } from "@/components/ui/drawer";
@@ -29,10 +28,8 @@ interface MobileOrderDrawerProps {
 }
 
 export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: MobileOrderDrawerProps) {
-  const [orderType, setOrderType] = useState<'market' | 'limit'>('market');
   const [side, setSide] = useState<'buy' | 'sell'>('buy');
   const [amount, setAmount] = useState("");
-  const [limitPrice, setLimitPrice] = useState("");
   const [sliderValue, setSliderValue] = useState([0]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +40,7 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
   const lastSubmitTime = useRef<number>(0);
   const DEBOUNCE_MS = 1000;
 
-  const price = asset ? (orderType === 'limit' && limitPrice ? parseFloat(limitPrice) : asset.price) : 0;
+  const price = asset?.price ?? 0;
   const quantity = amount ? parseFloat(amount) : 0;
   const total = quantity * price;
   const fee = total * 0.001;
@@ -68,16 +65,15 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
     if (!asset || !quantity || quantity <= 0) return;
     setIsSubmitting(true);
     try {
-      await onTrade(asset, side, quantity, orderType, orderType === 'limit' ? parseFloat(limitPrice) : undefined, journalEnabled ? rationale : undefined);
+      await onTrade(asset, side, quantity, 'market', undefined, journalEnabled ? rationale : undefined);
       setAmount("");
-      setLimitPrice("");
       setSliderValue([0]);
       setRationale("");
       setIsOpen(false);
     } finally {
       setTimeout(() => setIsSubmitting(false), 300);
     }
-  }, [asset, side, quantity, orderType, limitPrice, onTrade, journalEnabled, rationale]);
+  }, [asset, side, quantity, onTrade, journalEnabled, rationale]);
 
   const handleSubmit = useCallback(async () => {
     if (!asset || !quantity || quantity <= 0) return;
@@ -134,22 +130,12 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
               >Sell</Button>
             </div>
 
-            <Tabs value={orderType} onValueChange={(v) => setOrderType(v as 'market' | 'limit')}>
-              <TabsList className="grid w-full grid-cols-2 h-12 rounded-xl">
-                <TabsTrigger value="market" className="text-base rounded-lg h-10">Market</TabsTrigger>
-                <TabsTrigger value="limit" className="text-base rounded-lg h-10">Limit</TabsTrigger>
-              </TabsList>
-            </Tabs>
-
-            {orderType === 'limit' && (
-              <div className="space-y-2">
-                <Label className="text-sm text-muted-foreground">Limit Price</Label>
-                <div className="relative">
-                  <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <Input type="number" placeholder={asset.price.toString()} value={limitPrice} onChange={(e) => setLimitPrice(e.target.value)} className="pl-11 h-14 text-lg bg-muted/50 border-0 tabular-nums rounded-xl" />
-                </div>
-              </div>
-            )}
+            <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+              <p className="text-sm font-medium">Market-style simulation</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                The mobile quick-order flow executes immediately at the simulator's displayed price. Pending limit orders are not simulated here yet.
+              </p>
+            </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">

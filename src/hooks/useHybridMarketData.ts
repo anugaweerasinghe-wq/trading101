@@ -10,8 +10,8 @@ export interface HybridMarketPrice {
   price: number;
   change24h: number;
   changePercent24h: number;
-  high24h: number;
-  low24h: number;
+  high24h?: number;
+  low24h?: number;
   volume24h: number;
   source: 'live' | 'cached' | 'delayed' | 'simulated';
   lastUpdated: string;
@@ -84,8 +84,8 @@ async function flushQueue() {
               price: result.data.price,
               change24h: result.data.change24h ?? 0,
               changePercent24h: result.data.changePercent24h ?? 0,
-              high24h: result.data.high24h ?? result.data.price,
-              low24h: result.data.low24h ?? result.data.price,
+              high24h: typeof result.data.high24h === 'number' ? result.data.high24h : undefined,
+              low24h: typeof result.data.low24h === 'number' ? result.data.low24h : undefined,
               volume24h: result.data.volume24h ?? 0,
               source: normalizedSource,
               lastUpdated: result.data.lastUpdated ?? new Date().toISOString(),

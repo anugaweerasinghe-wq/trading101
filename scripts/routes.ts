@@ -103,6 +103,17 @@ function extractLearnArticles(): { slug: string; title: string; metaDescription:
   return results;
 }
 
+function extractLegacyLessons(): { id: string; title: string; description: string }[] {
+  const src = readSrc("src/lib/lessonData.ts");
+  const results: { id: string; title: string; description: string }[] = [];
+  const re = /id:\s*(\d+),\s*\n\s*title:\s*"([^"]+)",\s*\n\s*category:\s*"[^"]+",\s*\n\s*description:\s*"([^"]+)"/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(src)) !== null) {
+    results.push({ id: m[1], title: m[2], description: m[3] });
+  }
+  return results;
+}
+
 function extractNicheSymbols(): string[] {
   const src = readSrc("src/lib/nicheData.ts");
   const match = src.match(/export const NICHE_SYMBOLS:[^=]*=\s*\[([\s\S]*?)\];/);
@@ -174,7 +185,7 @@ export function buildRoutes(): RouteMeta[] {
   // ---- Core pages ----
   routes.push({
     path: "/",
-    title: "TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)",
+    title: "TradeHQ — Free Paper Trading Simulator | $100K Virtual Cash",
     description: `Practice stock, crypto, ETF, forex & commodities trading with ${BALANCE} virtual cash. No signup. AI mentor, simulated charts, portfolio tracking & 150+ assets. Free educational trading simulator.`,
     h1: "TradeHQ — Free Paper Trading Simulator",
     summary: `Practice simulated trading across 150+ assets with ${BALANCE} in virtual cash. No real money is involved. Learn order mechanics, portfolio tracking, and risk concepts across stocks, crypto, ETFs, forex and commodities.`,
@@ -205,9 +216,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/portfolio",
     title: "Your Practice Portfolio — Positions, P&L, Analytics | TradeHQ",
-    description: `Track your simulated positions, realised and unrealised P&L, Sharpe ratio, and max drawdown. Free practice portfolio seeded with ${BALANCE}.`,
+    description: `Track simulated positions, realised and unrealised P&L, allocation, concentration and drawdown from locally recorded snapshots. Practice portfolio seeded with ${BALANCE}.`,
     h1: "Practice Portfolio",
-    summary: `See every position, trade, and analytics metric for your simulated portfolio — Sharpe ratio, max drawdown, sector allocation. Everything stays in your browser. Educational simulation only.`,
+    summary: `See positions, recorded trades, open-position allocation, concentration and locally recorded drawdown metrics for the virtual portfolio. Core simulator state is browser-held. Educational simulation only.`,
     priority: "0.8",
     changefreq: "daily",
   });
@@ -222,10 +233,25 @@ export function buildRoutes(): RouteMeta[] {
     changefreq: "weekly",
   });
 
+  // Legacy numeric lessons remain accessible in-app, but are explicitly
+  // governed by the route manifest and kept noindex until each is separately
+  // reviewed against the current content/quality standard.
+  for (const lesson of extractLegacyLessons()) {
+    routes.push({
+      path: `/learn/${lesson.id}`,
+      title: `${lesson.title} — Legacy Practice Lesson | TradeHQ`,
+      description: lesson.description,
+      h1: lesson.title,
+      summary: `Legacy interactive lesson retained for existing learners. It remains outside the searchable lesson catalogue while its examples and quiz content are being reviewed against the current TradeHQ standard.`,
+      noindex: true,
+      changefreq: "monthly",
+    });
+  }
+
   routes.push({
     path: "/learn-trading-guide",
-    title: "Complete Beginner Trading Guide 2026 | TradeHQ",
-    description: `The full beginner's trading guide for 2026. Learn how markets work, how to place orders and how to manage risk — then practice with ${BALANCE} virtual cash.`,
+    title: "Complete Beginner Trading Guide | TradeHQ",
+    description: `A beginner trading guide covering market mechanics, order types and risk concepts, with virtual-money practice on supported TradeHQ instruments.`,
     h1: "The Complete Beginner Trading Guide",
     summary: `A single long-form guide that walks a complete beginner from zero to placing their first informed trade. Covers order types, chart reading, risk sizing, and psychology. Practice everything with ${BALANCE} in virtual cash on the free simulator.`,
     priority: "0.9",
@@ -244,10 +270,10 @@ export function buildRoutes(): RouteMeta[] {
 
   routes.push({
     path: "/ai-mentor",
-    title: "AI Trading Mentor — Free Practice Coach | TradeHQ",
-    description: `Ask the free AI trading mentor about any strategy, indicator or asset. Educational simulation only — not financial advice.`,
-    h1: "AI Trading Mentor",
-    summary: `Ask an AI mentor about any indicator, strategy or asset. Answers are educational only — never financial advice. Practice what you learn on the free simulator with ${BALANCE} virtual cash.`,
+    title: "TradeHQ Mentor — Educational Trading Q&A | TradeHQ",
+    description: `Educational market and simulator Q&A using an AI chat service when available and a static topic-library fallback when it is not.`,
+    h1: "TradeHQ Mentor",
+    summary: `Ask educational questions about market mechanics, indicators and simulator concepts. The feature uses an AI service when available and a static fallback otherwise; it does not provide personalized buy/sell instructions.`,
     priority: "0.7",
     changefreq: "weekly",
   });
@@ -275,9 +301,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/roadmap",
     title: "TradeHQ Roadmap — What's Shipping Next | TradeHQ",
-    description: `See what's shipping next on TradeHQ. Public roadmap for the free trading simulator — options paper trading, backtesting and more.`,
+    description: `See TradeHQ feature status with shipped, in-progress and planned items clearly separated. Planned work is not a delivery promise.`,
     h1: "TradeHQ Roadmap",
-    summary: `The public roadmap for TradeHQ — upcoming features on the free educational trading simulator, from options paper trading to backtesting and portfolio sharing.`,
+    summary: `The public TradeHQ roadmap distinguishes current features from work still in progress and ideas that are only planned.`,
     priority: "0.5",
     changefreq: "weekly",
   });
@@ -395,7 +421,7 @@ export function buildRoutes(): RouteMeta[] {
       title: `${sym} Deep Dive — Chart, Analysis & Paper Trade | TradeHQ`,
       description: `In-depth ${sym} analysis with practice trading. ${BALANCE} virtual cash, no signup. Educational simulation only — not financial advice.`,
       h1: `${sym} — Deep Dive`,
-      summary: `A dedicated ${sym} research page with simulated charts, AI-mentor commentary, and one-click paper trading. Everything is educational — no real orders and no brokerage.`,
+      summary: `A dedicated ${sym} educational page with reference/simulator data, chart context, mentor access and virtual-money practice. No real orders or brokerage execution.`,
       priority: "0.6",
       changefreq: "daily",
       noindex: true,
@@ -408,7 +434,7 @@ export function buildRoutes(): RouteMeta[] {
     const label = c.slug.replace(/-/g, " ");
     routes.push({
       path: `/compare/${c.slug}`,
-      title: `${label.replace(/\b\w/g, (l) => l.toUpperCase())} — Which Should You Trade? | TradeHQ`,
+      title: `${label.replace(/\b\w/g, (l) => l.toUpperCase())} — Structural Comparison | TradeHQ`,
       description: c.intro || `Compare and paper-trade both with ${BALANCE} in virtual cash. Educational simulation only.`,
       h1: `${label.replace(/\b\w/g, (l) => l.toUpperCase())}`,
       summary: c.intro || `Head-to-head comparison and practice trading with ${BALANCE} virtual cash.`,
@@ -478,10 +504,10 @@ export function buildRoutes(): RouteMeta[] {
   // ---- Structured course tracks (/courses, /courses/:track, /courses/:track/:lesson) ----
   routes.push({
     path: "/courses",
-    title: "Free Trading Courses 2026 — Options, Futures, Macro & Psychology | TradeHQ",
+    title: "Free Trading Courses — Options, Futures, Macro & Psychology | TradeHQ",
     description: `Four structured trading courses with original lessons, quizzes and completion badges. Practise concepts with ${BALANCE} virtual cash.`,
     h1: "Structured Trading Courses",
-    summary: `Four structured tracks — options, futures, macro reading, and trading psychology — each with quizzes and a completion badge. Practice everything with ${BALANCE} in virtual cash on TradeHQ.`,
+    summary: `Four structured tracks cover options, futures, macro reading and trading psychology. Supported spot instruments can be explored with ${BALANCE} in virtual cash; TradeHQ does not currently simulate options or futures contracts.`,
     priority: "0.8",
     changefreq: "weekly",
   });

@@ -27,7 +27,7 @@ export default function AIMentor() {
     {
       role: "assistant",
       content:
-        "Hey! I'm your **Smart Mentor** — a curated trading-knowledge engine built from real strategy, risk, and psychology lessons. Ask me anything about trading, or tap a topic below."
+        "Hey! I'm the **TradeHQ Mentor**. When the AI chat service is available, questions are answered by that service; if it is unavailable, TradeHQ falls back to a static educational topic library. Ask about market mechanics, risk concepts, indicators, or simulator features."
     }
   ]);
   const [input, setInput] = useState("");
@@ -62,21 +62,21 @@ export default function AIMentor() {
   return (
     <>
       <Helmet>
-        <title>Smart Trading Mentor — Free Strategy, Risk & Psychology Coach | TradeHQ</title>
-        <meta name="description" content="Chat with TradeHQ's Smart Mentor — a curated knowledge engine covering stop-losses, RSI, position sizing, psychology, crypto, ETFs and more. Free, instant, no signup." />
+        <title>TradeHQ Mentor — Educational Trading Q&A | TradeHQ</title>
+        <meta name="description" content="Educational trading Q&A on TradeHQ. The mentor uses an AI chat service when available and a static topic-library fallback when it is not." />
         <link rel="canonical" href="https://www.thetradehq.com/ai-mentor" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Smart Trading Mentor — Your Free Trading Coach | TradeHQ" />
-        <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Curated by expert traders. Free on TradeHQ." />
+        <meta property="og:title" content="TradeHQ Mentor — Educational Trading Q&A" />
+        <meta property="og:description" content="Ask educational questions about market mechanics, risk concepts, indicators and simulator features. AI-backed when available, with a static fallback." />
         <meta property="og:url" content="https://www.thetradehq.com/ai-mentor" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Smart Trading Mentor — Your Free Trading Coach | TradeHQ" />
-        <meta name="twitter:description" content="Ask anything about trading, risk, psychology, or markets. Curated by expert traders." />
+        <meta name="twitter:title" content="TradeHQ Mentor — Educational Trading Q&A" />
+        <meta name="twitter:description" content="Educational trading Q&A with an AI chat service when available and a static topic fallback." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
       </Helmet>
 
@@ -88,13 +88,13 @@ export default function AIMentor() {
           <div className="text-center mb-8 animate-fade-in">
             <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-primary/10 border border-primary/20">
               <Brain className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium text-primary">Smart Trading Mentor</span>
+              <span className="text-sm font-medium text-primary">TradeHQ Mentor</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-2">
-              Trading Mentor <span className="text-primary">— Curated Knowledge</span>
+              Trading Q&A <span className="text-primary">— Educational Only</span>
             </h1>
             <p className="text-muted-foreground">
-              Expert-curated answers — strategy, risk, psychology, technicals
+              AI-backed when available, with a transparent static educational fallback
             </p>
           </div>
 
@@ -201,21 +201,21 @@ export default function AIMentor() {
 
           <SEOSection
             path="/ai-mentor"
-            faqHeading="AI Mentor"
-            breadcrumbs={[{ label: "AI Mentor" }]}
+            faqHeading="TradeHQ Mentor"
+            breadcrumbs={[{ label: "TradeHQ Mentor" }]}
             faqs={[
               {
-                question: "What is the TradeHQ AI Mentor?",
+                question: "What is the TradeHQ Mentor?",
                 answer:
-                  "An always-on AI trading coach that answers questions about strategies, indicators, market mechanics and trading psychology — tailored to your simulated portfolio. (Educational simulation only — not financial advice.)",
+                  "It is an educational Q&A feature. TradeHQ calls its AI chat service when available and otherwise uses a static topic-library fallback. This page is not a personalized investment-advice service.",
               },
               {
-                question: "Can the AI Mentor predict prices?",
+                question: "Can the TradeHQ Mentor predict prices?",
                 answer:
-                  "No. The mentor is built for education — it explains concepts, reviews your trade history and helps you build discipline. It will never give specific buy/sell recommendations or guarantees.",
+                  "No. The mentor is intended to explain concepts and simulator mechanics. It does not provide guaranteed forecasts, personalized allocations, or specific buy/sell instructions.",
               },
               {
-                question: "Is the AI Mentor free?",
+                question: "Is the TradeHQ Mentor free?",
                 answer:
                   "Yes — it is included free with every TradeHQ account, no signup or payment required.",
               },

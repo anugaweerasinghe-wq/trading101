@@ -1,7 +1,7 @@
 import { Asset } from "@/lib/types";
 import { getAssetContent, getCategoryIntro } from "@/lib/assetContent";
 import { LiveMarketData } from "@/hooks/useLiveMarketData";
-import { BookOpen, Target, BarChart3, AlertTriangle, Loader2, Info, Wifi, WifiOff } from "lucide-react";
+import { BookOpen, Target, BarChart3, AlertTriangle, Loader2, Info } from "lucide-react";
 
 interface AssetIntelligenceProps {
   asset: Asset;
@@ -56,7 +56,18 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
   if (!content) return null;
 
   const stats = content.stats;
-  const isLiveDataAvailable = liveData?.source === 'live';
+  const provenance = liveData?.provenance;
+  const statusLabels = {
+    realtime: 'Provider snapshot', delayed: 'Delayed / end-of-day',
+    previous_close: 'Previous session', proxy: 'Token proxy',
+    mixed: 'Provider + simulated fields', simulated: 'Simulated', provider: 'Provider snapshot',
+  };
+  const quoteLabel = provenance ? statusLabels[provenance.status] : 'Unverified snapshot';
+  const stockQuote = asset.type === 'stock' || asset.type === 'etf';
+  const sessionQuote = stockQuote && provenance && provenance.status !== 'simulated';
+  const changeLabel = provenance?.status === 'previous_close' ? 'Session open–close' : sessionQuote ? 'Reported change' : '24h Change';
+  const rangePeriod = sessionQuote ? 'Session' : '24h';
+  const priceUnit = asset.type === 'forex' ? asset.symbol.split('/')[1] || 'quote units' : 'USD';
   
   // Use live data if available, otherwise fall back to asset data
   const displayPrice = liveData?.price ?? asset.price;
@@ -77,28 +88,8 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
           Asset Intelligence
         </h2>
         
-        {/* Live data indicator */}
-        <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
-          isLiveDataAvailable 
-            ? 'bg-profit/20 text-profit' 
-            : 'bg-muted text-muted-foreground'
-        }`}>
-          {isLiveLoading ? (
-            <>
-              <Loader2 className="w-3 h-3 animate-spin" />
-              Updating...
-            </>
-          ) : isLiveDataAvailable ? (
-            <>
-              <Wifi className="w-3 h-3" />
-              Live Data
-            </>
-          ) : (
-            <>
-              <WifiOff className="w-3 h-3" />
-              Simulated
-            </>
-          )}
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground">
+          {isLiveLoading ? <><Loader2 className="w-3 h-3 animate-spin" />Updating...</> : quoteLabel}
         </div>
       </div>
       
@@ -184,21 +175,21 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
           <div className="space-y-3">
             {/* Live Price */}
             <div className="flex justify-between items-center">
-              <span className="text-muted-foreground text-sm">Price</span>
+              <span className="text-muted-foreground text-sm">Price ({priceUnit})</span>
               <span className="text-foreground font-medium tabular-nums">
                 {isLiveLoading && !liveData ? (
                   <span className="flex items-center gap-1.5 text-muted-foreground">
                     <Loader2 className="w-3 h-3 animate-spin" />
                   </span>
                 ) : (
-                  `$${displayPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                  `${displayPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                 )}
               </span>
             </div>
             
             {/* 24h Change */}
             <div className="flex justify-between items-center">
-              <span className="text-muted-foreground text-sm">24h Change</span>
+              <span className="text-muted-foreground text-sm">{changeLabel}</span>
               <span className={`font-medium tabular-nums ${displayChange >= 0 ? 'text-profit' : 'text-loss'}`}>
                 {isLiveLoading && !liveData ? (
                   <span className="flex items-center gap-1.5 text-muted-foreground">
@@ -215,9 +206,9 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
             {/* 24h High - NEW LIVE DATA */}
             {displayHigh24h && (
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground text-sm">24h High</span>
+                <span className="text-muted-foreground text-sm">{rangePeriod} High ({priceUnit})</span>
                 <span className="text-foreground font-medium tabular-nums">
-                  ${displayHigh24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  {displayHigh24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
             )}
@@ -225,19 +216,19 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
             {/* 24h Low - NEW LIVE DATA */}
             {displayLow24h && (
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground text-sm">24h Low</span>
+                <span className="text-muted-foreground text-sm">{rangePeriod} Low ({priceUnit})</span>
                 <span className="text-foreground font-medium tabular-nums">
-                  ${displayLow24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  {displayLow24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
             )}
 
             {/* 24h Volume - NEW LIVE DATA */}
-            {displayVolume && displayVolume > 0 && (
+            {displayVolume !== undefined && displayVolume > 0 && (
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground text-sm">24h Volume</span>
+                <span className="text-muted-foreground text-sm">{rangePeriod} Volume ({stockQuote ? 'shares' : 'USD'})</span>
                 <span className="text-foreground font-medium tabular-nums">
-                  ${formatVolume(displayVolume)}
+                  {formatVolume(displayVolume)}
                 </span>
               </div>
             )}
@@ -353,16 +344,13 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
               </div>
             )}
             
-            {/* Source & Last Updated */}
-            <div className="flex justify-between items-center pt-2 border-t border-white/5">
-              <span className="text-muted-foreground/60 text-xs">
-                {isLiveDataAvailable ? 'CoinGecko / Alpha Vantage' : stats?.source || 'Simulated'}
-              </span>
-              {liveData?.lastUpdated && (
-                <span className="text-muted-foreground/60 text-xs">
-                  {new Date(liveData.lastUpdated).toLocaleTimeString()}
-                </span>
-              )}
+            <div className="space-y-1 pt-2 border-t border-white/5 text-muted-foreground/80 text-xs">
+              <p>Quote source: {provenance?.provider || 'Unverified; simulator/reference snapshot'}</p>
+              {provenance?.note && <p>{provenance.note}</p>}
+              {provenance?.status === 'mixed' && <p>Change, high and low are simulated, not observed market statistics.</p>}
+              {provenance?.fetchedAt && <p>Fetched: {new Date(provenance.fetchedAt).toLocaleString()} (may be cached)</p>}
+              {provenance?.providerAsOf && <p>Provider timestamp: {new Date(provenance.providerAsOf).toLocaleString()}</p>}
+              {!provenance?.providerAsOf && <p>Provider timestamp unavailable.</p>}
             </div>
           </div>
         </article>

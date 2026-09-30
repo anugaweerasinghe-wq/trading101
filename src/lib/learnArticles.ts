@@ -47,7 +47,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Getting started is simple: visit TradeHQ, and you'll have $100,000 in virtual cash ready to trade immediately — no signup or credit card required. Browse over 150 assets, read the AI-generated market analysis, place your first simulated trade, and start tracking your portfolio performance.",
           "As you gain experience, use the AI Mentor feature to get personalized strategy recommendations. Review your trade history, analyze what worked and what didn't, and continuously refine your approach. The goal isn't to make money — it's to build the skills and discipline you'll need when you eventually trade with real capital.",
-          "Many professional traders still use paper trading to test new strategies before deploying real capital. It's not just for beginners — it's a lifelong tool for any serious market participant. Start your paper trading journey today and build the foundation for long-term financial success."
+          "Paper trading is also used to test rule changes and platform mechanics without placing real-money orders. It can be useful at different experience levels, but simulator results do not establish future profitability or financial success."
         ]
       }
     ],
@@ -70,21 +70,21 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "A stock chart is a visual representation of a security's price movement over time. The x-axis shows time (minutes, hours, days, or years) and the y-axis shows price. The most common chart types are line charts, bar charts, and candlestick charts. Candlestick charts are the most popular among traders because they show four key data points: open, high, low, and close prices.",
           "Each candlestick represents a specific time period. A green (or hollow) candle means the closing price was higher than the opening price — the asset went up. A red (or filled) candle means it went down. The body of the candle shows the open-to-close range, while the thin lines above and below (called wicks or shadows) show the high and low.",
-          "Learning to read candlestick patterns is foundational. Patterns like Doji (indecision), Hammer (potential reversal), and Engulfing (strong momentum shift) give traders clues about what might happen next. On TradeHQ, you can practice identifying these patterns on real market data without risking any money."
+          "Candlestick patterns are descriptive labels for combinations of open, high, low and close prices. Patterns such as Doji, Hammer and Engulfing can be used to practise recognizing chart structure, but they do not determine what price will do next. On TradeHQ, you can practise identifying them on simulated charts without risking real money."
         ]
       },
       {
         heading: "Support, Resistance, and Trend Lines",
         paragraphs: [
-          "Support is a price level where a stock tends to stop falling and bounce back up — think of it as a floor. Resistance is the opposite — a ceiling where the price tends to stop rising and pull back. Identifying these levels helps you decide when to buy (near support) and when to sell (near resistance).",
-          "Trend lines connect two or more price points and extend into the future to act as a line of support or resistance. An uptrend line connects higher lows, while a downtrend line connects lower highs. When a stock breaks through a support or resistance level with high volume, it often signals the start of a new trend.",
-          "Volume is the number of shares or contracts traded in a given period. High volume confirms the strength of a price move — a breakout on high volume is more reliable than one on low volume. Always check volume alongside price to avoid false signals."
+          "Support and resistance are charting terms for areas where price has previously stalled or reversed. They are often drawn as zones rather than exact floors or ceilings, and they can fail or shift as market conditions change.",
+          "Trend lines connect selected price points to describe historical direction. An uptrend line commonly connects higher lows, while a downtrend line connects lower highs. A break through a previously watched zone can be compared with volume and later price behavior, but it does not guarantee that a new trend will continue.",
+          "Volume is the number of shares or contracts traded in a given period. Traders often compare volume with price moves for context, but higher volume does not make a breakout certain or eliminate false signals."
         ]
       },
       {
         heading: "Key Technical Indicators for Beginners",
         paragraphs: [
-          "Moving averages smooth out price data to identify trends. The 50-day moving average (MA) and 200-day MA are widely watched. When the 50-day crosses above the 200-day (a Golden Cross), it signals bullish momentum. The opposite (Death Cross) signals bearish momentum. These are simple but powerful tools for timing entries and exits.",
+          "Moving averages smooth historical price data to describe trend direction. The 50-day and 200-day averages are widely watched; their crossovers are commonly labelled Golden Cross and Death Cross. Because moving averages lag price, these patterns describe past momentum and do not guarantee future direction.",
           "The Relative Strength Index (RSI) measures momentum on a scale of 0 to 100. An RSI above 70 suggests the asset is overbought (potentially due for a pullback), while below 30 suggests it's oversold (potentially due for a bounce). MACD (Moving Average Convergence Divergence) is another momentum indicator that shows the relationship between two moving averages.",
           "Practice reading charts on TradeHQ by opening any asset page — for example, NVIDIA (NVDA) or Ethereum (ETH). Study the candlestick patterns, identify support and resistance levels, and watch how indicators confirm or contradict price action. The more charts you study, the better your pattern recognition becomes."
         ]
@@ -99,9 +99,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   },
   {
     slug: "crypto-vs-stocks",
-    title: "Crypto vs Stocks: Which Should You Practice Trading First?",
-    summary: "Crypto and stocks have different risk profiles, trading hours, and volatility. Here's how to decide which to practice first as a beginner.",
-    metaDescription: "Crypto vs stocks — which should beginners practice first? Compare volatility, risk, and trading hours. Practice both free on TradeHQ.",
+    title: "Crypto vs Stocks: Comparing Two Practice Markets",
+    summary: "Crypto and stocks differ in market structure, trading hours and volatility. Compare both in a virtual-money environment without turning the comparison into a suitability recommendation.",
+    metaDescription: "Compare crypto and stocks by market structure, volatility and trading hours, then explore both with virtual money on TradeHQ.",
     readTime: "5 min read",
     sections: [
       {
@@ -109,7 +109,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Stocks represent ownership in real companies. When you buy Apple stock, you own a tiny piece of a trillion-dollar technology company that generates revenue, pays dividends, and is regulated by the SEC. Stock markets operate Monday through Friday during set hours (9:30 AM to 4:00 PM ET for the NYSE).",
           "Cryptocurrencies are decentralized digital assets that trade 24/7, 365 days a year. There's no closing bell, no holidays, and often no central authority governing their issuance. This means crypto prices can make dramatic moves at any hour — on a Sunday night, during a holiday, or while you sleep.",
-          "The biggest difference for beginners is volatility. Bitcoin might move 5-10% in a single day, while a large-cap stock like Microsoft typically moves less than 2%. This makes crypto exciting but also more dangerous for inexperienced traders. Paper trading on TradeHQ lets you experience both markets without any real risk."
+          "Volatility can differ substantially between a crypto asset and a large-cap stock, and those differences also change over time. TradeHQ can be used to compare simulated price paths without assuming a fixed daily range or that one market is more suitable for a particular person."
         ]
       },
       {
@@ -125,7 +125,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Crypto markets never close, so you can practice trading whenever it fits your schedule. The higher volatility means more frequent trading opportunities, which accelerates the learning process — you'll see the results of your decisions faster. Crypto also has lower barriers to entry, with many assets priced under $1.",
           "The crypto ecosystem introduces you to concepts like blockchain technology, decentralized finance (DeFi), and tokenomics — knowledge that's increasingly relevant in 2026 as traditional finance and crypto continue to converge. Understanding both worlds makes you a more versatile trader.",
-          "Our recommendation: start with both. TradeHQ gives you access to 150+ assets across stocks, crypto, ETFs, forex, and commodities. Practice trading a few blue-chip stocks and major cryptocurrencies simultaneously to see which market fits your trading style and risk tolerance."
+          "One simulation exercise is to place stocks and crypto side-by-side and record differences in volatility, market hours and drawdown. That comparison is educational only; it does not determine which asset class is suitable for real money."
         ]
       }
     ],
@@ -139,33 +139,33 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   {
     slug: "trading-strategies-for-beginners",
     title: "5 Trading Strategies You Can Test Risk-Free on a Simulator",
-    summary: "From buy-and-hold to momentum trading — explore five proven strategies you can practice with virtual money before risking real capital.",
+    summary: "Explore five commonly discussed approaches and test their assumptions with virtual money. The examples are practice frameworks, not proven profit formulas.",
     metaDescription: "5 beginner-friendly trading strategies to practice risk-free. Test momentum, swing, and value trading with $100K virtual cash on TradeHQ.",
     readTime: "7 min read",
     sections: [
       {
         heading: "1. Buy and Hold (The Warren Buffett Approach)",
         paragraphs: [
-          "Buy and hold is the simplest strategy: purchase quality assets and hold them for the long term, ignoring short-term price fluctuations. Warren Buffett's Berkshire Hathaway has averaged 20% annual returns over decades using this approach. The idea is that great companies increase in value over time, and patient investors are rewarded.",
+          "Buy-and-hold means maintaining a position over a long period rather than reacting to each short-term price move. Historical examples can illustrate the approach, but no company, ETF or holding period guarantees a particular return.",
           "On TradeHQ, you can practice buying blue-chip stocks like Apple (AAPL) or index ETFs like SPY and tracking their performance over weeks or months. This strategy teaches you to think long-term and avoid the emotional trap of selling during temporary dips. It also helps you understand the power of compound growth.",
-          "The key to successful buy-and-hold investing is selecting the right assets. Focus on companies with strong fundamentals: consistent revenue growth, healthy profit margins, competitive advantages (moats), and capable management. Use TradeHQ's AI Mentor to get analysis on any asset before you commit."
+          "A simulation can compare fundamentals such as revenue growth, margins and business concentration with later price behavior. TradeHQ does not determine the 'right' asset or provide a recommendation to commit real money."
         ]
       },
       {
         heading: "2. Swing Trading (Capturing Multi-Day Moves)",
         paragraphs: [
-          "Swing trading involves holding positions for several days to weeks, aiming to capture medium-term price moves. Unlike day trading, you don't need to watch screens all day — you can analyze charts in the evening, set your orders, and check back the next day. This makes it ideal for people with day jobs.",
-          "The typical swing trading approach uses technical analysis to identify assets that are about to make a significant move. Look for stocks near support levels with bullish candlestick patterns, or assets breaking out above resistance on high volume. Set a stop-loss below your entry point and a profit target 2-3x your risk.",
+          "Swing trading usually refers to positions held for several days to weeks. It may require less continuous screen time than some intraday approaches, but positions remain exposed to overnight gaps, news and changing liquidity, so no schedule makes it universally suitable.",
+          "Swing-trading exercises often use chart patterns, support/resistance zones and predefined exits. In the simulator, record both successes and failures and compare several exit assumptions instead of treating a pattern or a fixed reward-to-risk multiple as a predictive rule.",
           "Practice swing trading on TradeHQ with volatile assets like Tesla (TSLA) or Solana (SOL). Track your entry points, stop-losses, and targets in the built-in trading journal. After 20-30 trades, analyze your win rate and average profit/loss to refine your strategy."
         ]
       },
       {
         heading: "3. Momentum Trading, 4. Mean Reversion, and 5. Dollar-Cost Averaging",
         paragraphs: [
-          "Momentum trading follows the trend: buy assets that are going up and sell assets that are going down. The theory is that trends tend to persist. Use moving averages and RSI to confirm momentum direction. On TradeHQ, sort assets by 24-hour change to find momentum candidates.",
-          "Mean reversion is the opposite philosophy — it assumes that prices eventually return to their average. When an asset drops significantly below its 50-day moving average, mean reversion traders buy, expecting a bounce. When it spikes well above, they sell. This strategy works best in range-bound markets.",
-          "Dollar-cost averaging (DCA) is the most passive strategy: invest a fixed amount at regular intervals regardless of price. This smooths out volatility over time and removes the emotional decision of timing the market. On TradeHQ, practice DCA by buying a small amount of Bitcoin or SPY every simulated week and compare your results to lump-sum investing.",
-          "The best strategy is the one that fits your personality, schedule, and risk tolerance. Use TradeHQ's paper trading simulator to test all five strategies side-by-side. After several weeks of practice, you'll know which approach feels natural and produces the most consistent results for your style."
+          "Momentum strategies test the hypothesis that recent relative strength can persist. A simulator can rank assets by recent change and compare what happened afterward, including cases where momentum reversed; moving averages and RSI do not confirm a future outcome.",
+          "Mean-reversion strategies test the hypothesis that prices can move back toward a reference average after an unusually large deviation. In practice, deviations can continue or the reference average can shift, so the simulator should be used to test the assumption rather than turn a moving-average distance into a buy or sell instruction.",
+          "Dollar-cost averaging is the practice of allocating the same hypothetical amount at regular intervals. It changes purchase timing but does not guarantee lower risk or better returns. In TradeHQ, compare a simulated recurring-purchase schedule with other timing assumptions.",
+          "Use TradeHQ to test these approaches side-by-side under the same assumptions. Several weeks of simulated results can reveal how the rules behaved in that sample, but they do not establish future profitability or personal suitability."
         ]
       }
     ],
@@ -196,13 +196,13 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "An ETF is a fund that holds a basket of securities (stocks, bonds, commodities) and trades on an exchange like a regular stock. SPY tracks the S&P 500, QQQ tracks the Nasdaq 100, and DIA tracks the Dow Jones. When you buy one share of SPY, you effectively own a tiny piece of all 500 companies in the S&P 500.",
           "ETFs offer instant diversification at a low cost. Instead of buying 500 individual stocks, you buy one ETF. Most ETFs have very low expense ratios (annual fees), often under 0.1%. They also trade throughout the day at real-time prices, unlike mutual funds which only trade once at market close.",
-          "On TradeHQ, you can practice trading popular ETFs like SPY, QQQ, DIA, and ARKK. This lets you learn about market-wide movements without picking individual stocks — a strategy many professional investors recommend for beginners."
+          "On TradeHQ, you can compare ETFs such as SPY, QQQ, DIA and ARKK to observe differences in concentration, sector exposure and simulated volatility without treating an ETF choice as a recommendation."
         ]
       },
       {
         heading: "Building a Portfolio with ETFs",
         paragraphs: [
-          "A classic beginner portfolio might allocate 60% to a broad market ETF (SPY), 20% to a growth/tech ETF (QQQ), and 20% to individual stocks or crypto you want to learn about. This gives you diversified market exposure while still allowing you to practice active trading on a portion of your portfolio.",
+          "For a simulation exercise, choose two or more hypothetical allocation mixes and compare their concentration and drawdown. A 60/20/20 split can be one test case, not a 'beginner portfolio' recommendation.",
           "ETFs are also excellent for learning about different sectors and asset classes. Want exposure to the semiconductor industry? There's an ETF for that. Interested in international markets, clean energy, or real estate? ETFs cover virtually every market segment imaginable.",
           "Use TradeHQ to build a virtual portfolio with ETFs and track its performance against individual stock picks. This exercise teaches you about correlation, diversification benefits, and the trade-off between concentrated bets and broad market exposure. Practice this strategy risk-free before committing real capital."
         ]
@@ -225,9 +225,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "The Foundation: Asset Allocation",
         paragraphs: [
-          "Asset allocation is the process of dividing your portfolio among different asset classes — stocks, bonds, crypto, commodities, and cash. Research consistently shows that asset allocation is the single most important factor in long-term portfolio performance, more impactful than individual stock selection or market timing.",
-          "A common framework for beginners is the 60/30/10 split: 60% in stocks or stock ETFs for growth, 30% in bonds or stable assets for protection, and 10% in higher-risk opportunities like crypto or individual stock picks. On TradeHQ, you can experiment with different allocations to see how they perform.",
-          "Your ideal allocation depends on your goals, time horizon, and risk tolerance. A 25-year-old saving for retirement can afford more risk (80% stocks, 20% bonds) than a 55-year-old approaching retirement (40% stocks, 60% bonds). Paper trading helps you discover your true risk tolerance before real money is on the line."
+          "Asset allocation is the process of dividing a portfolio among different asset classes — stocks, bonds, crypto, commodities and cash. It changes the mix of risks and returns, but its contribution varies by assets, time period and methodology, so this guide does not call it the single most important factor.",
+          "In the simulator, a 60/30/10 split can be used as one arbitrary comparison case alongside other allocations. The percentages are experiment inputs, not a recommended real-money mix.",
+          "Real-world allocation choices depend on many personal and financial factors that a simulator cannot determine. Age alone does not establish an appropriate stock/bond mix, and simulated comfort with losses is not the same as real-world risk capacity."
         ]
       },
       {
@@ -235,14 +235,14 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Diversification means spreading investments across different assets so that poor performance in one area doesn't devastate your entire portfolio. If you own only tech stocks and the tech sector drops 30%, your whole portfolio suffers. But if tech is just 25% of a diversified portfolio, the impact is cushioned.",
           "Effective diversification happens across multiple dimensions: asset classes (stocks, crypto, commodities), sectors (technology, healthcare, energy), geographies (US, international), and company sizes (large-cap, mid-cap, small-cap). ETFs make diversification simple — SPY gives you 500 stocks in one trade.",
-          "On TradeHQ, build a portfolio that spans multiple asset types. Buy some stocks (AAPL, NVDA), add crypto exposure (BTC, ETH), include an ETF for broad market coverage (SPY), and maybe add a commodity like gold for hedging. Track how each piece contributes to your overall performance."
+          "For a diversification exercise, build several virtual portfolios with different combinations of stocks, crypto, ETFs and commodities, then compare concentration, correlation and drawdown. The examples are simulation inputs, not a suggested real portfolio."
         ]
       },
       {
         heading: "Rebalancing and Ongoing Management",
         paragraphs: [
           "Over time, your portfolio allocation will drift as some assets outperform others. If your crypto holdings surge 50% while stocks grow 10%, crypto becomes a larger percentage of your portfolio than you intended — increasing your risk. Rebalancing means periodically selling some winners and buying more of the underperformers to maintain your target allocation.",
-          "Most financial advisors recommend rebalancing quarterly or when any asset class drifts more than 5% from its target allocation. This disciplined approach forces you to sell high and buy low — the opposite of what emotional traders do. It's counterintuitive but mathematically sound.",
+          "Rebalancing can be calendar-based, threshold-based or not used at all. Quarterly and 5% drift rules are examples rather than universal standards, and their effects depend on market path, costs, taxes and the chosen allocation.",
           "Practice rebalancing on TradeHQ by setting a target allocation at the start, then checking your portfolio monthly. Use the portfolio analytics feature to see how your allocations have shifted and make adjustment trades. This exercise builds the discipline you'll need when managing real investments. Remember: successful investing is a marathon, not a sprint."
         ]
       }
@@ -257,14 +257,14 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   {
     slug: "risk-management-in-trading",
     title: "What Is Risk Management in Trading? The Complete Beginner's Guide",
-    summary: "Risk management is the difference between surviving and blowing up your account. Learn position sizing, stop-losses, and the 2% rule every trader needs.",
-    metaDescription: "Master risk management in trading: position sizing, stop-loss strategies, risk-reward ratios, and the 2% rule. Free guide with practice tools on TradeHQ.",
+    summary: "Explore position sizing, predefined exits and reward-to-risk arithmetic through simulation. Percentage limits are test assumptions, not universal rules.",
+    metaDescription: "Explore trading risk-management concepts with virtual money: position sizing, exit assumptions and reward-to-risk arithmetic without a universal percentage rule.",
     readTime: "6 min read",
     sections: [
       {
         heading: "Why Risk Management Matters More Than Stock Picks",
         paragraphs: [
-          "Most beginner traders obsess over finding the perfect stock or crypto to buy. But professional traders know the truth: risk management is far more important than any single trade idea. You can be wrong on 60% of your trades and still be profitable if your winners are larger than your losers — and that's entirely a function of risk management.",
+          "Risk management changes how a sequence of gains and losses affects an account. Profitability depends on win frequency, average gains and losses, costs, sizing and the order of outcomes; no single percentage or setup guarantees survival.",
           "Risk management is a set of rules and strategies designed to limit your potential losses on any single trade and across your entire portfolio. Without it, a single bad trade can wipe out weeks or months of gains. With it, you can survive losing streaks, preserve capital, and stay in the game long enough for your edge to play out.",
           "On TradeHQ, you can practise risk-management ideas with $100,000 in virtual cash. Experiment with different position sizes, exit rules, and reward-to-risk assumptions, then review how each choice changes drawdown and variability over a larger sample of trades. The aim is to build a repeatable process, not to discover a guaranteed formula."
         ]
@@ -280,9 +280,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "Stop-Losses and Risk-Reward Ratios",
         paragraphs: [
-          "A stop-loss is a predetermined price level at which you exit a losing trade. Setting a stop-loss before entering a trade removes emotion from the equation — you know exactly how much you can lose before you click buy. Common stop-loss methods include fixed percentage (e.g., 5% below entry), support level-based, or ATR-based (Average True Range).",
-          "The risk-reward ratio compares your potential loss to your potential gain. A 1:2 risk-reward ratio means you risk $1 to potentially make $2. Professional traders typically aim for at least 1:2 or 1:3 ratios. With a 1:3 ratio, you only need to win 25% of your trades to break even — and anything above that is pure profit.",
-          "Combine position sizing, stop-losses, and favorable risk-reward ratios into a complete risk management system. On TradeHQ, practice setting stop-losses on every trade, tracking your risk-reward ratios in the trading journal, and calculating your win rate over 50+ trades. This data-driven approach is what separates consistent traders from gamblers."
+          "A stop-loss is an instruction or assumption to exit at or around a specified level, but real execution can differ because of gaps, liquidity and slippage. In the simulator, fixed-percentage, chart-based and volatility-based exits can be compared as alternative assumptions.",
+          "The reward-to-risk ratio compares a planned gain with a planned loss. A 1:2 ratio means a target twice the size of the assumed loss. Break-even win-rate arithmetic also depends on transaction costs, slippage and whether actual wins and losses match the planned amounts, so no minimum ratio is treated here as a professional standard.",
+          "Use the simulator to compare combinations of position sizing, exit assumptions and reward-to-risk targets, then calculate results over a documented sample. The exercise is to understand how assumptions interact, not to certify a system or predict real-money performance."
         ]
       }
     ],
@@ -295,16 +295,15 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   },
   {
     slug: "market-orders-vs-limit-orders",
-    title: "Market Orders vs Limit Orders: Which Should You Use and When?",
-    summary: "Understanding order types is essential before placing your first trade. Learn the difference between market and limit orders, and when to use each one.",
-    metaDescription: "Market orders vs limit orders explained for beginners. Learn about slippage, fill guarantees, and when to use each order type. Practice free on TradeHQ.",
+    title: "Market Orders vs Limit Orders: How Their Execution Differs",
+    summary: "Understand how market and limit orders differ in immediacy, price control, fill risk and slippage.",
+    metaDescription: "Market orders vs limit orders explained for beginners: compare price control, fill risk, liquidity and slippage with virtual-money practice.",
     readTime: "5 min read",
     sections: [
       {
         heading: "What Is a Market Order?",
         paragraphs: [
-          "A market order is the simplest type of trade: you tell your broker to buy or sell an asset immediately at the best available price. Market orders are virtually guaranteed to execute, but the exact price you get may differ slightly from what you see on your screen — especially in fast-moving or illiquid markets.",
-          "The advantage of market orders is speed and certainty of execution. When you absolutely need to get into or out of a position right now — for example, cutting a loss or jumping on a breaking news catalyst — a market order is the right choice. You sacrifice price precision for guaranteed execution.",
+          "A market order asks for execution against available liquidity and prioritizes immediacy over price control. The final fill can differ from the displayed quote, and execution is not guaranteed under every condition because markets can halt, orders can be rejected, or liquidity can disappear. The trade-off depends on the execution objective and venue.",
           "The downside is slippage: the difference between the expected price and the actual fill price. In highly liquid markets like Apple (AAPL) or Bitcoin (BTC), slippage is usually pennies. But in thinly traded altcoins or penny stocks, slippage can be significant. On TradeHQ, you can observe how market orders execute instantly on different asset types."
         ]
       },
@@ -319,9 +318,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "When to Use Each Order Type",
         paragraphs: [
-          "Use market orders when: you need immediate execution, the asset is highly liquid (major stocks, BTC, ETH), you're cutting a losing position and can't afford to wait, or the spread between bid and ask is very tight. In these situations, the cost of slippage is minimal compared to the risk of not executing.",
-          "Use limit orders when: you want to buy at a specific support level, you're not in a hurry to enter, the asset has wide bid-ask spreads, or you want to set a take-profit level in advance. Limit orders also work well for scaling into positions — placing multiple buy limits at different price levels.",
-          "On TradeHQ, practice using both order types on different assets. Try market orders on liquid stocks like NVDA, and limit orders on more volatile crypto assets like SOL or AVAX. Track which order type gives you better average fill prices over 20+ trades and develop your own preference based on real experience."
+          "Market orders prioritize immediacy and accept price uncertainty; limit orders prioritize a worst acceptable price and accept non-execution or partial-fill risk. Liquidity, spread, order size, volatility and venue rules affect both.",
+          "In a simulation exercise, compare several hypothetical spreads and liquidity conditions using the same virtual order size. Record fill assumptions and slippage separately instead of treating support levels or asset categories as instructions for which order type to use.",
+          "TradeHQ's current quick-order simulation does not reproduce a full live order book or every pending-order behavior, so simulator fills should not be treated as evidence that one order type will achieve better real-market execution."
         ]
       }
     ],
@@ -335,7 +334,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   {
     slug: "technical-indicators-rsi-macd-moving-averages",
     title: "How to Use Technical Indicators: RSI, MACD, and Moving Averages Explained",
-    summary: "Technical indicators help traders identify trends, momentum, and potential reversals. Master the three most popular indicators used by professionals worldwide.",
+    summary: "Technical indicators transform historical price data to describe trend and momentum. Learn how RSI, MACD and moving averages are calculated and where their interpretations can fail.",
     metaDescription: "Learn how to use RSI, MACD, and Moving Averages for trading. Understand overbought/oversold signals, crossovers, and trend confirmation. Free practice on TradeHQ.",
     readTime: "7 min read",
     sections: [
@@ -343,7 +342,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "Moving Averages: The Foundation of Trend Analysis",
         paragraphs: [
           "Moving averages (MAs) smooth out price data to reveal the underlying trend. The two most common types are the Simple Moving Average (SMA), which gives equal weight to all prices in the period, and the Exponential Moving Average (EMA), which gives more weight to recent prices and reacts faster to changes.",
-          "The 50-day and 200-day moving averages are the most widely watched levels on Wall Street. When the 50-day MA crosses above the 200-day MA, it forms a 'Golden Cross' — a bullish signal that has historically preceded major rallies. The opposite, a 'Death Cross' (50 crossing below 200), signals bearish momentum and potential downtrends.",
+          "The 50-day and 200-day moving averages are commonly watched reference periods. A 50-day move above the 200-day is called a 'Golden Cross', while the reverse is called a 'Death Cross'. Both are lagging descriptions of historical price momentum, and either can be followed by continuation, reversal or sideways trading.",
           "Traders also use shorter moving averages (9 EMA, 21 EMA) for quicker signals on lower timeframes. When price is above the moving average, the trend is generally bullish; when below, bearish. On TradeHQ, overlay moving averages on any asset chart to see how they align with price action and practice identifying trend direction."
         ]
       },
@@ -351,16 +350,16 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "RSI: Measuring Momentum and Overbought/Oversold Conditions",
         paragraphs: [
           "The Relative Strength Index (RSI) is a momentum oscillator that measures the speed and magnitude of price changes on a scale of 0 to 100. Developed by J. Welles Wilder, RSI compares the average gains and losses over a 14-period window to determine whether an asset is overbought (above 70) or oversold (below 30).",
-          "When RSI rises above 70, it suggests the asset may be overheated and due for a pullback — but it doesn't mean you should immediately sell. In strong uptrends, RSI can stay above 70 for extended periods. The most reliable RSI signals come from divergences: when price makes a new high but RSI makes a lower high, it warns of weakening momentum.",
-          "RSI is particularly useful for timing entries in trending markets. During an uptrend, buy when RSI pulls back to 40-50 (not oversold, but showing a temporary dip in momentum). During a downtrend, look for RSI to bounce to 50-60 for short entries. Practice these RSI strategies on TradeHQ assets like ETH, AAPL, or NVDA."
+          "RSI readings above 70 are commonly labelled overbought and readings below 30 oversold, but those labels do not mean a reversal must occur. Strong trends can keep RSI at extreme readings for long periods, and divergences can persist or fail.",
+          "A useful practice exercise is to compare RSI readings with later price behavior across different assets and market regimes. Record examples where the same reading was followed by a reversal, continuation or no clear move so the indicator is treated as context rather than a timing rule."
         ]
       },
       {
         heading: "MACD: Combining Trend and Momentum Signals",
         paragraphs: [
           "The Moving Average Convergence Divergence (MACD) is a versatile indicator that shows the relationship between two exponential moving averages — typically the 12-period and 26-period EMAs. The MACD line is the difference between these two EMAs, and the signal line is a 9-period EMA of the MACD line. The histogram shows the gap between them.",
-          "The classic MACD signal is the crossover: when the MACD line crosses above the signal line, it's bullish; when it crosses below, it's bearish. The histogram makes these crossovers easy to spot — bars turning from negative to positive indicate building bullish momentum. MACD works best in trending markets and can generate false signals in sideways conditions.",
-          "For best results, combine all three indicators: use moving averages to identify the overall trend, RSI to gauge momentum and overbought/oversold conditions, and MACD crossovers for entry timing. No single indicator is perfect — they work best as a team. On TradeHQ, practice analyzing assets with all three indicators simultaneously and record your observations in the trading journal."
+          "A MACD-line crossover is commonly labelled bullish when it moves above the signal line and bearish when it moves below, but those labels describe the indicator relationship rather than guarantee price direction. Histogram bars show the changing difference between the lines and can whipsaw in different regimes.",
+          "For practice, compare RSI, moving averages and MACD separately and together across several historical windows. Define the interpretation before viewing later prices and record both confirming and conflicting signals rather than using the indicators as an entry-timing formula."
         ]
       }
     ],

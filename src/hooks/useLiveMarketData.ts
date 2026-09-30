@@ -6,6 +6,7 @@ export interface MarketDataProvenance {
   status: 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider';
   provider: string;
   fetchedAt: string;
+  providerAsOf?: string;
   note?: string;
 }
 
@@ -13,8 +14,8 @@ export interface LiveMarketData {
   price: number;
   change24h: number;
   changePercent24h: number;
-  high24h: number;
-  low24h: number;
+  high24h?: number;
+  low24h?: number;
   volume24h: number;
   marketCap?: number;
   lastUpdated: string;
@@ -122,8 +123,8 @@ export function useLiveMarketData(
             price: data.price,
             change24h: typeof data.change24h === 'number' ? data.change24h : 0,
             changePercent24h: typeof data.changePercent24h === 'number' ? data.changePercent24h : 0,
-            high24h: typeof data.high24h === 'number' ? data.high24h : data.price * 1.02,
-            low24h: typeof data.low24h === 'number' ? data.low24h : data.price * 0.98,
+            high24h: typeof data.high24h === 'number' ? data.high24h : undefined,
+            low24h: typeof data.low24h === 'number' ? data.low24h : undefined,
             volume24h: typeof data.volume24h === 'number' ? data.volume24h : 0,
             marketCap: typeof data.marketCap === 'number' ? data.marketCap : undefined,
             lastUpdated: data.lastUpdated || new Date().toISOString(),
@@ -154,6 +155,12 @@ export function useLiveMarketData(
           volume24h: asset.type === 'crypto' ? 50000000000 : 10000000,
           lastUpdated: new Date().toISOString(),
           source: 'simulated',
+          provenance: {
+            status: 'simulated',
+            provider: 'TradeHQ local fallback',
+            fetchedAt: new Date().toISOString(),
+            note: 'Price, change, high/low and volume are simulator fallback values because provider data was unavailable.',
+          },
         });
       }
     } finally {

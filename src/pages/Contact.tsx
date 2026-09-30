@@ -284,10 +284,10 @@ export default function Contact() {
               point to the relevant regulator, but they are context, not advice.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed mt-3">
-              We also cannot recover an account balance. Practice portfolios are stored in your own
-              browser, so clearing site data or switching device resets them, and there is no copy on
-              our side to restore. Signing in with the optional free account keeps your stats and
-              badges attached to you across devices, which is the only way to preserve a record.
+              We also cannot recover a browser-held practice portfolio. Clearing site data or switching
+              devices can reset local portfolio, trade, journal and course-progress records. Signing in
+              can associate selected profile/community summary statistics with an account, but it does
+              not currently restore the full portfolio, trade history, course progress or badges across devices.
             </p>
           </section>
 

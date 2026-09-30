@@ -595,29 +595,29 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "Step 1: Determine your risk amount (2% of account)",
+              "Step 1: Choose a hypothetical risk amount (2% in this example)",
               "Step 2: Set your stop-loss price",
               "Step 3: Calculate risk per share (entry - stop)",
               "Step 4: Divide risk amount by risk per share",
-              "Step 5: That's how many shares to buy",
+              "Step 5: This is the modeled share quantity before costs and execution constraints",
             ],
           },
           {
             type: "heading",
-            data: "Why This Works",
+            data: "What the Example Shows",
           },
           {
             type: "text",
-            data: "Even professional traders are wrong 40-50% of the time. The 2% rule ensures that losing streaks don't wipe you out:",
+            data: "This fixed-percentage example illustrates compounding losses. It assumes every exit fills at the modeled loss and ignores fees; it does not establish professional win rates or prevent severe drawdowns:",
           },
           {
             type: "list",
             data: [
               "10 consecutive 2%-of-current-equity losses leave about 81.7% of starting equity (about -18.3%)",
               "20 consecutive 2%-of-current-equity losses leave about 66.8% (about -33.2%)",
-              "You can be wrong many times and still survive",
-              "Small losses, big winners = profitable long-term",
-              "Protects you from emotional decisions",
+              "Losses reduce the account even when the percentage stays fixed",
+              "Profitability also depends on win frequency, actual fills and costs",
+              "A written process can help review decisions; it cannot remove emotion or risk",
             ],
           },
         ],
@@ -627,39 +627,39 @@ export const lessonData: Lesson[] = [
         content: [
           {
             type: "highlight",
-            data: "A stop-loss is not a sign of defeat - it's a sign of discipline. It's your automated risk manager working 24/7.",
+            data: "A stop is an order trigger, not insurance against losses. Its operation depends on the order type, venue and trading session.",
           },
           {
             type: "text",
-            data: "Every trade needs two critical levels set before you enter: where you'll exit if you're wrong (stop-loss) and where you'll exit if you're right (take-profit). Without these, you're gambling.",
+            data: "This lesson compares planned exits with actual execution. An exit plan can be recorded in the journal, but conceptual order examples do not establish which order types TradeHQ currently supports.",
           },
           {
             type: "stat",
-            value: "95%",
-            label: "Of Successful Traders Use Stop-Losses",
-            data: "The most consistent winners in trading never let losses run wild",
+            value: "Trigger ≠ fill",
+            label: "Stop-order execution",
+            data: "No trader-usage percentage is asserted here. A stop-market order can fill away from its trigger.",
           },
           {
             type: "heading",
-            data: "Stop-Loss Orders: Your Safety Net",
+            data: "Stop Orders and Execution Risk",
           },
           {
             type: "text",
-            data: "A stop-loss is an automatic order that sells your position when the price drops to a specific level. It limits your loss on a trade.",
+            data: "For a long position, a sell stop-market order becomes a market order when triggered. The eventual fill can differ from the stop price.",
           },
           {
             type: "list",
             data: [
-              "Set BEFORE you enter the trade, not after",
-              "Based on technical levels, not emotions",
-              "Prevents small losses from becoming big losses",
-              "Removes emotion from the decision",
-              "Non-negotiable for every trade",
+              "Record the intended trigger and order type",
+              "Compare different hypothetical trigger distances",
+              "Price gaps and thin liquidity can increase the realized loss",
+              "Automatic triggering does not guarantee the execution price",
+              "A stop-limit order controls its limit price but may not fill",
             ],
           },
           {
             type: "example",
-            data: "You buy Tesla at $200 with a stop-loss at $190. If Tesla drops to $190, you automatically sell. Maximum loss: $10 per share. Even if Tesla crashes to $150 overnight, you're out at $190.",
+            data: "Hypothetical purchase at $200 with a $190 sell-stop trigger: a fill at $190 loses $10 per share before costs. If the market gaps to $150 and the order fills there, the loss is $50. The trigger does not cap the loss at $10.",
           },
           {
             type: "heading",
@@ -667,7 +667,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Don't place stops randomly! Use technical analysis:",
+            data: "Possible simulation parameters include the following; none guarantees a favorable outcome:",
           },
           {
             type: "list",
@@ -681,15 +681,15 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Place stops just beyond key levels, not exactly on them. If support is at $100, place your stop at $99.50. This prevents getting stopped out by brief price spikes.",
+            data: "Compare hypothetical triggers at different distances from a chart level. A wider distance changes loss per share and a tighter distance changes sensitivity to price noise; neither prevents an unfavorable fill.",
           },
           {
             type: "heading",
-            data: "Take-Profit Targets: Lock In Gains",
+            data: "Take-Profit Targets and Fill Assumptions",
           },
           {
             type: "text",
-            data: "Take-profit orders automatically sell when you've reached your profit goal. They prevent you from getting greedy and giving back gains.",
+            data: "A take-profit level expresses a planned exit. Reaching a displayed price does not prove that a real order would fill in full.",
           },
           {
             type: "list",
@@ -698,34 +698,34 @@ export const lessonData: Lesson[] = [
               "Near previous highs",
               "Based on risk-reward ratio (we'll cover next)",
               "Can use multiple targets (scale out)",
-              "Better to take some profit than watch it disappear",
+              "Compare partial exits with a single-exit baseline",
             ],
           },
           {
             type: "example",
-            data: "You buy at $200 with targets at $220 (sell 50%) and $240 (sell remaining 50%). If the stock hits $220, you lock in some profit. If it reverses, you've secured gains instead of hoping it goes higher.",
+            data: "Hypothetical scaling example: buy two shares at $200, sell one at $220 and the other at $240. If both fills occur, profit is $60 before costs. If only the first fills, the remaining share still carries price risk.",
           },
           {
             type: "heading",
-            data: "Trailing Stops: Lock In Profits Automatically",
+            data: "Trailing Stops: Moving Triggers",
           },
           {
             type: "text",
-            data: "A trailing stop moves up with the price, locking in profits while giving the trade room to grow:",
+            data: "For a long position, a trailing sell-stop trigger follows favorable price moves at a specified distance:",
           },
           {
             type: "list",
             data: [
               "Follows the price up automatically",
-              "Never moves down (locks in gains)",
+              "The trigger normally does not move down when the market falls",
               "Set as percentage or dollar amount",
-              "Great for trending markets",
+              "Can trigger during temporary reversals",
               "Example: 10% trailing stop on winning trades",
             ],
           },
           {
             type: "example",
-            data: "Buy at $100 with 10% trailing stop ($90). Price rises to $150, stop moves to $135. If price drops to $135, you sell with $35 profit per share locked in!",
+            data: "Hypothetical purchase at $100 with a 10% trailing trigger: at a $150 high, the trigger is $135. A fill at $135 would realize $35 before costs, but a gap or slippage can produce a different result.",
           },
         ],
       },
@@ -739,13 +739,13 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "The risk-reward ratio is the secret to profitable trading. You don't need to win 90% of trades - you just need your winners to be bigger than your losers.",
+            data: "A planned payoff ratio compares an assumed gain with an assumed loss. Profitability depends on how often each outcome occurs, actual payoff sizes and costs.",
           },
           {
             type: "stat",
             value: "1:3",
-            label: "Ideal Minimum Risk-Reward Ratio",
-            data: "Risk $1 to make $3 - this ratio allows profitability even with a 30% win rate",
+            label: "Hypothetical Risk-to-Reward Ratio",
+            data: "Assuming every win earns $3 and every loss costs $1, a 30% win rate gives +$0.20 average per trade before costs.",
           },
           {
             type: "heading",
@@ -765,16 +765,16 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "With proper risk-reward ratios, you can be profitable even with a low win rate:",
+            data: "For a simplified two-outcome model with constant payoff sizes and no costs:",
           },
           {
             type: "list",
             data: [
               "1:1 ratio requires 50% win rate to break even",
-              "1:2 ratio requires 33% win rate to break even",
+              "1:2 ratio requires 33⅓% win rate to break even",
               "1:3 ratio requires 25% win rate to break even",
-              "You can lose 70% of trades and still profit with 1:3!",
-              "Focus on finding high-reward, low-risk setups",
+              "A 30% win rate with actual 1:3 payoffs has positive arithmetic expectancy before costs",
+              "A target ratio alone says nothing about the probability of reaching the target",
             ],
           },
           {
@@ -783,7 +783,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Never take a trade with less than 1:2 risk-reward. Ideally, aim for 1:3 or better. If you can't identify a setup with favorable risk-reward, wait for a better opportunity.",
+            data: "Compare several payoff and win-rate assumptions in a simulation. There is no universal minimum ratio, and a more distant target may be reached less often.",
           },
           {
             type: "heading",
@@ -818,12 +818,12 @@ export const lessonData: Lesson[] = [
               "Step 2: Set stop-loss (your risk)",
               "Step 3: Identify target (your reward)",
               "Step 4: Calculate ratio: Reward ÷ Risk",
-              "Step 5: If ratio is less than 2, reconsider the trade",
+              "Step 5: State the assumed win frequency and costs before interpreting the ratio",
             ],
           },
           {
             type: "example",
-            data: "Entry: $50 | Stop: $48 | Target: $56 | Risk: $2 | Reward: $6 | Ratio: $6 ÷ $2 = 3:1. Excellent trade setup!",
+            data: "Hypothetical entry: $50 | Exit: $48 | Target: $56 | Assumed loss: $2 | Assumed gain: $6 | Reward/risk: 3, or risk-to-reward 1:3. This calculation does not establish a profitable setup.",
           },
           {
             type: "heading",
@@ -831,15 +831,15 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Different trading styles require different ratios:",
+            data: "Compare model inputs instead of assigning a required ratio to each style:",
           },
           {
             type: "list",
             data: [
-              "Day trading: Minimum 1:2 (fast-paced, many trades)",
-              "Swing trading: Minimum 1:3 (fewer trades, longer holds)",
-              "Position trading: Can accept 1:5+ (patient, large moves)",
-              "Scalping: Often 1:1 but very high win rate needed",
+              "A 1:1 payoff model breaks even at 50% wins before costs",
+              "A 1:2 payoff model breaks even at 33⅓% wins before costs",
+              "A 1:3 payoff model breaks even at 25% wins before costs",
+              "Costs increase the win rate needed for any fixed payoff model",
             ],
           },
         ],
@@ -893,7 +893,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "For a $100,000 account, hold 5-8 positions maximum. Too few = too much risk. Too many = can't manage effectively. Find the sweet spot.",
+            data: "For a diversification exercise, compare portfolios with different numbers of positions and concentrations. There is no universal 5-8 position maximum; diversification depends on what the positions actually contain and how they move together.",
           },
           {
             type: "heading",
@@ -923,16 +923,16 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "A balanced approach for most traders:",
+            data: "One hypothetical core-satellite structure to test in the simulator:",
           },
           {
             type: "list",
             data: [
-              "Core (60-70%): Safe ETFs like SPY, QQQ for steady growth",
-              "Satellite (30-40%): Individual stocks for higher returns",
-              "Core provides stability",
-              "Satellites provide excitement and outperformance",
-              "Adjust percentages based on risk tolerance",
+              "Example core: a broad-market ETF allocation chosen for the simulation",
+              "Example satellite: a smaller set of individual assets",
+              "Compare concentration and drawdown across several percentage splits",
+              "Broad ETFs still carry market risk and can fall substantially",
+              "Treat every percentage as a test input, not a suitability recommendation",
             ],
           },
           {
@@ -945,16 +945,16 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Crypto is high-risk, high-reward. Allocate carefully:",
+            data: "Crypto can be highly volatile. Compare hypothetical allocations rather than prescribing one:",
           },
           {
             type: "list",
             data: [
-              "Beginners: 5-10% maximum in crypto",
-              "Moderate: 10-20% if you understand the risks",
-              "Aggressive: Up to 30% (not recommended)",
-              "Split between BTC (safer) and ETH/alts (riskier)",
-              "Never more than you can afford to lose completely",
+              "Test several virtual crypto weights and compare portfolio drawdown",
+              "A larger crypto weight generally increases exposure to crypto-specific volatility",
+              "BTC, ETH and other tokens have different risk drivers; none is labelled 'safe'",
+              "Record how concentration affects simulated outcomes",
+              "No percentage here is a real-money recommendation",
             ],
           },
           {
@@ -963,28 +963,28 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Set it and forget it doesn't work. Rebalance regularly:",
+            data: "Rebalancing is one portfolio-management method. Compare different schedules and thresholds:",
           },
           {
             type: "list",
             data: [
-              "Review monthly or quarterly",
-              "Sell winners that grew too large (take profits)",
-              "Add to losers if thesis still valid",
-              "Maintain target allocation percentages",
-              "Adapt to changing market conditions",
+              "Calendar-based reviews are one option",
+              "Threshold-based reviews are another option",
+              "Rebalancing can involve selling or buying to restore a chosen test allocation",
+              "Costs, taxes and market path can change the result",
+              "A no-rebalancing baseline is useful for comparison",
             ],
           },
           {
             type: "tip",
-            data: "If one position grows to more than 25% of your portfolio, consider taking some profits and rebalancing. This locks in gains and reduces concentration risk.",
+            data: "Use concentration thresholds such as 25% only as simulation examples. Compare how different thresholds change concentration, turnover and drawdown rather than treating one threshold as a universal action rule.",
           },
         ],
       },
     ],
     quiz: [
       {
-        question: "According to the 2% rule, how much should you risk per trade on a $100,000 account?",
+        question: "In the hypothetical 2% example, what is the risk budget on a $100,000 account?",
         options: ["$500", "$1,000", "$2,000", "$5,000"],
         correctAnswer: 2,
         explanation: "In this lesson's 2% example, 0.02 × $100,000 = $2,000.",
@@ -998,19 +998,19 @@ export const lessonData: Lesson[] = [
           "To calculate position size",
         ],
         correctAnswer: 1,
-        explanation: "A stop-loss automatically exits your position at a predetermined price to limit your losses if the trade goes against you.",
+        explanation: "A stop is intended to manage an exit, but its trigger price is not a guaranteed fill price. A stop-limit order may remain unfilled.",
       },
       {
-        question: "With a 1:3 risk-reward ratio, what minimum win rate do you need to be profitable?",
+        question: "With fixed 1:3 loss-to-gain payoffs and no costs, what win rate breaks even?",
         options: ["50%", "40%", "33%", "25%"],
         correctAnswer: 3,
-        explanation: "With a 1:3 ratio, you only need to win 25% of trades to break even. Anything above 25% becomes profitable!",
+        explanation: "At 25% wins, 0.25 × 3 minus 0.75 × 1 equals zero. Costs and differing realized payoffs change the break-even calculation.",
       },
       {
-        question: "What percentage of your portfolio should you typically hold in cryptocurrency as a beginner?",
-        options: ["50%", "30%", "5-10%", "90%"],
+        question: "Which statement best describes a crypto allocation in this simulation lesson?",
+        options: ["5-10% is universally correct", "30% is universally correct", "The percentage is a test input whose risk should be compared", "90% is always required"],
         correctAnswer: 2,
-        explanation: "Beginners should limit crypto exposure to 5-10% due to its high volatility and risk. Only invest what you can afford to lose.",
+        explanation: "There is no universal beginner percentage. In a simulator, compare several allocations and observe how concentration changes volatility and drawdown.",
       },
       {
         question: "What does diversification protect you from?",
@@ -1246,9 +1246,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "90%",
-            label: "Of Portfolio Returns Determined by Asset Allocation",
-            data: "Research shows asset allocation explains 90% of a portfolio's performance variance - stock picking matters far less than most think",
+            value: "Variable",
+            label: "Allocation Shapes Portfolio Risk",
+            data: "The contribution of asset allocation depends on the assets, period and methodology; this lesson does not assign a universal percentage of performance to it.",
           },
           {
             type: "heading",
@@ -1256,45 +1256,45 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Choose your allocation based on age, risk tolerance, and time horizon:",
+            data: "Compare hypothetical allocations using clearly stated assumptions rather than assigning a mix from age alone:",
           },
           {
             type: "example",
-            data: "Aggressive (Age 20-35): 80% stocks, 15% crypto, 5% bonds. You have time to recover from downturns and capture maximum growth.",
+            data: "Scenario A: a higher-equity/higher-volatility mix. Record its simulated drawdown and concentration without labelling it suitable for an age group.",
           },
           {
             type: "example",
-            data: "Moderate (Age 35-55): 60% stocks, 30% bonds, 10% alternatives. Balanced between growth and stability as you build wealth.",
+            data: "Scenario B: a more mixed allocation. Compare its simulated variability with Scenario A under the same market path.",
           },
           {
             type: "example",
-            data: "Conservative (Age 55+): 40% stocks, 50% bonds, 10% cash. Preserve capital while generating income for retirement.",
+            data: "Scenario C: a lower-equity hypothetical mix. This is an experiment setting, not a retirement recommendation.",
           },
           {
             type: "highlight",
-            data: "Your age and goals determine your allocation. Young investors can afford more risk. Older investors need more stability.",
+            data: "Age by itself does not determine an appropriate allocation. Real-world suitability depends on financial circumstances a simulator cannot assess.",
           },
           {
             type: "heading",
-            data: "The 100-Minus-Age Rule",
+            data: "Testing the 100-Minus-Age Heuristic",
           },
           {
             type: "text",
-            data: "A simple rule of thumb for stock allocation:",
+            data: "A historical rule of thumb that can be tested, not treated as a recommendation:",
           },
           {
             type: "list",
             data: [
-              "Subtract your age from 100 = % in stocks",
-              "Age 25: 75% stocks, 25% bonds/cash",
-              "Age 50: 50% stocks, 50% bonds/cash",
-              "Age 70: 30% stocks, 70% bonds/cash",
-              "Adjust based on risk tolerance",
+              "100 minus age has been used as a simplified stock-allocation heuristic",
+              "It ignores income, liabilities, goals, taxes and other circumstances",
+              "Compare it with alternative hypothetical mixes in the simulator",
+              "Record differences in drawdown and concentration",
+              "Do not infer real-world suitability from the result",
             ],
           },
           {
             type: "tip",
-            data: "Review your allocation annually, but don't chase performance. Stick to your plan and rebalance when allocations drift more than 5% from targets.",
+            data: "For simulation, compare calendar-based, threshold-based and no-rebalancing approaches. A 5% drift threshold is one possible test input, not a standard.",
           },
         ],
       },
@@ -1303,11 +1303,11 @@ export const lessonData: Lesson[] = [
         content: [
           {
             type: "highlight",
-            data: "Each asset class serves a different purpose - ETFs for stability, stocks for growth, crypto for moonshots. The magic is in the mix.",
+            data: "Asset classes have different structures and risks. The exercise is to compare mixes rather than assign each class a guaranteed role.",
           },
           {
             type: "text",
-            data: "Each asset class serves a different purpose in your portfolio. Combine them strategically for optimal risk-adjusted returns without putting all your eggs in one basket.",
+            data: "Different assets can contribute different risk exposures. Compare hypothetical mixes in the simulator without claiming an 'optimal' allocation.",
           },
           {
             type: "heading",
@@ -1315,7 +1315,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "ETFs should form 50-70% of most portfolios. They provide instant diversification and reduce single-stock risk.",
+            data: "Broad ETFs can reduce single-company concentration, but ETF composition and overlap matter. Use 50-70% only as one hypothetical range to compare, not a recommendation.",
           },
           {
             type: "list",
@@ -1337,7 +1337,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Allocate 20-40% to individual stocks for potential outperformance. Pick quality companies you understand:",
+            data: "For one simulation case, assign a chosen percentage to individual stocks and compare the concentration with an ETF-heavy case:",
           },
           {
             type: "list",
@@ -1345,15 +1345,15 @@ export const lessonData: Lesson[] = [
               "Blue chips: AAPL, MSFT, GOOGL (stability + growth)",
               "Growth stocks: TSLA, NVDA (higher risk, higher reward)",
               "Dividend payers: JNJ, PG (income generation)",
-              "Limit to 5-8 individual positions",
-              "Focus on companies with competitive advantages",
+              "Compare several position counts rather than imposing a universal 5-8 limit",
+              "Record the assumptions used to choose each company",
             ],
           },
           {
             type: "stat",
-            value: "5-15%",
-            label: "Recommended Crypto Allocation Maximum",
-            data: "Crypto is exciting but volatile. Limit exposure to what you can afford to lose completely",
+            value: "Variable",
+            label: "Crypto Allocation Test Range",
+            data: "Choose several hypothetical weights and compare how crypto-specific volatility changes the simulated portfolio.",
           },
           {
             type: "heading",
@@ -1361,21 +1361,21 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Allocate 5-15% maximum to crypto. It's speculative but offers asymmetric upside:",
+            data: "Compare several hypothetical crypto weights; this lesson does not set a maximum or promise asymmetric upside:",
           },
           {
             type: "list",
             data: [
-              "Bitcoin: Digital gold, most established",
-              "Ethereum: Smart contract platform leader",
-              "Altcoins: Higher risk, higher reward potential",
-              "Only invest what you can lose 100%",
-              "Never FOMO into crypto during mania phases",
+              "Bitcoin: large crypto asset with its own market and network risks",
+              "Ethereum: smart-contract network with different drivers",
+              "Other tokens can have very different liquidity and risk profiles",
+              "Compare concentration and drawdown in the simulator",
+              "No token allocation is recommended here",
             ],
           },
           {
             type: "tip",
-            data: "Use the core-satellite approach: 60-70% in ETFs (core), 20-30% in individual stocks (satellites), 5-15% in crypto (speculation). This balances stability with growth potential.",
+            data: "Use core-satellite percentages only as hypothetical test cases. Compare several splits and a simple benchmark to see how concentration and volatility change.",
           },
         ],
       },
@@ -1442,11 +1442,11 @@ export const lessonData: Lesson[] = [
         content: [
           {
             type: "highlight",
-            data: "Rebalancing is the only strategy that forces you to sell high and buy low systematically. It's discipline automated.",
+            data: "Rebalancing is one method for restoring a portfolio to a chosen target mix; it can add turnover and does not guarantee better returns.",
           },
           {
             type: "text",
-            data: "Markets move, and so should your portfolio. Rebalancing maintains your target allocation and forces you to buy low and sell high - the secret to long-term wealth.",
+            data: "Rebalancing restores a chosen allocation after market moves. Its effect on returns depends on the market path, costs, taxes and the rule used.",
           },
           {
             type: "heading",
@@ -1490,13 +1490,13 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "0.5-1%",
-            label: "Additional Annual Return from Rebalancing",
+            value: "Variable",
+            label: "Return Effect of Rebalancing",
             data: "Rebalancing is primarily a risk-control process. Its effect on returns varies by market path, trading costs, taxes, and the chosen thresholds.",
           },
           {
             type: "tip",
-            data: "Use the 5/25 rule: Rebalance when any position drifts 5% from target OR grows to 25%+ of portfolio. This captures both small drifts and concentration risk.",
+            data: "The 5/25 rule is one threshold heuristic to test. Compare it with other thresholds and a no-rebalancing baseline rather than treating it as a standard.",
           },
         ],
       },
@@ -1514,10 +1514,10 @@ export const lessonData: Lesson[] = [
         explanation: "Asset allocation is the most important factor in determining your long-term returns and overall portfolio risk.",
       },
       {
-        question: "How often should you typically rebalance your portfolio?",
-        options: ["Daily", "Weekly", "Quarterly or when allocation drifts significantly", "Never"],
+        question: "Which statement about rebalancing is most accurate for this lesson?",
+        options: ["Daily is always best", "A 5% threshold is universal", "Different schedules and thresholds can be compared", "Rebalancing always raises returns"],
         correctAnswer: 2,
-        explanation: "Quarterly rebalancing or when your allocation drifts 5%+ from targets strikes a good balance between maintenance and transaction costs.",
+        explanation: "Calendar, threshold and no-rebalancing approaches can all be compared; no single schedule or threshold is universally correct.",
       },
     ],
   },
@@ -1547,9 +1547,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "95%",
-            label: "Of Day Traders Lose Money Long-Term",
-            data: "Academic studies show the vast majority of day traders underperform buy-and-hold strategies after costs",
+            value: "Dataset-dependent",
+            label: "Trading Outcomes Need Context",
+            data: "A loss rate depends on the market, population, period and costs studied. This lesson does not claim a universal day-trader failure percentage.",
           },
           {
             type: "heading",
@@ -1572,7 +1572,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Day trader Sarah monitors charts 8 hours daily, makes 20+ trades weekly, needs 55%+ win rate to overcome fees. One emotional mistake can wipe out weeks of profits.",
+            data: "Hypothetical trader Sarah records a frequent-trading simulation. Her break-even win rate depends on average gains, average losses and costs, so a fixed 55% threshold cannot be inferred from trading frequency alone.",
           },
           {
             type: "heading",
@@ -1599,11 +1599,11 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "highlight",
-            data: "Be honest with yourself: Do you have 8+ hours daily to dedicate to trading? Can you handle the stress? If not, long-term investing is your path to wealth.",
+            data: "Compare the time commitment and turnover of different hypothetical holding periods. A time budget alone does not determine a suitable real-money strategy or a path to wealth.",
           },
           {
             type: "tip",
-            data: "Start with long-term investing. Once you're consistently profitable for 6+ months, consider adding swing trading. Only attempt day trading if you've mastered swing trading and can commit full-time.",
+            data: "Compare longer and shorter holding periods as separate simulation exercises. Six profitable months or any other fixed practice period does not establish real-money readiness.",
           },
         ],
       },
@@ -1626,18 +1626,18 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "Beginners: 5-10% monthly returns are EXCELLENT",
-              "Intermediate: 10-15% monthly with experience (rare)",
-              "Professionals: 15-25% monthly (extremely rare)",
-              "S&P 500 average: ~10% annually (not monthly!)",
-              "Warren Buffett career average: 20% annually",
+              "A simulation return assumption is a test input, not a beginner income target",
+              "Experience does not establish a predictable monthly return",
+              "No professional monthly-return range is asserted without a defined dataset",
+              "Historical comparisons require a named index, period and treatment of dividends and costs",
+              "A selected historical track record is not a forecast for another investor",
             ],
           },
           {
             type: "stat",
-            value: "20-30%",
-            label: "Annual Returns That Beat 95% of Funds",
-            data: "If you can consistently achieve 20-30% annual returns, you're outperforming virtually all professional money managers",
+            value: "Hypothetical",
+            label: "Return Assumptions Are Not Targets",
+            data: "Compare several assumed returns, including losses, without presenting one figure as achievable for a learner or superior to a fund population.",
           },
           {
             type: "highlight",
@@ -1752,11 +1752,11 @@ export const lessonData: Lesson[] = [
             type: "list",
             data: [
               "Total Return: Overall profit/loss percentage over time",
-              "Win Rate: Percentage of winning trades (aim for 45%+)",
-              "Average Win vs Average Loss: Your edge (target 2:1 or better)",
-              "Max Drawdown: Largest peak-to-valley decline (keep under 20%)",
-              "Sharpe Ratio: Risk-adjusted returns (higher is better)",
-              "Profit Factor: Gross profit ÷ gross loss (target 1.5+)",
+              "Win Rate: Percentage of closed trades that were profitable",
+              "Average Win vs Average Loss: Compare payoff size with win frequency",
+              "Max Drawdown: Largest peak-to-valley decline in the sample",
+              "Sharpe Ratio: One risk-adjusted-return metric with important assumptions",
+              "Profit Factor: Gross profit ÷ gross loss; interpret it with sample size and costs",
             ],
           },
           {
@@ -1765,7 +1765,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "highlight",
-            data: "Track your Maximum Drawdown religiously. If you drop more than 20% from peak equity, stop trading and reassess your strategy - something is broken.",
+            data: "Track maximum drawdown as a descriptive risk metric. A 20% threshold can be tested as a simulation rule, but exceeding it does not by itself prove a strategy is broken or prescribe a real-money action.",
           },
           {
             type: "heading",
@@ -1779,8 +1779,8 @@ export const lessonData: Lesson[] = [
             type: "list",
             data: [
               "Am I following my trading rules consistently?",
-              "Are my losses controlled (2% rule)?",
-              "Is my risk-reward ratio 1:2 or better?",
+              "Did the losses stay within the virtual risk rule documented for this exercise?",
+              "How did payoff size and win frequency combine after assumed costs?",
               "Am I trading too much (overtrading)?",
               "Am I trading too little (missing opportunities)?",
               "What was my biggest mistake this month?",
@@ -1793,19 +1793,19 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "1.5+",
-            label: "Target Profit Factor for Consistent Success",
-            data: "A profit factor above 1.5 means you make $1.50 for every $1 lost - a strong edge that compounds over time",
+            value: "1.5 example",
+            label: "Interpreting a Sample Profit Factor",
+            data: "A profit factor of 1.5 means gross profits were $1.50 per $1 of gross losses in the sample. It does not prove a persistent edge; sample size and costs matter.",
           },
         ],
       },
     ],
     quiz: [
       {
-        question: "What is a realistic monthly return target for beginner traders?",
-        options: ["50-100%", "20-30%", "5-10%", "2-3%"],
+        question: "How should a monthly return percentage be used in a simulation?",
+        options: ["As guaranteed income", "As a beginner standard", "As a hypothetical input rather than an expected return", "As proof of skill"],
         correctAnswer: 2,
-        explanation: "5-10% monthly returns are excellent for beginners and actually beat most professional fund managers over time!",
+        explanation: "A chosen return is an assumption for an exercise, not a forecast, skill benchmark or promise of repeatable performance.",
       },
       {
         question: "What is the most important reason to keep a trading journal?",
