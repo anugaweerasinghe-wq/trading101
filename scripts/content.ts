@@ -646,19 +646,11 @@ function groupLessonBody(body: string[]): PageSection[] {
  * per category so 49 glossary pages do not end with one identical block.
  */
 function glossaryPractice(g: any): string {
+  // Built from the term's own pro tip and key points, so every glossary page
+  // closes with an exercise that only makes sense for that term.
   const t = g.term;
-  const cat = String(g.category || "").toLowerCase();
-  if (cat.includes("technical")) {
-    return `Recognising ${t} on a static example is easy; spotting it on the right-hand edge of a live chart, before the outcome is known, is the actual skill. Open the practice desk, scan a handful of instruments you already follow until you find a candidate, and mark the level that would prove the read wrong. Take a small simulated position, then come back a day later and compare what happened with what this page describes. ${DISCLAIMER}`;
-  }
-  if (cat.includes("risk")) {
-    return `${t} only becomes real once it costs you something. Work through it on the simulator with deliberately awkward numbers — an odd position size, a stop that sits close to entry — so you feel how the maths behaves rather than reading it. Log the trade and check whether your actual loss matched the one you planned for. ${DISCLAIMER}`;
-  }
-  if (cat.includes("psych") || cat.includes("behav")) {
-    return `${t} is a habit, not a fact to memorise, so the useful exercise is watching yourself. Trade a normal simulated session, then read back through the journal entries and mark the moments where this pattern showed up in your own decisions. Naming it after the fact is how you learn to catch it in advance. ${DISCLAIMER}`;
-  }
-  if (cat.includes("mechanic") || cat.includes("order")) {
-    return `The fastest way to understand ${t} is to use it once. Place a small simulated order that involves it, watch exactly how the fill and the portfolio line respond, and repeat it on a second instrument so you can tell what is general and what is specific to one market. ${DISCLAIMER}`;
-  }
-  return `Reading about ${t} and using it are different skills. Try it once in the simulator on an instrument you already follow, write down beforehand what you expect to happen, and check the journal a day later to see whether it played out that way. ${DISCLAIMER}`;
+  const tip = String(g.proTip || "").trim();
+  const kp: string[] = (g.keyPoints || []).map((k: string) => k.replace(/\.$/, ""));
+  const check = kp.length ? ` Before testing it, make sure you could explain out loud why "${kp[0].toLowerCase()}"${kp[1] ? ` and how that connects to "${kp[1].toLowerCase()}"` : ""}.` : "";
+  return `${tip ? `A working note on ${t}: ${tip}` : `Test ${t} at a small simulated size first.`}${check} ${DISCLAIMER}`;
 }
