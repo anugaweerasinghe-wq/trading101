@@ -563,13 +563,21 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         ...(TYPE_GUIDE[a.type] ? [] : [{ h: `${c.category} as an asset class`, p: [intros[a.type] || ""] }]),
         ...(stats.length ? [{ h: "Reference facts", list: stats }] : []),
         { h: "How to practise it here", p: [c.strategy] },
-        ...(TYPE_LIVE_GAP[a.type] ? [{ h: "Where practice stops being representative", p: [TYPE_LIVE_GAP[a.type]] }] : []),
-        ...(TYPE_GUIDE[a.type]
+        ...(ASSET_NOTES[a.id]
           ? [
-              { h: TYPE_GUIDE[a.type].h, p: TYPE_GUIDE[a.type].p },
-              { h: "Rules of thumb for this asset class", list: TYPE_GUIDE[a.type].list },
+              { h: `Why learners study ${a.name}`, p: [ASSET_NOTES[a.id].why] },
+              { h: `What tends to move ${a.name}`, p: [ASSET_NOTES[a.id].watch] },
+              { h: `${a.name}: practice versus a real account`, p: [ASSET_NOTES[a.id].gap] },
             ]
-          : []),
+          : [
+              ...(TYPE_LIVE_GAP[a.type] ? [{ h: "Where practice stops being representative", p: [TYPE_LIVE_GAP[a.type]] }] : []),
+              ...(TYPE_GUIDE[a.type]
+                ? [
+                    { h: TYPE_GUIDE[a.type].h, p: TYPE_GUIDE[a.type].p },
+                    { h: "Rules of thumb for this asset class", list: TYPE_GUIDE[a.type].list },
+                  ]
+                : []),
+            ]),
         ...(c.executiveOutlook ? [{ h: "Context to be aware of", p: [`${c.executiveOutlook.summary} This is background context on the asset, not a forecast and not a recommendation.`] }] : []),
         ...(c.institutionalDrivers
           ? [{ h: "Arguments people make on each side", list: [`Bull case commonly cited: ${c.institutionalDrivers.bull}`, `Bear case commonly cited: ${c.institutionalDrivers.bear}`] }]
