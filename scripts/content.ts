@@ -460,9 +460,9 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: "The numbers behind it", p: [s.depth.math] },
         { h: "How it fails", list: s.depth.mistakes },
         {
-          h: "Practising it safely",
+          h: `Practising ${s.name} safely`,
           p: [
-            `Run this method for at least thirty simulated trades with fixed sizing before judging it, and record every trade in the journal. A handful of winners proves nothing. ${DISCLAIMER}`,
+            `The first mistake listed above — ${String(s.depth.mistakes?.[0] || "inconsistent sizing").replace(/\.$/, "").toLowerCase()} — is the one to watch for in your own ${s.name.toLowerCase()} journal entries. ${DISCLAIMER}`,
           ],
         },
       ],
