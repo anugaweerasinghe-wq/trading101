@@ -7,6 +7,7 @@
 import { loadSiteData } from "./loadData";
 import { STATIC_COPY, DISCLAIMER } from "./staticCopy";
 import { EXTRA_SECTIONS } from "./staticCopyExtra";
+import { ASSET_NOTES } from "./assetNotes";
 
 export interface PageSection {
   h: string;
