@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      api_rate_limits: {
+        Row: {
+          bucket: string
+          expires_at: string
+          request_count: number
+          subject: string
+          window_start: string
+        }
+        Insert: {
+          bucket: string
+          expires_at: string
+          request_count?: number
+          subject: string
+          window_start: string
+        }
+        Update: {
+          bucket?: string
+          expires_at?: string
+          request_count?: number
+          subject?: string
+          window_start?: string
+        }
+        Relationships: []
+      }
       duels: {
         Row: {
           code: string
@@ -217,7 +241,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      hit_rate_limit: {
+        Args: {
+          _bucket: string
+          _max: number
+          _subject: string
+          _window_seconds: number
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

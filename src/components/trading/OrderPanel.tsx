@@ -150,30 +150,7 @@ export function OrderPanel({ asset, availableCash, onTrade }: OrderPanelProps) {
       </div>
 
       <div className="flex-1 overflow-auto p-4 space-y-4">
-        {/* Order Type */}
-        <Tabs value={orderType} onValueChange={(v) => setOrderType(v as 'market' | 'limit')}>
-          <TabsList className="grid w-full grid-cols-2 h-8 rounded-xl">
-            <TabsTrigger value="market" className="text-xs rounded-lg">Market</TabsTrigger>
-            <TabsTrigger value="limit" className="text-xs rounded-lg">Limit</TabsTrigger>
-          </TabsList>
-        </Tabs>
-
-        {/* Limit Price */}
-        {orderType === 'limit' && (
-          <div className="space-y-2">
-            <Label className="text-xs text-muted-foreground">Limit Price</Label>
-            <div className="relative">
-              <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                type="number"
-                placeholder={asset.price.toString()}
-                value={limitPrice}
-                onChange={(e) => setLimitPrice(e.target.value)}
-                className="pl-9 h-10 bg-muted/50 border-0 tabular-nums rounded-xl"
-              />
-            </div>
-          </div>
-        )}
+        <p className="text-xs text-muted-foreground">Market order — fills immediately at the shown simulator price.</p>
 
         {/* Amount */}
         <div className="space-y-2">

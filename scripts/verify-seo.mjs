@@ -12,6 +12,17 @@ import { resolve } from "path";
 const DIST = resolve(process.cwd(), "dist");
 const DOMAIN = "https://www.thetradehq.com";
 
+// C03/C04 guard: internal QA/audit artifacts must never ship publicly.
+{
+  const { readdirSync } = await import("fs");
+  const INTERNAL = [/turbo/i, /_report\.(md|json|csv)$/i, /^list_of_urls/i, /og_image_status/i, /rich_results/i, /audit[-_].*\.(md|csv|json)$/i, /owner[-_]approval/i];
+  const leaked = existsSync(DIST) ? readdirSync(DIST).filter((f) => INTERNAL.some((r) => r.test(f))) : [];
+  if (leaked.length) {
+    console.error("✗ Internal QA artifacts found in public build:", leaked.join(", "));
+    process.exit(1);
+  }
+}
+
 const routes = [
   "/",
   "/markets",

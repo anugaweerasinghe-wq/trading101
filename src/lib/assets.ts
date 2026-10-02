@@ -1401,3 +1401,11 @@ export function formatPrice(price: number, type: Asset['type']): string {
   }
   return price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
+
+/** Resolve a display symbol (e.g. "BTC/USDT", "^GSPC", "SPY") to its canonical /trade/:id route. Falls back to /trade. */
+export function tradeRouteForSymbol(symbol: string): string {
+  const s = symbol.trim().toUpperCase();
+  const hit = ASSETS.find((a) => a.symbol.toUpperCase() === s || a.id === symbol.toLowerCase())
+    ?? ASSETS.find((a) => a.symbol.toUpperCase().split("/")[0] === s.split("/")[0]);
+  return hit ? `/trade/${hit.id}` : "/trade";
+}

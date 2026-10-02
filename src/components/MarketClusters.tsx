@@ -147,7 +147,7 @@ export function MarketClusters({ assets }: MarketClustersProps) {
                 {clusterAssets.slice(0, 5).map((asset) => (
                   <Link
                     key={asset.id}
-                    to={`/trade/${asset.symbol.toLowerCase().replace('/', '-')}`}
+                    to={`/trade/${asset.id}`}
                     className={cn(
                       "inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-all",
                       "bg-background/50 hover:bg-background text-foreground hover:text-primary"

@@ -134,22 +134,7 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
               >Sell</Button>
             </div>
 
-            <Tabs value={orderType} onValueChange={(v) => setOrderType(v as 'market' | 'limit')}>
-              <TabsList className="grid w-full grid-cols-2 h-12 rounded-xl">
-                <TabsTrigger value="market" className="text-base rounded-lg h-10">Market</TabsTrigger>
-                <TabsTrigger value="limit" className="text-base rounded-lg h-10">Limit</TabsTrigger>
-              </TabsList>
-            </Tabs>
-
-            {orderType === 'limit' && (
-              <div className="space-y-2">
-                <Label className="text-sm text-muted-foreground">Limit Price</Label>
-                <div className="relative">
-                  <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <Input type="number" placeholder={asset.price.toString()} value={limitPrice} onChange={(e) => setLimitPrice(e.target.value)} className="pl-11 h-14 text-lg bg-muted/50 border-0 tabular-nums rounded-xl" />
-                </div>
-              </div>
-            )}
+            <p className="text-sm text-muted-foreground">Market order — fills immediately at the shown simulator price.</p>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
