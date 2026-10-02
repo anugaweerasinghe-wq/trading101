@@ -1,3 +1,4 @@
+import { tradeRouteForSymbol } from "@/lib/assets";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -14,7 +15,7 @@ export default function Compare() {
   const pair = COMPARE_PAIRS.find((p) => p.slug === slug);
   if (!pair) return <Navigate to="/compare" replace />;
 
-  const title = `${pair.a.name} vs ${pair.b.name} — Which Should You Trade in 2026? | TradeHQ`;
+  const title = `${pair.a.name} vs ${pair.b.name} — Key Differences Explained | TradeHQ`;
   const description = `${pair.a.name} vs ${pair.b.name}: side-by-side comparison on returns, volatility, use case and risk. Practise both risk-free with $100K virtual cash on TradeHQ. (Educational simulation only — not financial advice.)`;
   const url = `${SITE_DOMAIN}/compare/${pair.slug}`;
 
@@ -52,7 +53,7 @@ export default function Compare() {
           </header>
 
           <AIAnswerBlock
-            question={`${pair.a.name} vs ${pair.b.name}: which should you trade in 2026?`}
+            question={`${pair.a.name} vs ${pair.b.name}: how do they differ?`}
             answer={`${pair.verdict} Both ${pair.a.name} and ${pair.b.name} are tradable free on TradeHQ with $100,000 virtual cash — no signup, no real-money risk. (Educational simulation only — not financial advice.)`}
             className="mb-8"
           />
@@ -61,14 +62,14 @@ export default function Compare() {
             <Card className="p-6 border-emerald-500/20">
               <div className="text-xs text-emerald-400 mb-1">{pair.a.tag}</div>
               <div className="text-2xl font-bold">{pair.a.name} <span className="text-muted-foreground text-base">({pair.a.symbol})</span></div>
-              <Link to={`/trade/${pair.a.symbol.toLowerCase()}`}>
+              <Link to={tradeRouteForSymbol(pair.a.symbol)}>
                 <Button variant="outline" size="sm" className="mt-4">Practise {pair.a.symbol} <ArrowRight className="ml-2 h-3 w-3" /></Button>
               </Link>
             </Card>
             <Card className="p-6 border-rose-500/20">
               <div className="text-xs text-rose-400 mb-1">{pair.b.tag}</div>
               <div className="text-2xl font-bold">{pair.b.name} <span className="text-muted-foreground text-base">({pair.b.symbol})</span></div>
-              <Link to={`/trade/${pair.b.symbol.toLowerCase()}`}>
+              <Link to={tradeRouteForSymbol(pair.b.symbol)}>
                 <Button variant="outline" size="sm" className="mt-4">Practise {pair.b.symbol} <ArrowRight className="ml-2 h-3 w-3" /></Button>
               </Link>
             </Card>
