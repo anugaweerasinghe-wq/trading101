@@ -146,6 +146,9 @@ export default function Reviews() {
             <p className="text-muted-foreground max-w-2xl mx-auto">
               User-submitted feedback about the free $100,000 practice simulator. Submissions are moderated and duplicate-limited, but identity and usage are not independently verified.
             </p>
+            <p className="mt-4 text-sm text-amber-500">
+              This page is temporarily unavailable. We&apos;re working on a fix and expect to restore it over the next few days.
+            </p>
             {stats.count > 0 && (
               <div className="mt-5 inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-card border border-border">
                 <Stars value={Math.round(stats.avg)} size={20} />
