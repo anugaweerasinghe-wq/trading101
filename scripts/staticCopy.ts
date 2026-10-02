@@ -21,7 +21,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What you can do here",
         list: [
-          "Paper trade 150+ instruments across stocks, crypto, ETFs, forex and commodities with market and limit orders.",
+          "Paper trade 150+ instruments across stocks, crypto, ETFs, forex and commodities using market orders.",
           "Track a full practice portfolio — open positions, realised and unrealised P&L, win rate, Sharpe ratio and maximum drawdown.",
           "Work through four structured courses (options, futures, macro reading and trading psychology) with quizzes and completion badges.",
           "Read a 49-term trading glossary written in plain language, each entry with a detailed explanation and a worked example.",
@@ -63,7 +63,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         h: "How the practice trading desk works",
         p: [
           "The trading desk is where simulated orders are placed. You choose an instrument, choose a side, choose a size, and the order is filled against the simulator's current price. The fill, the position and the resulting profit or loss are all recorded in your practice portfolio, which is stored in your own browser rather than on a server.",
-          "Two order types are supported today: market orders, which fill immediately at the shown price, and limit orders, which rest until the simulated price reaches your level. Position sizing is entirely up to you, which is deliberate — learning to size a position is one of the few skills a simulator can teach almost as well as a live account.",
+          "One order type is supported today: the market order, which fills immediately at the shown simulator price. Limit and stop orders are explained in the glossary but cannot yet be placed on the desk. Position sizing is entirely up to you, which is deliberate — learning to size a position is one of the few skills a simulator can teach almost as well as a live account.",
         ],
       },
       {
@@ -71,7 +71,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         list: [
           "Fixed-fraction sizing: risk the same small percentage of the balance on every trade and see how the equity curve smooths out.",
           "Stop discipline: decide the exit before entering, then check in the journal whether you actually honoured it.",
-          "Order-type behaviour: compare how a market order and a limit order behave on a fast-moving instrument.",
+          "Entry timing: note the price you intended versus the price you received on a fast-moving instrument, and record the gap in the journal.",
           "Concentration: run a week with five positions and a week with one, and compare the drawdown.",
         ],
       },
