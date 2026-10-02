@@ -263,6 +263,9 @@ export default function Leaderboard() {
                 simulator. The figures are simulated, user-controlled at source and not independently verified.
                 The table sorts submitted percentage return; it should not be read as an audited performance ranking.
               </p>
+              <p className="mt-4 text-sm text-amber-500">
+                This page is temporarily unavailable. We&apos;re working on a fix and expect to restore it over the next few days.
+              </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 {user ? (
                   <>
