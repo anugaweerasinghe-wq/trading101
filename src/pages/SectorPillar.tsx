@@ -107,7 +107,7 @@ export default function SectorPillar() {
       "itemListElement": sectorAssets.map((asset, index) => ({
         "@type": "ListItem",
         "position": index + 1,
-        "url": `https://www.thetradehq.com/trade/${asset!.symbol.toLowerCase().replace('/', '-')}`
+        "url": `https://www.thetradehq.com/trade/${asset!.id}`
       }))
     }
   };
@@ -181,7 +181,7 @@ export default function SectorPillar() {
                 return (
                   <Link
                     key={asset.id}
-                    to={`/trade/${asset.symbol.toLowerCase().replace('/', '-')}`}
+                    to={`/trade/${asset.id}`}
                     className="glass-liquid-card p-5 hover:border-primary/30 transition-all group"
                   >
                     <div className="flex items-start justify-between mb-3">
