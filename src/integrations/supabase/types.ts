@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "13.0.5"
   }
   public: {
     Tables: {
@@ -217,14 +217,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      create_practice_duel: {
-        Args: { p_code: string }
-        Returns: string
-      }
-      join_practice_duel: {
-        Args: { p_duel_id: string }
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
