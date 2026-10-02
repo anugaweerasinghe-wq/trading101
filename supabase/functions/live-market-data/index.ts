@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { allow, clientIp } from "../_shared/rateLimit.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -291,25 +292,37 @@ function generateSimulatedCandles(basePrice: number, count: number = 60): Candle
   return candles;
 }
 
+const ALLOWED_DATA_TYPES = new Set(['quote', 'candles']);
+const ALLOWED_TYPES = new Set(['crypto', 'stock', 'etf', 'forex', 'commodity', 'index']);
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+  const bad = (msg: string, status = 400) =>
+    new Response(JSON.stringify({ error: msg }), { status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 
   try {
     const url = new URL(req.url);
+    if (url.search.length > 300) return bad('Request too large', 413);
+
+    // Public proxy abuse protection: per-IP burst + per-minute limits (pseudonymised).
+    const ip = clientIp(req);
+    const okBurst = await allow(`ip:${ip}`, 'lmd-burst', 10, 25);
+    const okMin = okBurst && await allow(`ip:${ip}`, 'lmd-min', 60, 90);
+    if (!okBurst || !okMin) return bad('Too many requests — please slow down.', 429);
+
     const assetId = url.searchParams.get('assetId')?.toLowerCase();
     const assetType = url.searchParams.get('type')?.toLowerCase();
     const dataType = url.searchParams.get('dataType') || 'quote';
-    const basePrice = parseFloat(url.searchParams.get('basePrice') || '0');
-    const days = parseInt(url.searchParams.get('days') || '1', 10);
+    const basePriceRaw = parseFloat(url.searchParams.get('basePrice') || '0');
+    const basePrice = Number.isFinite(basePriceRaw) && basePriceRaw >= 0 && basePriceRaw < 1e9 ? basePriceRaw : 0;
+    const daysRaw = parseInt(url.searchParams.get('days') || '1', 10);
+    const days = Number.isFinite(daysRaw) ? Math.min(Math.max(daysRaw, 1), 365) : 1;
 
-    if (!assetId) {
-      return new Response(
-        JSON.stringify({ error: 'assetId is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+    if (!assetId || !/^[a-z0-9-]{1,20}$/.test(assetId)) return bad('Valid assetId is required');
+    if (!ALLOWED_DATA_TYPES.has(dataType)) return bad('Unsupported dataType');
+    if (assetType && !ALLOWED_TYPES.has(assetType)) return bad('Unsupported type');
 
     console.log(`Fetching ${dataType} for ${assetId} (type: ${assetType}, days: ${days})`);
 
