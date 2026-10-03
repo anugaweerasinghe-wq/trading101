@@ -317,16 +317,16 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "Stop-Loss Order: Automatically sells if price drops to a certain level",
+              "Sell Stop: Triggers a market order at a specified level; the fill price can differ",
               "Stop-Limit Order: Combines stop and limit order features",
-              "Trailing Stop: Moves with the price to lock in profits",
+              "Trailing Stop: Adjusts its trigger with favourable price moves; profits are not guaranteed",
               "Good-Til-Canceled (GTC): Order stays active until filled or canceled",
               "Day Order: Expires at end of trading day if not filled",
             ],
           },
           {
             type: "example",
-            data: "You buy Apple at $180 and set a stop-loss at $170. If Apple drops to $170, your shares automatically sell, limiting your loss to $10 per share.",
+            data: "Illustration: buy at $180 with a sell stop at $170. A $170 fill would lose $10 per share before costs; a worse fill increases the loss.",
           },
           {
             type: "heading",
@@ -627,39 +627,37 @@ export const lessonData: Lesson[] = [
         content: [
           {
             type: "highlight",
-            data: "A stop-loss is not a sign of defeat - it's a sign of discipline. It's your automated risk manager working 24/7.",
+            data: "Stop orders automate a trigger, not a guaranteed outcome. Availability, eligible trading hours and trigger rules depend on the broker and venue.",
           },
           {
             type: "text",
-            data: "Every trade needs two critical levels set before you enter: where you'll exit if you're wrong (stop-loss) and where you'll exit if you're right (take-profit). Without these, you're gambling.",
+            data: "A practice plan can record an adverse exit and a profit target before entry. Compare planned outcomes with actual fills; neither level promises execution.",
           },
           {
-            type: "stat",
-            value: "95%",
-            label: "Of Successful Traders Use Stop-Losses",
-            data: "The most consistent winners in trading never let losses run wild",
+            type: "text",
+            data: "Source: SEC Investor Bulletin, Stop, Stop-Limit, and Trailing Stop Orders — investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-15. These are market concepts; TradeHQ currently exposes market orders only.",
           },
           {
             type: "heading",
-            data: "Stop-Loss Orders: Your Safety Net",
+            data: "Stop Orders: Trigger and Execution",
           },
           {
             type: "text",
-            data: "A stop-loss is an automatic order that sells your position when the price drops to a specific level. It limits your loss on a trade.",
+            data: "A sell stop becomes a market order when triggered. A stop-limit instead becomes a limit order, which may remain unfilled.",
           },
           {
             type: "list",
             data: [
               "Set BEFORE you enter the trade, not after",
               "Based on technical levels, not emotions",
-              "Prevents small losses from becoming big losses",
+              "Losses can exceed the amount planned at the stop",
               "Removes emotion from the decision",
-              "Non-negotiable for every trade",
+              "Check which order types the venue actually supports",
             ],
           },
           {
             type: "example",
-            data: "You buy Tesla at $200 with a stop-loss at $190. If Tesla drops to $190, you automatically sell. Maximum loss: $10 per share. Even if Tesla crashes to $150 overnight, you're out at $190.",
+            data: "Illustration: buy at $200 and set a $190 sell stop. If an overnight gap leads to a $150 fill, the loss is $50 per share before costs, not $10.",
           },
           {
             type: "heading",
@@ -681,7 +679,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Place stops just beyond key levels, not exactly on them. If support is at $100, place your stop at $99.50. This prevents getting stopped out by brief price spikes.",
+            data: "Moving a stop further away changes planned risk; no fixed buffer prevents short-term price moves from triggering it.",
           },
           {
             type: "heading",
@@ -707,17 +705,17 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "heading",
-            data: "Trailing Stops: Lock In Profits Automatically",
+            data: "Trailing Stops: Moving Trigger Levels",
           },
           {
             type: "text",
-            data: "A trailing stop moves up with the price, locking in profits while giving the trade room to grow:",
+            data: "For a long position, a trailing sell stop rises with favourable price moves and stays fixed when prices fall:",
           },
           {
             type: "list",
             data: [
               "Follows the price up automatically",
-              "Never moves down (locks in gains)",
+              "A higher trigger does not guarantee a profitable fill",
               "Set as percentage or dollar amount",
               "Great for trending markets",
               "Example: 10% trailing stop on winning trades",
@@ -725,7 +723,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Buy at $100 with 10% trailing stop ($90). Price rises to $150, stop moves to $135. If price drops to $135, you sell with $35 profit per share locked in!",
+            data: "Illustration: a 10% trail moves from $90 to $135 as price rises from $100 to $150. Profit is $35 per share before costs only if execution occurs at $135.",
           },
         ],
       },
@@ -998,7 +996,7 @@ export const lessonData: Lesson[] = [
           "To calculate position size",
         ],
         correctAnswer: 1,
-        explanation: "A stop-loss automatically exits your position at a predetermined price to limit your losses if the trade goes against you.",
+        explanation: "A stop order attempts to limit losses by triggering a market order. The execution price is not guaranteed.",
       },
       {
         question: "With a 1:3 risk-reward ratio, what minimum win rate do you need to be profitable?",
