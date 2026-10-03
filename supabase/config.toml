@@ -1,4 +1,4 @@
-project_id = "bpzedtifdjbfrojlkano"
+project_id = "cbdktpjgczhthflspqjb"
 
 [functions.market-analysis]
 verify_jwt = true
@@ -10,4 +10,7 @@ verify_jwt = true
 verify_jwt = true
 
 [functions.live-market-data]
+verify_jwt = false
+
+[functions.submit-review]
 verify_jwt = false
