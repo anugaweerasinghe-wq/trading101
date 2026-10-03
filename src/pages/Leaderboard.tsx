@@ -263,8 +263,8 @@ export default function Leaderboard() {
                 simulator. The figures are simulated, user-controlled at source and not independently verified.
                 The table sorts submitted percentage return; it should not be read as an audited performance ranking.
               </p>
-              <p className="mt-4 text-sm text-amber-500">
-                This page is temporarily unavailable. We&apos;re working on a fix and expect to restore it over the next few days.
+              <p className="mt-4 text-sm text-emerald-500">
+                Leaderboard successfully restored by the TradeHQ developer team.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 {user ? (
@@ -455,7 +455,7 @@ export default function Leaderboard() {
                 },
                 {
                   title: "You control visibility",
-                  body: "Profiles are public by default but can be switched to private from your trader profile at any time, removing you from this board instantly.",
+                  body: "New profiles start private. You can choose to make your profile public from your trader profile page to appear on this board, and switch it back to private at any time.",
                 },
               ].map((c) => (
                 <div key={c.title} className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
