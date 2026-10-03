@@ -6,8 +6,8 @@
  * These are the public Supabase project URL and publishable/anon key used by
  * the browser client; no service-role/server secret belongs in this file.
  */
-const FALLBACK_SUPABASE_URL = "https://bpzedtifdjbfrojlkano.supabase.co";
-const FALLBACK_SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwemVkdGlmZGpiZnJvamxrYW5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MDU3NzAsImV4cCI6MjA3NjQ4MTc3MH0.7LzlcE59SijTpe2mXKE4t-3JnqHyGf9rTWzmOjI8Ce4";
+const FALLBACK_SUPABASE_URL = "https://cbdktpjgczhthflspqjb.supabase.co";
+const FALLBACK_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_lmCNfCn4tsB1tD604M49Xw_n4zum_Nr";
 
 export const SUPABASE_URL =
   import.meta.env.VITE_SUPABASE_URL?.trim() || FALLBACK_SUPABASE_URL;
