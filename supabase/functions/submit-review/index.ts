@@ -42,13 +42,14 @@ serve(async (req) => {
       });
     }
 
-    const salt = Deno.env.get("ADMIN_MASTER_KEY") ?? "tradehq-default-salt";
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const salt = Deno.env.get("ADMIN_MASTER_KEY") ?? serviceKey;
     const ip = getIP(req);
     const ip_hash = await hashIP(ip, salt);
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      serviceKey,
     );
 
     const { error } = await supabase.from("reviews").insert({
