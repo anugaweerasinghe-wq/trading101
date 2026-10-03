@@ -49,6 +49,7 @@ export function Navigation() {
     { to: "/learn", label: "Learn", icon: GraduationCap },
     { to: "/courses", label: "Courses", icon: BookOpen },
     { to: "/leaderboard", label: "Leaderboard", icon: Wallet },
+    { to: "/reviews", label: "Reviews", icon: Star },
     { to: "/ai-mentor", label: "AI Mentor", icon: Bot },
     { to: "/about", label: "About", icon: Info },
   ];
@@ -178,12 +179,6 @@ export function Navigation() {
             <Button variant="ghost" className="w-full justify-start h-12 px-4 text-sm font-medium rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/[0.05]">
               <UserRound className="w-4 h-4 mr-3" />
               {user ? "My profile" : "Sign in (optional)"}
-            </Button>
-          </Link>
-          <Link to="/reviews" onClick={() => setMobileMenuOpen(false)}>
-            <Button variant="ghost" className="w-full justify-start h-12 px-4 text-sm font-medium rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/[0.05]">
-              <Star className="w-4 h-4 mr-3" />
-              Reviews
             </Button>
           </Link>
         </div>
