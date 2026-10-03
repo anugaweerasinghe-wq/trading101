@@ -11,10 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, ShieldCheck, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/useAuth";
 import { SITE_DOMAIN, STARTING_BALANCE_LABEL } from "@/lib/constants";
-import { authOrigin, authUrl } from "@/lib/authRedirect";
+import { authUrl } from "@/lib/authRedirect";
 import { takePendingPath } from "@/lib/pendingRedirect";
 
 const schema = z.object({
@@ -95,11 +94,18 @@ export default function Auth() {
 
   const google = async () => {
     setBusy(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: authOrigin(),
-    });
-    setBusy(false);
-    if (result.error) toast.error("Google sign-in failed. Try email instead.");
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: authUrl("/auth"),
+        },
+      });
+      if (error) throw error;
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Google sign-in failed. Try email instead.");
+      setBusy(false);
+    }
   };
 
   const forgot = async () => {
