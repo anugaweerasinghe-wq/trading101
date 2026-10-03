@@ -21,10 +21,6 @@
   ],
   "rewrites": [
     {
-      "source": "/~oauth/:path*",
-      "destination": "https://tradinghq.lovable.app/~oauth/:path*"
-    },
-    {
       "source": "/sitemap.xml",
       "destination": "/sitemap.xml"
     },
