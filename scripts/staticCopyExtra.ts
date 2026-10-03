@@ -19,11 +19,11 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Common questions",
       list: [
         "Is TradeHQ free? Yes, entirely. There is no paid tier, no trial and no card required.",
-        "Do I need an account? No. Practice trading, courses and the glossary all work without signing up; an account is only needed for public profiles, duels and cross-device sync.",
+        "Do I need an account? No. Practice trading, courses and the glossary work without signing up. An optional account supports profiles, duels and selected community summary statistics; it does not restore your browser-held practice record on another device.",
         "Is the money real? No. Every balance, order and result is simulated, and the platform holds no funds.",
         "Are the prices real? They are based on public market data and refreshed periodically, with a simulation layer between refreshes. They are not a live trading feed.",
         "Does TradeHQ give advice? No. There are no signals, price targets or recommendations anywhere on the site.",
-        "Where is my data? Portfolio, journal and progress are stored in your own browser unless you create an account.",
+        "Where is my data? Portfolio, trade history, journal entries and course progress stay in your browser even when you sign in. Your account can hold profile information and selected summary statistics, including a badge count, but these are not a backup of the underlying practice record.",
       ],
     },
   ],
