@@ -53,7 +53,7 @@ const WHY_TRUST = [
   {
     icon: Award,
     title: "Practice, not preaching",
-    body: "Every concept is paired with a matching paper trade you can execute immediately with $100,000 virtual cash. Learning without practice does not stick.",
+    body: "Use $100,000 virtual cash to practise supported spot instruments and general trading habits. Options and futures contract mechanics are taught through worked examples; TradeHQ does not execute derivatives contracts.",
   },
 ];
 
@@ -61,7 +61,7 @@ const HOW_IT_WORKS = [
   { step: "1", title: "Pick a track", body: "Choose the topic that matches your level. Beginners typically start with Trading Psychology or Macro Reading." },
   { step: "2", title: "Read the lesson", body: "Each lesson is 8–14 minutes. Written in plain English with real examples and printed sources." },
   { step: "3", title: "Take the quiz", body: "A 4–6 question knowledge check. Explanations for every answer — you learn from mistakes." },
-  { step: "4", title: "Practice it live", body: "Every lesson links to a matching simulated trade so you use what you just learned with zero real money at risk." },
+  { step: "4", title: "Work through an example", body: "Practise supported spot trades with virtual cash. For options and futures, calculate hypothetical contract payoffs and margin changes in a worksheet." },
   { step: "5", title: "Earn the badge", body: "Complete every lesson in a track to earn a permanent completion badge on your practice profile." },
 ];
 
@@ -84,7 +84,7 @@ const FAQ = [
   },
   {
     q: "What do I get for completing a track?",
-    a: "A permanent completion badge that shows on your practice profile, and — more importantly — the ability to explain the concept and paper trade it responsibly. There is no real-money certification.",
+    a: "A completion badge records your course progress. Lessons and quizzes help you explain concepts, but completion does not certify trading competence. Options and futures exercises are conceptual; simulator execution is limited to supported spot instruments.",
   },
   {
     q: "Where does the content come from?",
@@ -189,7 +189,8 @@ export default function Courses() {
               trader survives their first year: options, futures, macro reading and psychology.
               Twenty full-length lessons. Quizzes, sources, completion badges, and a
               <span className="text-emerald-400 font-semibold"> $100,000 virtual practice account</span>
-              so you can apply every concept the moment you learn it.
+              {" "}for supported spot instruments. Options and futures contract mechanics are
+              taught through conceptual examples and worksheet exercises.
             </p>
             <p className="mt-4 text-sm text-muted-foreground/80 max-w-2xl mx-auto italic">
               Educational simulation only — not financial, investment, legal or tax advice.
@@ -214,7 +215,7 @@ export default function Courses() {
           <AIAnswerBlock
             className="mb-12"
             question="Are TradeHQ's free trading courses any good?"
-            answer="TradeHQ offers four structured, expert-written trading courses — Options Fundamentals, Futures & Derivatives, Macro Reading, and Trading Psychology — with 20 lessons total, quizzes, cited public sources (SEC, CFTC, FRED, CME) and completion badges. Every concept can be practised immediately on a free $100,000 virtual account with no signup. Written by TradeHQ creator Anuga Weerasinghe; educational simulation only, not financial advice."
+            answer="TradeHQ offers four structured, expert-written trading courses — Options Fundamentals, Futures & Derivatives, Macro Reading, and Trading Psychology — with 20 lessons total, quizzes, cited public sources (SEC, CFTC, FRED, CME) and completion badges. The free $100,000 virtual account supports spot instruments. Options and futures contract exercises are conceptual; TradeHQ does not execute derivatives contracts. Written by TradeHQ creator Anuga Weerasinghe; educational only, not financial advice."
           />
 
           {resume && (

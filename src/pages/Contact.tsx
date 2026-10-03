@@ -285,9 +285,10 @@ export default function Contact() {
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed mt-3">
               We also cannot recover an account balance. Practice portfolios are stored in your own
-              browser, so clearing site data or switching device resets them, and there is no copy on
-              our side to restore. Signing in with the optional free account keeps your stats and
-              badges attached to you across devices, which is the only way to preserve a record.
+              browser. Another browser or device has its own practice record; clearing site data
+              removes the local copy. Signing in can save your profile and selected summary values,
+              including a badge count, for community features. It does not back up or restore your
+              positions, trade history, journal entries, individual course badges or lesson progress.
             </p>
           </section>
 

@@ -236,7 +236,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         h: "How to work through a track",
         list: [
           "Do one lesson per session and take the quiz before moving on.",
-          `Apply each lesson in the simulator the same day using ${BALANCE} of virtual cash.`,
+          `Practise supported spot instruments with ${BALANCE} of virtual cash. Work through options and futures contract examples in a separate worksheet.`,
           "Re-read the key takeaways a week later; recall beats re-reading for retention.",
           `Nothing in these courses is a recommendation. ${DISCLAIMER}`,
         ],
@@ -290,7 +290,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
           {
             h: "Practise this lesson",
             p: [
-              `Open the practice desk and apply this lesson immediately with ${BALANCE} in virtual cash. Concepts become usable when they are rehearsed under simulated conditions, not when they are read. ${DISCLAIMER}`,
+              `Use ${BALANCE} in virtual cash to practise supported spot instruments and general habits such as recording a trade thesis. Options contracts, Greeks, futures margin and daily settlement are conceptual exercises: calculate their examples in a worksheet, because TradeHQ does not execute derivatives contracts. ${DISCLAIMER}`,
             ],
           },
         ],

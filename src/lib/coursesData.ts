@@ -41,14 +41,14 @@ export interface CourseTrack {
 }
 
 const DISC =
-  "(Educational simulation only — not financial advice. Practice everything below with $100,000 virtual cash on TradeHQ.)";
+  "(Educational only — not financial advice. TradeHQ offers $100,000 virtual cash for supported spot instruments. Options contracts, Greeks, futures margin and settlement are conceptual exercises; the simulator does not execute them.)";
 
 const optionsTrack: CourseTrack = {
   slug: "options-trading-fundamentals",
   title: "Options Trading Fundamentals",
   tagline: "Calls, puts, spreads and Greeks — decoded for beginners.",
   description:
-    "A structured, YMYL-compliant introduction to how listed options actually work — from what a call contract is, through the Greeks that drive its price, to defined-risk spread strategies you can safely practice on the simulator.",
+    "A structured introduction to listed options — from call contracts and the Greeks to defined-risk spread examples. Work through contract payoffs on paper; TradeHQ's spot simulator does not execute options contracts.",
   hero: optionsHero,
   level: "Intermediate",
   badge: {
@@ -84,8 +84,8 @@ const optionsTrack: CourseTrack = {
         "Options were originally created as a hedging tool. A pension fund that owned $50 million of an index could buy put options as portfolio insurance — capping downside for a known premium the same way you cap car-accident cost with an insurance policy. Individual traders now use them for the same three reasons: hedging existing positions, generating income by selling premium against shares they own (covered calls), or making a defined-risk directional bet without tying up the full cost of the shares.",
         "## A simple worked example",
         "Imagine Apple trades at $180 and you buy one 30-day $185 call for $3.00 ($300 total). Three things can happen. If Apple closes above $188 on expiration, you're profitable — the intrinsic value of the call exceeds what you paid. If it closes between $185 and $188 you're partially in-the-money but net negative. If it closes at or below $185, the call expires worthless and you lose the full $300 — but nothing more. That capped, known-in-advance loss is the defining feature that makes options different from margin or leverage.",
-        "## Sri Lankan student note",
-        "US-listed options are the deepest, most liquid derivatives market in the world, but they are geo-restricted for many Sri Lankan brokerage accounts. TradeHQ's simulator lets you practice the exact same contracts — Apple, Tesla, SPY — with $100,000 virtual capital, so you can build the mental model long before you ever face a real premium payment.",
+        "## What you can practise on TradeHQ",
+        "TradeHQ supports spot instruments, including shares and ETFs, with $100,000 virtual capital. It does not model option strikes, expirations or premiums. Use this lesson's worked examples to calculate hypothetical contract payoffs on paper; buying an underlying share in the simulator is a different transaction from buying an option on it.",
         "> Options are contracts, not shares. You are trading a right that decays with time.",
         DISC,
       ],
@@ -192,9 +192,9 @@ const optionsTrack: CourseTrack = {
         "## The earnings trap",
         "Implied volatility often rises before earnings and can fall sharply afterwards. A trader can be directionally correct and still lose on a long option if the volatility drop and time decay outweigh the price move.",
         "## A safer earnings play",
-        "In a simulator, compare long-premium and defined-risk premium-selling structures around earnings to see how direction, implied volatility and the size of the actual move interact. Avoid treating volatility selling as inherently safer; short premium can carry substantial risk.",
+        "In a paper worksheet, compare hypothetical long-premium and defined-risk premium-selling structures around earnings to see how direction, implied volatility and the size of the actual move interact. TradeHQ does not price these structures. Avoid treating volatility selling as inherently safer; short premium can carry substantial risk.",
         "## Practice loop",
-        "On the simulator, pick a highly-watched name (AAPL, NVDA, TSLA) reporting earnings this week. Note IV rank the day before, then compare to IV rank the day after. Do this for 10 earnings cycles and the IV-crush pattern becomes viscerally obvious in a way no textbook can teach.",
+        "For a historical study, record dated option quotes and implied-volatility observations from an options-data source before and after an earnings announcement. Keep the expiry, strike and data methodology consistent, and record price changes as well as volatility changes. TradeHQ does not supply an options chain or IV-rank data. A small sample can illustrate mechanisms without establishing a reliable trading edge.",
         DISC,
       ],
       keyTakeaways: [
@@ -217,19 +217,19 @@ const optionsTrack: CourseTrack = {
     {
       slug: "options-risk-management",
       title: "Options Risk Management — Sizing, Rolling & Cutting Losses",
-      summary: "Options losses can be amplified by position size, leverage, volatility and time decay. This lesson focuses on measuring those risks before a simulated trade.",
+      summary: "Options losses can be amplified by position size, leverage, volatility and time decay. This lesson measures those risks using hypothetical contract examples.",
       readingMinutes: 9,
       body: [
         "## The 1% rule for defined-risk trades",
         "For simulation, choose a small predefined risk budget before entering a position and compare how different limits affect drawdown. For example, 1% of a $100,000 practice account is $1,000. This is an educational parameter, not a universal real-money rule.",
         "## The 3x rule for undefined-risk trades",
-        "Naked puts and short strangles can create losses far larger than the premium collected. In the simulator, model adverse moves explicitly and set a maximum acceptable simulated loss before opening the position rather than relying on one fixed multiplier.",
+        "Naked puts and short strangles can create losses far larger than the premium collected. In a paper worksheet, model adverse moves explicitly and compare the resulting losses with a hypothetical risk budget rather than relying on one fixed multiplier. TradeHQ does not execute these option positions.",
         "## Rolling — extending, not doubling down",
-        "Rolling means closing an existing option and opening another with a different expiry and sometimes a different strike. A credit or debit alone does not determine whether the adjustment makes sense; compare the new maximum loss, break-even points, time remaining and total capital at risk in the simulation.",
+        "Rolling means closing an existing option and opening another with a different expiry and sometimes a different strike. A credit or debit alone does not determine whether the adjustment makes sense; compare the new maximum loss, break-even points, time remaining and total capital at risk in a worked example. Rolling options is not supported by TradeHQ's order engine.",
         "## When to cut a loss",
-        "Predefined exits can prevent open-ended decision-making, but no single percentage works for every option structure. In the simulator, test several exit rules and compare drawdown, average loss and opportunity cost across a meaningful sample.",
+        "Predefined exits can prevent open-ended decision-making, but no single percentage works for every option structure. In a worksheet with appropriate historical option prices, compare several hypothetical exit rules and record drawdown, average loss and opportunity cost. Account for execution assumptions and costs; TradeHQ's spot simulator cannot perform this options backtest.",
         "## Journaling every trade",
-        "For each trade record: thesis, IV rank at entry, position size in dollars, max loss in dollars, exit reason, actual P&L. After 50 trades you'll see your own edge and your own leaks. TradeHQ's ghost journal does this automatically on every simulated trade.",
+        "For each hypothetical options example, record the thesis, dated volatility inputs, contract size, possible loss, exit assumptions and calculated P&L in a separate worksheet. TradeHQ's journal records supported simulator trades; it does not automatically capture options contracts or IV rank. Reviewing examples may reveal recurring mistakes, but no fixed number of trades establishes a reliable edge.",
         DISC,
       ],
       keyTakeaways: [
@@ -422,14 +422,14 @@ const futuresTrack: CourseTrack = {
         "## The math is identical",
         "Everything about micros — margin, mark-to-market, contango, hedging — works exactly the same as full-size futures. You're not learning a lesser instrument; you're learning the same instrument at 1/10th the risk-per-tick.",
         "## On the simulator",
-        "TradeHQ's practice environment mirrors futures margin behaviour so you can experience daily mark-to-market with $100,000 in virtual capital and zero real dollars at risk.",
+        "TradeHQ's $100,000 practice account supports spot instruments. It does not model futures contracts, initial or maintenance margin, daily settlement, or margin calls. Use a paper worksheet to calculate a hypothetical contract's daily P&L and margin balance; buying a similarly named spot instrument does not reproduce futures mechanics.",
         DISC,
       ],
       keyTakeaways: [
         "Micros are 1/10th of standard e-minis in notional and margin.",
         "Everything else is identical.",
         "Micros let beginners scale one contract at a time.",
-        "Simulator practice adds another safety layer.",
+        "TradeHQ offers spot practice; futures margin and settlement remain worksheet exercises.",
       ],
       sources: [
         { label: "CME — Micro E-mini", url: "https://www.cmegroup.com/markets/equities/sp/micro-e-mini-sandp-500.html" },
