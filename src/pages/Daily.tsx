@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { Link } from "react-router-dom";
-import { Flame, Trophy, Check, ArrowRight, Sparkles, TrendingUp, Brain, Lock } from "lucide-react";
+import { Flame, Trophy, Check, ArrowRight, Sparkles, TrendingUp, Brain, Lock, X } from "lucide-react";
 import {
   getTodayChallenge,
   getStreak,

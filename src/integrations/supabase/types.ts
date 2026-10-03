@@ -241,6 +241,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_practice_duel: { Args: { p_code: string }; Returns: string }
       hit_rate_limit: {
         Args: {
           _bucket: string
@@ -250,6 +251,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      join_practice_duel: { Args: { p_duel_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
