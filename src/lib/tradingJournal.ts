@@ -71,3 +71,27 @@ export const AVAILABLE_EMOTIONS = [
   'Impulsive',
   'Rational'
 ];
+
+// Derived only from current entries; legacy stored analyses are left untouched.
+export const getJournalSummary = (trades: Trade[]) => {
+  const entries = getJournalEntries(trades);
+  const counts = new Map<string, number>();
+  let taggedEntries = 0;
+  for (const trade of entries) {
+    const raw = trade.journal?.emotions;
+    const tags = new Set(
+      (Array.isArray(raw) ? raw : [])
+        .filter((tag): tag is string => typeof tag === "string")
+        .map(tag => tag.trim().toLowerCase())
+        .filter(Boolean),
+    );
+    if (tags.size > 0) taggedEntries++;
+    for (const tag of tags) counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  }
+  return {
+    totalEntries: entries.length,
+    taggedEntries,
+    emotions: Array.from(counts, ([emotion, count]) => ({ emotion, count }))
+      .sort((a, b) => b.count - a.count || a.emotion.localeCompare(b.emotion)),
+  };
+};

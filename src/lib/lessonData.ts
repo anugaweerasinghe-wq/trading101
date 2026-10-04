@@ -317,16 +317,16 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "Stop-Loss Order: Automatically sells if price drops to a certain level",
+              "Sell Stop: Triggers a market order at a specified level; the fill price can differ",
               "Stop-Limit Order: Combines stop and limit order features",
-              "Trailing Stop: Moves with the price to lock in profits",
+              "Trailing Stop: Adjusts its trigger with favourable price moves; profits are not guaranteed",
               "Good-Til-Canceled (GTC): Order stays active until filled or canceled",
               "Day Order: Expires at end of trading day if not filled",
             ],
           },
           {
             type: "example",
-            data: "You buy Apple at $180 and set a stop-loss at $170. If Apple drops to $170, your shares automatically sell, limiting your loss to $10 per share.",
+            data: "Illustration: buy at $180 with a sell stop at $170. A $170 fill would lose $10 per share before costs; a worse fill increases the loss.",
           },
           {
             type: "heading",
@@ -627,39 +627,37 @@ export const lessonData: Lesson[] = [
         content: [
           {
             type: "highlight",
-            data: "A stop-loss is not a sign of defeat - it's a sign of discipline. It's your automated risk manager working 24/7.",
+            data: "Stop orders automate a trigger, not a guaranteed outcome. Availability, eligible trading hours and trigger rules depend on the broker and venue.",
           },
           {
             type: "text",
-            data: "Every trade needs two critical levels set before you enter: where you'll exit if you're wrong (stop-loss) and where you'll exit if you're right (take-profit). Without these, you're gambling.",
+            data: "A practice plan can record an adverse exit and a profit target before entry. Compare planned outcomes with actual fills; neither level promises execution.",
           },
           {
-            type: "stat",
-            value: "95%",
-            label: "Of Successful Traders Use Stop-Losses",
-            data: "The most consistent winners in trading never let losses run wild",
+            type: "text",
+            data: "Source: SEC Investor Bulletin, Stop, Stop-Limit, and Trailing Stop Orders — investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-15. These are market concepts; TradeHQ currently exposes market orders only.",
           },
           {
             type: "heading",
-            data: "Stop-Loss Orders: Your Safety Net",
+            data: "Stop Orders: Trigger and Execution",
           },
           {
             type: "text",
-            data: "A stop-loss is an automatic order that sells your position when the price drops to a specific level. It limits your loss on a trade.",
+            data: "A sell stop becomes a market order when triggered. A stop-limit instead becomes a limit order, which may remain unfilled.",
           },
           {
             type: "list",
             data: [
               "Set BEFORE you enter the trade, not after",
               "Based on technical levels, not emotions",
-              "Prevents small losses from becoming big losses",
+              "Losses can exceed the amount planned at the stop",
               "Removes emotion from the decision",
-              "Non-negotiable for every trade",
+              "Check which order types the venue actually supports",
             ],
           },
           {
             type: "example",
-            data: "You buy Tesla at $200 with a stop-loss at $190. If Tesla drops to $190, you automatically sell. Maximum loss: $10 per share. Even if Tesla crashes to $150 overnight, you're out at $190.",
+            data: "Illustration: buy at $200 and set a $190 sell stop. If an overnight gap leads to a $150 fill, the loss is $50 per share before costs, not $10.",
           },
           {
             type: "heading",
@@ -681,7 +679,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Place stops just beyond key levels, not exactly on them. If support is at $100, place your stop at $99.50. This prevents getting stopped out by brief price spikes.",
+            data: "Moving a stop further away changes planned risk; no fixed buffer prevents short-term price moves from triggering it.",
           },
           {
             type: "heading",
@@ -707,17 +705,17 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "heading",
-            data: "Trailing Stops: Lock In Profits Automatically",
+            data: "Trailing Stops: Moving Trigger Levels",
           },
           {
             type: "text",
-            data: "A trailing stop moves up with the price, locking in profits while giving the trade room to grow:",
+            data: "For a long position, a trailing sell stop rises with favourable price moves and stays fixed when prices fall:",
           },
           {
             type: "list",
             data: [
               "Follows the price up automatically",
-              "Never moves down (locks in gains)",
+              "A higher trigger does not guarantee a profitable fill",
               "Set as percentage or dollar amount",
               "Great for trending markets",
               "Example: 10% trailing stop on winning trades",
@@ -725,7 +723,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Buy at $100 with 10% trailing stop ($90). Price rises to $150, stop moves to $135. If price drops to $135, you sell with $35 profit per share locked in!",
+            data: "Illustration: a 10% trail moves from $90 to $135 as price rises from $100 to $150. Profit is $35 per share before costs only if execution occurs at $135.",
           },
         ],
       },
@@ -998,7 +996,7 @@ export const lessonData: Lesson[] = [
           "To calculate position size",
         ],
         correctAnswer: 1,
-        explanation: "A stop-loss automatically exits your position at a predetermined price to limit your losses if the trade goes against you.",
+        explanation: "A stop order attempts to limit losses by triggering a market order. The execution price is not guaranteed.",
       },
       {
         question: "With a 1:3 risk-reward ratio, what minimum win rate do you need to be profitable?",
@@ -1608,68 +1606,60 @@ export const lessonData: Lesson[] = [
         ],
       },
       {
-        title: "Setting Realistic Profit Targets",
-        content: [
+        "title": "Return Assumptions and Practice Goals",
+        "content": [
           {
-            type: "quote",
-            data: "Rule No. 1 is never lose money. Rule No. 2 is never forget Rule No. 1.",
-            author: "Warren Buffett",
+            "type": "text",
+            "data": "A practice lesson cannot establish a realistic monthly return from a label such as beginner, intermediate or professional. Outcomes depend on the strategy, exposure, market conditions and costs. A positive practice result is not evidence that the same result can be repeated with real money. Use explicit assumptions for calculations instead of treating a return target as an entitlement."
           },
           {
-            type: "text",
-            data: "Unrealistic expectations lead to overtrading, excessive risk, and blown accounts. Set achievable goals based on your strategy and skill level - not YouTube guru promises.",
+            "type": "heading",
+            "data": "Separate arithmetic from expectations"
           },
           {
-            type: "heading",
-            data: "Reality Check: What's Actually Possible",
+            "type": "list",
+            "data": [
+              "State the period: a monthly rate and an annual rate are different inputs.",
+              "State whether gains are reinvested and whether deposits or withdrawals occur.",
+              "Identify which costs the example includes and which it leaves out.",
+              "A comparison with a fund or index needs a defined period, benchmark and method; no fund ranking is established here."
+            ]
           },
           {
-            type: "list",
-            data: [
-              "Beginners: 5-10% monthly returns are EXCELLENT",
-              "Intermediate: 10-15% monthly with experience (rare)",
-              "Professionals: 15-25% monthly (extremely rare)",
-              "S&P 500 average: ~10% annually (not monthly!)",
-              "Warren Buffett career average: 20% annually",
-            ],
+            "type": "example",
+            "data": "Hypothetical arithmetic: start with $100, gain 10% in month one, then 10% on the new balance in month two. With reinvestment and no costs or cash flows, the balances are $110 and $121. The two-month gain is 21%, not 20%. The assumed gains are inputs, not forecasts."
           },
           {
-            type: "stat",
-            value: "20-30%",
-            label: "Annual Returns That Beat 95% of Funds",
-            data: "If you can consistently achieve 20-30% annual returns, you're outperforming virtually all professional money managers",
+            "type": "highlight",
+            "data": "If a hypothetical 10% gain repeated every month for twelve months, (1.10^12 − 1) × 100 gives about 213.8% annual growth before costs. This shows the compounding implied by the assumption; it does not make such a result typical or achievable."
           },
           {
-            type: "highlight",
-            data: "A 10% monthly return = 214% annually. If it were easy, everyone would be rich. Set realistic targets or risk gambling your account away chasing impossible dreams.",
+            "type": "heading",
+            "data": "Losses compound too"
           },
           {
-            type: "heading",
-            data: "Focus on Process, Not Profits",
+            "type": "example",
+            "data": "A hypothetical $100 balance that falls 10% becomes $90. A subsequent 10% gain brings it to $99, not back to $100. Recovering from $90 to $100 requires a gain of about 11.1%. The order and size of gains and losses matter when reviewing a record."
           },
           {
-            type: "text",
-            data: "Successful traders focus on executing their strategy consistently, not hitting specific profit targets:",
+            "type": "heading",
+            "data": "Use reviewable practice goals"
           },
           {
-            type: "list",
-            data: [
-              "Goal: Execute 20 quality trades following my rules",
-              "NOT: Make $5,000 this month at all costs",
-              "Track win rate, risk-reward, and process adherence",
-              "Profits are byproduct of good process",
-              "Bad months happen - focus on executing correctly",
-            ],
+            "type": "list",
+            "data": [
+              "Record the reason for each practice decision before checking its outcome.",
+              "Compare the intended position size with the position actually entered.",
+              "Review losses as well as gains, and identify missing information.",
+              "Track costs and cash flows separately from market gains.",
+              "Following a plan makes a decision easier to evaluate; it does not guarantee profit."
+            ]
           },
           {
-            type: "example",
-            data: "Trader A targets $100,000 monthly, takes risky trades to hit goal, blows up account. Trader B focuses on quality setups only, makes $8,000 some months, $2,000 others, but compounds wealth steadily over years.",
-          },
-          {
-            type: "tip",
-            data: "Set three goals: Minimum (stay profitable), Target (realistic stretch), and Maximum (dream scenario). Hit minimum? Success. Hit target? Excellent month. Exceeded target? Take profits and tighten risk management.",
-          },
-        ],
+            "type": "tip",
+            "data": "Choose a review task you can verify, such as checking whether each journal entry contains its original reasoning. Avoid requiring yourself to make a fixed number of trades or a fixed profit merely to meet a practice goal. Record uncertainty when the evidence is too limited to draw a conclusion."
+          }
+        ]
       },
       {
         title: "Creating a Trading Journal",
@@ -1802,10 +1792,10 @@ export const lessonData: Lesson[] = [
     ],
     quiz: [
       {
-        question: "What is a realistic monthly return target for beginner traders?",
-        options: ["50-100%", "20-30%", "5-10%", "2-3%"],
+        question: "In the hypothetical example, what does $100 become after two consecutive 10% gains with no costs or cash flows?",
+        options: ["$100", "$110", "$121", "$120"],
         correctAnswer: 2,
-        explanation: "5-10% monthly returns are excellent for beginners and actually beat most professional fund managers over time!",
+        explanation: "$100 × 1.10 × 1.10 = $121. The assumed gains illustrate compounding; they are not a forecast.",
       },
       {
         question: "What is the most important reason to keep a trading journal?",

@@ -19,11 +19,11 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Common questions",
       list: [
         "Is TradeHQ free? Yes, entirely. There is no paid tier, no trial and no card required.",
-        "Do I need an account? No. Practice trading, courses and the glossary all work without signing up; an account is only needed for public profiles, duels and cross-device sync.",
+        "Do I need an account? No. Practice trading, courses and the glossary work without signing up. An optional account supports profiles, duels and selected community summary statistics; it does not restore your browser-held practice record on another device.",
         "Is the money real? No. Every balance, order and result is simulated, and the platform holds no funds.",
         "Are the prices real? They are based on public market data and refreshed periodically, with a simulation layer between refreshes. They are not a live trading feed.",
         "Does TradeHQ give advice? No. There are no signals, price targets or recommendations anywhere on the site.",
-        "Where is my data? Portfolio, journal and progress are stored in your own browser unless you create an account.",
+        "Where is my data? Portfolio, trade history, journal entries and course progress stay in your browser even when you sign in. Your account can hold profile information and selected summary statistics, including a badge count, but these are not a backup of the underlying practice record.",
       ],
     },
   ],
@@ -170,7 +170,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "How it works and what it costs",
       p: [
         "The mentor runs on large language models through the site's backend, with a fallback chain so an outage at one provider does not take the feature down. It is free to use and there is no message quota for normal use.",
-        "Conversations are used to produce your answer and are not sold or used to build an advertising profile. Because language models can be confidently wrong, every substantive answer should be checked against the linked lessons or an authoritative source before you rely on it.",
+        "Conversations are used to produce your answer. Advertising and analytics data flows are described separately in the privacy policy; AI answers can be wrong, so check substantive claims against the linked lessons or an authoritative source before relying on them.",
       ],
     },
     {
@@ -362,7 +362,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Cookies and analytics",
       p: [
-        "TradeHQ uses local storage rather than tracking cookies for the practice account itself. Where analytics are used, they are limited to aggregate page-level measurement so we can see which lessons are read and which pages break — not to build profiles of individuals or to follow visitors across other websites.",
+        "TradeHQ stores the core practice account in local browser storage. Optional analytics and advertising services can use cookies or similar identifiers after the applicable consent choice; the privacy policy explains those providers and controls.",
       ],
     },
     {
@@ -383,7 +383,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Changes and contact",
       p: [
-        "No data is sold, and there is no advertising network profiling built into the practice tools. Analytics are used only to see which pages are read and where people give up, which is what drives the roadmap.",
+        "TradeHQ does not sell simulated portfolio data to brokers. Optional analytics and advertising are separate third-party services described in the privacy policy and are subject to the user's applicable consent choices.",
         "If this policy changes materially, the updated text appears on this page. Questions about what is stored, requests for a copy of account data, and deletion requests all go through the contact page and are handled by the person who maintains the site rather than an automated system.",
       ],
     },

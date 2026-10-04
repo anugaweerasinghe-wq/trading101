@@ -296,7 +296,7 @@ export default function Portfolio() {
         <meta name="twitter:title" content="Portfolio Dashboard — TradeHQ" />
         <meta
           name="twitter:description"
-          content="Track your virtual trading performance with AI analytics & journal."
+          content="Review your virtual portfolio, calculated performance metrics and browser-held trading journal."
         />
         <meta
           name="twitter:image"

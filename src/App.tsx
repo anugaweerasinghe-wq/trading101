@@ -12,6 +12,7 @@ import { PushNotificationPrompt } from "@/components/retention/PushNotificationP
 import { AuthProvider } from "@/hooks/useAuth";
 import { recordVisit } from "@/lib/lastVisit";
 import { snapshotWatchlist } from "@/lib/watchlistDiff";
+import { ConsentBanner } from "@/components/ConsentBanner";
 
 import Index from "./pages/Index";
 
@@ -164,6 +165,7 @@ const App = () => (
             <BackgroundMusic />
             <PushNotificationPrompt />
             <WatchlistSnapshot />
+            <ConsentBanner />
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>

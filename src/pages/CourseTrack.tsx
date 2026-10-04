@@ -19,7 +19,7 @@ export default function CourseTrack() {
 
   const url = `${DOMAIN}/courses/${track.slug}`;
   const title = `${track.title} — Free Trading Course | TradeHQ`;
-  const description = `${track.tagline} ${track.lessons.length} free lessons with quizzes and a completion badge. Practice with $100,000 virtual cash on TradeHQ.`;
+  const description = `${track.tagline} ${track.lessons.length} free lessons with quizzes and a completion badge. Derivatives examples are conceptual; simulator practice uses spot instruments.`;
 
   const courseSchema = {
     "@context": "https://schema.org",

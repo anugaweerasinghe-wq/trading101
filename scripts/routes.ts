@@ -481,7 +481,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "Free Trading Courses 2026 — Options, Futures, Macro & Psychology | TradeHQ",
     description: `Four structured trading courses with original lessons, quizzes and completion badges. Practise concepts with ${BALANCE} virtual cash.`,
     h1: "Structured Trading Courses",
-    summary: `Four structured tracks — options, futures, macro reading, and trading psychology — each with quizzes and a completion badge. Practice everything with ${BALANCE} in virtual cash on TradeHQ.`,
+    summary: `Four structured tracks — options, futures, macro reading, and trading psychology — each with quizzes and a completion badge. Practise supported spot instruments with ${BALANCE} in virtual cash; derivatives contract exercises are conceptual.`,
     priority: "0.8",
     changefreq: "weekly",
   });
@@ -489,9 +489,9 @@ export function buildRoutes(): RouteMeta[] {
     routes.push({
       path: `/courses/${t.slug}`,
       title: `${t.title} — Free Trading Course | TradeHQ`,
-      description: `${t.tagline} ${t.lessons.length} free lessons with quizzes and a completion badge. Practice with ${BALANCE} virtual cash.`,
+      description: `${t.tagline} ${t.lessons.length} free lessons with quizzes and a completion badge. Derivatives examples are conceptual; simulator practice uses spot instruments.`,
       h1: t.title,
-      summary: `${t.tagline} Includes ${t.lessons.length} lessons, quizzes, sources, and a completion badge — plus a free ${BALANCE} practice account to apply everything you learn.`,
+      summary: `${t.tagline} Includes ${t.lessons.length} lessons, quizzes, sources, and a completion badge. The ${BALANCE} simulator supports spot instruments; options and futures contract mechanics are worksheet exercises.`,
       priority: "0.75",
       changefreq: "weekly",
     });
@@ -501,7 +501,7 @@ export function buildRoutes(): RouteMeta[] {
         title: `${l.title} — ${t.title} | TradeHQ`,
         description: l.summary.length > 155 ? l.summary.slice(0, 152) + "..." : l.summary,
         h1: l.title,
-        summary: `${l.summary} Practice with ${BALANCE} virtual cash on TradeHQ — educational simulation only, not financial advice.`,
+        summary: `${l.summary} TradeHQ offers ${BALANCE} virtual cash for supported spot instruments. Derivatives contracts remain conceptual exercises. Educational only, not financial advice.`,
         priority: "0.7",
         changefreq: "monthly",
       });
