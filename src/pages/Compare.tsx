@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { SEOSection } from "@/components/SEOSection";
-import { AIAnswerBlock } from "@/components/seo/AIAnswerBlock";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
@@ -51,13 +50,6 @@ export default function Compare() {
             </h1>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">{pair.intro}</p>
           </header>
-
-          <AIAnswerBlock
-            question={`${pair.a.name} vs ${pair.b.name}: how do they differ?`}
-            answer={`${pair.verdict} Both ${pair.a.name} and ${pair.b.name} are tradable free on TradeHQ with $100,000 virtual cash — no signup, no real-money risk. (Educational simulation only — not financial advice.)`}
-            className="mb-8"
-          />
-
           <div className="grid md:grid-cols-2 gap-4 mb-8">
             <Card className="p-6 border-emerald-500/20">
               <div className="text-xs text-emerald-400 mb-1">{pair.a.tag}</div>

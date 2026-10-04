@@ -342,9 +342,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
   for (const p of pairs) {
     map.set(`/compare/${p.slug}`, {
       sections: [
-        { h: "The short answer", p: [p.intro] },
-        { h: `${p.a.name}: ${p.a.tag}`, p: [p.deepDive[0]] },
-        { h: `${p.b.name}: ${p.b.tag}`, p: [p.deepDive[1] || p.deepDive[0]] },
+        { h: "How the two differ in practice", p: p.deepDive },
         { h: "Key differences", list: p.bullets },
         { h: "Which to practise first", p: [p.verdict] },
         { h: "Common mistakes with this comparison", list: p.mistakes },
