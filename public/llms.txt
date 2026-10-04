@@ -9,7 +9,7 @@ TradeHQ is an educational simulator (not a brokerage). All prices are simulated 
 - [Home](https://www.thetradehq.com/): What TradeHQ is, how the free simulator works, key features.
 - [Trade](https://www.thetradehq.com/trade): Live-style trading terminal with 150+ practice assets.
 - [Markets](https://www.thetradehq.com/markets): Full asset universe — stocks, crypto, ETFs, forex, commodities.
-- [Portfolio](https://www.thetradehq.com/portfolio): Virtual portfolio, P&L, Sharpe ratio, drawdown analytics.
+- [Portfolio](https://www.thetradehq.com/portfolio): Virtual portfolio, P&L, maximum drawdown, open-position dispersion and allocation analytics.
 - [Leaderboard](https://www.thetradehq.com/leaderboard): Public ranking of virtual traders by return.
 - [AI Mentor](https://www.thetradehq.com/ai-mentor): Educational questions and answers, with AI responses when available and a labeled rule-based fallback.
 - [About](https://www.thetradehq.com/about): Mission, creator, transparency.

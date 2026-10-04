@@ -187,9 +187,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/portfolio",
     title: "Your Practice Portfolio — Positions, P&L, Analytics | TradeHQ",
-    description: `Track your simulated positions, realised and unrealised P&L, Sharpe ratio, and max drawdown. Free practice portfolio seeded with ${BALANCE}.`,
+    description: `Track simulated positions, realised and unrealised P&L, max drawdown, open-position P&L dispersion and allocation snapshots. Free practice portfolio seeded with ${BALANCE}.`,
     h1: "Practice Portfolio",
-    summary: `See every position, trade, and analytics metric for your simulated portfolio — Sharpe ratio, max drawdown, sector allocation. Everything stays in your browser. Educational simulation only.`,
+    summary: `See simulated positions, trades, P&L, maximum drawdown, open-position P&L dispersion and allocation snapshots. Practice metrics are labeled for what they measure; everything stays in your browser.`,
     priority: "0.8",
     changefreq: "daily",
   });

@@ -19,16 +19,18 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
     const totalReturn = currentValue - totalInvested;
     const returnPercent = totalInvested > 0 ? (totalReturn / totalInvested) * 100 : 0;
 
-    // Calculate Sharpe Ratio (simplified)
-    const returns = portfolio.positions.map(p => p.profitLossPercent);
-    const avgReturn = returns.reduce((a, b) => a + b, 0) / (returns.length || 1);
-    const stdDev = Math.sqrt(returns.reduce((sum, r) => sum + Math.pow(r - avgReturn, 2), 0) / (returns.length || 1));
-    const sharpeRatio = stdDev !== 0 ? (avgReturn / stdDev) : 0;
+    // Cross-sectional snapshot of current open-position P&L. This is not a
+    // time-series Sharpe ratio and is intentionally labelled as dispersion.
+    const openReturns = portfolio.positions.map(p => p.profitLossPercent);
+    const avgOpenReturn = openReturns.reduce((a, b) => a + b, 0) / (openReturns.length || 1);
+    const openReturnDispersion = Math.sqrt(
+      openReturns.reduce((sum, r) => sum + Math.pow(r - avgOpenReturn, 2), 0) / (openReturns.length || 1)
+    );
 
-    // Win/Loss ratio
+    // Current open-position status — not a closed-trade win rate.
     const winners = portfolio.positions.filter(p => p.profitLoss > 0).length;
     const losers = portfolio.positions.filter(p => p.profitLoss < 0).length;
-    const winRate = portfolio.positions.length > 0 ? (winners / portfolio.positions.length) * 100 : 0;
+    const openPositionsInProfit = portfolio.positions.length > 0 ? (winners / portfolio.positions.length) * 100 : 0;
 
     // Sector allocation
     const allocation = portfolio.positions.reduce((acc, p) => {
@@ -43,11 +45,12 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
       percentage: (value / currentValue) * 100
     }));
 
-    // Diversification score (0-100)
-    const diversificationScore = Math.min(
+    // Simple practice-only breadth score based on asset-class count and number
+    // of open positions. It does not measure correlation or diversification quality.
+    const allocationBreadthScore = Math.min(
       100,
-      (Object.keys(allocation).length * 20) + // Sector diversity
-      (portfolio.positions.length * 5) // Number of positions
+      (Object.keys(allocation).length * 20) +
+      (portfolio.positions.length * 5)
     );
 
     const maxDrawdown = calculateMaxDrawdown();
@@ -58,12 +61,12 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
       currentValue,
       totalReturn,
       returnPercent,
-      sharpeRatio,
-      winRate,
+      openReturnDispersion,
+      openPositionsInProfit,
       winners,
       losers,
       allocationData,
-      diversificationScore,
+      allocationBreadthScore,
       maxDrawdown,
       realizedPnL,
     };
@@ -85,15 +88,15 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Sharpe Ratio</span>
-            <span className="text-xl font-bold">{analytics.sharpeRatio.toFixed(2)}</span>
+            <span className="text-muted-foreground">Open P&amp;L Dispersion</span>
+            <span className="text-xl font-bold">{analytics.openReturnDispersion.toFixed(2)} pp</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Win Rate</span>
-            <span className="text-xl font-bold text-success">{analytics.winRate.toFixed(1)}%</span>
+            <span className="text-muted-foreground">Open Positions in Profit</span>
+            <span className="text-xl font-bold text-success">{analytics.openPositionsInProfit.toFixed(1)}%</span>
           </div>
           <div className="flex justify-between items-center text-sm">
-            <span className="text-muted-foreground">Winners / Losers</span>
+            <span className="text-muted-foreground">Open Profit / Loss Positions</span>
             <span className="font-medium">
               <span className="text-success">{analytics.winners}</span> / <span className="text-destructive">{analytics.losers}</span>
             </span>
@@ -168,22 +171,22 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
         )}
       </Card>
 
-      {/* Diversification Score */}
+      {/* Allocation breadth snapshot */}
       <Card className="p-6 bg-card/50 backdrop-blur-sm">
         <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
           <Shield className="w-5 h-5 text-primary" />
-          Diversification Score
+          Allocation Breadth (Practice)
         </h3>
         <div className="text-center">
           <div className="relative inline-flex items-center justify-center">
-            <div className="text-6xl font-bold text-gradient-gold">{analytics.diversificationScore}</div>
+            <div className="text-6xl font-bold text-gradient-gold">{analytics.allocationBreadthScore}</div>
             <span className="absolute -bottom-2 text-sm text-muted-foreground">/100</span>
           </div>
           <p className="mt-6 text-muted-foreground">
-            {analytics.diversificationScore >= 80 && "Excellent diversification!"}
-            {analytics.diversificationScore >= 60 && analytics.diversificationScore < 80 && "Good diversification"}
-            {analytics.diversificationScore >= 40 && analytics.diversificationScore < 60 && "Moderate diversification"}
-            {analytics.diversificationScore < 40 && "Consider diversifying more"}
+            Practice-only breadth score based on {Object.keys(portfolio.positions.reduce((acc, pos) => {
+              acc[pos.asset.type] = true;
+              return acc;
+            }, {} as Record<string, boolean>)).length} asset class(es) across {portfolio.positions.length} open position(s). It does not measure correlation or guarantee diversification.
           </p>
         </div>
       </Card>
@@ -197,17 +200,12 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
         <div className="space-y-4">
           <div>
             <div className="flex justify-between mb-2">
-              <span className="text-muted-foreground">Portfolio Volatility</span>
-              <span className="font-medium">
-                {Math.abs(analytics.sharpeRatio) < 0.5 && "Low"}
-                {Math.abs(analytics.sharpeRatio) >= 0.5 && Math.abs(analytics.sharpeRatio) < 1.5 && "Medium"}
-                {Math.abs(analytics.sharpeRatio) >= 1.5 && "High"}
-              </span>
+              <span className="text-muted-foreground">Open P&amp;L Dispersion</span>
+              <span className="font-medium">{analytics.openReturnDispersion.toFixed(2)} percentage points</span>
             </div>
-            <Progress 
-              value={Math.min(100, Math.abs(analytics.sharpeRatio) * 40)} 
-              className="h-2"
-            />
+            <p className="text-xs text-muted-foreground">
+              Spread of current open-position returns around their average; this is not time-series volatility or a Sharpe ratio.
+            </p>
           </div>
           <div>
             <div className="flex justify-between mb-2">
@@ -221,9 +219,7 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
           </div>
           <div className="pt-4 border-t border-border">
             <p className="text-sm text-muted-foreground">
-              {portfolio.cash / portfolio.totalValue > 0.5 && "High cash reserve - consider more investments"}
-              {portfolio.cash / portfolio.totalValue <= 0.5 && portfolio.cash / portfolio.totalValue > 0.2 && "Healthy cash balance"}
-              {portfolio.cash / portfolio.totalValue <= 0.2 && "Low cash reserve - be cautious"}
+              Cash reserve is shown descriptively only; TradeHQ does not prescribe a target cash percentage.
             </p>
           </div>
         </div>

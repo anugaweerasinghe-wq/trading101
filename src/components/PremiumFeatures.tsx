@@ -33,7 +33,7 @@ export function PremiumFeatures() {
     {
       icon: BarChart3,
       title: "Professional Analytics",
-      description: "Track Sharpe ratio, max drawdown, win rate, and P&L — the same metrics used by institutional traders worldwide.",
+      description: "Track simulated P&L, max drawdown, current open-position dispersion, and allocation snapshots with clearly labeled practice metrics.",
       gradient: "from-primary/20 to-primary/5",
       iconColor: "text-primary",
       borderGlow: "hover:border-primary/30",

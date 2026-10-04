@@ -526,7 +526,7 @@ export default function Portfolio() {
                 {
                   question: "What does the TradeHQ portfolio tracker show?",
                   answer:
-                    "It tracks simulated positions, realized and unrealized P&L, day change, max drawdown, Sharpe ratio and an automated growth summary. Asset prices may be live, cached, delayed or simulated depending on data availability.",
+                    "It tracks simulated positions, realized and unrealized P&L, day change, maximum drawdown, open-position P&L dispersion, allocation snapshots and an automated growth summary. Asset prices may be live, cached, delayed or simulated depending on data availability.",
                 },
                 {
                   question: "Are the portfolio statistics based on real prices?",
