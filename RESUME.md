@@ -175,3 +175,13 @@ H17: removed unsupported expert-written/expert-curated/expert-level and YMYL-com
 | H18 | Scenario label reflects rule-based parser; both canned mentor fallback paths visibly labeled; app/route/llms/static explanations disclose fallback. Local build/prerender/SEO passed. Runtime endpoint transitions remain unverified. | This H18 commit | Not merged |
 
 No production changes or backend writes. PR #12 contains the work; PR #7 remains untouched. Continue Group 2 with H06, H07, H24 and residual audience claims.
+
+## Second three-item checkpoint
+
+| Item | Action / verification | Commit | Production |
+|---|---|---|---|
+| H06 | Removed unsupported x.com/tradehq sameAs from both organization schemas; generated JSON-LD parses; local build/prerender/SEO passed | 50ff2ce05ce25de6c69072474857616bb4d8a239 | Not merged |
+| H07 | Removed unsupported best-simulator ranking from visible FAQ and JSON-LD, replaced with actual virtual-practice features; local pipeline passed | f4c1d7d4e3ab87c11c5431e930ecb3393936125a | Not merged |
+| H24 | Corrected profile sharing address and account requirements; removed expired proposed-feature targets; aligned crawler roadmap with actual proposed features and backend limitations; local pipeline passed | This H24 commit | Not merged |
+
+H18 commit: 53fb0c8a98c26143451abf39a18fa9be958489ae. Gmail failure search after 2026-10-04 returned no messages. Normal-merge setting still blocks release; no production claim. Country-guide audience/legal assertions remain under H09 and are not silently marked resolved.

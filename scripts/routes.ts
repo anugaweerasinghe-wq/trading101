@@ -256,9 +256,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/roadmap",
     title: "TradeHQ Roadmap — What's Shipping Next | TradeHQ",
-    description: `See what's shipping next on TradeHQ. Public roadmap for the free trading simulator — options paper trading, backtesting and more.`,
+    description: `Review existing TradeHQ features and proposals for portfolio projections and embeddable price widgets. Planned features have no confirmed release date.`,
     h1: "TradeHQ Roadmap",
-    summary: `The public roadmap for TradeHQ — upcoming features on the free educational trading simulator, from options paper trading to backtesting and portfolio sharing.`,
+    summary: `The TradeHQ roadmap separates implemented features from proposals for portfolio projections and embeddable price widgets. Planned features have no confirmed release date; account features depend on backend availability.`,
     priority: "0.5",
     changefreq: "weekly",
   });
