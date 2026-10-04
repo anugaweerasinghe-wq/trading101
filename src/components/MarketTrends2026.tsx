@@ -12,7 +12,7 @@ const trends = [
     subtitle: "Stacks, Lightning Network",
     description: "Bitcoin L2 solutions enable fast, low-cost transactions while inheriting Bitcoin's security. Practice trading STX, Lightning-enabled assets, and explore the future of Bitcoin scalability.",
     icon: Zap,
-    badge: "Hot 2026",
+    badge: "Topic",
     color: "primary",
     stats: [
       { label: "Lightning Capacity", value: "5,500+ BTC" },
@@ -65,15 +65,14 @@ export function MarketTrends2026() {
             Market Intelligence
           </Badge>
           <h2 className="text-3xl md:text-5xl font-bold mb-5 tracking-tight">
-            2026{' '}
             <span className="text-transparent bg-clip-text" style={{
               backgroundImage: 'linear-gradient(135deg, hsl(180 70% 50%), hsl(280 60% 55%))'
             }}>
-              Market Trends
+              Market Themes
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Stay ahead with the investment themes shaping the future of finance
+            Explore market themes and technologies that can be studied in the simulator
           </p>
         </motion.div>
 

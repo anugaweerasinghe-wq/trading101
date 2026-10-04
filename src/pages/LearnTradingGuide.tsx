@@ -67,7 +67,7 @@ const LearnTradingGuide = () => {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "AI-Assisted Trading for Beginners: 2026 Guide",
+    "headline": "AI-Assisted Trading for Beginners: Educational Guide",
     "description": "Master AI-assisted trading, Bitcoin Layer 2, and risk management with a free $100K simulator.",
     "author": { "@type": "Organization", "name": "TradeHQ" },
     "datePublished": "2026-02-01",
@@ -117,7 +117,7 @@ const LearnTradingGuide = () => {
             </h1>
 
             <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
-              Master the 2026 financial landscape. Learn AI-assisted strategies and Bitcoin Layer 2 dynamics 
+              Explore market concepts, AI-assisted learning tools, and Bitcoin scaling topics 
               using our high-fidelity simulator. No capital required.
             </p>
 
@@ -343,7 +343,7 @@ const LearnTradingGuide = () => {
               {[
                 { icon: Globe, title: "150+ Assets", desc: "Equities, Crypto & Tokenized Securities." },
                 { icon: Shield, title: "No Financial Risk", desc: "Pure educational environment." },
-                { icon: Zap, title: "2026 Ready", desc: "Optimized for Bitcoin L2 & AI Bots." }
+                { icon: Zap, title: "Practice Ready", desc: "Built around simulator exercises and guided learning." }
               ].map((f, i) => (
                 <div key={i} className="text-center group">
                   <div className="w-10 h-10 mx-auto mb-4 bg-emerald-500/5 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-all">
@@ -357,7 +357,7 @@ const LearnTradingGuide = () => {
           </section>
 
           <div className="mt-6 pt-4 border-t border-white/5 text-center">
-            <SocialShare title="I'm learning AI-assisted trading on TradeHQ! 🚀" description="Mastering 2026 trading with a free $100K simulator" variant="compact" />
+            <SocialShare title="I'm learning AI-assisted trading on TradeHQ! 🚀" description="Learning market concepts with a free $100K simulator" variant="compact" />
           </div>
           <EducationalDisclaimer variant="footer" className="mb-10" />
         </main>

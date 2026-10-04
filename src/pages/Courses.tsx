@@ -100,7 +100,7 @@ export default function Courses() {
   const progress = loadProgress();
   const resume = progress.lastLesson;
 
-  const title = "Free Trading Courses 2026 — Options, Futures, Macro & Psychology | TradeHQ";
+  const title = "Free Trading Courses — Options, Futures, Macro & Psychology | TradeHQ";
   const description =
     "Four structured trading courses covering options, futures, macro reading and trading psychology. Free lessons, quizzes and completion badges. Practice with $100,000 virtual cash on TradeHQ.";
 
@@ -179,7 +179,7 @@ export default function Courses() {
           {/* Hero */}
           <header className="my-10 text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-xs uppercase tracking-widest text-emerald-400 mb-5">
-              <GraduationCap className="h-3 w-3" /> Structured TradeHQ Courses · 2026 Edition
+              <GraduationCap className="h-3 w-3" /> Structured TradeHQ Courses
             </div>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-br from-white via-emerald-200 to-emerald-400 bg-clip-text text-transparent leading-[1.05]">
               Learn to Trade — Properly

@@ -28,7 +28,7 @@ const lessons = [
 ];
 
 const trendingTopics = [
-  { id: "bitcoin-l2", title: "Bitcoin Layer 2", subtitle: "Lightning & Stacks", description: "Master Bitcoin L2 solutions for faster, cheaper transactions.", icon: Zap, badge: "Hot 2026", href: "/trade/btc" },
+  { id: "bitcoin-l2", title: "Bitcoin Layer 2", subtitle: "Lightning & Stacks", description: "Master Bitcoin L2 solutions for faster, cheaper transactions.", icon: Zap, badge: "Topic", href: "/trade/btc" },
   { id: "rwa", title: "Real World Assets", subtitle: "Tokenized Securities", description: "Explore tokenized treasuries, real estate, and commodities.", icon: Coins, badge: "Trending", href: "/learn/article/stock-market-index-etfs" },
   { id: "ai-trading", title: "AI-Driven Trading", subtitle: "Smart Strategies", description: "Leverage AI algorithms for market analysis and automated strategies.", icon: Brain, badge: "Innovation", href: "/ai-mentor" },
 ];
@@ -97,12 +97,12 @@ export default function Learn() {
   return (
     <>
       <Helmet>
-        <title>Learn Trading 2026 — Free Beginner to Advanced Guides | TradeHQ</title>
-        <meta name="description" content="Free trading education 2026: stocks, crypto, technical analysis & risk management. Practice everything with $100K virtual cash. No signup required — TradeHQ." />
+        <title>Learn Trading — Free Beginner to Advanced Guides | TradeHQ</title>
+        <meta name="description" content="Free trading education for stocks, crypto, technical analysis and risk management. Practice with $100K virtual cash. No signup required — TradeHQ." />
         <link rel="canonical" href="https://www.thetradehq.com/learn" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Learn Trading 2026 — Free Beginner to Advanced Guides" />
+        <meta property="og:title" content="Learn Trading — Free Beginner to Advanced Guides" />
         <meta property="og:description" content="Master trading with free beginner-to-advanced lessons. Practice instantly with $100K virtual cash. No signup required." />
         <meta property="og:url" content="https://www.thetradehq.com/learn" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
@@ -110,7 +110,7 @@ export default function Learn() {
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Learn Trading 2026 — Free Beginner to Advanced Guides" />
+        <meta name="twitter:title" content="Learn Trading — Free Beginner to Advanced Guides" />
         <meta name="twitter:description" content="Free trading education: stocks, crypto, technical analysis & more. Practice with $100K virtual cash." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
@@ -234,7 +234,7 @@ export default function Learn() {
               />
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-6 backdrop-blur-xl">
                 <GraduationCap className="w-3.5 h-3.5 text-primary" />
-                <span className="text-[11px] font-bold text-primary uppercase tracking-[0.2em]">2026 Edition · 100% Free</span>
+                <span className="text-[11px] font-bold text-primary uppercase tracking-[0.2em]">Structured Learning · 100% Free</span>
               </div>
               <h1
                 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-[1.05]"
@@ -312,9 +312,9 @@ export default function Learn() {
               </div>
             </div>
 
-            {/* 2026 Market Trends — FIXED: onClick replaced with Link */}
+            {/* Market themes — onClick replaced with Link */}
             <div className="mb-20">
-              <h2 className="text-2xl font-bold mb-3 flex items-center gap-3"><TrendingUp className="w-6 h-6 text-primary" /> 2026 Market Trends</h2>
+              <h2 className="text-2xl font-bold mb-3 flex items-center gap-3"><TrendingUp className="w-6 h-6 text-primary" /> Market Themes to Explore</h2>
               <p className="text-sm text-muted-foreground mb-6">Emerging themes shaping markets this year — explore the trends driving new opportunities.</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {trendingTopics.map((topic, index) => {

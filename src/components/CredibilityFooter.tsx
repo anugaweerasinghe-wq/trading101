@@ -105,7 +105,7 @@ export function CredibilityFooter() {
               <span className="text-2xl font-bold font-serif">TradingHQ</span>
             </Link>
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-              An AI-powered financial education hub for 2026 and beyond. Practice trading with our 
+              A financial education hub with simulator-based practice and guided learning. Practice trading with our 
               risk-free $100K simulator and master the markets with guided learning.
             </p>
             <p className="text-xs text-muted-foreground">
@@ -133,17 +133,17 @@ export function CredibilityFooter() {
           </div>
           
           <div>
-            <h4 className="font-semibold mb-4">2026 Topics</h4>
+            <h4 className="font-semibold mb-4">Learning Topics</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><a href="#bitcoin-l2" className="hover:text-primary transition-colors">Bitcoin Layer 2</a></li>
               <li><a href="#tokenized-securities" className="hover:text-primary transition-colors">Tokenized Securities</a></li>
               <li><a href="#ai-assisted" className="hover:text-primary transition-colors">AI-Assisted Trading</a></li>
-              <li><a href="#market-outlook" className="hover:text-primary transition-colors">2026 Market Outlook</a></li>
+              <li><a href="#market-outlook" className="hover:text-primary transition-colors">Market Learning Guide</a></li>
             </ul>
           </div>
         </div>
 
-        {/* Compliance - 2026 Regulatory Disclaimer */}
+        {/* Regulatory disclaimer */}
         <div className="border-t border-border pt-8">
           <p className="text-xs text-muted-foreground text-center max-w-4xl mx-auto">
             <strong>Disclaimer:</strong> TradeHQ is a simulator for educational purposes only. No real money is at risk. 

@@ -156,7 +156,7 @@ export function buildRoutes(): RouteMeta[] {
   // ---- Core pages ----
   routes.push({
     path: "/",
-    title: "TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)",
+    title: "TradeHQ — Free Paper Trading Simulator | $100K Virtual Cash (No Signup)",
     description: `Practice stock, crypto, ETF, forex & commodities trading with ${BALANCE} virtual cash. No signup. AI mentor, simulated charts, portfolio tracking & 150+ assets. Free educational trading simulator.`,
     h1: "TradeHQ — Free Paper Trading Simulator",
     summary: `Practice simulated trading across 150+ assets with ${BALANCE} in virtual cash. No real money is involved. Learn order mechanics, portfolio tracking, and risk concepts across stocks, crypto, ETFs, forex and commodities.`,
@@ -206,8 +206,8 @@ export function buildRoutes(): RouteMeta[] {
 
   routes.push({
     path: "/learn-trading-guide",
-    title: "Complete Beginner Trading Guide 2026 | TradeHQ",
-    description: `The full beginner's trading guide for 2026. Learn how markets work, how to place orders and how to manage risk — then practice with ${BALANCE} virtual cash.`,
+    title: "Complete Beginner Trading Guide | TradeHQ",
+    description: `The full beginner's trading guide. Learn how markets work, how to place orders and how to manage risk — then practice with ${BALANCE} virtual cash.`,
     h1: "The Complete Beginner Trading Guide",
     summary: `A single long-form guide that walks a complete beginner from zero to placing their first informed trade. Covers order types, chart reading, risk sizing, and psychology. Practice everything with ${BALANCE} in virtual cash on the free simulator.`,
     priority: "0.9",
@@ -429,7 +429,7 @@ export function buildRoutes(): RouteMeta[] {
     const label = h.fullName || h.name || h.symbol.toUpperCase();
     routes.push({
       path: `/how-to-trade/${h.symbol}`,
-      title: `How to Trade ${label} in 2026 — Step-by-Step Guide | TradeHQ`,
+      title: `How to Trade ${label} — Step-by-Step Guide | TradeHQ`,
       description: `Learn how to trade ${label} step-by-step with ${BALANCE} virtual cash. Free practice account, no signup. Educational simulation only.`,
       h1: `How to Trade ${label}`,
       summary: h.whyTrade || `Step-by-step guide to trading ${label}, followed by risk-free practice on the free ${BALANCE} simulator.`,
@@ -475,7 +475,7 @@ export function buildRoutes(): RouteMeta[] {
   // ---- Structured course tracks (/courses, /courses/:track, /courses/:track/:lesson) ----
   routes.push({
     path: "/courses",
-    title: "Free Trading Courses 2026 — Options, Futures, Macro & Psychology | TradeHQ",
+    title: "Free Trading Courses — Options, Futures, Macro & Psychology | TradeHQ",
     description: `Four structured trading courses with original lessons, quizzes and completion badges. Practise concepts with ${BALANCE} virtual cash.`,
     h1: "Structured Trading Courses",
     summary: `Four structured tracks — options, futures, macro reading, and trading psychology — each with quizzes and a completion badge. Practise supported spot instruments with ${BALANCE} in virtual cash; derivatives contract exercises are conceptual.`,

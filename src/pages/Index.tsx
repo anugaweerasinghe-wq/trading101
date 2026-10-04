@@ -151,12 +151,12 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)</title>
+        <title>TradeHQ — Free Paper Trading Simulator | $100K Virtual Cash (No Signup)</title>
         <meta name="description" content="Practice stocks, crypto, ETFs & forex with $100,000 virtual cash. Zero signup. AI mentor, simulated charts, leaderboard & 150+ assets. Free educational trading simulator." />
         <link rel="canonical" href="https://www.thetradehq.com/" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator 2026 | $100K Virtual Cash (No Signup)" />
+        <meta property="og:title" content="TradeHQ — Free Paper Trading Simulator | $100K Virtual Cash (No Signup)" />
         <meta property="og:description" content="Practice simulated trading with $100K virtual money. AI mentor + simulated charts. No signup needed. Start in seconds." />
         <meta property="og:url" content="https://www.thetradehq.com/" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
@@ -164,7 +164,7 @@ const Index = () => {
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="TradeHQ — Free Paper Trading Simulator 2026" />
+        <meta name="twitter:title" content="TradeHQ — Free Paper Trading Simulator" />
         <meta name="twitter:description" content="Practice stocks & crypto with $100K virtual cash. No signup. AI mentor included." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(homeFaqSchema)}</script>
