@@ -200,7 +200,6 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: `What ${g.term} means`, p: [g.definition] },
         { h: "In depth", p: splitParagraphs(g.expertDefinition) },
         { h: "Key points", list: g.keyPoints },
-        { h: "Practical tip", p: [g.proTip] },
         { h: "Why it matters when you are learning", p: [g.studentPerspective] },
         {
           h: `Practising ${g.term} on the simulator`,
@@ -644,11 +643,13 @@ function groupLessonBody(body: string[]): PageSection[] {
  * per category so 49 glossary pages do not end with one identical block.
  */
 function glossaryPractice(g: any): string {
-  // Built from the term's own pro tip and key points, so every glossary page
-  // closes with an exercise that only makes sense for that term.
+  // Built from the term's own key points so each page stays specific without
+  // turning glossary copy into a trading instruction.
   const t = g.term;
-  const tip = String(g.proTip || "").trim();
-  const kp: string[] = (g.keyPoints || []).map((k: string) => k.replace(/\.$/, ""));
-  const check = kp.length ? ` Before testing it, make sure you could explain out loud why "${kp[0].toLowerCase()}"${kp[1] ? ` and how that connects to "${kp[1].toLowerCase()}"` : ""}.` : "";
-  return `${tip ? `A working note on ${t}: ${tip}` : `Test ${t} at a small simulated size first.`}${check} ${DISCLAIMER}`;
+  const kp: string[] = (g.keyPoints || []).map((k: string) => String(k).replace(/\.$/, ""));
+  if (!kp.length) {
+    return `Use the simulator only to observe how ${t} appears in context; the glossary entry explains the concept rather than recommending a trade. ${DISCLAIMER}`;
+  }
+  const second = kp[1] ? ` A second feature to compare is: ${kp[1]}.` : "";
+  return `Use the simulator as an observation exercise for ${t}. The main feature to identify is: ${kp[0]}.${second} The presence of the concept is not a prediction or a trade signal. ${DISCLAIMER}`;
 }
