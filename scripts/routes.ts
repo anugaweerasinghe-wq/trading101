@@ -14,6 +14,7 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 import { tradingGlossary } from "../src/lib/tradingGlossary";
 import { LEARN_ARTICLES } from "../src/lib/learnArticles";
+import { lessonData } from "../src/lib/lessonData";
 import { COMPARE_PAIRS, HOWTO_ASSETS, STRATEGIES } from "../src/lib/seoData";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -366,6 +367,21 @@ export function buildRoutes(): RouteMeta[] {
       summary: a.summary,
       priority: "0.8",
       changefreq: "weekly",
+    });
+  }
+
+  // ---- Legacy numeric lessons (/learn/:lessonId) ----
+  // Keep existing in-app links working, but place these older lessons inside
+  // the shared prerender/SEO quality gate and exclude them from search.
+  for (const l of lessonData) {
+    routes.push({
+      path: `/learn/${l.id}`,
+      title: `${l.title} — Trading Lesson | TradeHQ`,
+      description: firstCompleteSentence(l.description),
+      h1: l.title,
+      summary: l.description,
+      changefreq: "monthly",
+      noindex: true,
     });
   }
 
