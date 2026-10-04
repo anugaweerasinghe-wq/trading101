@@ -573,7 +573,7 @@ function fitDescription(desc: string): string {
   if (d.length <= 158) return d;
   const cut = d.slice(0, 158);
   const end = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("? "), cut.lastIndexOf("! "));
-  if (end > 110) return cut.slice(0, end + 1).trim();
+  if (end >= 0) return cut.slice(0, end + 1).trim();
   return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:—–-]$/, "").trim() + "…";
 }
 
