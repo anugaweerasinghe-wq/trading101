@@ -1606,68 +1606,60 @@ export const lessonData: Lesson[] = [
         ],
       },
       {
-        title: "Setting Realistic Profit Targets",
-        content: [
+        "title": "Return Assumptions and Practice Goals",
+        "content": [
           {
-            type: "quote",
-            data: "Rule No. 1 is never lose money. Rule No. 2 is never forget Rule No. 1.",
-            author: "Warren Buffett",
+            "type": "text",
+            "data": "A practice lesson cannot establish a realistic monthly return from a label such as beginner, intermediate or professional. Outcomes depend on the strategy, exposure, market conditions and costs. A positive practice result is not evidence that the same result can be repeated with real money. Use explicit assumptions for calculations instead of treating a return target as an entitlement."
           },
           {
-            type: "text",
-            data: "Unrealistic expectations lead to overtrading, excessive risk, and blown accounts. Set achievable goals based on your strategy and skill level - not YouTube guru promises.",
+            "type": "heading",
+            "data": "Separate arithmetic from expectations"
           },
           {
-            type: "heading",
-            data: "Reality Check: What's Actually Possible",
+            "type": "list",
+            "data": [
+              "State the period: a monthly rate and an annual rate are different inputs.",
+              "State whether gains are reinvested and whether deposits or withdrawals occur.",
+              "Identify which costs the example includes and which it leaves out.",
+              "A comparison with a fund or index needs a defined period, benchmark and method; no fund ranking is established here."
+            ]
           },
           {
-            type: "list",
-            data: [
-              "Beginners: 5-10% monthly returns are EXCELLENT",
-              "Intermediate: 10-15% monthly with experience (rare)",
-              "Professionals: 15-25% monthly (extremely rare)",
-              "S&P 500 average: ~10% annually (not monthly!)",
-              "Warren Buffett career average: 20% annually",
-            ],
+            "type": "example",
+            "data": "Hypothetical arithmetic: start with $100, gain 10% in month one, then 10% on the new balance in month two. With reinvestment and no costs or cash flows, the balances are $110 and $121. The two-month gain is 21%, not 20%. The assumed gains are inputs, not forecasts."
           },
           {
-            type: "stat",
-            value: "20-30%",
-            label: "Annual Returns That Beat 95% of Funds",
-            data: "If you can consistently achieve 20-30% annual returns, you're outperforming virtually all professional money managers",
+            "type": "highlight",
+            "data": "If a hypothetical 10% gain repeated every month for twelve months, (1.10^12 − 1) × 100 gives about 213.8% annual growth before costs. This shows the compounding implied by the assumption; it does not make such a result typical or achievable."
           },
           {
-            type: "highlight",
-            data: "A 10% monthly return = 214% annually. If it were easy, everyone would be rich. Set realistic targets or risk gambling your account away chasing impossible dreams.",
+            "type": "heading",
+            "data": "Losses compound too"
           },
           {
-            type: "heading",
-            data: "Focus on Process, Not Profits",
+            "type": "example",
+            "data": "A hypothetical $100 balance that falls 10% becomes $90. A subsequent 10% gain brings it to $99, not back to $100. Recovering from $90 to $100 requires a gain of about 11.1%. The order and size of gains and losses matter when reviewing a record."
           },
           {
-            type: "text",
-            data: "Successful traders focus on executing their strategy consistently, not hitting specific profit targets:",
+            "type": "heading",
+            "data": "Use reviewable practice goals"
           },
           {
-            type: "list",
-            data: [
-              "Goal: Execute 20 quality trades following my rules",
-              "NOT: Make $5,000 this month at all costs",
-              "Track win rate, risk-reward, and process adherence",
-              "Profits are byproduct of good process",
-              "Bad months happen - focus on executing correctly",
-            ],
+            "type": "list",
+            "data": [
+              "Record the reason for each practice decision before checking its outcome.",
+              "Compare the intended position size with the position actually entered.",
+              "Review losses as well as gains, and identify missing information.",
+              "Track costs and cash flows separately from market gains.",
+              "Following a plan makes a decision easier to evaluate; it does not guarantee profit."
+            ]
           },
           {
-            type: "example",
-            data: "Trader A targets $100,000 monthly, takes risky trades to hit goal, blows up account. Trader B focuses on quality setups only, makes $8,000 some months, $2,000 others, but compounds wealth steadily over years.",
-          },
-          {
-            type: "tip",
-            data: "Set three goals: Minimum (stay profitable), Target (realistic stretch), and Maximum (dream scenario). Hit minimum? Success. Hit target? Excellent month. Exceeded target? Take profits and tighten risk management.",
-          },
-        ],
+            "type": "tip",
+            "data": "Choose a review task you can verify, such as checking whether each journal entry contains its original reasoning. Avoid requiring yourself to make a fixed number of trades or a fixed profit merely to meet a practice goal. Record uncertainty when the evidence is too limited to draw a conclusion."
+          }
+        ]
       },
       {
         title: "Creating a Trading Journal",
@@ -1800,10 +1792,10 @@ export const lessonData: Lesson[] = [
     ],
     quiz: [
       {
-        question: "What is a realistic monthly return target for beginner traders?",
-        options: ["50-100%", "20-30%", "5-10%", "2-3%"],
+        question: "In the hypothetical example, what does $100 become after two consecutive 10% gains with no costs or cash flows?",
+        options: ["$100", "$110", "$121", "$120"],
         correctAnswer: 2,
-        explanation: "5-10% monthly returns are excellent for beginners and actually beat most professional fund managers over time!",
+        explanation: "$100 × 1.10 × 1.10 = $121. The assumed gains illustrate compounding; they are not a forecast.",
       },
       {
         question: "What is the most important reason to keep a trading journal?",

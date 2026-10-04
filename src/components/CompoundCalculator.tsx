@@ -73,10 +73,16 @@ export function CompoundCalculator() {
       {/* Header - Micro Size */}
       <div className="flex items-center gap-2 mb-6 border-b border-white/5 pb-2">
         <Calculator className="w-3.5 h-3.5 text-emerald-500" />
-        <h3 className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Live Projection</h3>
+        <h3 className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Illustrative Growth</h3>
       </div>
 
       <div className="flex flex-col gap-5 flex-1">
+        <p className="text-xs leading-relaxed text-slate-400">
+          {years}-year calculation using your assumptions, not live data or a forecast.
+          Contributions are added at the start of each month; growth uses the annual rate divided by 12.
+          The selected deduction is a percentage of absolute monthly growth, not a broker commission model.
+          Actual returns vary; taxes and inflation are excluded.
+        </p>
         {/* Inputs - stacked vertically */}
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
@@ -100,12 +106,12 @@ export function CompoundCalculator() {
         </div>
 
         <div className="space-y-3">
-          <div className="flex justify-between text-[9px] font-black text-emerald-500/80 uppercase">
-            <span>Return: {annualReturn}%</span>
-            <span>Fees: {tradingFeePct}%</span>
+          <div className="flex flex-wrap justify-between gap-2 text-[9px] font-black text-emerald-500/80 uppercase">
+            <span>Assumed annual rate: {annualReturn}%</span>
+            <span>Growth deduction: {tradingFeePct}%</span>
           </div>
-          <Slider value={[annualReturn]} onValueChange={([v]) => setAnnualReturn(v)} max={30} step={0.5} className="py-1" />
-          <Slider value={[tradingFeePct]} onValueChange={([v]) => setTradingFeePct(v)} max={1} step={0.01} className="py-1" />
+          <Slider aria-label="Assumed annual rate" value={[annualReturn]} onValueChange={([v]) => setAnnualReturn(v)} max={30} step={0.5} className="py-1" />
+          <Slider aria-label="Illustrative deduction as a percentage of monthly growth" value={[tradingFeePct]} onValueChange={([v]) => setTradingFeePct(v)} max={1} step={0.01} className="py-1" />
         </div>
 
         {/* Results */}
@@ -117,7 +123,7 @@ export function CompoundCalculator() {
             </p>
           </div>
           <div className="p-2.5 bg-emerald-500/5 border border-emerald-500/20 rounded-lg">
-            <p className="text-[8px] uppercase font-bold text-slate-500 mb-1">Total Profit</p>
+            <p className="text-[8px] uppercase font-bold text-slate-500 mb-1">Illustrative net gain</p>
             <p className="text-[13px] font-black text-emerald-500 tabular-nums tracking-tighter truncate">
               +{formatCurrency(result.netProfit)}
             </p>
@@ -126,7 +132,7 @@ export function CompoundCalculator() {
 
         {/* Broker Fees */}
         <div className="px-2.5 py-1.5 bg-red-500/5 border border-red-500/10 rounded-lg flex justify-between items-center">
-          <span className="text-[8px] uppercase font-bold text-slate-500">Broker Fees:</span>
+          <span className="text-[8px] uppercase font-bold text-slate-500">Illustrative deductions:</span>
           <span className="text-[10px] font-black text-red-400">-{formatCurrency(result.totalFees)}</span>
         </div>
 
