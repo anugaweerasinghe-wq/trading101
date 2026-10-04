@@ -93,7 +93,7 @@ export const COMPARE_PAIRS: ComparePair[] = [
     ],
     deepDive: [
       "Apple's economics combine device sales with recurring services tied to its installed base. When analysing the business, useful questions include how hardware demand changes, how services contribute to revenue and margins, and how dividends or share repurchases affect per-share results. Those figures should be taken from the latest Apple filings because they change over time.",
-      "Microsoft's economics are heavily connected to enterprise software, subscriptions and cloud infrastructure. Its current reporting also discusses substantial investment in capacity for cloud and AI workloads. When comparing it with Apple, separate revenue growth from the cost of supporting that growth and use the latest Microsoft filings for current rates, spending and segment definitions.",
+      "Microsoft's economics are heavily connected to enterprise software, subscriptions and cloud infrastructure. Its current reporting also discusses substantial investment in capacity for cloud and AI workloads. When comparing it with Apple, separate revenue growth from the cost of supporting that growth and use the latest Microsoft filings for current rates, spending and segment definitions. Use comparable reporting periods when comparing growth, margins and cash returns.",
     ],
     mistakes: [
       "Treating a mega-cap company as low risk simply because it is large. Large companies can still experience substantial drawdowns and business-model changes.",
