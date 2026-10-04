@@ -185,3 +185,16 @@ No production changes or backend writes. PR #12 contains the work; PR #7 remains
 | H24 | Corrected profile sharing address and account requirements; removed expired proposed-feature targets; aligned crawler roadmap with actual proposed features and backend limitations; local pipeline passed | This H24 commit | Not merged |
 
 H18 commit: 53fb0c8a98c26143451abf39a18fa9be958489ae. Gmail failure search after 2026-10-04 returned no messages. Normal-merge setting still blocks release; no production claim. Country-guide audience/legal assertions remain under H09 and are not silently marked resolved.
+
+
+## Checkpoint after resumed verify-fix cycle
+
+Workflow changed per owner instruction: verify the next finding against current branch/main and current trustworthy sources, fix only that finding if still present, validate it, then move on. Do not do another bulk audit-before-fixing pass. Every 2–3 implementation changes, check GitHub Actions, Vercel and Gmail failure alerts before continuing.
+
+| Item | Action / verification | Commit | Production |
+|---|---|---|---|
+| H09 | Removed unsupported country-audience, broker-availability, tax, remittance and minimum-capital claims across Sri Lanka, India, Philippines, Pakistan and Nigeria guides. Real-money regulatory references now defer to current official regulator/provider information. Exact commit GitHub validation succeeded; Vercel preview READY. | bc39893f9665670896b9b9c293ea936336a44f9c | Not merged |
+| H11 | Replaced universal 2%/take-profit/5–8-position/profit-factor prescriptions with qualified educational examples and definitions. SEC/Investor.gov order and diversification guidance checked before edit. Exact commit GitHub validation succeeded; Vercel preview READY. | 5a744f56b3d83591eab0a45bd5b1a901be2ea932 | Not merged |
+| H13 | Corrected FOMC/PCE facts, removed stale named-Chair copy, removed universal market-reaction and drawdown rules, and rewrote quizzes to test assumptions rather than prescriptions. Federal Reserve current sources checked before edit. Exact commit GitHub validation succeeded; Vercel preview READY. | b559baadd6ed8f330befc65c60b74b41f43ad789 | Not merged |
+
+Mandatory safety checkpoint after H09/H11: GitHub green, Vercel READY, Gmail search found no GitHub/Vercel failure alerts. H13 then passed GitHub and Vercel as well. No backend, migration or user-data changes.
