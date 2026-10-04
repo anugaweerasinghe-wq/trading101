@@ -64,16 +64,6 @@ export default function CourseLesson() {
     image: track.hero,
     timeRequired: `PT${lesson.readingMinutes}M`,
   };
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: lesson.quiz.map((q) => ({
-      "@type": "Question",
-      name: q.question,
-      acceptedAnswer: { "@type": "Answer", text: q.options[q.correctAnswer] + " — " + q.explanation },
-    })),
-  };
-
   const handleSubmit = () => {
     setSubmitted(true);
     markLessonCompleted(track.slug, lesson.slug, score);
@@ -134,7 +124,6 @@ export default function CourseLesson() {
         <meta property="og:url" content={url} />
         <meta property="og:image" content={track.hero} />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background flex flex-col">
