@@ -23,6 +23,16 @@ export const DOMAIN = "https://www.thetradehq.com";
 export const TODAY = new Date().toISOString().split("T")[0];
 export const BALANCE = "$100,000";
 
+const SECTOR_ROUTES = [
+  { slug: "ai-tech", name: "AI & Technology" },
+  { slug: "crypto-defi", name: "Crypto & DeFi" },
+  { slug: "mega-cap", name: "Mega-Cap Leaders" },
+  { slug: "tech-giants", name: "Tech Giants" },
+  { slug: "forex-currencies", name: "Forex & Currencies" },
+  { slug: "commodities", name: "Commodities" },
+  { slug: "etf-indices", name: "ETFs & Indices" },
+] as const;
+
 export interface RouteMeta {
   path: string;                // "/wiki/macd"
   title: string;               // <title>
@@ -183,6 +193,20 @@ export function buildRoutes(): RouteMeta[] {
     priority: "0.9",
     changefreq: "daily",
   });
+
+  // Sector hubs stay reachable in-app but are explicitly governed here and
+  // excluded from indexing until each route passes the same authored-content review.
+  for (const sector of SECTOR_ROUTES) {
+    routes.push({
+      path: `/sectors/${sector.slug}`,
+      title: `${sector.name} Practice Hub | TradeHQ`,
+      description: `Browse simulated ${sector.name.toLowerCase()} assets and open matching practice pages. Educational simulation only.`,
+      h1: sector.name,
+      summary: `A simulator hub for ${sector.name.toLowerCase()} assets. Values on the hub are catalogue references; asset pages label their current data status.`,
+      changefreq: "weekly",
+      noindex: true,
+    });
+  }
 
   routes.push({
     path: "/portfolio",
