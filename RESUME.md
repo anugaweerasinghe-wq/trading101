@@ -198,3 +198,13 @@ Workflow changed per owner instruction: verify the next finding against current 
 | H13 | Corrected FOMC/PCE facts, removed stale named-Chair copy, removed universal market-reaction and drawdown rules, and rewrote quizzes to test assumptions rather than prescriptions. Federal Reserve current sources checked before edit. Exact commit GitHub validation succeeded; Vercel preview READY. | b559baadd6ed8f330befc65c60b74b41f43ad789 | Not merged |
 
 Mandatory safety checkpoint after H09/H11: GitHub green, Vercel READY, Gmail search found no GitHub/Vercel failure alerts. H13 then passed GitHub and Vercel as well. No backend, migration or user-data changes.
+
+
+## Governance checkpoint — H26 / H28
+
+| Item | Action / verification | Commit | Production |
+|---|---|---|---|
+| H26 | Confirmed niche pages read hard-coded seed values from ASSETS while labelling them Current Price / 24h Change. Relabelled those fields as simulator reference data without changing the trading engine or backend. GitHub validation succeeded; Vercel preview READY. | ec4130f1e482ee98ebb800e5080de5627995dc6e | Not merged |
+| H28 | Confirmed legacy numeric /learn/:lessonId pages were indexable in the React page but absent from the shared prerender/SEO route manifest. Added them to the shared route quality gate as noindex pages and changed LessonDetail to noindex, follow. Google Search Central noindex guidance checked before edit. GitHub validation succeeded; Vercel preview READY. | de86b1e02964e523a56f8953dbb2aa9cc76ce80e | Not merged |
+
+Mandatory safety checkpoint after H26/H28: GitHub Actions green on H28, Vercel preview READY, Gmail search found no GitHub/Vercel failure alerts. No backend, migration or user-data changes.
