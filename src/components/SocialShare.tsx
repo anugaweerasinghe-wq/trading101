@@ -11,7 +11,7 @@ interface SocialShareProps {
 }
 
 export function SocialShare({ 
-  title = "I'm learning to trade on TradingHQ!",
+  title = "I'm learning to trade on TradeHQ!",
   description = "Master trading with a risk-free $100K simulator",
   url,
   variant = "default"
