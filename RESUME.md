@@ -153,3 +153,9 @@ Pending means not proof of defect; re-open source at edit time and mark ALREADY 
 ## Group 3 completion
 - H27 — FIXED-ON-BRANCH at `0d82a2fdcd97f76273c2ec59edba19599b170ec2`: sector FAQs no longer claim a live 60-second API feed; they describe simulator reference values and direct users to per-asset data-status labels.
 - C07 follow-up — `8ebb588437f1a80f5d9cf87e405033987dc5c98e`: non-live chart badges now display the exact computed status (for example DELAYED or SIMULATED), not a generic SIM label.
+
+## META-01 remediation checkpoint
+
+Generator now reads glossary, learn-article and SEO description objects directly, so apostrophes cannot terminate fields. Course summaries and description fitting preserve complete sentences instead of character cuts. No authored financial claims changed in this item.
+
+Validation: npm ci passed. Local npm run build hit environment-only tsx IPC EPERM; identical sitemap/Vite/prerender/SEO pipeline via node --import tsx passed (328 routes, 147 indexable, 181 noindex). All 49 glossary HTML intros equal full authored definitions; all 328 HTML descriptions equal the manifest and have no truncation ellipses. Ten explicit entries: short-squeeze, golden-cross, death-cross, liquidation-cascade, fibonacci-retracement, rsi-divergence, macd-histogram, bollinger-band-squeeze, order-block, fair-value-gap. Homepage retains its complete No signup sentence. GitHub exact-command build and preview pending; not merged or production-verified. Gmail search after 2026-10-03 found no GitHub/Vercel failure alerts. Baseline main Vercel production is READY at 73d5001.

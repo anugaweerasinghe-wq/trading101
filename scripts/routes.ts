@@ -12,6 +12,9 @@
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
+import { tradingGlossary } from "../src/lib/tradingGlossary";
+import { LEARN_ARTICLES } from "../src/lib/learnArticles";
+import { COMPARE_PAIRS, HOWTO_ASSETS, STRATEGIES } from "../src/lib/seoData";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -100,25 +103,11 @@ function humanizeSlug(slug: string): string {
 }
 
 function extractGlossary(): { slug: string; term: string; definition: string }[] {
-  const src = readSrc("src/lib/tradingGlossary.ts");
-  const results: { slug: string; term: string; definition: string }[] = [];
-  const re = /slug:\s*["']([^"']+)["'][\s\S]*?term:\s*["']([^"']+)["'][\s\S]*?definition:\s*["']([^"']+?)["']/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(src)) !== null) {
-    results.push({ slug: m[1], term: m[2], definition: m[3] });
-  }
-  return results;
+  return tradingGlossary.map(({ slug, term, definition }) => ({ slug, term, definition }));
 }
 
 function extractLearnArticles(): { slug: string; title: string; metaDescription: string; summary: string }[] {
-  const src = readSrc("src/lib/learnArticles.ts");
-  const results: { slug: string; title: string; metaDescription: string; summary: string }[] = [];
-  const re = /slug:\s*["']([^"']+)["'][\s\S]*?title:\s*["']([^"']+)["'][\s\S]*?summary:\s*["']([^"']+)["'][\s\S]*?metaDescription:\s*["']([^"']+)["']/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(src)) !== null) {
-    results.push({ slug: m[1], title: m[2], summary: m[3], metaDescription: m[4] });
-  }
-  return results;
+  return LEARN_ARTICLES.map(({ slug, title, metaDescription, summary }) => ({ slug, title, metaDescription, summary }));
 }
 
 function extractNicheSymbols(): string[] {
@@ -133,33 +122,7 @@ function extractNicheSymbols(): string[] {
 }
 
 function extractSeoDataList(constName: "COMPARE_PAIRS" | "HOWTO_ASSETS" | "STRATEGIES"): { slug?: string; symbol?: string; title?: string; name?: string; fullName?: string; intro?: string; whyTrade?: string; hook?: string }[] {
-  const src = readSrc("src/lib/seoData.ts");
-  const idx = src.indexOf(`export const ${constName}`);
-  if (idx < 0) return [];
-  // Grab the array literal — everything up to the next `export const` or EOF.
-  const rest = src.slice(idx);
-  const nextExport = rest.indexOf("\nexport const ", 1);
-  const block = nextExport > 0 ? rest.slice(0, nextExport) : rest;
-  const out: any[] = [];
-  const re = /\{[\s\S]*?\}(?=\s*,?\s*(?:\{|\]))/g;
-  const items = block.match(re) || [];
-  for (const item of items) {
-    const pick = (key: string) => {
-      const mm = item.match(new RegExp(`${key}:\\s*["']([^"']+)["']`));
-      return mm ? mm[1] : undefined;
-    };
-    out.push({
-      slug: pick("slug"),
-      symbol: pick("symbol"),
-      title: pick("title"),
-      name: pick("name"),
-      fullName: pick("fullName"),
-      intro: pick("intro"),
-      whyTrade: pick("whyTrade"),
-      hook: pick("hook"),
-    });
-  }
-  return out;
+  return { COMPARE_PAIRS, HOWTO_ASSETS, STRATEGIES }[constName];
 }
 
 function extractCourses(): { slug: string; title: string; tagline: string; lessons: { slug: string; title: string; summary: string }[] }[] {
@@ -517,7 +480,7 @@ export function buildRoutes(): RouteMeta[] {
       routes.push({
         path: `/courses/${t.slug}/${l.slug}`,
         title: `${l.title} — ${t.title} | TradeHQ`,
-        description: l.summary.length > 155 ? l.summary.slice(0, 152) + "..." : l.summary,
+        description: firstCompleteSentence(l.summary),
         h1: l.title,
         summary: `${l.summary} TradeHQ offers ${BALANCE} virtual cash for supported spot instruments. Derivatives contracts remain conceptual exercises. Educational only, not financial advice.`,
         priority: "0.7",
@@ -564,9 +527,8 @@ function extraRoutes(): RouteMeta[] {
 }
 
 /**
- * Keep <title> inside Google's ~60-character display window and meta
- * descriptions inside ~158 characters, trimming on word boundaries so
- * nothing gets cut mid-word in the SERP snippet.
+ * Bound title length and prefer complete sentences for descriptions.
+ * Search engines may shorten snippets; authored text must remain complete.
  */
 function fitTitle(title: string): string {
   if (title.length <= 62) return title;
@@ -587,7 +549,7 @@ function fitDescription(desc: string): string {
   const cut = d.slice(0, 158);
   const end = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("? "), cut.lastIndexOf("! "));
   if (end >= 0) return cut.slice(0, end + 1).trim();
-  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:—–-]$/, "").trim() + "…";
+  return firstCompleteSentence(d);
 }
 
 // Dedupe path collisions (last write wins) so future data overlap can't ship two entries for the same URL.
