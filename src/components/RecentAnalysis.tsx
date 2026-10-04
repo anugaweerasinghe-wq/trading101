@@ -9,6 +9,7 @@ interface Article {
   slug: string;
   sentiment: string;
   created_at: string;
+  updated_at: string;
   content: string;
 }
 
@@ -19,7 +20,7 @@ export function RecentAnalysis({ focusAsset }: { focusAsset: string }) {
     async function load() {
       const { data } = await supabase
         .from('market_articles')
-        .select('id, title, slug, sentiment, created_at, content')
+        .select('id, title, slug, sentiment, created_at, updated_at, content')
         .eq('focus_asset', focusAsset.toLowerCase())
         .order('created_at', { ascending: false })
         .limit(3);
@@ -65,12 +66,13 @@ export function RecentAnalysis({ focusAsset }: { focusAsset: string }) {
               {new Date(a.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </time>
 
-            {/* NewsArticle JSON-LD */}
+            {/* Generic Article JSON-LD: these CMS entries are analysis, not necessarily news. */}
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "NewsArticle",
+              "@type": "Article",
               "headline": a.title,
               "datePublished": a.created_at,
+              "dateModified": a.updated_at,
               "author": { "@type": "Organization", "name": "TradeHQ" },
               "publisher": {
                 "@type": "Organization",
