@@ -184,7 +184,7 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
                 ) : (
                   <>
                     <WifiOff className="w-3 h-3" />
-                    SIM
+                    {chartLabel}
                   </>
                 )}
               </div>
