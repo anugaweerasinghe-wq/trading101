@@ -86,6 +86,19 @@ function firstCompleteSentence(text: string): string {
   return match ? match[1] : text.trim();
 }
 
+function humanizeSlug(slug: string): string {
+  const acronyms = new Set(["macd", "rsi", "etf", "etfs", "btc", "eth", "ai"]);
+  return slug
+    .split("-")
+    .map((word) => {
+      const lower = word.toLowerCase();
+      if (lower === "vs") return "vs";
+      if (acronyms.has(lower)) return lower.toUpperCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    })
+    .join(" ");
+}
+
 function extractGlossary(): { slug: string; term: string; definition: string }[] {
   const src = readSrc("src/lib/tradingGlossary.ts");
   const results: { slug: string; term: string; definition: string }[] = [];
@@ -410,12 +423,12 @@ export function buildRoutes(): RouteMeta[] {
   // ---- Programmatic SEO pages from seoData ----
   for (const c of extractSeoDataList("COMPARE_PAIRS")) {
     if (!c.slug) continue;
-    const label = c.slug.replace(/-/g, " ");
+    const label = humanizeSlug(c.slug);
     routes.push({
       path: `/compare/${c.slug}`,
-      title: `${label.replace(/\b\w/g, (l) => l.toUpperCase())} — Which Should You Trade? | TradeHQ`,
+      title: `${label} — Key Differences Explained | TradeHQ`,
       description: c.intro || `Compare and paper-trade both with ${BALANCE} in virtual cash. Educational simulation only.`,
-      h1: `${label.replace(/\b\w/g, (l) => l.toUpperCase())}`,
+      h1: label,
       summary: c.intro || `Head-to-head comparison and practice trading with ${BALANCE} virtual cash.`,
       priority: "0.7",
       changefreq: "weekly",
@@ -458,13 +471,13 @@ export function buildRoutes(): RouteMeta[] {
 
   for (const s of extractSeoDataList("STRATEGIES")) {
     if (!s.slug) continue;
-    const label = (s.title || s.slug).replace(/-/g, " ");
+    const label = s.name || s.title || humanizeSlug(s.slug);
     routes.push({
       path: `/strategy/${s.slug}`,
-      title: `${label} — Trading Strategy Guide | TradeHQ`,
-      description: s.hook || s.intro || `Learn the ${label} strategy, then practice it with ${BALANCE} virtual cash.`,
-      h1: label.replace(/\b\w/g, (l) => l.toUpperCase()),
-      summary: s.hook || s.intro || `A step-by-step walkthrough of the ${label} strategy with practice on the free ${BALANCE} simulator.`,
+      title: `${label} — Strategy Guide | TradeHQ`,
+      description: s.hook || s.intro || `Learn how ${label} works, then practise it with ${BALANCE} virtual cash.`,
+      h1: label,
+      summary: s.hook || s.intro || `A step-by-step walkthrough of ${label} with practice on the free ${BALANCE} simulator.`,
       priority: "0.7",
       changefreq: "weekly",
     });
