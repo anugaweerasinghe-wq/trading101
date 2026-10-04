@@ -127,18 +127,18 @@ export function CredibilityFooter() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/learn" className="hover:text-primary transition-colors">All Courses</Link></li>
               <li><Link to="/learn-trading-guide" className="hover:text-primary transition-colors">Beginner's Guide</Link></li>
-              <li><a href="#ai-trading" className="hover:text-primary transition-colors">AI Trading Safety</a></li>
-              <li><a href="#psychology" className="hover:text-primary transition-colors">Trading Psychology</a></li>
+              <li><Link to="/learn-trading-guide" className="hover:text-primary transition-colors">Learning Guide</Link></li>
+              <li><Link to="/courses/trading-psychology-mastery" className="hover:text-primary transition-colors">Trading Psychology</Link></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4">Learning Topics</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#bitcoin-l2" className="hover:text-primary transition-colors">Bitcoin Layer 2</a></li>
-              <li><a href="#tokenized-securities" className="hover:text-primary transition-colors">Tokenized Securities</a></li>
-              <li><a href="#ai-assisted" className="hover:text-primary transition-colors">AI-Assisted Trading</a></li>
-              <li><a href="#market-outlook" className="hover:text-primary transition-colors">Market Learning Guide</a></li>
+              <li><Link to="/wiki" className="hover:text-primary transition-colors">Trading Glossary</Link></li>
+              <li><Link to="/markets" className="hover:text-primary transition-colors">Market Guides</Link></li>
+              <li><Link to="/ai-mentor" className="hover:text-primary transition-colors">AI Mentor</Link></li>
+              <li><Link to="/learn-trading-guide" className="hover:text-primary transition-colors">Market Learning Guide</Link></li>
             </ul>
           </div>
         </div>
