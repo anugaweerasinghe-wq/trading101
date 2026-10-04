@@ -287,7 +287,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How the daily challenge works",
         p: [
-          "Every day the simulator presents one hypothetical market scenario. You choose a response, compare the reasoning and trade-offs, then answer a short bonus knowledge question briefly. Completing the reflection advances a streak counter stored in your browser; no market direction is graded as objectively correct.",
+          "Every day the simulator presents one hypothetical market scenario. You choose a response, compare the reasoning and trade-offs, then answer a short bonus knowledge question about market basics. Completing the reflection advances a streak counter stored in your browser; no market direction is graded as objectively correct.",
         ],
       },
       {
