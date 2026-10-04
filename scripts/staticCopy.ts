@@ -287,7 +287,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How the daily challenge works",
         p: [
-          "Every day the simulator sets one small task — identify a pattern, place a correctly sized practice trade, review a journal entry, or answer a short knowledge question. Completing it advances a streak counter stored in your browser and measured against your own local calendar day, so a genuine daily habit is never reset by time-zone drift.",
+          "Every day the simulator presents one hypothetical market scenario. You choose a response, compare the reasoning and trade-offs, then answer a short bonus knowledge question. Completing the reflection advances a streak counter stored in your browser; no market direction is graded as objectively correct.",
         ],
       },
       {

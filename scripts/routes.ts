@@ -237,9 +237,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/daily",
     title: "Daily Trading Challenge — Learn a New Skill Every Day | TradeHQ",
-    description: `A new trading challenge every 24 hours. Build streaks, learn faster, and practice with ${BALANCE} virtual cash. Free, no signup.`,
+    description: `A new hypothetical market scenario every 24 hours. Compare long, short and hold reasoning, answer a knowledge question, and build a streak. Free, no signup.`,
     h1: "Daily Trading Challenge",
-    summary: `A new bite-sized trading challenge every day. Build a streak, learn a new pattern, and try it out immediately on the free ${BALANCE} practice account.`,
+    summary: `A new hypothetical scenario every day. Choose a response, compare the trade-offs, answer a bonus knowledge question, and build a streak without treating any direction as objectively correct.`,
     priority: "0.9",
     changefreq: "daily",
   });
