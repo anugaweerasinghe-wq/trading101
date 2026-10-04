@@ -651,5 +651,6 @@ function glossaryPractice(g: any): string {
     return `Use the simulator only to observe how ${t} appears in context; the glossary entry explains the concept rather than recommending a trade. ${DISCLAIMER}`;
   }
   const second = kp[1] ? ` A second feature to compare is: ${kp[1]}.` : "";
-  return `Use the simulator as an observation exercise for ${t}. The main feature to identify is: ${kp[0]}.${second} The presence of the concept is not a prediction or a trade signal. ${DISCLAIMER}`;
+  const third = kp[2] ? ` A third feature to note is: ${kp[2]}.` : "";
+  return `Use the simulator as an observation exercise for ${t}. The main feature to identify is: ${kp[0]}.${second}${third} The presence of the concept is not a prediction or a trade signal. ${DISCLAIMER}`;
 }
