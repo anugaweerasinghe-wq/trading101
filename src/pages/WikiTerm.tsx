@@ -13,6 +13,11 @@ import NotFound from "./NotFound";
 
 const DOMAIN = "https://www.thetradehq.com";
 
+function firstCompleteSentence(text: string): string {
+  const match = text.trim().match(/^(.+?[.!?])(?:\s|$)/);
+  return match ? match[1] : text.trim();
+}
+
 const WikiTerm = () => {
   const { slug } = useParams<{ slug: string }>();
   const term = tradingGlossary.find((t) => t.slug === slug);
@@ -82,7 +87,7 @@ const WikiTerm = () => {
         <title>What is {term.term}? | Complete Trading Guide 2026 | TradeHQ</title>
         <meta
           name="description"
-          content={`Master ${term.term} in under ${term.readTime}. ${term.definition.substring(0, 140)}... Expert definition, pro tips & simulator practice.`}
+          content={`${firstCompleteSentence(term.definition)} Learn the concept with examples and simulated practice on TradeHQ.`}
         />
         <link rel="canonical" href={`${DOMAIN}/wiki/${term.slug}`} />
         <meta name="robots" content="index, follow" />
@@ -145,9 +150,9 @@ const WikiTerm = () => {
           <Card className="mt-4 p-6 md:p-8 bg-primary/[0.04] border-primary/20 rounded-2xl">
             <div className="flex items-center gap-2 mb-3">
               <Lightbulb className="w-4 h-4 text-primary" />
-              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-primary">Pro Tip</h2>
+              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-primary">How It Works</h2>
             </div>
-            <p className="text-sm text-foreground/80 leading-relaxed font-medium">{term.proTip}</p>
+            <p className="text-sm text-foreground/80 leading-relaxed font-medium">{term.definition}</p>
           </Card>
 
           {/* Key Points */}
