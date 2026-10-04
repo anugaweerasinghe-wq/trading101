@@ -45,8 +45,8 @@ export function getNicheAsset(symbol: string): NicheAsset | null {
     ],
     keyStats: [
       { label: "Asset Class", value: asset.type.charAt(0).toUpperCase() + asset.type.slice(1) },
-      { label: "Current Price", value: `$${asset.price < 1 ? asset.price.toFixed(4) : asset.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}` },
-      { label: "24h Change", value: `${asset.changePercent >= 0 ? '+' : ''}${asset.changePercent.toFixed(2)}%` },
+      { label: "Simulator Reference Price", value: `${asset.price < 1 ? asset.price.toFixed(4) : asset.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}` },
+      { label: "Simulator Reference Change", value: `${asset.changePercent >= 0 ? '+' : ''}${asset.changePercent.toFixed(2)}%` },
       { label: "Simulator Available", value: "Yes — Free" },
     ],
   };
