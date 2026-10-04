@@ -13,7 +13,7 @@ export interface DailyChallenge {
   assetName: string;
   scenario: string;    // short headline
   context: string;     // 1-2 sentence setup
-  options: { label: string; value: ChallengeDecision; rationale: string; correct: boolean }[];
+  options: { label: string; value: ChallengeDecision; rationale: string }[];
   insight: string;     // educational takeaway shown after answer
   difficulty: "Beginner" | "Intermediate" | "Pro";
 }
@@ -25,11 +25,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "NVDA reports earnings tonight. Implied move is ±8%.",
     context: "Street expects $0.85 EPS on $36B revenue. Whisper number is $0.92. AI capex guidance from hyperscalers came in strong this week.",
     options: [
-      { label: "Go long ahead of earnings", value: "long", rationale: "Bullish setup + strong whisper", correct: false },
-      { label: "Wait — close existing positions and react after the print", value: "hold", rationale: "Avoid the gap risk; expected move pricing is rich", correct: true },
-      { label: "Short into the print", value: "short", rationale: "Bet on a sell-the-news reaction", correct: false },
+      { label: "Go long ahead of earnings", value: "long", rationale: "Bullish setup + strong whisper" },
+      { label: "Wait — close existing positions and react after the print", value: "hold", rationale: "Avoid the gap risk; expected move pricing is rich" },
+      { label: "Short into the print", value: "short", rationale: "Bet on a sell-the-news reaction" },
     ],
-    insight: "Pros rarely hold full size into earnings — implied moves price in the expected volatility, so the asymmetric edge is post-print when uncertainty collapses.",
+    insight: "Earnings can create gap risk and uncertainty. Compare the case for reducing exposure before the report with the case for waiting for confirmed post-report information; no direction is guaranteed.",
     difficulty: "Intermediate",
   },
   {
@@ -37,11 +37,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "BTC breaks $100K resistance on heavy volume.",
     context: "Funding rates are still neutral, open interest just hit ATH, and spot ETF inflows posted $1.2B yesterday.",
     options: [
-      { label: "Buy the breakout", value: "long", rationale: "Confirmed breakout with spot-driven flow", correct: true },
-      { label: "Short — too extended", value: "short", rationale: "Mean revert play", correct: false },
-      { label: "Hold and wait for a retest", value: "hold", rationale: "Patience on confirmation", correct: false },
+      { label: "Buy the breakout", value: "long", rationale: "Confirmed breakout with spot-driven flow" },
+      { label: "Short — too extended", value: "short", rationale: "Mean revert play" },
+      { label: "Hold and wait for a retest", value: "hold", rationale: "Patience on confirmation" },
     ],
-    insight: "Breakouts with spot-driven flow (not just leverage) historically have ~3x the follow-through of leverage-led breakouts. Funding neutrality is the tell.",
+    insight: "Treat volume, spot flow, funding and open interest as separate pieces of evidence. Compare a continuation case with a failed-breakout case instead of assuming the breakout must hold.",
     difficulty: "Beginner",
   },
   {
@@ -49,11 +49,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Tesla drops 12% on a weak delivery number.",
     context: "Q3 deliveries missed by 4%. Stock gapped down at the open and is now consolidating at the day's low.",
     options: [
-      { label: "Buy the dip immediately", value: "long", rationale: "Reflexive bounce expected", correct: false },
-      { label: "Wait for a higher-low intraday before going long", value: "hold", rationale: "Let the seller exhaust", correct: true },
-      { label: "Add to a short", value: "short", rationale: "Trend continuation", correct: false },
+      { label: "Buy the dip immediately", value: "long", rationale: "Reflexive bounce expected" },
+      { label: "Wait for a higher-low intraday before going long", value: "hold", rationale: "Let the seller exhaust" },
+      { label: "Add to a short", value: "short", rationale: "Trend continuation" },
     ],
-    insight: "Gap-down + consolidation at lows = sellers still in control. The 'falling knife' bounce works ~30% of the time; waiting for a higher low improves win rate to ~60%.",
+    insight: "After a sharp gap down, a higher low can be one confirmation signal while continued weakness can invalidate a bounce case. The setup does not imply a fixed win rate.",
     difficulty: "Intermediate",
   },
   {
@@ -61,11 +61,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "ETH/BTC ratio breaks a 6-month downtrend.",
     context: "ETH has been underperforming BTC for half a year. Today the ratio crossed back above its 50-day MA.",
     options: [
-      { label: "Rotate from BTC into ETH", value: "long", rationale: "Trend reversal in relative strength", correct: true },
-      { label: "Stay in BTC", value: "hold", rationale: "Wait for more confirmation", correct: false },
-      { label: "Short ETH/BTC", value: "short", rationale: "Fade the move", correct: false },
+      { label: "Rotate from BTC into ETH", value: "long", rationale: "Trend reversal in relative strength" },
+      { label: "Stay in BTC", value: "hold", rationale: "Wait for more confirmation" },
+      { label: "Short ETH/BTC", value: "short", rationale: "Fade the move" },
     ],
-    insight: "Relative strength reversals on multi-month timeframes are powerful — capital flows take weeks to rotate. The 50-day cross is a classic high-timeframe inflection.",
+    insight: "A relative-strength break and a moving-average cross can be studied as confirmation signals, but either can fail. Compare what would confirm the rotation with what would invalidate it.",
     difficulty: "Pro",
   },
   {
@@ -73,11 +73,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Apple announces a $90B buyback expansion.",
     context: "Stock is up 2% premarket. RSI on the daily is already 71. iPhone unit growth has been flat for 4 quarters.",
     options: [
-      { label: "Buy — buybacks are bullish", value: "long", rationale: "Reduced float", correct: false },
-      { label: "Hold — fundamentals haven't changed", value: "hold", rationale: "Buybacks ≠ growth", correct: true },
-      { label: "Short into strength", value: "short", rationale: "Overbought + flat fundamentals", correct: false },
+      { label: "Buy — buybacks are bullish", value: "long", rationale: "Reduced float" },
+      { label: "Hold — fundamentals haven't changed", value: "hold", rationale: "Buybacks ≠ growth" },
+      { label: "Short into strength", value: "short", rationale: "Overbought + flat fundamentals" },
     ],
-    insight: "Buybacks are an accounting tailwind, not a growth driver. When core revenue stalls, buyback-driven rallies typically retrace within a quarter.",
+    insight: "A buyback can affect share count without proving future revenue growth or price direction. Compare the capital-return case with the company's operating fundamentals before forming a view.",
     difficulty: "Intermediate",
   },
   {
@@ -85,11 +85,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Fed pauses rate cuts. SPY drops 1.5% intraday.",
     context: "Powell signaled 'higher for longer.' VIX spiked to 22. Volume is 1.4x the 20-day average.",
     options: [
-      { label: "Buy the dip — Fed always backs off", value: "long", rationale: "Mean reversion", correct: false },
-      { label: "Wait — VIX hasn't peaked yet", value: "hold", rationale: "Let volatility cool", correct: true },
-      { label: "Short — more downside coming", value: "short", rationale: "Trend follow", correct: false },
+      { label: "Buy the dip — Fed always backs off", value: "long", rationale: "Mean reversion" },
+      { label: "Wait — VIX hasn't peaked yet", value: "hold", rationale: "Let volatility cool" },
+      { label: "Short — more downside coming", value: "short", rationale: "Trend follow" },
     ],
-    insight: "VIX spikes typically take 2-5 sessions to fully exhaust. Buying the first red day captures ~20% of the eventual move; waiting for VIX to roll over captures the other 80%.",
+    insight: "A volatility spike does not reveal the exact timing of a reversal. Compare evidence that volatility is stabilising with evidence that risk is still increasing before choosing a simulated response.",
     difficulty: "Beginner",
   },
   {
@@ -97,11 +97,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Solana network outage for 4 hours.",
     context: "Validator software bug. Price down 7%. Devs say a patch is rolling out within 24h.",
     options: [
-      { label: "Buy — overreaction to a fixable bug", value: "long", rationale: "Short-term FUD", correct: true },
-      { label: "Sell — outages are a structural issue", value: "short", rationale: "Bearish narrative", correct: false },
-      { label: "Hold and wait", value: "hold", rationale: "Avoid the volatility", correct: false },
+      { label: "Buy — overreaction to a fixable bug", value: "long", rationale: "Short-term FUD" },
+      { label: "Sell — outages are a structural issue", value: "short", rationale: "Bearish narrative" },
+      { label: "Hold and wait", value: "hold", rationale: "Avoid the volatility" },
     ],
-    insight: "Layer-1 outages historically retrace within 7 days if the fix is shipped fast. The opportunity is buying the fear, not selling it.",
+    insight: "A network outage creates both technical-recovery and confidence risks. Compare evidence that the fault is resolved with evidence of lasting usage or reliability damage; neither a rebound nor further decline is guaranteed.",
     difficulty: "Intermediate",
   },
   {
@@ -109,11 +109,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "DXY dollar index breaks below a 2-year support.",
     context: "Real yields are falling. Central banks added a record amount of gold to reserves last quarter.",
     options: [
-      { label: "Buy gold", value: "long", rationale: "Weak dollar = strong gold", correct: true },
-      { label: "Short gold — too crowded", value: "short", rationale: "Contrarian", correct: false },
-      { label: "Wait for a pullback", value: "hold", rationale: "Discipline", correct: false },
+      { label: "Buy gold", value: "long", rationale: "Weak dollar = strong gold" },
+      { label: "Short gold — too crowded", value: "short", rationale: "Contrarian" },
+      { label: "Wait for a pullback", value: "hold", rationale: "Discipline" },
     ],
-    insight: "Gold's strongest tailwind is falling real yields + dollar weakness. When both align with central-bank accumulation, multi-month uptrends typically follow.",
+    insight: "Real yields, currency moves and central-bank demand are factors traders may compare when studying gold. Their direction and importance can change, so the combination is not a guaranteed price signal.",
     difficulty: "Beginner",
   },
   {
@@ -121,11 +121,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Meta announces $50B+ AI capex for next year.",
     context: "Stock down 6% on the news. Wall Street worries about ROI. But internal metrics show Reels engagement up 40% YoY thanks to AI ranking.",
     options: [
-      { label: "Buy — Street is short-sighted", value: "long", rationale: "Long-term ROI", correct: true },
-      { label: "Wait for the bottom", value: "hold", rationale: "Catch a knife", correct: false },
-      { label: "Short — capex worries are valid", value: "short", rationale: "Margin compression", correct: false },
+      { label: "Buy — Street is short-sighted", value: "long", rationale: "Long-term ROI" },
+      { label: "Wait for the bottom", value: "hold", rationale: "Catch a knife" },
+      { label: "Short — capex worries are valid", value: "short", rationale: "Margin compression" },
     ],
-    insight: "Meta has a history of capex 'shock' selloffs followed by 6-12 month rallies once the ROI becomes visible (Reality Labs 2022, AI 2024).",
+    insight: "Large capital-spending plans can create a trade-off between near-term costs and possible future returns. Compare evidence on margins, adoption and realised returns rather than assuming a fixed recovery pattern.",
     difficulty: "Pro",
   },
   {
@@ -133,11 +133,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "ECB hawkish surprise: Lagarde signals one more hike.",
     context: "EUR/USD spikes 80 pips in 5 minutes. Pre-news positioning was net short EUR.",
     options: [
-      { label: "Buy EUR/USD — squeeze continues", value: "long", rationale: "Short squeeze", correct: true },
-      { label: "Fade the spike", value: "short", rationale: "Mean reversion", correct: false },
-      { label: "Wait", value: "hold", rationale: "Confirmation", correct: false },
+      { label: "Buy EUR/USD — squeeze continues", value: "long", rationale: "Short squeeze" },
+      { label: "Fade the spike", value: "short", rationale: "Mean reversion" },
+      { label: "Wait", value: "hold", rationale: "Confirmation" },
     ],
-    insight: "Hawkish central bank surprises on heavily short positioning create multi-day squeezes ~70% of the time. The first 24h is usually only half the move.",
+    insight: "A policy surprise and crowded positioning can increase volatility, but they do not set a reliable duration or direction. Compare follow-through, positioning and later policy information before drawing a conclusion.",
     difficulty: "Pro",
   },
   {
@@ -145,11 +145,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Microsoft adds OpenAI o4 to all Copilot tiers.",
     context: "Stock flat on the news. Enterprise Copilot adoption was already accelerating (40% QoQ).",
     options: [
-      { label: "Buy — moat deepens", value: "long", rationale: "Locks in enterprise", correct: true },
-      { label: "Hold — priced in", value: "hold", rationale: "No reaction = priced in", correct: false },
-      { label: "Short", value: "short", rationale: "Sell strength", correct: false },
+      { label: "Buy — moat deepens", value: "long", rationale: "Locks in enterprise" },
+      { label: "Hold — priced in", value: "hold", rationale: "No reaction = priced in" },
+      { label: "Short", value: "short", rationale: "Sell strength" },
     ],
-    insight: "Flat reactions to genuinely bullish news in mega-caps often mean accumulation. Watch for breakouts within 5 trading days.",
+    insight: "A muted reaction to news can have several explanations. Compare price, volume and later company information rather than treating a flat response as proof of accumulation or a coming breakout.",
     difficulty: "Intermediate",
   },
   {
@@ -157,11 +157,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "DOJ proposes forcing Google to sell Chrome.",
     context: "Stock down 5% premarket. Legal experts give it 30% odds of happening. Process would take 3+ years.",
     options: [
-      { label: "Buy — fear overdone", value: "long", rationale: "Low odds + long timeline", correct: true },
-      { label: "Sell — regulatory risk is real", value: "short", rationale: "Tail risk", correct: false },
-      { label: "Hold", value: "hold", rationale: "Sit on hands", correct: false },
+      { label: "Buy — fear overdone", value: "long", rationale: "Low odds + long timeline" },
+      { label: "Sell — regulatory risk is real", value: "short", rationale: "Tail risk" },
+      { label: "Hold", value: "hold", rationale: "Sit on hands" },
     ],
-    insight: "Multi-year regulatory threats are notoriously bad short setups — the actual outcome is years away, but the fear creates immediate buying opportunities.",
+    insight: "Regulatory proposals can change, face legal review or take time to resolve. Separate the probability, timeline and business impact from the immediate price reaction instead of assuming a buy or sell outcome.",
     difficulty: "Pro",
   },
   {
@@ -169,11 +169,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "QQQ goes 5 days straight up. RSI hits 78.",
     context: "AI-driven rally. No pullback in 2 weeks.",
     options: [
-      { label: "Buy more — momentum", value: "long", rationale: "Trend follow", correct: false },
-      { label: "Trim and wait for a pullback", value: "hold", rationale: "Risk management", correct: true },
-      { label: "Short the overbought signal", value: "short", rationale: "Mean reversion", correct: false },
+      { label: "Buy more — momentum", value: "long", rationale: "Trend follow" },
+      { label: "Trim and wait for a pullback", value: "hold", rationale: "Risk management" },
+      { label: "Short the overbought signal", value: "short", rationale: "Mean reversion" },
     ],
-    insight: "RSI >75 on QQQ has historically resolved with a 3-5% pullback within 10 sessions ~80% of the time. Holding works; adding doesn't.",
+    insight: "RSI describes recent price momentum; it does not guarantee a pullback or its size. Compare trend strength, breadth and risk limits rather than treating an overbought reading as a forecast.",
     difficulty: "Beginner",
   },
   {
@@ -181,11 +181,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "OPEC+ surprise production cut of 1M bpd.",
     context: "Crude jumps 4% on the announcement. Inventories have been building for 6 weeks.",
     options: [
-      { label: "Buy — supply shock", value: "long", rationale: "Lower supply", correct: false },
-      { label: "Wait — demand is the issue", value: "hold", rationale: "Inventory builds = weak demand", correct: true },
-      { label: "Short — fade OPEC", value: "short", rationale: "Fade jawboning", correct: false },
+      { label: "Buy — supply shock", value: "long", rationale: "Lower supply" },
+      { label: "Wait — demand is the issue", value: "hold", rationale: "Inventory builds = weak demand" },
+      { label: "Short — fade OPEC", value: "short", rationale: "Fade jawboning" },
     ],
-    insight: "Supply cuts can't fix demand problems. Six weeks of inventory builds signals weak end-demand — OPEC announcements often fade within 2 weeks under those conditions.",
+    insight: "Supply decisions and inventory trends can point in different directions. Compare both sides of the balance and later demand data instead of assuming an announcement will persist or fade on a fixed schedule.",
     difficulty: "Pro",
   },
   {
@@ -193,11 +193,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Binance announces a major token burn.",
     context: "12% of supply removed. Volume already 3x average.",
     options: [
-      { label: "Buy — supply reduction is bullish", value: "long", rationale: "Lower float", correct: true },
-      { label: "Sell the news", value: "short", rationale: "Buy rumor sell news", correct: false },
-      { label: "Hold", value: "hold", rationale: "Wait", correct: false },
+      { label: "Buy — supply reduction is bullish", value: "long", rationale: "Lower float" },
+      { label: "Sell the news", value: "short", rationale: "Buy rumor sell news" },
+      { label: "Hold", value: "hold", rationale: "Wait" },
     ],
-    insight: "Genuine supply burns (not just emissions reductions) historically drive 30-60 day uptrends in exchange tokens when volume confirms.",
+    insight: "A token burn changes supply mechanics, but price also depends on demand, liquidity and broader market conditions. Treat the burn as one input rather than a guaranteed uptrend.",
     difficulty: "Beginner",
   },
   {
@@ -205,11 +205,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "China announces 200% tariff on US chips.",
     context: "NVDA -8% premarket. China is ~12% of NVDA revenue. Datacenter demand globally remains insatiable.",
     options: [
-      { label: "Buy the dip — global demand offsets China", value: "long", rationale: "Demand overwhelms", correct: true },
-      { label: "Hold and wait", value: "hold", rationale: "Sit out volatility", correct: false },
-      { label: "Short — bigger drop coming", value: "short", rationale: "Geopolitical risk", correct: false },
+      { label: "Buy the dip — global demand offsets China", value: "long", rationale: "Demand overwhelms" },
+      { label: "Hold and wait", value: "hold", rationale: "Sit out volatility" },
+      { label: "Short — bigger drop coming", value: "short", rationale: "Geopolitical risk" },
     ],
-    insight: "Geopolitical-driven selloffs in supply-constrained markets typically recover within 30 days as global demand fills the gap.",
+    insight: "Geopolitical shocks can change demand, supply access and risk premiums at the same time. Compare the size and persistence of those effects rather than assuming a fixed recovery window.",
     difficulty: "Intermediate",
   },
   {
@@ -217,11 +217,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "BTC funding rates spike to +0.15% (4-hour).",
     context: "Price flat. Open interest at record highs. Spot volume below average.",
     options: [
-      { label: "Short — funding extreme", value: "short", rationale: "Contrarian on leverage", correct: true },
-      { label: "Long — bulls are confident", value: "long", rationale: "Trend follow", correct: false },
-      { label: "Hold", value: "hold", rationale: "Wait it out", correct: false },
+      { label: "Short — funding extreme", value: "short", rationale: "Contrarian on leverage" },
+      { label: "Long — bulls are confident", value: "long", rationale: "Trend follow" },
+      { label: "Hold", value: "hold", rationale: "Wait it out" },
     ],
-    insight: "Sustained funding >+0.1% with flat price and low spot volume is a classic 'too many longs' setup. Liquidation cascades follow ~65% of the time within 72h.",
+    insight: "High funding, flat price and weak spot volume can be studied as signs of leveraged positioning. They do not establish a fixed probability or deadline for a liquidation move.",
     difficulty: "Pro",
   },
   {
@@ -229,11 +229,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Tesla unveils a sub-$25K model.",
     context: "Stock spikes 9% on the news. Margins guidance unclear. Production starts in 18 months.",
     options: [
-      { label: "Sell into the spike", value: "short", rationale: "Sell-the-news", correct: true },
-      { label: "Buy — TAM expansion", value: "long", rationale: "New market", correct: false },
-      { label: "Hold", value: "hold", rationale: "Patience", correct: false },
+      { label: "Sell into the spike", value: "short", rationale: "Sell-the-news" },
+      { label: "Buy — TAM expansion", value: "long", rationale: "New market" },
+      { label: "Hold", value: "hold", rationale: "Patience" },
     ],
-    insight: "18-month-out catalysts with unclear margins are perfect 'sell the news' setups — the bullish narrative gets fully priced in days; the actual financial impact is years away.",
+    insight: "A distant product catalyst with uncertain margins leaves multiple scenarios open. Compare the timing, economics and evidence of demand rather than treating the announcement as an automatic sell-the-news setup.",
     difficulty: "Intermediate",
   },
   {
@@ -241,11 +241,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "SPY tests the 200-day MA after a 10% correction.",
     context: "VIX at 28 (elevated). Breadth: only 35% of stocks above their 50-day. Put/call ratio at 1.4.",
     options: [
-      { label: "Buy — capitulation signs", value: "long", rationale: "Sentiment extremes", correct: true },
-      { label: "Wait", value: "hold", rationale: "Patience", correct: false },
-      { label: "Short — more downside", value: "short", rationale: "Trend follow", correct: false },
+      { label: "Buy — capitulation signs", value: "long", rationale: "Sentiment extremes" },
+      { label: "Wait", value: "hold", rationale: "Patience" },
+      { label: "Short — more downside", value: "short", rationale: "Trend follow" },
     ],
-    insight: "200-day test + VIX >25 + put/call >1.3 has historically marked durable lows ~75% of the time. Confluence of fear matters more than any single signal.",
+    insight: "Moving averages, volatility and options-positioning measures can provide different context around a selloff. Their combination still does not prove that a durable low has formed.",
     difficulty: "Intermediate",
   },
   {
@@ -253,11 +253,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Ethereum staking yield drops below 2.5%.",
     context: "Validator queue is full. Restaking protocols (EigenLayer) absorbing capital. ETH spot ETF flows turned negative.",
     options: [
-      { label: "Sell — yield no longer compelling", value: "short", rationale: "Rotation out", correct: true },
-      { label: "Buy — restaking is bullish", value: "long", rationale: "New use case", correct: false },
-      { label: "Hold", value: "hold", rationale: "Long-term", correct: false },
+      { label: "Sell — yield no longer compelling", value: "short", rationale: "Rotation out" },
+      { label: "Buy — restaking is bullish", value: "long", rationale: "New use case" },
+      { label: "Hold", value: "hold", rationale: "Long-term" },
     ],
-    insight: "Falling native yield + restaking siphoning capital + ETF outflows = institutional sellers. ETH has historically underperformed for 1-2 quarters from these setups.",
+    insight: "Yield changes, restaking activity and fund flows can affect the case for holding ETH in different ways. Compare each factor and its persistence instead of assigning a fixed period of underperformance.",
     difficulty: "Pro",
   },
   {
@@ -265,11 +265,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "BoJ intervenes verbally. USD/JPY at 158.",
     context: "Last actual intervention was at 152. MoF officials called move 'one-sided.' Carry trade flows still strong.",
     options: [
-      { label: "Wait — verbal isn't actual", value: "hold", rationale: "Discipline", correct: true },
-      { label: "Short JPY weakening continues", value: "long", rationale: "Trend follow", correct: false },
-      { label: "Short USD/JPY now", value: "short", rationale: "Front-run intervention", correct: false },
+      { label: "Wait — verbal isn't actual", value: "hold", rationale: "Discipline" },
+      { label: "Short JPY weakening continues", value: "long", rationale: "Trend follow" },
+      { label: "Short USD/JPY now", value: "short", rationale: "Front-run intervention" },
     ],
-    insight: "Verbal intervention before actual intervention rarely reverses trend by itself. The carry trade unwinds when policy actually shifts — not when officials complain.",
+    insight: "Official comments, actual intervention and monetary-policy changes are different events. Compare what has actually changed in policy or flows instead of assuming comments alone determine the next move.",
     difficulty: "Pro",
   },
   {
@@ -277,11 +277,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "NVDA splits 10-for-1.",
     context: "Retail interest surges. Options activity hits records. Stock up 4% on the announcement.",
     options: [
-      { label: "Buy — retail flows incoming", value: "long", rationale: "Liquidity event", correct: false },
-      { label: "Hold — splits don't change value", value: "hold", rationale: "Cosmetic", correct: true },
-      { label: "Short the hype", value: "short", rationale: "Sell hype", correct: false },
+      { label: "Buy — retail flows incoming", value: "long", rationale: "Liquidity event" },
+      { label: "Hold — splits don't change value", value: "hold", rationale: "Cosmetic" },
+      { label: "Short the hype", value: "short", rationale: "Sell hype" },
     ],
-    insight: "Stock splits are cosmetic — market cap unchanged. Post-split rallies are entirely sentiment-driven and fade ~60% of the time within 30 days.",
+    insight: "A stock split changes the number of shares and the per-share price proportionally; it does not by itself change the company's underlying value. Any later price move needs separate evidence.",
     difficulty: "Beginner",
   },
   {
@@ -289,11 +289,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "BTC halving happens this week.",
     context: "Price already up 80% YTD. Last 3 halvings saw the major rally AFTER, not before.",
     options: [
-      { label: "Hold through the event", value: "hold", rationale: "Avoid timing", correct: true },
-      { label: "Buy more", value: "long", rationale: "Halving narrative", correct: false },
-      { label: "Sell — buy the rumor", value: "short", rationale: "Sell event", correct: false },
+      { label: "Hold through the event", value: "hold", rationale: "Avoid timing" },
+      { label: "Buy more", value: "long", rationale: "Halving narrative" },
+      { label: "Sell — buy the rumor", value: "short", rationale: "Sell event" },
     ],
-    insight: "Halving is a known event — it's typically priced in well before. The real moves come 3-12 months later. Patience beats trying to time the actual date.",
+    insight: "A scheduled halving changes Bitcoin's issuance rate, but it does not specify when or how price must react. Separate the known protocol event from uncertain market expectations.",
     difficulty: "Beginner",
   },
   {
@@ -301,11 +301,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Apple beats earnings but guides Q1 lower.",
     context: "Stock down 4% after-hours. Services revenue grew 18%. iPhone guidance cut on China softness.",
     options: [
-      { label: "Buy — Services is the story", value: "long", rationale: "Quality narrative", correct: true },
-      { label: "Sell — guidance is what matters", value: "short", rationale: "Forward looking", correct: false },
-      { label: "Hold", value: "hold", rationale: "Wait it out", correct: false },
+      { label: "Buy — Services is the story", value: "long", rationale: "Quality narrative" },
+      { label: "Sell — guidance is what matters", value: "short", rationale: "Forward looking" },
+      { label: "Hold", value: "hold", rationale: "Wait it out" },
     ],
-    insight: "Mix shift toward higher-margin Services is structurally bullish for AAPL multiples. Short-term guidance dips in this regime are buying opportunities.",
+    insight: "Revenue mix and forward guidance can point to different risks and opportunities. Compare margin effects, demand and management guidance without treating a short-term drop as an automatic buying opportunity.",
     difficulty: "Intermediate",
   },
   {
@@ -313,11 +313,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "10-year yield crosses above 5%.",
     context: "QQQ down 2% intraday. Tech leadership weakening. Equal-weight QQQ outperforming.",
     options: [
-      { label: "Rotate out of mega-cap into equal-weight", value: "hold", rationale: "Quality rotation", correct: true },
-      { label: "Buy the dip in QQQ", value: "long", rationale: "Discount", correct: false },
-      { label: "Short QQQ", value: "short", rationale: "Yield headwind", correct: false },
+      { label: "Rotate out of mega-cap into equal-weight", value: "hold", rationale: "Quality rotation" },
+      { label: "Buy the dip in QQQ", value: "long", rationale: "Discount" },
+      { label: "Short QQQ", value: "short", rationale: "Yield headwind" },
     ],
-    insight: "When equal-weight outperforms cap-weighted, breadth is improving even as headline indices struggle. Rotating to quality breadth beats fighting the headline.",
+    insight: "Equal-weight versus cap-weighted performance can help describe market breadth. Use it as context rather than as a rule that one portfolio rotation must outperform.",
     difficulty: "Pro",
   },
   {
@@ -325,11 +325,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Robotaxi event delivers underwhelming demo.",
     context: "Stock down 9% the next session. Demo lacked details on regulatory path. But FSD subscription revenue grew 60% QoQ in background.",
     options: [
-      { label: "Wait for capitulation", value: "hold", rationale: "Let panic exhaust", correct: true },
-      { label: "Buy the dip — FSD growth", value: "long", rationale: "Underlying business strong", correct: false },
-      { label: "Short — Robotaxi was the catalyst", value: "short", rationale: "Trend follow", correct: false },
+      { label: "Wait for capitulation", value: "hold", rationale: "Let panic exhaust" },
+      { label: "Buy the dip — FSD growth", value: "long", rationale: "Underlying business strong" },
+      { label: "Short — Robotaxi was the catalyst", value: "short", rationale: "Trend follow" },
     ],
-    insight: "Disappointment selloffs in stocks with strong underlying business need 2-3 days for emotional selling to exhaust. Buying day 1 catches the knife.",
+    insight: "After a disappointment, selling pressure can persist or reverse at different speeds. Compare new information, liquidity and price stabilisation instead of assuming a fixed exhaustion period.",
     difficulty: "Intermediate",
   },
   {
@@ -337,11 +337,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Gold breaks $2,800 to new all-time highs.",
     context: "Central bank buying + retail FOMO + miner shares lagging.",
     options: [
-      { label: "Buy gold but avoid miners", value: "long", rationale: "Follow the metal", correct: true },
-      { label: "Buy miners — they'll catch up", value: "long", rationale: "Reversion", correct: false },
-      { label: "Short — too extended", value: "short", rationale: "Mean reversion", correct: false },
+      { label: "Buy gold but avoid miners", value: "long", rationale: "Follow the metal" },
+      { label: "Buy miners — they'll catch up", value: "long", rationale: "Reversion" },
+      { label: "Short — too extended", value: "short", rationale: "Mean reversion" },
     ],
-    insight: "When miners lag the metal at new highs, it signals institutional capital prefers physical exposure. The 'miners catch up' trade often fails for 6+ months.",
+    insight: "Gold and mining shares have different business and market drivers. A divergence can be investigated, but it does not by itself prove why capital is moving or how long the gap will last.",
     difficulty: "Pro",
   },
   {
@@ -349,11 +349,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Meta reports record ad revenue. Stock unchanged.",
     context: "Beat top + bottom line by 8%. CEO commentary muted. Sector peers underperforming.",
     options: [
-      { label: "Hold — no reaction means top", value: "hold", rationale: "Distribution signal", correct: true },
-      { label: "Buy more — accumulation", value: "long", rationale: "Quiet strength", correct: false },
-      { label: "Short — exhaustion", value: "short", rationale: "Top signal", correct: false },
+      { label: "Hold — no reaction means top", value: "hold", rationale: "Distribution signal" },
+      { label: "Buy more — accumulation", value: "long", rationale: "Quiet strength" },
+      { label: "Short — exhaustion", value: "short", rationale: "Top signal" },
     ],
-    insight: "Strong beats with zero price reaction often signal late-cycle distribution. Watch the next 2-3 sessions: if it can't break to highs, lighten up.",
+    insight: "A strong report with a muted price reaction can have several explanations. Compare expectations, volume and subsequent information instead of treating the reaction as proof of distribution.",
     difficulty: "Pro",
   },
   {
@@ -361,11 +361,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Solana memecoin volume crashes 70% in a week.",
     context: "Network revenue down 50%. Validators struggling. Real-app usage still growing.",
     options: [
-      { label: "Sell — revenue collapse", value: "short", rationale: "Bearish", correct: false },
-      { label: "Hold — real usage growing", value: "hold", rationale: "Long-term thesis", correct: true },
-      { label: "Buy aggressively", value: "long", rationale: "Contrarian", correct: false },
+      { label: "Sell — revenue collapse", value: "short", rationale: "Bearish" },
+      { label: "Hold — real usage growing", value: "hold", rationale: "Long-term thesis" },
+      { label: "Buy aggressively", value: "long", rationale: "Contrarian" },
     ],
-    insight: "Memecoin cycles are noise — sustainable L1 value comes from real-app usage. Separating signal from noise is half of crypto edge.",
+    insight: "Network revenue, speculative activity and application usage measure different parts of an ecosystem. Compare them separately rather than treating one short-term activity measure as the whole investment case.",
     difficulty: "Intermediate",
   },
   {
@@ -373,11 +373,11 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "First red Monday after 8 green weeks.",
     context: "SPY -1.2%. Breadth -3:1 negative. No specific catalyst. Bond yields stable.",
     options: [
-      { label: "Buy the dip — trend intact", value: "long", rationale: "Buy weakness in uptrend", correct: true },
-      { label: "Sell — trend break starting", value: "short", rationale: "Distribution", correct: false },
-      { label: "Hold", value: "hold", rationale: "Indecision", correct: false },
+      { label: "Buy the dip — trend intact", value: "long", rationale: "Buy weakness in uptrend" },
+      { label: "Sell — trend break starting", value: "short", rationale: "Distribution" },
+      { label: "Hold", value: "hold", rationale: "Indecision" },
     ],
-    insight: "Single red days after extended uptrends without a fundamental catalyst are typically healthy resets. Trend changes usually need a story — not just a date.",
+    insight: "One down day is not enough to establish either a healthy reset or a trend reversal. Compare breadth, follow-through and new information before updating the simulated thesis.",
     difficulty: "Beginner",
   },
 ];
@@ -405,7 +405,7 @@ export interface StreakState {
   longest: number;
   totalCompleted: number;
   lastCompletedDate: string | null; // ISO yyyy-mm-dd UTC
-  history: { date: string; challengeId: number; decision: ChallengeDecision; correct: boolean }[];
+  history: { date: string; challengeId: number; decision: ChallengeDecision }[];
 }
 
 const DEFAULT_STATE: StreakState = {
@@ -461,7 +461,7 @@ export function hasPlayedToday(): boolean {
   return s.lastCompletedDate === utcDateKey();
 }
 
-export function recordChallenge(challengeId: number, decision: ChallengeDecision, correct: boolean): StreakState {
+export function recordChallenge(challengeId: number, decision: ChallengeDecision): StreakState {
   const todayKey = utcDateKey();
   const prev = getStreak();
   if (prev.lastCompletedDate === todayKey) return prev; // Already played today
@@ -475,7 +475,7 @@ export function recordChallenge(challengeId: number, decision: ChallengeDecision
     longest,
     totalCompleted: prev.totalCompleted + 1,
     lastCompletedDate: todayKey,
-    history: [{ date: todayKey, challengeId, decision, correct }, ...prev.history].slice(0, 100),
+    history: [{ date: todayKey, challengeId, decision }, ...prev.history].slice(0, 100),
   };
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
