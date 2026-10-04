@@ -28,8 +28,8 @@ const lessons = [
 ];
 
 const trendingTopics = [
-  { id: "bitcoin-l2", title: "Bitcoin Layer 2", subtitle: "Lightning & Stacks", description: "Master Bitcoin L2 solutions for faster, cheaper transactions.", icon: Zap, badge: "Topic", href: "/trade/btc" },
-  { id: "rwa", title: "Real World Assets", subtitle: "Tokenized Securities", description: "Explore tokenized treasuries, real estate, and commodities.", icon: Coins, badge: "Trending", href: "/learn/article/stock-market-index-etfs" },
+  { id: "bitcoin-practice", title: "Bitcoin Practice", subtitle: "BTC simulator", description: "Practice Bitcoin order entry and portfolio tracking with virtual cash.", icon: Zap, badge: "Practice", href: "/trade/btc" },
+  { id: "index-etfs", title: "Stock Market Index ETFs", subtitle: "Broad-market funds", description: "Learn how index ETFs package baskets of stocks and how they differ from individual shares.", icon: Coins, badge: "Guide", href: "/learn/article/stock-market-index-etfs" },
   { id: "ai-trading", title: "AI-Driven Trading", subtitle: "Smart Strategies", description: "Leverage AI algorithms for market analysis and automated strategies.", icon: Brain, badge: "Innovation", href: "/ai-mentor" },
 ];
 
