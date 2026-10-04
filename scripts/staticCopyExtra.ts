@@ -169,7 +169,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "How it works and what it costs",
       p: [
-        "The mentor runs on large language models through the site's backend, with a fallback chain so an outage at one provider does not take the feature down. It is free to use and there is no message quota for normal use.",
+        "The mentor requests AI responses through the site's backend when available. If the request fails or returns no answer, a local rule-based library supplies a labeled educational response. That fallback uses predefined topic matching and calculations, not a language model. Availability and request limits can affect the AI service.",
         "Conversations are used to produce your answer. Advertising and analytics data flows are described separately in the privacy policy; AI answers can be wrong, so check substantive claims against the linked lessons or an authoritative source before relying on them.",
       ],
     },
@@ -276,32 +276,32 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "How features get prioritised",
       p: [
         "Requests that come through the contact page are weighted far more heavily than anything else, because a feature nobody asked for is usually a feature nobody uses. After that, the priority is whatever removes a known reason people fail to learn — better review tools beat more instruments, and clearer explanations beat more features.",
-        "Dates on this page are targets set by one maintainer working on an independent project, not commitments backed by a team. When something slips, the status changes rather than the date quietly disappearing.",
+        "Historical dates identify recorded implementation milestones. Proposed features have no confirmed release date. A feature appearing in the code does not guarantee that its backend is available; account and community features depend on that service.",
       ],
     },
     {
       h: "Recently shipped",
       list: [
         "Four structured course tracks with quizzes, cited sources and completion badges.",
-        "A full trading glossary with expert-level explanations and related-term navigation.",
+        "A full trading glossary with detailed explanations and related-term navigation.",
         "Localised country guides covering regulators, market access and realistic starting capital.",
         "Optional public trader profiles and a 30-day practice duel against a friend.",
         "Daily challenges with a local-time streak counter, plus journal and portfolio analytics.",
       ],
     },
     {
-      h: "In progress",
+      h: "Proposed features",
       list: [
-        "Deeper portfolio analytics, including per-strategy expectancy rather than only account-level metrics.",
-        "More structured course tracks covering risk management and market microstructure.",
-        "Wider glossary coverage, with each entry linked to the lesson where the concept is applied.",
-        "Better mobile layouts for the charting and order areas.",
+        "Portfolio projections are proposed as a way to explore hypothetical inputs, not as a promise of future returns.",
+        "Embeddable price widgets are proposed; their data sources, update frequency and access requirements are not specified.",
+        "These proposals are not available execution tools. Options and futures lessons remain conceptual; current simulator practice uses supported spot instruments.",
+        "Public profile sharing requires opting into visibility and using the /trader/{username} address. The /trader/me route is an account view, not a public profile link.",
       ],
     },
     {
       h: "How to influence it",
       p: [
-        "Dates on this page describe when work shipped or is expected to ship, not a commitment. TradeHQ is maintained by a very small team, so an item can slip a month without anything being wrong; items are only marked as shipped once the feature is live on the site and usable.",
+        "Core practice data such as portfolios, journals and course progress remain in the browser. Optional sign-in supports selected profile and community features; it does not restore all practice data on another device. Keep that distinction in mind when requesting sync or sharing features.",
         "The contact page is the roadmap's real input. Describe the thing you were trying to learn and where the site failed you — that is far more actionable than a feature name, and it is how most of the items above ended up on the list.",
       ],
     },

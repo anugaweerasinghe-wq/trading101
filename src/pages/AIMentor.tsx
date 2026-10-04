@@ -94,7 +94,7 @@ export default function AIMentor() {
               Trading Mentor <span className="text-primary">— Curated Knowledge</span>
             </h1>
             <p className="text-muted-foreground">
-              Expert-curated answers — strategy, risk, psychology, technicals
+              Educational answers — strategy, risk, psychology, technicals
             </p>
           </div>
 
@@ -207,7 +207,7 @@ export default function AIMentor() {
               {
                 question: "What is the TradeHQ AI Mentor?",
                 answer:
-                  "An always-on AI trading coach that answers questions about strategies, indicators, market mechanics and trading psychology — tailored to your simulated portfolio. (Educational simulation only — not financial advice.)",
+                  "An educational mentor that requests AI responses when the service is available and otherwise uses a labeled, rule-based knowledge library. It explains trading concepts; it does not assess whether a real-money trade suits you.",
               },
               {
                 question: "Can the AI Mentor predict prices?",

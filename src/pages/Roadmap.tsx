@@ -18,12 +18,12 @@ const ITEMS: RoadmapItem[] = [
   { icon: BookOpenCheck, title: "Expanded Learning Courses", desc: "Four structured tracks — options, futures, macro reading and trading psychology — each with quizzes and a completion badge. Now live at /courses.", status: "shipped", eta: "Shipped Jul 2026" },
   { icon: GraduationCap, title: "Guided Learning Pathways", desc: "Personalised next-lesson suggestions based on what you've already studied. Live on the Learn hub — the 'Picked for you' card resumes your last lesson or points you to the best starting point.", status: "shipped", eta: "Shipped Jul 2026" },
   { icon: Bell, title: "Daily Streak + Practice Reminders", desc: "Streak tracker on the daily challenge and opt-in browser notifications for returning learners. Fully free, no signup required.", status: "shipped", eta: "Shipped Jul 2026" },
-  { icon: Trophy, title: "Public Trader Profiles", desc: "Shareable profile at /trader/me showing your simulated P&L, win rate, drawdown and course badges. Copy or share the link anywhere.", status: "shipped", eta: "Shipped Jul 2026" },
+  { icon: Trophy, title: "Public Trader Profiles", desc: "Account holders can opt into a public profile and share its /trader/{username} link. /trader/me is the private account view, not a public sharing address.", status: "shipped", eta: "Shipped Jul 2026" },
   { icon: Globe2, title: "Localised Country Pages", desc: "Free tailored guides for Sri Lanka, India, Philippines, Pakistan and Nigeria — local regulator, exchange, tax notes and student angle. Live under /learn/country.", status: "shipped", eta: "Shipped Jul 2026" },
-  { icon: UserCircle2, title: "Optional Email + Google Sign-In", desc: "Create a free account to sync your practice stats and appear on the leaderboard. Still 100% optional — guest mode stays forever and every page works signed out.", status: "shipped", eta: "Shipped Aug 2026" },
+  { icon: UserCircle2, title: "Optional Email + Google Sign-In", desc: "Optional sign-in supports profile and community features when the service is available. Core trading works as a guest; browser-held portfolio, journal and course data are not a cross-device backup.", status: "shipped", eta: "Shipped Aug 2026" },
   { icon: Users2, title: "Challenge a Friend", desc: "Share an invite link and run a 30-day head-to-head practice duel. Both sides are scored on percentage return from their own recorded starting balance, with a live scoreboard and a Duels tab on the leaderboard.", status: "shipped", eta: "Shipped Aug 2026" },
-  { icon: LineChart, title: "Realistic Portfolio Projections", desc: "See where your simulated equity curve trends if your current win rate, R-multiple and frequency continue — powered by your real trade history.", status: "planned", eta: "Aug 2026" },
-  { icon: BarChart3, title: "Embeddable Live Price Widgets", desc: "Drop a TradeHQ live BTC, ETH or SPY widget into any blog or notion page — free, no API key.", status: "planned", eta: "Oct 2026" },
+  { icon: LineChart, title: "Realistic Portfolio Projections", desc: "See where your simulated equity curve trends if your current win rate, R-multiple and frequency continue — powered by your real trade history.", status: "planned", eta: "No confirmed date" },
+  { icon: BarChart3, title: "Embeddable Live Price Widgets", desc: "A proposed embeddable price widget. Data source, update frequency and access requirements are not yet specified.", status: "planned", eta: "No confirmed date" },
 ];
 
 const STATUS_STYLES: Record<RoadmapItem["status"], string> = {
@@ -42,7 +42,7 @@ const STATUS_LABEL: Record<RoadmapItem["status"], string> = {
 
 export default function Roadmap() {
   const title = "TradeHQ Roadmap — What's Coming Next | Future Updates";
-  const description = "Sneak peek at upcoming TradeHQ features: expanded courses, optional sign-in, realistic portfolio projections, public trader profiles and more — all free.";
+  const description = "Review existing TradeHQ features and proposed portfolio projections and embeddable price widgets. Planned features have no confirmed release date.";
   return (
     <>
       <Helmet>
@@ -106,11 +106,10 @@ export default function Roadmap() {
           <section className="mt-12 max-w-3xl mx-auto space-y-4">
             <h2 className="text-2xl font-semibold">What the statuses actually mean</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              "Shipped" means the feature is live on this site right now and you can use it without an
-              account — not that it is finished forever. Shipped items still get refined as people use
+              "Shipped" identifies an implemented feature. Profile and community features require an
+              account and an available backend service; this list does not certify service availability. Shipped items still get refined as people use
               them, and the date shown is when the first working version went live rather than when
-              the idea started. "Planned" means the work is specified and intended, with a target
-              month that is an estimate rather than a commitment; because TradeHQ is built by one
+              the idea started. "Planned" identifies a proposal with no confirmed release date; because TradeHQ is built by one
               person and given away free, a planned date can slip when something more useful takes
               priority. Nothing on this page is a promise of a paid feature, because there are none.
             </p>

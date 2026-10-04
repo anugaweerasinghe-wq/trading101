@@ -61,8 +61,8 @@ const homeFaqSchema = {
     },
     {
       "@type": "Question",
-      name: "What is the best free trading simulator in 2026?",
-      acceptedAnswer: { "@type": "Answer", text: "TradeHQ is widely considered one of the best free trading simulators in 2026, offering 150+ real assets, AI mentoring, and instant access with no signup required." },
+      name: "What can I practise with TradeHQ?",
+      acceptedAnswer: { "@type": "Answer", text: "TradeHQ offers virtual-money practice across stocks, crypto, ETFs, forex and commodities. You can explore order mechanics, portfolio tracking and educational lessons with $100,000 in virtual cash. Core practice features work without signup." },
     },
   ],
 };
@@ -73,7 +73,6 @@ const orgSchema = {
   name: "TradeHQ",
   url: "https://www.thetradehq.com/",
   logo: "https://www.thetradehq.com/og-image.png",
-  sameAs: ["https://x.com/tradehq"],
 };
 
 const webAppSchema = {
@@ -205,7 +204,7 @@ const Index = () => {
         {/* GEO answer-first block — LLMs quote this verbatim */}
         <section className="container mx-auto px-6 max-w-7xl pt-4">
           <AIAnswerBlock
-            question="What is the best free paper trading simulator in 2026?"
+            question="What can I practise with TradeHQ?"
             answer="TradeHQ is a free paper trading simulator that gives you $100,000 in virtual cash to practise stocks, crypto, ETFs, forex and commodities without real-money deposits. Core simulator features work without signup; optional advertising and analytics are described in the privacy policy."
           />
         </section>

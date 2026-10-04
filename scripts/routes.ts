@@ -12,6 +12,10 @@
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
+import { tradingGlossary } from "../src/lib/tradingGlossary";
+import { LEARN_ARTICLES } from "../src/lib/learnArticles";
+import { lessonData } from "../src/lib/lessonData";
+import { COMPARE_PAIRS, HOWTO_ASSETS, STRATEGIES } from "../src/lib/seoData";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -100,25 +104,11 @@ function humanizeSlug(slug: string): string {
 }
 
 function extractGlossary(): { slug: string; term: string; definition: string }[] {
-  const src = readSrc("src/lib/tradingGlossary.ts");
-  const results: { slug: string; term: string; definition: string }[] = [];
-  const re = /slug:\s*["']([^"']+)["'][\s\S]*?term:\s*["']([^"']+)["'][\s\S]*?definition:\s*["']([^"']+?)["']/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(src)) !== null) {
-    results.push({ slug: m[1], term: m[2], definition: m[3] });
-  }
-  return results;
+  return tradingGlossary.map(({ slug, term, definition }) => ({ slug, term, definition }));
 }
 
 function extractLearnArticles(): { slug: string; title: string; metaDescription: string; summary: string }[] {
-  const src = readSrc("src/lib/learnArticles.ts");
-  const results: { slug: string; title: string; metaDescription: string; summary: string }[] = [];
-  const re = /slug:\s*["']([^"']+)["'][\s\S]*?title:\s*["']([^"']+)["'][\s\S]*?summary:\s*["']([^"']+)["'][\s\S]*?metaDescription:\s*["']([^"']+)["']/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(src)) !== null) {
-    results.push({ slug: m[1], title: m[2], summary: m[3], metaDescription: m[4] });
-  }
-  return results;
+  return LEARN_ARTICLES.map(({ slug, title, metaDescription, summary }) => ({ slug, title, metaDescription, summary }));
 }
 
 function extractNicheSymbols(): string[] {
@@ -133,33 +123,7 @@ function extractNicheSymbols(): string[] {
 }
 
 function extractSeoDataList(constName: "COMPARE_PAIRS" | "HOWTO_ASSETS" | "STRATEGIES"): { slug?: string; symbol?: string; title?: string; name?: string; fullName?: string; intro?: string; whyTrade?: string; hook?: string }[] {
-  const src = readSrc("src/lib/seoData.ts");
-  const idx = src.indexOf(`export const ${constName}`);
-  if (idx < 0) return [];
-  // Grab the array literal — everything up to the next `export const` or EOF.
-  const rest = src.slice(idx);
-  const nextExport = rest.indexOf("\nexport const ", 1);
-  const block = nextExport > 0 ? rest.slice(0, nextExport) : rest;
-  const out: any[] = [];
-  const re = /\{[\s\S]*?\}(?=\s*,?\s*(?:\{|\]))/g;
-  const items = block.match(re) || [];
-  for (const item of items) {
-    const pick = (key: string) => {
-      const mm = item.match(new RegExp(`${key}:\\s*["']([^"']+)["']`));
-      return mm ? mm[1] : undefined;
-    };
-    out.push({
-      slug: pick("slug"),
-      symbol: pick("symbol"),
-      title: pick("title"),
-      name: pick("name"),
-      fullName: pick("fullName"),
-      intro: pick("intro"),
-      whyTrade: pick("whyTrade"),
-      hook: pick("hook"),
-    });
-  }
-  return out;
+  return { COMPARE_PAIRS, HOWTO_ASSETS, STRATEGIES }[constName];
 }
 
 function extractCourses(): { slug: string; title: string; tagline: string; lessons: { slug: string; title: string; summary: string }[] }[] {
@@ -263,9 +227,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/ai-mentor",
     title: "AI Trading Mentor — Free Practice Coach | TradeHQ",
-    description: `Ask the free AI trading mentor about any strategy, indicator or asset. Educational simulation only — not financial advice.`,
+    description: `Ask educational trading questions. The mentor requests AI responses when available and uses a labeled rule-based fallback.`,
     h1: "AI Trading Mentor",
-    summary: `Ask an AI mentor about any indicator, strategy or asset. Answers are educational only — never financial advice. Practice what you learn on the free simulator with ${BALANCE} virtual cash.`,
+    summary: `Ask the mentor about trading concepts. AI responses depend on service availability; a labeled rule-based library provides fallback answers. Answers are educational only — never financial advice. Practice what you learn on the free simulator with ${BALANCE} virtual cash.`,
     priority: "0.7",
     changefreq: "weekly",
   });
@@ -293,9 +257,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/roadmap",
     title: "TradeHQ Roadmap — What's Shipping Next | TradeHQ",
-    description: `See what's shipping next on TradeHQ. Public roadmap for the free trading simulator — options paper trading, backtesting and more.`,
+    description: `Review existing TradeHQ features and proposals for portfolio projections and embeddable price widgets. Planned features have no confirmed release date.`,
     h1: "TradeHQ Roadmap",
-    summary: `The public roadmap for TradeHQ — upcoming features on the free educational trading simulator, from options paper trading to backtesting and portfolio sharing.`,
+    summary: `The TradeHQ roadmap separates implemented features from proposals for portfolio projections and embeddable price widgets. Planned features have no confirmed release date; account features depend on backend availability.`,
     priority: "0.5",
     changefreq: "weekly",
   });
@@ -403,6 +367,21 @@ export function buildRoutes(): RouteMeta[] {
       summary: a.summary,
       priority: "0.8",
       changefreq: "weekly",
+    });
+  }
+
+  // ---- Legacy numeric lessons (/learn/:lessonId) ----
+  // Keep existing in-app links working, but place these older lessons inside
+  // the shared prerender/SEO quality gate and exclude them from search.
+  for (const l of lessonData) {
+    routes.push({
+      path: `/learn/${l.id}`,
+      title: `${l.title} — Trading Lesson | TradeHQ`,
+      description: firstCompleteSentence(l.description),
+      h1: l.title,
+      summary: l.description,
+      changefreq: "monthly",
+      noindex: true,
     });
   }
 
@@ -517,7 +496,7 @@ export function buildRoutes(): RouteMeta[] {
       routes.push({
         path: `/courses/${t.slug}/${l.slug}`,
         title: `${l.title} — ${t.title} | TradeHQ`,
-        description: l.summary.length > 155 ? l.summary.slice(0, 152) + "..." : l.summary,
+        description: firstCompleteSentence(l.summary),
         h1: l.title,
         summary: `${l.summary} TradeHQ offers ${BALANCE} virtual cash for supported spot instruments. Derivatives contracts remain conceptual exercises. Educational only, not financial advice.`,
         priority: "0.7",
@@ -564,9 +543,8 @@ function extraRoutes(): RouteMeta[] {
 }
 
 /**
- * Keep <title> inside Google's ~60-character display window and meta
- * descriptions inside ~158 characters, trimming on word boundaries so
- * nothing gets cut mid-word in the SERP snippet.
+ * Bound title length and prefer complete sentences for descriptions.
+ * Search engines may shorten snippets; authored text must remain complete.
  */
 function fitTitle(title: string): string {
   if (title.length <= 62) return title;
@@ -587,7 +565,7 @@ function fitDescription(desc: string): string {
   const cut = d.slice(0, 158);
   const end = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("? "), cut.lastIndexOf("! "));
   if (end >= 0) return cut.slice(0, end + 1).trim();
-  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:—–-]$/, "").trim() + "…";
+  return firstCompleteSentence(d);
 }
 
 // Dedupe path collisions (last write wins) so future data overlap can't ship two entries for the same URL.

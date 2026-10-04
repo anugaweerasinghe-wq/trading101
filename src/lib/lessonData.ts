@@ -608,16 +608,16 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Even professional traders are wrong 40-50% of the time. The 2% rule ensures that losing streaks don't wipe you out:",
+            data: "There is no universal win rate or risk percentage that guarantees survival. This 2% example simply shows how repeated fixed-percentage losses compound:",
           },
           {
             type: "list",
             data: [
               "10 consecutive 2%-of-current-equity losses leave about 81.7% of starting equity (about -18.3%)",
               "20 consecutive 2%-of-current-equity losses leave about 66.8% (about -33.2%)",
-              "You can be wrong many times and still survive",
-              "Small losses, big winners = profitable long-term",
-              "Protects you from emotional decisions",
+              "A smaller percentage loss budget reduces the amount exposed in each example trade but does not prevent a large drawdown",
+              "Small losses alone do not guarantee profitable long-term results; gains, costs, gaps and trade frequency also matter",
+              "A written risk rule can make simulated decision-making more consistent, but it cannot remove risk or emotion",
             ],
           },
         ],
@@ -687,16 +687,16 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Take-profit orders automatically sell when you've reached your profit goal. They prevent you from getting greedy and giving back gains.",
+            data: "A profit target is a planned exit level. Whether an order at that level executes depends on the order type, available liquidity and market conditions; a target does not guarantee a gain or remove emotion from the decision.",
           },
           {
             type: "list",
             data: [
-              "Set at resistance levels",
-              "Near previous highs",
-              "Based on risk-reward ratio (we'll cover next)",
-              "Can use multiple targets (scale out)",
-              "Better to take some profit than watch it disappear",
+              "A target can be compared with resistance levels or previous highs as part of a technical-analysis exercise",
+              "Risk/reward ratios describe assumptions rather than guaranteed outcomes",
+              "Multiple planned exits can be modelled in a simulation",
+              "Actual fills may differ from the planned level depending on order type and market conditions",
+              "Review the result against the original plan instead of treating any target as automatically correct",
             ],
           },
           {
@@ -891,7 +891,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "For a $100,000 account, hold 5-8 positions maximum. Too few = too much risk. Too many = can't manage effectively. Find the sweet spot.",
+            data: "There is no universal correct number of positions. Diversification depends on what the holdings are, how strongly they move together, their sizes and the strategy being tested. More holdings do not automatically remove risk, and diversification cannot guarantee against losses.",
           },
           {
             type: "heading",
@@ -1769,8 +1769,8 @@ export const lessonData: Lesson[] = [
             type: "list",
             data: [
               "Am I following my trading rules consistently?",
-              "Are my losses controlled (2% rule)?",
-              "Is my risk-reward ratio 1:2 or better?",
+              "Did actual losses stay within the risk limits chosen for this simulation?",
+              "How did planned risk/reward compare with the actual outcomes?",
               "Am I trading too much (overtrading)?",
               "Am I trading too little (missing opportunities)?",
               "What was my biggest mistake this month?",
@@ -1779,13 +1779,13 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Create a performance dashboard. Track total return, win rate, profit factor, and max drawdown monthly. If any metric degrades for 2+ months, pause trading and fix the issue before continuing.",
+            data: "A performance dashboard can track total return, win rate, profit factor and maximum drawdown over time. Compare changes across periods, but do not treat a single metric or fixed time threshold as proof that a strategy is valid or invalid.",
           },
           {
             type: "stat",
-            value: "1.5+",
-            label: "Target Profit Factor for Consistent Success",
-            data: "A profit factor above 1.5 means you make $1.50 for every $1 lost - a strong edge that compounds over time",
+            value: "Gross profit ÷ gross loss",
+            label: "Profit Factor Definition",
+            data: "Profit factor compares gross profits with the absolute value of gross losses over the measured sample. A value above 1 means gross profits exceeded gross losses in that sample; it does not by itself prove a repeatable edge.",
           },
         ],
       },

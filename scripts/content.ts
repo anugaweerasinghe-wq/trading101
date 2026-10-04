@@ -163,7 +163,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "A plain-language trading glossary",
         p: [
-          `Every term used across TradeHQ's lessons, guides and strategy pages is defined here in plain English, with an expert-level explanation, a worked example and a practical tip for each entry. There are ${glossary.length} terms in the index, grouped by the part of trading they belong to.`,
+          `Every term used across TradeHQ's lessons, guides and strategy pages is defined here in plain English, with a detailed explanation, a worked example and a practical tip for each entry. There are ${glossary.length} terms in the index, grouped by the part of trading they belong to.`,
           "Definitions are written for people who are learning, not for people who already know. Where a term has a contested or marketing-inflated meaning, the entry says so rather than repeating the sales version.",
         ],
       },
