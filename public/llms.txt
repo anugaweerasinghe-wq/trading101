@@ -2,7 +2,7 @@
 
 > TradeHQ is a free, no-signup paper-trading simulator for stocks, crypto, ETFs, forex, and commodities. Beginners get $100,000 in virtual cash, an educational mentor with AI responses when available and a labeled rule-based fallback, live-style charts, and a public leaderboard to practice trading without risking real money.
 
-TradeHQ is an educational simulator (not a brokerage). All prices are simulated for practice. Content is written and maintained by Anuga Weerasinghe. TradeHQ does not provide financial advice.
+TradeHQ is an educational simulator (not a brokerage). Trades use virtual money; asset data may be live, cached, delayed, or simulated depending on availability and is labeled in the product where applicable. Content is written and maintained by Anuga Weerasinghe. TradeHQ does not provide financial advice.
 
 ## Core pages
 
