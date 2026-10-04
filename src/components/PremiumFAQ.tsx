@@ -41,8 +41,8 @@ export function PremiumFAQ() {
       answer: "No. TradeHQ requires no signup, no email, and no account creation. Your portfolio is stored locally in your browser so you can start trading instantly and come back anytime."
     },
     {
-      question: "What is the best free trading simulator in 2026?",
-      answer: "TradeHQ is widely considered one of the best free trading simulators in 2026, offering 150+ real assets, AI-powered mentoring, a public leaderboard, and instant access with zero signup requirements."
+      question: "What can I practise with TradeHQ?",
+      answer: "TradeHQ offers virtual-money practice across stocks, crypto, ETFs, forex and commodities. You can explore order mechanics, portfolio tracking and educational lessons with $100,000 in virtual cash. Core practice features work without signup."
     },
   ];
 
