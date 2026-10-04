@@ -169,7 +169,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "How it works and what it costs",
       p: [
-        "The mentor runs on large language models through the site's backend, with a fallback chain so an outage at one provider does not take the feature down. It is free to use and there is no message quota for normal use.",
+        "The mentor requests AI responses through the site's backend when available. If the request fails or returns no answer, a local rule-based library supplies a labeled educational response. That fallback uses predefined topic matching and calculations, not a language model. Availability and request limits can affect the AI service.",
         "Conversations are used to produce your answer. Advertising and analytics data flows are described separately in the privacy policy; AI answers can be wrong, so check substantive claims against the linked lessons or an authoritative source before relying on them.",
       ],
     },

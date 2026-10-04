@@ -226,9 +226,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/ai-mentor",
     title: "AI Trading Mentor — Free Practice Coach | TradeHQ",
-    description: `Ask the free AI trading mentor about any strategy, indicator or asset. Educational simulation only — not financial advice.`,
+    description: `Ask educational trading questions. The mentor requests AI responses when available and uses a labeled rule-based fallback.`,
     h1: "AI Trading Mentor",
-    summary: `Ask an AI mentor about any indicator, strategy or asset. Answers are educational only — never financial advice. Practice what you learn on the free simulator with ${BALANCE} virtual cash.`,
+    summary: `Ask the mentor about trading concepts. AI responses depend on service availability; a labeled rule-based library provides fallback answers. Answers are educational only — never financial advice. Practice what you learn on the free simulator with ${BALANCE} virtual cash.`,
     priority: "0.7",
     changefreq: "weekly",
   });

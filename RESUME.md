@@ -165,3 +165,13 @@ Validation: npm ci passed. Local npm run build hit environment-only tsx IPC EPER
 META-01 commit a98fe2d29d55c34f647f0fc238a5469fdeb6a72d passed GitHub run 37187236477 (npm ci, npm run build including prerender/SEO) and Vercel preview dpl_DpGteC876phCkhcPm181btmB424e READY. PR #12 normal merge was rejected by GitHub: 405 “Merge commits are not allowed on this repository.” No squash/rebase substituted and no repository setting changed. Production remains baseline 73d5001; META-01 is FIXED-IN-BRANCH, not FIXED-IN-PRODUCTION. Continue code fixes; normal-merge policy is an owner/repository blocker.
 
 H17: removed unsupported expert-written/expert-curated/expert-level and YMYL-compliant claims from course metadata/FAQ, mentor, feature cards, crawler copy and llms.txt. Replaced with descriptive educational/structured/detailed wording without claiming credentials or policy compliance.
+
+## Three-item saved checkpoint
+
+| Item | Action / verification | Commit | Production |
+|---|---|---|---|
+| META-01 | Generator preserves complete descriptions; all 49 glossary entries and 328 HTML descriptions checked; GitHub success and Vercel READY | a98fe2d29d55c34f647f0fc238a5469fdeb6a72d | Not merged: normal merges disabled |
+| H17 | Unsupported expertise/compliance wording removed; full local build/prerender/SEO, GitHub run 37187394808 success, Vercel READY | 8487490090f3d0bf87622d9fbfb97db33a18e9a2 | Not merged |
+| H18 | Scenario label reflects rule-based parser; both canned mentor fallback paths visibly labeled; app/route/llms/static explanations disclose fallback. Local build/prerender/SEO passed. Runtime endpoint transitions remain unverified. | This H18 commit | Not merged |
+
+No production changes or backend writes. PR #12 contains the work; PR #7 remains untouched. Continue Group 2 with H06, H07, H24 and residual audience claims.

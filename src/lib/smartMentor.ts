@@ -286,7 +286,7 @@ export async function getAIReply(
   } catch (e) {
     console.warn("AI chat failed, using rule-based fallback", e);
   }
-  return getSmartMentorReply(input);
+  return "Rule-based educational response (AI service unavailable):\n\n" + getSmartMentorReply(input);
 }
 
 export async function getPortfolioAIReply(
@@ -314,7 +314,7 @@ Rules: be concise (under 120 words), conversational, no markdown headers. Refere
   } catch (e) {
     console.warn("AI portfolio chat failed, using rule-based fallback", e);
   }
-  return getPortfolioMentorReply(input, ctx);
+  return "Rule-based educational response (AI service unavailable):\n\n" + getPortfolioMentorReply(input, ctx);
 }
 
 /**
@@ -394,5 +394,5 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
   }
 
   // Fall back to topic engine
-  return getSmartMentorReply(input);
+  return "Rule-based educational response (AI service unavailable):\n\n" + getSmartMentorReply(input);
 }

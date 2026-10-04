@@ -138,10 +138,10 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         </div>
         <div>
           <h2 className="text-lg font-semibold flex items-center gap-2">
-            AI Scenario Builder
+            Scenario Builder
             <Badge variant="outline" className="text-2xs border-primary/30 text-primary">Beta</Badge>
           </h2>
-          <p className="text-2xs text-muted-foreground">Ask "What if…?" and see your portfolio under risk bands.</p>
+          <p className="text-2xs text-muted-foreground">Enter a hypothetical move for a rule-based simulation. Results are illustrative, not forecasts.</p>
         </div>
       </div>
 
