@@ -1,64 +1,37 @@
 import { Asset } from "@/lib/types";
-import { getAssetContent } from "@/lib/assetContent";
-import { Gauge, TrendingUp, Shield, Zap } from "lucide-react";
+import { Gauge } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface TradingStrengthMeterProps {
   asset: Asset;
 }
 
-// Calculate trading strength score based on strategy data and market conditions
-function calculateStrengthScore(asset: Asset): {
+// Scale the absolute simulator price move into a 0-100 visual meter.
+function calculateMovementScore(asset: Asset): {
   score: number;
-  factors: { name: string; value: number; icon: React.ComponentType<any> }[];
   interpretation: string;
 } {
-  const content = getAssetContent(asset.id);
   const changePercent = asset.changePercent || asset.change || 0;
-  
-  // Factor 1: Momentum (based on price change)
-  const momentumScore = Math.min(100, Math.max(0, 50 + changePercent * 10));
-  
-  // Factor 2: Strategy Alignment (based on content quality)
-  const hasDetailedStrategy = content?.strategy && content.strategy.length > 100;
-  const hasStats = content?.stats && Object.keys(content.stats).length > 3;
-  const strategyScore = (hasDetailedStrategy ? 40 : 20) + (hasStats ? 30 : 15) + 20;
-  
-  // Factor 3: Volatility Opportunity (higher volatility = more learning opportunity)
-  const volatilityScore = Math.min(100, 40 + Math.abs(changePercent) * 12);
-  
-  // Overall score weighted average
-  const overallScore = Math.round(
-    momentumScore * 0.35 + 
-    strategyScore * 0.35 + 
-    volatilityScore * 0.30
-  );
-  
-  // Interpretation based on score
+  const absoluteMove = Math.abs(changePercent);
+
+  // Display scale only: a 0-5% absolute move maps linearly to 0-100.
+  // This is not a strategy-quality, risk or prediction score.
+  const score = Math.round(Math.min(100, absoluteMove * 20));
+
   let interpretation = "";
-  if (overallScore >= 80) {
-    interpretation = "Excellent conditions for practice trading. High educational value with clear trends.";
-  } else if (overallScore >= 60) {
-    interpretation = "Good opportunity to practice. Moderate price action offers learning potential.";
-  } else if (overallScore >= 40) {
-    interpretation = "Fair conditions. Consider practicing patience and range-bound strategies.";
+  if (absoluteMove >= 4) {
+    interpretation = "Large simulator price move. Use it as an observation exercise, not as evidence that a trade is attractive.";
+  } else if (absoluteMove >= 2) {
+    interpretation = "Moderate simulator price move. Compare the move with the surrounding chart and data-status label.";
   } else {
-    interpretation = "Challenging environment. Focus on risk management practice and smaller positions.";
+    interpretation = "Small simulator price move. The meter describes movement only and does not rate a strategy.";
   }
-  
-  return {
-    score: overallScore,
-    factors: [
-      { name: "Momentum", value: Math.round(momentumScore), icon: TrendingUp },
-      { name: "Strategy Clarity", value: Math.round(strategyScore), icon: Shield },
-      { name: "Volatility", value: Math.round(volatilityScore), icon: Zap }
-    ],
-    interpretation
-  };
+
+  return { score, interpretation };
 }
 
 export function TradingStrengthMeter({ asset }: TradingStrengthMeterProps) {
-  const { score, factors, interpretation } = calculateStrengthScore(asset);
+  const { score, interpretation } = calculateMovementScore(asset);
   
   // Determine color based on score
   const getScoreColor = (s: number) => {
@@ -79,7 +52,7 @@ export function TradingStrengthMeter({ asset }: TradingStrengthMeterProps) {
   return (
     <section 
       className="glass-panel border border-white/10 rounded-2xl p-6"
-      aria-label="Trading Strength Analysis"
+      aria-label="Simulator Movement Meter"
     >
       <div className="flex items-center gap-3 mb-4">
         <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
@@ -87,10 +60,10 @@ export function TradingStrengthMeter({ asset }: TradingStrengthMeterProps) {
         </div>
         <div>
           <h3 className="text-lg font-semibold text-foreground">
-            Trading Strength Meter
+            Simulator Movement Meter
           </h3>
           <p className="text-xs text-muted-foreground">
-            2026 Strategy Score for {asset.symbol}
+            Absolute simulator price move for {asset.symbol}
           </p>
         </div>
       </div>
@@ -130,30 +103,8 @@ export function TradingStrengthMeter({ asset }: TradingStrengthMeterProps) {
         <span className="text-muted-foreground text-lg">/100</span>
       </div>
       
-      {/* Factor Breakdown */}
-      <div className="space-y-3 mb-4">
-        {factors.map((factor) => {
-          const Icon = factor.icon;
-          return (
-            <div key={factor.name} className="space-y-1">
-              <div className="flex items-center justify-between text-sm">
-                <span className="flex items-center gap-2 text-muted-foreground">
-                  <Icon className="w-4 h-4" />
-                  {factor.name}
-                </span>
-                <span className={cn("font-medium", getScoreColor(factor.value))}>
-                  {factor.value}%
-                </span>
-              </div>
-              <div className="h-1.5 bg-muted/30 rounded-full overflow-hidden">
-                <div 
-                  className={cn("h-full rounded-full transition-all duration-500", getProgressColor(factor.value))}
-                  style={{ width: `${factor.value}%` }}
-                />
-              </div>
-            </div>
-          );
-        })}
+      <div className="mb-4 rounded-xl border border-white/5 bg-white/[0.02] p-3 text-xs text-muted-foreground">
+        Scale: 0-5% absolute simulator move maps linearly to 0-100. This is a display of recent simulated movement only — not a strategy score, risk rating, recommendation or forecast.
       </div>
       
       {/* Interpretation */}
