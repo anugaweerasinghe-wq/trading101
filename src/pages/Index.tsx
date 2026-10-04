@@ -73,7 +73,6 @@ const orgSchema = {
   name: "TradeHQ",
   url: "https://www.thetradehq.com/",
   logo: "https://www.thetradehq.com/og-image.png",
-  sameAs: ["https://x.com/tradehq"],
 };
 
 const webAppSchema = {
