@@ -1,3 +1,102 @@
+# TradeHQ — RESUME
+
+Branch: `adsense-fixes-20261005`, created from current main `73d5001e8bbfb18b89e862d7781dced2f89169d1` on 2026-10-04 UTC.
+
+## Step 0: completed status sweep before remediation
+
+Attachment says main `5d87a322...` and branch `0137b081...`; it is older than current code. GitHub confirms PR #8 merged at 426edd5, #9 at da7a40f, #10 at 0a5eb56, #11 at 73d5001. PR #7 remains open/unmerged and must never be merged wholesale.
+
+Every attached C01–C22/H01–H36 item is assigned exactly one status below, plus META-01–07 and M16 from the new request. ALREADY FIXED rows are frozen for this run and will not be edited/re-audited. Scope qualifications are part of the evidence: source verification is not authenticated UI verification. Runtime/backend-only items are skipped as requested. STILL PRESENT means a current source or served-copy defect, not a fabricated new finding.
+
+Source references are at baseline main above. Served HTML was fetched directly from www.thetradehq.com (not search snippets); artifacts returned homepage fallback HTML, not report data. Wrong guessed aliases (/trade/bitcoin, /assets/PEPE, /country/sri-lanka) were excluded from conclusions about valid routes. Relevant URLs with exact copy or source file/line are below. No backend, migration, profile, review or user-data writes performed.
+
+| Item | Status | Current evidence |
+|---|---|---|
+| C01 | UNVERIFIED-NEEDS-WORK-MODE | src/pages/TradeAsset.tsx:257–261,432 aligns runtime robots to authored content; valid thin-route hydrated behavior still untested. /trade/btc served indexable; invalid /trade/bitcoin returns homepage shell and is not evidence about a valid asset. |
+| C02 | ALREADY FIXED | scripts/routes.ts:124–133 parses NICHE_SYMBOLS array; :409–419 registers niche routes noindex; src/pages/NicheAsset.tsx:69 also noindex. |
+| C03 | ALREADY FIXED | scripts/verify-seo.mjs:15–22 artifact guard; six historical report/CSV URLs fetched and return homepage HTML, not report contents. Source files absent from public output source. |
+| C04 | ALREADY FIXED | Same six served report-path checks as C03; no historical QA report contents exposed. HTTP 200 fallback is not claimed to be a correct 404. |
+| C05 | UNVERIFIED-NEEDS-WORK-MODE | Quote fallback provenance depends on provider/cache branches; source changes exist, but no live provider/fallback transition exercised. |
+| C06 | UNVERIFIED-NEEDS-WORK-MODE | Candle fallback provenance requires runtime chart/fetch exercise; HTML cannot establish it. |
+| C07 | UNVERIFIED-NEEDS-WORK-MODE | PR11 merged; source chart gating exists, but realtime quote plus synthetic candle scenario not run. |
+| C08 | ALREADY FIXED | /markets served description: Browse 150+ simulated markets; src/pages/Markets.tsx FAQ and scripts/routes.ts:216–218 describe simulated data. |
+| C09 | UNVERIFIED-NEEDS-WORK-MODE | src/components/home/MarketPulse.tsx:129 says Simulator • refresh 30s; runtime provenance itself is not observable in served homepage HTML. |
+| C10 | UNVERIFIED-NEEDS-WORK-MODE | src/pages/Daily.tsx:36–38,234 makes direction a reflection; served /daily has generic task copy. Interactive direction-grading flow not exercised. |
+| C11 | ALREADY FIXED | src/lib/lessonData.ts:559 ($100k halved=$50k); 572–593 (2%=$2k; /$5=400 shares); 616–617 (.98^10≈81.7%, .98^20≈66.8%); 938 ($60k+$40k); 986 quiz $2k; 1754 profit factor 1.0. Original enumerated arithmetic errors corrected. Other advice remains H11. |
+| C12 | ALREADY FIXED | src/lib/coursesData.ts:752,769,814 gives independent-model run probabilities 8.4%,1.7%,0.03%; validated by finite-state recurrence. The separate drawdown quiz is retained under H13. |
+| C13 | UNVERIFIED-NEEDS-WORK-MODE | /privacy served text discloses browser, backend, analytics/ads processing; actual consent/network/data-flow compliance requires runtime review. No backend testing authorized. |
+| C14 | UNVERIFIED-NEEDS-WORK-MODE | Profile default/RLS/privacy control requires backend and authenticated runtime; skipped. |
+| C15 | UNVERIFIED-NEEDS-WORK-MODE | /leaderboard served text says client-synced and not audited; src/lib/portfolio.ts:205–246 computes closed sells. Actual sync integrity/statistics need backend/runtime; no verified-performance claim remains in inspected copy. |
+| C16 | UNVERIFIED-NEEDS-WORK-MODE | src/lib/traderSync.ts:43–46 blocks legacy refill marker; migrated account/reset behavior not exercised. |
+| C17 | UNVERIFIED-NEEDS-WORK-MODE | Duel mutations, authorization and stored results require backend/runtime; skipped. |
+| C18 | ALREADY FIXED | /reviews served: Submissions are moderated and duplicate-limited but are not independently verified; Reviews.tsx:115–147 uses the same qualification. Original verified-review claim removed; endpoint identity/moderation behavior not verified. |
+| C19 | UNVERIFIED-NEEDS-WORK-MODE | Deployed unused AI endpoints/JWT boundaries require backend verification; skipped. |
+| C20 | UNVERIFIED-NEEDS-WORK-MODE | Newsletter administrative authorization requires deployed-function/runtime validation; skipped. |
+| C21 | STILL PRESENT | /daily served: identify a pattern, place a correctly sized practice trade; Daily.tsx:36–38 instead describes a directional reflection. Markets subset corrected, but this alternate copy remains. |
+| C22 | UNVERIFIED-NEEDS-WORK-MODE | src/lib/portfolio.ts:171 accepts currentAssets; Portfolio.tsx:171 uses async updatePortfolioOverTime. Price consistency needs running simulator; skipped. |
+| H01 | UNVERIFIED-NEEDS-WORK-MODE | PR11 source provenance changes merged; complete provider fields and hybrid update behavior require runtime transitions. |
+| H02 | STILL PRESENT | src/components/home/MarketPulse.tsx:18 computes internal score; :153 labels it Fear & Greed. No external index basis. |
+| H03 | UNVERIFIED-NEEDS-WORK-MODE | LearnTradingGuide.tsx:54 sentiment labels and marketData.ts generated data require rendered running guide to establish current presentation. |
+| H04 | STILL PRESENT | /wiki/short-squeeze served key point: Triggered when short interest exceeds 20-30% of float; body uses universal numeric squeeze thresholds without primary support. |
+| H05 | ALREADY FIXED | index.html schema no longer contains Bitcoin Layer 2/RWA/realtime coverage claims; same root schema served on /. Social sameAs tracked separately H06. |
+| H06 | STILL PRESENT | index.html:83 and src/pages/Index.tsx:76 sameAs https://x.com/tradehq; ownership unsubstantiated in repo. Remove assertion rather than invent ownership. |
+| H07 | STILL PRESENT | src/pages/Index.tsx:65 and PremiumFAQ.tsx:45 say widely considered one of the best free trading simulators; no substantiation. |
+| H08 | STILL PRESENT | src/lib/assetContent.ts:297 says Bitcoin enters 2026 ... position BTC for potential new highs; changing forecast-shaped claim without primary evidence. |
+| H09 | STILL PRESENT | src/lib/countryGuides.ts:79,109,113,145,149,181,185 contain current legal/tax/broker eligibility claims; :103,136,172 assert user demographics without evidence. Served /learn/country/sri-lanka confirms route exists. |
+| H10 | STILL PRESENT | src/lib/learnArticles.ts:260 calls 2% rule one every trader needs; :126 claims volatility accelerates learning and cheap unit price lowers barriers. Body qualifications do not fix summary overclaim. |
+| H11 | STILL PRESENT | src/lib/lessonData.ts:611 says 2% rule ensures losing streaks do not wipe you out; :690 says take-profit orders prevent greed/giving back gains; :894 prescribes 5–8 positions; :1788 treats factor>1.5 as strong edge. Prior return-target fixes retained. |
+| H12 | ALREADY FIXED | src/lib/coursesData.ts:160,169,178 and :713,730 now explicitly hypothetical; universal institutional/industry-standard risk floor and 3% lockout claims removed. |
+| H13 | STILL PRESENT | src/lib/coursesData.ts:836 still grades 10–15% drawdown mathematically expected from 55% WR/1.5:1 without position sizing or dependence assumptions; :516 claims minimal/all-market reactions to Fed decisions. Futures subset corrected. |
+| H14 | ALREADY FIXED | src/lib/seoData.ts:460,489,518,547,576,605 replace fixed success rates with qualified measurement language. Original observed-performance claim removed; remaining strategy advice belongs to separate scope. |
+| H15 | STILL PRESENT | src/lib/seoData.ts:91 says AAPL is largest buyback program in history and asserts changing comparison facts; no primary dated basis. /compare/bitcoin-vs-ethereum served current copy. |
+| H16 | STILL PRESENT | src/lib/smartMentor.ts:387 fallback prescribes ≤1–2% book and calls unexplained entries gambling; :190–191 makes generalized tax/legal claims. Source response exists; actual endpoint availability not asserted. |
+| H17 | STILL PRESENT | Courses.tsx:105,188,218 expert-written; PremiumFeatures.tsx:52 expert-curated; scripts/content.ts:166 and staticCopyExtra.ts:286 expert-level; served /llms.txt:22 YMYL-compliant. |
+| H18 | STILL PRESENT | ScenarioBuilder.tsx:94 deterministic regex parser but :141 AI Scenario Builder; llms.txt broadly calls mentor AI-powered despite deterministic fallback. PortfolioInsight component itself already neutrally labelled. |
+| H19 | STILL PRESENT | PortfolioAnalytics.tsx:22–31 divides cross-sectional open-position returns by dispersion as Sharpe Ratio and labels profitable open positions win rate; :183–186 claims diversification quality from custom score. |
+| H20 | STILL PRESENT | TradingStrengthMeter.tsx:22–26 includes strategy text length/stat count in score; :91–95 calls it Trading Strength Meter / 2026 Strategy Score. |
+| H21 | STILL PRESENT | scenarioEngine.ts:169–170 maps p5/p95 to worstCase/bestCase; ScenarioBuilder.tsx:203,210 renders those bounds. Percentiles are not worst/best possible outcomes. |
+| H22 | ALREADY FIXED | TradingJournal.tsx:127 Journal Summary and getJournalSummary actual counts; no AI Analysis/AI Insights or fake win-rate rendering. Original notes retained. Authenticated UI interaction not tested. |
+| H23 | ALREADY FIXED | CompoundCalculator.tsx:76 Illustrative Growth and :82–87 actual rate/deduction assumptions; no Live Projection or Broker Fees label. Formula separately checked in prior continuation; source retained. |
+| H24 | STILL PRESENT | Roadmap.tsx:21 says share /trader/me; :25 planned Aug 2026 is stale; served /roadmap summary promises options paper trading/backtesting while runtime list differs. |
+| H25 | STILL PRESENT | Served /llms.txt:5 says All prices are simulated for practice; provider-capable code makes this blanket assertion overbroad. |
+| H26 | STILL PRESENT | src/lib/nicheData.ts:30,48–49 reads static ASSETS then labels fields Current Price / 24h Change. No runtime feed in this getter. |
+| H27 | ALREADY FIXED | PR11 current sector FAQs qualify reference/simulator values; removed live 60-second API promise. Provider freshness itself remains runtime-unverified. |
+| H28 | STILL PRESENT | LessonDetail.tsx:88 explicitly index, follow; scripts/routes.ts does not register numeric lessonData routes; /learn/1 serves homepage HTML. Legacy route governance still missing. |
+| H29 | STILL PRESENT | HowToTrade.tsx:17 generated title hardcodes 2026; served /learn-trading-guide title Complete Beginner Trading Guide 2026. No demonstrated annual review. |
+| H30 | UNVERIFIED-NEEDS-WORK-MODE | MobileOrderDrawer.tsx:32 market default; no visible setter invocation. Actual mobile order execution needs running browser; skipped. |
+| H31 | UNVERIFIED-NEEDS-WORK-MODE | TradeAsset resolves symbol aliases or IDs. Symbol-based links alone do not prove broken routing; duplicate/slash-symbol interaction not executed in this sweep. |
+| H32 | ALREADY FIXED | /courses served: Practise supported spot instruments ... derivatives contract exercises are conceptual; current coursesData.ts and CourseTrack.tsx retain limitation. |
+| H33 | UNVERIFIED-NEEDS-WORK-MODE | TraderProfile source guards private shares and encodes username; authenticated sharing needs runtime verification; skipped. |
+| H34 | ALREADY FIXED | Contact.tsx:288–291 distinguishes browser-held positions/history/journal/badges; staticCopyExtra.ts:22 says account does not restore practice record on another device. Original overclaim absent. |
+| H35 | UNVERIFIED-NEEDS-WORK-MODE | ai-chat caller system and cost controls need deployed endpoint validation; backend explicitly excluded. |
+| H36 | UNVERIFIED-NEEDS-WORK-MODE | Public market proxy throttling needs deployed endpoint/abuse checks; backend explicitly excluded. |
+| META-01 | STILL PRESENT | https://www.thetradehq.com/wiki/short-squeeze description AND intro: A short squeeze occurs when a heavily shorted asset. routes.ts:104 stops quoted definition at apostrophe; :520,587–590 can also cut descriptions. |
+| META-02 | ALREADY FIXED | Served / homepage description ends No signup. Complete sentence, no mid-sentence cut. Generic description fitting defect is included in META-01, not a second change. |
+| META-03 | ALREADY FIXED | index.html has no meta keywords; served homepage inspected without keywords tag. |
+| META-04 | STILL PRESENT | routes.ts:578–579 cuts titles by words; served /daily title ends Learn a New Skill Every; country title ends Free Guide for Sri. Acronym fix alone did not make titles complete. |
+| META-05 | ALREADY FIXED | Compare.tsx:83–84 has single verdict block; scripts/content.ts:346 heading Which to practise first matches paired verdict. /compare/bitcoin-vs-ethereum no doubled summary found. |
+| META-06 | ALREADY FIXED | Current glossary practice generated from per-term fields; served bull-trap and short-squeeze have different specifics. Not claiming every sentence is unique. |
+| META-07 | ALREADY FIXED | WikiTerm.tsx no proTip renderer; scripts/content.ts observation exercise; served short-squeeze has no directive pro-tip block. Underlying definition reliability remains H04. |
+| M16 | UNVERIFIED-NEEDS-WORK-MODE | ConsentBanner.tsx:6 placeholder, :44 prevents AdSense load without ca-pub ID. Consent/revocation and network blocking require runtime; certified CMP configuration not verified. |
+
+## Work order and checkpoint log
+
+1. META-01: correct all glossary/other description truncation, rebuild, check >=10 wiki entries including short-squeeze; validate group 1 exact commit before normal merge.
+2. Trust group: H06, H07, H17, H18, H24 and unsupported country-audience claims; skip frozen fixed/runtime rows. One item per commit.
+3. Lesson group: remaining H11/H13 logic claims; retain corrected C11/C12/H12/H14 findings.
+4. Governance group: H26/H28 and any confirmed valid-route indexability defect.
+5. Remaining STILL PRESENT C/H items in ID order.
+
+After every three implementation items, append the exact commits/checks here and push. Only mark FIXED-IN-PRODUCTION after observing changed served production HTML. Merge each completed group only after exact-SHA npm ci/build/prerender/SEO, GitHub and Vercel Ready checks. Normal merge only; no backend changes or force pushes.
+
+## Needs owner input
+
+- AdSense publisher ID (placeholder remains [CONFIRM_ADSENSE_PUBLISHER_ID]).
+- Google-certified consent tool / Privacy & messaging configuration.
+- Authentic ads.txt contents. None invented.
+
+## Historical log (not current proof)
+
 # AdSense remediation checkpoint — 2026-10-04
 
 Branch: `adsense-fixes-20261004`
