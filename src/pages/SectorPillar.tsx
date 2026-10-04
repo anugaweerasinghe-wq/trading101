@@ -266,11 +266,11 @@ export default function SectorPillar() {
               },
               {
                 question: `How do I research ${sector.name} before trading?`,
-                answer: `Click an asset to see live price data, technical indicators, AI-mentor analysis and a per-asset FAQ. Combine this with the Learning Center articles and Trading Glossary linked above.`,
+                answer: `Click an asset to open its simulator page, where market-data status is labelled according to the available source. Use the educational context and glossary links to understand the instrument before practising.`,
               },
               {
                 question: `Are ${sector.name} prices live on TradeHQ?`,
-                answer: `The most-liquid ${sector.name} assets refresh every 60 seconds from public market APIs and are tagged LIVE. Less-liquid tickers fall back to cached prices with small micro-fluctuations and are tagged SIM.`,
+                answer: `This sector hub shows simulator reference values from TradeHQ's asset catalogue and does not claim a continuous live feed. Open an asset's simulator page for its current data-status label.`,
               },
             ]}
           />

@@ -77,8 +77,12 @@ async function flushQueue() {
           const result = await resp.json();
           if (result.success && result.data && typeof result.data.price === 'number') {
             const status = result.provenance?.status ?? result.data.provenance?.status;
+            const hasCompleteRealtimeFields =
+              status === 'realtime' &&
+              ['change24h', 'changePercent24h', 'high24h', 'low24h', 'volume24h']
+                .every((key) => typeof result.data[key] === 'number' && Number.isFinite(result.data[key]));
             const normalizedSource: HybridMarketPrice['source'] =
-              status === 'realtime' ? 'live' :
+              hasCompleteRealtimeFields ? 'live' :
               status === 'simulated' ? 'simulated' : 'delayed';
             const d: HybridMarketPrice = {
               price: result.data.price,
@@ -175,7 +179,7 @@ export function useHybridMarketData(asset: Asset | null) {
     // LiveSim fluctuation
     liveSimRef.current = setInterval(() => {
       setData(prev => {
-        if (!prev) return prev;
+        if (!prev || prev.source === 'live') return prev;
         const base = basePriceRef.current || prev.price;
         const fluctuation = (Math.random() * 2 - 1) * 0.0001; // ±0.01%
         const newPrice = base * (1 + fluctuation);

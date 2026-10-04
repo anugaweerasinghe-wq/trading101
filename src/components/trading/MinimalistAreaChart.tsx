@@ -68,7 +68,7 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
     enabled: !!asset,
   });
   
-  const { candles, isLoading: candlesLoading, refetch: refetchCandles } = useLiveCandleData(asset, {
+  const { candles, isLoading: candlesLoading, provenance: candleProvenance, refetch: refetchCandles } = useLiveCandleData(asset, {
     refreshInterval: 60000, // 1 minute for candle updates
     enabled: !!asset,
   });
@@ -145,6 +145,13 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
     };
   }, [chartData, liveData, safePrice]);
 
+  const chartIsRealtime = isLive && candles.length > 0 && candleProvenance?.status === "realtime";
+  const chartLabel =
+    chartIsRealtime ? "LIVE" :
+    candleProvenance?.status === "delayed" || candleProvenance?.status === "previous_close" ? "DELAYED" :
+    candleProvenance?.status === "simulated" || candles.length === 0 ? "SIMULATED" :
+    "MARKET DATA";
+
   const padding = (maxPrice - minPrice) * 0.1 || 1;
 
   const handleRefresh = () => {
@@ -165,19 +172,19 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
               <h2 className="text-xl font-semibold">{asset.symbol}</h2>
               {/* Live indicator */}
               <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                isLive 
-                  ? 'bg-profit/20 text-profit' 
+                chartIsRealtime
+                  ? 'bg-profit/20 text-profit'
                   : 'bg-muted text-muted-foreground'
               }`}>
-                {isLive ? (
+                {chartIsRealtime ? (
                   <>
                     <Wifi className="w-3 h-3" />
-                    LIVE
+                    {chartLabel}
                   </>
                 ) : (
                   <>
                     <WifiOff className="w-3 h-3" />
-                    SIM
+                    {chartLabel}
                   </>
                 )}
               </div>
@@ -287,7 +294,7 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
       {/* Footer with data source info */}
       <div className="px-4 pb-2 flex items-center justify-between text-[10px] text-muted-foreground">
         <span>
-          {isLive ? 'Data: CoinGecko / Alpha Vantage' : 'Simulated market data'}
+          {chartIsRealtime ? 'Realtime quote and chart data' : `Data status: ${chartLabel.toLowerCase()}`}
         </span>
         <span>
           1-min intervals • Auto-refresh 30s

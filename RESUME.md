@@ -35,3 +35,22 @@ Pending means not proof of defect; re-open source at edit time and mark ALREADY 
 - META-05 — FIXED-ON-BRANCH at `4843355d35f477d16ecb0c5fd4b64c6f43b41111`: comparison runtime duplicate answer removed; crawler deep-dive headings now match pair-wide paragraphs.
 - META-06 — ALREADY FIXED: current `glossaryPractice()` was already entry-specific, using each term's own fields rather than one identical paragraph.
 - META-07 — FIXED-ON-BRANCH at `f6ea0390e8ff3d54234722a7f13a230df43c3d86`: public glossary output no longer renders directive pro-tip text; practice copy is observational and term-specific.
+
+## Checkpoint after items 10–12
+- C05 — ALREADY FIXED: quote fallback is explicitly `simulated`, stale cache is `delayed`, and only provenance `realtime` maps to `live`.
+- C06 — ALREADY FIXED: generated candle fallback is tagged `simulated`; candle provenance alone does not create the live badge.
+- C07 — FIXED-ON-BRANCH at `c49df96aa896e8da8d35051c9baea68291c339a8`: chart UI now requires realtime quote + realtime candle provenance before showing `LIVE`; delayed/simulated states are labelled accordingly.
+
+## Checkpoint after items 13–15
+- C08 — ALREADY FIXED: Markets runtime FAQ explicitly labels the dashboard values as simulated practice prices/changes/estimated volume.
+- C09 — ALREADY FIXED for the live-provenance finding: Market Pulse says `Simulator • refresh 30s` and identifies persisted simulator practice data. H02 still covers the separate Fear & Greed naming issue.
+- C21 — FIXED-ON-BRANCH at `f3c6cb2c86278c0ab4d0e03b59d256bf12aea9d4`: crawler-visible Markets copy now matches the runtime simulated-data explanation.
+
+## Checkpoint after items 16–18
+- H01 — FIXED-ON-BRANCH at `326f4cb5b004a9b3e4a1649666af94f3d1194bdf`: live status now requires complete realtime quote fields; hybrid micro-simulation no longer mutates live provider prices while retaining a live label.
+- H05 — FIXED-ON-BRANCH at `4d0374d6e97ab9ce5e3e1ececae3f30dcd9dd2ec`: root schema no longer claims real-time asset coverage, Bitcoin Layer 2 trading, or tokenized RWA functionality.
+- H23 — ALREADY FIXED: compound calculator is labelled `Illustrative Growth`, states it is not live/forecast data, and explains rate/deduction assumptions.
+
+## Group 3 completion
+- H27 — FIXED-ON-BRANCH at `0d82a2fdcd97f76273c2ec59edba19599b170ec2`: sector FAQs no longer claim a live 60-second API feed; they describe simulator reference values and direct users to per-asset data-status labels.
+- C07 follow-up — `8ebb588437f1a80f5d9cf87e405033987dc5c98e`: non-live chart badges now display the exact computed status (for example DELAYED or SIMULATED), not a generic SIM label.
