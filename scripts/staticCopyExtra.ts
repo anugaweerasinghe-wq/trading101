@@ -283,7 +283,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Recently shipped",
       list: [
         "Four structured course tracks with quizzes, cited sources and completion badges.",
-        "A full trading glossary with expert-level explanations and related-term navigation.",
+        "A full trading glossary with detailed explanations and related-term navigation.",
         "Localised country guides covering regulators, market access and realistic starting capital.",
         "Optional public trader profiles and a 30-day practice duel against a friend.",
         "Daily challenges with a local-time streak counter, plus journal and portfolio analytics.",

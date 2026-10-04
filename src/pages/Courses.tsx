@@ -102,7 +102,7 @@ export default function Courses() {
 
   const title = "Free Trading Courses 2026 — Options, Futures, Macro & Psychology | TradeHQ";
   const description =
-    "Four expert-written, structured trading courses covering options, futures, macro reading and trading psychology. Free lessons, quizzes and completion badges. Practice with $100,000 virtual cash on TradeHQ.";
+    "Four structured trading courses covering options, futures, macro reading and trading psychology. Free lessons, quizzes and completion badges. Practice with $100,000 virtual cash on TradeHQ.";
 
   const itemListSchema = {
     "@context": "https://schema.org",
@@ -185,7 +185,7 @@ export default function Courses() {
               Learn to Trade — Properly
             </h1>
             <p className="mt-5 text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Four structured, expert-written courses on the topics that actually decide whether a
+              Four structured courses on the topics that actually decide whether a
               trader survives their first year: options, futures, macro reading and psychology.
               Twenty full-length lessons. Quizzes, sources, completion badges, and a
               <span className="text-emerald-400 font-semibold"> $100,000 virtual practice account</span>
@@ -215,7 +215,7 @@ export default function Courses() {
           <AIAnswerBlock
             className="mb-12"
             question="Are TradeHQ's free trading courses any good?"
-            answer="TradeHQ offers four structured, expert-written trading courses — Options Fundamentals, Futures & Derivatives, Macro Reading, and Trading Psychology — with 20 lessons total, quizzes, cited public sources (SEC, CFTC, FRED, CME) and completion badges. The free $100,000 virtual account supports spot instruments. Options and futures contract exercises are conceptual; TradeHQ does not execute derivatives contracts. Written by TradeHQ creator Anuga Weerasinghe; educational only, not financial advice."
+            answer="TradeHQ offers four structured trading courses — Options Fundamentals, Futures & Derivatives, Macro Reading, and Trading Psychology — with 20 lessons total, quizzes, cited public sources (SEC, CFTC, FRED, CME) and completion badges. The free $100,000 virtual account supports spot instruments. Options and futures contract exercises are conceptual; TradeHQ does not execute derivatives contracts. Written by TradeHQ creator Anuga Weerasinghe; educational only, not financial advice."
           />
 
           {resume && (

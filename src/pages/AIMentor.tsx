@@ -94,7 +94,7 @@ export default function AIMentor() {
               Trading Mentor <span className="text-primary">— Curated Knowledge</span>
             </h1>
             <p className="text-muted-foreground">
-              Expert-curated answers — strategy, risk, psychology, technicals
+              Educational answers — strategy, risk, psychology, technicals
             </p>
           </div>
 

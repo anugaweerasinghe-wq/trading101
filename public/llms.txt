@@ -19,7 +19,7 @@ TradeHQ is an educational simulator (not a brokerage). All prices are simulated 
 
 - [Learn hub](https://www.thetradehq.com/learn): Free structured trading courses for beginners.
 - [Trading Guide 2026](https://www.thetradehq.com/learn-trading-guide): Comprehensive beginner-to-intermediate trading guide.
-- [Structured Courses](https://www.thetradehq.com/courses): Four YMYL-compliant tracks with quizzes and completion badges.
+- [Structured Courses](https://www.thetradehq.com/courses): Four educational tracks with quizzes and completion badges.
 - [Options Trading Fundamentals](https://www.thetradehq.com/courses/options-trading-fundamentals): Calls, puts, Greeks, spreads and risk.
 - [Futures & Derivatives](https://www.thetradehq.com/courses/futures-and-derivatives): Contracts, margin, contango/backwardation, hedging.
 - [Macro Reading for Traders](https://www.thetradehq.com/courses/macro-reading-for-traders): CPI, FOMC, yield curve, DXY.

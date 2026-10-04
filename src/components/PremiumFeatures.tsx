@@ -49,7 +49,7 @@ export function PremiumFeatures() {
     {
       icon: GraduationCap,
       title: "Structured Courses",
-      description: "Master technical analysis, risk management, and trading psychology through our expert-curated learning paths.",
+      description: "Master technical analysis, risk management, and trading psychology through our structured learning paths.",
       gradient: "from-secondary/20 to-secondary/5",
       iconColor: "text-secondary",
       borderGlow: "hover:border-secondary/30",
