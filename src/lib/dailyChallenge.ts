@@ -1,5 +1,5 @@
 /**
- * Daily Trading Challenge — deterministic per UTC date.
+ * Daily Trading Challenge — deterministic per local calendar date.
  * 100% client-side, localStorage-persisted streak. Zero auth.
  *
  * Educational simulation only — not financial advice.
@@ -18,7 +18,7 @@ export interface DailyChallenge {
   difficulty: "Beginner" | "Intermediate" | "Pro";
 }
 
-// Curated bank of 30+ challenges. Cycles deterministically by UTC date.
+// Curated bank of 30+ challenges. Cycles deterministically by the user's local calendar date.
 const CHALLENGES: DailyChallenge[] = [
   {
     id: 1, asset: "NVDA", assetName: "NVIDIA",
@@ -382,12 +382,14 @@ const CHALLENGES: DailyChallenge[] = [
   },
 ];
 
+function localCalendarDayNumber(now: Date): number {
+  // Convert the local Y/M/D to a timezone-neutral day number. This keeps the
+  // challenge rotation aligned with the same local-day boundary used by streaks.
+  return Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86_400_000);
+}
+
 export function getTodayChallenge(now: Date = new Date()): DailyChallenge {
-  // UTC day-of-year, deterministic across timezones
-  const start = Date.UTC(now.getUTCFullYear(), 0, 0);
-  const diff = now.getTime() - start;
-  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
-  return CHALLENGES[dayOfYear % CHALLENGES.length];
+  return CHALLENGES[localCalendarDayNumber(now) % CHALLENGES.length];
 }
 
 export function getChallengeCount(): number {
@@ -404,7 +406,7 @@ export interface StreakState {
   current: number;
   longest: number;
   totalCompleted: number;
-  lastCompletedDate: string | null; // ISO yyyy-mm-dd UTC
+  lastCompletedDate: string | null; // local YYYY-MM-DD
   history: { date: string; challengeId: number; decision: ChallengeDecision }[];
 }
 
@@ -583,6 +585,5 @@ const BONUS_BANK: BonusQuestion[] = [
 ];
 
 export function getTodayBonus(now: Date = new Date()): BonusQuestion {
-  const seed = Math.floor(now.getTime() / 86_400_000);
-  return BONUS_BANK[seed % BONUS_BANK.length];
+  return BONUS_BANK[localCalendarDayNumber(now) % BONUS_BANK.length];
 }
