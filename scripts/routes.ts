@@ -277,9 +277,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/contact",
     title: "Contact TradeHQ | TradeHQ",
-    description: `Contact the TradeHQ team. Free educational trading simulator. We usually reply within 2 business days.`,
+    description: `Contact the TradeHQ team for questions, feedback or partnership inquiries. Free educational trading simulator.`,
     h1: "Contact TradeHQ",
-    summary: `Send a message to the TradeHQ team. Response time is typically within two business days. TradeHQ is a free educational simulator — not a brokerage.`,
+    summary: `Send a message to the TradeHQ team. Response times vary with request volume. TradeHQ is a free educational simulator — not a brokerage.`,
     priority: "0.4",
     changefreq: "monthly",
   });
