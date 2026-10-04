@@ -45,3 +45,8 @@ Pending means not proof of defect; re-open source at edit time and mark ALREADY 
 - C08 — ALREADY FIXED: Markets runtime FAQ explicitly labels the dashboard values as simulated practice prices/changes/estimated volume.
 - C09 — ALREADY FIXED for the live-provenance finding: Market Pulse says `Simulator • refresh 30s` and identifies persisted simulator practice data. H02 still covers the separate Fear & Greed naming issue.
 - C21 — FIXED-ON-BRANCH at `f3c6cb2c86278c0ab4d0e03b59d256bf12aea9d4`: crawler-visible Markets copy now matches the runtime simulated-data explanation.
+
+## Checkpoint after items 16–18
+- H01 — FIXED-ON-BRANCH at `326f4cb5b004a9b3e4a1649666af94f3d1194bdf`: live status now requires complete realtime quote fields; hybrid micro-simulation no longer mutates live provider prices while retaining a live label.
+- H05 — FIXED-ON-BRANCH at `4d0374d6e97ab9ce5e3e1ececae3f30dcd9dd2ec`: root schema no longer claims real-time asset coverage, Bitcoin Layer 2 trading, or tokenized RWA functionality.
+- H23 — ALREADY FIXED: compound calculator is labelled `Illustrative Growth`, states it is not live/forecast data, and explains rate/deduction assumptions.
