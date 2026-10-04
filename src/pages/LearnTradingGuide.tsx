@@ -70,7 +70,6 @@ const LearnTradingGuide = () => {
     "headline": "AI-Assisted Trading for Beginners: Educational Guide",
     "description": "Master AI-assisted trading, Bitcoin Layer 2, and risk management with a free $100K simulator.",
     "author": { "@type": "Organization", "name": "TradeHQ" },
-    "datePublished": "2026-02-01",
     "image": `${DOMAIN}/og-image.jpg`
   };
 
