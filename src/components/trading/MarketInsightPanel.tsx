@@ -33,7 +33,7 @@ function deriveInsights(asset: Asset): InsightTile[] {
   const absChange = Math.abs(cp);
   const price = asset.price;
 
-  const trendValue = cp > 1.5 ? "Uptrend" : cp < -1.5 ? "Downtrend" : "Sideways";
+  const moveValue = cp > 1.5 ? "Positive move" : cp < -1.5 ? "Negative move" : "Near flat";
   const trendColor =
     cp > 1.5 ? "text-profit" : cp < -1.5 ? "text-loss" : "text-muted-foreground";
   const trendIcon =
@@ -60,7 +60,7 @@ function deriveInsights(asset: Asset): InsightTile[] {
         ? "text-profit"
         : "text-muted-foreground";
 
-  const momentumValue = cp > 2 ? "Bullish" : cp < -2 ? "Bearish" : "Neutral";
+  const moveHeuristicValue = cp > 2 ? "Above +2%" : cp < -2 ? "Below -2%" : "Inside ±2%";
   const momentumColor =
     cp > 2 ? "text-profit" : cp < -2 ? "text-loss" : "text-muted-foreground";
 
@@ -70,18 +70,18 @@ function deriveInsights(asset: Asset): InsightTile[] {
 
   const beginnerTip =
     absChange > 4
-      ? "High volatility day — smaller position sizes usually make practice more realistic."
+      ? "Large recent move — smaller position sizes usually make practice more realistic."
       : cp > 2
-        ? "Momentum is strong. Avoid chasing moves without a plan."
+        ? "The recent move is above +2%. Avoid chasing a move without a plan."
         : cp < -2
-          ? "Price is under pressure. Watch whether support levels actually hold before reacting."
+          ? "The recent move is below -2%. Review the chart before reacting."
           : "Market conditions are calmer. This is a good moment to study structure and risk.";
 
   return [
     {
-      label: "Trend",
-      value: trendValue,
-      detail: `${cp >= 0 ? "+" : ""}${cp.toFixed(2)}% recent move`,
+      label: "Recent Move",
+      value: moveValue,
+      detail: `${cp >= 0 ? "+" : ""}${cp.toFixed(2)}% · descriptive only`,
       icon: trendIcon,
       color: trendColor,
     },
@@ -93,16 +93,16 @@ function deriveInsights(asset: Asset): InsightTile[] {
       color: volatilityColor,
     },
     {
-      label: "Momentum",
-      value: momentumValue,
-      detail: cp > 0 ? "Buyers in control" : cp < 0 ? "Sellers in control" : "Balanced flow",
+      label: "Move Heuristic",
+      value: moveHeuristicValue,
+      detail: "Simple ±2% practice bucket · not a market signal",
       icon: <BarChart3 className="h-4 w-4" />,
       color: momentumColor,
     },
     {
-      label: "Key Levels",
-      value: `S: $${formatPrice(support)}`,
-      detail: `R: $${formatPrice(resistance)}`,
+      label: "Practice Range",
+      value: `Lower: ${formatPrice(support)}`,
+      detail: `Upper: ${formatPrice(resistance)} · fixed ±${(levelOffset * 100).toFixed(1)}% band`,
       icon: <Target className="h-4 w-4" />,
       color: "text-accent",
     },
