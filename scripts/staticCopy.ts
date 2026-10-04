@@ -459,7 +459,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         h: "What we do not do",
         list: [
           "We do not sell personal data.",
-          "We do not run behavioural advertising profiles.",
+          "Advertising and analytics can use cookies or similar identifiers after the applicable consent choice; see the privacy policy for provider and opt-out details.",
           "We do not ask for financial account details, because there is nothing to fund.",
         ],
       },

@@ -10,45 +10,49 @@ export default function Privacy() {
     {
       icon: Database,
       title: "Information TradeHQ Handles",
-      content: `You can use the core simulator without creating an account. TradeHQ nevertheless handles different categories of data depending on the features you choose:
+      content: `TradeHQ can be used without creating an account. The data handled depends on the features you choose.
 
-• Browser-stored simulator data: portfolio positions, trade history, watchlists, course/streak state and other practice settings are primarily stored in your browser.
-• Optional account data: if you create an account, the authentication service processes your email or provider identity. TradeHQ can also store your username, country, bio and account identifier.
-• Practice statistics: signed-in users can sync selected summary statistics used for profile, leaderboard and challenge features. This is not the same as uploading a complete brokerage statement or real-money trading record.
-• Public profile data: profile information and practice statistics are shown publicly only when the profile is set to public.
-• Reviews and messages: information you submit in a review or contact form is sent to the service so it can be displayed, moderated or answered. Review abuse controls may store a salted hash derived from network information to limit duplicate submissions.
-• Technical and advertising data: hosting, security and advertising services can receive technical information such as IP address, browser/device information, request logs, cookies or similar identifiers according to their configuration and your applicable consent choices.
+• Browser-stored simulator data: practice portfolio positions, trade history, watchlists, course progress, streaks and related settings are primarily stored in your browser.
+• Optional account data: if you create an account, Supabase processes authentication data such as your email or provider identity and can store profile fields including username, country and bio.
+• Community data: signed-in features can store selected practice statistics, public-profile settings, reviews and duel/challenge records. These are simulated results, not brokerage statements or verified real-money performance.
+• Contact messages: the contact page opens your own email client with a pre-filled message. TradeHQ does not send that form directly from the browser.
+• Technical data: hosting, authentication, security and abuse-prevention services can receive normal request information such as IP address, browser/device information and server logs.
+• Optional analytics and advertising data: after the applicable consent choice, Amplitude may receive analytics/session-replay data and Google AdSense may use cookies or similar identifiers for ad delivery, measurement and, where permitted by the user's choices and region, personalization.
 
-TradeHQ is a virtual-money simulator. It does not require a deposit, payment card or brokerage account to place simulated trades.`
+TradeHQ does not require a payment card, bank account or brokerage account to place simulated trades.`
     },
     {
       icon: Lock,
       title: "How Information Is Used",
-      content: `TradeHQ uses information to operate the simulator and optional account features, restore or display selected account/profile information, provide community features, prevent abuse, respond to messages, diagnose problems and improve the service.
+      content: `TradeHQ uses data only for the feature that needs it: operating the simulator, authenticating optional accounts, showing profile/community features, preventing abuse, responding to messages, diagnosing problems and improving the service.
 
-TradeHQ also loads Google AdSense on the site. Advertising-related processing, cookies and personalization can depend on Google's settings, consent requirements and the user's region. This policy does not claim that all advertising is non-personalized.
+Amplitude is used for product analytics and may include session replay when analytics consent is granted. This can record interactions such as navigation and clicks subject to the provider's masking and privacy controls.
 
-TradeHQ uses Amplitude for product analytics and, where enabled, session replay to understand how visitors use the site and improve usability. Session replay may capture interactions such as clicks and navigation, subject to configured masking/privacy controls and applicable consent choices.
+Google AdSense is the advertising service planned/used on TradeHQ. When advertising is enabled after the required consent flow, Google and its advertising partners may use cookies or similar technologies to deliver and measure ads. Advertising may be personalized or non-personalized depending on consent, location and Google settings.
 
-TradeHQ does not present the simulator as a bank or brokerage and does not share simulated portfolio data with financial institutions for trade execution.`
+TradeHQ does not sell simulated portfolio data to brokers or financial institutions and does not execute real-money trades.`
     },
     {
       icon: Eye,
-      title: "Storage, Visibility & Security",
-      content: `Local browser storage: core simulator state can remain on the device and can be removed by clearing this site's browser storage.
+      title: "Storage, Visibility & Retention",
+      content: `Browser data remains on the device until the browser, the user or TradeHQ's own reset controls remove it.
 
-Account and community data: optional authentication/profile information, selected synced statistics, reviews and contact submissions can be stored on TradeHQ's backend or its service providers. Public visibility is controlled separately from whether data is stored.
+Optional account and community data can be stored by Supabase for as long as the related account or feature requires it. Public profile information is shown only when the profile is configured as public.
 
-Security: TradeHQ uses hosted infrastructure and access controls intended to protect stored data, but no online service can promise absolute security. Security or privacy claims on this page should be read as descriptions of the current product, not as a certification.`
+Analytics and advertising data are retained according to the settings and policies of the relevant provider. TradeHQ does not state a fixed retention period where it cannot verify one.
+
+TradeHQ uses hosted infrastructure and access controls intended to protect stored data, but no online service can guarantee absolute security.`
     },
     {
       icon: Globe,
-      title: "Third Parties, Transfers & Your Choices",
-      content: `TradeHQ relies on service providers for functions such as hosting, authentication, database services, AI features and advertising. Those providers may process data in countries other than your own under their own legal and contractual frameworks.
+      title: "Service Providers, Cookies & Your Choices",
+      content: `TradeHQ relies on third parties including Vercel for hosting, Supabase for optional authentication/database features, Amplitude for consented analytics/session replay, and Google AdSense for consented advertising. These providers can process data in countries other than your own under their own legal and contractual arrangements.
 
-Depending on where you live, privacy law may give you rights to access, correct, delete or object to certain processing. The exact rights and legal basis depend on your jurisdiction and the service configuration. TradeHQ does not claim blanket GDPR or CCPA compliance merely because the simulator can be used without an account.
+Non-essential analytics and advertising scripts should not load until the user has made the applicable consent choice. You can reject optional analytics/advertising, change your choice later from this privacy page, clear browser storage/cookies, and use browser privacy controls. Google also provides ad-personalization controls through Google Ads Settings.
 
-You can use guest mode for core simulator features, avoid publishing a profile, clear browser-stored simulator data, and contact TradeHQ about backend information associated with an account or submission.`
+For users in the EEA, United Kingdom and Switzerland, Google requires a Google-certified consent-management platform for AdSense consent collection. TradeHQ must not describe a temporary local consent banner as Google-certified unless that certified CMP has actually been configured.
+
+Depending on where you live, privacy law may give you rights to access, correct, delete, restrict or object to certain processing. Use the TradeHQ contact page for a privacy request. The exact rights available depend on your jurisdiction.`
     }
   ];
 
@@ -56,60 +60,42 @@ You can use guest mode for core simulator features, avoid publishing a profile, 
     <>
       <Helmet>
         <title>Privacy Policy | TradeHQ</title>
-        <meta name="description" content="TradeHQ privacy policy: browser-stored simulator data, optional account and profile data, reviews, service providers, advertising and user choices." />
+        <meta name="description" content="TradeHQ privacy policy covering browser-stored simulator data, optional accounts, analytics, advertising cookies, service providers and user choices." />
         <link rel="canonical" href="https://www.thetradehq.com/privacy" />
         <meta name="robots" content="index, follow" />
       </Helmet>
 
       <div className="min-h-screen bg-background">
         <Navigation />
-        
+
         <main className="container mx-auto px-4 py-12 max-w-4xl pb-24 md:pb-12">
-          {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-6">
               <Shield className="w-8 h-8 text-primary" />
             </div>
             <h1 className="text-4xl font-bold mb-4">Privacy Policy</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Your privacy matters. TradeHQ is committed to protecting your data while providing an educational trading simulation.
+              This policy describes the data flows used by the current TradeHQ website, including optional analytics and advertising.
             </p>
             <p className="text-sm text-muted-foreground mt-4">
-              Last Updated: September 30, 2026
+              Last Updated: October 4, 2026
             </p>
           </div>
 
-          {/* Quick Summary Card */}
           <div className="glass-liquid-card p-6 mb-12">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <Lock className="w-5 h-5 text-primary" />
               Privacy at a Glance
             </h2>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="text-profit">✓</span>
-                <span>Core simulator features can be used without creating an account</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-profit">✓</span>
-                <span>Core portfolio and trade state is primarily stored in your browser</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-profit">✓</span>
-                <span>Optional accounts can store profile information and selected practice statistics</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-profit">✓</span>
-                <span>Reviews, contact messages and advertising services involve server-side or third-party processing</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-profit">✓</span>
-                <span>No real-money deposit or brokerage account is required for simulated trading</span>
-              </li>
+              <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>Core simulator features can be used without creating an account.</span></li>
+              <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>Core portfolio and trade state is primarily stored in your browser.</span></li>
+              <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>Optional accounts and community features can store data with Supabase.</span></li>
+              <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>Amplitude analytics/session replay and Google advertising are optional, consent-dependent services.</span></li>
+              <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>No real-money deposit or brokerage account is required for simulated trading.</span></li>
             </ul>
           </div>
 
-          {/* Detailed Sections */}
           <div className="space-y-8">
             {sections.map((section, index) => (
               <section key={index} className="glass-liquid-card p-6">
@@ -126,7 +112,6 @@ You can use guest mode for core simulator features, avoid publishing a profile, 
             ))}
           </div>
 
-          {/* Contact Section */}
           <section className="mt-12 glass-liquid-card p-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -135,11 +120,11 @@ You can use guest mode for core simulator features, avoid publishing a profile, 
               Contact Us
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
-              If you have questions about this Privacy Policy or wish to exercise your data rights, please contact us:
+              For privacy questions or rights requests, use the contact page and identify the message as privacy-related.
             </p>
             <div className="p-4 rounded-xl bg-muted/30 border border-border/30">
               <p className="text-sm">
-                Use the <a href="/contact" className="text-primary hover:underline">TradeHQ contact form</a> and identify your request as privacy-related.
+                <a href="/contact" className="text-primary hover:underline">Contact TradeHQ</a>
               </p>
             </div>
           </section>
@@ -151,23 +136,15 @@ You can use guest mode for core simulator features, avoid publishing a profile, 
             faqs={[
               {
                 question: "Do I need an account to use TradeHQ?",
-                answer:
-                  "No. Core simulator features can be used in guest mode. If you choose to sign in, the authentication service processes account information and TradeHQ can store a profile plus selected practice statistics.",
+                answer: "No. Core simulator features work in guest mode. Optional account and community features can store profile information and selected practice statistics.",
               },
               {
                 question: "Where is my simulated portfolio stored?",
-                answer:
-                  "Core portfolio and trade state is primarily stored in your browser. Optional signed-in community features can sync selected summary statistics, but they are not a complete brokerage or real-money trading record.",
+                answer: "Core portfolio and trade state is primarily stored in your browser. Optional signed-in profile, community and selected practice-stat features can use TradeHQ's backend.",
               },
               {
-                question: "Does TradeHQ use advertising services?",
-                answer:
-                  "Yes. TradeHQ loads Google AdSense. Advertising-related cookies, identifiers and personalization depend on Google's configuration, applicable consent choices and region.",
-              },
-              {
-                question: "Is a public profile required?",
-                answer:
-                  "No. Public profile visibility is optional. A profile must be set to public before its profile information and selected practice statistics are intended to be publicly displayed.",
+                question: "Does TradeHQ use analytics or advertising cookies?",
+                answer: "Yes, when the applicable consent choice allows them. TradeHQ uses Amplitude for product analytics/session replay and Google AdSense for advertising. These services can use cookies or similar identifiers according to their settings and your consent choices.",
               },
             ]}
           />

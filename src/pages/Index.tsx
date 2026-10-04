@@ -206,7 +206,7 @@ const Index = () => {
         <section className="container mx-auto px-6 max-w-7xl pt-4">
           <AIAnswerBlock
             question="What is the best free paper trading simulator in 2026?"
-            answer="TradeHQ is a free paper trading simulator that gives you $100,000 in virtual cash to practice trading 150+ stocks, crypto, ETFs, forex, and commodities — with no signup, no credit card, and no ads. It includes an AI trading mentor, a public leaderboard, and educational content built for beginners."
+            answer="TradeHQ is a free paper trading simulator that gives you $100,000 in virtual cash to practise stocks, crypto, ETFs, forex and commodities without real-money deposits. Core simulator features work without signup; optional advertising and analytics are described in the privacy policy."
           />
         </section>
 
