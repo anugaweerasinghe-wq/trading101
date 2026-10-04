@@ -294,7 +294,7 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       source: "CoinGecko"
     },
     executiveOutlook: {
-      summary: "Bitcoin enters 2026 as the dominant digital asset with institutional adoption accelerating. ETF inflows, halving effects, and Layer 2 scaling (Lightning, Stacks) position BTC for potential new highs. Risk factors include regulatory uncertainty and macroeconomic headwinds.",
+      summary: "Bitcoin is a major digital asset with a fixed maximum supply and a large global trading market. Factors often discussed when studying its price behaviour include flows into investment products, the supply schedule, network usage, regulation, liquidity and broader macroeconomic conditions. None of these factors guarantees a future price direction.",
       lastUpdated: "January 2026"
     },
     institutionalDrivers: {
