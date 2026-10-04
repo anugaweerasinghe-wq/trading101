@@ -81,13 +81,18 @@ function extractAssetFaqKeys(): string[] {
 }
 
 
+function firstCompleteSentence(text: string): string {
+  const match = text.trim().match(/^(.+?[.!?])(?:\s|$)/);
+  return match ? match[1] : text.trim();
+}
+
 function extractGlossary(): { slug: string; term: string; definition: string }[] {
   const src = readSrc("src/lib/tradingGlossary.ts");
   const results: { slug: string; term: string; definition: string }[] = [];
   const re = /slug:\s*["']([^"']+)["'][\s\S]*?term:\s*["']([^"']+)["'][\s\S]*?definition:\s*["']([^"']+?)["']/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(src)) !== null) {
-    results.push({ slug: m[1], term: m[2], definition: m[3].slice(0, 240) });
+    results.push({ slug: m[1], term: m[2], definition: m[3] });
   }
   return results;
 }
@@ -367,7 +372,7 @@ export function buildRoutes(): RouteMeta[] {
     routes.push({
       path: `/wiki/${g.slug}`,
       title: `${g.term} — Definition, Example & How to Trade It | TradeHQ Wiki`,
-      description: g.definition.length > 150 ? g.definition.slice(0, 147) + "..." : g.definition,
+      description: firstCompleteSentence(g.definition),
       h1: `${g.term} — Trading Wiki`,
       summary: `${g.definition}`,
       priority: "0.7",

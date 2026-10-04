@@ -13,6 +13,11 @@ import NotFound from "./NotFound";
 
 const DOMAIN = "https://www.thetradehq.com";
 
+function firstCompleteSentence(text: string): string {
+  const match = text.trim().match(/^(.+?[.!?])(?:\s|$)/);
+  return match ? match[1] : text.trim();
+}
+
 const WikiTerm = () => {
   const { slug } = useParams<{ slug: string }>();
   const term = tradingGlossary.find((t) => t.slug === slug);
@@ -82,7 +87,7 @@ const WikiTerm = () => {
         <title>What is {term.term}? | Complete Trading Guide 2026 | TradeHQ</title>
         <meta
           name="description"
-          content={`Master ${term.term} in under ${term.readTime}. ${term.definition.substring(0, 140)}... Expert definition, pro tips & simulator practice.`}
+          content={`${firstCompleteSentence(term.definition)} Learn the concept with examples and simulated practice on TradeHQ.`}
         />
         <link rel="canonical" href={`${DOMAIN}/wiki/${term.slug}`} />
         <meta name="robots" content="index, follow" />
