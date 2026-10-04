@@ -48,19 +48,20 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
   const totalWithFee = side === 'buy' ? total + fee : total - fee;
   const maxBuyQuantity = price > 0 ? availableCash / (price * 1.001) : 0;
   const maxBuyAmount = Math.floor(maxBuyQuantity * 10000) / 10000;
+  const maxSellAmount = portfolio?.positions.find((p) => p.asset.id === asset?.id)?.quantity ?? 0;
 
   const handleSliderChange = useCallback((value: number[]) => {
     setSliderValue(value);
     const percentage = value[0] / 100;
-    const maxAmount = side === 'buy' ? maxBuyAmount : 0;
+    const maxAmount = side === 'buy' ? maxBuyAmount : maxSellAmount;
     setAmount((maxAmount * percentage).toFixed(4));
-  }, [side, maxBuyAmount]);
+  }, [side, maxBuyAmount, maxSellAmount]);
 
   const handleQuickAmount = useCallback((percentage: number) => {
-    const maxAmount = side === 'buy' ? maxBuyAmount : 0;
+    const maxAmount = side === 'buy' ? maxBuyAmount : maxSellAmount;
     setAmount((maxAmount * percentage).toFixed(4));
     setSliderValue([percentage * 100]);
-  }, [side, maxBuyAmount]);
+  }, [side, maxBuyAmount, maxSellAmount]);
 
   const executeTrade = useCallback(async () => {
     if (!asset || !quantity || quantity <= 0) return;
@@ -96,7 +97,10 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
 
   if (!asset) return null;
 
-  const isValid = quantity > 0 && (side === 'buy' ? totalWithFee <= availableCash : true) && !isSubmitting && (!journalEnabled || rationale.trim().length > 0);
+  const isValid = quantity > 0
+    && (side === 'buy' ? totalWithFee <= availableCash : quantity <= maxSellAmount)
+    && !isSubmitting
+    && (!journalEnabled || rationale.trim().length > 0);
 
   return (
     <>
