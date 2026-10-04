@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { Sparkles } from "lucide-react";
 
 interface Props {
@@ -8,36 +7,13 @@ interface Props {
 }
 
 /**
- * Answer-first block optimized for LLM answer engines
- * (ChatGPT, Gemini, Perplexity, Google AI Overviews).
- *
- * Renders a plain-English 40-70 word direct answer to the page's
- * primary query, and emits SpeakableSpecification + Question JSON-LD
- * so voice assistants and LLM crawlers can lift it verbatim.
+ * Answer-first block for a concise, visible summary of the page's primary query.
+ * Structured data is intentionally left to the page-level schema so generic
+ * authored summaries are not misrepresented as Q&A or speakable content.
  */
 export function AIAnswerBlock({ question, answer, className = "" }: Props) {
-  const speakable = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    speakable: {
-      "@type": "SpeakableSpecification",
-      cssSelector: [".ai-answer-block"],
-    },
-  };
-  const qa = {
-    "@context": "https://schema.org",
-    "@type": "Question",
-    name: question,
-    acceptedAnswer: { "@type": "Answer", text: answer },
-  };
-
   return (
-    <>
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify(speakable)}</script>
-        <script type="application/ld+json">{JSON.stringify(qa)}</script>
-      </Helmet>
-      <div
+    <div
         className={`ai-answer-block relative overflow-hidden rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 via-background to-fuchsia-500/5 p-5 md:p-6 ${className}`}
       >
         <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-emerald-400 mb-2">
@@ -46,6 +22,5 @@ export function AIAnswerBlock({ question, answer, className = "" }: Props) {
         <h2 className="text-sm md:text-base font-semibold text-foreground mb-2">{question}</h2>
         <p className="text-sm md:text-[15px] leading-relaxed text-muted-foreground">{answer}</p>
       </div>
-    </>
   );
 }

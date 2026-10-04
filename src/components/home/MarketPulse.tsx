@@ -31,7 +31,7 @@ interface MarketSession {
   name: string;
   flag: string;
   tz: string;
-  openH: number; // local hour open
+  openH: number; // regular weekday local-hour schedule only
   closeH: number;
 }
 
@@ -53,7 +53,7 @@ function sessionStatus(s: MarketSession): { open: boolean; nextEventInMin: numbe
   if (open) {
     nextMin = (s.closeH - hours) * 60;
   } else {
-    // Crude: time until next open hour, today or tomorrow
+    // Approximate regular-hours countdown; exchange holidays/special sessions are not modeled.
     const delta = hours < s.openH ? s.openH - hours : 24 - hours + s.openH;
     nextMin = delta * 60;
   }
@@ -164,8 +164,9 @@ export function MarketPulse() {
           {/* Market clock */}
           <div className="p-3 rounded-2xl bg-black/40 border border-white/[0.04]">
             <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-foreground mb-2">
-              <Clock className="w-3 h-3" /> Global Sessions
+              <Clock className="w-3 h-3" /> Global Sessions · approximate
             </div>
+            <p className="text-[9px] text-muted-foreground/70 mb-2">Regular weekday hours only; exchange holidays and special sessions are not included.</p>
             <div className="grid grid-cols-2 gap-2">
               {sessions.map((s) => (
                 <div key={s.name} className="flex items-center justify-between p-2 rounded-lg bg-white/[0.02] border border-white/[0.04]">
@@ -175,10 +176,10 @@ export function MarketPulse() {
                   </div>
                   <div className="text-right">
                     <div className={cn("text-[10px] font-bold", s.open ? "text-success" : "text-muted-foreground")}>
-                      {s.open ? "OPEN" : "CLOSED"}
+                      {s.open ? "SCHEDULED OPEN" : "SCHEDULED CLOSED"}
                     </div>
                     <div className="text-[10px] text-muted-foreground tabular-nums">
-                      {s.open ? "closes" : "opens"} {formatTimeLeft(s.nextEventInMin)}
+                      approx. {s.open ? "closes" : "opens"} {formatTimeLeft(s.nextEventInMin)}
                     </div>
                   </div>
                 </div>
