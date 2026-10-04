@@ -50,3 +50,7 @@ Pending means not proof of defect; re-open source at edit time and mark ALREADY 
 - H01 — FIXED-ON-BRANCH at `326f4cb5b004a9b3e4a1649666af94f3d1194bdf`: live status now requires complete realtime quote fields; hybrid micro-simulation no longer mutates live provider prices while retaining a live label.
 - H05 — FIXED-ON-BRANCH at `4d0374d6e97ab9ce5e3e1ececae3f30dcd9dd2ec`: root schema no longer claims real-time asset coverage, Bitcoin Layer 2 trading, or tokenized RWA functionality.
 - H23 — ALREADY FIXED: compound calculator is labelled `Illustrative Growth`, states it is not live/forecast data, and explains rate/deduction assumptions.
+
+## Group 3 completion
+- H27 — FIXED-ON-BRANCH at `0d82a2fdcd97f76273c2ec59edba19599b170ec2`: sector FAQs no longer claim a live 60-second API feed; they describe simulator reference values and direct users to per-asset data-status labels.
+- C07 follow-up — `8ebb588437f1a80f5d9cf87e405033987dc5c98e`: non-live chart badges now display the exact computed status (for example DELAYED or SIMULATED), not a generic SIM label.
