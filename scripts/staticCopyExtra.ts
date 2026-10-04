@@ -328,7 +328,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Contacting the maintainer",
       p: [
-        "The contact page reaches the person who writes and maintains everything here. Corrections, bug reports and feature requests all go to the same place and are usually answered within two business days.",
+        "The contact page reaches the person who writes and maintains everything here. Corrections, bug reports and feature requests all go to the same place; response times vary with request volume.",
       ],
     },
   ],
@@ -353,7 +353,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Response times and expectations",
       p: [
-        "TradeHQ is maintained by one person, so replies typically arrive within two business days and occasionally take longer during heavy development weeks. There is no phone line and no live chat. If you have not heard back within a week, sending the message again is reasonable rather than rude.",
+        "TradeHQ is maintained by one person, so response times vary with request volume and development work. There is no phone line and no live chat. If you have not heard back after a while, sending the message again is reasonable.",
       ],
     },
   ],

@@ -418,7 +418,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "Getting in touch",
         p: [
-          "Use the contact form on this page to reach the person who builds TradeHQ. Messages are usually answered within two business days. There is no call centre and no support queue — replies come from the maintainer.",
+          "Use the contact form on this page to reach the person who builds TradeHQ. Response times vary with request volume. There is no call centre and no support queue — replies come from the maintainer. For a bug report, include the page URL and the steps that reproduce it so the current build can be checked.",
         ],
       },
       {

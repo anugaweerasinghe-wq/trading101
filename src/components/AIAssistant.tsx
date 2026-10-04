@@ -5,12 +5,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
 import { Bot, Send, X, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Message } from "@/lib/types";
-import { getAIReply } from "@/lib/smartMentor";
+import { Message, Portfolio, Asset } from "@/lib/types";
+import { getPortfolioAIReply } from "@/lib/smartMentor";
 
 interface AIAssistantProps {
-  portfolio: any;
-  assets: any[];
+  portfolio: Portfolio;
+  assets: Asset[];
 }
 
 export function AIAssistant({ portfolio, assets }: AIAssistantProps) {
@@ -19,7 +19,7 @@ export function AIAssistant({ portfolio, assets }: AIAssistantProps) {
     {
       id: '1',
       role: 'assistant',
-      content: "Hi! I'm your AI trading advisor. Ask me about market trends, portfolio strategies, or specific assets you're interested in.",
+      content: "Hi! I'm your educational trading mentor. I can use your simulated portfolio context to explain positions, P&L and risk concepts.",
       timestamp: new Date(),
     },
   ]);
@@ -49,7 +49,36 @@ export function AIAssistant({ portfolio, assets }: AIAssistantProps) {
     setInput("");
     setIsLoading(true);
 
-    const reply = await getAIReply(text, { history });
+    const sellTrades = portfolio.trades.filter((t) => t.type === "sell");
+    const wins = sellTrades.filter((t) => {
+      const buys = portfolio.trades.filter(
+        (bt) => bt.assetId === t.assetId && bt.type === "buy" && bt.timestamp < t.timestamp,
+      );
+      return buys.length > 0 && t.price > buys[buys.length - 1].price;
+    });
+    const winRate = sellTrades.length ? (wins.length / sellTrades.length) * 100 : null;
+    const topPosition = portfolio.positions
+      .map((p) => ({
+        symbol: p.asset.symbol,
+        weightPct: (p.currentValue / Math.max(portfolio.totalValue, 1)) * 100,
+        pnlPct: p.profitLossPercent ?? 0,
+      }))
+      .sort((a, b) => b.weightPct - a.weightPct)[0] ?? null;
+    const heldIds = new Set(portfolio.positions.map((p) => p.asset.id));
+    const heldMarketMove = assets
+      .filter((a) => heldIds.has(a.id))
+      .sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent))[0] ?? null;
+
+    const reply = await getPortfolioAIReply(text, {
+      cash: portfolio.cash,
+      totalValue: portfolio.totalValue,
+      positionsCount: portfolio.positions.length,
+      tradesCount: portfolio.trades.length,
+      winRate,
+      topPosition,
+      selectedSymbol: heldMarketMove?.symbol ?? null,
+      selectedChangePct: heldMarketMove?.changePercent ?? null,
+    }, history);
     setMessages(prev => [...prev, {
       id: (Date.now() + 1).toString(),
       role: 'assistant',
