@@ -29,10 +29,8 @@ interface MobileOrderDrawerProps {
 }
 
 export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: MobileOrderDrawerProps) {
-  const [orderType, setOrderType] = useState<'market' | 'limit'>('market');
   const [side, setSide] = useState<'buy' | 'sell'>('buy');
   const [amount, setAmount] = useState("");
-  const [limitPrice, setLimitPrice] = useState("");
   const [sliderValue, setSliderValue] = useState([0]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +41,7 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
   const lastSubmitTime = useRef<number>(0);
   const DEBOUNCE_MS = 1000;
 
-  const price = asset ? (orderType === 'limit' && limitPrice ? parseFloat(limitPrice) : asset.price) : 0;
+  const price = asset?.price ?? 0;
   const quantity = amount ? parseFloat(amount) : 0;
   const total = quantity * price;
   const fee = total * 0.001;
@@ -68,16 +66,15 @@ export function MobileOrderDrawer({ asset, availableCash, portfolio, onTrade }: 
     if (!asset || !quantity || quantity <= 0) return;
     setIsSubmitting(true);
     try {
-      await onTrade(asset, side, quantity, orderType, orderType === 'limit' ? parseFloat(limitPrice) : undefined, journalEnabled ? rationale : undefined);
+      await onTrade(asset, side, quantity, 'market', undefined, journalEnabled ? rationale : undefined);
       setAmount("");
-      setLimitPrice("");
       setSliderValue([0]);
       setRationale("");
       setIsOpen(false);
     } finally {
       setTimeout(() => setIsSubmitting(false), 300);
     }
-  }, [asset, side, quantity, orderType, limitPrice, onTrade, journalEnabled, rationale]);
+  }, [asset, side, quantity, onTrade, journalEnabled, rationale]);
 
   const handleSubmit = useCallback(async () => {
     if (!asset || !quantity || quantity <= 0) return;
