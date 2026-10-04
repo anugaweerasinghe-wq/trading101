@@ -96,7 +96,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         h: "What is on the markets page",
         p: [
           "The markets page lists every instrument available in the simulator, grouped by asset class: US equities, cryptocurrencies, exchange-traded funds, major and minor forex pairs, and commodities. Each row shows the current simulated price and the day's change, and links to a dedicated page for that instrument.",
-          "Prices come from public market-data sources and refresh on a schedule; between refreshes a small simulation layer keeps charts moving so the practice experience is continuous. This is a learning environment, not a market-data terminal — do not use these quotes for any real decision.",
+          "The Markets page uses simulated practice prices and estimated changes for visual feedback. Provider-backed, delayed or cached data may appear elsewhere on TradeHQ and is labelled separately when available. This is a learning environment, not a market-data terminal — do not use these quotes for any real decision.",
         ],
       },
       {
