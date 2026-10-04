@@ -123,7 +123,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "Why Some Beginners Prefer Crypto First",
         paragraphs: [
-          "Crypto markets never close, so you can practice trading whenever it fits your schedule. The higher volatility means more frequent trading opportunities, which accelerates the learning process — you'll see the results of your decisions faster. Crypto also has lower barriers to entry, with many assets priced under $1.",
+          "Crypto markets never close, so simulated practice is available at any time. Higher volatility can make price changes appear faster and larger, but that does not make learning easier or safer. An asset's unit price also does not measure its risk or accessibility; position size and total exposure matter more than whether one token costs less than $1.",
           "The crypto ecosystem introduces you to concepts like blockchain technology, decentralized finance (DeFi), and tokenomics — knowledge that's increasingly relevant in 2026 as traditional finance and crypto continue to converge. Understanding both worlds makes you a more versatile trader.",
           "Our recommendation: start with both. TradeHQ gives you access to 150+ assets across stocks, crypto, ETFs, forex, and commodities. Practice trading a few blue-chip stocks and major cryptocurrencies simultaneously to see which market fits your trading style and risk tolerance."
         ]
@@ -257,8 +257,8 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   {
     slug: "risk-management-in-trading",
     title: "What Is Risk Management in Trading? The Complete Beginner's Guide",
-    summary: "Risk management is the difference between surviving and blowing up your account. Learn position sizing, stop-losses, and the 2% rule every trader needs.",
-    metaDescription: "Master risk management in trading: position sizing, stop-loss strategies, risk-reward ratios, and the 2% rule. Free guide with practice tools on TradeHQ.",
+    summary: "Learn how position sizing, stop-loss orders and predefined risk limits can be tested in a simulator. Percentage rules such as 1% or 2% are examples, not universal prescriptions.",
+    metaDescription: "Learn risk-management concepts including position sizing, stop-loss orders, reward-to-risk assumptions, and example percentage risk limits using TradeHQ practice tools.",
     readTime: "6 min read",
     sections: [
       {

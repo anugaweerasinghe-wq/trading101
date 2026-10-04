@@ -36,7 +36,7 @@ export default function Daily() {
     // The directional scenario is a reflection exercise, not a forecast quiz.
     // Completing the reasoning step advances the streak; no market direction is
     // presented as objectively correct.
-    const next = recordChallenge(challenge.id, decision, true);
+    const next = recordChallenge(challenge.id, decision);
     setSelected(decision);
     setSubmitted(true);
     setStreak(next);

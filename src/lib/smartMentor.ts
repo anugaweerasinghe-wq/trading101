@@ -184,12 +184,8 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     keywords: ["tax", "capital gains", "wash sale", "tax loss"],
     title: "Trading & Taxes",
     answer:
-      "Taxes vary wildly by country — but the universals:\n\n" +
-      "• **Short-term gains** (held <1 year) are usually taxed as regular income (higher rate).\n" +
-      "• **Long-term gains** (>1 year) usually get preferential rates.\n" +
-      "• **Tax-loss harvesting** — selling losers to offset winners is legal in most jurisdictions.\n" +
-      "• **Wash sale rules** (US) — you can't claim a loss if you re-buy the same asset within 30 days.\n\n" +
-      "**Speak to a local accountant** — this is not tax advice, just trading-101 framing.",
+      "Tax treatment depends on the country, asset, account type, holding period and the rules in force at the time. TradeHQ cannot determine what tax rate, loss rule or reporting requirement applies to a specific user.\n\n" +
+      "For real-money activity, check the current guidance published by your tax authority or ask a qualified local tax professional. The simulator itself uses virtual money and this explanation is educational, not tax advice.",
   },
   {
     id: "compounding",
@@ -363,13 +359,13 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
 
   // Risk assessment
   if (/risk|overexposed|exposure|concentration/.test(text)) {
-    const lines = ["**Risk assessment:**"];
+    const lines = ["**Risk review:**"];
     if (ctx.topPosition && ctx.topPosition.weightPct > 30) {
-      lines.push(`⚠️ **Concentration risk** — ${ctx.topPosition.symbol} is ${ctx.topPosition.weightPct.toFixed(0)}% of your book. Rule of thumb: no single asset >20%.`);
+      lines.push(`• ${ctx.topPosition.symbol} is ${ctx.topPosition.weightPct.toFixed(0)}% of the simulated portfolio. That is a useful concentration scenario to stress-test, but there is no universal percentage that automatically makes a position acceptable or unacceptable.`);
     }
-    if (ctx.positionsCount === 1) lines.push(`⚠️ Only one position — that's not a portfolio, it's a bet.`);
-    if (ctx.positionsCount > 15) lines.push(`⚠️ ${ctx.positionsCount} positions — likely over-diversified. You can't track that many edges.`);
-    if (lines.length === 1) lines.push(`✓ Allocation looks reasonable. Maintain 1-2% risk per trade and 5-15% cash reserve.`);
+    if (ctx.positionsCount === 1) lines.push("• A one-position simulated portfolio is fully dependent on one asset. Compare that outcome with a diversified practice portfolio.");
+    if (ctx.positionsCount > 15) lines.push(`• The portfolio has ${ctx.positionsCount} positions. Position count alone does not determine diversification; check weights and how strongly the holdings move together.`);
+    if (lines.length === 1) lines.push("• Review position weights, correlation, liquidity assumptions and how the portfolio behaves under different simulated losses. Choose any practice risk limit explicitly and test it rather than treating one percentage as universal.");
     return lines.join("\n") + DISCLAIMER;
   }
 
@@ -384,13 +380,13 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
 
   // What should I do
   if (/what should i (do|buy|sell|trade)|next move|next action/.test(text)) {
-    return "I won't give you specific buy/sell calls — that's the line between mentor and signal-seller. What I will say:\n\n1. Define your edge in one sentence.\n2. Size positions so a stop-out costs ≤1-2% of book.\n3. Pre-write your exit (target + stop) before entry.\n4. Journal *why* — entries with no reason are gambling." + DISCLAIMER;
+    return "I won't give you specific buy/sell calls. For a simulation, you can instead:\n\n1. Write the idea or assumption you want to test.\n2. Choose a practice risk limit and record why you chose it; no single percentage is universally correct.\n3. Define the conditions that would make you exit, while remembering that real orders may not fill at the planned price.\n4. Journal the reasoning so you can compare the plan with the outcome later." + DISCLAIMER;
   }
 
   // Selected asset analysis
   if (ctx.selectedSymbol && /this asset|analyze.*asset|current asset|this coin|this stock/.test(text)) {
     const dir = (ctx.selectedChangePct ?? 0) >= 0 ? "up" : "down";
-    return `**${ctx.selectedSymbol}** — ${dir} ${Math.abs(ctx.selectedChangePct ?? 0).toFixed(2)}% today.\n\nWithout giving a call, here's a framework:\n• Mark the higher-timeframe trend (daily, weekly).\n• Identify the nearest support and resistance.\n• Define risk:reward before entering — minimum 1:2.\n• If the chart confuses you, pass. Cash is a position.` + DISCLAIMER;
+    return `**${ctx.selectedSymbol}** — ${dir} ${Math.abs(ctx.selectedChangePct ?? 0).toFixed(2)}% today.\n\nWithout giving a call, here's a framework:\n• Mark the higher-timeframe trend (daily, weekly).\n• Identify the nearest support and resistance.\n• Compare the planned downside and upside assumptions before a simulated entry; a ratio does not guarantee an outcome.\n• If the setup is unclear, record what information is missing instead of forcing a simulated decision.` + DISCLAIMER;
   }
 
   // Fall back to topic engine

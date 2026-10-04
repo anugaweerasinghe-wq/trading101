@@ -4,18 +4,18 @@ import { ASSETS } from "@/lib/assets";
 import { getPersistedPrices } from "@/lib/pricePersistence";
 import { cn } from "@/lib/utils";
 
-type Sentiment = "Extreme Fear" | "Fear" | "Neutral" | "Greed" | "Extreme Greed";
+type MomentumLabel = "Strong Downside" | "Downside" | "Neutral" | "Upside" | "Strong Upside";
 
-function sentimentLabel(score: number): { label: Sentiment; color: string } {
-  if (score < 20) return { label: "Extreme Fear", color: "#FF4560" };
-  if (score < 40) return { label: "Fear", color: "#FF8A65" };
+function momentumLabel(score: number): { label: MomentumLabel; color: string } {
+  if (score < 20) return { label: "Strong Downside", color: "#FF4560" };
+  if (score < 40) return { label: "Downside", color: "#FF8A65" };
   if (score < 60) return { label: "Neutral", color: "#FFB74D" };
-  if (score < 80) return { label: "Greed", color: "#66BB6A" };
-  return { label: "Extreme Greed", color: "#00E396" };
+  if (score < 80) return { label: "Upside", color: "#66BB6A" };
+  return { label: "Strong Upside", color: "#00E396" };
 }
 
-// Compute a fear/greed index from the top-20 asset momentum
-function computeFearGreed(prices: Record<string, { changePercent: number }>): number {
+// Compute an internal simulator momentum score from a basket of assets
+function computeMomentumScore(prices: Record<string, { changePercent: number }>): number {
   const sample = ASSETS.slice(0, 30);
   const changes = sample
     .map((a) => prices[a.id]?.changePercent ?? a.changePercent ?? 0)
@@ -68,7 +68,7 @@ function formatTimeLeft(min: number): string {
 }
 
 /**
- * Market Pulse — Fear/Greed dial + global market clock + movers.
+ * Market Pulse — simulator momentum dial + global market clock + movers.
  * Designed as the homepage "habit" widget — users check it daily.
  */
 export function MarketPulse() {
@@ -84,8 +84,8 @@ export function MarketPulse() {
     return () => clearInterval(i);
   }, []);
 
-  const score = useMemo(() => computeFearGreed(prices), [prices]);
-  const sentiment = sentimentLabel(score);
+  const score = useMemo(() => computeMomentumScore(prices), [prices]);
+  const momentum = momentumLabel(score);
 
   // Movers
   const ranked = ASSETS.map((a) => {
@@ -131,7 +131,7 @@ export function MarketPulse() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {/* Fear & Greed dial */}
+        {/* Simulator momentum dial */}
         <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-black/40 border border-white/[0.04]">
           <div className="relative w-[180px] h-[180px]">
             <svg viewBox="0 0 180 180" className="w-full h-full -rotate-[135deg]">
@@ -141,21 +141,21 @@ export function MarketPulse() {
                 cy="90"
                 r={r}
                 fill="none"
-                stroke={sentiment.color}
+                stroke={momentum.color}
                 strokeWidth="14"
                 strokeDasharray={`${filled} ${c}`}
                 strokeLinecap="round"
-                style={{ transition: "stroke-dasharray 1s ease, stroke 1s ease", filter: `drop-shadow(0 0 10px ${sentiment.color}66)` }}
+                style={{ transition: "stroke-dasharray 1s ease, stroke 1s ease", filter: `drop-shadow(0 0 10px ${momentum.color}66)` }}
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="text-4xl font-bold tabular-nums text-foreground" style={{ color: sentiment.color }}>{score}</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">Fear & Greed</div>
+              <div className="text-4xl font-bold tabular-nums text-foreground" style={{ color: momentum.color }}>{score}</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">Simulator Momentum</div>
             </div>
           </div>
-          <div className="mt-3 text-sm font-bold" style={{ color: sentiment.color }}>{sentiment.label}</div>
+          <div className="mt-3 text-sm font-bold" style={{ color: momentum.color }}>{momentum.label}</div>
           <p className="text-[11px] text-muted-foreground text-center mt-1 max-w-[200px]">
-            Simulator momentum across 30 major assets
+            Internal practice score from recent simulator price changes across 30 assets
           </p>
         </div>
 

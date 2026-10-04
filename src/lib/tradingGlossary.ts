@@ -16,18 +16,18 @@ export const tradingGlossary: GlossaryTerm[] = [
   {
     slug: "short-squeeze",
     term: "Short Squeeze",
-    definition: "A short squeeze occurs when a heavily shorted asset's price rises sharply, forcing short sellers to buy back shares to cover their positions. This buying pressure accelerates the price increase further, creating a feedback loop.",
-    expertDefinition: "A short squeeze is a rapid price appreciation event triggered when a heavily shorted asset begins to rise, forcing short sellers to buy back borrowed shares to limit their losses. This forced buying creates additional upward pressure, which in turn triggers more short covering — producing a powerful positive feedback loop that can drive prices to extreme levels in a very short time. The mechanics are straightforward: when a trader shorts a stock, they borrow shares and sell them, hoping to buy them back cheaper later. If the price rises instead, their losses are theoretically unlimited since there is no cap on how high a stock can go. Brokers enforce margin requirements, meaning if the price rises enough, short sellers receive margin calls and must either add capital or close their positions by buying shares at market price. The GameStop short squeeze of January 2021 became a cultural phenomenon when retail traders on Reddit's WallStreetBets forum coordinated buying of GME stock, which had short interest exceeding 140% of its float. The stock surged from approximately $20 to nearly $500 in under two weeks, inflicting billions in losses on hedge funds like Melvin Capital. Key metrics to monitor for potential short squeezes include short interest as a percentage of float (above 20% is elevated), the short interest ratio or days-to-cover (above 5 days is significant), and cost-to-borrow rates for short sellers. High values across all three metrics create the conditions for a squeeze. In crypto markets, short squeezes manifest through leveraged positions on perpetual futures contracts, where funding rates and liquidation cascades amplify the effect dramatically.",
-    proTip: "Monitor short interest data weekly. When short interest exceeds 25% of float AND the cost-to-borrow spikes above 50% annualized, the setup for a squeeze is in place. Wait for a catalyst (earnings beat, insider buying) before entering — squeezes need a spark.",
+    definition: "A short squeeze occurs when a rising price or difficulty borrowing a security puts pressure on short sellers to close positions by buying shares. That covering demand can add further upward pressure to the price.",
+    expertDefinition: "A short seller borrows a security, sells it, and later needs to buy equivalent securities to close the position and return what was borrowed. If the price rises instead of falling, the short position loses value. A short squeeze can develop when price increases or borrowing constraints cause multiple short sellers to cover at the same time; those purchases add demand and can intensify the upward move. Short interest is one useful measure of outstanding short positions, while days to cover compares reported short interest with average daily share volume. FINRA publishes these measures as market data, but they do not create a universal squeeze threshold or a reliable timing signal. Reported short interest is also a periodic snapshot rather than a real-time count. Borrowing availability, trading volume, price movement, liquidity and the behaviour of market participants can all affect whether heavy short positioning ever becomes a squeeze.",
+    proTip: "Treat short interest and days-to-cover figures as context, not a trigger. Compare current reported data with earlier periods and check how the price and trading volume are behaving; no single percentage or ratio guarantees that a squeeze will occur.",
     difficulty: "Intermediate",
     readTime: "4 min",
     category: "Market Mechanics",
     keyPoints: [
-      "Triggered when short interest exceeds 20-30% of float",
-      "Creates a positive feedback loop of forced buying",
-      "Can result in 100%+ price moves within days"
+      "A squeeze can occur when rising prices or borrowing pressure cause short sellers to cover",
+      "Covering purchases can add further upward pressure to the price",
+      "Short interest and days to cover provide context but do not define a universal squeeze threshold"
     ],
-    studentPerspective: "Understanding short squeezes helps you identify explosive setups and avoid being on the wrong side of a crowded trade.",
+    studentPerspective: "Understanding short squeezes helps you recognise how crowded short positioning and forced covering can affect price without treating the setup as a guaranteed trade signal.",
     relatedTerms: ["bull-trap", "whale-manipulation", "leverage-trading"]
   },
   {

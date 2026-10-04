@@ -297,7 +297,7 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
           {chartIsRealtime ? 'Realtime quote and chart data' : `Data status: ${chartLabel.toLowerCase()}`}
         </span>
         <span>
-          1-min intervals • Auto-refresh 30s
+          Candle interval varies by provider • Quotes 30s • Candles 60s
         </span>
       </div>
     </div>

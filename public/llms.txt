@@ -2,14 +2,14 @@
 
 > TradeHQ is a free, no-signup paper-trading simulator for stocks, crypto, ETFs, forex, and commodities. Beginners get $100,000 in virtual cash, an educational mentor with AI responses when available and a labeled rule-based fallback, live-style charts, and a public leaderboard to practice trading without risking real money.
 
-TradeHQ is an educational simulator (not a brokerage). All prices are simulated for practice. Content is written and maintained by Anuga Weerasinghe. TradeHQ does not provide financial advice.
+TradeHQ is an educational simulator (not a brokerage). Trades use virtual money; asset data may be live, cached, delayed, or simulated depending on availability and is labeled in the product where applicable. Content is written and maintained by Anuga Weerasinghe. TradeHQ does not provide financial advice.
 
 ## Core pages
 
 - [Home](https://www.thetradehq.com/): What TradeHQ is, how the free simulator works, key features.
 - [Trade](https://www.thetradehq.com/trade): Live-style trading terminal with 150+ practice assets.
 - [Markets](https://www.thetradehq.com/markets): Full asset universe — stocks, crypto, ETFs, forex, commodities.
-- [Portfolio](https://www.thetradehq.com/portfolio): Virtual portfolio, P&L, Sharpe ratio, drawdown analytics.
+- [Portfolio](https://www.thetradehq.com/portfolio): Virtual portfolio, P&L, maximum drawdown, open-position dispersion and allocation analytics.
 - [Leaderboard](https://www.thetradehq.com/leaderboard): Public ranking of virtual traders by return.
 - [AI Mentor](https://www.thetradehq.com/ai-mentor): Educational questions and answers, with AI responses when available and a labeled rule-based fallback.
 - [About](https://www.thetradehq.com/about): Mission, creator, transparency.
@@ -18,7 +18,7 @@ TradeHQ is an educational simulator (not a brokerage). All prices are simulated 
 ## Learn (courses & guides)
 
 - [Learn hub](https://www.thetradehq.com/learn): Free structured trading courses for beginners.
-- [Trading Guide 2026](https://www.thetradehq.com/learn-trading-guide): Comprehensive beginner-to-intermediate trading guide.
+- [Trading Guide](https://www.thetradehq.com/learn-trading-guide): Comprehensive beginner-to-intermediate trading guide.
 - [Structured Courses](https://www.thetradehq.com/courses): Four educational tracks with quizzes and completion badges.
 - [Options Trading Fundamentals](https://www.thetradehq.com/courses/options-trading-fundamentals): Calls, puts, Greeks, spreads and risk.
 - [Futures & Derivatives](https://www.thetradehq.com/courses/futures-and-derivatives): Contracts, margin, contango/backwardation, hedging.

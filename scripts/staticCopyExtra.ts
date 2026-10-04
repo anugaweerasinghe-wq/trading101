@@ -71,8 +71,8 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       list: [
         "Unrealised P&L: what an open position is worth right now versus what you paid. It is not money until you close.",
         "Realised P&L: the result of trades you have actually closed. This is the number that measures decisions you finished making.",
-        "Win rate: the share of closed trades that made money. Useless without the average size of wins and losses next to it.",
-        "Sharpe ratio: a rough measure of return relative to volatility. Higher means smoother, not necessarily larger, returns.",
+        "Open positions in profit: the share of current open positions showing positive unrealised P&L. This is not a closed-trade win rate.",
+        "Open-position P&L dispersion: the spread of current position returns around their average. This is a snapshot, not a Sharpe ratio or time-series volatility measure.",
         "Maximum drawdown: the largest fall from a peak in your equity curve. The single most useful number for judging whether an approach is survivable.",
       ],
     },

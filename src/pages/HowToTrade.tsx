@@ -14,7 +14,7 @@ export default function HowToTrade() {
   const asset = HOWTO_ASSETS.find((a) => a.symbol === symbol?.toLowerCase());
   if (!asset) return <Navigate to="/how-to-trade" replace />;
 
-  const title = `How to Trade ${asset.fullName} (${asset.name}) in 2026 — Step-by-Step Guide | TradeHQ`;
+  const title = `How to Trade ${asset.fullName} (${asset.name}) — Step-by-Step Guide | TradeHQ`;
   const description = `Learn how to trade ${asset.fullName} step-by-step with $100,000 virtual cash. Free practice account, no signup. (Educational simulation only — not financial advice.)`;
   const url = `${SITE_DOMAIN}/how-to-trade/${asset.symbol}`;
 

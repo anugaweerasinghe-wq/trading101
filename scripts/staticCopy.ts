@@ -22,7 +22,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         h: "What you can do here",
         list: [
           "Paper trade 150+ instruments across stocks, crypto, ETFs, forex and commodities using market orders.",
-          "Track a full practice portfolio — open positions, realised and unrealised P&L, win rate, Sharpe ratio and maximum drawdown.",
+          "Track a full practice portfolio — open positions, realised and unrealised P&L, maximum drawdown, open-position P&L dispersion and allocation snapshots.",
           "Work through four structured courses (options, futures, macro reading and trading psychology) with quizzes and completion badges.",
           "Read a 49-term trading glossary written in plain language, each entry with a detailed explanation and a worked example.",
           "Follow step-by-step guides for individual assets, side-by-side asset comparisons, and named strategy walkthroughs.",
@@ -287,7 +287,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How the daily challenge works",
         p: [
-          "Every day the simulator sets one small task — identify a pattern, place a correctly sized practice trade, review a journal entry, or answer a short knowledge question. Completing it advances a streak counter stored in your browser and measured against your own local calendar day, so a genuine daily habit is never reset by time-zone drift.",
+          "Every day the simulator presents one hypothetical market scenario. You choose a response, compare the reasoning and trade-offs, then answer a short bonus knowledge question about market basics. Completing the reflection advances a streak counter stored in your browser; no market direction is graded as objectively correct.",
         ],
       },
       {

@@ -198,16 +198,16 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
                 <TrendingDown className="w-3 h-3 text-destructive" />
-                <p className="text-2xs text-muted-foreground">Worst (P5)</p>
+                <p className="text-2xs text-muted-foreground">P5 Model Percentile</p>
               </div>
-              <p className="text-base font-bold tabular-nums mt-1 text-destructive">{fmt(result.worstCase)}</p>
+              <p className="text-base font-bold tabular-nums mt-1 text-destructive">{fmt(result.p5)}</p>
             </Card>
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
                 <TrendingUp className="w-3 h-3 text-success" />
-                <p className="text-2xs text-muted-foreground">Best (P95)</p>
+                <p className="text-2xs text-muted-foreground">P95 Model Percentile</p>
               </div>
-              <p className="text-base font-bold tabular-nums mt-1 text-success">{fmt(result.bestCase)}</p>
+              <p className="text-base font-bold tabular-nums mt-1 text-success">{fmt(result.p95)}</p>
             </Card>
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
@@ -217,6 +217,10 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
               <p className="text-base font-bold tabular-nums mt-1">{result.probabilityOfLoss.toFixed(0)}%</p>
             </Card>
           </div>
+
+          <p className="text-xs text-muted-foreground">
+            P5 and P95 are simulated distribution percentiles, not the worst or best outcomes that could occur.
+          </p>
 
           <div className="h-64 w-full">
             <ResponsiveContainer>
