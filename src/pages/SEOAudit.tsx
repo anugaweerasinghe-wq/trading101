@@ -18,11 +18,11 @@ interface AuditResult {
 // All expected metadata by route
 const ROUTE_META: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "TradingHQ | The Ultimate AI-Powered Trading Simulator & Journal",
-    description: "Master the markets with TradingHQ. Practice trading Crypto, Stocks, and Forex with real-time data, AI-driven mentorship, and an automated trading journal. Start your legacy today.",
+    title: "TradeHQ | The Ultimate AI-Powered Trading Simulator & Journal",
+    description: "Master the markets with TradeHQ. Practice trading Crypto, Stocks, and Forex with real-time data, AI-driven mentorship, and an automated trading journal. Start your legacy today.",
   },
   "/trade": {
-    title: "Real-Time Trading Terminal | Execute Simulator Trades on TradingHQ",
+    title: "Real-Time Trading Terminal | Execute Simulator Trades on TradeHQ",
     description: "Experience high-performance trading with our Obsidian Terminal. Features TradingView charts, one-click execution, and a Neural Mentor to guide your strategy and block revenge trading.",
   },
   "/markets": {
@@ -46,12 +46,12 @@ const ROUTE_META: Record<string, { title: string; description: string }> = {
     description: "From Pips to Portfolio management, master the art of trading. Our structured guides cover technical analysis, success psychology, and market mechanics for future-proof traders.",
   },
   "/privacy": {
-    title: "Privacy Policy & Terms of Service | TradingHQ Transparency",
-    description: "Read the official terms and privacy guidelines for TradingHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice.",
+    title: "Privacy Policy & Terms of Service | TradeHQ Transparency",
+    description: "Read the official terms and privacy guidelines for TradeHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice.",
   },
   "/terms": {
-    title: "Privacy Policy & Terms of Service | TradingHQ Transparency",
-    description: "Read the official terms and privacy guidelines for TradingHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice.",
+    title: "Privacy Policy & Terms of Service | TradeHQ Transparency",
+    description: "Read the official terms and privacy guidelines for TradeHQ. We prioritize data transparency and provide a safe, simulated environment for financial education and practice.",
   },
 };
 
