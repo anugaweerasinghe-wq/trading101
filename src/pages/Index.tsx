@@ -86,20 +86,13 @@ const webAppSchema = {
   description: "Practice stock & crypto trading free with $100,000 virtual cash. No signup needed. 150+ assets, AI mentor, leaderboard.",
 };
 
-// WebSite + SearchAction — enables Google sitelinks search box.
+// WebSite identity schema. No SearchAction is declared because TradeHQ does not
+// expose a dedicated site-search experience for this route.
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "TradeHQ",
   url: "https://www.thetradehq.com/",
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: "https://www.thetradehq.com/markets?q={search_term_string}",
-    },
-    "query-input": "required name=search_term_string",
-  },
 };
 
 // NEW: hardcoded from the 154 URL list — lowercase symbols matching exact URLs

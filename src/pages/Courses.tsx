@@ -397,7 +397,7 @@ export default function Courses() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Content is reviewed periodically and every lesson displays its last-reviewed date
                 and its public sources (SEC, CFTC, FRED, CME Group, Investopedia). If you spot an
-                error, please <Link to="/contact" className="text-emerald-400 hover:underline">contact us</Link> — corrections are shipped within 48 hours.
+                error, please <Link to="/contact" className="text-emerald-400 hover:underline">contact us</Link> — reported corrections are reviewed before publication.
               </p>
             </Card>
           </section>
