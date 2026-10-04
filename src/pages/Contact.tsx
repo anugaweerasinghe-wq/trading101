@@ -88,7 +88,7 @@ export default function Contact() {
         <title>Contact TradeHQ | Get in Touch</title>
         <meta
           name="description"
-          content="Contact TradeHQ for questions, feedback or partnership inquiries. Reach the team by email or phone — typical response within 48 hours."
+          content="Contact TradeHQ for questions, feedback or partnership inquiries. Reach the team by email, phone, or the contact form."
         />
         <link rel="canonical" href={`${DOMAIN}/contact`} />
         <meta name="robots" content="index, follow" />
@@ -96,7 +96,7 @@ export default function Contact() {
         <meta property="og:title" content="Contact TradeHQ | Get in Touch" />
         <meta
           property="og:description"
-          content="Get in touch with TradeHQ. Email, phone and a simple contact form — typical response within 48 hours."
+          content="Get in touch with TradeHQ by email, phone, or a simple contact form."
         />
         <meta property="og:url" content={`${DOMAIN}/contact`} />
       </Helmet>
@@ -111,7 +111,7 @@ export default function Contact() {
             </div>
             <h1 className="text-4xl font-bold mb-4">Contact TradeHQ</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Questions, feedback or partnership inquiries? Reach out — we typically respond within 48 hours.
+              Questions, feedback or partnership inquiries? Reach out and we will respond as soon as we can.
             </p>
           </header>
 
@@ -145,7 +145,7 @@ export default function Contact() {
           <section className="glass-liquid-card p-6 mb-8" aria-labelledby="contact-form-heading">
             <h2 id="contact-form-heading" className="text-xl font-semibold mb-2">Send a message</h2>
             <p className="text-xs text-muted-foreground mb-6 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5" aria-hidden="true" /> Expected response time: within 48 hours.
+              <Clock className="w-3.5 h-3.5" aria-hidden="true" /> Response times vary depending on the request.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
@@ -251,7 +251,7 @@ export default function Contact() {
             <p className="text-sm text-muted-foreground leading-relaxed">
               TradeHQ is a small independent project rather than a company with a support desk, so
               messages are read and answered by the person who builds the site. In practice that means
-              a reply usually arrives within forty-eight hours on weekdays and can take longer over a
+              response times vary with request volume and can take longer over a
               weekend or a public holiday. Nothing is auto-responded to, and no message is passed to a
               third party — the contact form simply opens your own email client with the text
               pre-filled, so your address is never stored on this site.
@@ -311,7 +311,7 @@ export default function Contact() {
               {
                 question: "How quickly does TradeHQ respond?",
                 answer:
-                  "We typically respond to email within 48 hours. Response time may be longer on weekends or holidays.",
+                  "Response times vary depending on the request and may be longer on weekends or holidays.",
               },
               {
                 question: "Does TradeHQ offer investment advice by email?",
