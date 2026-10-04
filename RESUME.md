@@ -35,3 +35,8 @@ Pending means not proof of defect; re-open source at edit time and mark ALREADY 
 - META-05 — FIXED-ON-BRANCH at `4843355d35f477d16ecb0c5fd4b64c6f43b41111`: comparison runtime duplicate answer removed; crawler deep-dive headings now match pair-wide paragraphs.
 - META-06 — ALREADY FIXED: current `glossaryPractice()` was already entry-specific, using each term's own fields rather than one identical paragraph.
 - META-07 — FIXED-ON-BRANCH at `f6ea0390e8ff3d54234722a7f13a230df43c3d86`: public glossary output no longer renders directive pro-tip text; practice copy is observational and term-specific.
+
+## Checkpoint after items 10–12
+- C05 — ALREADY FIXED: quote fallback is explicitly `simulated`, stale cache is `delayed`, and only provenance `realtime` maps to `live`.
+- C06 — ALREADY FIXED: generated candle fallback is tagged `simulated`; candle provenance alone does not create the live badge.
+- C07 — FIXED-ON-BRANCH at `c49df96aa896e8da8d35051c9baea68291c339a8`: chart UI now requires realtime quote + realtime candle provenance before showing `LIVE`; delayed/simulated states are labelled accordingly.
