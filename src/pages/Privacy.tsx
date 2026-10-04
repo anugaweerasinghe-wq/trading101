@@ -48,9 +48,9 @@ TradeHQ uses hosted infrastructure and access controls intended to protect store
       title: "Service Providers, Cookies & Your Choices",
       content: `TradeHQ relies on third parties including Vercel for hosting, Supabase for optional authentication/database features, Amplitude for consented analytics/session replay, and Google AdSense for consented advertising. These providers can process data in countries other than your own under their own legal and contractual arrangements.
 
-Non-essential analytics and advertising scripts should not load until the user has made the applicable consent choice. You can reject optional analytics/advertising, change your choice later from this privacy page, clear browser storage/cookies, and use browser privacy controls. Google also provides ad-personalization controls through Google Ads Settings.
+Non-essential analytics and advertising scripts are blocked until the user has made the applicable consent choice. You can reject optional analytics/advertising, change your choice later from this privacy page, clear browser storage/cookies, and use browser privacy controls. Google also provides ad-personalization controls through Google Ads Settings.
 
-For users in the EEA, United Kingdom and Switzerland, Google requires a Google-certified consent-management platform for AdSense consent collection. TradeHQ must not describe a temporary local consent banner as Google-certified unless that certified CMP has actually been configured.
+For users in the EEA, United Kingdom and Switzerland, Google requires a Google-certified consent-management platform for AdSense consent collection. AdSense remains disabled in this build until that certified CMP and the confirmed publisher ID are configured.
 
 Depending on where you live, privacy law may give you rights to access, correct, delete, restrict or object to certain processing. Use the TradeHQ contact page for a privacy request. The exact rights available depend on your jurisdiction.`
     }
@@ -113,6 +113,13 @@ Depending on where you live, privacy law may give you rights to access, correct,
           </div>
 
           <section className="mt-12 glass-liquid-card p-6">
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event("tradehq:open-consent"))}
+              className="mb-5 rounded-lg border border-border px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted"
+            >
+              Change analytics and advertising choices
+            </button>
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                 <Mail className="w-5 h-5 text-primary" />
