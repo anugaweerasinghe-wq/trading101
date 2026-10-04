@@ -68,7 +68,7 @@ export default function AIMentor() {
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Smart Trading Mentor — Your Free Trading Coach | TradeHQ" />
-        <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Curated by expert traders. Free on TradeHQ." />
+        <meta property="og:description" content="Ask anything about trading, risk, psychology, or markets. Educational explanations are based on TradeHQ learning content." />
         <meta property="og:url" content="https://www.thetradehq.com/ai-mentor" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -76,7 +76,7 @@ export default function AIMentor() {
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Smart Trading Mentor — Your Free Trading Coach | TradeHQ" />
-        <meta name="twitter:description" content="Ask anything about trading, risk, psychology, or markets. Curated by expert traders." />
+        <meta name="twitter:description" content="Ask anything about trading, risk, psychology, or markets. Educational explanations are based on TradeHQ learning content." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
       </Helmet>
 
@@ -91,10 +91,10 @@ export default function AIMentor() {
               <span className="text-sm font-medium text-primary">Smart Trading Mentor</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-2">
-              Trading Mentor <span className="text-primary">— Curated Knowledge</span>
+              Trading Mentor <span className="text-primary">— Educational Knowledge</span>
             </h1>
             <p className="text-muted-foreground">
-              Expert-curated answers — strategy, risk, psychology, technicals
+              Educational answers — strategy, risk, psychology, technicals
             </p>
           </div>
 
