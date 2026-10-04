@@ -14,8 +14,6 @@ export interface ScenarioResult {
   p25: number;
   p75: number;
   p95: number;
-  worstCase: number;
-  bestCase: number;
   deltaPercent: number;
   probabilityOfLoss: number;
   perAsset: Array<{
@@ -166,8 +164,6 @@ export function runScenario(
     p25,
     p75,
     p95,
-    worstCase: p5,
-    bestCase: p95,
     deltaPercent: ((expected - currentValue) / currentValue) * 100,
     probabilityOfLoss,
     perAsset,
