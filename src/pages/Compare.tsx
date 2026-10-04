@@ -36,7 +36,6 @@ export default function Compare() {
           author: { "@type": "Organization", name: "TradeHQ" },
           publisher: { "@type": "Organization", name: "TradeHQ" },
           mainEntityOfPage: url,
-          datePublished: "2026-06-13",
         })}</script>
       </Helmet>
 

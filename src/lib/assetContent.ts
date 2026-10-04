@@ -293,10 +293,6 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       consensus: "Proof of Work",
       source: "CoinGecko"
     },
-    executiveOutlook: {
-      summary: "Bitcoin is a major digital asset with a fixed maximum supply and a large global trading market. Factors often discussed when studying its price behaviour include flows into investment products, the supply schedule, network usage, regulation, liquidity and broader macroeconomic conditions. None of these factors guarantees a future price direction.",
-      lastUpdated: "January 2026"
-    },
     institutionalDrivers: {
       bull: "Institutional ETF accumulation, post-halving supply shock, Lightning Network adoption, and sovereign nation treasury allocations drive bullish momentum.",
       bear: "Fed rate decisions, regulatory crackdowns on self-custody, and potential ETF outflows during risk-off periods could pressure prices."
@@ -313,10 +309,6 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       marketCap: "live_sourced_at_runtime",
       consensus: "Proof of Stake",
       source: "CoinGecko"
-    },
-    executiveOutlook: {
-      summary: "Ethereum's 2026 outlook centers on Layer 2 ecosystem growth and institutional staking adoption. Proto-danksharding (EIP-4844) has reduced L2 costs dramatically, driving DeFi and NFT activity. Deflationary supply mechanics post-Merge continue to benefit long-term holders.",
-      lastUpdated: "January 2026"
     },
     institutionalDrivers: {
       bull: "L2 scaling success, institutional staking yields, and growing RWA tokenization on Ethereum mainnet support price appreciation.",

@@ -16,7 +16,6 @@ import { toast } from "sonner";
 
 const DOMAIN = "https://www.thetradehq.com";
 const AUTHOR = "Anuga Weerasinghe";
-const REVIEWED = "2026-07-13";
 
 export default function CourseLesson() {
   const { trackSlug, lessonSlug } = useParams<{ trackSlug: string; lessonSlug: string }>();
@@ -55,7 +54,6 @@ export default function CourseLesson() {
     url,
     author: { "@type": "Person", name: AUTHOR },
     publisher: { "@type": "Organization", name: "TradeHQ", url: DOMAIN },
-    dateModified: REVIEWED,
     isPartOf: {
       "@type": "Course",
       name: track.title,
@@ -117,7 +115,6 @@ export default function CourseLesson() {
         <link rel="canonical" href={url} />
         <meta name="author" content={AUTHOR} />
         <meta property="article:author" content={AUTHOR} />
-        <meta property="article:modified_time" content={REVIEWED} />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
@@ -151,7 +148,7 @@ export default function CourseLesson() {
           <p className="text-base text-muted-foreground mb-4">{lesson.summary}</p>
 
           <div className="text-xs text-muted-foreground mb-6">
-            By <span className="text-foreground font-medium">{AUTHOR}</span> · Last reviewed {REVIEWED}
+            By <span className="text-foreground font-medium">{AUTHOR}</span>
           </div>
 
           <div className="rounded-2xl overflow-hidden mb-8 bg-black aspect-[16/9]">
