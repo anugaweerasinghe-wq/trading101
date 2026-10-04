@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, AlertTriangle, GraduationCap } from "lucide-react";
 import { HOWTO_ASSETS, SITE_DOMAIN } from "@/lib/seoData";
+import { tradeRouteForSymbol } from "@/lib/assets";
 
 export default function HowToTrade() {
   const { symbol } = useParams<{ symbol: string }>();
@@ -52,7 +53,7 @@ export default function HowToTrade() {
             <p className="text-xs uppercase tracking-widest text-emerald-400 mb-3">{asset.type} guide</p>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">How to Trade {asset.fullName}</h1>
             <p className="mt-4 text-lg text-muted-foreground">{asset.whyTrade}</p>
-            <Link to={`/trade/${asset.symbol}`}>
+            <Link to={tradeRouteForSymbol(asset.symbol)}>
               <Button className="mt-6">Practise {asset.name} now <ArrowRight className="ml-2 h-4 w-4" /></Button>
             </Link>
           </header>
@@ -135,7 +136,7 @@ export default function HowToTrade() {
           <section className="mb-10">
             <h2 className="text-xl font-semibold mb-3">Keep going</h2>
             <div className="flex flex-wrap gap-2 text-sm">
-              <Link to={`/trade/${asset.symbol}`} className="px-4 py-2 rounded-full border border-white/10 hover:border-emerald-500/40">Practice {asset.fullName} in the simulator</Link>
+              <Link to={tradeRouteForSymbol(asset.symbol)} className="px-4 py-2 rounded-full border border-white/10 hover:border-emerald-500/40">Practice {asset.fullName} in the simulator</Link>
               <Link to="/courses" className="px-4 py-2 rounded-full border border-white/10 hover:border-emerald-500/40">Structured courses</Link>
               <Link to="/wiki" className="px-4 py-2 rounded-full border border-white/10 hover:border-emerald-500/40">Trading glossary</Link>
               <Link to="/compare" className="px-4 py-2 rounded-full border border-white/10 hover:border-emerald-500/40">Asset comparisons</Link>

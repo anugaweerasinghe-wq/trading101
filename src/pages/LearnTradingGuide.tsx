@@ -132,21 +132,24 @@ const LearnTradingGuide = () => {
         <main className="container mx-auto px-6 pb-6">
           {/* --- Ticker Tape --- */}
           <div className="overflow-hidden rounded-xl border border-white/5 bg-white/[0.01] mb-6">
+            <p className="px-4 pt-2.5 text-[9px] uppercase tracking-[0.16em] font-bold text-slate-600">
+              Illustrative ticker examples — not live market data
+            </p>
             <div className="ticker-tape-container flex whitespace-nowrap py-2.5" style={{ willChange: "transform" }}>
               {[...Array(2)].map((_, dupeIdx) => (
                 <div key={dupeIdx} className="ticker-scroll flex gap-8 px-4 animate-ticker">
                   {[
-                    { sym: "BTC", price: "$67,842", change: "+2.4%", up: true },
-                    { sym: "ETH", price: "$3,891", change: "+1.8%", up: true },
-                    { sym: "SOL", price: "$187.50", change: "-0.6%", up: false },
-                    { sym: "NVDA", price: "$924.12", change: "+3.1%", up: true },
-                    { sym: "SPY", price: "$521.30", change: "+0.4%", up: true },
-                    { sym: "GOLD", price: "$2,178", change: "+0.9%", up: true },
-                    { sym: "EUR/USD", price: "1.0842", change: "-0.2%", up: false },
+                    { sym: "BTC", change: "+2.4%", up: true },
+                    { sym: "ETH", change: "+1.8%", up: true },
+                    { sym: "SOL", change: "-0.6%", up: false },
+                    { sym: "NVDA", change: "+3.1%", up: true },
+                    { sym: "SPY", change: "+0.4%", up: true },
+                    { sym: "GOLD", change: "+0.9%", up: true },
+                    { sym: "EUR/USD", change: "-0.2%", up: false },
                   ].map((t) => (
                     <span key={`${dupeIdx}-${t.sym}`} className="inline-flex items-center gap-2 text-xs font-mono">
                       <span className="font-bold text-white">{t.sym}</span>
-                      <span className="text-slate-400">{t.price}</span>
+                      <span className="text-slate-500">sample move</span>
                       <span className={t.up ? "text-emerald-400" : "text-red-400"}>{t.change}</span>
                     </span>
                   ))}
@@ -295,7 +298,7 @@ const LearnTradingGuide = () => {
               <Card className="p-5 bg-white/[0.02] border-white/5 rounded-2xl flex flex-col">
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp className="w-4 h-4 text-emerald-500" />
-                  <h3 className="text-xs uppercase tracking-[0.15em] font-black text-white">Market Sentiment</h3>
+                  <h3 className="text-xs uppercase tracking-[0.15em] font-black text-white">Practice Sentiment Example</h3>
                 </div>
                 <div className="flex-1 flex flex-col items-center justify-center gap-3">
                   <div className="relative w-8 h-32 bg-white/5 rounded-full overflow-hidden border border-white/10">
@@ -311,7 +314,7 @@ const LearnTradingGuide = () => {
                     <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-slate-500">{sentimentLabel}</p>
                   </div>
                 </div>
-                <p className="text-[9px] text-slate-600 text-center mt-2">Visual indicator only · Not financial advice</p>
+                <p className="text-[9px] text-slate-600 text-center mt-2">Seeded educational example · Not live market sentiment</p>
               </Card>
             </div>
 
