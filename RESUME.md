@@ -40,3 +40,8 @@ Pending means not proof of defect; re-open source at edit time and mark ALREADY 
 - C05 — ALREADY FIXED: quote fallback is explicitly `simulated`, stale cache is `delayed`, and only provenance `realtime` maps to `live`.
 - C06 — ALREADY FIXED: generated candle fallback is tagged `simulated`; candle provenance alone does not create the live badge.
 - C07 — FIXED-ON-BRANCH at `c49df96aa896e8da8d35051c9baea68291c339a8`: chart UI now requires realtime quote + realtime candle provenance before showing `LIVE`; delayed/simulated states are labelled accordingly.
+
+## Checkpoint after items 13–15
+- C08 — ALREADY FIXED: Markets runtime FAQ explicitly labels the dashboard values as simulated practice prices/changes/estimated volume.
+- C09 — ALREADY FIXED for the live-provenance finding: Market Pulse says `Simulator • refresh 30s` and identifies persisted simulator practice data. H02 still covers the separate Fear & Greed naming issue.
+- C21 — FIXED-ON-BRANCH at `f3c6cb2c86278c0ab4d0e03b59d256bf12aea9d4`: crawler-visible Markets copy now matches the runtime simulated-data explanation.
