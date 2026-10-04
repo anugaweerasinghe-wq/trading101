@@ -118,6 +118,11 @@ export function useLiveMarketData(
         const data = result.data;
         // Validate that we got a valid price back
         if (typeof data.price === 'number' && !isNaN(data.price) && data.price > 0) {
+          const provenanceStatus = result.provenance?.status ?? data.provenance?.status;
+          const hasCompleteRealtimeFields =
+            provenanceStatus === 'realtime' &&
+            ['change24h', 'changePercent24h', 'high24h', 'low24h', 'volume24h']
+              .every((key) => typeof data[key] === 'number' && Number.isFinite(data[key]));
           const marketData: LiveMarketData = {
             price: data.price,
             change24h: typeof data.change24h === 'number' ? data.change24h : 0,
@@ -127,8 +132,8 @@ export function useLiveMarketData(
             volume24h: typeof data.volume24h === 'number' ? data.volume24h : 0,
             marketCap: typeof data.marketCap === 'number' ? data.marketCap : undefined,
             lastUpdated: data.lastUpdated || new Date().toISOString(),
-            // Only provider data explicitly marked realtime may surface as "live".
-            source: (result.provenance?.status ?? data.provenance?.status) === 'realtime' ? 'live' : 'simulated',
+            // Only complete provider data explicitly marked realtime may surface as "live".
+            source: hasCompleteRealtimeFields ? 'live' : 'simulated',
             provenance: result.provenance ?? data.provenance,
           };
           setLiveData(marketData);
