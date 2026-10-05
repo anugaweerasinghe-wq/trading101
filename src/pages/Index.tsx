@@ -42,12 +42,12 @@ const homeFaqSchema = {
     {
       "@type": "Question",
       name: "How do I start trading on TradeHQ?",
-      acceptedAnswer: { "@type": "Answer", text: "Just visit TradeHQ and click 'Start Trading Free.' You'll instantly receive $100,000 in virtual cash to trade 150+ assets — no account creation needed." },
+      acceptedAnswer: { "@type": "Answer", text: "Just visit TradeHQ and click 'Start Trading Free.' You'll instantly receive $100,000 in virtual cash to trade 149 assets — no account creation needed." },
     },
     {
       "@type": "Question",
       name: "What stocks and crypto can I trade?",
-      acceptedAnswer: { "@type": "Answer", text: "TradeHQ offers 150+ assets including major stocks (AAPL, NVDA, TSLA), cryptocurrencies (BTC, ETH, SOL), ETFs (SPY, QQQ), forex pairs (EUR/USD), and commodities (Gold, Oil)." },
+      acceptedAnswer: { "@type": "Answer", text: "TradeHQ offers 149 assets including major stocks (AAPL, NVDA, TSLA), cryptocurrencies (BTC, ETH, SOL), ETFs (SPY, QQQ), forex pairs (EUR/USD), and commodities (Gold, Oil)." },
     },
     {
       "@type": "Question",
@@ -83,7 +83,7 @@ const webAppSchema = {
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web Browser",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  description: "Practice stock & crypto trading free with $100,000 virtual cash. No signup needed. 150+ assets, AI mentor, leaderboard.",
+  description: "Practice stock & crypto trading free with $100,000 virtual cash. No signup needed. 149 assets, AI mentor, leaderboard.",
 };
 
 // WebSite identity schema. No SearchAction is declared because TradeHQ does not
@@ -145,7 +145,7 @@ const Index = () => {
     <>
       <Helmet>
         <title>TradeHQ — Free Paper Trading Simulator | $100K Virtual Cash (No Signup)</title>
-        <meta name="description" content="Practice stocks, crypto, ETFs & forex with $100,000 virtual cash. Zero signup. AI mentor, simulated charts, leaderboard & 150+ assets. Free educational trading simulator." />
+        <meta name="description" content="Practice stocks, crypto, ETFs & forex with $100,000 virtual cash. Zero signup. AI mentor, simulated charts, leaderboard & 149 assets. Free educational trading simulator." />
         <link rel="canonical" href="https://www.thetradehq.com/" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
@@ -255,7 +255,7 @@ const Index = () => {
                 to="/markets"
                 className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-full bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all duration-200"
               >
-                View All 150+ Assets →
+                View All 149 Assets →
               </Link>
             </div>
           </div>

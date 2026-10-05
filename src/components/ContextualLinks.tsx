@@ -109,11 +109,11 @@ export function ContextualLinks({ variant, asset, assetSymbols }: ContextualLink
     const symbols = assetSymbols ?? ["btc", "eth", "nvda", "tsla", "spy", "qqq"];
     return (
       <section
-        aria-label="Popular trading destinations"
+        aria-label="Featured trading destinations"
         className="mt-4 mb-6 p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06]"
       >
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Browse 150+ assets across stocks, crypto, ETFs, forex and commodities. Most-practiced today:{" "}
+          Browse 149 assets across stocks, crypto, ETFs, forex and commodities. Featured practice markets:{" "}
           {symbols.map((s, i) => (
             <span key={s}>
               <Link to={`/trade/${s}`} className="text-primary underline-offset-4 hover:underline font-medium">

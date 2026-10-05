@@ -21,7 +21,7 @@ export function CredibilityFooter() {
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
               <Users className="w-8 h-8 text-primary" />
             </div>
-            <p className="text-3xl font-bold mb-1">150+</p>
+            <p className="text-3xl font-bold mb-1">149</p>
             <p className="text-sm text-muted-foreground">Tradeable Assets</p>
           </div>
           <div className="text-center">

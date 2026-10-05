@@ -31,7 +31,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Paper trading is the practice of simulating trades without using real money. Instead of risking your hard-earned savings, you use virtual currency to buy and sell stocks, ETFs, cryptocurrencies, and other financial instruments. The term dates back to a time when aspiring traders would literally write their hypothetical trades on paper to track performance.",
           "Today, paper trading is usually done digitally through simulated platforms. It can help beginners practise order entry, chart reading, record-keeping, and portfolio mechanics without risking real money. It is one practical way to learn how markets work, but it cannot reproduce every part of live trading, especially slippage, liquidity constraints, and the emotions attached to real losses.",
-          "On TradeHQ, every user starts with $100,000 in virtual cash. You can trade over 150 assets including blue-chip stocks like Apple (AAPL), cryptocurrencies like Bitcoin (BTC), ETFs like SPY, forex pairs, and commodities like gold. Every trade you make is tracked, giving you a realistic portfolio experience."
+          "On TradeHQ, every user starts with $100,000 in virtual cash. You can trade 149 assets including blue-chip stocks like Apple (AAPL), cryptocurrencies like Bitcoin (BTC), ETFs like SPY, forex pairs, and commodities like gold. Every trade you make is tracked, giving you a realistic portfolio experience."
         ]
       },
       {
@@ -45,7 +45,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "How to Get Started with Paper Trading on TradeHQ",
         paragraphs: [
-          "Getting started is simple: visit TradeHQ, and you'll have $100,000 in virtual cash ready to trade immediately — no signup or credit card required. Browse over 150 assets, read the AI-generated market analysis, place your first simulated trade, and start tracking your portfolio performance.",
+          "Getting started is simple: visit TradeHQ, and you'll have $100,000 in virtual cash ready to trade immediately — no signup or credit card required. Browse 149 assets, read the AI-generated market analysis, place your first simulated trade, and start tracking your portfolio performance.",
           "As you gain experience, use the AI Mentor feature to get personalized strategy recommendations. Review your trade history, analyze what worked and what didn't, and continuously refine your approach. The goal isn't to make money — it's to build the skills and discipline you'll need when you eventually trade with real capital.",
           "Many professional traders still use paper trading to test new strategies before deploying real capital. It's not just for beginners — it's a lifelong tool for any serious market participant. Start your paper trading journey today and build the foundation for long-term financial success."
         ]
@@ -125,14 +125,14 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Crypto markets never close, so simulated practice is available at any time. Higher volatility can make price changes appear faster and larger, but that does not make learning easier or safer. An asset's unit price also does not measure its risk or accessibility; position size and total exposure matter more than whether one token costs less than $1.",
           "The crypto ecosystem introduces you to concepts like blockchain technology, decentralized finance (DeFi), and tokenomics — knowledge that's increasingly relevant in 2026 as traditional finance and crypto continue to converge. Understanding both worlds makes you a more versatile trader.",
-          "Our recommendation: start with both. TradeHQ gives you access to 150+ assets across stocks, crypto, ETFs, forex, and commodities. Practice trading a few blue-chip stocks and major cryptocurrencies simultaneously to see which market fits your trading style and risk tolerance."
+          "Our recommendation: start with both. TradeHQ gives you access to 149 assets across stocks, crypto, ETFs, forex, and commodities. Practice trading a few blue-chip stocks and major cryptocurrencies simultaneously to see which market fits your trading style and risk tolerance."
         ]
       }
     ],
     relatedLinks: [
       { href: "/trade/btc", label: "Practice trading Bitcoin (BTC)" },
       { href: "/trade/aapl", label: "Practice trading Apple (AAPL)" },
-      { href: "/markets", label: "Explore all 150+ tradeable assets" },
+      { href: "/markets", label: "Explore all 149 tradeable assets" },
       { href: "/learn/article/how-to-build-a-portfolio", label: "How to build a balanced portfolio" },
     ],
   },
