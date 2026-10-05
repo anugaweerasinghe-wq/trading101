@@ -165,7 +165,7 @@ export default function Daily() {
                   </div>
                 </div>
                 <div className="hidden md:flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-foreground/50 font-semibold">
-                  <TrendingUp className="w-3.5 h-3.5" /> Live Scenario
+                  <TrendingUp className="w-3.5 h-3.5" /> Hypothetical Scenario
                 </div>
               </div>
 

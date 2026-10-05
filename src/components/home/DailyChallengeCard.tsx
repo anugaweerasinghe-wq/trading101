@@ -51,6 +51,7 @@ export function DailyChallengeCard() {
 
       {/* Challenge */}
       <div className="mb-5">
+        <p className="text-xs text-muted-foreground mb-2">Hypothetical exercise — figures and events are not current market data.</p>
         <div className="flex items-center gap-2 mb-2">
           <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded bg-foreground/10 text-foreground/80">
             {challenge.asset}
