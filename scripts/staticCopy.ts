@@ -335,7 +335,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How a practice duel works",
         p: [
-          "Create an invite link and send it to a friend. Both of you start a 30-day duel from the same $100,000 virtual balance, and a shared scoreboard tracks percentage return for the duration. When the countdown ends, the duel closes and the final standings are recorded.",
+          "Create an invite link and send it to a friend. Each participant is measured from their own recorded starting balance, which can differ. The page shows a 30-day countdown and compares client-synced simulated percentage changes. These are not independently verified results, and the displayed statistics are not a frozen record of final standings.",
           "Nothing is wagered and nothing is won. There is no entry fee, no prize pool and no real money at any point — this is a study device that uses mild competition to make daily practice stick.",
         ],
       },
