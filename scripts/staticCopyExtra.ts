@@ -185,11 +185,10 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "What the challenges cover",
       list: [
-        "Chart literacy: identifying a described structure on a real chart rather than in a textbook diagram.",
-        "Risk arithmetic: calculating a position size from a stop distance and a fixed account risk.",
-        "Order mechanics: placing a specific order type and predicting how it will behave.",
-        "Review discipline: re-reading one old journal entry and grading the decision, not the outcome.",
-        "Knowledge checks: short questions drawn from the glossary and courses.",
+        "A hypothetical market scenario with stated exercise inputs, rather than current market news.",
+        "Comparing long, short and hold reasoning without grading one market direction as objectively correct.",
+        "Reviewing the scenario's educational insight and the trade-offs in each response.",
+        "A short bonus knowledge question about market concepts.",
       ],
     },
     {
@@ -212,8 +211,8 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "How reviews are handled",
       list: [
-        "One review per visitor, enforced so the page cannot be flooded by a single person.",
-        "Reviews are checked before publication for spam, abuse, and anything presented as investment advice.",
+        "Browser storage and server-side duplicate checks limit repeat submissions; these checks do not verify identity.",
+        "Submissions appear automatically and can be moderated after publication.",
         "We publish criticism. A page of only five-star reviews would tell you nothing.",
         "Reviews are about the software — usability, content quality, bugs — not about trading returns.",
       ],
@@ -237,7 +236,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Leaving one",
       p: [
-        "Reviews are limited to one per visitor, and you do not need an account to leave one. Say what you were trying to learn, what helped and what did not. Criticism about missing content or confusing pages is genuinely welcome — several sections of the site exist because someone said the previous version was unclear.",
+        "You do not need an account to leave feedback. Browser and server-side duplicate checks limit repeat submissions. Say what you were trying to learn, what helped and what did not, including missing content or confusing pages.",
       ],
     },
   ],

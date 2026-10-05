@@ -213,7 +213,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How to use it with the simulator",
         p: [
-          "Read one section, then immediately do the matching thing in the practice account with $100,000 in virtual cash. Reading about a limit order teaches you the definition; placing twenty of them teaches you how they behave when price moves against you. The guide is written so every section has a corresponding action you can take in the simulator the same day.",
+          "Use the $100,000 virtual practice account to explore the market-order, position-sizing and portfolio concepts supported by the simulator. Limit and stop orders are educational concepts in the guide; they cannot currently be placed on TradeHQ. Study those sections as explanations of real-market mechanics rather than instructions for an available simulator feature.",
         ],
       },
     ],
@@ -288,6 +288,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         h: "How the daily challenge works",
         p: [
           "Every day the simulator presents one hypothetical market scenario. You choose a response, compare the reasoning and trade-offs, then answer a short bonus knowledge question about market basics. Completing the reflection advances a streak counter stored in your browser; no market direction is graded as objectively correct.",
+          "The scenario's prices, news events and dates are exercise inputs, not a report of what happened in today's markets. Choosing long, short or hold records a reflection; it does not place an order. Use the explanation to compare assumptions and uncertainty rather than treating completion as evidence of forecasting skill.",
         ],
       },
       {
@@ -312,7 +313,8 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "Community reviews",
         p: [
-          "This page collects reviews submitted by people who have used the practice simulator. Submission is limited to one review per visitor, and reviews are moderated before publication to remove spam, abuse and anything presenting itself as investment advice. Reviews describe the product; they are not testimonials about profits, and no review claims anyone earned money.",
+          "This page collects visitor-submitted feedback about the practice simulator. Submissions appear automatically and can be moderated after publication. Browser and server-side duplicate checks limit repeat submissions, but identity and usage are not independently verified. Reviews are feedback about the product, not verified investment-performance testimonials.",
+          "A visible rating summarises the submissions currently displayed; it does not establish that each author used every feature or that the feedback represents all visitors. Read the specific task and experience described. For a factual correction or a privacy concern, the contact page provides a direct way to reach the maintainer.",
         ],
       },
       {
