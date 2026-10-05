@@ -213,7 +213,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How to use it with the simulator",
         p: [
-          "Read one section, then immediately do the matching thing in the practice account with $100,000 in virtual cash. Reading about a limit order teaches you the definition; placing twenty of them teaches you how they behave when price moves against you. The guide is written so every section has a corresponding action you can take in the simulator the same day.",
+          "Use the $100,000 virtual practice account to explore the market-order, position-sizing and portfolio concepts supported by the simulator. Limit and stop orders are educational concepts in the guide; they cannot currently be placed on TradeHQ. Study those sections as explanations of real-market mechanics rather than instructions for an available simulator feature.",
         ],
       },
     ],
@@ -312,7 +312,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "Community reviews",
         p: [
-          "This page collects reviews submitted by people who have used the practice simulator. Submission is limited to one review per visitor, and reviews are moderated before publication to remove spam, abuse and anything presenting itself as investment advice. Reviews describe the product; they are not testimonials about profits, and no review claims anyone earned money.",
+          "This page collects visitor-submitted feedback about the practice simulator. Submissions appear automatically and can be moderated after publication. Browser and server-side duplicate checks limit repeat submissions, but identity and usage are not independently verified. Reviews are feedback about the product, not verified investment-performance testimonials.",
         ],
       },
       {
