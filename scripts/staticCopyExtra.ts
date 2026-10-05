@@ -377,7 +377,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Children and jurisdiction",
       p: [
-        "TradeHQ is not directed at children and asks for no financial information from anyone. Because the service holds no funds and executes no trades, it is not a financial services provider in any jurisdiction; local financial regulation applies to the broker you eventually use, not to this simulator.",
+        "The core simulator works without an account, and optional signup does not collect age. AdSense is currently disabled; advertising consent is not an age check. Parents or guardians can raise privacy concerns through the contact page. Because the service holds no funds and executes no trades, it is not a financial services provider in any jurisdiction; local financial regulation applies to the broker you eventually use, not to this simulator.",
       ],
     },
     {

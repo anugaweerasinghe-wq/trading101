@@ -96,6 +96,10 @@ export default function LearnArticle() {
               </div>
 
               <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">{article.title}</h1>
+              <p className="text-sm text-muted-foreground mb-6">
+                Published by TradeHQ. <Link to="/about" className="underline underline-offset-4">Site creator and editorial approach: Anuga Weerasinghe</Link>.
+                This page has no recorded editorial review date.
+              </p>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8">{article.summary}</p>
 
               <div className="space-y-10">

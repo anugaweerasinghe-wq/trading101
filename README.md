@@ -71,3 +71,17 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+
+## Advertising audience decision required before activation
+
+N-M04 remains an owner decision, not a finding that TradeHQ is automatically child-directed.
+AdSense is currently disabled behind the unconfirmed publisher placeholder. Before enabling it:
+
+- Record the intended audience and whether any site or section is child-directed; student wording alone is insufficient to decide this.
+- Review current Google age-treatment requirements and configure the applicable signals and advertising protections for that audience. Unknown age must not be silently treated as verified adult age.
+- Assess optional account data, public profiles and consented analytics/session replay for the intended audience. Do not assume advertising consent proves age.
+- Confirm the publisher account and Google-certified CMP separately.
+
+No age gate, authentication change or backend configuration was introduced by this documentation.
+Reference: https://support.google.com/publisherpolicies/answer/10436800
