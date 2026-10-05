@@ -253,9 +253,9 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Practical details",
       list: [
-        "Both participants start from an identical $100,000 virtual balance on the day the duel begins.",
+        "Each participant uses their own recorded starting balance; those balances can differ.",
         "The scoreboard tracks percentage return so different activity levels stay comparable.",
-        "The countdown is fixed at 30 days and closes automatically.",
+        "The page shows a 30-day countdown based on the recorded duel dates.",
         "There is no fee, no stake, no prize and no real money — running a duel for money would be gambling, and this is not that.",
       ],
     },
@@ -264,9 +264,9 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       list: [
         "Create the duel and copy the invite link that appears.",
         "Send it to one person; the duel starts when they join.",
-        "Both balances reset to the same starting figure at that moment.",
+        "Joining records the second participant's current synced starting value; it does not reset either portfolio.",
         "The scoreboard and countdown appear on this page for both participants for the next 30 days.",
-        "When the countdown ends the duel closes and neither side can trade into it further.",
+        "The countdown reaching zero does not stop simulator trading. Displayed scores use synced practice statistics and are not frozen, audited final standings.",
       ],
     },
   ],
