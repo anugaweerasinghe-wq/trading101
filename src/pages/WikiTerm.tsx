@@ -133,6 +133,11 @@ const WikiTerm = () => {
             </h1>
           </motion.div>
 
+              <p className="text-sm text-muted-foreground mb-6">
+                Published by TradeHQ. <Link to="/about" className="underline underline-offset-4">Site creator and editorial approach: Anuga Weerasinghe</Link>.
+                This page has no recorded editorial review date.
+              </p>
+
           {/* Expert Definition */}
           <Card className="mt-8 p-6 md:p-8 bg-card border-border rounded-2xl backdrop-blur-md">
             <div className="flex items-center gap-2 mb-4">

@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
@@ -179,7 +180,7 @@ Users may not copy, modify, distribute, or create derivative works without expli
             </p>
             <div className="p-4 rounded-xl bg-muted/30 border border-border/30">
               <p className="text-sm">
-                <strong>Email:</strong> legal@tradinghq.com
+                <strong>Contact:</strong> <Link to="/contact" className="underline underline-offset-4">TradeHQ contact page</Link>
               </p>
             </div>
           </section>

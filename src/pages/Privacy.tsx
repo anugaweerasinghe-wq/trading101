@@ -44,6 +44,15 @@ Analytics and advertising data are retained according to the settings and polici
 TradeHQ uses hosted infrastructure and access controls intended to protect stored data, but no online service can guarantee absolute security.`
     },
     {
+      icon: Shield,
+      title: "Age and Optional Features",
+      content: `The core simulator works without an account. The optional account flow does not ask for age, so TradeHQ does not determine a visitor's age from that form.
+
+Public profiles and community features can publish the information and simulated statistics you choose to share. Avoid including private or sensitive information in public fields. A parent or guardian can use the contact page to raise a privacy concern involving a young user.
+
+AdSense advertising remains disabled in the current build. An advertising consent choice alone does not determine age or replace age-specific advertising protections where they apply.`
+    },
+    {
       icon: Globe,
       title: "Service Providers, Cookies & Your Choices",
       content: `TradeHQ relies on third parties including Vercel for hosting, Supabase for optional authentication/database features, Amplitude for consented analytics/session replay, and Google AdSense for consented advertising. These providers can process data in countries other than your own under their own legal and contractual arrangements.

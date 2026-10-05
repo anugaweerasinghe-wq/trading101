@@ -197,6 +197,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
     const related = (g.relatedTerms || []).filter((r: string) => bySlug.has(r));
     map.set(`/wiki/${g.slug}`, {
       sections: [
+        { h: "Publisher and editorial transparency", p: ["Published by TradeHQ. Site creator: Anuga Weerasinghe. This page has no recorded editorial review date; the About page explains the site's editorial approach."] },
         { h: `What ${g.term} means`, p: [g.definition] },
         { h: "In depth", p: splitParagraphs(g.expertDefinition) },
         { h: "Key points", list: g.keyPoints },
@@ -210,6 +211,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       ],
       links: [
         ...related.map((r: string) => ({ href: `/wiki/${r}`, label: bySlug.get(r)!.term })),
+        { href: "/about", label: "Publisher and editorial approach" },
         { href: "/wiki", label: "Full glossary index" },
         { href: "/trade", label: "Practice desk" },
       ],
@@ -533,11 +535,12 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
   for (const a of d.LEARN_ARTICLES as any[]) {
     map.set(`/learn/article/${a.slug}`, {
       sections: [
+        { h: "Publisher and editorial transparency", p: ["Published by TradeHQ. Site creator: Anuga Weerasinghe. This page has no recorded editorial review date; the About page explains the site's editorial approach."] },
         { h: "Summary", p: [a.summary] },
         ...a.sections.map((s: any) => ({ h: s.heading, p: s.paragraphs })),
         { h: "Practise what you just read", p: [`Apply this in the simulator with ${BALANCE} in virtual cash. ${DISCLAIMER}`] },
       ],
-      links: [...(a.relatedLinks || []).map((l: any) => ({ href: l.href, label: l.label })), { href: "/learn", label: "All learn articles" }],
+      links: [...(a.relatedLinks || []).map((l: any) => ({ href: l.href, label: l.label })), { href: "/about", label: "Publisher and editorial approach" }, { href: "/learn", label: "All learn articles" }],
     });
   }
 
