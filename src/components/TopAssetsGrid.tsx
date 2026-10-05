@@ -22,7 +22,7 @@ const TOP_ASSETS: TopAsset[] = [
     name: "Bitcoin",
     description: "The world's most popular cryptocurrency. Practice BTC trading with simulated charts, order types, and AI-powered analysis.",
     icon: Zap,
-    badge: "Most Traded",
+    badge: "Featured Market",
     badgeColor: "bg-primary/10 text-primary border-primary/20",
     glowColor: "hsl(180 70% 50% / 0.08)",
   },
@@ -65,7 +65,7 @@ export function TopAssetsGrid() {
           className="text-center mb-16"
         >
           <span className="inline-block text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-4">
-            Popular Markets
+            Featured Practice Markets
           </span>
           <h2 className="text-3xl md:text-5xl font-bold mb-5 tracking-tight">
             Start Trading{' '}
@@ -76,7 +76,7 @@ export function TopAssetsGrid() {
             </span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-base">
-            Jump into our most popular simulations. $100,000 virtual capital — no signup required.
+            Explore these featured practice markets. $100,000 virtual capital — no signup required.
           </p>
         </motion.div>
 

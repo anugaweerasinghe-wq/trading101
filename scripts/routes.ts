@@ -167,19 +167,19 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/",
     title: "TradeHQ — Free Paper Trading Simulator | $100K Virtual Cash (No Signup)",
-    description: `Practice stock, crypto, ETF, forex & commodities trading with ${BALANCE} virtual cash. No signup. AI mentor, simulated charts, portfolio tracking & 150+ assets. Free educational trading simulator.`,
+    description: `Practice stock, crypto, ETF, forex & commodities trading with ${BALANCE} virtual cash. No signup. AI mentor, simulated charts, portfolio tracking & 149 assets. Free educational trading simulator.`,
     h1: "TradeHQ — Free Paper Trading Simulator",
-    summary: `Practice simulated trading across 150+ assets with ${BALANCE} in virtual cash. No real money is involved. Learn order mechanics, portfolio tracking, and risk concepts across stocks, crypto, ETFs, forex and commodities.`,
+    summary: `Practice simulated trading across 149 assets with ${BALANCE} in virtual cash. No real money is involved. Learn order mechanics, portfolio tracking, and risk concepts across stocks, crypto, ETFs, forex and commodities.`,
     priority: "1.0",
     changefreq: "daily",
   });
 
   routes.push({
     path: "/trade",
-    title: "Paper Trade 150+ Assets — Free Simulator | TradeHQ",
-    description: `Buy and sell 150+ stocks, crypto, ETFs, forex and commodities with ${BALANCE} in virtual cash. No signup, no risk. Educational simulation only.`,
-    h1: "Paper Trade 150+ Assets",
-    summary: `Choose from 150+ simulated assets and place buy or sell orders instantly. Every account starts with ${BALANCE} in virtual cash. Educational simulation — no real money and no brokerage relationship.`,
+    title: "Paper Trade 149 Assets — Free Simulator | TradeHQ",
+    description: `Buy and sell 149 stocks, crypto, ETFs, forex and commodities with ${BALANCE} in virtual cash. No signup, no risk. Educational simulation only.`,
+    h1: "Paper Trade 149 Assets",
+    summary: `Choose from 149 simulated assets and place buy or sell orders instantly. Every account starts with ${BALANCE} in virtual cash. Educational simulation — no real money and no brokerage relationship.`,
     priority: "0.9",
     changefreq: "daily",
   });
@@ -187,9 +187,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/markets",
     title: "Practice Markets — Stocks, Crypto, ETFs, Forex | TradeHQ",
-    description: `Browse 150+ simulated markets across stocks, crypto, ETFs, forex and commodities. Practice trading with ${BALANCE} virtual cash — free, no signup.`,
+    description: `Browse 149 simulated markets across stocks, crypto, ETFs, forex and commodities. Practice trading with ${BALANCE} virtual cash — free, no signup.`,
     h1: "Markets Overview",
-    summary: `Browse 150+ simulated markets across major asset classes. Explore movers, sentiment-style indicators and sector groupings, then practise with ${BALANCE} virtual cash. Data may be simulated or delayed and is for education only.`,
+    summary: `Browse 149 simulated markets across major asset classes. Explore movers, sentiment-style indicators and sector groupings, then practise with ${BALANCE} virtual cash. Data may be simulated or delayed and is for education only.`,
     priority: "0.9",
     changefreq: "daily",
   });

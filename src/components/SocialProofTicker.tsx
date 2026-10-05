@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const items = [
-  "150+ assets available",
+  "149 assets available",
   "100% free",
   "No signup required",
   "Real market simulation",

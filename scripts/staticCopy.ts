@@ -21,7 +21,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What you can do here",
         list: [
-          "Paper trade 150+ instruments across stocks, crypto, ETFs, forex and commodities using market orders.",
+          "Paper trade 149 instruments across stocks, crypto, ETFs, forex and commodities using market orders.",
           "Track a full practice portfolio — open positions, realised and unrealised P&L, maximum drawdown, open-position P&L dispersion and allocation snapshots.",
           "Work through four structured courses (options, futures, macro reading and trading psychology) with quizzes and completion badges.",
           "Read a 49-term trading glossary written in plain language, each entry with a detailed explanation and a worked example.",

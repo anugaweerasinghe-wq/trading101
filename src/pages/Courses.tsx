@@ -48,7 +48,7 @@ const WHY_TRUST = [
   {
     icon: Users,
     title: "Written and maintained by a real person",
-    body: "All courses are written and reviewed by Anuga Weerasinghe, TradeHQ's creator. Reviewed dates and author byline appear on every lesson page.",
+    body: "All courses are written and reviewed by Anuga Weerasinghe, TradeHQ's creator. An author byline and sources appear on every lesson page.",
   },
   {
     icon: Award,
@@ -395,8 +395,7 @@ export default function Courses() {
                 understand how markets really work before ever risking real money.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Content is reviewed periodically and every lesson displays its last-reviewed date
-                and its public sources (SEC, CFTC, FRED, CME Group, Investopedia). If you spot an
+                Every lesson displays its public sources (SEC, CFTC, FRED, CME Group, Investopedia). If you spot an
                 error, please <Link to="/contact" className="text-emerald-400 hover:underline">contact us</Link> — reported corrections are reviewed before publication.
               </p>
             </Card>
