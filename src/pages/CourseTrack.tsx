@@ -36,7 +36,6 @@ export default function CourseTrack() {
       courseMode: "online",
       courseWorkload: `PT${track.lessons.reduce((s, l) => s + l.readingMinutes, 0)}M`,
     },
-    educationalCredentialAwarded: track.badge.name,
     inLanguage: "en",
     url,
   };

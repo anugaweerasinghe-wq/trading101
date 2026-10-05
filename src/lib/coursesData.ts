@@ -52,9 +52,9 @@ const optionsTrack: CourseTrack = {
   hero: optionsHero,
   level: "Intermediate",
   badge: {
-    name: "Options Fundamentals Certified",
+    name: "Options Fundamentals Completion",
     description:
-      "Awarded after completing every lesson and passing every quiz in the Options Trading Fundamentals track.",
+      "Awarded after completing every lesson and submitting every quiz in the Options Trading Fundamentals track.",
   },
   outcomes: [
     "Read an option chain and explain what a specific call or put contract obliges each side to do.",
@@ -260,7 +260,7 @@ const futuresTrack: CourseTrack = {
     "A ground-up guide to exchange-listed futures — how contracts are specified, how margin actually works, why term-structure matters, and how hedgers and speculators interact on the CME.",
   hero: futuresHero,
   level: "Intermediate",
-  badge: { name: "Futures Fundamentals Certified", description: "Awarded after completing every lesson in the Futures & Derivatives track." },
+  badge: { name: "Futures Fundamentals Completion", description: "Awarded after completing every lesson in the Futures & Derivatives track." },
   outcomes: [
     "Explain what a futures contract standardises and who the natural counterparties in a market are.",
     "Calculate the notional value behind a contract and the margin actually required to hold it.",
@@ -454,7 +454,7 @@ const macroTrack: CourseTrack = {
     "A trader-focused tour of the macro variables that move markets — inflation prints, central-bank policy, the yield curve, and the dollar index — with a concrete playbook for reading them together.",
   hero: macroHero,
   level: "Intermediate",
-  badge: { name: "Macro Reading Certified", description: "Awarded after completing every lesson in the Macro Reading for Traders track." },
+  badge: { name: "Macro Reading Completion", description: "Awarded after completing every lesson in the Macro Reading for Traders track." },
   outcomes: [
     "Read a CPI release and identify which component drove the surprise, rather than reacting to the headline number.",
     "Explain how the Fed's policy cycle is set and why the market's expectation matters more than the decision itself.",
@@ -649,7 +649,7 @@ const psychologyTrack: CourseTrack = {
     "The most sophisticated system in the world fails if the trader running it is emotionally compromised. This track teaches the cognitive biases, emotional dysregulation patterns, and concrete rituals professional traders use to stay in the game.",
   hero: psychologyHero,
   level: "Beginner",
-  badge: { name: "Psychology Mastery Certified", description: "Awarded after completing every lesson in the Trading Psychology Mastery track." },
+  badge: { name: "Trading Psychology Completion", description: "Awarded after completing every lesson in the Trading Psychology Mastery track." },
   outcomes: [
     "Name the specific biases most likely to affect your own decisions, with an example from your own trade log.",
     "Recognise the physical and behavioural signs of tilt early enough to stop trading.",

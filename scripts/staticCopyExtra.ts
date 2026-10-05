@@ -11,7 +11,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Why practice first, honestly",
       p: [
-        "The argument for a simulator is not that practice guarantees profit — it does not. It is that the cost of learning market mechanics is unavoidable, and you get to choose whether you pay it in money or in time. A beginner who learns what a limit order does by watching it not fill in a fast market has learned the same lesson as one who paid for it, minus the loss.",
+        "The argument for a simulator is not that practice guarantees profit — it does not. It is that the cost of learning market mechanics is unavoidable, and you get to choose whether you pay it in money or in time. A beginner can practice buying and selling holdings with virtual capital, then review those decisions without risking savings. TradeHQ currently supports market orders only; it does not simulate resting limit orders or short positions.",
         "There is a real limitation to be honest about: a simulator removes the emotional weight of losing your own money, and that weight changes behaviour. Treat practice as the place to build a repeatable process — sizing, exits, journaling, review — and expect the emotional part to still be new when real money is involved.",
       ],
     },
@@ -30,11 +30,11 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
 
   "/trade": [
     {
-      h: "Order types, and when each one matters",
+      h: "Orders supported by this simulator",
       list: [
         "Market order: fills immediately at the shown simulated price. Simple, but in a fast market the price you see is not always the price you get — in real trading this gap is called slippage.",
-        "Limit order: only fills at your price or better. It protects the entry price but may never fill at all, which is itself a lesson worth learning on practice capital.",
-        "Closing a position: selling what you hold, or buying back a short. The realised result lands in the portfolio history for review.",
+        "Limit orders are explained in the learning material but are not available in the current simulator. Practice orders execute as market orders at the shown simulated price.",
+        "Closing a position: sell some or all of an existing holding. You cannot sell more than you hold or open a short position. Completed buys and sells appear in portfolio trade history.",
       ],
     },
     {

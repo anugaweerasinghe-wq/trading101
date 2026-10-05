@@ -124,10 +124,11 @@ export default function About() {
                 an exchange or a statistical agency, so the claim can be checked rather than trusted.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mt-3">
-                We deliberately do not publish performance claims, testimonials, win-rate promises or
-                statistics about our own users. Numbers of that kind are impossible for a reader to
-                verify and are the standard signature of a site selling something. When a page needs a
-                figure, it comes from a cited public source; when a question has no honest answer —
+                Community Reviews publish visitor-submitted feedback; we do not independently verify
+                reviewers' identities or experiences. The Community Practice Board publishes optional,
+                client-synced simulated statistics, not independently verified investment results.
+                Neither feedback nor practice rankings promise real-world returns. Educational figures
+                use cited sources or clearly labelled hypothetical examples; when a question has no honest answer —
                 which asset will rise, whether a strategy will work for you — the page says so instead
                 of guessing. Content is revised whenever a reader points out an error or a market
                 mechanism changes, and corrections are made in place rather than quietly removed.
