@@ -55,7 +55,7 @@ export async function requestPushPermission(): Promise<NotificationPermission> {
   if (perm === "granted") {
     try {
       new Notification("TradeHQ notifications on 🎯", {
-        body: "We'll send a daily challenge nudge and big-market-move alerts.",
+        body: "Browser permission is enabled. Scheduled daily and watchlist alerts are not currently available.",
         icon: "/logo.svg",
         badge: "/logo.svg",
       });

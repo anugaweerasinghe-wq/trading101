@@ -32,7 +32,7 @@ interface Props {
   portfolio: Portfolio;
   /** Live ticking asset list (same source as the Trade page). When provided,
    *  position prices are overridden with their live counterparts so the
-   *  scenario engine simulates from the exact real-time price. */
+   *  scenario engine starts from the current practice price; provenance may vary. */
   liveAssets?: Asset[];
 }
 
@@ -45,7 +45,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
   const [horizonDays, setHorizonDays] = useState<number>(30);
   const { toast } = useToast();
 
-  // Build a live-price-synced portfolio snapshot — matches the Trade page exactly.
+  // Build a practice-price portfolio snapshot from the shared price cache.
   const livePortfolio = (() => {
     if (!liveAssets || liveAssets.length === 0) return portfolio;
     const liveById = new Map(liveAssets.map((a) => [a.id, a]));

@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -14,7 +15,7 @@ const DOMAIN = "https://www.thetradehq.com";
 export default function CountryGuide() {
   const { country } = useParams<{ country: string }>();
   const guide = country ? getCountryGuide(country) : undefined;
-  if (!guide) return <Navigate to="/learn" replace />;
+  if (!guide) return <NotFound />;
 
   const path = `/learn/country/${guide.slug}`;
   const title = `Learn Trading in ${guide.country} — Free Guide for ${guide.country} Students | TradeHQ`;
@@ -65,7 +66,7 @@ export default function CountryGuide() {
           <AIAnswerBlock
             className="mb-10"
             question={`Is TradeHQ suitable for ${guide.country} traders?`}
-            answer={`Yes. TradeHQ is a free educational trading simulator accessible from ${guide.country} with no signup, no payment and no geo-restriction. It is not a broker and does not execute real trades, so it is not regulated by ${guide.regulator.name}. Every account starts with $100,000 in virtual cash so you can learn how markets work before opening a real ${guide.currency} account. Educational simulation only — not financial advice.`}
+            answer={`Yes. TradeHQ is a free educational trading simulator accessible from ${guide.country} with no signup, no payment and no geo-restriction. TradeHQ is a virtual practice tool, not a broker, and does not execute real trades. This page does not determine your legal eligibility or a provider’s regulatory status. Every account starts with $100,000 in virtual cash so you can learn how markets work before opening a real ${guide.currency} account. Educational simulation only — not financial advice.`}
           />
 
           <section className="grid md:grid-cols-2 gap-4 mb-10">
@@ -77,7 +78,7 @@ export default function CountryGuide() {
                 {guide.regulator.name}
               </a>
               <p className="text-xs text-muted-foreground mt-2">
-                Only real-money brokers are regulated. TradeHQ is not.
+                Check current local rules and provider registration with the relevant official authority. This guide does not certify regulatory compliance.
               </p>
             </Card>
             <Card className="p-5 bg-white/[0.02] border-white/10">

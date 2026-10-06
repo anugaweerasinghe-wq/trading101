@@ -150,7 +150,7 @@ export default function Markets() {
             {/* Static H1 Header - Renders immediately for Google */}
             <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 transition-all duration-300">
               <div>
-                <h1 className="text-xl md:text-3xl font-bold">2026 Market Strategy Hub</h1>
+                <h1 className="text-xl md:text-3xl font-bold">Market Practice Hub</h1>
                 <p className="text-muted-foreground text-xs md:text-sm">
                   Practice professional positioning with simulated market data. Explore {assets.length}+ assets across crypto, stocks, ETFs, forex, and commodities.
                 </p>

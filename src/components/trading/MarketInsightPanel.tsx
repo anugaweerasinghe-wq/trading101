@@ -68,14 +68,7 @@ function deriveInsights(asset: Asset): InsightTile[] {
   const support = price * (1 - levelOffset);
   const resistance = price * (1 + levelOffset);
 
-  const beginnerTip =
-    absChange > 4
-      ? "Large recent move — smaller position sizes usually make practice more realistic."
-      : cp > 2
-        ? "The recent move is above +2%. Avoid chasing a move without a plan."
-        : cp < -2
-          ? "The recent move is below -2%. Review the chart before reacting."
-          : "Market conditions are calmer. This is a good moment to study structure and risk.";
+  const beginnerTip = "Compare the percentage move with your chosen hypothetical position value. These buckets describe the practice snapshot; they do not measure future volatility or recommend an entry or size.";
 
   return [
     {
@@ -86,9 +79,9 @@ function deriveInsights(asset: Asset): InsightTile[] {
       color: trendColor,
     },
     {
-      label: "Volatility",
+      label: "Move Size Bucket",
       value: volatilityValue,
-      detail: `${absChange.toFixed(1)}% current swing`,
+      detail: `${absChange.toFixed(1)}% practice move · heuristic`,
       icon: <Activity className="h-4 w-4" />,
       color: volatilityColor,
     },

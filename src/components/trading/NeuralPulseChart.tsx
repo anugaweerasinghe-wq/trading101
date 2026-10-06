@@ -223,7 +223,7 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
 
     series.setData(chartData as any);
 
-    // Dynamic support/resistance zones
+    // Fixed illustrative bands; not calculated support or resistance.
     const lastClose = chartData[chartData.length - 1]?.close || asset.price;
     const supportZone = lastClose * 0.97;
     const resistanceZone = lastClose * 1.035;
@@ -234,7 +234,7 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
       lineWidth: 2,
       lineStyle: LineStyle.Dashed,
       axisLabelVisible: true,
-      title: 'Support Zone',
+      title: 'Illustrative lower band (−3%)',
     });
 
     series.createPriceLine({
@@ -243,7 +243,7 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
       lineWidth: 2,
       lineStyle: LineStyle.Dashed,
       axisLabelVisible: true,
-      title: 'Resistance Zone',
+      title: 'Illustrative upper band (+3.5%)',
     });
 
     chart.timeScale().fitContent();
@@ -304,11 +304,11 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full bg-profit" />
-            Support
+            Lower illustrative band −3%
           </span>
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full bg-coral" />
-            Resistance
+            Upper illustrative band +3.5%
           </span>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -33,18 +34,7 @@ export default function LessonDetail() {
 
   const lesson = lessonData.find((l) => l.id === Number(lessonId));
 
-  if (!lesson) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <main className="pt-24 pb-12">
-          <div className="container mx-auto px-6">
-            <h1 className="text-3xl font-bold">Lesson not found</h1>
-          </div>
-        </main>
-      </div>
-    );
-  }
+  if (!lesson) return <NotFound />;
 
   const progress = (completedSubtopics.size / lesson.subtopics.length) * 100;
   const currentTopic = lesson.subtopics[currentSubtopic];
@@ -82,7 +72,7 @@ export default function LessonDetail() {
   return (
     <>
       <Helmet>
-        <title>{lesson.title} — Free Trading Course | TradeHQ 2026</title>
+        <title>{lesson.title} — Free Trading Course | TradeHQ</title>
         <meta name="description" content={`Learn ${lesson.title.toLowerCase()}. ${lesson.description} Free interactive course with quiz.`} />
         <link rel="canonical" href={`https://www.thetradehq.com/learn/${lessonId}`} />
         <meta name="robots" content="noindex, follow" />

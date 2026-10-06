@@ -84,7 +84,7 @@ export default function Daily() {
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-5 backdrop-blur-xl">
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
                 <span className="text-[11px] font-bold text-primary uppercase tracking-[0.2em]">
-                  Daily Challenge · {new Date().toUTCString().slice(5, 16)}
+                  Daily Challenge · {new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
                 </span>
               </div>
               <h1

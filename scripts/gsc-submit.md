@@ -15,7 +15,7 @@
 
 ## Why pages don't get indexed (in order of likelihood)
 1. **Thin content** — page has < 300 words of unique text. Fix: enrich content.
-2. **Duplicate / near-duplicate** — same description across many pages. Fix: per-route unique descriptions (already wired via `SEOHead`).
+2. **Duplicate / near-duplicate** — review page value and descriptions. Per-route descriptions are maintained by the route manifest/prerender and page-level Helmet metadata.
 3. **Orphan page** — no internal link points to it. Fix: ensure MegaFooter or a hub page links to every URL in sitemap.
 4. **Slow Core Web Vitals** — LCP > 2.5s. Fix: lazy-load below-the-fold, preload hero font.
 5. **JS-only rendering** — Googlebot can render JS but indexes it slower. Fix: every page must render meaningful HTML on first paint (Helmet handles `<title>`/meta; main content should not require API call to display).

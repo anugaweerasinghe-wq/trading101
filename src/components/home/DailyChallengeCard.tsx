@@ -38,7 +38,7 @@ export function DailyChallengeCard() {
           </div>
           <div>
             <div className="text-[10px] uppercase tracking-widest text-primary font-bold">Today's Challenge</div>
-            <div className="text-xs text-muted-foreground">New every UTC midnight</div>
+            <div className="text-xs text-muted-foreground">New at local midnight</div>
           </div>
         </div>
         {streak && streak.current > 0 && (

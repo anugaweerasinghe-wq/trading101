@@ -1,3 +1,4 @@
+import { calculateClosedTradeStats } from "@/lib/portfolio";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,14 +50,8 @@ export function AIAssistant({ portfolio, assets }: AIAssistantProps) {
     setInput("");
     setIsLoading(true);
 
-    const sellTrades = portfolio.trades.filter((t) => t.type === "sell");
-    const wins = sellTrades.filter((t) => {
-      const buys = portfolio.trades.filter(
-        (bt) => bt.assetId === t.assetId && bt.type === "buy" && bt.timestamp < t.timestamp,
-      );
-      return buys.length > 0 && t.price > buys[buys.length - 1].price;
-    });
-    const winRate = sellTrades.length ? (wins.length / sellTrades.length) * 100 : null;
+    const stats = calculateClosedTradeStats(portfolio);
+    const winRate = stats.sells ? stats.winRate : null;
     const topPosition = portfolio.positions
       .map((p) => ({
         symbol: p.asset.symbol,
@@ -111,7 +106,7 @@ export function AIAssistant({ portfolio, assets }: AIAssistantProps) {
                 <Sparkles className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold">Smart Trading Advisor</h3>
+                <h3 className="font-semibold">Educational Trading Mentor</h3>
                 <p className="text-xs text-muted-foreground">Curated knowledge engine</p>
               </div>
             </div>

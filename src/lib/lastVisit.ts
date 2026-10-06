@@ -7,12 +7,17 @@ const ROUTE_KEY = "tradehq_last_route";
 const ASSET_KEY = "tradehq_last_asset";
 const VISIT_KEY = "tradehq_last_visit_at";
 const PREVIOUS_VISIT_KEY = "tradehq_previous_visit_at";
+let recordedThisSession = false;
 
 export function recordVisit(pathname: string) {
   try {
     localStorage.setItem(ROUTE_KEY, pathname);
     const previous = localStorage.getItem(VISIT_KEY);
-    if (previous) localStorage.setItem(PREVIOUS_VISIT_KEY, previous);
+    if (!recordedThisSession) {
+      if (previous) localStorage.setItem(PREVIOUS_VISIT_KEY, previous);
+      else localStorage.removeItem(PREVIOUS_VISIT_KEY);
+      recordedThisSession = true;
+    }
     localStorage.setItem(VISIT_KEY, new Date().toISOString());
     const m = pathname.match(/^\/trade\/([a-z0-9-]+)/i);
     if (m) localStorage.setItem(ASSET_KEY, m[1].toLowerCase());

@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -21,7 +22,7 @@ export default function LearnArticle() {
   const article = LEARN_ARTICLES.find((a) => a.slug === slug);
 
   if (!article) {
-    return <Navigate to="/learn" replace />;
+    return <NotFound />;
   }
 
   const articleUrl = `${DOMAIN}/learn/article/${article.slug}`;

@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -15,7 +16,7 @@ const DOMAIN = "https://www.thetradehq.com";
 export default function CourseTrack() {
   const { trackSlug } = useParams<{ trackSlug: string }>();
   const track = trackSlug ? getTrack(trackSlug) : undefined;
-  if (!track) return <Navigate to="/courses" replace />;
+  if (!track) return <NotFound />;
 
   const url = `${DOMAIN}/courses/${track.slug}`;
   const title = `${track.title} — Free Trading Course | TradeHQ`;

@@ -6,7 +6,7 @@ const items = [
   "No signup required",
   "Real market simulation",
   "$100K virtual cash",
-  "AI mentor included",
+  "Educational mentor included",
   "Stocks, ETFs & crypto",
   "Built for beginners",
 ];
