@@ -456,7 +456,7 @@ export const STRATEGIES: Strategy[] = [
       "Use a predefined session stop in the simulator if repeated losses are affecting decision quality, and review the session before continuing.",
       "Review every trade nightly — most edge comes from cutting bad setups, not adding new ones.",
     ],
-    example: "Long BTC at $95,120 with stop $95,080, target $95,210 — risking $40 to make $90.",
+    example: "Hypothetical worksheet, not an observed trade: Long BTC at $95,120 with stop $95,080, target $95,210 — risking $40 to make $90.",
     successRate: "No universal win rate applies. Track your own simulated win rate, payoff ratio, costs and drawdown over a sufficiently large sample.",
     depth: {
       context:
@@ -469,7 +469,7 @@ export const STRATEGIES: Strategy[] = [
         "Holding a scalp that goes against you and calling it a swing trade. That is a different plan with a different stop, and switching mid-trade means you have no plan at all.",
       ],
       math:
-        "With a 57% win rate and a 1:1.5 reward-to-risk ratio, expectancy per trade is (0.57 x 1.5) - (0.43 x 1) = +0.42R. On a $100,000 practice account risking 0.25% ($250) per trade, that is roughly $105 of expected value per trade before costs — and costs are the point: 20 trades a day at $3 round-turn is $60, so more than half the theoretical edge goes to friction. Test that friction in the simulator before assuming it away.",
+        "Hypothetical arithmetic, not observed performance: fixed realized 57% wins at 1.5R and 43% losses at 1R give 0.57×1.5−0.43=0.425R per trade. An assumed 0.25% of $100,000 is $250, giving $106.25 gross expectancy per trade. Twenty trades imply $2,125 gross expectancy; twenty $3 round trips cost $60, about 2.82% of that amount. Actual gains, fills and costs can differ.",
     },
   },
   {
@@ -485,7 +485,7 @@ export const STRATEGIES: Strategy[] = [
       "Set stops outside daily noise (1.5x ATR is a good default).",
       "Test fixed exits, partial exits and trailing exits separately so you can compare how each rule behaves in simulation.",
     ],
-    example: "Bought NVDA at $145 after a pullback, stop $138, target $165 — risked $7 to make $20.",
+    example: "Hypothetical worksheet, not an observed trade: Bought NVDA at $145 after a pullback, stop $138, target $165 — risked $7 to make $20.",
     successRate: "Performance depends on market regime, entry/exit rules, costs and sample size. Use the simulator to measure your own distribution of outcomes.",
     depth: {
       context:
@@ -498,7 +498,7 @@ export const STRATEGIES: Strategy[] = [
         "Adding to a losing swing. Averaging down converts a defined-risk trade into an undefined one, which is the single most common way practice accounts hit zero.",
       ],
       math:
-        "At a 47% win rate and 1:2 reward-to-risk, expectancy is (0.47 x 2) - (0.53 x 1) = +0.41R per trade. Risking 1% of a $100,000 practice account means $410 expected per trade, but with only 4-8 trades a month the sample is small — 30 trades is the minimum before the numbers say anything. Expect drawdowns of 5-7 losers in a row at that win rate; it is statistically ordinary, not evidence the method is broken.",
+        "Hypothetical arithmetic: fixed realized 47% wins at 2R and 53% losses at 1R give 0.41R gross expectancy per trade. With an arbitrary $1,000 practice loss amount, that is $410 before costs. These assumed inputs do not establish performance. Losing-run probabilities require a sample length and independence assumption; no particular run is guaranteed or universally normal.",
     },
   },
   {
@@ -514,7 +514,7 @@ export const STRATEGIES: Strategy[] = [
       "Close everything before the close — no overnight exposure.",
       "End every day with a journal entry: what worked, what didn't, what to cut tomorrow.",
     ],
-    example: "Long SPY at VWAP reclaim, stop below VWAP, target the day's prior high.",
+    example: "Hypothetical worksheet, not an observed trade: Long SPY at VWAP reclaim, stop below VWAP, target the day's prior high.",
     successRate: "There is no dependable universal win-rate range. Evaluate the method by expectancy, drawdown, costs and consistency across a larger sample.",
     depth: {
       context:
@@ -527,7 +527,7 @@ export const STRATEGIES: Strategy[] = [
         "Ignoring the daily loss limit. Two full stops in a session is a signal to close the platform; a third is almost always emotional rather than analytical.",
       ],
       math:
-        "A 52% win rate at 1:1.5 gives (0.52 x 1.5) - (0.48 x 1) = +0.30R per trade. Five trades a day at 0.5% risk on $100,000 is $250 risk per trade, so roughly $375 of expected value a day before commissions and slippage — and slippage on market orders in fast conditions is routinely a quarter of that. Track your actual fills in the simulator's journal rather than assuming the mid-price.",
+        "Hypothetical arithmetic: fixed realized 52% wins at 1.5R and 48% losses at 1R give 0.30R gross expectancy. An arbitrary 0.5% of $100,000 is $500, so expectancy is $150 per trade and $750 across five trades before costs. This is an input-based worksheet, not observed returns or a slippage estimate.",
     },
   },
   {
@@ -543,7 +543,7 @@ export const STRATEGIES: Strategy[] = [
       "Never sell on red days; rebalance once a year at most.",
       "Track total return on TradeHQ's portfolio analytics to see compounding in action.",
     ],
-    example: "$100 into SPY every Friday for 10 years has historically outperformed 80% of active retail traders.",
+    example: "Hypothetical schedule: $100 contributed to a selected practice asset each Friday. Record purchase dates, prices and units; no outperformance percentage is established.",
     successRate: "Execution can be measured separately from investment performance: track whether the scheduled contribution was made as planned, without treating adherence as a guarantee of returns.",
     depth: {
       context:
@@ -556,7 +556,7 @@ export const STRATEGIES: Strategy[] = [
         "Checking the balance daily. The plan works on a horizon of years; daily monitoring only increases the chance of abandoning it.",
       ],
       math:
-        "$500 a month for 20 years at an 8% annualised return contributes $120,000 of capital and ends near $295,000, so roughly 60% of the final balance comes from compounding rather than contributions. Raise the horizon to 30 years and contributions become a minority of the outcome entirely. Model your own numbers with the compound calculator on the learn pages before deciding a monthly amount.",
+        "Hypothetical calculation: $500 deposited at each month end for twenty years with an assumed nominal annual rate of 8%, compounded monthly, gives $500×((1+0.08/12)^240−1)/(0.08/12), about $294,510. Contributions total $120,000. The rate is an arbitrary positive-growth assumption rather than a forecast; fees, taxes, varying returns and contribution timing change the result.",
     },
   },
   {
@@ -572,7 +572,7 @@ export const STRATEGIES: Strategy[] = [
       "Enter, stop just beyond the reversal candle, target the 20 EMA.",
       "Skip the trade in obvious strong-trend regimes — check the 50/200 EMA first.",
     ],
-    example: "BTC RSI dips to 26 at $92K with a bullish engulfing — buy, stop $91K, target $94K.",
+    example: "Hypothetical worksheet, not an observed trade: BTC RSI dips to 26 at $92K with a bullish engulfing — buy, stop $91K, target $94K.",
     successRate: "RSI-based results can vary sharply by market regime and rule set. Test the same rules in ranging and trending periods rather than relying on a fixed win-rate claim.",
     depth: {
       context:
@@ -585,7 +585,7 @@ export const STRATEGIES: Strategy[] = [
         "Tuning the lookback until history looks profitable. An RSI(9) that backtests beautifully on one asset and one year is usually curve-fitting, not an edge.",
       ],
       math:
-        "In range conditions a 57% win rate at 1:1.2 reward-to-risk gives (0.57 x 1.2) - (0.43 x 1) = +0.25R. Apply the same rules to trending conditions at a 32% win rate and expectancy falls to (0.32 x 1.2) - (0.68 x 1) = -0.30R. The identical setup is profitable in one regime and clearly negative in the other, which is why regime classification — not indicator settings — is where the work belongs.",
+        "Hypothetical comparison: fixed realized 57% wins at 1.2R and 43% losses at 1R give 0.254R gross expectancy. Changing only the assumed win rate to 32% gives 0.32×1.2−0.68=−0.296R. These chosen inputs do not establish the observed profitability of ranging or trending markets; costs and actual fills must also be considered.",
     },
   },
   {
@@ -601,7 +601,7 @@ export const STRATEGIES: Strategy[] = [
       "Stop below the last swing low.",
       "Exit when MACD crosses back.",
     ],
-    example: "NVDA MACD crosses up at $130 with stop $124 — held for 6 weeks to $165.",
+    example: "Hypothetical worksheet, not an observed trade: NVDA MACD crosses up at $130 with stop $124 — held for 6 weeks to $165.",
     successRate: "MACD results vary by timeframe, market and exit rule. Track payoff distribution and drawdown instead of assuming a fixed win-rate range.",
     depth: {
       context:
@@ -614,7 +614,7 @@ export const STRATEGIES: Strategy[] = [
         "Reading histogram divergence as a reversal signal. Divergence is common and frequently resolves by the trend simply continuing after a pause.",
       ],
       math:
-        "At a 43% win rate with 1:2.5 reward-to-risk, expectancy is (0.43 x 2.5) - (0.57 x 1) = +0.51R per trade — strong, but delivered unevenly. Expect stretches of 6-8 consecutive losers; in a 40-trade sample that is normal variance rather than a broken system. This is why position sizing at 1% or less matters more here than in higher-win-rate methods: the strategy is only profitable if you are still trading when the trend finally arrives.",
+        "Hypothetical arithmetic: fixed realized 43% wins at 2.5R and 57% losses at 1R give 0.505R gross expectancy before costs. A planned reward-to-risk ratio is not the realized payoff. Losing-run probabilities depend on sample length, independence and the assumed win rate; a six-to-eight-loss run is not a universally expected outcome.",
     },
   },
 ];

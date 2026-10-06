@@ -737,13 +737,13 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "The risk-reward ratio is the secret to profitable trading. You don't need to win 90% of trades - you just need your winners to be bigger than your losers.",
+            data: "Reward-to-risk is one assumption in an expectancy calculation. Realized outcomes, frequency and costs all affect profitability; neither a planned ratio nor a win rate guarantees a profit.",
           },
           {
             type: "stat",
             value: "1:3",
-            label: "Ideal Minimum Risk-Reward Ratio",
-            data: "Risk $1 to make $3 - this ratio allows profitability even with a 30% win rate",
+            label: "Hypothetical Reward-to-Risk Example",
+            data: "Assume fixed realized $3 wins and $1 losses: a 30% win rate gives 0.2R gross expectancy before costs. A planned target need not be filled.",
           },
           {
             type: "heading",
@@ -768,10 +768,10 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "1:1 ratio requires 50% win rate to break even",
-              "1:2 ratio requires 33% win rate to break even",
-              "1:3 ratio requires 25% win rate to break even",
-              "You can lose 70% of trades and still profit with 1:3!",
+              "Fixed realized 1:1 amounts require 50% wins for gross break-even before costs",
+              "Fixed realized 1:2 loss-to-gain amounts require 33⅓% wins for gross break-even before costs",
+              "Fixed realized 1:3 amounts require 25% wins for gross break-even before costs",
+              "With fixed realized 3R wins and 1R losses, 30% wins yield 0.2R gross expectancy before costs",
               "Focus on finding high-reward, low-risk setups",
             ],
           },
@@ -781,7 +781,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Never take a trade with less than 1:2 risk-reward. Ideally, aim for 1:3 or better. If you can't identify a setup with favorable risk-reward, wait for a better opportunity.",
+            data: "Compare several hypothetical reward-to-risk settings with realized gains, losses and costs. No minimum planned ratio is universally suitable or guarantees that targets will be achieved.",
           },
           {
             type: "heading",
@@ -921,15 +921,15 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "A balanced approach for most traders:",
+            data: "A hypothetical weighting exercise, not an allocation recommendation:",
           },
           {
             type: "list",
             data: [
-              "Core (60-70%): Safe ETFs like SPY, QQQ for steady growth",
-              "Satellite (30-40%): Individual stocks for higher returns",
-              "Core provides stability",
-              "Satellites provide excitement and outperformance",
+              "Example core: 60% in selected ETF exposures; holdings and concentration still matter",
+              "Example satellites: 40% in selected company exposures; higher returns are not assured",
+              "A core describes the role chosen in the example, not guaranteed stability",
+              "Satellite positions can increase concentration and can underperform",
               "Adjust percentages based on risk tolerance",
             ],
           },
@@ -943,15 +943,15 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Crypto is high-risk, high-reward. Allocate carefully:",
+            data: "Cryptocurrency exposure can produce substantial losses. Compare hypothetical weights rather than use universal limits:",
           },
           {
             type: "list",
             data: [
-              "Beginners: 5-10% maximum in crypto",
-              "Moderate: 10-20% if you understand the risks",
-              "Aggressive: Up to 30% (not recommended)",
-              "Split between BTC (safer) and ETH/alts (riskier)",
+              "Example A: 0% crypto and 100% in other practice exposures",
+              "Example B: 10% crypto and 90% in other practice exposures",
+              "The examples are arbitrary simulation settings, not beginner or risk-profile limits",
+              "Risk comparisons require the same observation period and measure; BTC is not assuredly safe",
               "Never more than you can afford to lose completely",
             ],
           },
@@ -975,14 +975,14 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "If one position grows to more than 25% of your portfolio, consider taking some profits and rebalancing. This locks in gains and reduces concentration risk.",
+            data: "Compare several hypothetical concentration thresholds and record turnover and costs. There is no universal 25% instruction to take profits, and selling changes exposure without guaranteeing a better outcome.",
           },
         ],
       },
     ],
     quiz: [
       {
-        question: "According to the 2% rule, how much should you risk per trade on a $100,000 account?",
+        question: "In the hypothetical 2% worksheet, what is 2% of $100,000?",
         options: ["$500", "$1,000", "$2,000", "$5,000"],
         correctAnswer: 2,
         explanation: "In this lesson's 2% example, 0.02 × $100,000 = $2,000.",
@@ -1002,13 +1002,13 @@ export const lessonData: Lesson[] = [
         question: "With a 1:3 risk-reward ratio, what minimum win rate do you need to be profitable?",
         options: ["50%", "40%", "33%", "25%"],
         correctAnswer: 3,
-        explanation: "With a 1:3 ratio, you only need to win 25% of trades to break even. Anything above 25% becomes profitable!",
+        explanation: "With fixed realized 3R wins and 1R losses, 25% wins gives gross break-even before costs. Planned targets and actual fills can differ.",
       },
       {
-        question: "What percentage of your portfolio should you typically hold in cryptocurrency as a beginner?",
-        options: ["50%", "30%", "5-10%", "90%"],
+        question: "Which statement about a crypto allocation is accurate?",
+        options: ["50% is always safe", "Age alone determines it", "No percentage is universally suitable", "90% guarantees gains"],
         correctAnswer: 2,
-        explanation: "Beginners should limit crypto exposure to 5-10% due to its high volatility and risk. Only invest what you can afford to lose.",
+        explanation: "No crypto percentage is universally appropriate. Practice weights are assumptions rather than real-money recommendations.",
       },
       {
         question: "What does diversification protect you from?",
@@ -1234,7 +1234,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Asset allocation is how you divide your money among different investment types. It's the single most important factor in long-term returns - more important than picking individual stocks.",
+            data: "Asset allocation describes how value is divided among exposures. Its effect depends on holdings, correlations and the period examined; it does not guarantee performance or universally outrank every other decision.",
           },
           {
             type: "image",
@@ -1244,9 +1244,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "90%",
-            label: "Of Portfolio Returns Determined by Asset Allocation",
-            data: "Research shows asset allocation explains 90% of a portfolio's performance variance - stock picking matters far less than most think",
+            value: "100%",
+            label: "Total Weight in a Normalized Allocation",
+            data: "The selected weights, including cash, should sum to 100%. This is an accounting identity, not evidence that an allocation determines a fixed share of returns.",
           },
           {
             type: "heading",
@@ -1258,19 +1258,19 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Aggressive (Age 20-35): 80% stocks, 15% crypto, 5% bonds. You have time to recover from downturns and capture maximum growth.",
+            data: "Hypothetical A: 80% stock exposures, 15% crypto and 5% cash. Weights total 100%; this is not an age-based recommendation and losses can be permanent.",
           },
           {
             type: "example",
-            data: "Moderate (Age 35-55): 60% stocks, 30% bonds, 10% alternatives. Balanced between growth and stability as you build wealth.",
+            data: "Hypothetical B: 60% stock exposures, 30% cash and 10% another practice asset. The example does not certify a balanced or suitable real portfolio.",
           },
           {
             type: "example",
-            data: "Conservative (Age 55+): 40% stocks, 50% bonds, 10% cash. Preserve capital while generating income for retirement.",
+            data: "Hypothetical C: 40% stock exposures and 60% cash. This illustrates a different weighting rather than promising capital preservation or retirement income.",
           },
           {
             type: "highlight",
-            data: "Your age and goals determine your allocation. Young investors can afford more risk. Older investors need more stability.",
+            data: "Age alone cannot determine a suitable allocation. Objectives, liabilities, time horizon and ability to bear loss also matter; a simulator cannot make that determination.",
           },
           {
             type: "heading",
@@ -1278,7 +1278,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "A simple rule of thumb for stock allocation:",
+            data: "The 100-minus-age shortcut is a simplified heuristic, not a suitability assessment:",
           },
           {
             type: "list",
@@ -1292,7 +1292,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Review your allocation annually, but don't chase performance. Stick to your plan and rebalance when allocations drift more than 5% from targets.",
+            data: "Compare hypothetical annual review and threshold rules under the same assumptions. Five-percent drift is an example setting, not a universally appropriate rebalancing trigger.",
           },
         ],
       },
@@ -1301,11 +1301,11 @@ export const lessonData: Lesson[] = [
         content: [
           {
             type: "highlight",
-            data: "Each asset class serves a different purpose - ETFs for stability, stocks for growth, crypto for moonshots. The magic is in the mix.",
+            data: "Instrument labels do not guarantee stability, growth or profit. Compare holdings, concentration and hypothetical price shocks.",
           },
           {
             type: "text",
-            data: "Each asset class serves a different purpose in your portfolio. Combine them strategically for optimal risk-adjusted returns without putting all your eggs in one basket.",
+            data: "Different exposures can behave differently, but mixing them does not guarantee optimal returns. Inspect actual holdings and overlapping risks in a virtual example.",
           },
           {
             type: "heading",
@@ -1313,7 +1313,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "ETFs should form 50-70% of most portfolios. They provide instant diversification and reduce single-stock risk.",
+            data: "There is no universal ETF weight. A fund's objective, underlying holdings, leverage and concentration determine its exposure.",
           },
           {
             type: "list",
@@ -1335,7 +1335,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Allocate 20-40% to individual stocks for potential outperformance. Pick quality companies you understand:",
+            data: "There is no universal individual-stock weight. Compare company exposures and concentration as a practice exercise:",
           },
           {
             type: "list",
@@ -1343,14 +1343,14 @@ export const lessonData: Lesson[] = [
               "Blue chips: AAPL, MSFT, GOOGL (stability + growth)",
               "Growth stocks: TSLA, NVDA (higher risk, higher reward)",
               "Dividend payers: JNJ, PG (income generation)",
-              "Limit to 5-8 individual positions",
+              "The number of positions does not by itself measure diversification",
               "Focus on companies with competitive advantages",
             ],
           },
           {
             type: "stat",
-            value: "5-15%",
-            label: "Recommended Crypto Allocation Maximum",
+            value: "Variable",
+            label: "Crypto Weight Is an Assumption",
             data: "Crypto is exciting but volatile. Limit exposure to what you can afford to lose completely",
           },
           {
@@ -1359,7 +1359,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Allocate 5-15% maximum to crypto. It's speculative but offers asymmetric upside:",
+            data: "A crypto allocation has substantial loss risk and no universal maximum. A practice comparison can examine different hypothetical weights:",
           },
           {
             type: "list",
@@ -1373,7 +1373,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Use the core-satellite approach: 60-70% in ETFs (core), 20-30% in individual stocks (satellites), 5-15% in crypto (speculation). This balances stability with growth potential.",
+            data: "A normalized hypothetical example is 60% ETFs, 30% individual stocks and 10% crypto, totalling 100%. These arbitrary weights illustrate accounting only; neither stability nor higher returns is assured.",
           },
         ],
       },
@@ -1488,13 +1488,13 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "0.5-1%",
-            label: "Additional Annual Return from Rebalancing",
+            value: "Varies",
+            label: "Return Effect of Rebalancing",
             data: "Rebalancing is primarily a risk-control process. Its effect on returns varies by market path, trading costs, taxes, and the chosen thresholds.",
           },
           {
             type: "tip",
-            data: "Use the 5/25 rule: Rebalance when any position drifts 5% from target OR grows to 25%+ of portfolio. This captures both small drifts and concentration risk.",
+            data: "Five-percent drift and 25% concentration are example thresholds to compare with other rules. Record turnover and costs; no threshold guarantees risk control or improved returns.",
           },
         ],
       },
@@ -1509,13 +1509,13 @@ export const lessonData: Lesson[] = [
           "Increases trading frequency",
         ],
         correctAnswer: 1,
-        explanation: "Asset allocation is the most important factor in determining your long-term returns and overall portfolio risk.",
+        explanation: "Allocation changes exposure and risk. Its effect on returns depends on holdings, the market path and costs.",
       },
       {
-        question: "How often should you typically rebalance your portfolio?",
+        question: "Which is an example of a rebalancing rule rather than a universal requirement?",
         options: ["Daily", "Weekly", "Quarterly or when allocation drifts significantly", "Never"],
         correctAnswer: 2,
-        explanation: "Quarterly rebalancing or when your allocation drifts 5%+ from targets strikes a good balance between maintenance and transaction costs.",
+        explanation: "A calendar or drift threshold is one possible practice rule. Its effect depends on costs and the market path; no frequency is universally best.",
       },
     ],
   },
@@ -1545,9 +1545,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "95%",
-            label: "Of Day Traders Lose Money Long-Term",
-            data: "Academic studies show the vast majority of day traders underperform buy-and-hold strategies after costs",
+            value: "Uncertain",
+            label: "No Universal Day-Trader Loss Rate",
+            data: "Any study percentage needs its market, population, period and definition of loss. Simulator results do not establish a general success rate.",
           },
           {
             type: "heading",
@@ -1570,7 +1570,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Day trader Sarah monitors charts 8 hours daily, makes 20+ trades weekly, needs 55%+ win rate to overcome fees. One emotional mistake can wipe out weeks of profits.",
+            data: "In a hypothetical journal, Sarah records time spent, trade frequency, realized gains and losses and costs. The break-even win rate depends on those gain/loss and cost amounts rather than a universal 55% threshold.",
           },
           {
             type: "heading",
@@ -1742,9 +1742,9 @@ export const lessonData: Lesson[] = [
             type: "list",
             data: [
               "Total Return: Overall profit/loss percentage over time",
-              "Win Rate: Percentage of winning trades (aim for 45%+)",
+              "Win Rate: Share of closed trades with positive realized net results; no universal target",
               "Average Win vs Average Loss: Your edge (target 2:1 or better)",
-              "Max Drawdown: Largest peak-to-valley decline (keep under 20%)",
+              "Max Drawdown: Largest observed peak-to-trough decline in a specified equity series",
               "Sharpe Ratio: Risk-adjusted returns (higher is better)",
               "Profit Factor: Gross profit ÷ gross loss (target 1.5+)",
             ],
@@ -1755,7 +1755,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "highlight",
-            data: "Track your Maximum Drawdown religiously. If you drop more than 20% from peak equity, stop trading and reassess your strategy - something is broken.",
+            data: "Review the measured drawdown against the assumptions and observation period. A 20% threshold can be a chosen practice setting; it does not universally diagnose a broken strategy.",
           },
           {
             type: "heading",
@@ -2008,7 +2008,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "highlight",
-            data: "Never trust a breakout without volume confirmation. 70% of low-volume breakouts fail within days. Wait for volume surge to confirm the move is real.",
+            data: "Compare price and volume observations over a defined sample. There is no substantiated universal 70% failure rate here, and high volume does not guarantee a continuing breakout.",
           },
           {
             type: "tip",
@@ -2069,9 +2069,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "80%",
-            label: "Of Retail Traders Wrong at Market Extremes",
-            data: "When retail sentiment hits extremes, the smart money does the opposite - and profits from the crowd's mistakes",
+            value: "Not established",
+            label: "No Universal Contrarian Success Rate",
+            data: "A sentiment extreme does not establish that retail traders are wrong or that an opposing trade will profit. Define the sample and test alternative outcomes.",
           },
           {
             type: "heading",
@@ -2097,7 +2097,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Create a sentiment checklist: VIX level, Put/Call ratio, headline sentiment, social media buzz. When 3+ indicators show extreme fear, start buying. When 3+ show extreme greed, start selling. Sentiment extremes don't last long!",
+            data: "A practice checklist can record volatility, put/call observations and sentiment sources. Three signals are not an instruction to buy or sell; extremes can persist, and opposite positions can lose.",
           },
         ],
       },
