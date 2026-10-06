@@ -102,14 +102,14 @@ export function CredibilityFooter() {
               <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/60 rounded-lg flex items-center justify-center">
                 <span className="text-lg font-bold text-primary-foreground">TH</span>
               </div>
-              <span className="text-2xl font-bold font-serif">TradingHQ</span>
+              <span className="text-2xl font-bold font-serif">TradeHQ</span>
             </Link>
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
               A financial education hub with simulator-based practice and guided learning. Practice trading with our 
               risk-free $100K simulator and master the markets with guided learning.
             </p>
             <p className="text-xs text-muted-foreground">
-              © {new Date().getFullYear()} TradingHQ. All rights reserved.
+              © {new Date().getFullYear()} TradeHQ. All rights reserved.
             </p>
           </div>
           
