@@ -146,9 +146,6 @@ export default function Reviews() {
             <p className="text-muted-foreground max-w-2xl mx-auto">
               User-submitted feedback about the free $100,000 practice simulator. Submissions are moderated and duplicate-limited, but identity and usage are not independently verified.
             </p>
-            <p className="mt-4 text-sm text-emerald-500">
-              Reviews page successfully restored by the TradeHQ developer team.
-            </p>
             {stats.count > 0 && (
               <div className="mt-5 inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-card border border-border">
                 <Stars value={Math.round(stats.avg)} size={20} />

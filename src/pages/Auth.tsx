@@ -71,7 +71,7 @@ export default function Auth() {
           password: parsed.data.password,
           options: {
             emailRedirectTo: authUrl("/auth"),
-            data: { username: parsed.data.username },
+            data: { username: parsed.data.username, is_public: true },
           },
         });
         if (error) throw error;
@@ -143,7 +143,8 @@ export default function Auth() {
             </h1>
             <p className="text-sm text-muted-foreground mt-2">
               An account adds optional community features such as the leaderboard, profile visibility and friend
-              challenges. New profiles start private; trading, courses and tools never require an account.
+              challenges. New profiles start public, and you can make yours private at any time from your profile.
+              Trading, courses and tools never require an account.
             </p>
           </div>
 
