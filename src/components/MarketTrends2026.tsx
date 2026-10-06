@@ -1,49 +1,37 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Zap, Coins, Brain, ArrowRight, TrendingUp } from "lucide-react";
+import { ArrowRight, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 const trends = [
   {
-    id: "bitcoin-l2",
-    title: "Bitcoin Layer 2s",
-    subtitle: "Stacks, Lightning Network",
-    description: "Bitcoin L2 solutions enable fast, low-cost transactions while inheriting Bitcoin's security. Practice trading STX, Lightning-enabled assets, and explore the future of Bitcoin scalability.",
-    icon: Zap,
-    badge: "Topic",
+    id: "paper-trading",
+    title: "Paper Trading",
+    subtitle: "Practice market mechanics",
+    description: "Learn order entry, position sizing, portfolio tracking and review with virtual cash before deciding whether to use real money.",
+    badge: "Learn",
     color: "primary",
-    stats: [
-      { label: "Lightning Capacity", value: "5,500+ BTC" },
-      { label: "Stacks TVL", value: "$150M+" },
-    ]
+    href: "/learn/what-is-paper-trading",
   },
   {
-    id: "rwa",
-    title: "Tokenized Real World Assets",
-    subtitle: "RWA Revolution",
-    description: "Real World Asset tokenization brings traditional assets on-chain. Trade tokenized treasuries, real estate, and commodities with 24/7 liquidity and fractional ownership.",
-    icon: Coins,
-    badge: "Trending",
+    id: "risk-management",
+    title: "Risk Management",
+    subtitle: "Build repeatable habits",
+    description: "Study position sizing, exits, diversification and drawdown control through TradeHQ's educational lessons and simulator.",
+    badge: "Core skill",
     color: "secondary",
-    stats: [
-      { label: "RWA Market Cap", value: "$12B+" },
-      { label: "Tokenized Treasuries", value: "$2.5B+" },
-    ]
+    href: "/learn-trading-guide",
   },
   {
-    id: "ai-liquidity",
-    title: "AI-Driven Liquidity",
-    subtitle: "Smart Market Making",
-    description: "AI algorithms now power market making and liquidity provision. Learn how machine learning optimizes order flow, reduces slippage, and creates more efficient markets.",
-    icon: Brain,
-    badge: "Innovation",
+    id: "market-basics",
+    title: "Market Basics",
+    subtitle: "Understand before you practise",
+    description: "Use the glossary and courses to understand common market terms, order types and asset classes without unsupported trend forecasts.",
+    badge: "Foundation",
     color: "primary",
-    stats: [
-      { label: "AI Trading Volume", value: "60%+" },
-      { label: "Efficiency Gain", value: "3x" },
-    ]
+    href: "/wiki",
   },
 ];
 
@@ -78,8 +66,7 @@ export function MarketTrends2026() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-6xl mx-auto">
           {trends.map((trend, index) => {
-            const Icon = trend.icon;
-            return (
+return (
               <motion.div
                 key={trend.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -92,9 +79,6 @@ export function MarketTrends2026() {
                   style={{ boxShadow: '0 8px 32px -12px hsl(0 0% 0% / 0.4)' }}
                 >
                   <div className="flex items-center justify-between mb-6">
-                    <div className={`w-14 h-14 rounded-2xl ${trend.color === 'primary' ? 'bg-primary/10' : 'bg-secondary/10'} flex items-center justify-center group-hover:scale-105 transition-transform duration-300`}>
-                      <Icon className={`w-7 h-7 ${trend.color === 'primary' ? 'text-primary' : 'text-secondary'}`} />
-                    </div>
                     <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-xs">
                       {trend.badge}
                     </Badge>
@@ -107,17 +91,7 @@ export function MarketTrends2026() {
                   <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
                     {trend.description}
                   </p>
-
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    {trend.stats.map((stat) => (
-                      <div key={stat.label} className="bg-white/[0.03] rounded-xl p-3 text-center border border-white/[0.04]">
-                        <div className="text-base font-bold text-primary tabular-nums">{stat.value}</div>
-                        <div className="text-[10px] text-muted-foreground uppercase tracking-wider">{stat.label}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Link to="/learn-trading-guide" className="flex items-center gap-2 text-sm text-primary font-medium group-hover:gap-3 transition-all">
+                  <Link to={trend.href} className="flex items-center gap-2 text-sm text-primary font-medium group-hover:gap-3 transition-all">
                     <span>Learn More</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
