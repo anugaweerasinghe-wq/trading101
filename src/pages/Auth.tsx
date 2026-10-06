@@ -120,7 +120,7 @@ export default function Auth() {
 
   const title = "Sign in or create a free TradeHQ account";
   const description =
-    "Optional free account for TradeHQ. Save your practice stats, appear on the leaderboard and challenge friends. Everything on TradeHQ stays usable without an account.";
+    "Optional free account for TradeHQ. Sync your simulated practice portfolio across devices, appear on the community leaderboard when public, and challenge friends. Core learning tools remain usable without an account.";
 
   return (
     <>
@@ -235,8 +235,8 @@ export default function Auth() {
           </Card>
 
           <p className="text-2xs text-muted-foreground mt-6 text-center leading-relaxed">
-            If you create an account, we store authentication details, your chosen username and selected simulated
-            practice statistics. Profiles start private and can be made public from your profile page. No real money, no brokerage links, no payment
+            If you create an account, we store authentication details, your chosen username and your simulated
+            practice portfolio so it can sync across devices. Profiles start public and can be made private from your profile page. No real money, no brokerage links, no payment
             details. Every balance on TradeHQ is virtual and starts at{" "}
             {STARTING_BALANCE_LABEL}. (Educational simulation only — not financial
             advice.) See our{" "}
