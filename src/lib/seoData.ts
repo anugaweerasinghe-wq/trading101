@@ -247,7 +247,7 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     "name": "ETH",
     "fullName": "Ethereum",
     "type": "crypto",
-    "whyTrade": "Ethereum supports smart contracts and uses proof-of-stake consensus. Owning ETH in this simulator is a price-exposure exercise; it does not execute a smart contract, stake tokens or reproduce a DeFi position.",
+    "whyTrade": "Ethereum is a network for running applications and smart contracts; ether, or ETH, is its native currency. People use ETH to pay network fees, transfer value and participate in staking. Trading ETH means exchanging that currency at a market price. TradeHQ lets you practise the price and quantity calculations with virtual funds; it does not send coins to a wallet or stake them.",
     "steps": [
       "Open the free virtual practice terminal for ETH; no real-money account is created.",
       "Visit /trade/eth and read the quote and chart data-status labels; they may have different provenance.",
@@ -255,12 +255,12 @@ export const HOWTO_ASSETS: HowToAsset[] = [
       "Record the reason for the exercise and any intended manual exit. TradeHQ does not place resting limit or stop orders or open short positions.",
       "Compare the recorded fills and fee-inclusive result with the original assumptions. Add your own explanation to the journal; it is not written automatically."
     ],
-    "beginnerTip": "Use ETH as a worksheet for describing price observations and position arithmetic. An indicator or chart pattern is not a verified entry signal. This terminal does not offer every indicator mentioned in the glossary.",
-    "risk": "A ETH practice loss depends on quantity, price change and costs. Real execution can involve gaps, slippage and liquidity limits that this simulator does not reproduce. Virtual results do not establish a tolerable real-money risk level.",
+    "beginnerTip": "Separate the network from the currency: Ethereum is the system, while ETH is the unit whose price you see. A lower price per coin than BTC does not by itself mean ETH is cheaper in valuation terms.",
+    "risk": "An ETH practice loss depends on quantity, price change and costs. Real execution can involve gaps, slippage and liquidity limits that this simulator does not reproduce. Virtual results do not establish a tolerable real-money risk level.",
     "studentNote": "For learners in Sri Lanka or elsewhere, ETH is an educational catalogue example, not a savings plan or an access recommendation. Local eligibility, funding and tax questions require current official information outside this simulator.",
     "drivers": [
-      "Distinguish network activity, staking and layer-two activity from exchange-price changes. An ETH/BTC ratio compares two prices; a rising ratio alone does not identify capital flows or a profitable entry.",
-      "Compare a dated primary description of Ethereum with the practice chart. A simulated movement is not evidence that a particular news item changed the real market price."
+      "Network use and ETH price measure different things. Gas is the unit used to measure transaction work; the network fee is paid in ETH. A busy network can change fees without producing a matching percentage change in the exchange price.",
+      "Staking helps secure Ethereum, while layer-two networks handle activity with a different fee structure. These concepts explain how the network works; a TradeHQ price chart does not measure staking rewards, network demand or the effect of a particular headline."
     ],
     "firstTrade": "For a hypothetical $20,000 ETH holding, a 5% price decline is a $1,000 gross loss. The purchase also incurs a $20 simulator fee at 0.1%. These selected values illustrate exposure, not a safe percentage or a suggested trade. Review both upward and downward cases using the same quantity. Actual simulator results also include selling fees. A manual exit assumption can be crossed by a price move; it is not a guaranteed maximum loss.",
     "timing": "Venue hours, available liquidity and actual data timestamps are separate from the time you open TradeHQ. The ETH chart may use provider history or synthetic candles. Consult the displayed status before treating a practice observation as a current-market event; no session or timeframe is presented as the best time to trade.",
@@ -270,7 +270,7 @@ export const HOWTO_ASSETS: HowToAsset[] = [
       "Assuming an intended manual exit is a pending stop order, or that selling can create a short position.",
       "Drawing a general performance conclusion from a short, selected or synthetic price sample."
     ],
-    "review": "For a ETH worksheet, compare planned quantity, filled quantity, fee and resulting cash. Explain any changed assumption and include unfavorable outcomes. Compare alternative rules over the same data window rather than changing both the method and the observation period. Trade history records fills; your written rationale remains your responsibility."
+    "review": "After a practice trade, explain the result in units before judging it in dollars. If you hold 2 ETH and the price falls by $100 per ETH, the gross position loss is $200. Then include the buy and sell fees. Compare that calculation with the recorded fills, and note whether the chart used provider history or simulated candles. This makes the review about what happened in the exercise rather than whether a prediction sounded convincing."
   },
   {
     "symbol": "tsla",
@@ -330,7 +330,7 @@ export const HOWTO_ASSETS: HowToAsset[] = [
       "Assuming an intended manual exit is a pending stop order, or that selling can create a short position.",
       "Drawing a general performance conclusion from a short, selected or synthetic price sample."
     ],
-    "review": "For a NVDA worksheet, compare planned quantity, filled quantity, fee and resulting cash. Explain any changed assumption and include unfavorable outcomes. Compare alternative rules over the same data window rather than changing both the method and the observation period. Trade history records fills; your written rationale remains your responsibility."
+    "review": "For an NVDA worksheet, compare planned quantity, filled quantity, fee and resulting cash. Explain any changed assumption and include unfavorable outcomes. Compare alternative rules over the same data window rather than changing both the method and the observation period. Trade history records fills; your written rationale remains your responsibility."
   },
   {
     "symbol": "spy",
