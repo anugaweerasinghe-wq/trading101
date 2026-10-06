@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { tradeRouteForSymbol } from "@/lib/assets";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -12,7 +13,7 @@ import { COMPARE_PAIRS, SITE_DOMAIN } from "@/lib/seoData";
 export default function Compare() {
   const { slug } = useParams<{ slug: string }>();
   const pair = COMPARE_PAIRS.find((p) => p.slug === slug);
-  if (!pair) return <Navigate to="/compare" replace />;
+  if (!pair) return <NotFound />;
 
   const title = `${pair.a.name} vs ${pair.b.name} — Key Differences Explained | TradeHQ`;
   const description = `${pair.a.name} vs ${pair.b.name}: side-by-side comparison on returns, volatility, use case and risk. Practise both risk-free with $100K virtual cash on TradeHQ. (Educational simulation only — not financial advice.)`;
@@ -108,15 +109,14 @@ export default function Compare() {
           </section>
 
           <Card className="p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-2">How to settle it for yourself</h2>
+            <h2 className="text-xl font-semibold mb-2">How to compare a practice worksheet</h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Rather than picking a side from an article, run both. Open the practice terminal, take a
-              position of the same risk — not the same dollar amount — in {pair.a.symbol} and{" "}
-              {pair.b.symbol}, and hold them for at least 30 days while logging how each behaves on
-              red days, on news days and overnight. The portfolio analytics will show you the
-              volatility difference and the drawdown you would actually have sat through, which is the
-              only part of this comparison that changes how you invest. Nothing here is a
-              recommendation to buy either one.
+              For {pair.a.symbol} and {pair.b.symbol}, define hypothetical quantities, a common
+              observation window and cost assumptions before comparing outcomes. Equal dollar
+              values do not establish equal risk. Record unfavorable cases as well as favorable
+              ones, and distinguish provider data from simulation. Portfolio metrics describe
+              practice results and may include generated history; they do not establish the
+              drawdown you would experience in a real account or which asset suits you.
             </p>
           </Card>
 

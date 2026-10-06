@@ -194,7 +194,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "How the streak is counted",
       p: [
-        "A streak advances once per calendar day in your own local time zone, so completing a challenge late one evening and early the next morning still counts as two consecutive days. The counter lives in your browser, which means clearing site data resets it and using a different device starts a separate count unless you have an account.",
+        "A streak advances once per calendar day in your own local time zone, so completing a challenge late one evening and early the next morning still counts as two consecutive days. The counter lives in your browser, which means clearing site data resets it and using a different device starts a separate count even when you have an account; sign-in does not back up local streaks.",
         "There is no penalty for missing a day beyond the counter resetting, and there is no reward for a long streak other than the habit itself. Nothing about the challenge involves money, prizes or entry fees.",
       ],
     },
@@ -336,7 +336,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Support questions we answer most often",
       list: [
-        "My portfolio disappeared — this almost always means browser data was cleared, or you are on a different device or browser. Without an account, practice data lives only in the browser that created it.",
+        "My portfolio disappeared — this almost always means browser data was cleared, or you are on a different device or browser. Practice data lives only in the browser that created it, including for signed-in users; selected synced summaries do not restore the underlying record.",
         "How do I reset my practice balance? There is a reset control in the portfolio area; it returns the account to $100,000 in virtual cash and clears open positions.",
         "A price looks wrong — quotes refresh periodically and are simulated between refreshes, so they will not match a live broker feed exactly.",
         "Can I use TradeHQ on my phone? Yes, the whole site works on mobile browsers; there is no app to install.",
@@ -352,7 +352,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Response times and expectations",
       p: [
-        "TradeHQ is maintained by one person, so response times vary with request volume and development work. There is no phone line and no live chat. If you have not heard back after a while, sending the message again is reasonable.",
+        "TradeHQ is maintained by one person, so response times vary with request volume and development work. Contact details include email and phone; there is no live support queue. If you have not heard back after a while, sending the message again is reasonable.",
       ],
     },
   ],
@@ -376,7 +376,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Children and jurisdiction",
       p: [
-        "The core simulator works without an account, and optional signup does not collect age. AdSense is currently disabled; advertising consent is not an age check. Parents or guardians can raise privacy concerns through the contact page. Because the service holds no funds and executes no trades, it is not a financial services provider in any jurisdiction; local financial regulation applies to the broker you eventually use, not to this simulator.",
+        "The core simulator works without an account, and optional signup does not collect age. AdSense is currently disabled; advertising consent is not an age check. Parents or guardians can raise privacy concerns through the contact page. TradeHQ holds no funds and executes no real trades. This policy does not determine the legal classification of the service or certify compliance in every jurisdiction.",
       ],
     },
     {

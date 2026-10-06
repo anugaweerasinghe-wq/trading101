@@ -80,7 +80,7 @@ export function MinimalistAreaChart({ asset }: MinimalistAreaChartProps) {
     }
   }, [asset?.id, safePrice]);
 
-  // Real-time simulation when no live candles available
+  // Synthetic chart updates when provider candles are unavailable
   useEffect(() => {
     if (candles.length === 0 && asset) {
       simulationInterval.current = setInterval(() => {

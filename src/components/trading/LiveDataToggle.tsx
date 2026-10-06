@@ -68,7 +68,7 @@ export function LiveDataToggle({ asset, onLiveDataReceived }: LiveDataToggleProp
 
       if (result.success && result.data && typeof result.data.price === 'number' && !isNaN(result.data.price)) {
         const isLive = (result.provenance?.status ?? result.data.provenance?.status) === 'realtime';
-        setIsConnected(isLive);
+        setIsConnected(true);
         setLastUpdate(new Date());
         
         if (onLiveDataReceivedRef.current) {
@@ -154,7 +154,7 @@ export function LiveDataToggle({ asset, onLiveDataReceived }: LiveDataToggleProp
         ) : (
           <WifiOff className="w-4 h-4" />
         )}
-        {isLiveMode ? (isConnected ? 'Live' : 'Connecting...') : 'Simulated'}
+        {isLiveMode ? (isLoading ? 'Fetching...' : isConnected ? 'Quote request' : 'Quote unavailable') : 'Simulated'}
       </Button>
 
       {/* Status Badge */}
@@ -173,14 +173,14 @@ export function LiveDataToggle({ asset, onLiveDataReceived }: LiveDataToggleProp
             isConnected && isLiveMode ? "bg-green-500 animate-pulse" : "bg-muted-foreground"
           )} 
         />
-        {isConnected && isLiveMode ? 'LIVE FEED' : 'OFFLINE'}
+        {isConnected && isLiveMode ? 'FETCHED · CHECK DATA STATUS' : 'NO PROVIDER REQUEST'}
       </Badge>
 
       {/* Last Update Time */}
       {lastUpdate && isLiveMode && (
         <div className="hidden sm:flex items-center gap-1.5 text-xs text-muted-foreground">
           <Clock className="w-3 h-3" />
-          {formatLastUpdate()}
+          Fetched {formatLastUpdate()}
         </div>
       )}
 

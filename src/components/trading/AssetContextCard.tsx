@@ -30,9 +30,9 @@ function getRiskProfile(asset: Asset) {
 }
 
 function getBiasLabel(changePercent: number) {
-  if (changePercent > 2) return "Bullish bias";
-  if (changePercent < -2) return "Bearish bias";
-  return "Balanced";
+  if (changePercent > 2) return "Above +2%";
+  if (changePercent < -2) return "Below −2%";
+  return "Inside ±2%";
 }
 
 export function AssetContextCard({ asset }: AssetContextCardProps) {
@@ -85,14 +85,14 @@ export function AssetContextCard({ asset }: AssetContextCardProps) {
 
         <div className="rounded-xl border border-white/8 bg-white/[0.02] p-3">
           <p className="text-2xs uppercase tracking-wide text-muted-foreground">
-            Risk profile
+            Asset-class context
           </p>
           <p className="mt-1 text-sm font-medium">{getRiskProfile(asset)}</p>
         </div>
 
         <div className="rounded-xl border border-white/8 bg-white/[0.02] p-3">
           <p className="text-2xs uppercase tracking-wide text-muted-foreground">
-            Short-term bias
+            Practice move bucket
           </p>
           <p className="mt-1 text-sm font-medium">{getBiasLabel(asset.changePercent)}</p>
         </div>

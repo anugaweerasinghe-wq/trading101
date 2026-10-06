@@ -236,7 +236,7 @@ export async function getPortfolioAIReply(
     ctx.selectedSymbol ? `Currently viewing ${ctx.selectedSymbol} (${(ctx.selectedChangePct ?? 0) >= 0 ? "+" : ""}${(ctx.selectedChangePct ?? 0).toFixed(2)}% today).` : "",
   ].filter(Boolean).join(" ");
 
-  const system = `You are TradeHQ's AI Trading Mentor with FULL access to the user's live simulated portfolio.
+  const system = `You are TradeHQ's educational mentor. The supplied context is a client-reported practice snapshot, not full account access or verified market data.
 ${ctxLines}
 Rules: be concise (under 120 words), conversational, no markdown headers. Reference their real numbers when relevant. Never give buy/sell signals. End every reply with: (Educational simulation only — not financial advice.)`;
 

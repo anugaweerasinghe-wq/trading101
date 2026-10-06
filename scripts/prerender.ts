@@ -179,6 +179,16 @@ async function main() {
   const bodyHashes = new Map<string, string>();
   const thin: { path: string; words: number }[] = [];
   const missing: string[] = [];
+  // Non-manifest routes must not inherit the indexable homepage fallback.
+  // This shell also supports account/profile routes without indexing private UI.
+  const fallback = shell
+    .replace(/<title>[\s\S]*?<\/title>/i, '<title>TradeHQ requested page</title>')
+    .replace(/<meta\s[^>]*name=["']robots["'][^>]*>/gi, '')
+    .replace(/<link\s[^>]*rel=["']canonical["'][^>]*>/gi, '')
+    .replace(/<script\s[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<\/head>/i, '<meta data-static-head name="robots" content="noindex, follow" /></head>');
+  fs.writeFileSync(path.join(DIST, "app-shell.html"), fallback, "utf-8");
+
   let written = 0;
 
   for (const r of routes) {

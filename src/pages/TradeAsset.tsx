@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -232,7 +233,7 @@ export default function TradeAsset() {
 
   // Redirect if asset not found
   if (symbol && !findAssetBySymbol(symbol)) {
-    return <Navigate to="/trade" replace />;
+    return <NotFound />;
   }
 
   // Canonicalize URL casing: enforce lowercase asset id in the path.

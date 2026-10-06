@@ -86,7 +86,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
       "US technology large-caps, widely followed by Indian retail investors through international platforms",
     ],
     practicePlan:
-      "Suggested first quarter: month one on Trading Psychology, as one way to study decision-making under uncertainty. Month two on Macro Reading, paying attention to how RBI policy and US rate expectations jointly move the rupee. Month three on a single documented strategy with a fixed 1% risk per simulated trade, reviewed at the end against a simple index hold. Indian market hours overlap comfortably with the working day, so the discipline challenge is usually overtrading rather than sleep.",
+      "Suggested first quarter: month one on Trading Psychology, as one way to study decision-making under uncertainty. Month two on Macro Reading, paying attention to how RBI policy and US rate expectations jointly move the rupee. Month three on a single documented strategy with several explicitly hypothetical position sizes per simulated trade, reviewed at the end against a simple index hold. Indian market hours overlap comfortably with the working day, so the discipline challenge is usually overtrading rather than sleep.",
     faqs: [
       { q: "Is TradeHQ SEBI-registered?", a: "TradeHQ is a free educational simulator and does not execute trades or hold client funds. For the activities and entities that require SEBI registration, use SEBI's current rules and recognised-intermediary registry." },
       { q: "Can I paper trade Indian stocks like Reliance or TCS?", a: "The current TradeHQ catalogue focuses on US and global tickers. Indian-listed tickers are planned but not yet live." },
@@ -120,7 +120,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
       "US large-caps, the most common first international exposure for Filipino investors",
     ],
     practicePlan:
-      "First quarter: month one on Trading Psychology and a simple journal habit. Month two on Macro Reading, tracking how Fed decisions move USD/PHP and therefore the peso value of remittances and imported goods. Month three on consistency — the same setup, the same 1% risk, thirty simulated trades, then a written review. With the US session opening late at night in Manila, the daily timeframe is the realistic choice for anyone with school or work in the morning.",
+      "First quarter: month one on Trading Psychology and a simple journal habit. Month two on Macro Reading, tracking how Fed decisions move USD/PHP and therefore the peso value of remittances and imported goods. Month three on consistency — a documented setup and a chosen hypothetical size over a stated practice sample, then a written review. If a market schedule conflicts with school or work, recorded examples can be studied without treating a particular timeframe as a universal recommendation.",
     faqs: [
       { q: "Do I need to register with SEC Philippines to use TradeHQ?", a: "TradeHQ is a free educational simulator with no real-money trades. For account eligibility or activities that require registration, check current Philippine SEC rules and the provider involved." },
       { q: "Can Filipino students under 18 use TradeHQ?", a: "TradeHQ is a simulated educational site and does not execute real-money trades. Eligibility for a real brokerage account depends on the provider and applicable rules, so check current official/provider requirements rather than relying on this guide." },
@@ -192,7 +192,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
       "US large-cap equities, the most common international exposure available locally",
     ],
     practicePlan:
-      "First quarter: month one on Trading Psychology with a written journal. Month two on Macro Reading, following how oil prices and CBN policy feed into the naira and into local inflation. Month three on repetition — one strategy, fixed 1% risk, thirty simulated trades, then an honest review of the worst stretch rather than the best week. The US session opens in the Nigerian afternoon, which makes live practice more feasible here than in most of the other guides.",
+      "First quarter: month one on Trading Psychology with a written journal. Month two on Macro Reading, following how oil prices and CBN policy feed into the naira and into local inflation. Month three on repetition — one documented strategy and several hypothetical sizes over a stated practice sample, then an honest review of the worst stretch rather than the best week. The US session opens in the Nigerian afternoon, which makes live practice more feasible here than in most of the other guides.",
     faqs: [
       { q: "Is TradeHQ accessible from Nigeria?", a: "Yes. TradeHQ is a global free website. No signup, no payment, no geo-restriction." },
       { q: "Can I trade NGX-listed stocks here?", a: "Not yet. Current coverage focuses on US and global tickers." },

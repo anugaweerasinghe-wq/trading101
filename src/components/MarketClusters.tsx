@@ -48,7 +48,7 @@ const MARKET_CLUSTERS: Cluster[] = [
   {
     id: "blue-chip-giants",
     name: "🏛️ Blue Chip Giants",
-    description: "America's most valuable and stable companies",
+    description: "Examples of large listed companies and an equity ETF",
     icon: Building2,
     color: "text-blue-400",
     bgColor: "bg-blue-500/10",
@@ -88,19 +88,19 @@ export function MarketClusters({ assets }: MarketClustersProps) {
             <Sparkles className="w-5 h-5 text-primary" />
           </div>
           <h2 className="text-xl font-bold text-foreground">
-            State of the Market 2026: Practice Trading Guide
+            Market Categories: Practice Trading Guide
           </h2>
         </div>
         
         <div className="prose prose-sm prose-invert max-w-none">
           <p className="text-muted-foreground leading-relaxed mb-3">
-            The 2026 trading landscape is defined by three mega-trends: the <strong>AI infrastructure buildout</strong> driving semiconductor and cloud stocks to unprecedented valuations, the <strong>Bitcoin institutional adoption cycle</strong> following ETF approvals and corporate treasury allocations, and <strong>central bank policy divergence</strong> creating forex volatility not seen since 2022.
+            These categories group selected catalogue instruments by asset class or business theme. They are educational navigation aids, not a current market outlook, valuation assessment or forecast. Asset pages describe the available practice data and its limitations.
           </p>
           <p className="text-muted-foreground leading-relaxed mb-3">
-            For practice traders, this environment offers exceptional learning opportunities. Technology stocks like NVIDIA (NVDA) and Microsoft (MSFT) exhibit high-conviction trends ideal for momentum strategy practice. Cryptocurrencies including Bitcoin (BTC) and Ethereum (ETH) provide 24/7 market access to refine entry and exit timing. Blue-chip names like Apple (AAPL) and Amazon (AMZN) teach patience and earnings-based positioning.
+            The catalogue includes technology stocks, cryptocurrencies, currencies, commodities and ETFs. Comparing them can illustrate different position values and asset descriptions. A category label does not measure suitability, safety, expected returns or current momentum.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            TradeHQ's $100,000 virtual portfolio lets you simulate professional positioning across all five asset clusters below—from the AI Revolution to Hard Assets—without risking real capital. Master chart patterns, develop emotional discipline, and build your 2026 strategy playbook before committing real funds.
+            TradeHQ's $100,000 virtual portfolio lets you compare hypothetical positions across these categories without using real money. Record the assumptions behind a practice decision and review what the simulator can and cannot reproduce.
           </p>
         </div>
       </article>

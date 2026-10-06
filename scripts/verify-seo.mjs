@@ -12,6 +12,20 @@ import { resolve } from "path";
 const DIST = resolve(process.cwd(), "dist");
 const DOMAIN = "https://www.thetradehq.com";
 
+// M19: unknown/utility URLs must never inherit the indexable homepage fallback.
+{
+  const shell = readFileSync(resolve(DIST, "app-shell.html"), "utf8");
+  const hosting = JSON.parse(readFileSync(resolve(process.cwd(), "vercel.json"), "utf8"));
+  if (!/<meta[^>]+name="robots"[^>]+content="noindex, follow"/.test(shell)
+      || /<link[^>]+rel="canonical"/.test(shell)
+      || shell.includes("prerender-seo")
+      || shell.includes("application/ld+json")
+      || hosting.rewrites.at(-1).destination !== "/app-shell.html") {
+    console.error("✗ Non-manifest fallback must be a noindex shell without homepage content/canonical/schema");
+    process.exit(1);
+  }
+}
+
 // C03/C04 guard: internal QA/audit artifacts must never ship publicly.
 {
   const { readdirSync } = await import("fs");

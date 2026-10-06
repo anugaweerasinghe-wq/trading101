@@ -9,7 +9,7 @@ const steps = [
   },
   {
     icon: ShoppingCart,
-    title: "Buy Stocks & Crypto at Real Prices",
+    title: "Buy Stocks & Crypto in Simulation",
     description: "Trade 149 real assets — from Bitcoin and Ethereum to Apple and NVIDIA — with simulated market data.",
   },
   {

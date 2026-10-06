@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import { useParams, Navigate, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -14,7 +15,7 @@ const SECTORS = {
   "ai-tech": {
     name: "AI & Technology",
     slug: "ai-tech",
-    description: "Artificial intelligence and technology sector leaders driving the 2026 computing revolution. From GPU manufacturers to cloud platforms, these companies are at the forefront of AI innovation.",
+    description: "Artificial intelligence and technology sector leaders driving computing and software development. From GPU manufacturers to cloud platforms, these companies are at the forefront of AI innovation.",
     icon: Cpu,
     assetIds: ["nvda", "msft", "googl", "meta", "amd", "intc"],
     keywords: ["AI stocks", "technology investing", "semiconductor stocks", "cloud computing"],
@@ -84,7 +85,7 @@ export default function SectorPillar() {
   
   // Redirect if sector not found
   if (!sector) {
-    return <Navigate to="/markets" replace />;
+    return <NotFound />;
   }
 
   // Get assets for this sector
@@ -115,7 +116,7 @@ export default function SectorPillar() {
   return (
     <>
       <Helmet>
-        <title>{sector.name} Trading Simulator | 2026 Strategy & Analysis | TradeHQ</title>
+        <title>{sector.name} Trading Simulator | Practice Guide | TradeHQ</title>
         <meta name="description" content={`Practice trading ${sector.name.toLowerCase()} assets with $100K virtual funds. ${sector.description.slice(0, 100)}...`} />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="noindex, follow" />

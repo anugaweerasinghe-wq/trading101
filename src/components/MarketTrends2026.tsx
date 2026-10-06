@@ -13,7 +13,7 @@ const trends = [
     description: "Learn order entry, position sizing, portfolio tracking and review with virtual cash before deciding whether to use real money.",
     badge: "Learn",
     color: "primary",
-    href: "/learn/what-is-paper-trading",
+    href: "/learn/article/what-is-paper-trading",
   },
   {
     id: "risk-management",

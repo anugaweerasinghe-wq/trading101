@@ -93,7 +93,7 @@ export function calculate24hStats(asset: Asset) {
   };
 }
 
-// Get real-time price updates (simulated)
+// Get periodically simulated practice price updates
 export function subscribeToPrice(assetId: string, callback: (price: number, change: number) => void) {
   const interval = setInterval(() => {
     // Simulate small price movements (±0.5%)

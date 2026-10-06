@@ -133,7 +133,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         h: "What the practice portfolio tracks",
         p: [
           "The portfolio page is the scoreboard for your simulated account. It shows every open position with its entry price, current simulated price and unrealised profit or loss, plus a full history of closed trades with realised results. Your data lives in your browser's local storage, so clearing site data resets the account.",
-          "Beyond raw P&L, the page calculates the metrics that actually describe a process rather than an outcome: win rate, average win versus average loss, Sharpe ratio as a rough risk-adjusted measure, and maximum drawdown — the deepest peak-to-trough fall your equity curve has taken.",
+          "Beyond raw P&L, the page calculates the metrics that actually describe a process rather than an outcome: fee-inclusive closed-result win rate, average win versus average loss, current open-position return dispersion, and practice maximum drawdown. The chart can include generated history; it is not a verified sequence of account observations.",
         ],
       },
       {
@@ -148,7 +148,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "Why results here do not transfer one-to-one",
         p: [
-          "Simulated fills are optimistic, there are no commissions or financing costs, and no simulator can replicate the discomfort of a real drawdown. Use the portfolio to judge consistency and discipline, and assume live results will be meaningfully worse than practice results.",
+          "The simulator applies a 0.1% practice transaction fee, rather than a real broker fee schedule. It does not model financing costs, taxes or actual market execution. Review practice results alongside these limits; they do not predict real-money results.",
         ],
       },
     ],
@@ -363,7 +363,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What this page is",
         p: [
-          "The roadmap lists what has already shipped on TradeHQ and what is being worked on next, with honest status labels. Shipped means the feature is live and usable right now. Planned means it is intended but not built, and the date is a target rather than a promise.",
+          "The roadmap lists what has already shipped on TradeHQ and what is being worked on next, with honest status labels. Shipped means the feature is live and usable right now. Planned means it is intended but not built, and no confirmed delivery date is promised.",
         ],
       },
       {
@@ -420,7 +420,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "Getting in touch",
         p: [
-          "Use the contact form on this page to reach the person who builds TradeHQ. Response times vary with request volume. There is no call centre and no support queue — replies come from the maintainer. For a bug report, include the page URL and the steps that reproduce it so the current build can be checked.",
+          "The contact page lists email and phone details for the maintainer. Its form opens your own email client with a prepared draft; it does not send a message automatically or store submissions on TradeHQ. Response times vary with request volume. For a bug report, include the page URL and reproducible steps so the current build can be checked.",
         ],
       },
       {

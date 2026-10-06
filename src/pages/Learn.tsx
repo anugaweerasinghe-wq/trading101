@@ -30,7 +30,7 @@ const lessons = [
 const trendingTopics = [
   { id: "bitcoin-practice", title: "Bitcoin Practice", subtitle: "BTC simulator", description: "Practice Bitcoin order entry and portfolio tracking with virtual cash.", icon: Zap, badge: "Practice", href: "/trade/btc" },
   { id: "index-etfs", title: "Stock Market Index ETFs", subtitle: "Broad-market funds", description: "Learn how index ETFs package baskets of stocks and how they differ from individual shares.", icon: Coins, badge: "Guide", href: "/learn/article/stock-market-index-etfs" },
-  { id: "ai-trading", title: "AI-Driven Trading", subtitle: "Smart Strategies", description: "Leverage AI algorithms for market analysis and automated strategies.", icon: Brain, badge: "Innovation", href: "/ai-mentor" },
+  { id: "educational-mentor", title: "Educational Mentor", subtitle: "Trading concepts", description: "Ask the rule-based educational library about concepts and practice observations. It does not automate trades or provide investment signals.", icon: Brain, badge: "Learning", href: "/ai-mentor" },
 ];
 
 const WIKI_TERMS = [
@@ -315,7 +315,7 @@ export default function Learn() {
             {/* Market themes — onClick replaced with Link */}
             <div className="mb-20">
               <h2 className="text-2xl font-bold mb-3 flex items-center gap-3"><TrendingUp className="w-6 h-6 text-primary" /> Market Themes to Explore</h2>
-              <p className="text-sm text-muted-foreground mb-6">Emerging themes shaping markets this year — explore the trends driving new opportunities.</p>
+              <p className="text-sm text-muted-foreground mb-6">Explore practice tools and learning topics. Each card describes its destination.</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {trendingTopics.map((topic, index) => {
                   const Icon = topic.icon;

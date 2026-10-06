@@ -158,7 +158,7 @@ const Index = () => {
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="TradeHQ — Free Paper Trading Simulator" />
-        <meta name="twitter:description" content="Practice stocks & crypto with $100K virtual cash. No signup. AI mentor included." />
+        <meta name="twitter:description" content="Practice stocks & crypto with $100K virtual cash. No signup. Educational mentor included." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(homeFaqSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>

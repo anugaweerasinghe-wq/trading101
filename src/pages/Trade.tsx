@@ -357,7 +357,7 @@ export default function Trade() {
             </h1>
             <p className="text-xs md:text-sm text-muted-foreground mt-1 max-w-3xl">
               Place simulated buy and sell orders across crypto, stocks, ETFs, forex and
-              commodities with $100,000 in virtual cash. Prices are live where available and
+              commodities with $100,000 in virtual cash. Quotes and charts can be provider-sourced, delayed or simulated and
               clearly labelled LIVE, CACHED or SIM. (Educational simulation only — not
               financial advice.)
             </p>

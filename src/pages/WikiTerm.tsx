@@ -31,7 +31,7 @@ const WikiTerm = () => {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": `What is ${term.term}? | Complete Trading Guide 2026 | TradeHQ`,
+    "headline": `What is ${term.term}? | Trading Concept Guide | TradeHQ`,
     "description": `Master ${term.term} in under ${term.readTime}. ${term.definition}`,
     "author": { "@type": "Organization", "name": "TradeHQ" },
     "publisher": {
@@ -82,7 +82,7 @@ const WikiTerm = () => {
   return (
     <>
       <Helmet>
-        <title>What is {term.term}? | Complete Trading Guide 2026 | TradeHQ</title>
+        <title>What is {term.term}? | Trading Concept Guide | TradeHQ</title>
         <meta
           name="description"
           content={`${firstCompleteSentence(term.definition)} Learn the concept with examples and simulated practice on TradeHQ.`}
@@ -90,7 +90,7 @@ const WikiTerm = () => {
         <link rel="canonical" href={`${DOMAIN}/wiki/${term.slug}`} />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={`What is ${term.term}? | Complete Trading Guide 2026 | TradeHQ`} />
+        <meta property="og:title" content={`What is ${term.term}? | Trading Concept Guide | TradeHQ`} />
         <meta property="og:description" content={term.definition} />
         <meta property="og:url" content={`${DOMAIN}/wiki/${term.slug}`} />
         <meta property="og:image" content={`${DOMAIN}/og-image.png`} />
@@ -138,11 +138,11 @@ const WikiTerm = () => {
                 This page has no recorded editorial review date.
               </p>
 
-          {/* Expert Definition */}
+          {/* Detailed Definition */}
           <Card className="mt-8 p-6 md:p-8 bg-card border-border rounded-2xl backdrop-blur-md">
             <div className="flex items-center gap-2 mb-4">
               <BookOpen className="w-4 h-4 text-primary" />
-              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-muted-foreground">Expert Definition</h2>
+              <h2 className="text-xs uppercase tracking-[0.15em] font-black text-muted-foreground">Detailed Definition</h2>
             </div>
             <p className="text-sm md:text-base text-foreground/80 leading-relaxed whitespace-pre-line">
               {term.expertDefinition}
@@ -189,7 +189,7 @@ const WikiTerm = () => {
               <h3 className="text-sm font-bold text-foreground">Apply This in the Simulator</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-4">
-              Practice identifying {term.term.toLowerCase()} patterns with $100,000 in virtual capital. Zero risk, real market data.
+              Practice identifying {term.term.toLowerCase()} patterns with $100,000 in virtual capital. Virtual practice only; data may be provider-sourced, delayed or simulated.
             </p>
             <Link to="/trade/BTC">
               <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-lg">

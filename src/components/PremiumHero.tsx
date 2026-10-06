@@ -148,7 +148,7 @@ export function PremiumHero() {
           {[
             { label: 'Tradeable Assets', value: '149', icon: TrendingUp, glow: 'hsl(180 70% 50% / 0.1)' },
             { label: 'Virtual Capital', value: '$100K', icon: Shield, glow: 'hsl(152 60% 42% / 0.1)' },
-            { label: 'AI Mentoring', value: 'Free', icon: Sparkles, glow: 'hsl(280 60% 55% / 0.1)' },
+            { label: 'Educational Mentor', value: 'Free', icon: Sparkles, glow: 'hsl(280 60% 55% / 0.1)' },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
