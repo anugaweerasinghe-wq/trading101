@@ -88,7 +88,7 @@ export default function SEOAudit() {
           titleEst = ROUTE_META[route].title;
           descEst = ROUTE_META[route].description;
         } else if (isNiche && symbol) {
-          titleEst = `${symbol} — Institutional Analysis & 2026 Scenario Drivers | TradeHQ`;
+          titleEst = `${symbol} — Asset Overview & Scenario Drivers | TradeHQ`;
           descEst = `Practice ${symbol} trading with $100K virtual cash. Expert analysis, real-time charts, technical indicators & risk management tools. Start trading ${symbol} risk-free on TradeHQ simulator.`;
         }
 
