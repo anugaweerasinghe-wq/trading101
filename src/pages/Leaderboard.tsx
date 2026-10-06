@@ -11,7 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { MIN_TRADES_TO_RANK } from "@/lib/traderSync";
+import { MIN_TRADES_TO_RANK, syncStats } from "@/lib/traderSync";
 import { pushPortfolio } from "@/lib/cloudPortfolio";
 import { STARTING_BALANCE_LABEL } from "@/lib/constants";
 
@@ -93,20 +93,58 @@ export default function Leaderboard() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.rpc("get_cloud_leaderboard", { p_limit: 100 });
-      if (error) throw error;
+      const cloud = await supabase.rpc("get_cloud_leaderboard", { p_limit: 100 });
+      if (!cloud.error) {
+        const mapped: BoardRow[] = (cloud.data ?? []).map((row) => ({
+          userId: row.user_id,
+          username: row.username,
+          country: row.country,
+          portfolioValue: Number(row.portfolio_value),
+          pnlPct: Number(row.pnl_pct),
+          trades: Number(row.trades),
+          pricedAt: row.priced_at ?? null,
+        }));
+        setRows(mapped);
+        return;
+      }
 
-      const mapped: BoardRow[] = (data ?? []).map((row) => ({
-        userId: row.user_id,
-        username: row.username,
-        country: row.country,
-        portfolioValue: Number(row.portfolio_value),
-        pnlPct: Number(row.pnl_pct),
-        trades: Number(row.trades),
-        pricedAt: row.priced_at ?? null,
-      }));
+      // Compatibility fallback while older deployments finish the cloud-schema migration.
+      console.warn("Cloud leaderboard unavailable; falling back to legacy summaries", cloud.error);
+      const { data: profiles, error: profilesError } = await supabase
+        .from("profiles")
+        .select("id, username, country")
+        .eq("is_public", true);
+      if (profilesError) throw profilesError;
+      if (!profiles?.length) {
+        setRows([]);
+        return;
+      }
 
-      setRows(mapped);
+      const { data: stats, error: statsError } = await supabase
+        .from("trader_stats")
+        .select("user_id, portfolio_value, pnl_pct, trades")
+        .in("user_id", profiles.map((p) => p.id))
+        .gte("trades", MIN_TRADES_TO_RANK);
+      if (statsError) throw statsError;
+
+      const byId = new Map(profiles.map((p) => [p.id, p]));
+      const fallbackRows: BoardRow[] = (stats ?? [])
+        .map((row) => {
+          const p = byId.get(row.user_id);
+          if (!p) return null;
+          return {
+            userId: row.user_id,
+            username: p.username,
+            country: p.country,
+            portfolioValue: Number(row.portfolio_value),
+            pnlPct: Number(row.pnl_pct),
+            trades: Number(row.trades),
+            pricedAt: null,
+          };
+        })
+        .filter(Boolean) as BoardRow[];
+      fallbackRows.sort((a, b) => b.pnlPct - a.pnlPct);
+      setRows(fallbackRows);
     } catch (error) {
       console.error("Leaderboard load failed", error);
       setRows([]);
@@ -176,8 +214,14 @@ export default function Leaderboard() {
     if (!user) return;
     setSyncing(true);
     try {
-      await pushPortfolio(user.id);
-      toast.success("Practice portfolio synced.");
+      try {
+        await pushPortfolio(user.id);
+        toast.success("Practice portfolio synced.");
+      } catch (cloudError) {
+        console.warn("Cloud portfolio sync unavailable; using legacy summary sync", cloudError);
+        await syncStats(user.id);
+        toast.success("Practice stats synced.");
+      }
       await load();
     } catch (error) {
       console.error("Portfolio sync failed", error);
