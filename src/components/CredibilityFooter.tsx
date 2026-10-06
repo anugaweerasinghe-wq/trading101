@@ -2,9 +2,6 @@ import { Card } from "@/components/ui/card";
 import { 
   Shield, 
   Award, 
-  Twitter, 
-  Linkedin, 
-  Github,
   Star,
   Users,
   BookOpen
@@ -61,36 +58,7 @@ export function CredibilityFooter() {
                 Our content covers stock trading, crypto, forex, and risk management strategies. 
                 All simulations use virtual capital — no real money is at risk. This platform is for educational purposes only.
               </p>
-              <div className="flex flex-wrap items-center gap-4">
-                <span className="text-sm text-muted-foreground">Connect with us:</span>
-                <a 
-                  href="https://twitter.com/tradinghq" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#1DA1F2]/10 flex items-center justify-center hover:bg-[#1DA1F2]/20 transition-colors"
-                  aria-label="Follow us on Twitter"
-                >
-                  <Twitter className="w-5 h-5 text-[#1DA1F2]" />
-                </a>
-                <a 
-                  href="https://linkedin.com/company/tradinghq" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#0077B5]/10 flex items-center justify-center hover:bg-[#0077B5]/20 transition-colors"
-                  aria-label="Follow us on LinkedIn"
-                >
-                  <Linkedin className="w-5 h-5 text-[#0077B5]" />
-                </a>
-                <a 
-                  href="https://github.com/tradinghq" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-foreground/10 flex items-center justify-center hover:bg-foreground/20 transition-colors"
-                  aria-label="View our GitHub"
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-              </div>
+              <Link to="/contact" className="text-sm text-primary hover:underline">Contact TradeHQ</Link>
             </div>
           </div>
         </Card>
