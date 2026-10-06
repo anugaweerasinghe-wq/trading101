@@ -363,7 +363,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What this page is",
         p: [
-          "The roadmap lists what has already shipped on TradeHQ and what is being worked on next, with honest status labels. Shipped means the feature is live and usable right now. Planned means it is intended but not built, and no confirmed delivery date is promised.",
+          "The roadmap lists what has already shipped on TradeHQ and what is being worked on next, with honest status labels. Shipped identifies an implemented feature; account and community features still depend on the backend being available. Planned means it is intended but not built, and no confirmed delivery date is promised.",
         ],
       },
       {
