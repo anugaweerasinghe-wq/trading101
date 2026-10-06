@@ -42,7 +42,7 @@ const SECTORS = {
   "tech-giants": {
     name: "Tech Giants",
     slug: "tech-giants",
-    description: "The technology sector titans shaping our digital future. From search and social media to cloud computing and e-commerce, these companies dominate the global technology landscape in 2026.",
+    description: "The technology sector titans shaping our digital future. From search and social media to cloud computing and e-commerce, these companies participate in different parts of the technology sector.",
     icon: Building2,
     assetIds: ["aapl", "msft", "googl", "amzn", "meta", "nflx", "orcl", "adbe", "crm", "csco"],
     keywords: ["tech stocks", "big tech investing", "technology giants", "FAANG+"],

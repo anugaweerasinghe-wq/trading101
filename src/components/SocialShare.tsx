@@ -26,7 +26,7 @@ export function SocialShare({
       ? `${window.location.origin}${window.location.pathname}`
       : "https://www.thetradehq.com/learn-trading-guide");
 
-  const shareText = `${title} 📈\n\n${description}\n\n🔗 ${shareUrl}\n\n#TradingEducation #LearnToTrade #Investing2026`;
+  const shareText = `${title} 📈\n\n${description}\n\n🔗 ${shareUrl}\n\n#TradingEducation #LearnToTrade #TradingPractice`;
 
   const handleTwitterShare = () => {
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;

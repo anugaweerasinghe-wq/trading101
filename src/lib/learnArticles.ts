@@ -124,7 +124,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "Why Some Beginners Prefer Crypto First",
         paragraphs: [
           "Crypto markets never close, so simulated practice is available at any time. Higher volatility can make price changes appear faster and larger, but that does not make learning easier or safer. An asset's unit price also does not measure its risk or accessibility; position size and total exposure matter more than whether one token costs less than $1.",
-          "The crypto ecosystem introduces you to concepts like blockchain technology, decentralized finance (DeFi), and tokenomics — knowledge that's increasingly relevant in 2026 as traditional finance and crypto continue to converge. Understanding both worlds makes you a more versatile trader.",
+          "The crypto ecosystem introduces you to concepts like blockchain technology, decentralized finance (DeFi), and tokenomics — knowledge that helps you distinguish a network's function from a token's market price. Understanding both worlds can help you ask more precise questions about the risks.",
           "A learning exercise can compare one company example with one cryptocurrency using the same hypothetical position value and observation period. Record differences in mechanics and uncertainty without treating either market as the required starting choice. Virtual results do not establish real-money suitability."
         ]
       }

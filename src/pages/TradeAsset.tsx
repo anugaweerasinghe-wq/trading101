@@ -476,7 +476,7 @@ export default function TradeAsset() {
           {selectedAsset && (
             <header className="pb-2">
               <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2 tracking-tight">
-                {selectedAsset.name} — Practice Trading Simulator 2026
+                {selectedAsset.name} — Practice Trading Simulator
               </h1>
               <p className="text-sm text-muted-foreground mb-2 max-w-3xl">
                 Master {selectedAsset.symbol} trading with $100,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
@@ -582,7 +582,7 @@ export default function TradeAsset() {
           {selectedAsset && (
             <section className="mt-8 p-6 bg-white/[0.02] backdrop-blur-xl rounded-2xl border border-white/[0.06]">
               <h2 className="text-lg font-bold text-foreground mb-4 tracking-tight">
-                {selectedAsset.symbol} Simulated Market Analysis — Educational Overview 2026
+                {selectedAsset.symbol} Simulated Market Analysis — Educational Overview
               </h2>
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                 {generateMarketOutlook(selectedAsset).split('\n\n').map((paragraph, index) => (
