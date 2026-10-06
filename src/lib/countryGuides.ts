@@ -86,7 +86,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
       "US technology large-caps, widely followed by Indian retail investors through international platforms",
     ],
     practicePlan:
-      "Suggested first quarter: month one on Trading Psychology, since the failure mode documented in Indian retail data is behavioural rather than analytical. Month two on Macro Reading, paying attention to how RBI policy and US rate expectations jointly move the rupee. Month three on a single documented strategy with a fixed 1% risk per simulated trade, reviewed at the end against a simple index hold. Indian market hours overlap comfortably with the working day, so the discipline challenge is usually overtrading rather than sleep.",
+      "Suggested first quarter: month one on Trading Psychology, as one way to study decision-making under uncertainty. Month two on Macro Reading, paying attention to how RBI policy and US rate expectations jointly move the rupee. Month three on a single documented strategy with a fixed 1% risk per simulated trade, reviewed at the end against a simple index hold. Indian market hours overlap comfortably with the working day, so the discipline challenge is usually overtrading rather than sleep.",
     faqs: [
       { q: "Is TradeHQ SEBI-registered?", a: "TradeHQ is a free educational simulator and does not execute trades or hold client funds. For the activities and entities that require SEBI registration, use SEBI's current rules and recognised-intermediary registry." },
       { q: "Can I paper trade Indian stocks like Reliance or TCS?", a: "The current TradeHQ catalogue focuses on US and global tickers. Indian-listed tickers are planned but not yet live." },
@@ -122,7 +122,7 @@ export const COUNTRY_GUIDES: CountryGuide[] = [
     practicePlan:
       "First quarter: month one on Trading Psychology and a simple journal habit. Month two on Macro Reading, tracking how Fed decisions move USD/PHP and therefore the peso value of remittances and imported goods. Month three on consistency — the same setup, the same 1% risk, thirty simulated trades, then a written review. With the US session opening late at night in Manila, the daily timeframe is the realistic choice for anyone with school or work in the morning.",
     faqs: [
-      { q: "Do I need to register with SEC Philippines to use TradeHQ?", a: "No. TradeHQ is a free educational simulator with no real money. Registration is only required for real broker accounts." },
+      { q: "Do I need to register with SEC Philippines to use TradeHQ?", a: "TradeHQ is a free educational simulator with no real-money trades. For account eligibility or activities that require registration, check current Philippine SEC rules and the provider involved." },
       { q: "Can Filipino students under 18 use TradeHQ?", a: "TradeHQ is a simulated educational site and does not execute real-money trades. Eligibility for a real brokerage account depends on the provider and applicable rules, so check current official/provider requirements rather than relying on this guide." },
     ],
   },

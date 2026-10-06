@@ -271,7 +271,7 @@ const futuresTrack: CourseTrack = {
   prerequisites:
     "Some familiarity with charts and with the idea of buying and selling an asset. The margin lesson involves multiplication and percentages, nothing more. Working through the Trading Psychology track first is recommended, because leverage punishes emotional decisions faster than any other instrument on the site.",
   progression:
-    "The sequence deliberately delays the exciting part. You first learn what the contract is and why it exists, then how margin and leverage work — the mechanism responsible for most account losses in this asset class. Term structure follows, because contango and backwardation explain returns that otherwise look inexplicable to anyone holding a rolling position. Hedging comes next to restore the original purpose of these markets, and the track closes on micro contracts, which are the only sensible size for someone learning.",
+    "The sequence starts with contract specifications, then margin and leverage. Term structure follows to explain differences between delivery prices and rolling exposure. Hedging introduces basis risk, and micro contracts illustrate smaller multipliers. No contract size is universally suitable, and losses are not limited to the margin deposit.",
   notFor:
     "This track does not teach day-trading systems, scalping methods or any approach that relies on high leverage to produce results. It does not cover crypto perpetual contracts, which have different funding mechanics. If your interest is in maximising position size on a small account, the honest answer from this material is that the approach has a poor survival rate.",
   lessons: [
@@ -346,36 +346,36 @@ const futuresTrack: CourseTrack = {
     {
       slug: "contango-and-backwardation",
       title: "Contango & Backwardation — Term Structure Explained",
-      summary: "The shape of the futures curve tells you what commercial hedgers actually expect — the single most important concept for commodity traders.",
+      summary: "Compare prices across delivery dates and study carrying costs, supply conditions and the assumptions behind rolling exposure.",
       readingMinutes: 9,
       body: [
         "## Term structure — the futures curve",
         "For any commodity there are typically 6-24 listed futures expirations. Plot each expiration's price on a graph and you get the term structure. When further-dated contracts trade above nearer ones, the curve is in contango. When they trade below, it's in backwardation.",
         "## Why contango happens",
-        "Contango is the default state for storable commodities. The further-dated contract prices in storage costs, insurance, and financing over the holding period. If a barrel of oil sitting in a tank for 12 months costs $4 to store and finance, the 12-month future should trade $4 above spot in a healthy market.",
+        "Carrying costs such as storage, insurance and financing can contribute to higher prices for later delivery. A simplified example with $4 of carrying costs may illustrate that relationship, but convenience yield, constraints and market conditions also matter; there is no universal $4 premium or default curve.",
         "## Why backwardation happens",
-        "Backwardation signals a physical shortage right now. Commercial users are willing to pay a premium for immediate delivery rather than wait. Crude oil famously flipped into deep backwardation during the 2022 supply-shock rally.",
+        "Backwardation means later-delivery contracts trade below nearer delivery in the comparison being made. Supply conditions and the value of immediate availability can contribute, but the curve alone does not prove a physical shortage or identify a future price direction.",
         "## The roll yield trap",
-        "Retail commodity ETFs like USO must continuously roll expiring contracts into new ones. In contango, they systematically sell cheaper front-month and buy more-expensive back-month, bleeding value on every roll. This is why USO has vastly underperformed spot WTI over the past decade.",
+        "A fund with futures exposure may replace expiring contracts according to its current published methodology. Rolling can affect performance relative to spot, alongside collateral returns, fees and the price path. A roll is not an automatic cash loss equal to the price gap; inspect the specific fund and observation period.",
         "## Trading implications",
-        "Steep contango often precedes a top in the commodity. Deep backwardation often precedes a bottom or a squeeze. The curve is not a prediction — it's the aggregate positioning of commercial hedgers who move the actual physical.",
+        "The curve records prices for different delivery dates. It is context for an educational comparison, not an automatic top, bottom or squeeze signal and not a direct measurement of commercial hedger positioning.",
         DISC,
       ],
       keyTakeaways: [
-        "Contango: futures above spot — storage costs dominate.",
-        "Backwardation: futures below spot — physical shortage.",
-        "Commodity ETFs bleed value rolling in contango.",
-        "The curve reveals hedger positioning.",
+        "Contango: later delivery trades above nearer delivery in the comparison; carrying costs can contribute.",
+        "Backwardation: later delivery trades below nearer delivery; the curve alone does not establish a shortage.",
+        "Futures-fund returns depend on methodology, contract price changes, collateral returns and costs.",
+        "The curve shows delivery prices, not the identity or positioning of participants.",
       ],
       sources: [
         { label: "CME — Contango/Backwardation", url: "https://www.cmegroup.com/education/courses/introduction-to-crude-oil/contango-and-backwardation.html" },
         { label: "FRED — WTI", url: "https://fred.stlouisfed.org/series/DCOILWTICO" },
       ],
       quiz: [
-        { question: "Further-dated below front month =", options: ["Contango", "Backwardation", "Equilibrium", "Rollover"], correctAnswer: 1, explanation: "Backwardation = shortage signal." },
-        { question: "Why do ETFs bleed value in contango?", options: ["Fees", "Roll from cheap to expensive contract", "FX", "Tax"], correctAnswer: 1, explanation: "Systematic roll drag." },
+        { question: "Further-dated below front month =", options: ["Contango", "Backwardation", "Equilibrium", "Rollover"], correctAnswer: 1, explanation: "Backwardation describes relative delivery prices; it does not by itself prove a shortage." },
+        { question: "Which factor can make a futures fund differ from spot performance?", options: ["Guaranteed gains", "Contract selection and rolling methodology", "No costs", "Identical exposure"], correctAnswer: 1, explanation: "Methodology, contract price changes, collateral returns and costs affect fund performance." },
         { question: "Contango is typical for:", options: ["Perishables", "Storable commodities in normal markets", "Only metals", "Only ags"], correctAnswer: 1, explanation: "Storage costs push distant deliveries up." },
-        { question: "Deep backwardation often signals:", options: ["Quiet market", "Physical shortage", "Delisting", "Low vol"], correctAnswer: 1, explanation: "Hedgers pay for immediate supply." },
+        { question: "Which condition can contribute to backwardation, without being proven by the curve alone?", options: ["Quiet market", "Physical shortage", "Delisting", "Low vol"], correctAnswer: 1, explanation: "Hedgers pay for immediate supply." },
       ],
     },
     {
@@ -389,7 +389,7 @@ const futuresTrack: CourseTrack = {
         "## The farmer case study",
         "A corn farmer plants in May and won't harvest until September. By selling corn futures for September delivery in May, the farmer locks in the price today. If corn falls between May and September, the futures gain offsets the lower cash sale.",
         "## Portfolio hedging with equity index futures",
-        "A fund manager who owns $50 million of large-cap stocks can hedge that exposure by shorting E-mini S&P 500 futures. With the index at 5,000 and each contract at $250,000 notional, they'd short 200 contracts to fully neutralise. This is why S&P futures see billions in daily volume during equity drawdowns.",
+        "In a hypothetical worksheet, $50 million divided by $250,000 of contract notional gives 200 contracts. That arithmetic assumes one-for-one exposure; actual hedge sizing also depends on portfolio beta, basis risk and contract specifications. It does not guarantee full neutralisation or establish trading volume.",
         "## The hedge is never perfect",
         "Basis risk (difference between futures and physical price) always exists. Jet fuel is not crude oil. A specific corn variety is not the generic contract. Portfolio betas drift. Hedges reduce risk — they never eliminate it.",
         DISC,
@@ -476,9 +476,9 @@ const macroTrack: CourseTrack = {
       readingMinutes: 8,
       body: [
         "## What CPI actually measures",
-        "The Consumer Price Index is a monthly Bureau of Labor Statistics survey of prices paid by urban consumers for a basket of goods and services. It has two headline flavours: headline CPI (includes food and energy) and core CPI (excludes them, because they're volatile). Traders watch both, but the Federal Reserve targets core PCE — a separate but closely related measure.",
+        "The Consumer Price Index is a monthly Bureau of Labor Statistics survey of prices paid by urban consumers for a basket of goods and services. It has two headline flavours: headline CPI (includes food and energy) and core CPI (excludes them, because they're volatile). Core readings are used to study trends, while the FOMC states its longer-run 2% inflation goal in terms of the annual change in the PCE price index.",
         "## The release mechanics",
-        "CPI drops at 8:30 AM Eastern on a set day mid-month. In the 60 seconds after release, S&P 500 futures, 10-year Treasury yields, and the dollar index can move 0.5-1.5% on a meaningful surprise. This initial impulse is driven by algorithmic reactions to the print vs consensus.",
+        "Check the current BLS release calendar for CPI timing; scheduled releases are generally at 8:30 AM Eastern. Market reactions depend on expectations and other information. No fixed first-minute percentage move or single class of participant is established by this lesson.",
         "## Consensus, surprise and market reaction",
         "Every economist submits a forecast. The median is consensus. If actual > consensus, it's a hot print — bond yields typically rise, dollar strengthens, equities can either sell off (rate fear dominant) or rally (growth optimism dominant). Which reaction dominates depends on the regime — this is why context matters more than the number itself.",
         "## The three-layer read",
