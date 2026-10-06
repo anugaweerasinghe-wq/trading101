@@ -46,6 +46,7 @@ function Stars({ value, size = 16, onChange }: { value: number; size?: number; o
 export default function Reviews() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(5);
@@ -54,15 +55,24 @@ export default function Reviews() {
 
   const load = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("reviews")
-      .select("id, name, content, rating, is_featured, created_at")
-      .eq("is_visible", true)
-      .order("is_featured", { ascending: false })
-      .order("created_at", { ascending: false });
-    if (error) toast.error("Could not load reviews");
-    else setReviews(data ?? []);
-    setLoading(false);
+    setLoadError(null);
+    try {
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("id, name, content, rating, is_featured, created_at")
+        .eq("is_visible", true)
+        .order("is_featured", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      setReviews(data ?? []);
+    } catch (error) {
+      console.error("Reviews load failed", error);
+      setReviews([]);
+      setLoadError("Reviews are temporarily unavailable. Please retry.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -160,6 +170,12 @@ export default function Reviews() {
             <section aria-label="Reviews">
               {loading ? (
                 <Card className="p-6 text-sm text-muted-foreground">Loading reviews…</Card>
+              ) : loadError ? (
+                <Card className="p-8 text-center">
+                  <Quote className="w-8 h-8 text-muted-foreground/40 mx-auto mb-3" />
+                  <p className="text-muted-foreground mb-4">{loadError}</p>
+                  <Button type="button" variant="outline" onClick={load}>Retry</Button>
+                </Card>
               ) : reviews.length === 0 ? (
                 <Card className="p-8 text-center">
                   <Quote className="w-8 h-8 text-muted-foreground/40 mx-auto mb-3" />
