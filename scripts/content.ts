@@ -323,7 +323,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         h: "Why comparison beats a ranking",
         p: [
           "There is no such thing as the best asset to trade, only assets that suit different tolerances, schedules and levels of experience. A pair of instruments that look interchangeable on a price chart can differ completely in what moves them, when they are liquid, how far they typically travel in a day, and how badly they punish a mis-sized position. That is what these pages compare.",
-          "None of them tell you what to buy, and none of them predict which side will perform better. The verdict section answers a narrower and more useful question: which of the two is the better vehicle for learning a particular skill, and under what circumstances the other one becomes the better choice.",
+          "None of them tell you what to buy, and none of them predict which side will perform better. The comparison section highlights differences in mechanics, assumptions and risks. It does not rank either instrument as the better investment or prescribe which one to practise first.",
         ],
       },
       {
@@ -345,7 +345,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       sections: [
         { h: "How the two differ in practice", p: p.deepDive },
         { h: "Key differences", list: p.bullets },
-        { h: "Which to practise first", p: [p.verdict] },
+        { h: "What the comparison shows", p: [p.verdict] },
         { h: "Common mistakes with this comparison", list: p.mistakes },
         {
           h: "Practise both sides",
@@ -396,7 +396,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
   for (const h of howto) {
     map.set(`/how-to-trade/${h.symbol}`, {
       sections: [
-        { h: `Why people trade ${h.fullName}`, p: [h.whyTrade] },
+        { h: `Understanding ${h.fullName}`, p: [h.beginnerTip] },
         { h: "What actually moves it", list: h.drivers },
         { h: "Step by step", list: h.steps },
         { h: "A realistic first practice trade", p: [h.firstTrade] },
@@ -410,6 +410,10 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { href: `/trade/${h.symbol}`, label: `${h.fullName} practice page` },
         { href: "/how-to-trade", label: "All asset guides" },
         { href: "/strategy", label: "Strategy guides" },
+        ...(h.symbol === "eth" ? [
+          { href: "https://ethereum.org/what-is-ether/", label: "Ethereum.org: ether" },
+          { href: "https://ethereum.org/gas/", label: "Ethereum.org: gas and fees" },
+        ] : []),
       ],
     });
   }

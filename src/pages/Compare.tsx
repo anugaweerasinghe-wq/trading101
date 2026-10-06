@@ -80,7 +80,7 @@ export default function Compare() {
           </Card>
 
           <Card className="p-6 mb-8 bg-gradient-to-br from-emerald-500/5 to-rose-500/5 border-white/10">
-            <h2 className="text-xl font-semibold mb-2">The verdict</h2>
+            <h2 className="text-xl font-semibold mb-2">What the comparison shows</h2>
             <p className="text-base text-muted-foreground">{pair.verdict}</p>
             <p className="mt-3 text-xs text-muted-foreground/70 italic">(Educational simulation only — not financial advice.)</p>
           </Card>

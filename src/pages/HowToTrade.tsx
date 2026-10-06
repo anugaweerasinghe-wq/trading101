@@ -132,6 +132,12 @@ export default function HowToTrade() {
             <h2 className="text-2xl font-semibold mb-3">How to review the trade afterwards</h2>
             <p className="text-sm leading-relaxed text-muted-foreground">{asset.review}</p>
             <p className="mt-3 text-xs text-muted-foreground/70 italic">(Educational simulation only — not financial advice.)</p>
+            {asset.symbol === "eth" && (
+              <p className="mt-3 text-sm text-muted-foreground">
+                Network concepts: <a href="https://ethereum.org/what-is-ether/" className="underline">Ethereum.org on ether</a>
+                {" and "}<a href="https://ethereum.org/gas/" className="underline">Ethereum.org on gas and fees</a>.
+              </p>
+            )}
           </section>
 
           <section className="mb-10">
