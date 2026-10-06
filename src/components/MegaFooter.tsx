@@ -180,24 +180,7 @@ export function MegaFooter() {
               and master stocks, crypto, forex, and commodities risk-free.
             </p>
 
-            <div className="flex items-center gap-3">
-              {[
-                { href: "https://twitter.com/tradinghq", icon: Twitter, label: "Twitter" },
-                { href: "https://linkedin.com/company/tradinghq", icon: Linkedin, label: "LinkedIn" },
-                { href: "https://github.com/tradinghq", icon: Github, label: "GitHub" },
-              ].map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center hover:bg-primary/10 hover:border-primary/20 transition-all duration-300"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-4 h-4 text-muted-foreground" />
-                </a>
-              ))}
-            </div>
+            <Link to="/contact" className="text-sm text-primary hover:underline">Contact TradeHQ</Link>
           </div>
 
           {/* Platform Links */}
