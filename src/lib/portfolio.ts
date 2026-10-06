@@ -42,8 +42,23 @@ export function getPortfolio(): Portfolio {
   };
 }
 
-export function savePortfolio(portfolio: Portfolio): void {
+const UPDATED_AT_KEY = 'tradehq_portfolio_updated_at';
+let saveListener: ((p: Portfolio) => void) | null = null;
+
+/** Registered by the cloud sync module so signed-in saves reach the database. */
+export function setPortfolioSaveListener(fn: (p: Portfolio) => void) {
+  saveListener = fn;
+}
+
+export function getLocalUpdatedAt(): number {
+  try { return Number(localStorage.getItem(UPDATED_AT_KEY) || 0); } catch { return 0; }
+}
+
+export function savePortfolio(portfolio: Portfolio, opts: { silent?: boolean } = {}): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolio));
+  try { localStorage.setItem(UPDATED_AT_KEY, String(Date.now())); } catch { /* ignore */ }
+  if (!opts.silent) saveListener?.(portfolio);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('tradehq:portfolio-updated'));
 }
 
 export function executeTrade(

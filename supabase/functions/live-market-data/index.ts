@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { allow, clientIp } from "../_shared/rateLimit.ts";
+import { cachePrice } from "../_shared/priceCache.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -393,6 +394,12 @@ serve(async (req) => {
         data = generateSimulatedData(basePrice, assetType || 'stock');
       }
     }
+
+    if (dataType !== 'candles' && data && !Array.isArray(data) && data.source === 'live') {
+      await cachePrice(assetId, data.price, data.provenance?.provider ?? 'provider');
+    }
+
+
 
     return new Response(
       JSON.stringify({
