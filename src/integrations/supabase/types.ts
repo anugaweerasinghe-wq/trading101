@@ -113,6 +113,90 @@ export type Database = {
         }
         Relationships: []
       }
+      market_prices: {
+        Row: {
+          asset_id: string
+          price: number
+          source: string
+          updated_at: string
+        }
+        Insert: {
+          asset_id: string
+          price: number
+          source?: string
+          updated_at?: string
+        }
+        Update: {
+          asset_id?: string
+          price?: number
+          source?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      practice_portfolios: {
+        Row: {
+          cash: number
+          created_at: string
+          realized_pnl: number
+          trades_count: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cash?: number
+          created_at?: string
+          realized_pnl?: number
+          trades_count?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cash?: number
+          created_at?: string
+          realized_pnl?: number
+          trades_count?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      practice_positions: {
+        Row: {
+          asset_id: string
+          asset_type: string
+          avg_price: number
+          created_at: string
+          last_price: number
+          quantity: number
+          symbol: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          asset_id: string
+          asset_type: string
+          avg_price: number
+          created_at?: string
+          last_price: number
+          quantity: number
+          symbol: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          asset_id?: string
+          asset_type?: string
+          avg_price?: number
+          created_at?: string
+          last_price?: number
+          quantity?: number
+          symbol?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           bio: string | null
@@ -242,6 +326,18 @@ export type Database = {
     }
     Functions: {
       create_practice_duel: { Args: { p_code: string }; Returns: string }
+      get_cloud_leaderboard: {
+        Args: { p_limit?: number }
+        Returns: {
+          country: string
+          pnl_pct: number
+          portfolio_value: number
+          priced_at: string
+          trades: number
+          user_id: string
+          username: string
+        }[]
+      }
       hit_rate_limit: {
         Args: {
           _bucket: string
