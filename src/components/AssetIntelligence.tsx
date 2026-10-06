@@ -61,8 +61,6 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
   // Use live data if available, otherwise fall back to asset data
   const displayPrice = liveData?.price ?? asset.price;
   const displayChange = liveData?.changePercent24h ?? asset.changePercent;
-  const displayHigh24h = liveData?.high24h;
-  const displayLow24h = liveData?.low24h;
   const displayVolume = liveData?.volume24h;
   const displayMarketCap = liveData?.marketCap;
 
@@ -91,7 +89,7 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
           ) : isLiveDataAvailable ? (
             <>
               <Wifi className="w-3 h-3" />
-              Live Data
+              Provider / practice data
             </>
           ) : (
             <>
@@ -101,6 +99,12 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
           )}
         </div>
       </div>
+
+      <p className="text-xs text-muted-foreground mb-4">
+        Quotes can be provider-sourced while other fields are delayed or simulated.
+        High and low values are omitted because this feed can generate those fields.
+        The time below records a fetch, not a verified provider observation time.
+      </p>
       
       {/* Category Intro - SEO Multiplier */}
       <div className="mb-6 p-4 rounded-xl bg-primary/5 border border-primary/10">
@@ -211,26 +215,6 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
                 )}
               </span>
             </div>
-
-            {/* 24h High - NEW LIVE DATA */}
-            {displayHigh24h && (
-              <div className="flex justify-between items-center">
-                <span className="text-muted-foreground text-sm">24h High</span>
-                <span className="text-foreground font-medium tabular-nums">
-                  ${displayHigh24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </span>
-              </div>
-            )}
-
-            {/* 24h Low - NEW LIVE DATA */}
-            {displayLow24h && (
-              <div className="flex justify-between items-center">
-                <span className="text-muted-foreground text-sm">24h Low</span>
-                <span className="text-foreground font-medium tabular-nums">
-                  ${displayLow24h.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </span>
-              </div>
-            )}
 
             {/* 24h Volume - NEW LIVE DATA */}
             {displayVolume && displayVolume > 0 && (
@@ -360,7 +344,7 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
               </span>
               {liveData?.lastUpdated && (
                 <span className="text-muted-foreground/60 text-xs">
-                  {new Date(liveData.lastUpdated).toLocaleTimeString()}
+                  Fetched {new Date(liveData.lastUpdated).toLocaleTimeString()}
                 </span>
               )}
             </div>

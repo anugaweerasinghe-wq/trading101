@@ -339,7 +339,7 @@ export default function Portfolio() {
                           dataStatus === "live" ? "bg-success animate-pulse" : "bg-current",
                         )}
                       />
-                      {dataStatus === "live" ? "Live Data" : dataStatus === "delayed" ? "Provider reference" : dataStatus === "cached" ? "Cached" : "Simulated"}
+                      {dataStatus === "live" ? "Provider reference + simulation" : dataStatus === "delayed" ? "Provider reference + simulation" : dataStatus === "cached" ? "Cached practice data" : "Simulated"}
                     </span>
                     <span className="inline-flex items-center gap-1 text-2xs text-muted-foreground">
                       <Clock className="w-3 h-3" />
