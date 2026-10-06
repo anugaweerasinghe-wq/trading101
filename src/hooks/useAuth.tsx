@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { startCloudSync } from "@/lib/cloudPortfolio";
 
 export interface Profile {
   id: string;
@@ -48,10 +49,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
-        // defer supabase call out of the callback
-        setTimeout(() => loadProfile(s.user.id), 0);
+        // Defer network work outside the auth callback to avoid blocking auth state propagation.
+        setTimeout(() => {
+          void Promise.allSettled([
+            loadProfile(s.user.id),
+            startCloudSync(s.user.id),
+          ]);
+        }, 0);
       } else {
         setProfile(null);
+        void startCloudSync(null);
       }
       setLoading(false);
     });
@@ -59,7 +66,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
       setUser(data.session?.user ?? null);
-      if (data.session?.user) loadProfile(data.session.user.id);
+      if (data.session?.user) {
+        void Promise.allSettled([
+          loadProfile(data.session.user.id),
+          startCloudSync(data.session.user.id),
+        ]);
+      } else {
+        void startCloudSync(null);
+      }
       setLoading(false);
     });
 
