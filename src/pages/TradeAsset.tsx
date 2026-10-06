@@ -491,7 +491,7 @@ export default function TradeAsset() {
                     : 'bg-muted/50 text-muted-foreground border border-muted-foreground/20'
                 }`}>
                   {dataSource === 'live' ? <Wifi className="w-3 h-3" /> : <WifiOff className="w-3 h-3" />}
-                  {dataSource === 'live' ? 'Live Data' : dataSource === 'delayed' ? 'Provider reference' : dataSource === 'cached' ? 'Cached' : 'Simulated'}
+                  {dataSource === 'live' ? 'Provider reference + simulation' : dataSource === 'delayed' ? 'Provider reference + simulation' : dataSource === 'cached' ? 'Cached practice price' : 'Simulated'}
                 </span>
                 {lastUpdated && (
                   <span className="inline-flex items-center gap-1 text-muted-foreground">
