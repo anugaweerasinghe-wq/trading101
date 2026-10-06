@@ -44,8 +44,7 @@ export default function LearnArticle() {
     image: [`${DOMAIN}/og-image.png`],
     mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
     url: articleUrl,
-    datePublished: "2026-03-01",
-    dateModified: "2026-04-02",
+
     author: { "@type": "Organization", name: "TradeHQ" },
     publisher: {
       "@type": "Organization",
