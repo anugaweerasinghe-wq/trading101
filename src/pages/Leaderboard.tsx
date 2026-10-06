@@ -263,9 +263,6 @@ export default function Leaderboard() {
                 simulator. The figures are simulated, user-controlled at source and not independently verified.
                 The table sorts submitted percentage return; it should not be read as an audited performance ranking.
               </p>
-              <p className="mt-4 text-sm text-emerald-500">
-                Leaderboard successfully restored by the TradeHQ developer team.
-              </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 {user ? (
                   <>
