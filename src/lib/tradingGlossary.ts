@@ -136,15 +136,15 @@ export const tradingGlossary: GlossaryTerm[] = [
     slug: "bollinger-band-squeeze",
     term: "Bollinger Band Squeeze",
     definition: "A Bollinger Band squeeze describes a narrow distance between the bands relative to a selected comparison period. It reflects lower measured volatility, without specifying the direction or size of the next move.",
-    expertDefinition: "The Bollinger Band squeeze is a volatility-based trading pattern that identifies periods of abnormally low volatility — conditions that historically precede significant directional price moves. Developed by John Bollinger in the 1980s, Bollinger Bands consist of three lines: a 20-period simple moving average (middle band) and two bands set at 2 standard deviations above and below the middle band. The bands expand during periods of high volatility and contract during low volatility. A squeeze occurs when this contraction reaches extreme levels — specifically when the Bandwidth indicator (the percentage difference between upper and lower bands) drops to its lowest value over a defined lookback period, typically 6 months or 125 trading sessions. The physics analogy is apt: like a coiled spring, compressed volatility stores energy that is eventually released in an explosive directional move. The squeeze alone does not determine breakout direction; additional indicators do not remove that uncertainty. The Bollinger Band squeeze is often combined with the Keltner Channel — another volatility indicator that uses Average True Range (ATR) instead of standard deviations. When the Bollinger Bands contract inside the Keltner Channel, it confirms the squeeze condition and is known as the 'TTM Squeeze' (created by John Carter). This dual-indicator approach filters out false squeezes and provides higher-conviction signals. Volume analysis is crucial during and after the squeeze. A legitimate breakout from a squeeze should be accompanied by a significant volume expansion — ideally 2-3 times the average volume. Low-volume breakouts from squeezes are more likely to fail and reverse. The initial candle that breaks outside the compressed bands often establishes the direction of the subsequent multi-day or multi-week move.",
+    expertDefinition: "The Bollinger Band squeeze is a volatility-based trading pattern that identifies periods of abnormally low volatility — conditions that historically precede significant directional price moves. Developed by John Bollinger in the 1980s, Bollinger Bands consist of three lines: a 20-period simple moving average (middle band) and two bands set at 2 standard deviations above and below the middle band. The bands expand during periods of high volatility and contract during low volatility. A squeeze occurs when this contraction reaches extreme levels — specifically when the Bandwidth indicator (the percentage difference between upper and lower bands) drops to its lowest value over a defined lookback period, typically 6 months or 125 trading sessions. The physics analogy is apt: like a coiled spring, compressed volatility stores energy that is eventually released in an explosive directional move. The squeeze alone does not determine breakout direction; additional indicators do not remove that uncertainty. The Bollinger Band squeeze is often combined with the Keltner Channel — another volatility indicator that uses Average True Range (ATR) instead of standard deviations. When the Bollinger Bands contract inside the Keltner Channel, it confirms the squeeze condition and is known as the 'TTM Squeeze' (created by John Carter). These indicators use related historical data; combining them does not establish a measured reduction in false signals. Volume analysis is crucial during and after the squeeze. Record volume relative to a stated historical window, including breaks that reverse and those that continue. No volume multiple or initial candle establishes a validated probability or duration of continuation.",
     proTip: "Record the bandwidth calculation and the period used. Narrow bands describe lower recent volatility; a breakout can fail and the bands do not establish its timing or direction.",
     difficulty: "Intermediate",
     readTime: "4 min",
     category: "Technical Analysis",
     keyPoints: [
-      "Narrow bands signal low volatility and an impending breakout",
-      "The direction of the breakout determines the trade direction",
-      "Often combined with volume spikes to confirm the move"
+      "Narrow bands describe lower recent volatility; they do not establish when a breakout will occur",
+      "A break outside a band is an observation that can continue or reverse",
+      "Volume provides another observation, without validating a future move"
     ],
     studentPerspective: "The Bollinger squeeze is like a coiled spring — tight bands mean energy is building. Learning to spot squeezes helps you catch big moves early.",
     relatedTerms: ["rsi-divergence", "support-and-resistance", "candlestick-patterns"]
@@ -244,9 +244,9 @@ export const tradingGlossary: GlossaryTerm[] = [
     readTime: "3 min",
     category: "Technical Analysis",
     keyPoints: [
-      "Support = price floor where buyers step in; Resistance = price ceiling",
-      "Broken support becomes resistance and vice versa (polarity principle)",
-      "Strongest levels have multiple touches and high-volume reactions"
+      "Support and resistance label areas of prior reactions rather than floors or ceilings",
+      "Some chart frameworks relabel a crossed level; the next reaction remains uncertain",
+      "Record the selected touches, interval and volume without ranking a level as reliably strongest"
     ],
     studentPerspective: "Support and resistance is the bedrock of all chart analysis. Master this before anything else — every other pattern builds on it.",
     relatedTerms: ["fibonacci-retracement", "order-block", "candlestick-patterns"]
@@ -263,7 +263,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "Single-candle: doji, hammer, shooting star, engulfing",
       "Multi-candle: morning star, evening star, three white soldiers",
-      "Context matters — patterns at support/resistance are strongest"
+      "Context changes a pattern description but does not establish its success rate"
     ],
     studentPerspective: "Candlesticks are the language of the market. Learning to read them transforms a confusing chart into a narrative of buyer vs. seller battles.",
     relatedTerms: ["support-and-resistance", "head-and-shoulders", "double-bottom"]
@@ -279,8 +279,8 @@ export const tradingGlossary: GlossaryTerm[] = [
     category: "Chart Patterns",
     keyPoints: [
       "Three peaks: left shoulder, head (highest), right shoulder",
-      "Neckline break confirms the reversal with a measured move target",
-      "Inverse version signals bullish reversal at market bottoms"
+      "A neckline break describes the chart; a measured target is a projection, not a guaranteed outcome",
+      "The inverse shape can occur without a lasting upward reversal"
     ],
     studentPerspective: "Draw the three peaks and neckline, then distinguish the pattern's measured-move convention from the actual later price. A projected target is a hypothesis rather than an expected payout.",
     relatedTerms: ["double-bottom", "support-and-resistance", "candlestick-patterns"]
@@ -297,7 +297,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "W-shaped pattern with two tests of the same support level",
       "Confirmed when price breaks above the neckline (middle peak)",
-      "Strongest with RSI divergence on the second bottom"
+      "RSI divergence is another historical observation, not independent proof of a profitable reversal"
     ],
     studentPerspective: "The double bottom is beginner-friendly and appears frequently. It's a great pattern to build your initial trading confidence around.",
     relatedTerms: ["head-and-shoulders", "support-and-resistance", "bull-trap"]
@@ -313,8 +313,8 @@ export const tradingGlossary: GlossaryTerm[] = [
     category: "Technical Analysis",
     keyPoints: [
       "MACD line = 12 EMA minus 26 EMA; Signal line = 9 EMA of MACD",
-      "Crossovers generate buy/sell signals",
-      "Zero-line crossovers confirm trend direction changes"
+      "Crossovers are indicator events, rather than validated buy or sell instructions",
+      "A zero-line crossing describes the relationship of the selected moving averages"
     ],
     studentPerspective: "MACD is the Swiss Army knife of indicators. It shows trend direction, momentum strength, and potential reversals all in one tool.",
     relatedTerms: ["macd-histogram", "golden-cross", "rsi-divergence"]
@@ -365,7 +365,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "Amplifies both gains and losses by the leverage multiplier",
       "Liquidation occurs when losses exceed your margin deposit",
-      "Professional traders rarely exceed 3-5x leverage"
+      "No universal professional leverage limit is established here"
     ],
     studentPerspective: "Leverage is the most dangerous tool in trading. Master position sizing and risk management on a simulator before ever using leverage with real funds.",
     relatedTerms: ["liquidation-cascade", "stop-loss-hunting", "limit-order-vs-market-order"]
@@ -374,14 +374,14 @@ export const tradingGlossary: GlossaryTerm[] = [
     slug: "fomo",
     term: "FOMO (Fear of Missing Out)",
     definition: "FOMO is the anxiety-driven urge to trade because a price is moving or others appear to be profiting. The emotion does not identify a market top or establish a measured win rate.",
-    expertDefinition: "FOMO — Fear of Missing Out — is one of the most destructive emotional forces in trading, responsible for more blown accounts and irrational decision-making than perhaps any other psychological factor. In a trading context, FOMO manifests as the overwhelming urge to enter a position in an asset that has already made a significant move, driven by the fear that continued inaction will mean missing further gains. The neuroscience behind FOMO is well-documented. When traders observe others profiting from a rising asset — through social media posts, news coverage, or peer conversations — it activates the brain's reward and regret centers simultaneously. The prospect of missing out on gains triggers a stronger emotional response than the prospect of losing money, leading to impulsive entries without proper analysis, position sizing, or risk management. This is a documented cognitive bias known as loss aversion asymmetry. The statistical reality of FOMO-driven entries is sobering. A purchase made after rapid appreciation can gain or lose; this glossary does not provide a sourced performance comparison between entry styles. This is because FOMO entries typically occur during the late stages of a move — after the majority of the advance has already occurred. By the time an asset has risen enough to generate widespread FOMO, the risk-reward ratio has deteriorated significantly: the potential upside is smaller while the potential downside from a correction has increased. Social media has amplified FOMO to unprecedented levels. Platforms like Twitter, Reddit, TikTok, and Telegram create echo chambers where narratives around specific assets build on themselves, creating the impression that 'everyone' is making money on a particular trade. Selective sharing of winning trades can create survivorship or selection bias; not every shared result is complete evidence. Selected price histories cannot establish what motivated each buyer or a universal loss rate for emotion-driven entries.",
+    expertDefinition: "FOMO — Fear of Missing Out — describes anxiety about missing an apparent opportunity. It can influence trading decisions, but no ranking against other psychological factors is established here. In a trading context, FOMO manifests as the overwhelming urge to enter a position in an asset that has already made a significant move, driven by the fear that continued inaction will mean missing further gains. The neuroscience behind FOMO is well-documented. When traders observe others profiting from a rising asset — through social media posts, news coverage, or peer conversations — it activates the brain's reward and regret centers simultaneously. The prospect of missing out on gains triggers a stronger emotional response than the prospect of losing money, leading to impulsive entries without proper analysis, position sizing, or risk management. This is a documented cognitive bias known as loss aversion asymmetry. The statistical reality of FOMO-driven entries is sobering. A purchase made after rapid appreciation can gain or lose; this glossary does not provide a sourced performance comparison between entry styles. This is because FOMO entries typically occur during the late stages of a move — after the majority of the advance has already occurred. A prior rise does not determine the remaining upside or downside. Compare several possible subsequent price paths rather than treating the emotion as a market-timing measure. Social media has amplified FOMO to unprecedented levels. Platforms like Twitter, Reddit, TikTok, and Telegram create echo chambers where narratives around specific assets build on themselves, creating the impression that 'everyone' is making money on a particular trade. Selective sharing of winning trades can create survivorship or selection bias; not every shared result is complete evidence. Selected price histories cannot establish what motivated each buyer or a universal loss rate for emotion-driven entries.",
     proTip: "Write down the information available at the time of a simulated decision and compare it with the reason for acting. A recent percentage move alone does not establish a safe entry or required waiting period.",
     difficulty: "Novice",
     readTime: "3 min",
     category: "Trading Psychology",
     keyPoints: [
       "Emotional response to seeing rapid price increases",
-      "FOMO entries are statistically more likely to be near tops",
+      "Emotion alone does not establish where a market top is or a measured loss probability",
       "Combat FOMO with pre-defined trading plans and alerts"
     ],
     studentPerspective: "Every trader experiences FOMO. The difference between amateurs and professionals is that pros have systems to override emotional impulses.",
@@ -415,7 +415,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     category: "Trading Psychology",
     keyPoints: [
       "Originated from a 2013 Bitcoin forum typo ('HODL' instead of 'HOLD')",
-      "Eliminates timing risk and reduces transaction fees",
+      "Fewer transactions may reduce trading costs while price and timing risks remain",
       "Requires strong conviction and tolerance for drawdowns"
     ],
     studentPerspective: "Holding through declines can include permanent loss; no outperformance over active strategies is established here. It teaches patience and removes emotional decision-making.",
@@ -432,7 +432,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     category: "Crypto Fundamentals",
     keyPoints: [
       "Published the Bitcoin whitepaper on October 31, 2008",
-      "Mined ~1.1 million BTC that have never been moved",
+      "Wallet attribution and estimated holdings are uncertain; no exact ownership total is asserted here",
       "True identity remains unknown — one of tech's biggest mysteries"
     ],
     studentPerspective: "Satoshi's creation of Bitcoin introduced the concept of decentralized money. Understanding the origin story contextualizes the entire crypto ecosystem.",
@@ -467,7 +467,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     category: "Trading Fundamentals",
     keyPoints: [
       "Higher leverage brings the liquidation price closer to entry",
-      "Isolated margin protects rest of account from single-trade liquidation",
+      "Isolated-margin treatment depends on the platform rules; it is not a universal loss guarantee",
       "Mark price vs last price affects when liquidation triggers"
     ],
     studentPerspective: "Knowing your exact liquidation price before entering a trade is non-negotiable. If you can't calculate it, you're gambling — not trading.",
@@ -485,7 +485,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "Fixed amount invested at regular intervals regardless of price",
       "Buys more when prices are low, less when high — averaging down",
-      "Eliminates emotional timing decisions for most investors"
+      "A schedule defines purchase timing without eliminating emotion or guaranteeing a better result"
     ],
     studentPerspective: "DCA is the strategy that works while you sleep. Compare a contribution schedule with a lump-sum example over the same price sequence, including unfavorable outcomes. No outperformance percentage is established here.",
     relatedTerms: ["hodl-strategy", "fomo", "risk-reward-ratio"]
@@ -502,7 +502,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "Holds positions days to weeks to capture medium-term moves",
       "Primary timeframes: daily and 4-hour charts",
-      "Requires 30-60 minutes daily — compatible with full-time jobs"
+      "Time requirements vary with the process and instruments; no universal daily schedule is established"
     ],
     studentPerspective: "Swing trading is the sweet spot for most beginners — enough action to learn quickly, but enough time to think and plan without pressure.",
     relatedTerms: ["day-trading", "scalping", "support-and-resistance"]
@@ -519,7 +519,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "All positions opened and closed within the same trading day",
       "Published research and broker disclosures often report high loss rates among retail day traders; the exact rate varies by market, time period, and sample",
-      "US Pattern Day Trader rule requires $25,000 minimum equity"
+      "Real account margin and day-trading requirements depend on current rules, broker and jurisdiction"
     ],
     studentPerspective: "Day trading looks glamorous but is one of the hardest professions in finance. Compare the time demands and assumptions of swing and intraday examples; practice profit alone does not establish readiness for real-money trading.",
     relatedTerms: ["swing-trading", "scalping", "paper-trading"]
@@ -536,7 +536,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "Captures tiny price movements over seconds to minutes",
       "Requires extremely low latency, tight spreads, and low commissions",
-      "High win rate (60%+) needed to overcome transaction costs"
+      "Break-even win rate depends on realized win and loss amounts plus costs"
     ],
     studentPerspective: "Scalping is the Formula 1 of trading — thrilling but unforgiving. Master slower styles first; scalping rewards only the most disciplined traders.",
     relatedTerms: ["day-trading", "swing-trading", "limit-order-vs-market-order"]
@@ -552,8 +552,8 @@ export const tradingGlossary: GlossaryTerm[] = [
     category: "Technical Analysis",
     keyPoints: [
       "Plots volume horizontally at each price level, not over time",
-      "Point of Control (POC) is the highest-volume price — acts as a magnet",
-      "Value Area (70% of volume) defines fair value range"
+      "Point of Control is the highest-volume price bin in the selected sample; it need not attract future price",
+      "A chosen value-area share summarizes observed volume, not economic fair value"
     ],
     studentPerspective: "Volume Profile allocates observed trading volume to price bins; it does not identify who still holds positions. Once you learn to read it, standard support/resistance levels make even more sense.",
     relatedTerms: ["support-and-resistance", "order-block", "vwap"]
@@ -568,8 +568,8 @@ export const tradingGlossary: GlossaryTerm[] = [
     readTime: "4 min",
     category: "Technical Analysis",
     keyPoints: [
-      "Average price weighted by volume — gives true market average",
-      "Price above VWAP = bullish trend; below = bearish trend",
+      "Average price weighted by the selected traded volume and observation window",
+      "Price above or below VWAP describes a reference relationship, not a forecast",
       "Institutional benchmark for judging execution quality"
     ],
     studentPerspective: "Recalculate the volume-weighted average for the chosen session or anchor. VWAP is a historical benchmark; price crossing it does not prove future support, resistance or profitability.",
@@ -587,7 +587,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "Five components that show trend, momentum, and support/resistance",
       "The Cloud (Kumo) provides dynamic, future-projected support/resistance",
-      "Strongest signals align all five components in one direction"
+      "Component alignment describes related calculations without proving predictive strength"
     ],
     studentPerspective: "Ichimoku looks complex but provides the most complete single-indicator view of any market. Learning it gives you a framework that replaces 3-4 separate indicators.",
     relatedTerms: ["support-and-resistance", "golden-cross", "macd"]
@@ -672,7 +672,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "Difference between expected and actual execution price",
       "Worse during high volatility and low liquidity conditions",
-      "Limit orders eliminate slippage risk; market orders are vulnerable"
+      "Limit prices constrain eligible fills but do not ensure execution; market fills can differ from a quote"
     ],
     studentPerspective: "Slippage is a hidden cost that eats into your profits. Even small amounts compound over hundreds of trades — use limit orders to control it.",
     relatedTerms: ["limit-order-vs-market-order", "market-maker", "leverage-trading"]
@@ -783,15 +783,15 @@ export const tradingGlossary: GlossaryTerm[] = [
     slug: "risk-reward-ratio",
     term: "Risk-Reward Ratio",
     definition: "The risk-reward ratio compares a trade's planned loss with its planned gain. A 1:3 ratio means a planned $1 loss for a potential $3 gain; it does not guarantee those fills or establish a universal professional minimum.",
-    expertDefinition: "The risk-reward ratio (R:R or RRR) is a measurement that compares the potential loss on a trade (from entry to stop loss) against the potential gain (from entry to take profit target). Expressed as a ratio like 1:2 or 1:3, it quantifies the trade's payoff structure before entry, enabling traders to make mathematically informed decisions about which trades are worth taking. A 1:2 risk-reward ratio means that for every dollar risked, two dollars of profit are targeted. A 1:3 ratio means three dollars of potential profit for each dollar of risk. This simple metric is one of the most important concepts in trading because it directly determines the win rate required for long-term profitability. For fixed realised payoffs before costs, a 1:1 ratio breaks even at 50% wins; profitability requires more than 50%. Planned exits do not ensure those realised payoffs. At 1:2 R:R, you only need a >33.3% win rate. At 1:3 with fixed realised gains and losses, a win rate above 25% is required before costs; exactly 25% breaks even. This mathematical reality means that traders with mediocre win rates can still be highly profitable if their average winners are significantly larger than their average losers — a concept known as positive expectancy. A chosen planned payoff ratio is not a universal fund rule or evidence of positive realised expectancy. The calculation is straightforward: divide the distance to your take-profit target by the distance to your stop loss. If your stop loss is $5 below entry and your target is $15 above entry, the R:R is 1:3.",
+    expertDefinition: "The risk-reward ratio (R:R or RRR) is a measurement that compares the potential loss on a trade (from entry to stop loss) against the potential gain (from entry to take profit target). Expressed as a ratio like 1:2 or 1:3, it quantifies the trade's payoff structure before entry, enabling traders to make mathematically informed decisions about which trades are worth taking. A 1:2 risk-reward ratio means that for every dollar risked, two dollars of profit are targeted. A 1:3 ratio means three dollars of potential profit for each dollar of risk. This simple metric is one of the most important concepts in trading because it directly determines the win rate required for long-term profitability. For fixed realised payoffs before costs, a 1:1 ratio breaks even at 50% wins; profitability requires more than 50%. Planned exits do not ensure those realised payoffs. With fixed realized +2R/−1R before costs, the exact break-even rate is one third; profitability requires a higher rate. At 1:3 with fixed realised gains and losses, a win rate above 25% is required before costs; exactly 25% breaks even. This mathematical reality means that traders with mediocre win rates can still be highly profitable if their average winners are significantly larger than their average losers — a concept known as positive expectancy. A chosen planned payoff ratio is not a universal fund rule or evidence of positive realised expectancy. The calculation is straightforward: divide the distance to your take-profit target by the distance to your stop loss. If your stop loss is $5 below entry and your target is $15 above entry, the R:R is 1:3.",
     proTip: "Compare planned risk and reward with realised outcomes and costs. A positive average in one sample can be luck or overfitting; a ratio alone does not prove an edge.",
     difficulty: "Novice",
     readTime: "3 min",
     category: "Trading Fundamentals",
     keyPoints: [
       "Compares potential loss (stop loss) to potential gain (take profit)",
-      "At 1:3 R:R, you only need 25% win rate to be profitable",
-      "Professional traders require minimum 1:2 ratio before entering"
+      "With fixed realized +3R/−1R before costs, 25% wins breaks even; profitability requires more",
+      "A planned ratio is not a universal professional minimum or evidence of positive expectancy"
     ],
     studentPerspective: "Risk-reward ratio is the math that separates gambling from trading. Every trade should have the math in your favor BEFORE you enter.",
     relatedTerms: ["stop-loss-hunting", "leverage-trading", "drawdown"]
@@ -825,7 +825,7 @@ export const tradingGlossary: GlossaryTerm[] = [
     keyPoints: [
       "Simulates strategy performance using historical price data",
       "Curve fitting is the biggest pitfall — overfit strategies fail live",
-      "Out-of-sample testing validates that the edge is genuine"
+      "Out-of-sample testing can challenge overfitting but cannot establish a guaranteed future edge"
     ],
     studentPerspective: "Backtesting gives you confidence that your strategy has worked in the past. But remember — the map is not the territory. Always forward-test (paper trade) before going live.",
     relatedTerms: ["paper-trading", "risk-reward-ratio", "drawdown"]
@@ -841,8 +841,8 @@ export const tradingGlossary: GlossaryTerm[] = [
     category: "Trading Fundamentals",
     keyPoints: [
       "Measures how assets move relative to each other (-1 to +1 scale)",
-      "Pairs trading profits from correlated assets reverting to mean",
-      "Correlations break down during crises — all assets fall together"
+      "Pairs trading assumes a relationship that can change; divergence can continue and cause losses",
+      "Correlations can change during stress; neither universal convergence nor equal losses is implied"
     ],
     studentPerspective: "Correlation trading teaches you that diversification is about statistical relationships, not just owning different assets. It's the foundation of professional portfolio construction.",
     relatedTerms: ["risk-reward-ratio", "drawdown", "support-and-resistance"]
