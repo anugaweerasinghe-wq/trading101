@@ -68,7 +68,7 @@ const WikiTerm = () => {
 
   const handleWhatsAppShare = () => {
     const text = encodeURIComponent(
-      `I just mastered "${term.term}" on TradingHQ! 🚀📈 Learn it here: ${DOMAIN}/wiki/${term.slug}`
+      `I just mastered "${term.term}" on TradeHQ! 🚀📈 Learn it here: ${DOMAIN}/wiki/${term.slug}`
     );
     window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
   };
