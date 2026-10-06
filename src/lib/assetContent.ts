@@ -293,10 +293,6 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       consensus: "Proof of Work",
       source: "CoinGecko"
     },
-    institutionalDrivers: {
-      bull: "Institutional ETF accumulation, post-halving supply shock, Lightning Network adoption, and sovereign nation treasury allocations drive bullish momentum.",
-      bear: "Fed rate decisions, regulatory crackdowns on self-custody, and potential ETF outflows during risk-off periods could pressure prices."
-    },
     sectorPillar: "crypto-defi"
   },
   eth: {
@@ -309,10 +305,6 @@ export const ASSET_CONTENT: Record<string, AssetContent> = {
       marketCap: "live_sourced_at_runtime",
       consensus: "Proof of Stake",
       source: "CoinGecko"
-    },
-    institutionalDrivers: {
-      bull: "L2 scaling success, institutional staking yields, and growing RWA tokenization on Ethereum mainnet support price appreciation.",
-      bear: "Competition from Solana and alternative L1s, plus regulatory classification uncertainty, pose headwinds."
     },
     sectorPillar: "crypto-defi"
   },
