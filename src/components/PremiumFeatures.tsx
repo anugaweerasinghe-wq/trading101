@@ -24,8 +24,8 @@ export function PremiumFeatures() {
     },
     {
       icon: Brain,
-      title: "AI-Powered Mentor",
-      description: "Get personalized strategy feedback, market analysis, and trading psychology insights from your AI mentor — available 24/7.",
+      title: "Educational Mentor",
+      description: "Ask a rule-based knowledge library about trading concepts and practice-portfolio observations. Responses are educational prompts, not personalized investment advice.",
       gradient: "from-secondary/20 to-secondary/5",
       iconColor: "text-secondary",
       borderGlow: "hover:border-secondary/30",

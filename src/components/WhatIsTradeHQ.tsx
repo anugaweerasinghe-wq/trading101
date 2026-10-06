@@ -29,7 +29,7 @@ export function WhatIsTradeHQ() {
           <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed text-base">
             TradeHQ is a free trading simulator that gives you $100,000 in virtual capital to practice
             trading stocks, cryptocurrencies, ETFs, forex, and commodities — all without risking real money.
-            Built for students and beginners, it features simulated market charts, AI-powered mentoring,
+            Built for students and beginners, it features simulated market charts, rule-based educational mentoring,
             and 149 tradeable assets. No signup, no credit card, no hidden fees. Start practicing
             market strategies in seconds and build confidence before committing real capital.
           </p>

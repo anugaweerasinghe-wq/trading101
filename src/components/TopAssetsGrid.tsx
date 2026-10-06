@@ -20,7 +20,7 @@ const TOP_ASSETS: TopAsset[] = [
     id: "btc",
     symbol: "BTC",
     name: "Bitcoin",
-    description: "The world's most popular cryptocurrency. Practice BTC trading with simulated charts, order types, and AI-powered analysis.",
+    description: "The world's most popular cryptocurrency. Practice BTC trading with simulated charts, order types, and descriptive practice summaries.",
     icon: Zap,
     badge: "Featured Market",
     badgeColor: "bg-primary/10 text-primary border-primary/20",

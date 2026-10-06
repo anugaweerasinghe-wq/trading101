@@ -17,7 +17,7 @@ import {
   YAxis,
   ComposedChart,
 } from "recharts";
-import { runScenario, type ScenarioResult, type Shock } from "@/lib/scenarioEngine";
+import { DAILY_VOL, runScenario, type ScenarioResult, type Shock } from "@/lib/scenarioEngine";
 import { supabase } from "@/integrations/supabase/client";
 import type { Portfolio, Asset } from "@/lib/types";
 
@@ -145,6 +145,15 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         </div>
       </div>
 
+      <p className="mt-3 text-xs text-muted-foreground">
+        Assumptions: the requested shock is spread across the chosen horizon with fixed daily variability:
+        {Object.entries(DAILY_VOL).map(([type, value]) => ` ${type} ${(value * 100).toFixed(1)}%`).join(",")}.
+        Asset moves are independent; cross-asset correlation, costs and market events are not modeled.
+        The 1,000 random paths produce illustrative sample means, percentiles and loss frequencies,
+        not calibrated market probabilities. A frequency near 50% has about ±3 percentage points
+        of simulation sampling uncertainty, before model uncertainty. Requested losses below −99% are clamped to −99%.
+      </p>
+
       <div className="flex flex-col sm:flex-row gap-2 mt-4">
         <Input
           value={prompt}
@@ -189,7 +198,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
         <div className="mt-6 space-y-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
-              <p className="text-2xs text-muted-foreground">Expected Value</p>
+              <p className="text-2xs text-muted-foreground">Model Mean</p>
               <p className="text-base font-bold tabular-nums mt-1">{fmt(result.expected)}</p>
               <p className={cn("text-2xs tabular-nums", result.deltaPercent >= 0 ? "text-success" : "text-destructive")}>
                 {result.deltaPercent >= 0 ? "+" : ""}{result.deltaPercent.toFixed(2)}%
@@ -212,7 +221,7 @@ export function ScenarioBuilder({ portfolio, liveAssets }: Props) {
             <Card className="p-3 bg-white/[0.02] border-white/[0.06]">
               <div className="flex items-center gap-1">
                 <AlertTriangle className="w-3 h-3 text-warning" />
-                <p className="text-2xs text-muted-foreground">Loss Probability</p>
+                <p className="text-2xs text-muted-foreground">Model Loss Frequency</p>
               </div>
               <p className="text-base font-bold tabular-nums mt-1">{result.probabilityOfLoss.toFixed(0)}%</p>
             </Card>

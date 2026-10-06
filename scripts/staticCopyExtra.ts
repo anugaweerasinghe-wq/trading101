@@ -73,7 +73,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Realised P&L: the result of trades you have actually closed. This is the number that measures decisions you finished making.",
         "Open positions in profit: the share of current open positions showing positive unrealised P&L. This is not a closed-trade win rate.",
         "Open-position P&L dispersion: the spread of current position returns around their average. This is a snapshot, not a Sharpe ratio or time-series volatility measure.",
-        "Maximum drawdown: the largest fall from a peak in your equity curve. The single most useful number for judging whether an approach is survivable.",
+        "Practice maximum drawdown: the largest fall from a peak in locally stored snapshots, which can include generated hourly backfill. It is not an observed market record or proof that a strategy is survivable.",
       ],
     },
     {

@@ -15,7 +15,7 @@ const steps = [
   {
     icon: BarChart3,
     title: "Track Your Portfolio & Beat the Leaderboard",
-    description: "Monitor your performance, learn from AI mentoring, and compete with other virtual traders.",
+    description: "Monitor your performance, review educational mentor explanations, and compete with other virtual traders.",
   },
 ];
 

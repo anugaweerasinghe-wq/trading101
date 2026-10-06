@@ -158,7 +158,7 @@ export default function LearnArticle() {
                   {
                     question: "How can I practice what I just read?",
                     answer:
-                      "Open the trading simulator with $100,000 in virtual cash and apply the concepts from this article risk-free. Real-time price data, charts and an AI mentor are included.",
+                      "Open the trading simulator with $100,000 in virtual cash and apply the concepts from this article risk-free. Provider references and practice charts have separate source labels; the mentor uses labeled rule-based responses when the AI service is unavailable.",
                   },
                   {
                     question: "What should I read next?",

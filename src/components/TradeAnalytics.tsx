@@ -1,8 +1,9 @@
+import { getRealizedTradeResults } from '@/lib/realizedTrades';
 import { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, TrendingDown, Target, Trophy, AlertTriangle, BarChart3 } from 'lucide-react';
-import { Portfolio, Trade } from '@/lib/types';
+import { Portfolio } from '@/lib/types';
 import { format } from 'date-fns';
 
 interface TradeAnalyticsProps {
@@ -21,65 +22,7 @@ interface TradePerformance {
 
 export function TradeAnalytics({ portfolio }: TradeAnalyticsProps) {
   const analytics = useMemo(() => {
-    const trades = portfolio.trades;
-    const completedTrades: TradePerformance[] = [];
-    
-    // Group trades by symbol to calculate realized P&L
-    const tradesBySymbol: Record<string, Trade[]> = {};
-    trades.forEach(trade => {
-      if (!tradesBySymbol[trade.symbol]) {
-        tradesBySymbol[trade.symbol] = [];
-      }
-      tradesBySymbol[trade.symbol].push(trade);
-    });
-
-    // Calculate completed round-trip trades (buy then sell)
-    Object.entries(tradesBySymbol).forEach(([symbol, symbolTrades]) => {
-      const sortedTrades = [...symbolTrades].sort(
-        (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-      );
-      
-      let holdings: { price: number; quantity: number }[] = [];
-      
-      sortedTrades.forEach(trade => {
-        if (trade.type === 'buy') {
-          holdings.push({ price: trade.price, quantity: trade.quantity });
-        } else if (trade.type === 'sell' && holdings.length > 0) {
-          let remainingToSell = trade.quantity;
-          let totalCost = 0;
-          let totalQuantitySold = 0;
-          
-          while (remainingToSell > 0 && holdings.length > 0) {
-            const holding = holdings[0];
-            const soldFromHolding = Math.min(holding.quantity, remainingToSell);
-            totalCost += soldFromHolding * holding.price;
-            totalQuantitySold += soldFromHolding;
-            remainingToSell -= soldFromHolding;
-            holding.quantity -= soldFromHolding;
-            
-            if (holding.quantity === 0) {
-              holdings.shift();
-            }
-          }
-          
-          if (totalQuantitySold > 0) {
-            const avgBuyPrice = totalCost / totalQuantitySold;
-            const profit = (trade.price - avgBuyPrice) * totalQuantitySold;
-            const profitPercent = ((trade.price - avgBuyPrice) / avgBuyPrice) * 100;
-            
-            completedTrades.push({
-              symbol,
-              profit,
-              profitPercent,
-              buyPrice: avgBuyPrice,
-              sellPrice: trade.price,
-              quantity: totalQuantitySold,
-              timestamp: trade.timestamp,
-            });
-          }
-        }
-      });
-    });
+    const completedTrades = getRealizedTradeResults(portfolio.trades);
 
     // Calculate metrics
     const winningTrades = completedTrades.filter(t => t.profit > 0);
@@ -101,7 +44,9 @@ export function TradeAnalytics({ portfolio }: TradeAnalyticsProps) {
       ? losingTrades.reduce((sum, t) => sum + t.profit, 0) / losingTrades.length
       : 0;
     
-    const profitFactor = avgLoss !== 0 ? Math.abs(avgWin / avgLoss) : 0;
+    const grossProfit = winningTrades.reduce((sum, trade) => sum + trade.profit, 0);
+    const grossLoss = -losingTrades.reduce((sum, trade) => sum + trade.profit, 0);
+    const profitFactor = grossLoss > 0 ? grossProfit / grossLoss : grossProfit > 0 ? Infinity : 0;
     
     const sortedByProfit = [...completedTrades].sort((a, b) => b.profit - a.profit);
     const bestTrades = sortedByProfit.slice(0, 3);
@@ -139,7 +84,7 @@ export function TradeAnalytics({ portfolio }: TradeAnalyticsProps) {
           <CardContent className="p-4">
             <div className="flex items-center gap-2 text-muted-foreground text-sm mb-1">
               <Target className="h-4 w-4" />
-              Win Rate
+              Closed-Sell Win Rate
             </div>
             <div className={`text-2xl font-bold ${analytics.winRate >= 50 ? 'text-success' : 'text-destructive'}`}>
               {analytics.winRate.toFixed(1)}%
@@ -175,7 +120,7 @@ export function TradeAnalytics({ portfolio }: TradeAnalyticsProps) {
               {formatCurrency(analytics.totalProfit)}
             </div>
             <div className="text-xs text-muted-foreground mt-1">
-              From closed positions
+              Net of recorded simulator fees
             </div>
           </CardContent>
         </Card>
