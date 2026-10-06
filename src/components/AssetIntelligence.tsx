@@ -356,7 +356,7 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
             {/* Source & Last Updated */}
             <div className="flex justify-between items-center pt-2 border-t border-white/5">
               <span className="text-muted-foreground/60 text-xs">
-                {isLiveDataAvailable ? 'CoinGecko / Alpha Vantage' : stats?.source || 'Simulated'}
+                {liveData?.provenance?.provider || stats?.source || 'Simulated'}
               </span>
               {liveData?.lastUpdated && (
                 <span className="text-muted-foreground/60 text-xs">
