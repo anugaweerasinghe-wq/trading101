@@ -13,9 +13,9 @@ export interface AssetNote {
 
 export const ASSET_NOTES: Record<string, AssetNote> = {
   btc: {
-    why: "Bitcoin is usually the first crypto asset beginners open, which makes it a useful baseline: most other coins are quoted against it, and when it moves sharply the rest of the market tends to follow. Learning to read its rhythm first makes every altcoin chart easier to interpret.",
+    why: "Bitcoin provides a case study in a currency with a published issuance schedule and no company earnings. Comparing it with another token can help separate network design from observed price changes. A shared move does not prove that Bitcoin caused another asset to move.",
     watch: "Its supply schedule is fixed in code and the issuance rate halves roughly every four years, so long-term narratives often revolve around those halving dates. In the short term, spot ETF flows, US dollar strength and broad risk appetite are the forces commentators cite most often.",
-    gap: "A practice fill on Bitcoin is instant and free. On a real exchange you pay trading fees, sometimes network fees to move coins, and you take on custody risk. Practise as if each round trip costs you something, because in reality it does.",
+    gap: "TradeHQ fills a Bitcoin practice order at the displayed price and deducts a 0.1% simulated fee on each buy or sell. A real exchange can also involve spreads, slippage, network fees and custody risk. Compare gross price movement with the fee-inclusive practice result; the simulator does not reproduce every real cost.",
     checklist: [
       "Mark the previous week's high and low before you look at today's candles.",
       "Decide whether you are reacting to a weekend move — Bitcoin trades 24/7 and weekend volume is often thinner.",
@@ -29,26 +29,26 @@ export const ASSET_NOTES: Record<string, AssetNote> = {
     checklist: [
       "Compare the day's ETH move with BTC's before deciding the cause is Ethereum news.",
       "Note any scheduled network upgrade dates in your journal.",
-      "Use a smaller size than you would for Bitcoin; percentage swings are usually larger.",
+      "Compare equal hypothetical ETH and BTC exposures over the same window, including a decline in both.",
     ],
   },
   sol: {
-    why: "Solana is a younger, higher-throughput blockchain, and its token tends to move faster than the two largest coins in both directions. It is a good instrument for learning how much smaller position sizes need to be when volatility rises.",
+    why: "Solana is a blockchain designed for high transaction throughput. SOL provides a case study in network usage, token ownership and operational risk. Compare observed price variation over a stated interval instead of assuming a permanent volatility ranking against other tokens.",
     watch: "Ecosystem activity, network reliability and broader appetite for speculative crypto assets are the themes most often discussed. Past network outages are part of its history and are a reminder that technical risk exists alongside price risk.",
     gap: "Smaller-cap crypto assets can have thinner order books on some venues, so a real market order may fill noticeably worse than the quoted price. The simulator fills at the displayed price; real life often does not.",
     checklist: [
-      "Halve the size you would use on Bitcoin and see whether the swing still feels comfortable.",
+      "Compare several chosen hypothetical sizes and calculate the dollar effect of the same percentage move.",
       "Check whether the whole crypto market moved or only SOL.",
-      "Set your exit before entry — fast assets punish decisions made mid-move.",
+      "Record a hypothetical exit assumption and compare it with a manual market-order exit; TradeHQ does not place automatic stops.",
     ],
   },
   xrp: {
     why: "XRP is closely associated with cross-border payments and has a long history of price reactions to legal and regulatory headlines. Practising on it shows how news-driven an asset can be compared with one driven mainly by flows.",
     watch: "Regulatory developments, particularly in the United States, have historically produced some of XRP's sharpest moves. Large holder activity and exchange listings are other topics that appear frequently in coverage.",
-    gap: "Headline-driven gaps are hard to simulate honestly — in a real market a stop can be skipped entirely during a news spike. Assume your practice stops are more reliable than a live one would be.",
+    gap: "Headline-driven gaps are hard to simulate. A real stop can execute beyond its trigger price during a news spike. TradeHQ has no resting stop orders: exits are manual market orders, so a planned exit is not an implemented loss limit.",
     checklist: [
       "Look up whether any legal or regulatory event is scheduled this week.",
-      "Avoid entering in the first minutes after a headline; note what happens instead.",
+      "Record the source and time of a headline and compare observations before and after it; timing alone does not establish an entry.",
       "Record why you expect the move to continue, in one sentence.",
     ],
   },
@@ -59,13 +59,13 @@ export const ASSET_NOTES: Record<string, AssetNote> = {
     checklist: [
       "Write down which organisation-level risk could affect the price before entering.",
       "Compare its weekly move against BTC to see how independent it really is.",
-      "Keep this position small relative to your broader practice portfolio.",
+      "Calculate this hypothetical position as a share of the whole practice portfolio and compare different concentration scenarios.",
     ],
   },
   nvda: {
     why: "NVIDIA's chips sit at the centre of AI and data-centre demand, so its share price has become a bellwether for the whole AI theme. That makes it a useful case study in how expectations, not just results, drive a stock.",
     watch: "Quarterly earnings and forward guidance produce its largest scheduled moves. Large technology customers' capital-spending plans and export restrictions on advanced chips are other frequently cited drivers.",
-    gap: "Real earnings-night gaps can open far beyond a stop. In practice, try holding through one report at a deliberately tiny size to experience how far the open can move from the previous close.",
+    gap: "Real earnings-night gaps can open far beyond a stop. A worksheet can compare hypothetical pre-report and post-report prices with several chosen exposures. Generated practice history does not reproduce a real earnings event.",
     checklist: [
       "Find the next earnings date and decide whether you will hold through it.",
       "Note how far the stock has moved over the last month before chasing it.",
@@ -73,9 +73,9 @@ export const ASSET_NOTES: Record<string, AssetNote> = {
     ],
   },
   aapl: {
-    why: "Apple is one of the largest companies in the world and among the most widely held stocks, so it tends to move more steadily than smaller tech names. It is a good place to practise patience rather than speed.",
+    why: "Apple combines device sales with services and a broad supplier network. Its stock offers a case study in product demand, recurring revenue and valuation assumptions. Company size does not guarantee steadier price moves or establish a suitable holding period.",
     watch: "Product cycles, services revenue and results from its largest markets, including China, are the themes most coverage returns to. Its annual autumn product event and quarterly reports are predictable calendar dates.",
-    gap: "Because Apple is so liquid, real fills are usually close to quoted prices — the bigger gap between practice and reality here is emotional: holding a large position in a household name can feel safer than it is.",
+    gap: "TradeHQ fills at the displayed practice price with a simulated fee. Real fills depend on venue, liquidity, spread and timing. Holding a large position in a familiar name can also feel safer than its concentration risk warrants.",
     checklist: [
       "Mark the date of the next product event and earnings report.",
       "Compare its move to the broader Nasdaq before attributing it to Apple news.",
@@ -88,7 +88,7 @@ export const ASSET_NOTES: Record<string, AssetNote> = {
     gap: "Tesla's volatility makes real stops prone to slippage, and social-media sentiment can make holding a losing position harder than it looks on a practice screen.",
     checklist: [
       "Check the date of the next quarterly delivery report.",
-      "Use a smaller size than you would for Apple or Microsoft.",
+      "Compare equal hypothetical exposures to Tesla and another company over a stated window, then vary the size assumptions.",
       "Write down whether your idea is based on a headline or on the chart.",
     ],
   },
@@ -103,13 +103,13 @@ export const ASSET_NOTES: Record<string, AssetNote> = {
     ],
   },
   msft: {
-    why: "Microsoft is a diversified software and cloud company with recurring enterprise revenue, which historically has made it one of the steadier large-cap technology stocks. It is useful for practising longer holding periods.",
+    why: "Microsoft combines enterprise software, cloud infrastructure and other businesses. Recurring contracts provide a useful contrast with one-off sales, but they do not establish lower share-price risk. A practice worksheet can compare different holding periods and valuation assumptions.",
     watch: "Azure cloud growth, enterprise software subscriptions and its investments in AI are the recurring themes in its results. Because it is heavily weighted in major indices, index flows also influence it.",
     gap: "Steadier stocks can tempt learners into oversized positions. In real accounts, concentration in one name is a risk even when that company is large and profitable.",
     checklist: [
       "Compare MSFT's monthly move with the S&P 500 to see how much is market-wide.",
       "Note the date of its next quarterly report.",
-      "Try a longer review cycle here — weekly rather than hourly.",
+      "Compare two stated review windows and record how they change the observations, without treating either as a universal schedule.",
     ],
   },
   googl: {
@@ -139,7 +139,7 @@ export const ASSET_NOTES: Record<string, AssetNote> = {
     checklist: [
       "Check the economic calendar for inflation or interest-rate announcements.",
       "Compare SPY's move with QQQ to see whether technology led the day.",
-      "Try a dollar-cost averaging plan here instead of a single entry.",
+      "Compare scheduled hypothetical contributions with a lump sum using the same total amount and including a declining-price scenario.",
     ],
   },
   qqq: {
@@ -169,13 +169,13 @@ export const ASSET_NOTES: Record<string, AssetNote> = {
     checklist: [
       "Check the date of the next OPEC+ meeting.",
       "Note whether a weekly inventory report is due during your holding period.",
-      "Use a wider stop and smaller size than you would for a large-cap stock.",
+      "Compare chosen price shocks and hypothetical exposures; futures margin and automatic stops are not implemented here.",
     ],
   },
   eurusd: {
     why: "EUR/USD is the most traded currency pair in the world, pairing the euro against the US dollar. Practising here teaches you how interest-rate differences between two central banks drive exchange rates.",
     watch: "Decisions and statements from the European Central Bank and the US Federal Reserve, along with inflation and employment data from both regions, are the main drivers.",
-    gap: "Retail forex is commonly traded with high leverage, which can magnify losses quickly. Practise at low leverage and express risk in money, not pips.",
+    gap: "Retail forex is commonly traded with high leverage, which can magnify losses quickly. TradeHQ does not implement leverage. Express a chosen hypothetical price move in account currency and distinguish this spot practice from a leveraged real account.",
     checklist: [
       "Check whether an ECB or Fed announcement falls within your window.",
       "Note whether you are trading during the London–New York overlap.",
@@ -183,13 +183,13 @@ export const ASSET_NOTES: Record<string, AssetNote> = {
     ],
   },
   gbpusd: {
-    why: "GBP/USD, often called 'cable', pairs the British pound against the US dollar. It tends to move more than EUR/USD, which makes it a good next step once the euro pair feels familiar.",
+    why: "GBP/USD, often called 'cable', pairs the British pound against the US dollar. Comparing it with EUR/USD can help separate US-dollar movements from currency-specific observations. Volatility rankings depend on the selected interval and period, rather than a fixed learning progression.",
     watch: "Bank of England decisions, UK inflation data and political developments in the UK are frequent drivers, alongside US data and Federal Reserve policy.",
     gap: "UK political or economic surprises can cause sharp gaps. Leverage and spreads in real accounts make those moves more costly than they appear in practice.",
     checklist: [
       "Check the Bank of England calendar before entering.",
       "Compare today's move with EUR/USD to see whether the dollar or the pound is driving it.",
-      "Use a smaller size than on EUR/USD to account for the larger range.",
+      "Compare matched hypothetical exposures and measured ranges over the same window; do not assume a fixed volatility ranking.",
     ],
   },
 };
