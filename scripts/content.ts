@@ -163,7 +163,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "A plain-language trading glossary",
         p: [
-          `Every term used across TradeHQ's lessons, guides and strategy pages is defined here in plain English, with a detailed explanation, a worked example and a practical tip for each entry. There are ${glossary.length} terms in the index, grouped by the part of trading they belong to.`,
+          `TradeHQ's glossary explains trading terms in plain English, with worked examples and questions to help you examine the ideas in practice. There are ${glossary.length} terms in the index, grouped by the part of trading they belong to. The entries discuss limitations as well as the underlying mechanics.`,
           "Definitions are written for people who are learning, not for people who already know. Where a term has a contested or marketing-inflated meaning, the entry says so rather than repeating the sales version.",
         ],
       },
@@ -461,7 +461,9 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         {
           h: `Practising ${s.name} safely`,
           p: [
-            `The first mistake listed above — ${String(s.depth.mistakes?.[0] || "inconsistent sizing").replace(/\.$/, "").toLowerCase()} — is the one to watch for in your own ${s.name.toLowerCase()} journal entries. ${DISCLAIMER}`,
+            `When reviewing a ${s.name} practice trade, compare the rule you planned with the action you recorded. The first pitfall above is a useful review question:`,
+            String(s.depth.mistakes?.[0] || "Check whether position sizing stayed consistent with the plan."),
+            DISCLAIMER,
           ],
         },
       ],
