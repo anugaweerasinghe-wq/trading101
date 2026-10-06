@@ -198,7 +198,7 @@ Users may not copy, modify, distribute, or create derivative works without expli
               {
                 question: "Does TradeHQ provide financial advice?",
                 answer:
-                  "No. Nothing on TradeHQ — including AI Mentor responses, market analysis or sector commentary — constitutes financial, investment, legal or tax advice. Always consult a qualified advisor for real-money decisions.",
+                  "No. Nothing on TradeHQ — including educational mentor responses, market analysis or sector commentary — constitutes financial, investment, legal or tax advice. Always consult a qualified advisor for real-money decisions.",
               },
               {
                 question: "Can I use TradeHQ commercially?",
