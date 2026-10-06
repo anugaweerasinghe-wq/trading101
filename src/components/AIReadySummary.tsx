@@ -11,66 +11,38 @@ interface AIReadySummaryProps {
 function generateTradingSummary(asset: Asset): {
   verdict: 'bullish' | 'bearish' | 'neutral';
   summary: string;
-  confidence: number;
 } {
   const content = getAssetContent(asset.id);
   const changePercent = asset.changePercent || asset.change || 0;
-  
-  // Determine verdict based on price action and strategy alignment
-  let verdict: 'bullish' | 'bearish' | 'neutral' = 'neutral';
-  let confidence = 60;
-  
-  if (changePercent > 2) {
-    verdict = 'bullish';
-    confidence = Math.min(85, 65 + changePercent * 3);
-  } else if (changePercent < -2) {
-    verdict = 'bearish';
-    confidence = Math.min(80, 60 + Math.abs(changePercent) * 2);
-  } else if (changePercent > 0.5) {
-    verdict = 'bullish';
-    confidence = 55 + changePercent * 5;
-  } else if (changePercent < -0.5) {
-    verdict = 'bearish';
-    confidence = 55 + Math.abs(changePercent) * 5;
-  }
-  
-  // Generate contextual summary using strategy data
-  const strategyHint = content?.strategy?.split('.')[0] || `Practice ${asset.symbol} trading patterns`;
-  
-  const summaries = {
-    bullish: `${asset.name} shows upward momentum (+${changePercent.toFixed(1)}%). ${strategyHint}. Current conditions favor practicing long positions with defined stop-losses.`,
-    bearish: `${asset.name} faces downward pressure (${changePercent.toFixed(1)}%). ${strategyHint}. Use this simulation to practice identifying reversal patterns or short-term hedging.`,
-    neutral: `${asset.name} trades in consolidation (${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(1)}%). ${strategyHint}. Ideal for practicing range-bound strategies and patience.`
-  };
-  
+  const verdict = changePercent > 0.5 ? 'bullish' : changePercent < -0.5 ? 'bearish' : 'neutral';
+  const strategyHint = content?.strategy || `Compare hypothetical ${asset.symbol} price changes in the simulator.`;
   return {
     verdict,
-    summary: summaries[verdict],
-    confidence: Math.round(confidence)
+    summary: `The practice snapshot shows a ${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(1)}% change. This describes simulator data, not a forecast or an instruction to buy, sell or hedge. ${strategyHint}`
   };
 }
 
 export function AIReadySummary({ asset }: AIReadySummaryProps) {
-  const { verdict, summary, confidence } = generateTradingSummary(asset);
+  const { verdict, summary } = generateTradingSummary(asset);
   
   const verdictConfig = {
     bullish: {
       icon: TrendingUp,
-      label: "Bullish Bias",
+      label: "Positive practice change",
       color: "text-green-400",
       bg: "bg-green-500/10",
       border: "border-green-500/20"
     },
     bearish: {
       icon: TrendingDown,
-      label: "Bearish Bias",
+      label: "Negative practice change",
       color: "text-red-400",
       bg: "bg-red-500/10",
       border: "border-red-500/20"
     },
     neutral: {
       icon: Minus,
-      label: "Neutral Range",
+      label: "Small practice change",
       color: "text-yellow-400",
       bg: "bg-yellow-500/10",
       border: "border-yellow-500/20"
@@ -87,7 +59,7 @@ export function AIReadySummary({ asset }: AIReadySummaryProps) {
         config.bg,
         config.border
       )}
-      aria-label="AI Trading Summary"
+      aria-label="Practice data summary"
     >
       <div className="flex items-start gap-3">
         <div className={cn(
