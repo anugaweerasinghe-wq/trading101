@@ -3,7 +3,7 @@
  *
  * Zero AI credits. Matches user input against a curated topic library
  * (trading concepts, risk, psychology, technicals, asset basics) and
- * returns expert-quality canned answers with educational disclaimers.
+ * returns authored topic answers with educational disclaimers.
  *
  * Replaces the previous LLM-backed trading-mentor edge function.
  */
@@ -24,62 +24,35 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     keywords: ["stop loss", "stop-loss", "stoploss", "sl ", "protective stop"],
     title: "Stop-Loss Orders",
     answer:
-      "A **stop-loss** is a pre-set exit order that closes your position once price hits a chosen level — capping the loss.\n\n" +
-      "**How to set one:**\n" +
-      "• Risk only 1–2% of your portfolio per trade.\n" +
-      "• Place the stop below a structural level (recent swing low, moving average) — not at a round number where everyone else parks theirs.\n" +
-      "• On $100K capital, that's $1K–$2K max risk per trade.\n\n" +
-      "**Pro insight:** A stop-loss isn't a failure — it's the cost of being in the game. Traders who skip stops blow up eventually; the math is brutal (a 50% drawdown needs a 100% gain to recover).",
+      "A stop order uses a trigger price; it does not cap the final loss or guarantee a fill. Gaps and liquidity can produce a worse execution. For a hypothetical $100,000 account, a chosen 1% or 2% loss assumption is $1,000 or $2,000, but those are arbitrary practice settings. TradeHQ executes market orders; stop mechanics are conceptual. Record an exit assumption and compare it with the actual practice result.",
   },
   {
     id: "dca",
     keywords: ["dollar cost", "dca", "dollar-cost", "averaging"],
     title: "Dollar-Cost Averaging (DCA)",
     answer:
-      "**DCA** = investing a fixed amount on a fixed schedule (e.g. $200 every Friday) regardless of price.\n\n" +
-      "**Why it works:**\n" +
-      "• Removes emotion — you buy mechanically.\n" +
-      "• Averages your entry price across cycles.\n" +
-      "• Beats most beginners who try to time the market.\n\n" +
-      "**Trade-off:** In a strong uptrend, lump-sum investing usually beats DCA mathematically — but DCA wins on discipline and psychology, which is what kills most retail portfolios.",
+      "Dollar-cost averaging means contributing a fixed amount on a stated schedule. For example, $200 each Friday changes purchase timing and the units acquired. It does not guarantee a lower average cost, better returns or emotional discipline. Compare equal total contributions under scheduled purchases and a lump-sum hypothetical example, including a declining-price path.",
   },
   {
     id: "risk-management",
     keywords: ["risk management", "manage risk", "position size", "position sizing", "how much should i risk"],
     title: "Risk Management Basics",
     answer:
-      "Risk management is the **#1 differentiator** between traders who survive and traders who blow up.\n\n" +
-      "**The 4 rules:**\n" +
-      "1. **1-2% rule** — never risk more than 1–2% of total capital on one trade. On $100K, that's $1–2K max.\n" +
-      "2. **Always use a stop-loss** — define your exit before you enter.\n" +
-      "3. **Risk:reward ≥ 1:2** — only take trades where potential reward is at least 2× the risk.\n" +
-      "4. **Diversify** — no single asset should be >20% of your portfolio.\n\n" +
-      "Practice this in TradeHQ first. If you can't be disciplined with simulated $100K, you won't be disciplined with real $1K.",
+      "Risk review compares exposure, realized gains and losses, costs and drawdown. Choose several hypothetical position sizes and document the assumptions instead of using a universal risk percentage, minimum reward-to-risk ratio or maximum asset weight. A planned exit does not guarantee a maximum loss. TradeHQ can illustrate practice portfolio accounting without certifying a real-money risk plan.",
   },
   {
     id: "bull-market",
     keywords: ["bull market", "bullish", "uptrend"],
     title: "Bull Markets",
     answer:
-      "A **bull market** is a sustained period (typically months to years) where prices trend upward — usually defined as a 20%+ rise from recent lows.\n\n" +
-      "**Characteristics:**\n" +
-      "• Higher highs and higher lows on the chart.\n" +
-      "• Strong economic data (GDP growth, low unemployment).\n" +
-      "• Investor optimism and increasing volume.\n\n" +
-      "**Trading approach:** 'Buy the dip' works in bull markets. Pullbacks to 20/50-day moving averages are typical entry zones. Stay long, trust the trend, don't try to short a bull.",
+      "Bull market describes a sustained rising market; a twenty-percent rise is a commonly used convention, not a trading instruction. Rising past prices do not establish that a dip will recover or that a moving average provides an entry. For a practice exercise, describe the observation period and compare continuation with reversal outcomes.",
   },
   {
     id: "bear-market",
     keywords: ["bear market", "bearish", "downtrend", "crash"],
     title: "Bear Markets",
     answer:
-      "A **bear market** = a 20%+ decline from recent highs, lasting weeks or months.\n\n" +
-      "**What to do:**\n" +
-      "• Reduce position sizes — volatility spikes.\n" +
-      "• Cash is a position. Holding cash in a downtrend isn't 'missing out' — it's discipline.\n" +
-      "• Look at defensive sectors (utilities, consumer staples) and gold.\n" +
-      "• If you DCA, bear markets are where future returns are built — but only if you stay solvent.\n\n" +
-      "**Most retail traders lose money in bears by averaging down on losers.** Don't.",
+      "Bear market commonly describes a substantial decline, often using a twenty-percent convention. It does not prescribe cash, gold, defensive sectors or additional purchases. Compare hypothetical exposures and price shocks with the same starting balance. A declining asset can keep falling and a recovery is not guaranteed.",
   },
   {
     id: "rsi",
@@ -97,25 +70,14 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     keywords: ["moving average", "ma ", "sma", "ema", "20 day", "50 day", "200 day"],
     title: "Moving Averages",
     answer:
-      "A **moving average** smooths price into a single trend line.\n\n" +
-      "**Key MAs:**\n" +
-      "• **20-day** — short-term trend, scalp/swing entries.\n" +
-      "• **50-day** — intermediate trend, key support in bull markets.\n" +
-      "• **200-day** — long-term trend. Above = bull regime, below = bear regime.\n\n" +
-      "**Golden cross** = 50-day crossing above 200-day → bullish. **Death cross** = 50 below 200 → bearish. They're lagging signals — confirmation, not prediction.",
+      "A moving average summarizes a specified historical price series. Different periods and SMA/EMA methods produce different values. A shorter average crossing a longer one describes that series and lags price changes; it does not prove an entry, support level or future direction. Compare settings and record where their descriptions differ.",
   },
   {
     id: "candlestick",
     keywords: ["candlestick", "candle", "doji", "hammer", "engulfing"],
     title: "Candlestick Patterns",
     answer:
-      "**Candlesticks** show open/high/low/close in one symbol — body = open-to-close, wicks = high/low.\n\n" +
-      "**Must-know patterns:**\n" +
-      "• **Doji** — open ≈ close. Indecision. Common at trend reversals.\n" +
-      "• **Hammer** — small body, long lower wick. Bullish reversal at support.\n" +
-      "• **Shooting star** — small body, long upper wick. Bearish reversal at resistance.\n" +
-      "• **Bullish/Bearish engulfing** — one candle fully engulfs the prior. Strong reversal signal.\n\n" +
-      "Patterns only work in context. A hammer at resistance ≠ a hammer at support.",
+      "A candlestick shows open, high, low and close for a stated interval. Doji, hammer and engulfing names describe shapes, not guaranteed reversals. Inspect the data source and interval before interpreting the chart. TradeHQ can show provider candles or generated practice candles, and neither shape establishes the next move.",
   },
   {
     id: "psychology",
@@ -147,37 +109,21 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     keywords: ["leverage", "margin", "10x", "100x", "liquidation"],
     title: "Leverage & Margin",
     answer:
-      "**Leverage amplifies both gains AND losses.** 10x leverage means a 10% adverse move = -100% (liquidation).\n\n" +
-      "**Reality:**\n" +
-      "• High leverage can make even small market moves produce very large gains or losses; loss rates vary widely by product, market and trader.\n" +
-      "• The leverage a platform offers is not a recommendation. In simulation, compare how leverage changes drawdown and liquidation distance before using it as a learning tool.\n" +
-      "• In TradeHQ, practice cash-account discipline first. If you can't make money unlevered, leverage will only speed up the loss.\n\n" +
-      "**Rule:** If you're new, stay unlevered for the first 100 trades.",
+      "Leverage increases gains and losses relative to funds committed. In simplified arithmetic, a ten-percent adverse move on ten-times exposure equals the original funds before costs, but actual margin calls and liquidation may occur earlier and losses can exceed a deposit. Requirements depend on the product and provider. TradeHQ spot practice does not implement futures margin or leverage.",
   },
   {
     id: "crypto-basics",
     keywords: ["bitcoin", "btc", "ethereum", "eth", "crypto", "altcoin", "defi"],
     title: "Crypto Basics",
     answer:
-      "**Crypto is the most volatile mainstream asset class.** 10–20% daily moves are normal.\n\n" +
-      "**Core tiers:**\n" +
-      "• **BTC/ETH** — large-cap, behave like risk-on tech stocks. Lower-risk tier (still volatile).\n" +
-      "• **Top-50 alts** (SOL, BNB, XRP) — higher beta, real projects.\n" +
-      "• **Anything else** — speculative. Treat as 90%-loss-possible.\n\n" +
-      "Cycles matter: crypto rotates capital ~every 4 years (BTC halving). Position sizing matters more than picking the winner.",
+      "Cryptocurrencies have different network designs, issuance, custody and operational risks. Volatility and correlation depend on the asset and observation period; neither market-cap rank nor a halving schedule establishes a safe tier or a predictable four-year return cycle. Compare equal hypothetical exposures rather than presume a universal daily move or a reliable price forecast.",
   },
   {
     id: "etfs",
     keywords: ["etf", "spy", "qqq", "index fund", "vti"],
     title: "ETFs & Index Funds",
     answer:
-      "**ETFs** track baskets of assets — instant diversification, low fees.\n\n" +
-      "**Beginner-friendly:**\n" +
-      "• **SPY / VOO** — S&P 500. The default 'own America' bet.\n" +
-      "• **QQQ** — Nasdaq-100. Tech-heavy.\n" +
-      "• **VTI** — total US market.\n" +
-      "• **VT** — total world market.\n\n" +
-      "Warren Buffett's recommendation for 99% of investors: just DCA into a broad index ETF. It outperforms ~85% of active fund managers over 10+ years.",
+      "An ETF provides the exposure defined by its objective and holdings. Fees, leverage, concentration and overlaps vary by fund. SPY and QQQ illustrate different index exposures, but no fund is universally beginner-friendly or assuredly low risk. Use current fund documents and compare hypothetical positions without a claimed outperformance rate.",
   },
   {
     id: "tax",
@@ -192,13 +138,7 @@ export const MENTOR_TOPICS: MentorTopic[] = [
     keywords: ["compound", "compounding", "interest"],
     title: "Compounding",
     answer:
-      "Compounding is the **8th wonder of the world** (Einstein, allegedly).\n\n" +
-      "**$100K at 10% annual return:**\n" +
-      "• 10 years → $259K\n" +
-      "• 20 years → $673K\n" +
-      "• 30 years → $1.74M\n" +
-      "• 40 years → $4.53M\n\n" +
-      "**The lesson:** Time in market > timing the market. Use TradeHQ's Compound Calculator to model your own scenarios.",
+      "Hypothetical arithmetic: $100,000 with a fixed ten-percent effective annual gain and no contributions or costs becomes about $259,374 after ten years and $672,750 after twenty. The positive rate is an assumption, not a forecast or an investing rule. Negative returns and costs change the path; compare several scenarios rather than use one result as a promise.",
   },
 ];
 
@@ -352,8 +292,8 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
       );
     }
     const cashPct = (ctx.cash / ctx.totalValue) * 100;
-    if (cashPct > 80) lines.push(`\n**Observation:** You're sitting on heavy cash (${cashPct.toFixed(0)}%) — consider DCAing into a few positions.`);
-    else if (cashPct < 5) lines.push(`\n**Observation:** Almost fully invested. Keep some dry powder (5-15%) for opportunities.`);
+    if (cashPct > 80) lines.push(`\n**Observation:** You're sitting on heavy cash (${cashPct.toFixed(0)}%) — compare how different hypothetical cash weights change the practice result; this percentage does not prescribe purchases.`);
+    else if (cashPct < 5) lines.push(`\n**Observation:** Cash is ${cashPct.toFixed(0)}% of the practice portfolio. Compare alternative weights without treating a cash band as a universal requirement.`);
     return lines.join("\n") + DISCLAIMER;
   }
 
@@ -372,10 +312,10 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
   // Trade history
   if (/trade history|recent trades|review my trades|patterns/.test(text)) {
     if (ctx.tradesCount === 0) return "You haven't placed any trades yet. Start with a small position on a familiar asset, journal your reasoning, and we'll review patterns once you have 10+ trades." + DISCLAIMER;
-    if (ctx.tradesCount < 10) return `You have ${ctx.tradesCount} trades — too few for pattern analysis. Aim for 20-30 closed trades before drawing conclusions.${ctx.winRate !== null ? ` Current win rate: ${ctx.winRate.toFixed(0)}%.` : ""}` + DISCLAIMER;
+    if (ctx.tradesCount < 10) return `You have ${ctx.tradesCount} trades — too few for pattern analysis. The sample is small; no universal trade count establishes a dependable pattern.${ctx.winRate !== null ? ` Current win rate: ${ctx.winRate.toFixed(0)}%.` : ""}` + DISCLAIMER;
     const wr = ctx.winRate ?? 0;
-    const verdict = wr >= 55 ? "above average" : wr >= 45 ? "average" : "below average";
-    return `**Trade history review** (${ctx.tradesCount} trades, ${wr.toFixed(0)}% win rate — ${verdict}):\n\n• Win rate alone is misleading without R-multiple. A 40% win rate with 3:1 winners beats 60% with 1:1.\n• Track avg-win / avg-loss in your journal.\n• Look for time-of-day or asset-class patterns.` + DISCLAIMER;
+    const verdict = "descriptive sample; no benchmark ranking";
+    return `**Trade history review** (${ctx.tradesCount} trades, ${wr.toFixed(0)}% win rate — ${verdict}):\n\n• Win rate alone is misleading without R-multiple. With fixed realized 3R wins and 1R losses,40%wins gives0.6R gross expectancy;60%wins at1R gives0.2R beforecosts. These are hypothetical inputs.\n• Track avg-win / avg-loss in your journal.\n• Look for time-of-day or asset-class patterns.` + DISCLAIMER;
   }
 
   // What should I do

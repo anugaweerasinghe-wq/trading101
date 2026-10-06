@@ -82,7 +82,7 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
         </h3>
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Total Return</span>
+            <span className="text-muted-foreground">Open Position P&amp;L</span>
             <span className={`text-xl font-bold ${analytics.totalReturn >= 0 ? 'text-success' : 'text-destructive'}`}>
               {analytics.totalReturn >= 0 ? '+' : ''}${analytics.totalReturn.toFixed(2)} ({analytics.returnPercent.toFixed(2)}%)
             </span>
@@ -103,7 +103,7 @@ export function PortfolioAnalytics({ portfolio }: PortfolioAnalyticsProps) {
           </div>
           <div className="flex justify-between items-center pt-2 border-t border-border">
             <span className="text-muted-foreground flex items-center gap-1.5">
-              <TrendingDown className="w-3.5 h-3.5" /> Max Drawdown
+              <TrendingDown className="w-3.5 h-3.5" /> Practice Max Drawdown
             </span>
             <span className="text-base font-semibold text-destructive tabular-nums">
               -{analytics.maxDrawdown.toFixed(2)}%

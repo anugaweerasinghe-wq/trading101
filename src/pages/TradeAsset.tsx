@@ -280,7 +280,7 @@ export default function TradeAsset() {
       {
         "@type": "PropertyValue",
         "name": "simulatorScope",
-        "value": `Practice ${selectedAsset.symbol} trading with $100K virtual capital, simulated charts, and AI mentoring — educational only.`
+        "value": `Practice ${selectedAsset.symbol} trading with $100K virtual capital, simulated charts, and educational mentor explanations — educational only.`
       },
       {
         "@type": "PropertyValue",
@@ -361,7 +361,7 @@ export default function TradeAsset() {
       "name": `How can I practice trading ${selectedAsset.name}?`,
       "acceptedAnswer": {
         "@type": "Answer" as const,
-        "text": `TradeHQ provides $100,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and AI mentoring.`
+        "text": `TradeHQ provides $100,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and educational mentor explanations.`
       }
     }
   ] : [];

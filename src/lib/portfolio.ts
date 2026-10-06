@@ -1,3 +1,4 @@
+import { getRealizedTradeResults } from './realizedTrades';
 import { Portfolio, Trade, Position, Asset } from './types';
 import { INITIAL_CASH, ASSETS } from './assets';
 import { recordSnapshot, getPortfolioHistory } from './portfolioHistory';
@@ -196,84 +197,15 @@ export function updatePositionPrices(
   return newPortfolio;
 }
 
-/**
- * Lifetime realized P&L: for each SELL trade, value gained relative to
- * the average cost basis at the time. We approximate using current avgPrice
- * of remaining position when available, else the sell price itself (0 P&L).
- * To keep it simple and correct, we walk trades chronologically per asset.
- */
+/** Closed sells use fee-inclusive weighted-average costs and net proceeds. */
 export function calculateClosedTradeStats(portfolio: Portfolio): { sells: number; wins: number; winRate: number } {
-  const positions = new Map<string, { quantity: number; avgUnitCost: number }>();
-  let sells = 0;
-  let wins = 0;
-
-  const trades = [...portfolio.trades].sort(
-    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
-  );
-
-  for (const trade of trades) {
-    const state = positions.get(trade.assetId) ?? { quantity: 0, avgUnitCost: 0 };
-    if (trade.quantity <= 0) continue;
-
-    if (trade.type === "buy") {
-      // Buy totals include the simulator fee, so this cost basis includes fees.
-      const unitCost = trade.total / trade.quantity;
-      const nextQuantity = state.quantity + trade.quantity;
-      state.avgUnitCost =
-        nextQuantity > 0
-          ? (state.avgUnitCost * state.quantity + unitCost * trade.quantity) / nextQuantity
-          : 0;
-      state.quantity = nextQuantity;
-      positions.set(trade.assetId, state);
-      continue;
-    }
-
-    if (state.quantity <= 0) continue;
-    const closedQuantity = Math.min(trade.quantity, state.quantity);
-    // Sell totals are net of the simulator fee.
-    const unitProceeds = trade.total / trade.quantity;
-    const realized = (unitProceeds - state.avgUnitCost) * closedQuantity;
-    sells += 1;
-    if (realized > 0) wins += 1;
-    state.quantity = Math.max(0, state.quantity - closedQuantity);
-    if (state.quantity === 0) state.avgUnitCost = 0;
-    positions.set(trade.assetId, state);
-  }
-
-  return {
-    sells,
-    wins,
-    winRate: sells > 0 ? Math.round((wins / sells) * 100) : 0,
-  };
+  const results = getRealizedTradeResults(portfolio.trades);
+  const wins = results.filter(result => result.profit > 0).length;
+  return { sells: results.length, wins, winRate: results.length ? Math.round(wins / results.length * 100) : 0 };
 }
 
 export function calculateRealizedPnL(portfolio: Portfolio): number {
-  const byAsset = new Map<string, Trade[]>();
-  // Sort ascending
-  const trades = [...portfolio.trades].sort(
-    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
-  );
-  for (const t of trades) {
-    if (!byAsset.has(t.assetId)) byAsset.set(t.assetId, []);
-    byAsset.get(t.assetId)!.push(t);
-  }
-
-  let realized = 0;
-  for (const [, list] of byAsset) {
-    let qty = 0;
-    let avgCost = 0;
-    for (const t of list) {
-      if (t.type === 'buy') {
-        const newQty = qty + t.quantity;
-        avgCost = newQty > 0 ? (avgCost * qty + t.price * t.quantity) / newQty : 0;
-        qty = newQty;
-      } else {
-        realized += (t.price - avgCost) * t.quantity;
-        qty = Math.max(0, qty - t.quantity);
-      }
-    }
-  }
-  return realized;
+  return getRealizedTradeResults(portfolio.trades).reduce((sum, result) => sum + result.profit, 0);
 }
 
 /**

@@ -65,7 +65,7 @@ interface AssetContent {
 export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   btc: [
     { question: "How can I practice trading Bitcoin without losing money?", answer: "Use a crypto simulator like TradeHQ. You get $100,000 in virtual funds to practice Bitcoin's price action with simulated charts — no financial risk." },
-    { question: "What is a free Bitcoin trading simulator in 2026?", answer: "TradeHQ offers a free BTC simulator with $100K virtual cash, candlestick charts, and AI mentoring. No signup or credit card required — start in seconds." },
+    { question: "What is a free Bitcoin trading simulator in 2026?", answer: "TradeHQ offers a free BTC simulator with $100K virtual cash, candlestick charts, and educational mentor explanations. No signup or credit card required — start in seconds." },
     { question: "How to practice Bitcoin trading in Colombo as a student?", answer: "Students in Sri Lanka can use TradeHQ's free simulator to practice BTC trading with virtual money. Learn chart reading and risk management before using real capital." },
     { question: "Is Bitcoin a good asset for beginner traders to practice?", answer: "BTC is one available practice market. Its price can be volatile and chart levels can fail; suitability depends on what mechanics the learner wants to study." }
   ],
@@ -934,7 +934,7 @@ export function generateAssetMetaDescription(asset: Asset): string {
   if (content) {
     description = `Practice ${asset.symbol} trading risk-free. ${content.whatIs} Start with $100K virtual cash now.`;
   } else {
-    description = `Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $100K demo cash, simulated charts, and AI mentoring. No signup needed!`;
+    description = `Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $100K demo cash, simulated charts, and educational mentor explanations. No signup needed!`;
   }
 
   // ALWAYS enforce 155 character limit

@@ -36,7 +36,7 @@ export function PortfolioChart() {
     <Card className="p-6 bg-card/50 backdrop-blur-sm">
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-semibold">Portfolio Performance</h3>
+          <h3 className="text-lg font-semibold">Practice Portfolio History</h3>
           <Button
             variant="outline"
             size="sm"
@@ -44,9 +44,10 @@ export function PortfolioChart() {
             className="gap-2"
           >
             <Shield className="w-4 h-4" />
-            Stop Loss: {stopLossPercent}%
+            Reference line: {stopLossPercent}%
           </Button>
         </div>
+        <p className="text-xs text-muted-foreground mb-3">Local practice snapshots may include generated hourly backfill between visits. This is not observed market history; the reference line does not execute a stop order.</p>
         <div className="flex items-baseline gap-3">
           <span className="text-3xl font-bold">${currentValue.toFixed(2)}</span>
           <span className={cn(
@@ -61,7 +62,7 @@ export function PortfolioChart() {
           <div className="mt-2 px-3 py-2 bg-destructive/20 border border-destructive/50 rounded-lg">
             <p className="text-sm font-medium text-destructive flex items-center gap-2">
               <Shield className="w-4 h-4" />
-              Stop Loss Breached! Portfolio dropped below ${stopLossValue.toFixed(2)}
+              Reference threshold crossed. Portfolio dropped below ${stopLossValue.toFixed(2)}
             </p>
           </div>
         )}
@@ -96,7 +97,7 @@ export function PortfolioChart() {
               strokeDasharray="5 5"
               strokeWidth={2}
               label={{
-                value: `Stop Loss: $${stopLossValue.toFixed(0)}`,
+                value: `Reference: $${stopLossValue.toFixed(0)}`,
                 position: 'right',
                 fill: 'hsl(var(--destructive))',
                 fontSize: 12,

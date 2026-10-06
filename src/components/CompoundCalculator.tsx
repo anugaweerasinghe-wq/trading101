@@ -79,7 +79,7 @@ export function CompoundCalculator() {
       <div className="flex flex-col gap-5 flex-1">
         <p className="text-xs leading-relaxed text-slate-400">
           {years}-year calculation using your assumptions, not live data or a forecast.
-          Contributions are added at the start of each month; growth uses the annual rate divided by 12.
+          Contributions are added at the start of each month; growth uses a nominal annual rate divided by 12. A 12% nominal input compounds to about 12.68% effective annual growth before deductions.
           The selected deduction is a percentage of absolute monthly growth, not a broker commission model.
           Actual returns vary; taxes and inflation are excluded.
         </p>
@@ -107,10 +107,10 @@ export function CompoundCalculator() {
 
         <div className="space-y-3">
           <div className="flex flex-wrap justify-between gap-2 text-[9px] font-black text-emerald-500/80 uppercase">
-            <span>Assumed annual rate: {annualReturn}%</span>
+            <span>Assumed nominal annual rate: {annualReturn}%</span>
             <span>Growth deduction: {tradingFeePct}%</span>
           </div>
-          <Slider aria-label="Assumed annual rate" value={[annualReturn]} onValueChange={([v]) => setAnnualReturn(v)} max={30} step={0.5} className="py-1" />
+          <Slider aria-label="Assumed nominal annual rate" value={[annualReturn]} onValueChange={([v]) => setAnnualReturn(v)} max={30} step={0.5} className="py-1" />
           <Slider aria-label="Illustrative deduction as a percentage of monthly growth" value={[tradingFeePct]} onValueChange={([v]) => setTradingFeePct(v)} max={1} step={0.01} className="py-1" />
         </div>
 

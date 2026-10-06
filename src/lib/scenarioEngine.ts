@@ -35,7 +35,7 @@ export interface ScenarioResult {
   }>;
 }
 
-const DAILY_VOL: Record<AssetType, number> = {
+export const DAILY_VOL: Record<AssetType, number> = {
   crypto: 0.04,
   stock: 0.015,
   etf: 0.01,
