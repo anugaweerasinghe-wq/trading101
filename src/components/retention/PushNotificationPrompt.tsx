@@ -8,8 +8,8 @@ import {
 import { isReturningUser } from "@/lib/lastVisit";
 
 /**
- * Subtle, dismissible push-notification opt-in.
- * Only shown to day-2+ returning visitors, once, then remembered for 14 days.
+ * Subtle, dismissible notification-permission opt-in.
+ * TradeHQ does not currently deliver scheduled background alerts.
  */
 export function PushNotificationPrompt() {
   const [show, setShow] = useState(false);
@@ -35,9 +35,9 @@ export function PushNotificationPrompt() {
           <Bell className="w-4 h-4 text-primary" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-bold text-foreground">Daily nudge + market alerts?</div>
+          <div className="text-sm font-bold text-foreground">Allow browser notifications?</div>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Get a subtle reminder for the daily challenge and big moves on your watchlist. Fully optional.
+            This only grants browser permission. TradeHQ does not currently send scheduled daily or watchlist alerts.
           </p>
           <div className="flex items-center gap-2 mt-3">
             <button
