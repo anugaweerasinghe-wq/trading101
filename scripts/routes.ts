@@ -321,9 +321,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/privacy",
     title: "Privacy Policy | TradeHQ",
-    description: `TradeHQ privacy policy. What we store (locally in your browser), what we send to the server, and what we never do. Free educational trading simulator.`,
+    description: `TradeHQ privacy policy covering guest browser data, signed-in portfolio sync, optional accounts, analytics, advertising and your choices.`,
     h1: "Privacy Policy",
-    summary: `Core simulator state is primarily browser-stored. Optional accounts, public profiles, reviews, contact submissions and third-party advertising involve server-side or provider processing; see the full policy for details.`,
+    summary: `Guest simulator records stay in your browser. Signed-in cash and open positions can sync with Supabase; account, community and consented analytics features also involve provider processing. See the full policy for details.`,
     priority: "0.3",
     changefreq: "monthly",
   });

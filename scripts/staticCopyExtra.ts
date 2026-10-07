@@ -361,7 +361,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Cookies and analytics",
       p: [
-        "TradeHQ stores the core practice account in local browser storage. Optional analytics and advertising services can use cookies or similar identifiers after the applicable consent choice; the privacy policy explains those providers and controls.",
+        "TradeHQ stores guest practice records in local browser storage. Signed-in cash and open positions can also sync with Supabase. Optional analytics and advertising services can use cookies or similar identifiers after the applicable consent choice; the privacy policy explains those providers and controls.",
       ],
     },
     {

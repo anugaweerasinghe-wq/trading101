@@ -453,8 +453,8 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "Summary of what we store",
         p: [
-          "Your practice portfolio, trade history, journal entries, watchlist, course progress and streaks are stored in your own browser's local storage. Clearing site data deletes them permanently, and we cannot restore them because we never held them.",
-          "If you choose to create an account, publish a public trader profile, submit a review or join a duel, the data needed for that specific feature is stored on our backend. Everything else stays local.",
+          "Guest practice cash, positions and trade history stay in your browser. Signed-in portfolio sync sends cash, open-position quantities, asset identifiers, average purchase prices, last recorded prices and a trade count to Supabase. Cash and open positions can be restored on another device when sync succeeds; individual trade history, journals, watchlists, course progress and streaks remain browser-held.",
+          "Clearing site data removes browser-held records but does not delete a portfolio already synced to your account. Optional accounts, public profiles, reviews and duels also store the data needed for those features on our backend. Contact the maintainer for an account-data or deletion request.",
         ],
       },
       {
