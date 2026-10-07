@@ -62,7 +62,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How the practice trading desk works",
         p: [
-          "The trading desk is where simulated orders are placed. You choose an instrument, choose a side, choose a size, and the order is filled against the simulator's current price. The fill, the position and the resulting profit or loss are all recorded in your practice portfolio, which is stored in your own browser rather than on a server.",
+          "The trading desk is where simulated orders are placed. You choose an instrument, choose a side, choose a size, and the order is filled against the simulator's current price. Fills and results are recorded in your browser. Signed-in cash and open positions can also sync with your account when the service is available; individual trade history remains local.",
           "One order type is supported today: the market order, which fills immediately at the shown simulator price. Limit and stop orders are explained in the glossary but cannot yet be placed on the desk. Position sizing is entirely up to you, which is deliberate — learning to size a position is one of the few skills a simulator can teach almost as well as a live account.",
         ],
       },
@@ -132,7 +132,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What the practice portfolio tracks",
         p: [
-          "The portfolio page is the scoreboard for your simulated account. It shows every open position with its entry price, current simulated price and unrealised profit or loss, plus a full history of closed trades with realised results. Your data lives in your browser's local storage, so clearing site data resets the account.",
+          "The portfolio page shows open positions with entry prices, current practice prices and unrealised profit or loss, plus this browser's history of closed trades. Guest records live in local storage. Signed-in cash and open positions can sync when the service is available; clearing browser data does not delete an account copy already stored on the server.",
           "Beyond raw P&L, the page calculates the metrics that actually describe a process rather than an outcome: fee-inclusive closed-result win rate, average win versus average loss, current open-position return dispersion, and practice maximum drawdown. The chart can include generated history; it is not a verified sequence of account observations.",
         ],
       },

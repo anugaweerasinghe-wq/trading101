@@ -46,7 +46,7 @@ export function recordSnapshot(cash: number, positionsValue: number): void {
 
 /**
  * Update portfolio with simulated price changes over time
- * This creates realistic portfolio value changes based on AI-driven market analysis
+ * Creates synthetic hourly backfill, not observed account history or an AI forecast.
  */
 export async function updatePortfolioOverTime(portfolio: Portfolio): Promise<Portfolio> {
   const hoursElapsed = getHoursSinceLastUpdate();
@@ -63,16 +63,16 @@ export async function updatePortfolioOverTime(portfolio: Portfolio): Promise<Por
     return portfolio;
   }
   
-  // Fetch AI predictions for realistic market movements
+  // The retired prediction fetch returns no parameters; use the practice model.
   const predictions = await fetchMarketPredictions(ASSETS);
-  console.log('Using AI predictions for portfolio update:', Object.keys(predictions).length, 'assets');
+  console.log('Using practice model parameters for portfolio backfill:', Object.keys(predictions).length, 'assets');
   
   // Get current asset prices
   let currentAssets = [...ASSETS];
   
   // Simulate price changes for each hour that passed
   for (let i = 0; i < hoursToSimulate; i++) {
-    // Simulate 1 hour of price movement with AI predictions
+    // Simulate one hour of practice movement using the supplied model parameters.
     currentAssets = simulateAssetPrices(currentAssets, 1, predictions);
     
     // Calculate portfolio value with new prices

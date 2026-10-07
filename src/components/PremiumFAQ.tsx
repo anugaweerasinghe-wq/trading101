@@ -38,7 +38,7 @@ export function PremiumFAQ() {
     },
     {
       question: "Do I need to create an account?",
-      answer: "No. TradeHQ requires no signup, no email, and no account creation. Your portfolio is stored locally in your browser so you can start trading instantly and come back anytime."
+      answer: "No. TradeHQ requires no signup, no email, and no account creation. Guest practice records stay in your browser. Optional signed-in cash and open positions can sync when the service is available; trade history, journals and course progress remain browser-held."
     },
     {
       question: "What can I practise with TradeHQ?",

@@ -536,7 +536,7 @@ export default function Portfolio() {
                 {
                   question: "How do I reset my virtual portfolio?",
                   answer:
-                    "Your portfolio is stored locally in your browser. Clear your browser's site data for www.thetradehq.com to reset back to the default $100,000 starting balance.",
+                    "Guest records are browser-held; clearing site data removes the local copy. Signed-in cash and open positions can also have a synced account copy when the service is available. Clearing browser data does not delete or reset that account copy. Trade history, journals and course progress remain browser-held.",
                 },
               ]}
             />

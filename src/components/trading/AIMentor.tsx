@@ -30,7 +30,7 @@ const quickPrompts = [
   { icon: TrendingUp, text: "Analyze this asset", prompt: "Analyze the current market conditions for the asset I'm viewing right now." },
   { icon: Shield, text: "Risk assessment", prompt: "What's the risk level of my current portfolio? Am I overexposed anywhere?" },
   { icon: BarChart3, text: "Trade history", prompt: "Review my recent trade history and tell me what patterns you see." },
-  { icon: Lightbulb, text: "What should I do?", prompt: "Based on my portfolio and current market conditions, what action should I consider next?" },
+  { icon: Lightbulb, text: "Review assumptions", prompt: "Explain the quantities, fees and assumptions in this practice snapshot without recommending a trade." },
 ];
 
 export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
@@ -39,7 +39,7 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
     {
       id: '1',
       role: 'assistant',
-      content: "Hey! I'm your Neural Trading Mentor. I have full access to your portfolio — ask me about your positions, P&L, win rate, or any trading question. What do you need?",
+      content: "I explain trading concepts using the practice snapshot supplied by this page. Responses use AI when available or a labeled rule-based fallback. Ask about quantities, fees or your recorded assumptions.",
       timestamp: new Date(),
     },
   ]);
@@ -131,10 +131,10 @@ export function AIMentor({ portfolio, assets, selectedAsset }: AIMentorProps) {
               </div>
               <div>
                 <h3 className="font-semibold flex items-center gap-2">
-                  Neural Mentor
-                  <Badge variant="outline" className="text-2xs">PRO</Badge>
+                  Educational Mentor
+                  <Badge variant="outline" className="text-2xs">Study aid</Badge>
                 </h3>
-                <p className="text-xs text-muted-foreground">Full portfolio access</p>
+                <p className="text-xs text-muted-foreground">Client-reported practice snapshot</p>
               </div>
             </div>
             <Button

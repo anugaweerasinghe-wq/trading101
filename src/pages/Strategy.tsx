@@ -16,7 +16,7 @@ export default function Strategy() {
   if (!s) return <NotFound />;
 
   const title = `${s.name} Strategy — How It Works, When to Use It | TradeHQ`;
-  const description = `${s.name}: ${s.oneLiner} Step-by-step rules, win-rate expectations and a worked example. Practise it free with $100K virtual cash. (Educational simulation only — not financial advice.)`;
+  const description = `${s.name}: ${s.oneLiner} Example rules, limitations and a hypothetical worked example. Practise it free with $100K virtual cash. (Educational simulation only — not financial advice.)`;
   const url = `${SITE_DOMAIN}/strategy/${s.slug}`;
 
   return (
@@ -152,7 +152,7 @@ export default function Strategy() {
 
 export function StrategyIndex() {
   const title = "Trading Strategies — Scalping, Swing, DCA, RSI & More | TradeHQ";
-  const description = "Free trading strategy guides: scalping, swing trading, day trading, DCA, RSI, MACD. Rules, win rates and worked examples. Practise on a $100K virtual account.";
+  const description = "Free trading strategy guides: scalping, swing trading, day trading, DCA, RSI, MACD. Example rules, limitations and hypothetical calculations. Practise on a $100K virtual account.";
   return (
     <>
       <Helmet>
@@ -185,11 +185,10 @@ export function StrategyIndex() {
               abandoned mid-trade rather than executed.
             </p>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Whichever you pick, judge it over a sample, not a session. A method with a 45% win rate will
-              routinely produce five or six consecutive losses; that is ordinary variance, not a broken
-              system. Log at least 30 simulated trades with a fixed risk per trade before changing
-              anything, and record why you entered as well as what happened — the journal, not the
-              indicator, is where improvement actually comes from.
+              Review a defined sample and record costs, realized gains and losses and the rules used.
+              A losing run depends on sample length and assumptions; a 45% win rate alone does not
+              establish how often five or six losses occur. Thirty selected trades do not validate a
+              method. Separate observations used to design the rules from those used to evaluate them.
             </p>
             <p className="text-xs text-muted-foreground/70 italic">
               (Educational simulation only — not financial advice.)
@@ -211,13 +210,12 @@ export function StrategyIndex() {
           <section className="mt-10 max-w-3xl">
             <h2 className="text-xl font-semibold mb-3">How to test a strategy without risking money</h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Open the practice terminal, pick one instrument and one method, and fix your risk per trade
-              at a constant percentage of the $100,000 virtual balance. Take every signal the rules
-              produce — including the ones you dislike — for a full 30-trade sample, then read the results
-              in the portfolio analytics: win rate, average win divided by average loss, and the largest
-              peak-to-trough drawdown. If the expectancy is positive and the drawdown is one you could
-              have sat through calmly, the method is worth continuing. If not, change one variable and run
-              the sample again.
+              Write down the instrument, dates, sizing assumptions and entry and exit rules before a
+              worksheet comparison. Record every observation covered by those rules, including losses,
+              and state the costs included. TradeHQ executes simplified spot market orders; resting stops,
+              shorts and some indicators described here are conceptual. A positive selected sample does
+              not validate a strategy. Compare a separate period and a simple baseline before interpreting
+              a result, and keep simulator limitations alongside the calculation.
             </p>
           </section>
         </main>

@@ -70,9 +70,9 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
     { question: "Is Bitcoin a good asset for beginner traders to practice?", answer: "BTC is one available practice market. Its price can be volatile and chart levels can fail; suitability depends on what mechanics the learner wants to study." }
   ],
   eth: [
-    { question: "What is one way to learn Ethereum trading?", answer: "Start by simulating trades on a platform that offers simulated charts. Focus on ETH/BTC correlation and gas fee trends before moving to real capital." },
+    { question: "What is one way to learn Ethereum trading?", answer: "Use virtual funds to compare ETH quantity, price changes and fees. Network fees and ETH exchange prices are different measures; neither a correlation nor a gas-fee trend establishes readiness for real-money trading." },
     { question: "How does Ethereum differ from Bitcoin for trading practice?", answer: "Ethereum supports a smart-contract ecosystem while Bitcoin has a different network design. Comparing their returns over a defined period can illustrate correlations that change over time." },
-    { question: "Can students practice Ethereum trading for free?", answer: "Yes. TradeHQ gives you $100K virtual cash to practice ETH trades. Students in Colombo and worldwide can learn DeFi trading patterns without any cost." },
+    { question: "Can students practice Ethereum trading for free?", answer: "Yes. TradeHQ gives you $100K virtual cash to practise ETH price and quantity calculations. It does not execute DeFi transactions, stake ETH or send coins to a wallet." },
     { question: "What indicators can be studied for Ethereum trading practice?", answer: "Gas fees, network activity and relative-price measures can be studied as different inputs. No indicator is universally best, and none establishes a future ETH price." }
   ],
   nvda: [

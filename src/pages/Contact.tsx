@@ -261,8 +261,8 @@ export default function Contact() {
               include the page address you were on, the browser and device you were using, what you
               expected to happen and what actually happened. A screenshot removes most of the
               guesswork. For a problem with a simulated trade, mention the ticker and roughly when it
-              happened, since positions are stored in your own browser and cannot be inspected from
-              our side.
+              happened. Guest positions are browser-held; signed-in cash and open positions may also
+              be stored by account sync when that service is available. Do not send passwords or private financial records.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed mt-3">
               Feature suggestions are welcome and genuinely do shape the public roadmap — several of
@@ -284,11 +284,11 @@ export default function Contact() {
               point to the relevant regulator, but they are context, not advice.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed mt-3">
-              We also cannot recover an account balance. Practice portfolios are stored in your own
-              browser. Another browser or device has its own practice record; clearing site data
-              removes the local copy. Signing in can save your profile and selected summary values,
-              including a badge count, for community features. It does not back up or restore your
-              positions, trade history, journal entries, individual course badges or lesson progress.
+              Guest practice records are stored in the browser that created them. Optional account sync
+              can save cash and open positions and restore them on another device when the service is
+              available. It does not restore individual trade history, journal entries, individual course
+              badges or lesson progress. Clearing site data removes local records; a synced account copy
+              may still exist. Account sync is not a complete backup of your learning record.
             </p>
           </section>
 
