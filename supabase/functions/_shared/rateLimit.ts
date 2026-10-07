@@ -1,5 +1,6 @@
 // Shared abuse protection: HMAC-pseudonymised subject + fixed-window counter in the DB.
-// Plain IPs are never stored. Fails open on DB errors so legitimate users are not blocked by outages.
+// Plain IPs are never stored. Counter errors fail closed before any provider call.
+import { checkedLimit, RateLimitUnavailable } from "./rateLimitPolicy.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const url = Deno.env.get("SUPABASE_URL")!;
@@ -23,11 +24,10 @@ export async function allow(subjectRaw: string, bucket: string, windowSeconds: n
   try {
     const subject = await hmac(subjectRaw);
     const { data, error } = await admin.rpc("hit_rate_limit", { _subject: subject, _bucket: bucket, _window_seconds: windowSeconds, _max: max });
-    if (error) { console.warn("rate limit rpc error", error.message); return true; }
-    return data !== false;
+    return checkedLimit(data, error);
   } catch (e) {
     console.warn("rate limit failure", (e as Error).message);
-    return true;
+    throw new RateLimitUnavailable("Rate-limit service unavailable");
   }
 }
 

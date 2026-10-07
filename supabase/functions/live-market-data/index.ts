@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { marketLimit, RateLimitUnavailable } from "../_shared/rateLimitPolicy.ts";
 import { allow, clientIp } from "../_shared/rateLimit.ts";
 import { coinQuote, stockQuote, forexQuote } from "../_shared/providerQuotes.ts";
 import { cachePrice } from "../_shared/priceCache.ts";
@@ -67,8 +68,8 @@ const COMMODITY_MAP: Record<string, string> = {
   'silver': 'silver-token',
 };
 
-type MarketData = NonNullable<ReturnType<typeof coinQuote>>;
-type DataProvenance = MarketData['provenance'];
+interface DataProvenance { status: 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider'; provider: string; fetchedAt: string; observedAt?: string | null; fields?: Record<string,string>; note?: string; }
+interface MarketData { price: number; change24h: number | null; changePercent24h: number | null; high24h: number | null; low24h: number | null; volume24h: number | null; marketCap?: number; lastUpdated: string | null; source: 'live' | 'simulated'; provenance: DataProvenance; }
 
 interface CandleData {
   time: string;
@@ -226,17 +227,12 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
   const bad = (msg: string, status = 400) =>
-    new Response(JSON.stringify({ error: msg }), { status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    new Response(JSON.stringify({ error: msg }), { status, headers: { ...corsHeaders, 'Content-Type': 'application/json', ...([429,503].includes(status) ? {'Retry-After':'60'} : {}) } });
 
+  if (req.method !== 'GET') return bad('Only GET is supported', 405);
   try {
     const url = new URL(req.url);
     if (url.search.length > 300) return bad('Request too large', 413);
-
-    // Public proxy abuse protection: per-IP burst + per-minute limits (pseudonymised).
-    const ip = clientIp(req);
-    const okBurst = await allow(`ip:${ip}`, 'lmd-burst', 10, 25);
-    const okMin = okBurst && await allow(`ip:${ip}`, 'lmd-min', 60, 90);
-    if (!okBurst || !okMin) return bad('Too many requests — please slow down.', 429);
 
     const assetId = url.searchParams.get('assetId')?.toLowerCase();
     const assetType = url.searchParams.get('type')?.toLowerCase();
@@ -249,6 +245,8 @@ serve(async (req) => {
     if (!assetId || !/^[a-z0-9-]{1,20}$/.test(assetId)) return bad('Valid assetId is required');
     if (!ALLOWED_DATA_TYPES.has(dataType)) return bad('Unsupported dataType');
     if (assetType && !ALLOWED_TYPES.has(assetType)) return bad('Unsupported type');
+
+    if (!await marketLimit(`ip:${clientIp(req)}`, allow)) return bad('Too many requests — please try again later.', 429);
 
     console.log(`Fetching ${dataType} for ${assetId} (type: ${assetType}, days: ${days})`);
 
@@ -324,6 +322,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: unknown) {
+    if (error instanceof RateLimitUnavailable) return bad('Market data temporarily unavailable. Please retry later.', 503);
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('Live market data error:', msg);
     return new Response(
