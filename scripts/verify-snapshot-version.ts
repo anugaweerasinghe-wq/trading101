@@ -6,4 +6,7 @@ assert.equal(snapshotIsStale({...recent,count:3},recent),false);
 const reset={cycle:'b',count:0,updatedAt:'2026-10-07T12:01:00Z'};
 assert.equal(snapshotIsStale(reset,recent),false);assert.equal(snapshotIsStale(recent,reset),true);
 assert.equal(snapshotIsStale(recent,null),false);
+const priced={...recent,pricedAt:'2026-10-07T12:05:00Z'};
+assert.equal(snapshotIsStale({...priced,pricedAt:'2026-10-07T12:04:00Z'},priced),true);
+assert.equal(snapshotIsStale({...priced,count:3,pricedAt:'2026-10-07T12:04:00Z'},priced),false);
 console.log('PASS account snapshot races: older order response and prior cycle cannot replace newer state');

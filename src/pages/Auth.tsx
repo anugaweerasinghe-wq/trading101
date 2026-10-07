@@ -143,7 +143,7 @@ export default function Auth() {
             </h1>
             <p className="text-sm text-muted-foreground mt-2">
               An account adds optional community features such as the leaderboard, profile visibility and friend
-              challenges. New profiles start public. You can make yours private at any time from your profile page.
+              challenges. New profiles start public and your username appears on the leaderboard even before your first trade. You can make yours private at any time from your profile page.
               Trading, courses and tools never require an account.
             </p>
           </div>

@@ -11,7 +11,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { MIN_TRADES_TO_RANK } from "@/lib/traderSync";
+import { PRICE_REFRESH_COPY, priceLabel, quoteTimeLabel } from "@/lib/practicePricing";
 import { pushPortfolio, reconcilePortfolio, startRankedPractice } from "@/lib/cloudPortfolio";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { STARTING_BALANCE_LABEL } from "@/lib/constants";
@@ -20,13 +20,17 @@ interface BoardRow {
   userId: string;
   username: string;
   country: string | null;
-  portfolioValue: number;
-  pnlPct: number;
+  portfolioValue: number | null;
+  pnlPct: number | null;
   trades: number;
   pricedAt: string | null;
+  observedAt: string | null;
+  priceStatus: string;
+  portfolioStatus: string;
+  practiceRank: number | null;
 }
 
-interface PreviousRow extends Omit<BoardRow, "pricedAt"> { reportedAt: string }
+interface PreviousRow { userId: string; username: string; country: string | null; portfolioValue: number; pnlPct: number; trades: number; reportedAt: string }
 
 interface DuelRow {
   id: string;
@@ -48,7 +52,7 @@ const LEADERBOARD_FAQS = [
   {
     question: "How do I climb the leaderboard?",
     answer:
-      "Public accounts with at least five server-recorded trades in a ranked portfolio can appear. The board sorts simulated return against a $100,000 virtual starting balance. A rank is not evidence of real-money skill.",
+      "Every public member appears, including accounts with no trades yet. Comparable ranked portfolios receive a rank after their first server-recorded trade. The board sorts simulated return against a $100,000 virtual starting balance. A rank is not evidence of real-money skill.",
   },
   {
     question: "Do I need an account to compete?",
@@ -63,7 +67,7 @@ const LEADERBOARD_FAQS = [
   {
     question: "Can I stay private?",
     answer:
-      "Yes. Profiles can be switched to private at any time from your trader profile page, which removes you from the leaderboard immediately while keeping your account.",
+      "Yes. Profiles can be switched to private at any time from your trader profile page, which hides your data from new leaderboard requests while keeping your account. Open pages reflect the change on refresh.",
   },
 ];
 
@@ -86,6 +90,7 @@ function getRankIcon(rank: number) {
 
 export default function Leaderboard() {
   const { user, profile } = useAuth();
+  const userId = user?.id;
   const [rows, setRows] = useState<BoardRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [ranked, setRanked] = useState<boolean | null>(null);
@@ -94,21 +99,26 @@ export default function Leaderboard() {
   const [tab, setTab] = useState<"traders" | "previous" | "duels">("traders");
   const [previousRows, setPreviousRows] = useState<PreviousRow[]>([]);
   const [previousError, setPreviousError] = useState(false);
-  const selectedByUser = useRef(false);
+  const loadBusy = useRef(false);
+  const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
+  const [loadError, setLoadError] = useState(false);
   const [duels, setDuels] = useState<DuelRow[]>([]);
   const [duelsLoading, setDuelsLoading] = useState(true);
 
-  const load = useCallback(async () => {
-    setLoading(true);
+  const load = useCallback(async (quiet = false) => {
+    if (loadBusy.current) return;
+    loadBusy.current = true;
+    if (!quiet) setLoading(true);
     try {
       const [cloud, previous] = await Promise.all([
-        supabase.rpc("get_cloud_leaderboard", { p_limit: 100 }),
-        supabase.rpc("get_previous_practice_results", { p_limit: 100 }),
+        supabase.rpc("get_public_practice_members", { p_limit: 500 }),
+        supabase.rpc("get_previous_practice_results", { p_limit: 500 }),
       ]);
       const rankedRows = cloud.error ? [] : (cloud.data ?? []).map(row => ({
         userId: row.user_id, username: row.username, country: row.country,
-        portfolioValue: Number(row.portfolio_value), pnlPct: Number(row.pnl_pct),
-        trades: Number(row.trades), pricedAt: row.priced_at ?? null,
+        portfolioValue: row.portfolio_value === null ? null : Number(row.portfolio_value), pnlPct: row.pnl_pct === null ? null : Number(row.pnl_pct),
+        trades: Number(row.trades), pricedAt: row.priced_at ?? null, observedAt: row.observed_at ?? null,
+        priceStatus: row.price_status, portfolioStatus: row.portfolio_status, practiceRank: row.practice_rank,
       }));
       const historicRows = previous.error ? [] : (previous.data ?? []).map(row => ({
         userId: row.user_id, username: row.username, country: row.country,
@@ -118,29 +128,37 @@ export default function Leaderboard() {
       setRows(rankedRows);
       setPreviousRows(historicRows);
       setPreviousError(!!previous.error);
-      if (!selectedByUser.current) setTab(rankedRows.length ? "traders" : historicRows.length ? "previous" : "traders");
-      if (cloud.error) toast.error("Could not load current rankings. Please try again.");
+      setLoadError(!!cloud.error);
+      if (!cloud.error && !previous.error) setLastRefreshed(new Date());
+      if (cloud.error && !quiet) toast.error("Could not load current rankings. Please try again.");
     } catch (error) {
       console.error("Leaderboard load failed", error);
       setRows([]);
       setPreviousRows([]);
       setPreviousError(true);
-      toast.error("Could not load rankings. Please try again.");
+      setLoadError(true);
+      if (!quiet) toast.error("Could not load rankings. Please try again.");
     } finally {
+      loadBusy.current = false;
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    load();
-  }, [load]);
+    void load();
+    const refresh = () => { if (!document.hidden) void load(true); };
+    const timer = window.setInterval(refresh, 60000);
+    document.addEventListener("visibilitychange", refresh);
+    window.addEventListener("focus", refresh);
+    return () => { clearInterval(timer); document.removeEventListener("visibilitychange", refresh); window.removeEventListener("focus", refresh); };
+  }, [load, profile?.is_public]);
 
   useEffect(() => {
     let cancelled = false;
     setRanked(null);
-    if (user) reconcilePortfolio(user.id).then(p => { if (!cancelled) setRanked(p.ranked); }).catch(() => {});
+    if (userId) reconcilePortfolio(userId).then(p => { if (!cancelled) setRanked(p.ranked); }).catch(() => {});
     return () => { cancelled = true; };
-  }, [user?.id]);
+  }, [userId]);
 
   // Head-to-head duels between members with public profiles.
   useEffect(() => {
@@ -234,7 +252,7 @@ export default function Leaderboard() {
                 TradeHQ Leaderboard
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Ranked practice uses server-recorded account orders, with cached provider quotes or fixed simulator prices. Previous results keep earlier browser-reported summaries visible separately. Both are educational simulations, not audited investment performance.
+                All public members appear here. Ranked practice uses server-recorded orders; imported portfolios and members with no trades remain unranked. Previous results preserve browser-reported summaries separately. All values are educational simulations, not audited investment performance.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 {user ? (
@@ -288,13 +306,13 @@ export default function Leaderboard() {
             {/* Tabs: overall board vs head-to-head duels */}
             <div className="flex gap-2 mb-4">
               {([
-                { id: "traders", label: "Ranked practice" },
+                { id: "traders", label: "Public members" },
                 { id: "previous", label: "Previous results" },
                 { id: "duels", label: "Duels" },
               ] as const).map((t) => (
                 <button
                   key={t.id}
-                  onClick={() => { selectedByUser.current = true; setTab(t.id); }}
+                  onClick={() => setTab(t.id)}
                   aria-pressed={tab === t.id}
                   className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors border ${
                     tab === t.id
@@ -307,81 +325,44 @@ export default function Leaderboard() {
               ))}
             </div>
 
-            {tab === "traders" ? (
-            <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden" style={{ backdropFilter: "blur(12px)" }}>
-              {/* Header */}
-              <div className="hidden md:grid grid-cols-5 gap-4 px-6 py-4 bg-white/[0.03] border-b border-white/[0.06] text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                <span>Rank</span>
-                <span>Trader</span>
-                <span className="text-right">Portfolio Value</span>
-                <span className="text-right">% Return</span>
-                <span className="text-right">Trades</span>
-              </div>
-
-              {loading ? (
-                <div className="py-16 text-center text-muted-foreground text-sm">
-                  <Loader2 className="w-5 h-5 animate-spin mx-auto mb-3" />
-                  Loading rankings…
-                </div>
-              ) : rows.length === 0 ? (
-                <div className="py-16 px-6 text-center">
-                  <Users className="w-10 h-10 text-primary/60 mx-auto mb-4" />
-                  <h2 className="text-lg font-semibold mb-2">No ranked practice portfolios yet</h2>
-                  <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
-                    This board displays public accounts with at least {MIN_TRADES_TO_RANK}{" "}
-                    server-recorded trades in a ranked practice portfolio. Results are simulated, not real investment returns.
-                  </p>
-                  <Link to={user ? "/trade" : "/auth"}>
-                    <Button className="!text-black font-bold rounded-xl">
-                      {user ? "Place your first trades" : "Create a free account"}
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </Link>
-                </div>
-              ) : (
-                rows.map((trader, i) => (
-                  <Link
-                    key={trader.userId}
-                    to={`/trader/${trader.username}`}
-                    className={`grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4 px-4 md:px-6 py-4 border-b border-white/[0.04] hover:bg-white/[0.03] transition-colors ${
-                      profile?.id === trader.userId ? "bg-primary/[0.06]" : ""
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      {getRankIcon(i + 1)}
-                      <span className="font-semibold text-sm md:hidden">{trader.username}</span>
-                    </div>
-                    <div className="hidden md:flex items-center">
-                      <span className="font-semibold text-sm text-foreground">{trader.username}</span>
-                      {trader.country && (
-                        <span className="ml-2 text-2xs text-muted-foreground">{trader.country}</span>
-                      )}
-                    </div>
-                    <div className="flex items-center justify-end">
-                      <span className="font-mono text-sm text-foreground">
-                        ${trader.portfolioValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-end">
-                      <Badge variant="outline" className={trader.pnlPct >= 0 ? "text-profit border-profit/30" : "text-loss border-loss/30"}>
-                        {trader.pnlPct >= 0 ? "+" : ""}{trader.pnlPct.toFixed(1)}%
-                      </Badge>
-                    </div>
-                    <div className="hidden md:flex items-center justify-end">
-                      <span className="text-xs text-muted-foreground">
-                        {trader.trades} trades
-                      </span>
-                    </div>
-                  </Link>
-                ))
-              )}
+            <div className="mb-4 text-xs text-muted-foreground leading-relaxed">
+              <p>{PRICE_REFRESH_COPY}</p>
+              <p className="mt-1">This page refreshes every minute while visible. {lastRefreshed && `Last loaded ${lastRefreshed.toLocaleTimeString()}.`}</p>
+              <Link to="/trader/me" className="text-primary underline">Manage my public/private visibility</Link>
             </div>
+            {tab === "traders" ? (
+              <section aria-label="Public members" className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden">
+                <div className="p-4 border-b border-white/[0.06] text-sm">{rows.length} public members · no minimum trades to appear</div>
+                <div className="hidden md:grid grid-cols-5 gap-4 px-6 py-4 text-xs text-muted-foreground uppercase border-b border-white/[0.06]">
+                  <span>Practice rank</span><span>Member</span><span className="text-right">Virtual value</span><span className="text-right">Ranked return</span><span className="text-right">Server trades</span>
+                </div>
+                {loading ? <p className="p-8 text-center">Loading public members…</p>
+                  : loadError ? <div className="p-8 text-center"><p>Could not load public members.</p><Button variant="outline" onClick={() => void load()}>Try again</Button></div>
+                  : rows.length === 0 ? <p className="p-8 text-center">No public members yet.</p>
+                  : rows.map(trader => (
+                    <Link key={trader.userId} to={`/trader/${trader.username}`} className={`grid grid-cols-2 md:grid-cols-5 gap-3 px-4 md:px-6 py-5 border-b border-white/[0.04] hover:bg-white/[0.03] ${profile?.id === trader.userId ? "bg-primary/[0.06]" : ""}`}>
+                      <div>{trader.practiceRank !== null ? getRankIcon(trader.practiceRank) : <span className="text-xs text-muted-foreground">Unranked</span>}</div>
+                      <div>
+                        <span className="font-semibold text-sm">{trader.username}</span>
+                        {trader.country && <span className="block text-xs text-muted-foreground">{trader.country}</span>}
+                        <span className="block text-xs text-muted-foreground mt-1">{trader.portfolioStatus === "imported" ? "Imported practice · unranked" : trader.trades === 0 ? "No trades yet" : "Server-recorded practice"}</span>
+                      </div>
+                      <div className="md:text-right text-xs text-muted-foreground">
+                        <span className="block font-mono text-sm text-foreground">{trader.portfolioValue === null ? "—" : `$${trader.portfolioValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}</span>
+                        <span className="block mt-1">{priceLabel(trader.priceStatus)}</span>
+                        <span className="block mt-1">{quoteTimeLabel(trader.pricedAt, trader.observedAt)}</span>
+                      </div>
+                      <div className="text-right font-mono text-sm">{trader.pnlPct === null ? "—" : `${trader.pnlPct >= 0 ? "+" : ""}${trader.pnlPct.toFixed(1)}%`}</div>
+                      <div className="md:text-right text-xs text-muted-foreground">{trader.trades} server trades</div>
+                    </Link>
+                  ))}
+              </section>
             ) : tab === "previous" ? (
               <section aria-labelledby="previous-results-heading" className="rounded-2xl border border-white/[0.08] bg-white/[0.02] overflow-hidden">
                 <div className="p-6 border-b border-white/[0.06]">
                   <h2 id="previous-results-heading" className="text-lg font-semibold">Previous results</h2>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    Saved summaries from the earlier browser-based simulator. These figures were reported by each browser and were not verified by the server. They are preserved as previous practice results and do not enter current rankings. Only public profiles with at least five reported trades are shown; making your profile private hides your result.
+                    Saved summaries from the earlier browser-based simulator. These figures were reported by each browser and were not verified by the server. They are preserved as previous practice results and do not enter current rankings. All saved public summaries appear, including zero-trade accounts. Making your profile private hides your result. These snapshots do not update with current prices.
                   </p>
                 </div>
                 {loading ? (
@@ -389,10 +370,10 @@ export default function Leaderboard() {
                 ) : previousError ? (
                   <div className="p-8 text-center">
                     <p className="text-muted-foreground mb-4">Could not load previous results.</p>
-                    <Button variant="outline" onClick={load}>Try again</Button>
+                    <Button variant="outline" onClick={() => void load()}>Try again</Button>
                   </div>
                 ) : previousRows.length === 0 ? (
-                  <p className="p-8 text-center text-muted-foreground">No previous public results meet the five-trade requirement.</p>
+                  <p className="p-8 text-center text-muted-foreground">No previous public results are available.</p>
                 ) : (
                   <>
                     <div className="hidden md:grid grid-cols-4 gap-4 px-6 py-4 text-xs uppercase text-muted-foreground border-b border-white/[0.06]">
@@ -479,15 +460,15 @@ export default function Leaderboard() {
               {[
                 {
                   title: "Ranked by % return",
-                  body: `Every member begins with the same ${STARTING_BALANCE_LABEL} of virtual capital, so rank reflects percentage return only — never account size.`,
+                  body: `Comparable ranked portfolios begin with the same ${STARTING_BALANCE_LABEL} of virtual capital, so rank reflects percentage return only — never account size.`,
                 },
                 {
-                  title: "Minimum activity",
-                  body: `A profile appears once it records at least ${MIN_TRADES_TO_RANK} practice trades, which prevents single-trade luck from topping the board.`,
+                  title: "Everyone can appear",
+                  body: "All public members appear. Accounts with no trades and imported portfolios remain unranked; comparable portfolios receive a rank after their first server-recorded trade.",
                 },
                 {
                   title: "You control visibility",
-                  body: "New profiles start public and can appear on this board once they meet its practice-trade requirements. You can make your profile private at any time from your trader profile page.",
+                  body: "New profiles start public and appear without a minimum trade count. You can make your profile private at any time from your trader profile page.",
                 },
               ].map((c) => (
                 <div key={c.title} className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">

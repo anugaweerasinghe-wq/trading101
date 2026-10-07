@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { AIAssistant } from "@/components/AIAssistant";
@@ -49,7 +49,16 @@ import {
 } from "@/lib/notifications";
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
 
+import { useAuth } from "@/hooks/useAuth";
+import { pushPortfolio } from "@/lib/cloudPortfolio";
+import { PRICE_REFRESH_COPY, priceLabel, quoteTimeLabel, snapshotPriceInfo } from "@/lib/practicePricing";
 export default function Portfolio() {
+  const { user } = useAuth();
+  const userRef = useRef(user);
+  userRef.current = user;
+  const refreshBusy = useRef(false);
+  const [accountPricing, setAccountPricing] = useState<{ status: string; fetched: string | null; observed: string | null } | null>(null);
+  const [accountError, setAccountError] = useState(false);
   const [portfolio, setPortfolio] = useState(getPortfolio());
   const [assets, setAssets] = useState(() => {
     // Hydrate from persisted prices for continuity
@@ -62,6 +71,8 @@ export default function Portfolio() {
   const [dataStatus, setDataStatus] = useState<"live" | "delayed" | "cached" | "simulated">("cached");
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [secondsAgo, setSecondsAgo] = useState(0);
+  const lastUpdatedRef = useRef(lastUpdated);
+  lastUpdatedRef.current = lastUpdated;
   const assetsRef = useRef(assets);
   const isMounted = useRef(true);
   const [notificationsEnabled, setNotificationsEnabled] = useState(
@@ -81,7 +92,7 @@ export default function Portfolio() {
   }, []);
 
   // Fetch real price for a single held asset
-  const fetchLivePrice = async (asset: typeof ASSETS[number]) => {
+  const fetchLivePrice = useCallback(async (asset: typeof ASSETS[number]) => {
     try {
       const response = await fetch(
         `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
@@ -110,12 +121,27 @@ export default function Portfolio() {
           };
         }
       }
-    } catch (_err) {}
+    } catch (_err) { /* Preserve the last available guest quote on network failure. */ }
     return { ...asset, _status: "cached" as const };
-  };
+  }, []);
 
   // Refresh held positions in staggered batches of 5
-  const refreshHeldAssets = async () => {
+  const refreshHeldAssets = useCallback(async () => {
+    if (userRef.current) {
+      if (refreshBusy.current) return;
+      refreshBusy.current = true;
+      try {
+        const snapshot = await pushPortfolio(userRef.current.id);
+        if (!isMounted.current) return;
+        setPortfolio(getPortfolio());
+        setAccountPricing(snapshotPriceInfo(snapshot.positions));
+        setAccountError(false);
+        setDataStatus("cached");
+        setLastUpdated(new Date());
+      } catch { if (isMounted.current) setAccountError(true); }
+      finally { refreshBusy.current = false; }
+      return;
+    }
     const heldIds = new Set(getPortfolio().positions.map((p) => p.asset.id));
     if (heldIds.size === 0) return;
     const heldAssets = assetsRef.current.filter((a) => heldIds.has(a.id));
@@ -147,7 +173,7 @@ export default function Portfolio() {
       if (i + batchSize < heldAssets.length) await new Promise((r) => setTimeout(r, 1000));
     }
 
-    if (!isMounted.current) return;
+    if (!isMounted.current || userRef.current) return;
     const newAssets = assetsRef.current.map((a) => updates.get(a.id) ?? a);
     setAssets(newAssets);
     setDataStatus(anyLive ? "live" : anyDelayed ? "delayed" : "cached");
@@ -169,27 +195,32 @@ export default function Portfolio() {
         variant: type === "danger" ? "destructive" : "default",
       });
     });
-  };
+  }, [fetchLivePrice, toast]);
 
   useEffect(() => {
     isMounted.current = true;
     const initPortfolio = async () => {
       await updatePortfolioOverTime(getPortfolio());
-      if (!isMounted.current) return;
+      if (!isMounted.current || userRef.current) return;
       const updated = updatePositionPrices(getPortfolio(), assetsRef.current);
       setPortfolio(updated);
       savePortfolio(updated);
       initializeMilestones(updated.totalValue);
     };
 
-    initPortfolio();
-    refreshHeldAssets();
+    setAccountPricing(null);
+    if (!userRef.current) void initPortfolio();
+    void refreshHeldAssets();
 
     // Real-data refresh every 60s
-    const liveInterval = setInterval(refreshHeldAssets, 60000);
+    const refreshVisible = () => { if (!document.hidden) void refreshHeldAssets(); };
+    const liveInterval = setInterval(refreshVisible, 60000);
+    document.addEventListener("visibilitychange", refreshVisible);
+    window.addEventListener("focus", refreshVisible);
 
     // Visual micro-fluctuation every 3s for liveness, anchored to last real price
     const microInterval = setInterval(() => {
+      if (userRef.current) return;
       setAssets((prev) => {
         const nextAssets = prev.map((a) => {
           const m = generatePriceMovement(a.price);
@@ -202,19 +233,21 @@ export default function Portfolio() {
 
     // "Updated Xs ago" ticker
     const tickInterval = setInterval(() => {
-      setSecondsAgo(Math.floor((Date.now() - lastUpdated.getTime()) / 1000));
+      setSecondsAgo(Math.floor((Date.now() - lastUpdatedRef.current.getTime()) / 1000));
     }, 1000);
 
     return () => {
       isMounted.current = false;
       clearInterval(liveInterval);
+      document.removeEventListener("visibilitychange", refreshVisible);
+      window.removeEventListener("focus", refreshVisible);
       clearInterval(microInterval);
       clearInterval(tickInterval);
     };
-  }, []);
+  }, [user?.id, refreshHeldAssets]);
 
   useEffect(() => {
-    setSecondsAgo(Math.floor((Date.now() - lastUpdated.getTime()) / 1000));
+    setSecondsAgo(Math.floor((Date.now() - lastUpdatedRef.current.getTime()) / 1000));
   }, [lastUpdated]);
 
   const totalPositionValue = portfolio.positions.reduce(
@@ -329,6 +362,11 @@ export default function Portfolio() {
                   <p className="text-sm text-muted-foreground mt-1.5">
                     Track your virtual investments, analyze performance, and manage simulated risk.
                   </p>
+                  {user && <div className="text-xs text-muted-foreground mt-3 max-w-2xl leading-relaxed">
+                    <p>{PRICE_REFRESH_COPY} Account values reload every minute while this page is visible.</p>
+                    <p className="mt-1">{accountPricing ? `${priceLabel(accountPricing.status)}. ${quoteTimeLabel(accountPricing.fetched, accountPricing.observed)}` : "Loading account prices…"}</p>
+                    {accountError && <p role="status">Account refresh failed. Showing the last loaded account snapshot; retrying automatically.</p>}
+                  </div>}
                   <div className="flex items-center gap-3 mt-3 flex-wrap">
                     <span
                       className={cn(
@@ -350,7 +388,7 @@ export default function Portfolio() {
                     </span>
                     <span className="inline-flex items-center gap-1 text-2xs text-muted-foreground">
                       <Clock className="w-3 h-3" />
-                      Updated {secondsAgo}s ago
+                      {user ? "Account loaded" : "Updated"} {secondsAgo}s ago
                     </span>
                     <span
                       className={cn(

@@ -1,6 +1,6 @@
 // Writes provider-sourced quotes to the shared price cache used to value
 // stored practice portfolios. Simulated fallback prices are never cached.
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2.75.1";
 
 const admin = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -8,15 +8,16 @@ const admin = createClient(
   { auth: { persistSession: false } },
 );
 
-export async function cachePrice(assetId: string, price: number, source: string, observedAt: string | null): Promise<void> {
-  if (!Number.isFinite(price) || price <= 0 || price >= 1e9) return;
+export async function cachePrice(assetId: string, price: number, source: string, observedAt: string | null, status = "provider"): Promise<boolean> {
+  if (!Number.isFinite(price) || price <= 0 || price >= 1e9) return false;
   try {
-    const { error } = await admin.from("market_prices").upsert(
-      { asset_id: assetId, price, source, observed_at: observedAt, updated_at: new Date().toISOString() },
-      { onConflict: "asset_id" },
-    );
-    if (error) console.warn("price cache error", error.message);
+    const { data, error } = await admin.rpc("store_practice_quote", {
+      p_asset: assetId, p_price: price, p_source: source, p_observed: observedAt, p_status: status,
+    });
+    if (error) console.warn("price cache write failed");
+    return !error && data === true;
   } catch (e) {
-    console.warn("price cache failure", (e as Error).message);
+    console.warn("price cache failure");
+    return false;
   }
 }

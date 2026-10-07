@@ -9,6 +9,7 @@ import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 import { Loader2, Trophy, UserX } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { PRICE_REFRESH_COPY, priceLabel, quoteTimeLabel } from "@/lib/practicePricing";
 import { SITE_DOMAIN, STARTING_BALANCE_LABEL } from "@/lib/constants";
 
 interface PublicTraderData {
@@ -18,11 +19,12 @@ interface PublicTraderData {
   createdAt: string;
   stats: {
     portfolio_value: number;
-    pnl_pct: number;
+    pnl_pct: number | null;
     trades: number;
-    win_rate: number;
-    max_drawdown: number;
-    badges: number;
+    price_status: string;
+    priced_at: string | null;
+    observed_at: string | null;
+    portfolio_status: string;
   } | null;
 }
 
@@ -33,8 +35,11 @@ export default function PublicTrader() {
 
   useEffect(() => {
     let active = true;
-    (async () => {
-      setLoading(true);
+    let busy = false;
+    const load = async () => {
+      if (busy) return;
+      busy = true;
+      try {
       const { data: p } = await supabase
         .from("profiles")
         .select("id, username, country, bio, created_at, is_public")
@@ -50,42 +55,42 @@ export default function PublicTrader() {
         return;
       }
 
-      const { data: s } = await supabase
-        .from("trader_stats")
-        .select("portfolio_value, pnl_pct, trades, win_rate, max_drawdown, badges")
-        .eq("user_id", p.id)
-        .maybeSingle();
-
+      const { data: members, error } = await supabase.rpc("get_public_practice_members", { p_limit: 1, p_username: username });
+      const s = !error ? members?.[0] : null;
+      if (!s) { if (active) { setData(null); setLoading(false); } return; }
       if (active) {
         setData({
           username: p.username,
           country: p.country,
           bio: p.bio,
           createdAt: p.created_at,
-          stats: s
+          stats: s.portfolio_value !== null
             ? {
                 portfolio_value: Number(s.portfolio_value),
-                pnl_pct: Number(s.pnl_pct),
+                pnl_pct: s.pnl_pct === null ? null : Number(s.pnl_pct),
                 trades: s.trades,
-                win_rate: Number(s.win_rate),
-                max_drawdown: Number(s.max_drawdown),
-                badges: s.badges,
+                price_status: s.price_status, priced_at: s.priced_at, observed_at: s.observed_at, portfolio_status: s.portfolio_status,
               }
             : null,
         });
         setLoading(false);
       }
-    })();
-    return () => {
-      active = false;
+      } catch { if (active) { setData(null); setLoading(false); } }
+      finally { busy = false; }
     };
+    setLoading(true);
+    void load();
+    const refresh = () => { if (!document.hidden) void load(); };
+    const timer = window.setInterval(refresh, 60000);
+    document.addEventListener("visibilitychange", refresh);
+    return () => { active = false; clearInterval(timer); document.removeEventListener("visibilitychange", refresh); };
   }, [username]);
 
   const title = data
     ? `${data.username} — Practice Trading Stats | TradeHQ`
     : "Trader profile | TradeHQ";
   const description = data
-    ? `Public practice-trading record for ${data.username} on TradeHQ: simulated portfolio value, percentage return, trade count and win rate on ${STARTING_BALANCE_LABEL} of virtual capital. Educational simulation only.`
+    ? `Public practice-trading record for ${data.username} on TradeHQ: simulated portfolio value, percentage return, server-recorded trade count on ${STARTING_BALANCE_LABEL} of virtual capital. Educational simulation only.`
     : "This TradeHQ trader profile is private or does not exist.";
 
   const schema = data
@@ -140,7 +145,7 @@ export default function PublicTrader() {
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{data.username}</h1>
                 <p className="text-sm text-muted-foreground mt-2 max-w-xl">
                   {data.bio ||
-                    `Practice-trading record on TradeHQ, starting from ${STARTING_BALANCE_LABEL} of virtual capital.`}
+                    `Public practice-trading profile on TradeHQ.`}
                   {data.country ? ` · ${data.country}` : ""}
                 </p>
                 <p className="text-2xs text-muted-foreground mt-2">
@@ -154,11 +159,11 @@ export default function PublicTrader() {
                     { label: "Portfolio value", value: `$${data.stats.portfolio_value.toLocaleString(undefined, { maximumFractionDigits: 0 })}` },
                     {
                       label: "Total return",
-                      value: `${data.stats.pnl_pct >= 0 ? "+" : ""}${data.stats.pnl_pct.toFixed(1)}%`,
-                      color: data.stats.pnl_pct >= 0 ? "text-profit" : "text-loss",
+                      value: data.stats.pnl_pct === null ? "Unranked" : `${data.stats.pnl_pct >= 0 ? "+" : ""}${data.stats.pnl_pct.toFixed(1)}%`,
+                      color: data.stats.pnl_pct === null || data.stats.pnl_pct >= 0 ? "text-profit" : "text-loss",
                     },
                     { label: "Trades placed", value: String(data.stats.trades) },
-                    { label: "Win rate", value: `${data.stats.win_rate}%` },
+                    { label: "Price basis", value: priceLabel(data.stats.price_status) },
                   ].map((k) => (
                     <Card key={k.label} className="p-5 bg-white/[0.02] border-white/10">
                       <p className="text-2xs uppercase tracking-widest text-muted-foreground mb-1">{k.label}</p>
@@ -168,7 +173,7 @@ export default function PublicTrader() {
                 </section>
               ) : (
                 <p className="text-sm text-muted-foreground mb-10">
-                  This trader has not synced any practice statistics yet.
+                  No account portfolio or server-recorded trades yet. This public member can still appear on the leaderboard.
                 </p>
               )}
 
@@ -177,10 +182,8 @@ export default function PublicTrader() {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   All figures come from a simulated account funded with virtual money.
                   They are not audited, do not represent real trading results, and do not
-                  predict future performance. Percentage return is measured against the
-                  same {STARTING_BALANCE_LABEL} starting balance every member receives, and
-                  max drawdown ({data.stats ? `${data.stats.max_drawdown.toFixed(1)}%` : "n/a"})
-                  shows the largest peak-to-trough decline recorded in the simulator.
+                  predict future performance. Comparable ranked portfolios use a {STARTING_BALANCE_LABEL} starting balance; imported portfolios remain unranked. {PRICE_REFRESH_COPY}
+                  {data.stats && quoteTimeLabel(data.stats.priced_at, data.stats.observed_at)}
                 </p>
               </Card>
 

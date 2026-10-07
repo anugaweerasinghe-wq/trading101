@@ -13,8 +13,8 @@ export interface LocalStats {
   badges: number;
 }
 
-/** Minimum activity before a client-synced practice row is displayed. */
-export const MIN_TRADES_TO_RANK = 5;
+/** A comparable portfolio receives a practice rank after its first server-recorded trade. */
+export const MIN_TRADES_TO_RANK = 1;
 
 export function computeLocalStats(): LocalStats {
   const p = getPortfolio();

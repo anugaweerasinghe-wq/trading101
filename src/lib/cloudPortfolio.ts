@@ -15,7 +15,8 @@ const snapshotVersions = new Map<string, SnapshotVersion>();
 export interface ServerSnapshot {
   trades: ServerTrade[];
   cash: number; ranked: boolean; cycle_id: string; updated_at: string;
-  positions: { asset_id: string; symbol: string; asset_type: string; quantity: number; avg_price: number; last_price: number }[];
+  positions: { asset_id: string; symbol: string; asset_type: string; quantity: number; avg_price: number; last_price: number;
+    priced_at?: string | null; observed_at?: string | null; quote_status?: string }[];
 }
 export interface ServerTrade {
   id: string; asset_id: string; side: "buy" | "sell"; quantity: number;
@@ -30,7 +31,8 @@ function backUpLocal() {
 export function applyServerSnapshot(snapshot: ServerSnapshot, userId: string): Portfolio {
   const local = getPortfolio();
   const sameOwner = ownerOfLocal() === userId;
-  const version = { cycle: snapshot.cycle_id, count: snapshot.trades?.length ?? 0, updatedAt: snapshot.updated_at };
+  const quoteTimes = snapshot.positions.map(p => p.priced_at).filter((t): t is string => !!t).sort();
+  const version = { cycle: snapshot.cycle_id, count: snapshot.trades?.length ?? 0, updatedAt: snapshot.updated_at, pricedAt: quoteTimes.at(-1) ?? null };
   if (sameOwner && snapshotIsStale(version, snapshotVersions.get(userId) ?? null)) return local;
   const serverIds = new Set((snapshot.trades ?? []).map(t => t.id));
   if (sameOwner && local.trades.some(t => !serverIds.has(t.id))) backUpLocal();
@@ -70,12 +72,13 @@ export async function reconcilePortfolio(userId: string): Promise<ServerSnapshot
   return data as unknown as ServerSnapshot;
 }
 /** Refreshes account state; never uploads client cash or scores. */
-export async function pushPortfolio(userId: string): Promise<void> {
+export async function pushPortfolio(userId: string): Promise<ServerSnapshot> {
   const generation = syncGeneration;
   const snapshot = await reconcilePortfolio(userId);
   const { data: { session } } = await supabase.auth.getSession();
   if (session?.user.id !== userId || generation !== syncGeneration) throw new Error("Account changed during refresh");
   applyServerSnapshot(snapshot, userId);
+  return snapshot;
 }
 export async function startRankedPractice(userId: string): Promise<void> {
   await pushPortfolio(userId);

@@ -1,186 +1,13 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { marketLimit, RateLimitUnavailable } from "../_shared/rateLimitPolicy.ts";
 import { allow, clientIp } from "../_shared/rateLimit.ts";
-import { coinQuote, stockQuote, forexQuote } from "../_shared/providerQuotes.ts";
+import { coinQuote } from "../_shared/providerQuotes.ts";
+import { CRYPTO_ID_MAP, COMMODITY_MAP, fetchCryptoData, fetchCryptoCandles, fetchStockData, fetchForexData, type MarketData, type CandleData, type DataProvenance } from "../_shared/marketProviders.ts";
 import { cachePrice } from "../_shared/priceCache.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
-
-// CoinGecko ID mapping — all 30 crypto assets
-const CRYPTO_ID_MAP: Record<string, string> = {
-  'btc': 'bitcoin', 'eth': 'ethereum', 'sol': 'solana', 'bnb': 'binancecoin',
-  'xrp': 'ripple', 'ada': 'cardano', 'doge': 'dogecoin', 'avax': 'avalanche-2',
-  'dot': 'polkadot', 'matic': 'matic-network', 'link': 'chainlink', 'ltc': 'litecoin',
-  'shib': 'shiba-inu', 'uni': 'uniswap', 'atom': 'cosmos', 'algo': 'algorand',
-  'ftm': 'fantom', 'near': 'near', 'icp': 'internet-computer', 'xlm': 'stellar',
-  'vet': 'vechain', 'fil': 'filecoin', 'hbar': 'hedera-hashgraph', 'apt': 'aptos',
-  'arb': 'arbitrum', 'op': 'optimism', 'inj': 'injective-protocol', 'sui': 'sui',
-  'sei': 'sei-network', 'tia': 'celestia',
-};
-
-// Stock/ETF symbols — all mapped
-const STOCK_SYMBOLS: Record<string, string> = {
-  // Tech mega-cap
-  'aapl': 'AAPL', 'msft': 'MSFT', 'googl': 'GOOGL', 'amzn': 'AMZN', 'nvda': 'NVDA',
-  'tsla': 'TSLA', 'meta': 'META', 'nflx': 'NFLX', 'amd': 'AMD', 'crm': 'CRM',
-  'intc': 'INTC', 'orcl': 'ORCL', 'adbe': 'ADBE', 'csco': 'CSCO', 'avgo': 'AVGO',
-  'txn': 'TXN', 'qcom': 'QCOM', 'now': 'NOW', 'ibm': 'IBM',
-  // Tech growth
-  'uber': 'UBER', 'shop': 'SHOP', 'snow': 'SNOW', 'pltr': 'PLTR', 'coin': 'COIN',
-  'spot': 'SPOT', 'sq': 'SQ', 'pypl': 'PYPL', 'twlo': 'TWLO', 'docu': 'DOCU',
-  'zm': 'ZM', 'roku': 'ROKU', 'net': 'NET', 'ddog': 'DDOG', 'mdb': 'MDB',
-  'crwd': 'CRWD', 'zs': 'ZS', 'panw': 'PANW', 'okta': 'OKTA', 'wday': 'WDAY', 'veev': 'VEEV',
-  // Finance
-  'jpm': 'JPM', 'v': 'V', 'ma': 'MA', 'bac': 'BAC', 'wfc': 'WFC', 'gs': 'GS', 'ms': 'MS',
-  // Healthcare
-  'unh': 'UNH', 'jnj': 'JNJ', 'pfe': 'PFE', 'mrna': 'MRNA', 'abbv': 'ABBV', 'lly': 'LLY',
-  // Consumer
-  'wmt': 'WMT', 'cost': 'COST', 'hd': 'HD', 'low': 'LOW', 'tgt': 'TGT',
-  'sbux': 'SBUX', 'mcd': 'MCD', 'ko': 'KO', 'pep': 'PEP', 'dis': 'DIS', 'nke': 'NKE',
-  // Energy/Industrial
-  'xom': 'XOM', 'cvx': 'CVX', 'ba': 'BA', 'cat': 'CAT', 'de': 'DE',
-  // ETFs
-  'spy': 'SPY', 'qqq': 'QQQ', 'iwm': 'IWM', 'dia': 'DIA', 'voo': 'VOO', 'arkk': 'ARKK',
-  'vti': 'VTI', 'ivv': 'IVV', 'agg': 'AGG', 'ief': 'IEF', 'tlt': 'TLT',
-  'gld': 'GLD', 'slv': 'SLV', 'uso': 'USO',
-  'xlf': 'XLF', 'xlk': 'XLK', 'xle': 'XLE', 'xlv': 'XLV', 'smh': 'SMH', 'soxx': 'SOXX',
-};
-
-// Forex pairs — all 15
-const FOREX_PAIRS: Record<string, { from: string; to: string }> = {
-  'eurusd': { from: 'EUR', to: 'USD' }, 'gbpusd': { from: 'GBP', to: 'USD' },
-  'usdjpy': { from: 'USD', to: 'JPY' }, 'usdchf': { from: 'USD', to: 'CHF' },
-  'audusd': { from: 'AUD', to: 'USD' }, 'usdcad': { from: 'USD', to: 'CAD' },
-  'nzdusd': { from: 'NZD', to: 'USD' }, 'eurgbp': { from: 'EUR', to: 'GBP' },
-  'eurjpy': { from: 'EUR', to: 'JPY' }, 'gbpjpy': { from: 'GBP', to: 'JPY' },
-  'usdhkd': { from: 'USD', to: 'HKD' }, 'usdsgd': { from: 'USD', to: 'SGD' },
-  'usdmxn': { from: 'USD', to: 'MXN' }, 'usdzar': { from: 'USD', to: 'ZAR' },
-  'usdtry': { from: 'USD', to: 'TRY' },
-};
-
-// Commodity proxies on CoinGecko
-const COMMODITY_MAP: Record<string, string> = {
-  'gold': 'pax-gold',
-  'silver': 'silver-token',
-};
-
-interface DataProvenance { status: 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider'; provider: string; fetchedAt: string; observedAt?: string | null; fields?: Record<string,string>; note?: string; }
-interface MarketData { price: number; change24h: number | null; changePercent24h: number | null; high24h: number | null; low24h: number | null; volume24h: number | null; marketCap?: number; lastUpdated: string | null; source: 'live' | 'simulated'; provenance: DataProvenance; }
-
-interface CandleData {
-  time: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-}
-
-// Batch crypto via CoinGecko simple/price (up to 250 IDs per call, free)
-async function fetchCryptoData(assetId: string): Promise<MarketData | null> {
-  const coinId = CRYPTO_ID_MAP[assetId];
-  if (!coinId) return null;
-
-  try {
-    const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_last_updated_at=true&include_market_cap=true`,
-      { headers: { 'Accept': 'application/json' } }
-    );
-
-    if (!response.ok) return null;
-    const data = await response.json();
-    const coin = data[coinId];
-    if (!coin || !coin.usd) return null;
-
-    return coinQuote(coin);
-  } catch (error) {
-    console.error(`Crypto fetch error ${assetId}:`, error);
-    return null;
-  }
-}
-
-async function fetchCryptoCandles(assetId: string, days: number = 1): Promise<CandleData[]> {
-  const coinId = CRYPTO_ID_MAP[assetId];
-  if (!coinId) return [];
-
-  try {
-    const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${coinId}/ohlc?vs_currency=usd&days=${days}`,
-      { headers: { 'Accept': 'application/json' } }
-    );
-    if (!response.ok) return [];
-    const data = await response.json();
-    return data.map((c: number[]) => ({
-      time: new Date(c[0]).toISOString(),
-      open: c[1], high: c[2], low: c[3], close: c[4], volume: 0,
-    }));
-  } catch { return []; }
-}
-
-async function fetchStockData(assetId: string): Promise<MarketData | null> {
-  const symbol = STOCK_SYMBOLS[assetId];
-  if (!symbol) return null;
-
-  const polygonKey = Deno.env.get('POLYGON_API_KEY');
-  if (polygonKey) {
-    try {
-      const response = await fetch(
-        `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?apiKey=${polygonKey}`,
-        { headers: { 'Accept': 'application/json' } }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        if (data.results?.[0]) {
-          const r = data.results[0];
-          return stockQuote(r, 'Polygon');
-        }
-      }
-    } catch (e) { console.error(`Polygon error ${symbol}:`, e); }
-  }
-
-  // Alpha Vantage fallback
-  const avKey = Deno.env.get('ALPHA_VANTAGE_API_KEY') || 'demo';
-  try {
-    const response = await fetch(
-      `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${avKey}`,
-      { headers: { 'Accept': 'application/json' } }
-    );
-    if (response.ok) {
-      const data = await response.json();
-      const q = data['Global Quote'];
-      if (q?.['05. price']) {
-        return stockQuote(q, 'Alpha Vantage');
-      }
-    }
-  } catch (e) { console.error(`AV error ${symbol}:`, e); }
-
-  return null;
-}
-
-async function fetchForexData(assetId: string): Promise<MarketData | null> {
-  const pair = FOREX_PAIRS[assetId];
-  if (!pair) return null;
-
-  const avKey = Deno.env.get('ALPHA_VANTAGE_API_KEY') || 'demo';
-  try {
-    const response = await fetch(
-      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${pair.from}&to_currency=${pair.to}&apikey=${avKey}`,
-      { headers: { 'Accept': 'application/json' } }
-    );
-    if (response.ok) {
-      const data = await response.json();
-      const rate = data['Realtime Currency Exchange Rate'];
-      if (rate?.['5. Exchange Rate']) {
-        return forexQuote(rate);
-      }
-    }
-  } catch (e) { console.error(`Forex error ${assetId}:`, e); }
-  return null;
-}
 
 function generateSimulatedData(basePrice: number, type: string): MarketData {
   const volatility = type === 'crypto' ? 0.03 : type === 'forex' ? 0.005 : 0.015;
@@ -222,7 +49,7 @@ function generateSimulatedCandles(basePrice: number, count: number = 60): Candle
 const ALLOWED_DATA_TYPES = new Set(['quote', 'candles']);
 const ALLOWED_TYPES = new Set(['crypto', 'stock', 'etf', 'forex', 'commodity', 'index']);
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -305,7 +132,7 @@ serve(async (req) => {
     }
 
     if (dataType !== 'candles' && data && !Array.isArray(data) && data.source === 'live' && data.provenance.status !== 'proxy') {
-      await cachePrice(assetId, data.price, data.provenance?.provider ?? 'provider', data.provenance.observedAt ?? null);
+      await cachePrice(assetId, data.price, data.provenance?.provider ?? 'provider', data.provenance.observedAt ?? null, data.provenance.status);
     }
 
 
