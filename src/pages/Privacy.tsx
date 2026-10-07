@@ -13,7 +13,7 @@ export default function Privacy() {
       content: `TradeHQ can be used without creating an account. The data handled depends on the features you choose.
 
 • Guest simulator data: practice cash, positions and trade history are stored in your browser. Watchlists, journal entries, course progress, streaks and related settings also remain browser-stored.
-• Signed-in portfolio data: account sync sends practice cash, open positions, asset identifiers, quantities, average purchase prices, last recorded prices and a trade count to Supabase. Cash and open positions can be restored on another device when sync succeeds; individual trade history, journals and course progress are not restored by portfolio sync.
+• Signed-in portfolio data: Supabase stores account cash, positions and server-recorded practice orders, including asset, quantity, execution price, fees, time and simulated result. These account records restore across devices when the service is available. A first-time browser import stores cash and positions as an unranked portfolio; earlier guest trade history stays in its original browser. Starting a fresh ranked practice cycle archives the previous account snapshot privately. Journals and course progress remain browser-held.
 • Optional account data: if you create an account, Supabase processes authentication data such as your email or provider identity and can store profile fields including username, country and bio.
 • Community data: signed-in features can store selected practice statistics, public-profile settings, reviews and duel/challenge records. These are simulated results, not brokerage statements or verified real-money performance.
 • Contact messages: the contact page opens your own email client with a pre-filled message. TradeHQ does not send that form directly from the browser.
@@ -99,7 +99,7 @@ Depending on where you live, privacy law may give you rights to access, correct,
             </h2>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>Core simulator features can be used without creating an account.</span></li>
-              <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>Guest portfolios stay in your browser; signed-in cash and open positions can sync with Supabase.</span></li>
+              <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>Guest portfolios stay in your browser; account cash, positions and server-recorded trades restore from Supabase.</span></li>
               <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>Optional accounts and community features can store data with Supabase.</span></li>
               <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>Amplitude analytics/session replay and Google advertising are optional, consent-dependent services.</span></li>
               <li className="flex items-start gap-2"><span className="text-profit">✓</span><span>No real-money deposit or brokerage account is required for simulated trading.</span></li>
@@ -157,7 +157,7 @@ Depending on where you live, privacy law may give you rights to access, correct,
               },
               {
                 question: "Where is my simulated portfolio stored?",
-                answer: "Guest portfolios are stored in your browser. Signed-in cash and open positions can sync with Supabase and be restored on another device when sync succeeds. Individual trade history, journals and course progress remain browser-held.",
+                answer: "Guest portfolios are stored in your browser. Account cash, positions and server-recorded trades are stored with Supabase and restore across devices when available. Earlier guest history, journals and course progress remain browser-held.",
               },
               {
                 question: "Does TradeHQ use analytics or advertising cookies?",

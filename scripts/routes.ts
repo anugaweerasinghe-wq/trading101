@@ -213,7 +213,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "Your Practice Portfolio — Positions, P&L, Analytics | TradeHQ",
     description: `Track simulated positions, realised and unrealised P&L, max drawdown, open-position P&L dispersion and allocation snapshots. Free practice portfolio seeded with ${BALANCE}.`,
     h1: "Practice Portfolio",
-    summary: `Review simulated positions, trades, P&L, drawdown and allocation snapshots. Guest records stay in your browser; signed-in cash and open positions can sync when the service is available. Individual trade history remains browser-held.`,
+    summary: `Review simulated positions, trades, P&L, drawdown and allocation snapshots. Guest records stay in your browser; account cash, positions and server-recorded trades restore when the service is available. Server-recorded account trades restore across devices; earlier guest history and journals remain browser-held.`,
     priority: "0.8",
     changefreq: "daily",
   });
@@ -323,7 +323,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "Privacy Policy | TradeHQ",
     description: `TradeHQ privacy policy covering guest browser data, signed-in portfolio sync, optional accounts, analytics, advertising and your choices.`,
     h1: "Privacy Policy",
-    summary: `Guest simulator records stay in your browser. Signed-in cash and open positions can sync with Supabase; account, community and consented analytics features also involve provider processing. See the full policy for details.`,
+    summary: `Guest simulator records stay in your browser. Account cash, positions and server-recorded trades are stored with Supabase; account, community and consented analytics features also involve provider processing. See the full policy for details.`,
     priority: "0.3",
     changefreq: "monthly",
   });

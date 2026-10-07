@@ -74,6 +74,12 @@ export default function Portfolio() {
     assetsRef.current = assets;
   }, [assets]);
 
+  useEffect(() => {
+    const refresh = () => setPortfolio(getPortfolio());
+    window.addEventListener('tradehq:portfolio-updated', refresh);
+    return () => window.removeEventListener('tradehq:portfolio-updated', refresh);
+  }, []);
+
   // Fetch real price for a single held asset
   const fetchLivePrice = async (asset: typeof ASSETS[number]) => {
     try {

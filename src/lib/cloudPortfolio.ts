@@ -4,7 +4,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { ASSETS, INITIAL_CASH } from "./assets";
 import { getPortfolio, savePortfolio } from "./portfolio";
-import type { Portfolio, Position } from "./types";
+import type { Portfolio, Position, Trade } from "./types";
 import type { Json } from "@/integrations/supabase/types";
 const OWNER_KEY = "tradehq:portfolio-owner";
 const BACKUP_KEY = "tradehq_portfolio_backup";
@@ -12,6 +12,7 @@ let activeUser: string | null = null;
 let syncGeneration = 0;
 let lastCycle: string | null = null;
 export interface ServerSnapshot {
+  trades: ServerTrade[];
   cash: number; ranked: boolean; cycle_id: string; updated_at: string;
   positions: { asset_id: string; symbol: string; asset_type: string; quantity: number; avg_price: number; last_price: number }[];
 }
@@ -23,7 +24,7 @@ function ownerOfLocal(): string | null {
   try { return localStorage.getItem(OWNER_KEY); } catch { return null; }
 }
 function backUpLocal() {
-  try { localStorage.setItem(BACKUP_KEY, JSON.stringify({ savedAt: new Date().toISOString(), portfolio: getPortfolio() })); } catch { /* unavailable storage */ }
+  try { localStorage.setItem(`${BACKUP_KEY}:${ownerOfLocal() ?? "guest"}:${crypto.randomUUID()}`, JSON.stringify({ savedAt: new Date().toISOString(), portfolio: getPortfolio() })); } catch { /* unavailable storage */ }
 }
 export function applyServerSnapshot(snapshot: ServerSnapshot, userId: string): Portfolio {
   const local = getPortfolio();
@@ -38,9 +39,15 @@ export function applyServerSnapshot(snapshot: ServerSnapshot, userId: string): P
     return { asset, quantity, avgPrice, currentValue, profitLoss: currentValue - cost,
       profitLossPercent: cost ? (currentValue - cost) / cost * 100 : 0 };
   });
+  const localJournals = new Map(sameOwner ? local.trades.map(t => [t.id, t.journal]) : []);
+  const trades: Trade[] = (snapshot.trades ?? []).map(t => ({
+    id: t.id, assetId: t.asset_id, symbol: ASSETS.find(a => a.id === t.asset_id)?.symbol ?? t.asset_id,
+    type: t.side, quantity: Number(t.quantity), price: Number(t.price), total: Number(t.total),
+    timestamp: new Date(t.created_at), journal: localJournals.get(t.id),
+  }));
   const portfolio: Portfolio = { cash: Number(snapshot.cash), positions,
     totalValue: Number(snapshot.cash) + positions.reduce((n, p) => n + p.currentValue, 0),
-    trades: sameOwner && (!lastCycle || lastCycle === snapshot.cycle_id) ? local.trades : [] };
+    trades };
   lastCycle = snapshot.cycle_id;
   savePortfolio(portfolio, { silent: true });
   try { localStorage.setItem(OWNER_KEY, userId); } catch { /* unavailable storage */ }
@@ -59,9 +66,10 @@ export async function reconcilePortfolio(userId: string): Promise<ServerSnapshot
 }
 /** Refreshes account state; never uploads client cash or scores. */
 export async function pushPortfolio(userId: string): Promise<void> {
+  const generation = syncGeneration;
   const snapshot = await reconcilePortfolio(userId);
   const { data: { session } } = await supabase.auth.getSession();
-  if (session?.user.id !== userId) throw new Error("Account changed during refresh");
+  if (session?.user.id !== userId || generation !== syncGeneration) throw new Error("Account changed during refresh");
   applyServerSnapshot(snapshot, userId);
 }
 export async function startRankedPractice(userId: string): Promise<void> {
@@ -69,6 +77,8 @@ export async function startRankedPractice(userId: string): Promise<void> {
   backUpLocal();
   const { data, error } = await supabase.rpc("start_ranked_practice");
   if (error) throw error;
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.user.id !== userId) throw new Error("Account changed during reset");
   lastCycle = null;
   savePortfolio({ cash: INITIAL_CASH, totalValue: INITIAL_CASH, positions: [], trades: [] }, { silent: true });
   applyServerSnapshot(data as unknown as ServerSnapshot, userId);

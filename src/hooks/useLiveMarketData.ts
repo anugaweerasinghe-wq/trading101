@@ -6,18 +6,20 @@ export interface MarketDataProvenance {
   status: 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider';
   provider: string;
   fetchedAt: string;
+  observedAt?: string | null;
+  fields?: Record<string, string>;
   note?: string;
 }
 
 export interface LiveMarketData {
   price: number;
-  change24h: number;
-  changePercent24h: number;
-  high24h: number;
-  low24h: number;
-  volume24h: number;
+  change24h: number | null;
+  changePercent24h: number | null;
+  high24h: number | null;
+  low24h: number | null;
+  volume24h: number | null;
   marketCap?: number;
-  lastUpdated: string;
+  lastUpdated: string | null;
   source: 'live' | 'simulated';
   provenance?: MarketDataProvenance;
 }
@@ -38,7 +40,7 @@ interface UseLiveMarketDataOptions {
 
 // Cache for market data with localStorage persistence
 const CACHE_TTL = 120000; // 120 seconds (CoinGecko-friendly interval)
-const LS_CACHE_KEY = 'tradehq_market_cache';
+const LS_CACHE_KEY = 'tradehq_market_cache_v2';
 
 function getLocalStorageCache(): Map<string, { data: LiveMarketData; timestamp: number }> {
   try {
@@ -125,15 +127,15 @@ export function useLiveMarketData(
               .every((key) => typeof data[key] === 'number' && Number.isFinite(data[key]));
           const marketData: LiveMarketData = {
             price: data.price,
-            change24h: typeof data.change24h === 'number' ? data.change24h : 0,
-            changePercent24h: typeof data.changePercent24h === 'number' ? data.changePercent24h : 0,
-            high24h: typeof data.high24h === 'number' ? data.high24h : data.price * 1.02,
-            low24h: typeof data.low24h === 'number' ? data.low24h : data.price * 0.98,
-            volume24h: typeof data.volume24h === 'number' ? data.volume24h : 0,
+            change24h: typeof data.change24h === 'number' && Number.isFinite(data.change24h) ? data.change24h : null,
+            changePercent24h: typeof data.changePercent24h === 'number' && Number.isFinite(data.changePercent24h) ? data.changePercent24h : null,
+            high24h: typeof data.high24h === 'number' && Number.isFinite(data.high24h) ? data.high24h : null,
+            low24h: typeof data.low24h === 'number' && Number.isFinite(data.low24h) ? data.low24h : null,
+            volume24h: typeof data.volume24h === 'number' && Number.isFinite(data.volume24h) ? data.volume24h : null,
             marketCap: typeof data.marketCap === 'number' ? data.marketCap : undefined,
-            lastUpdated: data.lastUpdated || new Date().toISOString(),
+            lastUpdated: data.lastUpdated ?? null,
             // Only complete provider data explicitly marked realtime may surface as "live".
-            source: hasCompleteRealtimeFields ? 'live' : 'simulated',
+            source: data.source === 'live' ? 'live' : 'simulated',
             provenance: result.provenance ?? data.provenance,
           };
           setLiveData(marketData);

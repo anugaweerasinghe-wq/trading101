@@ -15,6 +15,8 @@ BEGIN
  repeated:=public.record_practice_trade('aapl','buy',1,'00000000-0000-4000-8000-000000000153');
  IF first<>repeated THEN RAISE EXCEPTION 'Retry duplicated or changed an order'; END IF;
  result:=public.record_practice_trade('aapl','sell',1,'00000000-0000-4000-8000-000000000154');
+ IF jsonb_array_length(result->'portfolio'->'trades')<>2 THEN RAISE EXCEPTION 'Server history not restored'; END IF;
+ IF public.initialize_practice_portfolio('{"cash":1,"positions":[]}') <> result->'portfolio' THEN RAISE EXCEPTION 'Second device overwrote server record'; END IF;
  original:=(first->'trade'->>'price')::numeric;
  final_cash:=(result->'portfolio'->>'cash')::numeric;
  IF abs(final_cash-(100000-original*0.002))>0.000001 THEN RAISE EXCEPTION 'Round-trip fees wrong'; END IF;
