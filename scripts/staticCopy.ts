@@ -62,7 +62,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How the practice trading desk works",
         p: [
-          "The trading desk is where simulated orders are placed. You choose an instrument, choose a side, choose a size, and the order is filled against the simulator's current price. The fill, the position and the resulting profit or loss are all recorded in your practice portfolio, which is stored in your own browser rather than on a server.",
+          "The trading desk is where simulated orders are placed. You choose an instrument, choose a side, choose a size, and the order is filled against the simulator's current price. Fills and results are recorded in your browser. Signed-in cash and open positions can also sync with your account when the service is available; individual trade history remains local.",
           "One order type is supported today: the market order, which fills immediately at the shown simulator price. Limit and stop orders are explained in the glossary but cannot yet be placed on the desk. Position sizing is entirely up to you, which is deliberate — learning to size a position is one of the few skills a simulator can teach almost as well as a live account.",
         ],
       },
@@ -132,7 +132,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What the practice portfolio tracks",
         p: [
-          "The portfolio page is the scoreboard for your simulated account. It shows every open position with its entry price, current simulated price and unrealised profit or loss, plus a full history of closed trades with realised results. Your data lives in your browser's local storage, so clearing site data resets the account.",
+          "The portfolio page shows open positions with entry prices, current practice prices and unrealised profit or loss, plus this browser's history of closed trades. Guest records live in local storage. Signed-in cash and open positions can sync when the service is available; clearing browser data does not delete an account copy already stored on the server.",
           "Beyond raw P&L, the page calculates the metrics that actually describe a process rather than an outcome: fee-inclusive closed-result win rate, average win versus average loss, current open-position return dispersion, and practice maximum drawdown. The chart can include generated history; it is not a verified sequence of account observations.",
         ],
       },
@@ -230,7 +230,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What the leaderboard shows",
         p: [
-          "The leaderboard ranks practice traders who have chosen to publish their results. Publishing is optional and off by default; if you never opt in, nothing about your account is shared. Ranked figures are simulated: percentage return on a $100,000 virtual starting balance, win rate, and number of trades.",
+          "The leaderboard ranks public practice profiles with enough recorded trades to qualify. New accounts start public; you can make your profile private at any time from your profile page. Ranked figures are simulated: percentage return on a $100,000 virtual starting balance, win rate, and number of trades.",
           "There is no prize, no fee and no real money involved. The leaderboard exists because a visible scoreboard makes people practise more often, and frequency is what builds skill.",
         ],
       },
@@ -453,8 +453,8 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "Summary of what we store",
         p: [
-          "Your practice portfolio, trade history, journal entries, watchlist, course progress and streaks are stored in your own browser's local storage. Clearing site data deletes them permanently, and we cannot restore them because we never held them.",
-          "If you choose to create an account, publish a public trader profile, submit a review or join a duel, the data needed for that specific feature is stored on our backend. Everything else stays local.",
+          "Guest practice cash, positions and trade history stay in your browser. Signed-in portfolio sync sends cash, open-position quantities, asset identifiers, average purchase prices, last recorded prices and a trade count to Supabase. Cash and open positions can be restored on another device when sync succeeds; individual trade history, journals, watchlists, course progress and streaks remain browser-held.",
+          "Clearing site data removes browser-held records but does not delete a portfolio already synced to your account. Optional accounts, public profiles, reviews and duels also store the data needed for those features on our backend. Contact the maintainer for an account-data or deletion request.",
         ],
       },
       {

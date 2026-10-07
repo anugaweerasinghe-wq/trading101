@@ -17,7 +17,7 @@ export const COMPARE_PAIRS: ComparePair[] = [
     slug: "bitcoin-vs-ethereum",
     a: { symbol: "BTC", name: "Bitcoin", tag: "Digital gold" },
     b: { symbol: "ETH", name: "Ethereum", tag: "Smart-contract platform" },
-    intro: "Bitcoin is the original cryptocurrency built as a scarce digital store of value. Ethereum is a programmable settlement layer powering DeFi, NFTs and most of Web3. Picking between them is a question of conviction: hard-money savings vs. an internet-native economy.",
+    intro: "Bitcoin and Ethereum are digital networks with different transaction and application designs. Compare their supply rules, uses and costs without treating either token as a savings plan or predicting its price.",
     verdict: "Practice comparison: contrast Bitcoin supply rules and settlement design with Ethereum execution, issuance and staking mechanics. Neither profile establishes the better investment, an assured hedge or future upside.",
     bullets: [
       "Supply: compare Bitcoin issuance rules with Ethereum issuance and fee burning; Ethereum supply changes with network conditions.",
@@ -30,16 +30,16 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "For a practice comparison, measure BTC and ETH returns over the same observation period. Correlation depends on that sample and can change; two token names do not by themselves establish independent exposures. Record the market-data source, interval and method before interpreting a relationship. Network activity, fees and issuance are additional variables to investigate rather than guaranteed leading indicators. A BTC/ETH split changes weights but does not prove diversification or prescribe a suitable total crypto allocation.",
     ],
     mistakes: [
-      "Treating a BTC and ETH split as diversified. They fall together in almost every stress event; the combined position is what needs sizing.",
+      "Treating two token names as proof of diversification. Measure correlation over a stated sample and compare combined exposure under different price shocks.",
       "Assuming staking yield is free money. Staking rewards come with lock-up periods, validator risk and, through liquid staking tokens, an extra layer of smart-contract exposure.",
-      "Comparing prices per unit. One ETH costing less than one BTC says nothing about value — only market capitalisation and issuance are comparable.",
+      "Treating a lower unit price as proof of cheaper valuation. Units, circulating supply, issuance and the rights associated with an asset are different measures.",
     ],
   },
   {
     slug: "tesla-vs-nvidia",
     a: { symbol: "TSLA", name: "Tesla", tag: "EV + energy + AI" },
     b: { symbol: "NVDA", name: "Nvidia", tag: "Compute products + software" },
-    intro: "Tesla blends auto, energy storage and an emerging humanoid/robotaxi narrative. Nvidia is the picks-and-shovels supplier of the entire AI buildout. Both are high-beta names, but the drivers behind them are completely different.",
+    intro: "Tesla reports automotive and energy businesses; NVIDIA sells compute products and supporting software. Compare their business models and current filings rather than treating an AI narrative or a historical beta estimate as a permanent risk label.",
     verdict: "Practice comparison: contrast Tesla automotive and energy assumptions with NVIDIA compute demand and customer concentration. Neither business narrative establishes a superior investment or predictable price response.",
     bullets: [
       "Business mix: compare automotive and energy reporting with compute products and supporting software.",
@@ -48,11 +48,11 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Beta: a beta estimate depends on the benchmark, interval and period; it is not a permanent risk score.",
     ],
     deepDive: [
-      "Nvidia's revenue is concentrated in a small number of very large buyers building data centres, which makes its results a fairly direct read on hyperscaler capital expenditure. When those budgets expand, orders and margins expand with them; when a single large customer defers a build-out, the effect is visible in one quarter. Tesla's revenue comes from millions of individual consumers making financed purchase decisions, so it responds to interest rates, incentives and regional demand rather than to enterprise budgets. Two very different demand signals sit behind two stocks that retail traders often lump together as 'AI names'.",
+      "NVIDIA reporting separates compute and networking from graphics and discusses customer concentration. Tesla reporting separates automotive from energy generation and storage. Those categories suggest different questions: how customers fund compute capacity, how consumers and businesses buy vehicles, and how energy demand affects storage orders. Use current filings to measure those contributions instead of assuming a budget change produces an immediate margin or price response.",
       "That difference matters for how each is analysed. For Nvidia, the numbers that move the story are data-centre revenue growth, gross margin and customer concentration. For Tesla, they are deliveries, automotive gross margin excluding regulatory credits, and progress on the autonomy and energy segments that carry the long-duration part of the valuation. Both trade at multiples that assume years of execution, which is why both can fall sharply on results that would be considered good for an average company — the bar is set by expectations, not by absolute performance.",
     ],
     mistakes: [
-      "Buying both as one 'AI trade'. Their demand drivers are unrelated, and holding both simply doubles exposure to high-multiple growth without adding an independent thesis.",
+      "Treating both companies as one AI exposure. Compare business mix, customer demand and shared market factors rather than assuming their drivers are unrelated.",
       "Treating a beta estimate or a familiar ticker as a guaranteed risk classification. Compare the same benchmark and sample, and consider hypothetical price shocks without prescribing leverage or a fixed drawdown.",
       "Reading a headline earnings beat as a bullish signal. In high-expectation stocks the reaction is driven by guidance and margins, not by the beat itself.",
     ],
@@ -61,7 +61,7 @@ export const COMPARE_PAIRS: ComparePair[] = [
     slug: "bitcoin-vs-gold",
     a: { symbol: "BTC", name: "Bitcoin", tag: "Digital store of value" },
     b: { symbol: "GLD", name: "Gold", tag: "Physical hedge" },
-    intro: "Both are non-yielding scarce assets, but they trade very differently in stress. Gold is the 5,000-year hedge with central-bank demand. Bitcoin is the 16-year-old digital alternative with a fixed supply schedule and rising sovereign adoption.",
+    intro: "Gold and Bitcoin have different ownership, custody and market arrangements. A gold fund also differs from physical gold. Compare specified exposures over matching dates; neither a long history nor a digital supply rule guarantees a hedge.",
     verdict: "Practice comparison: contrast physical gold exposure, costs and custody with Bitcoin network and custody risks. Neither is assured currency-crisis insurance or a guarantee of asymmetric upside.",
     bullets: [
       "Volatility: compare a specified gold exposure and BTC over the same period and calculation method.",
@@ -74,7 +74,7 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "In a hypothetical stress exercise, compare several possible price changes for gold and Bitcoin rather than assume one rises whenever stocks fall. Use equal starting values and record the resulting portfolio contribution, costs and custody assumptions. A recent favourable response does not establish a permanent safe-haven relationship. Different custody methods introduce different operational risks, and neither a price chart nor a simulated return certifies real-money suitability. TradeHQ can illustrate price and portfolio arithmetic without reproducing physical delivery or key custody.",
     ],
     mistakes: [
-      "Sizing them equally in dollars. Matching risk, not capital, means a much smaller bitcoin position for the same contribution to portfolio volatility.",
+      "Assuming equal dollar positions have equal risk. Compare variability and portfolio contributions under stated data and assumptions; no relative position size is prescribed.",
       "Calling bitcoin an inflation hedge based on 2020-2021. It behaved like a high-beta risk asset through the 2022 inflation peak, which is the opposite of a hedge.",
       "Ignoring custody. Vault fees for gold and key management for bitcoin are real, ongoing costs that a price chart never shows.",
     ],
@@ -105,7 +105,7 @@ export const COMPARE_PAIRS: ComparePair[] = [
     slug: "ethereum-vs-solana",
     a: { symbol: "ETH", name: "Ethereum", tag: "L1 + L2 ecosystem" },
     b: { symbol: "SOL", name: "Solana", tag: "Monolithic high-throughput chain" },
-    intro: "Ethereum scales through rollups (L2s) and prioritises decentralisation. Solana scales by running a single fast chain with parallel execution. Both lead in DeFi and tokenization but make opposite architectural bets.",
+    intro: "Ethereum and Solana use different designs for processing transactions and supporting applications. Compare current network documentation, transaction definitions and fee measurements rather than assigning permanent leadership or token-price upside.",
     verdict: "Practice comparison: contrast network design, execution, reliability and supply assumptions using current Ethereum and Solana documentation. Throughput or a fee comparison does not establish token-price upside.",
     bullets: [
       "Throughput: define transaction type, observation period and inclusion of votes or rollup activity before comparing counts.",
@@ -140,7 +140,7 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "For a virtual comparison, use equal starting values, matching dates and a stated calculation method. A price-only series and an index with reinvested dividends answer different questions. Measure drawdowns and variability from the same sample rather than repeat a permanent return or maximum-loss percentage. Position weights determine each contribution to a hypothetical loss, but no beginner core/satellite split is universally appropriate. A simulator’s simplified data and fills do not establish that either exposure is suitable for real-money savings.",
     ],
     mistakes: [
-      "Sizing a crypto allocation as if its drawdown profile resembled an index. It does not; assume a 75% fall is possible and set the position accordingly.",
+      "Treating an index and a token as equivalent exposures. Compare several hypothetical declines and their portfolio contributions without turning one loss percentage into a position-sizing rule.",
       "Judging either over a single year. Both need a multi-year horizon before returns say anything about the strategy.",
       "Using leverage on 24/7 markets. Crypto liquidations happen while you sleep, and there is no closing bell to stop the move.",
     ],
@@ -149,7 +149,7 @@ export const COMPARE_PAIRS: ComparePair[] = [
     slug: "nvidia-vs-amd",
     a: { symbol: "NVDA", name: "Nvidia", tag: "AI accelerator leader" },
     b: { symbol: "AMD", name: "AMD", tag: "Challenger + CPU strength" },
-    intro: "Nvidia is the incumbent in AI training silicon with the CUDA software moat. AMD has the strongest credible alternative roadmap (MI300/MI400) and dominates server CPUs via EPYC. The trade is incumbency vs. catch-up.",
+    intro: "NVIDIA and AMD sell compute products with different hardware and software ecosystems. Compare reported product mix, demand and costs using matching periods instead of treating a roadmap or a competitive narrative as an investment conclusion.",
     verdict: "Practice comparison: examine product mix, software support, customer demand and reported costs. Neither incumbency nor a challenger narrative establishes compounding dominance or greater share-price upside.",
     bullets: [
       "Software: compare current product documentation and compatibility rather than presume permanent developer lock-in.",
@@ -171,7 +171,7 @@ export const COMPARE_PAIRS: ComparePair[] = [
     slug: "forex-vs-stocks",
     a: { symbol: "FX", name: "Forex", tag: "24/5 currency markets" },
     b: { symbol: "Stocks", name: "Equities", tag: "Company ownership" },
-    intro: "Forex is the largest, most liquid market in the world but trades macroeconomic differentials, not company fundamentals. Stocks are slower-moving but tied to durable cash flow and innovation. They reward completely different skill sets.",
+    intro: "A currency pair quotes one currency relative to another; a share represents company ownership. Their trading arrangements and information differ. Neither category has a universally slower price path or rewards a particular skill set reliably.",
     verdict: "Practice comparison: distinguish relative currency prices from company ownership and cash flows. Neither instrument category guarantees wealth compounding or suits every short-term trader.",
     bullets: [
       "Turnover: any comparison needs a dated survey and matching definitions; no permanent daily dollar total is asserted here.",
@@ -456,8 +456,8 @@ export const STRATEGIES: Strategy[] = [
     steps: [
       "Use the daily chart to find the trend.",
       "Use the 4-hour chart for entries on pullbacks.",
-      "Risk 0.5-1% per trade.",
-      "Set stops outside daily noise (1.5x ATR is a good default).",
+      "Choose and document a hypothetical risk amount for the worksheet; no percentage is universally suitable.",
+      "Compare chosen exit distances with a stated volatility calculation; a 1.5x ATR setting is an example, not a validated default.",
       "Test fixed exits, partial exits and trailing exits separately so you can compare how each rule behaves in simulation.",
     ],
     example: "Hypothetical worksheet, not an observed trade: Bought NVDA at $145 after a pullback, stop $138, target $165 — risked $7 to make $20.",
@@ -468,7 +468,7 @@ export const STRATEGIES: Strategy[] = [
       regime:
         "It performs when a market is trending on the daily chart with regular pullbacks: think large-cap tech in an uptrend, or a major FX pair in a sustained rate-differential move. It performs badly in tight, headline-driven chop where every pullback becomes a reversal, and around earnings, where a single gap can exceed several planned stops.",
       mistakes: [
-        "Placing the stop at a round number rather than outside the market's normal noise. Use a volatility measure such as 1.5x the 14-day ATR so ordinary movement does not close the trade.",
+        "Treating a round-number exit or a volatility multiple as guaranteed protection. Compare alternative distances and include gaps and costs.",
         "Holding through earnings on a full-size position because 'it should beat'. Either halve the size or close before the print — that event has nothing to do with your entry signal.",
         "Adding to a losing swing. Averaging down converts a defined-risk trade into an undefined one, which is the single most common way practice accounts hit zero.",
       ],
@@ -522,12 +522,12 @@ export const STRATEGIES: Strategy[] = [
     successRate: "Execution can be measured separately from investment performance: track whether the scheduled contribution was made as planned, without treating adherence as a guarantee of returns.",
     depth: {
       context:
-        "Dollar-cost averaging removes the hardest variable in investing: timing. By committing a fixed amount on a fixed schedule you automatically buy more units when prices are low and fewer when they are high, and you never have to form a view about the next three months. Academic work generally finds lump-sum investing beats DCA on average expected return simply because markets rise more often than they fall — but DCA wins on behaviour, and behaviour is what determines whether someone is still invested after a 30% drawdown.",
+        "Dollar-cost averaging removes the hardest variable in investing: timing. By committing a fixed amount on a fixed schedule you automatically buy more units when prices are low and fewer when they are high, and you never have to form a view about the next three months. A comparison with a lump sum depends on when funds become available, the market path, costs and dates. A fixed schedule does not guarantee better returns or continued participation during a drawdown.",
       regime:
         "It is designed for broad, diversified, long-lived assets — a total-market or S&P 500 index fund, and for those who accept the volatility, a small allocation to a major crypto asset. It is not designed for single stocks, leveraged products, or anything that can go to zero, because averaging into a permanently impaired asset just buys more of a losing position.",
       mistakes: [
         "Pausing contributions during a crash. That is precisely when the schedule is buying the cheapest units; stopping converts a mechanical plan into market timing.",
-        "DCA-ing into a single speculative name and calling it investing. The method assumes the underlying asset recovers over long horizons — that assumption holds for a diversified index, not for one company.",
+        "DCA-ing into a single speculative name and calling it investing. Repeated purchases do not establish that an asset will recover. Diversified indexes can also decline over an observation period.",
         "Checking the balance daily. The plan works on a horizon of years; daily monitoring only increases the chance of abandoning it.",
       ],
       math:
@@ -580,12 +580,12 @@ export const STRATEGIES: Strategy[] = [
     successRate: "MACD results vary by timeframe, market and exit rule. Track payoff distribution and drawdown instead of assuming a fixed win-rate range.",
     depth: {
       context:
-        "MACD is the difference between a 12-period and a 26-period exponential moving average, plotted against a 9-period signal line. Because it is built from averages, it always confirms a move after it has begun — it is a trend-following tool, not a predictive one. That lag is the price paid for filtering out most false starts, and it is why MACD systems typically lose more trades than they win while still making money: the winners run far longer than the losers.",
+        "MACD subtracts a 26-period exponential moving average from a 12-period average and compares the result with a 9-period signal line. These historical inputs create lag. A crossover can persist or reverse; the calculation does not establish a win rate, profitability or how many false starts a rule filters.",
       regime:
-        "It performs in markets that trend persistently on the daily chart — index ETFs, mega-cap equities, major commodities in a supply cycle. It performs badly in range-bound conditions, where the signal line crosses back and forth and each whipsaw costs a full stop. A simple filter that removes most of the damage: only take long crosses while price is above the 200-day moving average.",
+        "It performs in markets that trend persistently on the daily chart — index ETFs, mega-cap equities, major commodities in a supply cycle. It performs badly in range-bound conditions, where the signal line crosses back and forth and each whipsaw costs a full stop. A rule restricting long crosses to prices above a 200-day average is another hypothesis to compare, not a verified improvement.",
       mistakes: [
-        "Trading every cross. Crosses below the zero line in a downtrend, or inside a tight range, produce the bulk of the losing trades in any MACD backtest.",
-        "Exiting winners at a fixed target. The method's entire expectancy depends on a handful of large trends; capping them at 1R while taking full 1R losses inverts the edge.",
+        "Trading every cross. The outcome depends on the sample, costs and exit rules; no location accounts for the bulk of losses in every backtest.",
+        "Exiting winners at a fixed target. A fixed target changes realized payoff sizes. Compare that rule with another exit under the same data and costs instead of assuming an edge.",
         "Reading histogram divergence as a reversal signal. Divergence is common and frequently resolves by the trend simply continuing after a pause.",
       ],
       math:

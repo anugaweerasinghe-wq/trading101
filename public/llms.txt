@@ -49,7 +49,7 @@ TradeHQ is an educational simulator (not a brokerage). Trades use virtual money;
 
 - [Scalping](https://www.thetradehq.com/strategy/scalping)
 - [Swing trading](https://www.thetradehq.com/strategy/swing-trading)
-- [Dollar-cost averaging (DCA)](https://www.thetradehq.com/strategy/dca)
+- [Dollar-cost averaging (DCA)](https://www.thetradehq.com/strategy/dca-dollar-cost-averaging)
 - [All strategies](https://www.thetradehq.com/strategy)
 
 ## Optional

@@ -21,7 +21,7 @@ export interface LearnArticle {
 export const LEARN_ARTICLES: LearnArticle[] = [
   {
     slug: "what-is-paper-trading",
-    title: "What Is Paper Trading and Why Every Beginner Should Start Here",
+    title: "What Is Paper Trading? Practice, Uses and Limitations",
     summary: "Paper trading lets you practice buying and selling stocks, crypto, and other assets using virtual money — so you can learn without losing a cent.",
     metaDescription: "Learn what paper trading is and how virtual practice works. Practice with $100,000 virtual cash on TradeHQ — no signup, no risk.",
     readTime: "5 min read",
@@ -35,7 +35,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         ]
       },
       {
-        heading: "Why Beginners Should Paper Trade First",
+        heading: "What Beginners Can Practise",
         paragraphs: [
           "Paper trading gives you a controlled environment to make mistakes, test a process, and learn the mechanics before real money is involved. There is no universal number of practice weeks or months that guarantees better results. A more useful goal is to practise until you can follow the same written process consistently across a meaningful sample of simulated trades.",
           "A virtual exercise can compare day trading, swing trading and buy-and-hold under the same stated assumptions. Record hypothetical entries and exits and review gains and losses over a meaningful sample. TradeHQ executes market orders; stop and limit orders are explained conceptually rather than implemented as pending orders.",
@@ -154,7 +154,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
       {
         heading: "2. Swing Trading (Capturing Multi-Day Moves)",
         paragraphs: [
-          "Swing trading involves holding positions for several days to weeks, aiming to capture medium-term price moves. Unlike day trading, you don't need to watch screens all day — you can analyze charts in the evening, set your orders, and check back the next day. This makes it ideal for people with day jobs.",
+          "Swing trading involves holding positions for several days to weeks, aiming to capture medium-term price moves. Holding overnight introduces gaps and news exposure. A written example can compare review schedules, but a holding period does not establish suitability for a particular person or guarantee that less monitoring is sufficient.",
           "A swing-trading hypothesis may refer to support, resistance or a chosen chart pattern. Those descriptions do not identify an asset that is certainly about to move. Record an entry assumption and hypothetical exit, then compare alternative outcomes and the effect of gaps or costs.",
           "Compare virtual swing-trading examples with a simple hold over the same period. Record entry, exit and sample size in a journal. TradeHQ implements market orders; a stop or target recorded in the journal does not automatically execute. A short sample cannot establish a dependable edge."
         ]
@@ -359,7 +359,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         heading: "MACD: Combining Trend and Momentum Signals",
         paragraphs: [
           "The Moving Average Convergence Divergence (MACD) is a versatile indicator that shows the relationship between two exponential moving averages — typically the 12-period and 26-period EMAs. The MACD line is the difference between these two EMAs, and the signal line is a 9-period EMA of the MACD line. The histogram shows the gap between them.",
-          "The classic MACD signal is the crossover: when the MACD line crosses above the signal line, it's bullish; when it crosses below, it's bearish. The histogram makes these crossovers easy to spot — bars turning from negative to positive indicate building bullish momentum. MACD works best in trending markets and can generate false signals in sideways conditions.",
+          "The classic MACD signal is the crossover: when the MACD line crosses above the signal line, it's bullish; when it crosses below, it's bearish. The histogram makes these crossovers easy to spot — bars turning from negative to positive indicate building bullish momentum. Crossovers can reverse in both trending and sideways samples; performance depends on the rules, period, costs and comparison used.",
           "Combining indicators creates another hypothesis to evaluate, rather than guaranteeing the best results. Define each calculation, interval and decision rule, then compare against a simple baseline with the same costs and sample. TradeHQ does not provide a MACD chart overlay; journal examples are conceptual."
         ]
       }

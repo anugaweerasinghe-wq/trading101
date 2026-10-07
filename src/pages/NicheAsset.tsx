@@ -94,7 +94,7 @@ export default function NicheAsset() {
               </span>
             </div>
             <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl">
-              Institutional-grade analysis and trading simulator for {niche.name}. Practice with $100K virtual cash, zero risk.
+              Educational price-driver notes and virtual trading practice for {niche.name}. Use $100K in virtual cash and check the displayed data labels.
             </p>
           </header>
 

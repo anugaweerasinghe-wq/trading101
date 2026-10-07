@@ -19,11 +19,11 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Common questions",
       list: [
         "Is TradeHQ free? Yes, entirely. There is no paid tier, no trial and no card required.",
-        "Do I need an account? No. Practice trading, courses and the glossary work without signing up. An optional account supports profiles, duels and selected community summary statistics; it does not restore your browser-held practice record on another device.",
+        "Do I need an account? No. Practice trading, courses and the glossary work without signing up. An optional account supports profiles and community features. Cash and open positions can sync across devices when portfolio sync is available; individual trade history and other browser-held records are separate.",
         "Is the money real? No. Every balance, order and result is simulated, and the platform holds no funds.",
         "Are the prices real? They are based on public market data and refreshed periodically, with a simulation layer between refreshes. They are not a live trading feed.",
         "Does TradeHQ give advice? No. There are no signals, price targets or recommendations anywhere on the site.",
-        "Where is my data? Portfolio, trade history, journal entries and course progress stay in your browser even when you sign in. Your account can hold profile information and selected summary statistics, including a badge count, but these are not a backup of the underlying practice record.",
+        "Where is my data? Guest practice records stay in your browser. Signed-in cash and open positions can be uploaded to Supabase and restored when sync succeeds. Trade history, journal entries, course progress and streaks remain browser-held; a synced badge count does not restore the course record.",
       ],
     },
   ],
@@ -138,7 +138,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Privacy on the leaderboard",
       list: [
-        "Participation is opt-in; nothing is published unless you choose to publish it.",
+        "New accounts start public. Your profile display name, profile fields and selected simulated statistics can appear on public pages; make your profile private to hide them.",
         "Only your chosen display name and simulated statistics appear — never an email address.",
         "You can stop publishing at any time and the entry is removed.",
       ],
@@ -146,7 +146,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Frequently asked",
       list: [
-        "Do I have to appear here? No. Publishing is opt-in and can be switched off at any time.",
+        "Do I have to appear here? No. New profiles start public, but you can switch public visibility off at any time from your profile page.",
         "Is there a prize? No. There is no money, no entry fee and nothing to win.",
         "Can I see someone's trades? Only the summary statistics they chose to publish, never their journal.",
         "How often does it update? Rankings refresh as published portfolios change; short-term positions move constantly.",
@@ -294,13 +294,13 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Portfolio projections are proposed as a way to explore hypothetical inputs, not as a promise of future returns.",
         "Embeddable price widgets are proposed; their data sources, update frequency and access requirements are not specified.",
         "These proposals are not available execution tools. Options and futures lessons remain conceptual; current simulator practice uses supported spot instruments.",
-        "Public profile sharing requires opting into visibility and using the /trader/{username} address. The /trader/me route is an account view, not a public profile link.",
+        "Public profile sharing requires public visibility and uses the /trader/{username} address. New profiles start public; visibility can be switched off at any time. The /trader/me route is an account view, not a public profile link.",
       ],
     },
     {
       h: "How to influence it",
       p: [
-        "Core practice data such as portfolios, journals and course progress remain in the browser. Optional sign-in supports selected profile and community features; it does not restore all practice data on another device. Keep that distinction in mind when requesting sync or sharing features.",
+        "Guest portfolios, journals and course progress use browser storage. Optional sign-in can sync cash and open positions when the service is available, alongside profile and community features. It does not restore individual trade history, journals or course progress on another device.",
         "The contact page is the roadmap's real input. Describe the thing you were trying to learn and where the site failed you — that is far more actionable than a feature name, and it is how most of the items above ended up on the list.",
       ],
     },
@@ -311,7 +311,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Why this site exists",
       p: [
         "Most people meet trading through advertising: a broker campaign, an influencer's screenshot, or an app that makes placing an order feel like a game. Almost none of that explains what an order actually does, what position sizing is, or how quickly leverage removes an account. TradeHQ exists to be the boring middle step between that advertising and someone's savings.",
-        "The site is deliberately conservative about claims. It does not tell you that trading is a path to income, it does not publish success stories, and it does not imply that practice results predict real ones. Those omissions are the point.",
+        "TradeHQ does not present practice results as evidence of future income. Community Reviews publish visitor-submitted feedback without independently verifying identity or experience. The Community Practice Board displays optional account-controlled simulated statistics, not verified investment returns.",
       ],
     },
     {
@@ -336,7 +336,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Support questions we answer most often",
       list: [
-        "My portfolio disappeared — this almost always means browser data was cleared, or you are on a different device or browser. Practice data lives only in the browser that created it, including for signed-in users; selected synced summaries do not restore the underlying record.",
+        "My portfolio disappeared — check which account, browser and device you are using. Guest records are browser-held. Signed-in cash and open positions can be restored if they were successfully synced, but individual trade history, journals and course progress stay on the original browser. If sync fails, contact the maintainer before resetting the practice account.",
         "How do I reset my practice balance? There is a reset control in the portfolio area; it returns the account to $100,000 in virtual cash and clears open positions.",
         "A price looks wrong — quotes refresh periodically and are simulated between refreshes, so they will not match a live broker feed exactly.",
         "Can I use TradeHQ on my phone? Yes, the whole site works on mobile browsers; there is no app to install.",
@@ -361,7 +361,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Cookies and analytics",
       p: [
-        "TradeHQ stores the core practice account in local browser storage. Optional analytics and advertising services can use cookies or similar identifiers after the applicable consent choice; the privacy policy explains those providers and controls.",
+        "TradeHQ stores guest practice records in local browser storage. Signed-in cash and open positions can also sync with Supabase. Optional analytics and advertising services can use cookies or similar identifiers after the applicable consent choice; the privacy policy explains those providers and controls.",
       ],
     },
     {
@@ -370,7 +370,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Contact messages: kept only as long as needed to answer you.",
         "Reviews: published with your chosen display name, and removable on request.",
         "Accounts: email address plus the practice data you choose to sync; deletable on request.",
-        "Public trader profiles and duels: only the display name and simulated statistics you opted to publish.",
+        "Public trader profiles and duels: profile fields and selected simulated statistics can be public. New accounts start public, and you can make your profile private at any time.",
       ],
     },
     {

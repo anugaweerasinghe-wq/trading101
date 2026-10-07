@@ -298,9 +298,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "73%",
-            label: "Of Professional Traders Use Limit Orders",
-            data: "Most experienced traders prefer price control over immediate execution",
+            value: "Price limit",
+            label: "Limit Order Mechanic",
+            data: "A limit order restricts the fill price but does not guarantee execution. No professional-use percentage is established here.",
           },
           {
             type: "tip",
@@ -821,7 +821,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Entry: $50 | Stop: $48 | Target: $56 | Risk: $2 | Reward: $6 | Ratio: $6 ÷ $2 = 3:1. Excellent trade setup!",
+            data: "Entry: $50 | Stop: $48 | Target: $56 | Risk: $2 | Reward: $6 | Ratio: $6 ÷ $2 = 3:1 under the stated exit assumptions, before costs. The ratio does not establish a successful setup.",
           },
           {
             type: "heading",
@@ -1411,7 +1411,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "highlight",
-            data: "Never put more than 30% of your portfolio in a single sector, no matter how hot it is. When tech crashed in 2022, diversified portfolios survived.",
+            data: "Compare several hypothetical sector weights using the same prices and period. No single concentration limit is suitable for everyone, and diversification does not prevent losses.",
           },
           {
             type: "heading",
@@ -1431,7 +1431,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Build a 'weather any storm' portfolio: 40% tech/growth, 30% finance/cyclicals, 20% healthcare/staples, 10% energy/materials. This captures growth while providing downside protection.",
+            data: "Hypothetical weights of 40% technology, 30% finance, 20% healthcare and 10% energy total 100%. Compare other weights under the same price shocks; this arithmetic does not promise growth or downside protection.",
           },
         ],
       },
@@ -1601,7 +1601,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Start with long-term investing. Once you're consistently profitable for 6+ months, consider adding swing trading. Only attempt day trading if you've mastered swing trading and can commit full-time.",
+            data: "Compare holding periods in a simulator and record the time, costs and assumptions each requires. Six months of selected results does not establish readiness for real-money trading or suitability for a trading style.",
           },
         ],
       },
@@ -1712,9 +1712,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "3x",
-            label: "Profitability Increase with Journaling",
-            data: "Studies show traders who journal consistently are 3x more likely to be profitable than those who don't",
+            value: "Record and review",
+            label: "Journaling Purpose",
+            data: "A journal preserves decisions and assumptions for review. No measured profitability multiplier is established here.",
           },
           {
             type: "tip",
@@ -1732,7 +1732,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "Winning percentage doesn't matter as much as you think. A 40% win rate with 1:3 risk-reward beats 70% win rate with 1:1. Evaluate holistically using multiple metrics.",
+            data: "If realized wins are 3R and losses 1R, 40% wins give 0.6R gross expectancy per trade. With realized 1R wins and losses, 70% wins give 0.4R. These fixed inputs exclude costs and do not establish which real strategy is better.",
           },
           {
             type: "heading",
@@ -1743,10 +1743,10 @@ export const lessonData: Lesson[] = [
             data: [
               "Total Return: Overall profit/loss percentage over time",
               "Win Rate: Share of closed trades with positive realized net results; no universal target",
-              "Average Win vs Average Loss: Your edge (target 2:1 or better)",
+              "Average Win vs Average Loss: Measured realized amounts; no universal target",
               "Max Drawdown: Largest observed peak-to-trough decline in a specified equity series",
               "Sharpe Ratio: Risk-adjusted returns (higher is better)",
-              "Profit Factor: Gross profit ÷ gross loss (target 1.5+)",
+              "Profit Factor: Gross profit ÷ absolute gross loss over the stated sample; undefined when gross loss is zero",
             ],
           },
           {
@@ -1836,9 +1836,9 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "stat",
-            value: "4:1",
-            label: "Historical Bull vs Bear Market Time Ratio",
-            data: "Bull markets last ~4 years on average while bear markets last ~1 year. Time in the market beats timing the market.",
+            value: "Specify the sample",
+            label: "Comparing Market Regimes",
+            data: "Regime durations depend on the index, date range and definition. This lesson does not establish a universal bull-to-bear duration ratio.",
           },
           {
             type: "heading",
@@ -1855,7 +1855,7 @@ export const lessonData: Lesson[] = [
               "'Buy the dip' strategy works consistently",
               "More stocks rise than fall (breadth is positive)",
               "Long positions have systematic edge",
-              "Average bull market lasts 3-4 years",
+              "Duration depends on the market, dates and definition used",
               "Corrections (10% drops) are buying opportunities",
             ],
           },
@@ -1878,13 +1878,13 @@ export const lessonData: Lesson[] = [
               "Rally attempts fail quickly ('bear market rallies')",
               "More stocks fall than rise (negative breadth)",
               "Cash and defensive positions preferred",
-              "Average bear market lasts 6-12 months",
-              "Official definition: 20%+ decline from highs",
+              "Duration varies; specify the market and observation period",
+              "A 20% decline is a common convention, not a universal official rule",
             ],
           },
           {
             type: "example",
-            data: "The 2022 bear market saw S&P 500 drop 25%. Every rally attempt failed. Traders who bought every dip lost money. Better strategy: cash position and patience.",
+            data: "For a historical comparison, identify the index, start and end dates and whether returns include dividends. Review rallies and declines without assuming every participant had the same entry, exit or result.",
           },
           {
             type: "highlight",
@@ -1923,7 +1923,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Bitcoin tops at $69k in Nov 2021. RSI shows lower highs while price makes new highs (bearish divergence). Two weeks later, brutal 50% crash begins. Divergence warned early!",
+            data: "For a historical BTC example, identify the exchange, interval, dates and RSI calculation before comparing price and indicator peaks. A selected reversal after a divergence does not establish predictive accuracy.",
           },
           {
             type: "heading",
@@ -1980,13 +1980,13 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "Stock breaks out above resistance on 3x average volume = Strong move, likely to continue. Same breakout on below-average volume = Fake breakout, likely to fail.",
+            data: "Compare a price break with volume three times a chosen historical average and one with below-average volume. Both can continue or reverse; these observations do not supply a success probability.",
           },
           {
             type: "stat",
-            value: "2-3x",
-            label: "Volume Spike Confirming Breakouts",
-            data: "Legitimate breakouts typically show 2-3x higher than average volume - this confirms real institutional buying",
+            value: "Relative volume",
+            label: "A Historical Comparison",
+            data: "State the averaging window when describing a volume multiple. Volume alone does not identify institutional buyers or validate a breakout.",
           },
           {
             type: "heading",
@@ -2012,7 +2012,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Add volume bars to your charts. Set an alert for volume 2x above 20-day average. These spikes often signal the start of major moves - both up and down. Act quickly when volume speaks.",
+            data: "Compare volume with a stated historical average and record subsequent outcomes, including reversals. A two-times threshold is a chosen worksheet setting, not a verified signal or a reason to act quickly.",
           },
         ],
       },
@@ -2048,7 +2048,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "example",
-            data: "March 2020 COVID crash: VIX spiked to 80+ (extreme panic). Those who bought stocks during peak fear made 50-100%+ in following months. Fear = opportunity.",
+            data: "A historical volatility spike describes its own sample, not an instruction to buy. Any return comparison needs specified assets, entry and exit dates and costs; a selected recovery does not show that buying during fear will work again.",
           },
           {
             type: "heading",

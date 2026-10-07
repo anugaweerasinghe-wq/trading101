@@ -50,7 +50,7 @@ export function shouldUpdatePrices(): boolean {
   return getHoursSinceLastUpdate() >= 1;
 }
 
-// Get cached AI predictions
+// Read legacy model-parameter cache (storage key retained for compatibility).
 function getCachedPredictions(): Record<string, MarketPrediction> | null {
   try {
     const stored = localStorage.getItem(AI_PREDICTIONS_KEY);
@@ -71,7 +71,7 @@ function getCachedPredictions(): Record<string, MarketPrediction> | null {
   }
 }
 
-// Cache AI predictions
+// Cache model parameters.
 function cachePredictions(predictions: Record<string, MarketPrediction>) {
   localStorage.setItem(AI_PREDICTIONS_KEY, JSON.stringify({
     predictions,
@@ -79,7 +79,7 @@ function cachePredictions(predictions: Record<string, MarketPrediction>) {
   }));
 }
 
-// Fetch AI-driven market predictions
+// Retired prediction fetch; current practice uses synthetic parameters.
 export async function fetchMarketPredictions(assets: Asset[]): Promise<Record<string, MarketPrediction>> {
   // AI predictions disabled — geometric Brownian motion fallback handles all price movement.
   // Returning an empty record routes every asset through the deterministic simulator below.
@@ -87,8 +87,8 @@ export async function fetchMarketPredictions(assets: Asset[]): Promise<Record<st
 }
 
 /**
- * Simulate realistic price movement using AI predictions or geometric Brownian motion
- * This creates realistic price changes based on market analysis
+ * Simulate hypothetical price movement using supplied parameters or geometric Brownian motion
+ * This model does not provide a market forecast or observed price history.
  */
 export function simulatePriceChange(
   currentPrice: number,
@@ -100,7 +100,7 @@ export function simulatePriceChange(
   let drift: number;
 
   if (prediction) {
-    // Use AI-driven parameters
+    // Use supplied illustrative model parameters
     volatility = prediction.dailyVolatility / 100; // Convert percentage to decimal
     
     // Calculate drift based on annual return and trend

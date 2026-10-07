@@ -213,7 +213,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "Your Practice Portfolio — Positions, P&L, Analytics | TradeHQ",
     description: `Track simulated positions, realised and unrealised P&L, max drawdown, open-position P&L dispersion and allocation snapshots. Free practice portfolio seeded with ${BALANCE}.`,
     h1: "Practice Portfolio",
-    summary: `See simulated positions, trades, P&L, maximum drawdown, open-position P&L dispersion and allocation snapshots. Practice metrics are labeled for what they measure; everything stays in your browser.`,
+    summary: `Review simulated positions, trades, P&L, drawdown and allocation snapshots. Guest records stay in your browser; signed-in cash and open positions can sync when the service is available. Individual trade history remains browser-held.`,
     priority: "0.8",
     changefreq: "daily",
   });
@@ -243,7 +243,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "Trader Leaderboard — Top Practice Portfolios | TradeHQ",
     description: `Community practice board for public TradeHQ accounts. Client-synced simulated portfolio statistics are sorted by submitted percentage return and are not independently verified.`,
     h1: "Trader Leaderboard",
-    summary: `Public accounts can opt in to display client-synced simulated portfolio statistics. These browser-originated figures are not audited performance records.`,
+    summary: `New accounts start public and can display client-synced simulated portfolio statistics; profile visibility can be switched off. These browser-originated figures are not audited performance records.`,
     priority: "0.7",
     changefreq: "daily",
   });
@@ -260,7 +260,7 @@ export function buildRoutes(): RouteMeta[] {
 
   routes.push({
     path: "/daily",
-    title: "Daily Trading Challenge — Learn a New Skill Every Day | TradeHQ",
+    title: "Daily Trading Challenge — Build Your Streak | TradeHQ",
     description: `A new hypothetical market scenario every 24 hours. Compare long, short and hold reasoning, answer a knowledge question, and build a streak. Free, no signup.`,
     h1: "Daily Trading Challenge",
     summary: `A new hypothetical scenario every day. Choose a response, compare the trade-offs, answer a bonus knowledge question, and build a streak without treating any direction as objectively correct.`,
@@ -321,9 +321,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/privacy",
     title: "Privacy Policy | TradeHQ",
-    description: `TradeHQ privacy policy. What we store (locally in your browser), what we send to the server, and what we never do. Free educational trading simulator.`,
+    description: `TradeHQ privacy policy covering guest browser data, signed-in portfolio sync, optional accounts, analytics, advertising and your choices.`,
     h1: "Privacy Policy",
-    summary: `Core simulator state is primarily browser-stored. Optional accounts, public profiles, reviews, contact submissions and third-party advertising involve server-side or provider processing; see the full policy for details.`,
+    summary: `Guest simulator records stay in your browser. Signed-in cash and open positions can sync with Supabase; account, community and consented analytics features also involve provider processing. See the full policy for details.`,
     priority: "0.3",
     changefreq: "monthly",
   });
@@ -566,21 +566,9 @@ function extraRoutes(): RouteMeta[] {
   return out;
 }
 
-/**
- * Bound title length and prefer complete sentences for descriptions.
- * Search engines may shorten snippets; authored text must remain complete.
- */
+/** Keep authored titles complete; search engines may shorten their display. */
 function fitTitle(title: string): string {
-  if (title.length <= 62) return title;
-  const BRAND = " | TradeHQ";
-  const hasBrand = title.endsWith(BRAND) || / \| TradeHQ .*/.test(title);
-  let main = title.replace(/\s*\|\s*TradeHQ.*$/, "");
-  const budget = 62 - (hasBrand ? BRAND.length : 0);
-  if (main.length > budget) {
-    main = main.slice(0, budget);
-    main = main.slice(0, Math.max(main.lastIndexOf(" "), main.lastIndexOf("—"), 20)).replace(/[\s—–-]+$/, "");
-  }
-  return hasBrand ? `${main}${BRAND}` : main;
+  return title.replace(/\s+/g, " ").trim();
 }
 
 function fitDescription(desc: string): string {

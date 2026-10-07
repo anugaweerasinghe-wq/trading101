@@ -40,17 +40,17 @@ const LEADERBOARD_FAQS = [
   {
     question: "Is the TradeHQ leaderboard real?",
     answer:
-      "Each displayed row is tied to a public TradeHQ account and is calculated from that account's cloud-synced simulated practice portfolio. It is educational simulation data, not an audited investment-performance record.",
+      "Each displayed row is tied to a public TradeHQ account. Rankings use synced simulated portfolios where available, or browser-submitted summary statistics when portfolio sync is unavailable. These account-controlled figures are not independently verified or audited investment-performance records.",
   },
   {
     question: "How do I climb the leaderboard?",
     answer:
-      "Public accounts with at least 5 recorded practice trades can appear. The board sorts cloud-synced simulated portfolio return from the same $100,000 virtual starting balance.",
+      "Public accounts with at least 5 recorded practice trades can appear. The board sorts submitted simulated percentage return against a $100,000 virtual starting balance. A rank is not evidence of real-money skill or verified returns.",
   },
   {
     question: "Do I need an account to compete?",
     answer:
-      "An account is needed to sync a practice portfolio across devices and appear on the leaderboard when the profile is public. Core learning tools can still be used without signing up.",
+      "An account and a public profile are needed to appear on the board. Cash and open positions can sync across devices when portfolio sync is available; browser-held trade history is separate. Core learning tools work without signing up.",
   },
   {
     question: "What data does TradeHQ store if I sign up?",
@@ -85,6 +85,7 @@ export default function Leaderboard() {
   const { user, profile } = useAuth();
   const [rows, setRows] = useState<BoardRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [rankingSource, setRankingSource] = useState<"cloud" | "legacy" | null>(null);
   const [syncing, setSyncing] = useState(false);
   const [tab, setTab] = useState<"traders" | "duels">("traders");
   const [duels, setDuels] = useState<DuelRow[]>([]);
@@ -95,6 +96,7 @@ export default function Leaderboard() {
     try {
       const cloud = await supabase.rpc("get_cloud_leaderboard", { p_limit: 100 });
       if (!cloud.error) {
+        setRankingSource("cloud");
         const mapped: BoardRow[] = (cloud.data ?? []).map((row) => ({
           userId: row.user_id,
           username: row.username,
@@ -110,6 +112,7 @@ export default function Leaderboard() {
 
       // Compatibility fallback while older deployments finish the cloud-schema migration.
       console.warn("Cloud leaderboard unavailable; falling back to legacy summaries", cloud.error);
+      setRankingSource("legacy");
       const { data: profiles, error: profilesError } = await supabase
         .from("profiles")
         .select("id, username, country")
@@ -243,13 +246,13 @@ export default function Leaderboard() {
   return (
     <>
       <Helmet>
-        <title>Community Practice Board — Cloud-Synced TradeHQ Stats</title>
-        <meta name="description" content="Community practice board of public TradeHQ accounts using cloud-synced simulated portfolio data. Values are educational simulation results, not audited performance records." />
+        <title>Community Practice Board — TradeHQ Practice Stats</title>
+        <meta name="description" content="Community practice board of public TradeHQ accounts using submitted simulated statistics. Results are not independently verified or audited performance records." />
         <link rel="canonical" href="https://www.thetradehq.com/leaderboard" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ Community Practice Board" />
-        <meta property="og:description" content="Public TradeHQ accounts sorted by cloud-synced simulated percentage return. Results are educational simulation data, not audited performance records." />
+        <meta property="og:description" content="Public TradeHQ accounts sorted by submitted simulated percentage return. Results are not independently verified or audited performance records." />
         <meta property="og:url" content="https://www.thetradehq.com/leaderboard" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -280,15 +283,18 @@ export default function Leaderboard() {
             <div className="text-center mb-12">
               <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Cloud-synced practice portfolios
+                {rankingSource === "cloud" ? "Synced practice portfolios" : rankingSource === "legacy" ? "Browser-submitted practice statistics" : "Account practice statistics"}
               </Badge>
               <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
                 TradeHQ Leaderboard
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Rankings use each public account's cloud-synced simulated practice portfolio, so values can remain
-                available when that user is offline. Results are educational simulation data and should not be read
-                as audited investment performance.
+                {rankingSource === "cloud"
+                  ? "Rankings use synced simulated cash and open positions. These account-controlled practice records are not independently verified."
+                  : rankingSource === "legacy"
+                    ? "Portfolio sync is currently unavailable. Rankings use the latest browser-submitted summaries, which do not refresh an offline user's positions."
+                    : "Rankings show submitted simulated practice statistics from public accounts."}
+                {" "}Results are educational simulation data, not audited investment performance.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 {user ? (
@@ -356,7 +362,7 @@ export default function Leaderboard() {
                   <h2 className="text-lg font-semibold mb-2">No public traders yet — be the first</h2>
                   <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
                     This board displays public accounts with at least {MIN_TRADES_TO_RANK}
-                    recorded practice trades. Ranking values come from cloud-synced simulated portfolios.
+                    recorded practice trades. Ranking values are submitted simulated statistics, not verified returns.
                   </p>
                   <Link to={user ? "/trade" : "/auth"}>
                     <Button className="!text-black font-bold rounded-xl">
@@ -478,7 +484,7 @@ export default function Leaderboard() {
                 },
                 {
                   title: "You control visibility",
-                  body: "New profiles start private. You can choose to make your profile public from your trader profile page to appear on this board, and switch it back to private at any time.",
+                  body: "New profiles start public and can appear on this board once they meet its practice-trade requirements. You can make your profile private at any time from your trader profile page.",
                 },
               ].map((c) => (
                 <div key={c.title} className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">

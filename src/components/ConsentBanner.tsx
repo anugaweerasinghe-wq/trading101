@@ -65,8 +65,15 @@ export function ConsentBanner() {
   }, []);
 
   const save = (next: ConsentChoice) => {
+    const previous = window.localStorage.getItem(STORAGE_KEY);
     window.localStorage.setItem(STORAGE_KEY, next);
     setChoice(next);
+    // An already initialized SDK keeps running when its script tag is removed.
+    // Reload with the stored rejection so no optional SDK is initialized again.
+    if (next === "rejected" && previous === "accepted") {
+      (window as any).amplitude?.setOptOut?.(true);
+      window.location.reload();
+    }
   };
 
   if (choice) return null;

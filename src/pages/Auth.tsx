@@ -120,7 +120,7 @@ export default function Auth() {
 
   const title = "Sign in or create a free TradeHQ account";
   const description =
-    "Optional free account for TradeHQ. Sync your simulated practice portfolio across devices, appear on the community leaderboard when public, and challenge friends. Core learning tools remain usable without an account.";
+    "Optional free account for TradeHQ. Cash and open positions can sync when the service is available; trade history, journals and course progress remain browser-held. Public profiles can use community features. Core learning tools remain usable without an account.";
 
   return (
     <>
@@ -143,7 +143,7 @@ export default function Auth() {
             </h1>
             <p className="text-sm text-muted-foreground mt-2">
               An account adds optional community features such as the leaderboard, profile visibility and friend
-              challenges. New profiles start public, and you can make yours private at any time from your profile.
+              challenges. New profiles start public. You can make yours private at any time from your profile page.
               Trading, courses and tools never require an account.
             </p>
           </div>
@@ -236,7 +236,7 @@ export default function Auth() {
 
           <p className="text-2xs text-muted-foreground mt-6 text-center leading-relaxed">
             If you create an account, we store authentication details, your chosen username and your simulated
-            practice portfolio so it can sync across devices. Profiles start public and can be made private from your profile page. No real money, no brokerage links, no payment
+            practice portfolio when sync is available. Profiles start public; you can make yours private at any time from your profile page. No real money, no brokerage links, no payment
             details. Every balance on TradeHQ is virtual and starts at{" "}
             {STARTING_BALANCE_LABEL}. (Educational simulation only — not financial
             advice.) See our{" "}
