@@ -484,7 +484,7 @@ export default function Leaderboard() {
                 },
                 {
                   title: "You control visibility",
-                  body: "New profiles start private. You can choose to make your profile public from your trader profile page to appear on this board, and switch it back to private at any time.",
+                  body: "New profiles start public and can appear on this board once they meet its practice-trade requirements. You can make your profile private at any time from your trader profile page.",
                 },
               ].map((c) => (
                 <div key={c.title} className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">

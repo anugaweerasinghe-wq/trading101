@@ -230,7 +230,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What the leaderboard shows",
         p: [
-          "The leaderboard ranks practice traders who have chosen to publish their results. Publishing is optional and off by default; if you never opt in, nothing about your account is shared. Ranked figures are simulated: percentage return on a $100,000 virtual starting balance, win rate, and number of trades.",
+          "The leaderboard ranks public practice profiles with enough recorded trades to qualify. New accounts start public; you can make your profile private at any time from your profile page. Ranked figures are simulated: percentage return on a $100,000 virtual starting balance, win rate, and number of trades.",
           "There is no prize, no fee and no real money involved. The leaderboard exists because a visible scoreboard makes people practise more often, and frequency is what builds skill.",
         ],
       },

@@ -243,7 +243,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "Trader Leaderboard — Top Practice Portfolios | TradeHQ",
     description: `Community practice board for public TradeHQ accounts. Client-synced simulated portfolio statistics are sorted by submitted percentage return and are not independently verified.`,
     h1: "Trader Leaderboard",
-    summary: `Public accounts can opt in to display client-synced simulated portfolio statistics. These browser-originated figures are not audited performance records.`,
+    summary: `New accounts start public and can display client-synced simulated portfolio statistics; profile visibility can be switched off. These browser-originated figures are not audited performance records.`,
     priority: "0.7",
     changefreq: "daily",
   });

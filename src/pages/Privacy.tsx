@@ -38,7 +38,7 @@ TradeHQ does not sell simulated portfolio data to brokers or financial instituti
       title: "Storage, Visibility & Retention",
       content: `Browser data remains on the device until the browser, the user or TradeHQ's own reset controls remove it. Clearing browser data removes local records; it does not delete a signed-in portfolio already stored in Supabase.
 
-Optional account and community data can be stored by Supabase for as long as the related account or feature requires it. Public profile information is shown only when the profile is configured as public.
+Optional account and community data can be stored by Supabase for as long as the related account or feature requires it. New accounts start with a public profile: the chosen username, profile fields and selected simulated statistics can be visible on public pages. You can make your profile private at any time from your profile page.
 
 Analytics and advertising data are retained according to the settings and policies of the relevant provider. TradeHQ does not state a fixed retention period where it cannot verify one.
 

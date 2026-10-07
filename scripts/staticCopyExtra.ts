@@ -138,7 +138,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Privacy on the leaderboard",
       list: [
-        "Participation is opt-in; nothing is published unless you choose to publish it.",
+        "New accounts start public. Your profile display name, profile fields and selected simulated statistics can appear on public pages; make your profile private to hide them.",
         "Only your chosen display name and simulated statistics appear — never an email address.",
         "You can stop publishing at any time and the entry is removed.",
       ],
@@ -146,7 +146,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Frequently asked",
       list: [
-        "Do I have to appear here? No. Publishing is opt-in and can be switched off at any time.",
+        "Do I have to appear here? No. New profiles start public, but you can switch public visibility off at any time from your profile page.",
         "Is there a prize? No. There is no money, no entry fee and nothing to win.",
         "Can I see someone's trades? Only the summary statistics they chose to publish, never their journal.",
         "How often does it update? Rankings refresh as published portfolios change; short-term positions move constantly.",
@@ -294,7 +294,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Portfolio projections are proposed as a way to explore hypothetical inputs, not as a promise of future returns.",
         "Embeddable price widgets are proposed; their data sources, update frequency and access requirements are not specified.",
         "These proposals are not available execution tools. Options and futures lessons remain conceptual; current simulator practice uses supported spot instruments.",
-        "Public profile sharing requires opting into visibility and using the /trader/{username} address. The /trader/me route is an account view, not a public profile link.",
+        "Public profile sharing requires public visibility and uses the /trader/{username} address. New profiles start public; visibility can be switched off at any time. The /trader/me route is an account view, not a public profile link.",
       ],
     },
     {
@@ -370,7 +370,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Contact messages: kept only as long as needed to answer you.",
         "Reviews: published with your chosen display name, and removable on request.",
         "Accounts: email address plus the practice data you choose to sync; deletable on request.",
-        "Public trader profiles and duels: only the display name and simulated statistics you opted to publish.",
+        "Public trader profiles and duels: profile fields and selected simulated statistics can be public. New accounts start public, and you can make your profile private at any time.",
       ],
     },
     {

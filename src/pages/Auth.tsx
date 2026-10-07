@@ -71,7 +71,7 @@ export default function Auth() {
           password: parsed.data.password,
           options: {
             emailRedirectTo: authUrl("/auth"),
-            data: { username: parsed.data.username, is_public: false },
+            data: { username: parsed.data.username, is_public: true },
           },
         });
         if (error) throw error;
@@ -143,7 +143,7 @@ export default function Auth() {
             </h1>
             <p className="text-sm text-muted-foreground mt-2">
               An account adds optional community features such as the leaderboard, profile visibility and friend
-              challenges. New profiles start private. You can choose to publish yours from your profile page.
+              challenges. New profiles start public. You can make yours private at any time from your profile page.
               Trading, courses and tools never require an account.
             </p>
           </div>
@@ -236,7 +236,7 @@ export default function Auth() {
 
           <p className="text-2xs text-muted-foreground mt-6 text-center leading-relaxed">
             If you create an account, we store authentication details, your chosen username and your simulated
-            practice portfolio when sync is available. Profiles start private; you can choose to publish yours from your profile page. No real money, no brokerage links, no payment
+            practice portfolio when sync is available. Profiles start public; you can make yours private at any time from your profile page. No real money, no brokerage links, no payment
             details. Every balance on TradeHQ is virtual and starts at{" "}
             {STARTING_BALANCE_LABEL}. (Educational simulation only — not financial
             advice.) See our{" "}
