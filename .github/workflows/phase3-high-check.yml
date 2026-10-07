@@ -24,5 +24,6 @@ jobs:
       - run: node --import tsx scripts/verify-refresh-prices.ts
       - run: node --import tsx scripts/verify-market-rate-limit.ts
       - run: node --import tsx scripts/verify-snapshot-version.ts
+      - run: node --import tsx scripts/verify-member-activity.ts
       - run: npm run verify:backend
       - run: npm run build

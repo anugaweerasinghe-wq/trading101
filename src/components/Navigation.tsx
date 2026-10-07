@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X, Star, Info, UserRound } from "lucide-react";
+import { Wallet, Home, GraduationCap, BookOpen, BarChart3, Bot, Menu, X, Star, Info, UserRound, LogOut } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -8,12 +8,29 @@ import { createPortal } from "react-dom";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { StreakBadge } from "@/components/badges/StreakBadge";
 import { useAuth } from "@/hooks/useAuth";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 export function Navigation() {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+  const [signingOut, setSigningOut] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const handleSignOut = async () => {
+    if (signingOut) return;
+    setSigningOut(true);
+    try {
+      await signOut();
+      setMobileMenuOpen(false);
+      toast.success("Signed out on this device.");
+    } catch {
+      toast.error("Could not sign out. Please try again.");
+    } finally {
+      setSigningOut(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -92,12 +109,24 @@ export function Navigation() {
             <div className="ml-2 pl-2 border-l border-white/[0.06]">
               <StreakBadge className="mr-2" />
               <ThemeToggle />
-              <Link to={user ? "/trader/me" : "/auth"} className="ml-2 inline-block">
+              {user ? <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="ml-2 h-9 rounded-xl text-sm" aria-label="Account menu">
+                    <UserRound className="w-4 h-4 mr-2" /> Profile
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild><Link to="/trader/me">My profile</Link></DropdownMenuItem>
+                  <DropdownMenuItem disabled={signingOut} onSelect={() => void handleSignOut()}>
+                    <LogOut className="w-4 h-4 mr-2" /> {signingOut ? "Signing out…" : "Sign out"}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu> : <Link to="/auth" className="ml-2 inline-block">
                 <Button variant="outline" size="sm" className="h-9 rounded-xl text-sm">
                   <UserRound className="w-4 h-4 mr-2" />
-                  {user ? "Profile" : "Sign in"}
+                  Sign in
                 </Button>
-              </Link>
+              </Link>}
             </div>
           </div>
 
@@ -181,6 +210,9 @@ export function Navigation() {
               {user ? "My profile" : "Sign in (optional)"}
             </Button>
           </Link>
+          {user && <Button variant="ghost" disabled={signingOut} onClick={() => void handleSignOut()} className="w-full justify-start h-12 px-4 text-sm font-medium rounded-xl">
+            <LogOut className="w-4 h-4 mr-3" /> {signingOut ? "Signing out…" : "Sign out"}
+          </Button>}
         </div>
       </div>
     </div>,

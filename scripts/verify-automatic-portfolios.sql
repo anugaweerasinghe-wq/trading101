@@ -2,9 +2,14 @@
 BEGIN;
 INSERT INTO auth.users(id,email,raw_user_meta_data) VALUES
 ('00000000-0000-4000-8000-000000000481','auto-one@example.invalid','{"username":"auto_one"}'),
-('00000000-0000-4000-8000-000000000482','auto-zero@example.invalid','{"username":"auto_zero"}'),
-('00000000-0000-4000-8000-000000000483','auto-private@example.invalid','{"username":"auto_private"}');
-UPDATE public.profiles SET is_public=true WHERE id IN ('00000000-0000-4000-8000-000000000481','00000000-0000-4000-8000-000000000482');
+('00000000-0000-4000-8000-000000000482','auto-zero@example.invalid','{"username":"Auto_ZERO"}'),
+('00000000-0000-4000-8000-000000000483','auto-private@example.invalid','{"username":"Auto_ZERO","is_public":false}');
+DO $$ BEGIN
+ IF NOT EXISTS(SELECT 1 FROM public.profiles WHERE id='00000000-0000-4000-8000-000000000482' AND is_public=true) THEN RAISE EXCEPTION 'New signup does not default public'; END IF;
+ IF NOT EXISTS(SELECT 1 FROM public.get_public_practice_members(500) WHERE user_id='00000000-0000-4000-8000-000000000482' AND trades=0 AND portfolio_value IS NULL) THEN RAISE EXCEPTION 'New signup absent before portfolio initialization'; END IF;
+ IF NOT EXISTS(SELECT 1 FROM public.profiles WHERE id='00000000-0000-4000-8000-000000000482' AND username='auto_zero') THEN RAISE EXCEPTION 'Mixed-case signup name lost letters or underscore'; END IF;
+ IF NOT EXISTS(SELECT 1 FROM public.profiles WHERE id='00000000-0000-4000-8000-000000000483' AND username='auto_zero-1' AND NOT is_public) THEN RAISE EXCEPTION 'Duplicate name or explicit private signup not handled'; END IF;
+END; $$;
 UPDATE public.profiles SET is_public=false WHERE id='00000000-0000-4000-8000-000000000483';
 SELECT set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000481',true);
 SET LOCAL ROLE authenticated;

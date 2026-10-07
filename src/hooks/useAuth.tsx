@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, useRef, ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { startCloudSync } from "@/lib/cloudPortfolio";
@@ -34,25 +34,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const authGeneration = useRef(0);
+  const currentUserId = useRef<string | null>(null);
 
-  const loadProfile = async (uid: string) => {
+  const loadProfile = useCallback(async (uid: string, generation = authGeneration.current) => {
     const { data } = await supabase
       .from("profiles")
       .select("id, username, country, bio, is_public")
       .eq("id", uid)
       .maybeSingle();
-    setProfile((data as Profile) ?? null);
-  };
+    if (generation === authGeneration.current && currentUserId.current === uid) setProfile((data as Profile) ?? null);
+  }, []);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
+    const invalidatePendingWork = () => { ++authGeneration.current; };
+    const applySession = (s: Session | null) => {
+      const generation = ++authGeneration.current;
+      const uid = s?.user.id ?? null;
+      if (currentUserId.current !== uid) setProfile(null);
+      currentUserId.current = uid;
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
         // Defer network work outside the auth callback to avoid blocking auth state propagation.
         setTimeout(() => {
+          if (generation !== authGeneration.current || currentUserId.current !== s.user.id) return;
           void Promise.allSettled([
-            loadProfile(s.user.id),
+            loadProfile(s.user.id, generation),
             startCloudSync(s.user.id),
           ]);
         }, 0);
@@ -61,32 +69,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         void startCloudSync(null);
       }
       setLoading(false);
-    });
+    };
+    const initialGeneration = authGeneration.current;
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => applySession(s));
 
     supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setUser(data.session?.user ?? null);
-      if (data.session?.user) {
-        void Promise.allSettled([
-          loadProfile(data.session.user.id),
-          startCloudSync(data.session.user.id),
-        ]);
-      } else {
-        void startCloudSync(null);
-      }
-      setLoading(false);
-    });
+      if (authGeneration.current === initialGeneration) applySession(data.session);
+    }).catch(() => { if (authGeneration.current === initialGeneration) setLoading(false); });
 
-    return () => sub.subscription.unsubscribe();
-  }, []);
+    return () => { invalidatePendingWork(); sub.subscription.unsubscribe(); };
+  }, [loadProfile]);
 
   const refreshProfile = async () => {
     if (user) await loadProfile(user.id);
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    setProfile(null);
+    const { error } = await supabase.auth.signOut({ scope: "local" });
+    if (error) throw error;
   };
 
   return (

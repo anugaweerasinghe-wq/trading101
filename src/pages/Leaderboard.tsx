@@ -15,6 +15,7 @@ import { PRICE_REFRESH_COPY, priceLabel, quoteTimeLabel } from "@/lib/practicePr
 import { pushPortfolio, reconcilePortfolio, startRankedPractice } from "@/lib/cloudPortfolio";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { STARTING_BALANCE_LABEL } from "@/lib/constants";
+import { compareMemberActivity } from "@/lib/memberActivity";
 
 interface BoardRow {
   userId: string;
@@ -23,6 +24,7 @@ interface BoardRow {
   portfolioValue: number | null;
   pnlPct: number | null;
   trades: number;
+  previousTrades: number;
   pricedAt: string | null;
   observedAt: string | null;
   priceStatus: string;
@@ -52,7 +54,7 @@ const LEADERBOARD_FAQS = [
   {
     question: "How do I climb the leaderboard?",
     answer:
-      "Every public member appears, including accounts with no trades yet. Comparable ranked portfolios receive a rank after their first server-recorded trade. The board sorts simulated return against a $100,000 virtual starting balance. A rank is not evidence of real-money skill.",
+      "Every public member appears, including accounts with no trades yet. Members with the most server-recorded trades appear first; previous reported trades break ties. Comparable ranked portfolios receive a rank after their first server-recorded trade, calculated from simulated return against a $100,000 virtual starting balance. Previous activity never changes that rank. A rank is not evidence of real-money skill.",
   },
   {
     question: "Do I need an account to compete?",
@@ -114,12 +116,13 @@ export default function Leaderboard() {
         supabase.rpc("get_public_practice_members", { p_limit: 500 }),
         supabase.rpc("get_previous_practice_results", { p_limit: 500 }),
       ]);
+      const previousTrades = new Map((previous.error ? [] : previous.data ?? []).map(row => [row.user_id, Number(row.trades)]));
       const rankedRows = cloud.error ? [] : (cloud.data ?? []).map(row => ({
         userId: row.user_id, username: row.username, country: row.country,
         portfolioValue: row.portfolio_value === null ? null : Number(row.portfolio_value), pnlPct: row.pnl_pct === null ? null : Number(row.pnl_pct),
-        trades: Number(row.trades), pricedAt: row.priced_at ?? null, observedAt: row.observed_at ?? null,
+        trades: Number(row.trades), previousTrades: previousTrades.get(row.user_id) ?? 0, pricedAt: row.priced_at ?? null, observedAt: row.observed_at ?? null,
         priceStatus: row.price_status, portfolioStatus: row.portfolio_status, practiceRank: row.practice_rank,
-      }));
+      })).sort(compareMemberActivity);
       const historicRows = previous.error ? [] : (previous.data ?? []).map(row => ({
         userId: row.user_id, username: row.username, country: row.country,
         portfolioValue: Number(row.portfolio_value), pnlPct: Number(row.pnl_pct),
@@ -332,7 +335,10 @@ export default function Leaderboard() {
             </div>
             {tab === "traders" ? (
               <section aria-label="Public members" className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden">
-                <div className="p-4 border-b border-white/[0.06] text-sm">{rows.length} public members · no minimum trades to appear</div>
+                <div className="p-4 border-b border-white/[0.06] text-sm">
+                  <p>{rows.length} public members · no minimum trades to appear</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Most server trades first; previous reported activity breaks ties. Practice rank still reflects simulated return.</p>
+                </div>
                 <div className="hidden md:grid grid-cols-5 gap-4 px-6 py-4 text-xs text-muted-foreground uppercase border-b border-white/[0.06]">
                   <span>Practice rank</span><span>Member</span><span className="text-right">Virtual value</span><span className="text-right">Ranked return</span><span className="text-right">Server trades</span>
                 </div>
@@ -345,7 +351,7 @@ export default function Leaderboard() {
                       <div>
                         <span className="font-semibold text-sm">{trader.username}</span>
                         {trader.country && <span className="block text-xs text-muted-foreground">{trader.country}</span>}
-                        <span className="block text-xs text-muted-foreground mt-1">{trader.portfolioStatus === "imported" ? "Imported practice · unranked" : trader.trades === 0 ? "No trades yet" : "Server-recorded practice"}</span>
+                        <span className="block text-xs text-muted-foreground mt-1">{trader.portfolioStatus === "imported" ? "Imported practice · unranked" : trader.trades === 0 ? trader.previousTrades > 0 ? "Previous reported activity · unranked" : "No trades yet" : "Server-recorded practice"}</span>
                       </div>
                       <div className="md:text-right text-xs text-muted-foreground">
                         <span className="block font-mono text-sm text-foreground">{trader.portfolioValue === null ? "—" : `$${trader.portfolioValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}</span>
@@ -353,7 +359,10 @@ export default function Leaderboard() {
                         <span className="block mt-1">{quoteTimeLabel(trader.pricedAt, trader.observedAt)}</span>
                       </div>
                       <div className="text-right font-mono text-sm">{trader.pnlPct === null ? "—" : `${trader.pnlPct >= 0 ? "+" : ""}${trader.pnlPct.toFixed(1)}%`}</div>
-                      <div className="md:text-right text-xs text-muted-foreground">{trader.trades} server trades</div>
+                      <div className="md:text-right text-xs text-muted-foreground">
+                        <p>{trader.trades} server trades</p>
+                        {trader.previousTrades > 0 && <p className="mt-1">{trader.previousTrades} previous reported trades · unverified</p>}
+                      </div>
                     </Link>
                   ))}
               </section>
