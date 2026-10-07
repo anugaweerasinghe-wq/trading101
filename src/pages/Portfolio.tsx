@@ -174,8 +174,9 @@ export default function Portfolio() {
   useEffect(() => {
     isMounted.current = true;
     const initPortfolio = async () => {
-      let updated = await updatePortfolioOverTime(portfolio);
-      updated = updatePositionPrices(updated, assetsRef.current);
+      await updatePortfolioOverTime(getPortfolio());
+      if (!isMounted.current) return;
+      const updated = updatePositionPrices(getPortfolio(), assetsRef.current);
       setPortfolio(updated);
       savePortfolio(updated);
       initializeMilestones(updated.totalValue);

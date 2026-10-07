@@ -1,6 +1,7 @@
 /** Account portfolios change only through server-recorded orders.
  * Browser imports remain unranked; an existing account copy always wins.
  */
+import { snapshotIsStale, type SnapshotVersion } from "./snapshotVersion";
 import { supabase } from "@/integrations/supabase/client";
 import { ASSETS, INITIAL_CASH } from "./assets";
 import { getPortfolio, savePortfolio } from "./portfolio";
@@ -10,7 +11,7 @@ const OWNER_KEY = "tradehq:portfolio-owner";
 const BACKUP_KEY = "tradehq_portfolio_backup";
 let activeUser: string | null = null;
 let syncGeneration = 0;
-let lastCycle: string | null = null;
+const snapshotVersions = new Map<string, SnapshotVersion>();
 export interface ServerSnapshot {
   trades: ServerTrade[];
   cash: number; ranked: boolean; cycle_id: string; updated_at: string;
@@ -29,6 +30,10 @@ function backUpLocal() {
 export function applyServerSnapshot(snapshot: ServerSnapshot, userId: string): Portfolio {
   const local = getPortfolio();
   const sameOwner = ownerOfLocal() === userId;
+  const version = { cycle: snapshot.cycle_id, count: snapshot.trades?.length ?? 0, updatedAt: snapshot.updated_at };
+  if (sameOwner && snapshotIsStale(version, snapshotVersions.get(userId) ?? null)) return local;
+  const serverIds = new Set((snapshot.trades ?? []).map(t => t.id));
+  if (sameOwner && local.trades.some(t => !serverIds.has(t.id))) backUpLocal();
   if (!sameOwner && (local.trades.length || local.positions.length || local.cash !== INITIAL_CASH)) backUpLocal();
   const positions: Position[] = snapshot.positions.map((r) => {
     const known = ASSETS.find((a) => a.id === r.asset_id);
@@ -48,7 +53,7 @@ export function applyServerSnapshot(snapshot: ServerSnapshot, userId: string): P
   const portfolio: Portfolio = { cash: Number(snapshot.cash), positions,
     totalValue: Number(snapshot.cash) + positions.reduce((n, p) => n + p.currentValue, 0),
     trades };
-  lastCycle = snapshot.cycle_id;
+  snapshotVersions.set(userId, version);
   savePortfolio(portfolio, { silent: true });
   try { localStorage.setItem(OWNER_KEY, userId); } catch { /* unavailable storage */ }
   return portfolio;
@@ -79,7 +84,6 @@ export async function startRankedPractice(userId: string): Promise<void> {
   if (error) throw error;
   const { data: { session } } = await supabase.auth.getSession();
   if (session?.user.id !== userId) throw new Error("Account changed during reset");
-  lastCycle = null;
   savePortfolio({ cash: INITIAL_CASH, totalValue: INITIAL_CASH, positions: [], trades: [] }, { silent: true });
   applyServerSnapshot(data as unknown as ServerSnapshot, userId);
 }
@@ -87,7 +91,7 @@ export async function startRankedPractice(userId: string): Promise<void> {
 export async function startCloudSync(userId: string | null): Promise<ServerSnapshot | null> {
   activeUser = userId;
   const generation = ++syncGeneration;
-  if (!userId) { lastCycle = null; return null; }
+  if (!userId) return null;
   try {
     const snapshot = await reconcilePortfolio(userId);
     if (activeUser !== userId || generation !== syncGeneration) return null;
