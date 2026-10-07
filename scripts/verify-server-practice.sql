@@ -1,4 +1,4 @@
--- Transactional production verification; all fixtures and changes roll back.
+-- Isolated database verification only. Never run authentication fixtures on production.
 BEGIN;
 INSERT INTO auth.users(id,email,raw_user_meta_data) VALUES
  ('00000000-0000-4000-8000-000000000151','audit-c15-a@example.invalid','{"username":"audit_c15_a"}'),

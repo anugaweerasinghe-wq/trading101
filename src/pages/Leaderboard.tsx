@@ -127,49 +127,19 @@ export default function Leaderboard() {
   useEffect(() => {
     (async () => {
       setDuelsLoading(true);
-      const { data: raw } = await supabase
-        .from("duels")
-        .select("id, code, creator_id, opponent_id, creator_start_value, opponent_start_value, ends_at")
-        .not("opponent_id", "is", null)
-        .order("created_at", { ascending: false })
-        .limit(50);
-
-      const list = raw ?? [];
-      if (list.length === 0) {
-        setDuels([]);
-        setDuelsLoading(false);
-        return;
-      }
-
-      const ids = Array.from(
-        new Set(list.flatMap((d) => [d.creator_id, d.opponent_id].filter(Boolean) as string[])),
-      );
-      const [{ data: profiles }, { data: stats }] = await Promise.all([
-        supabase.from("profiles").select("id, username").in("id", ids).eq("is_public", true),
-        supabase.from("trader_stats").select("user_id, portfolio_value").in("user_id", ids),
-      ]);
-      const nameOf = new Map((profiles ?? []).map((p) => [p.id, p.username]));
-      const valueOf = new Map((stats ?? []).map((s) => [s.user_id, Number(s.portfolio_value)]));
-
-      const mapped = list
-        .filter((d) => nameOf.has(d.creator_id) && nameOf.has(d.opponent_id as string))
-        .map((d) => {
-          const cStart = Number(d.creator_start_value);
-          const oStart = Number(d.opponent_start_value ?? 0) || cStart;
-          const cVal = valueOf.get(d.creator_id) ?? cStart;
-          const oVal = valueOf.get(d.opponent_id as string) ?? oStart;
-          return {
-            id: d.id,
-            code: d.code,
-            creatorName: nameOf.get(d.creator_id) as string,
-            opponentName: nameOf.get(d.opponent_id as string) as string,
-            creatorPct: ((cVal - cStart) / cStart) * 100,
-            opponentPct: ((oVal - oStart) / oStart) * 100,
-            endsAt: d.ends_at,
-            finished: new Date(d.ends_at).getTime() <= Date.now(),
-          };
-        });
-
+      const { data, error } = await supabase.rpc("get_public_practice_duels", { p_limit: 50 });
+      if (error) { setDuels([]); setDuelsLoading(false); return; }
+      const list = (data ?? []) as unknown as {
+        id: string; code: string; creator_name: string; opponent_name: string;
+        creator_start_value: number; opponent_start_value: number;
+        creator_value: number; opponent_value: number; ends_at: string; settled_at: string | null;
+      }[];
+      const mapped = list.filter(Boolean).map(d => ({
+        id: d.id, code: d.code, creatorName: d.creator_name, opponentName: d.opponent_name,
+        creatorPct: (Number(d.creator_value) - Number(d.creator_start_value)) / Number(d.creator_start_value) * 100,
+        opponentPct: (Number(d.opponent_value) - Number(d.opponent_start_value)) / Number(d.opponent_start_value) * 100,
+        endsAt: d.ends_at, finished: !!d.settled_at,
+      }));
       setDuels(mapped);
       setDuelsLoading(false);
     })();

@@ -40,6 +40,13 @@ export type Database = {
       }
       duels: {
         Row: {
+          score_mode: string
+          settled_at: string | null
+          creator_cycle_id: string | null
+          opponent_cycle_id: string | null
+          creator_final_value: number | null
+          opponent_final_value: number | null
+
           code: string
           created_at: string
           creator_id: string
@@ -53,6 +60,13 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          score_mode?: string
+          settled_at?: string | null
+          creator_cycle_id?: string | null
+          opponent_cycle_id?: string | null
+          creator_final_value?: number | null
+          opponent_final_value?: number | null
+
           code: string
           created_at?: string
           creator_id: string
@@ -66,6 +80,13 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          score_mode?: string
+          settled_at?: string | null
+          creator_cycle_id?: string | null
+          opponent_cycle_id?: string | null
+          creator_final_value?: number | null
+          opponent_final_value?: number | null
+
           code?: string
           created_at?: string
           creator_id?: string
@@ -325,6 +346,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_practice_duel_score: { Args: { p_duel_id: string }; Returns: Json }
+      get_public_practice_duels: { Args: { p_limit?: number }; Returns: Json }
       initialize_practice_portfolio: { Args: { p_import?: Json }; Returns: Json }
       record_practice_trade: { Args: { p_asset_id: string; p_side: string; p_quantity: number; p_request_id: string }; Returns: Json }
       start_ranked_practice: { Args: Record<PropertyKey, never>; Returns: Json }

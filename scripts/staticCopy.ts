@@ -337,7 +337,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How a practice duel works",
         p: [
-          "Create an invite link and send it to a friend. Each participant is measured from their own recorded starting balance, which can differ. The page shows a 30-day countdown and compares client-synced simulated percentage changes. These are not independently verified results, and the displayed statistics are not a frozen record of final standings.",
+          "Create an invite link and send it to a friend. Both starting values are recorded when the invitation is accepted; the values can differ. The page shows a 30-day countdown and compares server-recorded simulated percentage changes. Final scores use trades and the last cached valuation quotes available at the deadline and are then frozen. Older client-summary duels are labelled legacy because reliable final values cannot be recovered.",
           "Nothing is wagered and nothing is won. There is no entry fee, no prize pool and no real money at any point — this is a study device that uses mild competition to make daily practice stick.",
         ],
       },
