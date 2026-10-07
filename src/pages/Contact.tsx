@@ -285,9 +285,9 @@ export default function Contact() {
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed mt-3">
               Guest practice records are stored in the browser that created them. Optional account sync
-              can save cash and open positions and restore them on another device when the service is
-              available. It does not restore individual trade history, journal entries, individual course
-              badges or lesson progress. Clearing site data removes local records; a synced account copy
+              stores account cash, positions and server-recorded trades for restoration on another device when the service is
+              available. Earlier guest trade history, journal entries, individual course
+              badges and lesson progress remain browser-held. Clearing site data removes local records; a synced account copy
               may still exist. Account sync is not a complete backup of your learning record.
             </p>
           </section>

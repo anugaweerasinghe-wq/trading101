@@ -20,4 +20,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: node --import tsx scripts/verify-journal-summary.ts
+      - run: node --import tsx scripts/verify-provider-quotes.ts
+      - run: node --import tsx scripts/verify-market-rate-limit.ts
+      - run: node --import tsx scripts/verify-snapshot-version.ts
+      - run: npm run verify:backend
       - run: npm run build

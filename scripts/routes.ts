@@ -213,7 +213,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "Your Practice Portfolio — Positions, P&L, Analytics | TradeHQ",
     description: `Track simulated positions, realised and unrealised P&L, max drawdown, open-position P&L dispersion and allocation snapshots. Free practice portfolio seeded with ${BALANCE}.`,
     h1: "Practice Portfolio",
-    summary: `Review simulated positions, trades, P&L, drawdown and allocation snapshots. Guest records stay in your browser; signed-in cash and open positions can sync when the service is available. Individual trade history remains browser-held.`,
+    summary: `Review simulated positions, trades, P&L, drawdown and allocation snapshots. Guest records stay in your browser; account cash, positions and server-recorded trades restore when the service is available. Server-recorded account trades restore across devices; earlier guest history and journals remain browser-held.`,
     priority: "0.8",
     changefreq: "daily",
   });
@@ -241,9 +241,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/leaderboard",
     title: "Trader Leaderboard — Top Practice Portfolios | TradeHQ",
-    description: `Community practice board for public TradeHQ accounts. Client-synced simulated portfolio statistics are sorted by submitted percentage return and are not independently verified.`,
+    description: `Community practice board for public TradeHQ accounts. Ranked portfolios use server-recorded simulated trades, cached provider quotes or fixed simulator prices. Imported browser scores are excluded.`,
     h1: "Trader Leaderboard",
-    summary: `New accounts start public and can display client-synced simulated portfolio statistics; profile visibility can be switched off. These browser-originated figures are not audited performance records.`,
+    summary: `New accounts start public and can switch private. Rankings require five server-recorded trades in a ranked portfolio. Imported browser portfolios are excluded; practice results are not audited investment returns.`,
     priority: "0.7",
     changefreq: "daily",
   });
@@ -311,9 +311,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/challenge",
     title: `Challenge a Friend — 30-Day ${BALANCE} Practice Duel | TradeHQ`,
-    description: `Challenge a friend to a 30-day simulated trading exercise. Each side is measured from its own recorded starting value; scores are client-synced and not independently verified.`,
+    description: `Challenge a friend to a 30-day simulated trading exercise. Each side is measured from its own recorded starting value; scores use server-recorded simulated trades and are frozen at the deadline.`,
     h1: "Challenge a Friend",
-    summary: `Create a shareable invite for a 30-day practice duel. Each participant is measured from their own recorded starting value, using client-synced simulated statistics. Educational simulation only.`,
+    summary: `Create a shareable invite for a 30-day practice duel. Each participant is measured from their own recorded starting value, using server-recorded trades and deadline-frozen simulated scores. Educational simulation only.`,
     priority: "0.6",
     changefreq: "weekly",
   });
@@ -323,7 +323,7 @@ export function buildRoutes(): RouteMeta[] {
     title: "Privacy Policy | TradeHQ",
     description: `TradeHQ privacy policy covering guest browser data, signed-in portfolio sync, optional accounts, analytics, advertising and your choices.`,
     h1: "Privacy Policy",
-    summary: `Guest simulator records stay in your browser. Signed-in cash and open positions can sync with Supabase; account, community and consented analytics features also involve provider processing. See the full policy for details.`,
+    summary: `Guest simulator records stay in your browser. Account cash, positions and server-recorded trades are stored with Supabase; account, community and consented analytics features also involve provider processing. See the full policy for details.`,
     priority: "0.3",
     changefreq: "monthly",
   });

@@ -1,149 +1,104 @@
-/**
- * Cloud persistence for signed-in users' practice portfolios.
- *
- * Reconciliation (deterministic, never silently discards data):
- *  - No cloud portfolio yet → upload this browser's portfolio (guest → account migration).
- *  - Browser portfolio already belongs to this account → newest copy wins.
- *  - Browser holds guest data or another account's data while a cloud portfolio
- *    exists → keep the cloud portfolio, back up the browser copy locally.
- *
- * Educational simulation only — not financial advice.
+/** Account portfolios change only through server-recorded orders.
+ * Browser imports remain unranked; an existing account copy always wins.
  */
+import { snapshotIsStale, type SnapshotVersion } from "./snapshotVersion";
 import { supabase } from "@/integrations/supabase/client";
 import { ASSETS, INITIAL_CASH } from "./assets";
-import { getPortfolio, savePortfolio, setPortfolioSaveListener, getLocalUpdatedAt } from "./portfolio";
-import type { Asset, AssetType, Portfolio, Position } from "./types";
-
+import { getPortfolio, savePortfolio } from "./portfolio";
+import type { Portfolio, Position, Trade } from "./types";
+import type { Json } from "@/integrations/supabase/types";
 const OWNER_KEY = "tradehq:portfolio-owner";
-const GUEST_BACKUP_KEY = "tradehq_portfolio_backup";
-const ASSET_TYPES: AssetType[] = ["stock", "etf", "crypto", "commodity", "forex"];
-
-export type ReconcileOutcome = "uploaded" | "restored" | "kept-local" | "kept-cloud-backed-up" | "unchanged";
-
+const BACKUP_KEY = "tradehq_portfolio_backup";
 let activeUser: string | null = null;
-let pushTimer: ReturnType<typeof setTimeout> | null = null;
-let reconciling = false;
-
+let syncGeneration = 0;
+const snapshotVersions = new Map<string, SnapshotVersion>();
+export interface ServerSnapshot {
+  trades: ServerTrade[];
+  cash: number; ranked: boolean; cycle_id: string; updated_at: string;
+  positions: { asset_id: string; symbol: string; asset_type: string; quantity: number; avg_price: number; last_price: number }[];
+}
+export interface ServerTrade {
+  id: string; asset_id: string; side: "buy" | "sell"; quantity: number;
+  price: number; total: number; created_at: string; price_source: string;
+}
 function ownerOfLocal(): string | null {
   try { return localStorage.getItem(OWNER_KEY); } catch { return null; }
 }
-function setOwner(uid: string) {
-  try { localStorage.setItem(OWNER_KEY, uid); } catch { /* ignore */ }
+function backUpLocal() {
+  try { localStorage.setItem(`${BACKUP_KEY}:${ownerOfLocal() ?? "guest"}:${crypto.randomUUID()}`, JSON.stringify({ savedAt: new Date().toISOString(), portfolio: getPortfolio() })); } catch { /* unavailable storage */ }
 }
-
-function hasActivity(p: Portfolio) {
-  return p.trades.length > 0 || p.positions.length > 0 || Math.abs(p.cash - INITIAL_CASH) > 0.01;
-}
-
-export async function pushPortfolio(userId: string, p: Portfolio = getPortfolio()): Promise<void> {
-  const cash = Math.max(0, Math.round(p.cash * 100) / 100);
-  const { data: existing } = await supabase
-    .from("practice_portfolios").select("trades_count").eq("user_id", userId).maybeSingle();
-  // Trade history is browser-held; never lower the stored count from a restored device.
-  const trades_count = Math.max(p.trades.length, existing?.trades_count ?? 0);
-  const { error: pErr } = await supabase
-    .from("practice_portfolios")
-    .upsert({ user_id: userId, cash, trades_count }, { onConflict: "user_id" });
-  if (pErr) throw pErr;
-
-  const valid = p.positions.filter(
-    (x) => x.quantity > 0 && x.avgPrice > 0 && /^[a-z0-9-]{1,20}$/.test(x.asset.id) && ASSET_TYPES.includes(x.asset.type),
-  );
-  const keep = valid.map((x) => x.asset.id);
-  let del = supabase.from("practice_positions").delete().eq("user_id", userId);
-  if (keep.length) del = del.not("asset_id", "in", `(${keep.join(",")})`);
-  const { error: dErr } = await del;
-  if (dErr) throw dErr;
-
-  if (valid.length) {
-    const { error: uErr } = await supabase.from("practice_positions").upsert(
-      valid.map((x) => ({
-        user_id: userId,
-        asset_id: x.asset.id,
-        symbol: x.asset.symbol.slice(0, 20),
-        asset_type: x.asset.type,
-        quantity: x.quantity,
-        avg_price: x.avgPrice,
-        last_price: x.asset.price > 0 ? x.asset.price : x.avgPrice,
-      })),
-      { onConflict: "user_id,asset_id" },
-    );
-    if (uErr) throw uErr;
-  }
-}
-
-function toLocal(cash: number, rows: { asset_id: string; symbol: string; asset_type: string; quantity: number; avg_price: number; last_price: number }[]): Portfolio {
-  const positions: Position[] = rows.map((r) => {
-    const known = ASSETS.find((a) => a.id === r.asset_id);
-    const asset: Asset = known
-      ? { ...known, price: Number(r.last_price) }
-      : { id: r.asset_id, symbol: r.symbol, name: r.symbol, type: r.asset_type as AssetType, price: Number(r.last_price), change: 0, changePercent: 0 };
-    const qty = Number(r.quantity);
-    const avg = Number(r.avg_price);
-    const currentValue = asset.price * qty;
-    const cost = avg * qty;
-    return { asset, quantity: qty, avgPrice: avg, currentValue, profitLoss: currentValue - cost, profitLossPercent: cost ? ((currentValue - cost) / cost) * 100 : 0 };
-  });
-  return { cash: Number(cash), totalValue: Number(cash) + positions.reduce((s, x) => s + x.currentValue, 0), positions, trades: [] };
-}
-
-export async function reconcilePortfolio(userId: string): Promise<ReconcileOutcome> {
+export function applyServerSnapshot(snapshot: ServerSnapshot, userId: string): Portfolio {
   const local = getPortfolio();
-  const { data: cloud, error } = await supabase
-    .from("practice_portfolios").select("cash, updated_at").eq("user_id", userId).maybeSingle();
+  const sameOwner = ownerOfLocal() === userId;
+  const version = { cycle: snapshot.cycle_id, count: snapshot.trades?.length ?? 0, updatedAt: snapshot.updated_at };
+  if (sameOwner && snapshotIsStale(version, snapshotVersions.get(userId) ?? null)) return local;
+  const serverIds = new Set((snapshot.trades ?? []).map(t => t.id));
+  if (sameOwner && local.trades.some(t => !serverIds.has(t.id))) backUpLocal();
+  if (!sameOwner && (local.trades.length || local.positions.length || local.cash !== INITIAL_CASH)) backUpLocal();
+  const positions: Position[] = snapshot.positions.map((r) => {
+    const known = ASSETS.find((a) => a.id === r.asset_id);
+    if (!known) throw new Error("Unknown account asset");
+    const asset = { ...known, price: Number(r.last_price) };
+    const quantity = Number(r.quantity), avgPrice = Number(r.avg_price);
+    const currentValue = asset.price * quantity, cost = avgPrice * quantity;
+    return { asset, quantity, avgPrice, currentValue, profitLoss: currentValue - cost,
+      profitLossPercent: cost ? (currentValue - cost) / cost * 100 : 0 };
+  });
+  const localJournals = new Map(sameOwner ? local.trades.map(t => [t.id, t.journal]) : []);
+  const trades: Trade[] = (snapshot.trades ?? []).map(t => ({
+    id: t.id, assetId: t.asset_id, symbol: ASSETS.find(a => a.id === t.asset_id)?.symbol ?? t.asset_id,
+    type: t.side, quantity: Number(t.quantity), price: Number(t.price), total: Number(t.total),
+    timestamp: new Date(t.created_at), journal: localJournals.get(t.id),
+  }));
+  const portfolio: Portfolio = { cash: Number(snapshot.cash), positions,
+    totalValue: Number(snapshot.cash) + positions.reduce((n, p) => n + p.currentValue, 0),
+    trades };
+  snapshotVersions.set(userId, version);
+  savePortfolio(portfolio, { silent: true });
+  try { localStorage.setItem(OWNER_KEY, userId); } catch { /* unavailable storage */ }
+  return portfolio;
+}
+export async function reconcilePortfolio(userId: string): Promise<ServerSnapshot> {
+  const local = getPortfolio();
+  const p_import: Json = { cash: local.cash,
+    has_activity: local.trades.length > 0 || !!localStorage.getItem("tradesandbox_last_bonus"),
+    positions: local.positions.map((p) => ({ asset_id: p.asset.id, quantity: p.quantity, avg_price: p.avgPrice })),
+  };
+  const { data, error } = await supabase.rpc("initialize_practice_portfolio", { p_import: ownerOfLocal() && ownerOfLocal() !== userId ? null : p_import });
   if (error) throw error;
-
-  if (!cloud) {
-    await pushPortfolio(userId, local);
-    setOwner(userId);
-    return "uploaded";
-  }
-
-  const owner = ownerOfLocal();
-  const cloudTime = new Date(cloud.updated_at).getTime();
-
-  if (owner === userId && getLocalUpdatedAt() > cloudTime) {
-    await pushPortfolio(userId, local);
-    return "kept-local";
-  }
-
-  const { data: rows, error: rErr } = await supabase
-    .from("practice_positions")
-    .select("asset_id, symbol, asset_type, quantity, avg_price, last_price")
-    .eq("user_id", userId);
-  if (rErr) throw rErr;
-
-  if (owner !== userId && hasActivity(local)) {
-    try { localStorage.setItem(GUEST_BACKUP_KEY, JSON.stringify({ savedAt: new Date().toISOString(), portfolio: local })); } catch { /* ignore */ }
-  }
-  const restored = toLocal(Number(cloud.cash), rows ?? []);
-  // Keep this browser's trade history when it belongs to the same account.
-  if (owner === userId) restored.trades = local.trades;
-  savePortfolio(restored, { silent: true });
-  setOwner(userId);
-  return owner !== userId && hasActivity(local) ? "kept-cloud-backed-up" : owner === userId ? "unchanged" : "restored";
+  if (!data) throw new Error("Account portfolio unavailable");
+  return data as unknown as ServerSnapshot;
 }
-
-/** Called by the auth provider whenever the signed-in user changes. */
-export async function startCloudSync(userId: string | null): Promise<ReconcileOutcome | null> {
+/** Refreshes account state; never uploads client cash or scores. */
+export async function pushPortfolio(userId: string): Promise<void> {
+  const generation = syncGeneration;
+  const snapshot = await reconcilePortfolio(userId);
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.user.id !== userId || generation !== syncGeneration) throw new Error("Account changed during refresh");
+  applyServerSnapshot(snapshot, userId);
+}
+export async function startRankedPractice(userId: string): Promise<void> {
+  await pushPortfolio(userId);
+  backUpLocal();
+  const { data, error } = await supabase.rpc("start_ranked_practice");
+  if (error) throw error;
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.user.id !== userId) throw new Error("Account changed during reset");
+  savePortfolio({ cash: INITIAL_CASH, totalValue: INITIAL_CASH, positions: [], trades: [] }, { silent: true });
+  applyServerSnapshot(data as unknown as ServerSnapshot, userId);
+}
+/** Generation prevents stale sign-in work crossing accounts. */
+export async function startCloudSync(userId: string | null): Promise<ServerSnapshot | null> {
   activeUser = userId;
+  const generation = ++syncGeneration;
   if (!userId) return null;
-  reconciling = true;
   try {
-    return await reconcilePortfolio(userId);
-  } catch (e) {
-    console.warn("Practice portfolio sync failed", e);
+    const snapshot = await reconcilePortfolio(userId);
+    if (activeUser !== userId || generation !== syncGeneration) return null;
+    applyServerSnapshot(snapshot, userId);
+    return snapshot;
+  } catch (error) {
+    console.warn("Account portfolio restoration failed", error);
     return null;
-  } finally {
-    reconciling = false;
   }
 }
-
-setPortfolioSaveListener((p) => {
-  const uid = activeUser;
-  if (!uid || reconciling) return;
-  if (pushTimer) clearTimeout(pushTimer);
-  pushTimer = setTimeout(() => {
-    pushPortfolio(uid, p).then(() => setOwner(uid)).catch((e) => console.warn("Practice portfolio upload failed", e));
-  }, 800);
-});

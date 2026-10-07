@@ -60,7 +60,7 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
   
   // Use live data if available, otherwise fall back to asset data
   const displayPrice = liveData?.price ?? asset.price;
-  const displayChange = liveData?.changePercent24h ?? asset.changePercent;
+  const displayChange = liveData ? liveData.changePercent24h : asset.changePercent;
   const displayVolume = liveData?.volume24h;
   const displayMarketCap = liveData?.marketCap;
 
@@ -210,7 +210,7 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
                   </span>
                 ) : (
                   <>
-                    {displayChange >= 0 ? '+' : ''}{displayChange.toFixed(2)}%
+                    {displayChange === null ? 'Unavailable' : `${displayChange >= 0 ? '+' : ''}${displayChange.toFixed(2)}%`}
                   </>
                 )}
               </span>
@@ -344,7 +344,7 @@ export function AssetIntelligence({ asset, liveMarketCap, liveData, isLiveLoadin
               </span>
               {liveData?.lastUpdated && (
                 <span className="text-muted-foreground/60 text-xs">
-                  Fetched {new Date(liveData.lastUpdated).toLocaleTimeString()}
+                  Provider observation {new Date(liveData.lastUpdated).toLocaleString()}
                 </span>
               )}
             </div>

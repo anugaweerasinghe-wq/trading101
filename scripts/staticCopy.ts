@@ -62,7 +62,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How the practice trading desk works",
         p: [
-          "The trading desk is where simulated orders are placed. You choose an instrument, choose a side, choose a size, and the order is filled against the simulator's current price. Fills and results are recorded in your browser. Signed-in cash and open positions can also sync with your account when the service is available; individual trade history remains local.",
+          "The trading desk is where simulated orders are placed. You choose an instrument, choose a side, choose a size, and the order is filled against the simulator's current price. Guest fills and results are recorded in your browser. Account orders execute through the server and cash, positions and server-recorded trade history restore across devices when the service is available.",
           "One order type is supported today: the market order, which fills immediately at the shown simulator price. Limit and stop orders are explained in the glossary but cannot yet be placed on the desk. Position sizing is entirely up to you, which is deliberate — learning to size a position is one of the few skills a simulator can teach almost as well as a live account.",
         ],
       },
@@ -337,7 +337,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How a practice duel works",
         p: [
-          "Create an invite link and send it to a friend. Each participant is measured from their own recorded starting balance, which can differ. The page shows a 30-day countdown and compares client-synced simulated percentage changes. These are not independently verified results, and the displayed statistics are not a frozen record of final standings.",
+          "Create an invite link and send it to a friend. Both starting values are recorded when the invitation is accepted; the values can differ. The page shows a 30-day countdown and compares server-recorded simulated percentage changes. Final scores use trades and the last cached valuation quotes available at the deadline and are then frozen. Older client-summary duels are labelled legacy because reliable final values cannot be recovered.",
           "Nothing is wagered and nothing is won. There is no entry fee, no prize pool and no real money at any point — this is a study device that uses mild competition to make daily practice stick.",
         ],
       },
@@ -453,7 +453,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "Summary of what we store",
         p: [
-          "Guest practice cash, positions and trade history stay in your browser. Signed-in portfolio sync sends cash, open-position quantities, asset identifiers, average purchase prices, last recorded prices and a trade count to Supabase. Cash and open positions can be restored on another device when sync succeeds; individual trade history, journals, watchlists, course progress and streaks remain browser-held.",
+          "Guest practice cash, positions and trade history stay in your browser. Supabase stores account cash, positions and server-recorded orders with execution prices, fees, time and simulated results. These records restore across devices when available. A first browser import stores an unranked cash/position snapshot; a fresh ranked cycle archives the previous account snapshot privately. Earlier guest history, journals, watchlists, course progress and streaks remain browser-held.",
           "Clearing site data removes browser-held records but does not delete a portfolio already synced to your account. Optional accounts, public profiles, reviews and duels also store the data needed for those features on our backend. Contact the maintainer for an account-data or deletion request.",
         ],
       },

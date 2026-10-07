@@ -52,6 +52,11 @@ function AssetIntelligenceWithLiveData({ asset }: { asset: Asset }) {
 export default function TradeAsset() {
   const { symbol } = useParams<{ symbol: string }>();
   const [portfolio, setPortfolio] = useState(getPortfolio());
+  useEffect(() => {
+    const refresh = () => setPortfolio(getPortfolio());
+    window.addEventListener("tradehq:portfolio-updated", refresh);
+    return () => window.removeEventListener("tradehq:portfolio-updated", refresh);
+  }, []);
   const [assets, setAssets] = useState<Asset[]>([]);
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -202,20 +207,20 @@ export default function TradeAsset() {
     }
   }, [assets, selectedAsset]);
 
-  const handleTrade = useCallback((
+  const handleTrade = useCallback(async (
     asset: Asset,
     type: 'buy' | 'sell',
     quantity: number,
     orderType?: 'market' | 'limit',
     limitPrice?: number
   ) => {
-    const result = executeTrade(portfolio, asset, type, quantity);
+    const result = await executeTrade(portfolio, asset, type, quantity);
     
     if (result.success && result.portfolio) {
       setPortfolio(result.portfolio);
       toast({
         title: `${type === 'buy' ? '🟢' : '🔴'} Order Executed`,
-        description: `${type === 'buy' ? 'Bought' : 'Sold'} ${quantity.toFixed(4)} ${asset.symbol} at $${asset.price.toLocaleString()}`,
+        description: result.message,
       });
     } else {
       toast({

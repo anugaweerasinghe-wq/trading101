@@ -19,11 +19,11 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Common questions",
       list: [
         "Is TradeHQ free? Yes, entirely. There is no paid tier, no trial and no card required.",
-        "Do I need an account? No. Practice trading, courses and the glossary work without signing up. An optional account supports profiles and community features. Cash and open positions can sync across devices when portfolio sync is available; individual trade history and other browser-held records are separate.",
+        "Do I need an account? No. Practice trading, courses and the glossary work without signing up. An optional account supports profiles and community features. Account cash, positions and server-recorded trades restore across devices when available; earlier guest trade history, journals and course progress remain on the original browser.",
         "Is the money real? No. Every balance, order and result is simulated, and the platform holds no funds.",
         "Are the prices real? They are based on public market data and refreshed periodically, with a simulation layer between refreshes. They are not a live trading feed.",
         "Does TradeHQ give advice? No. There are no signals, price targets or recommendations anywhere on the site.",
-        "Where is my data? Guest practice records stay in your browser. Signed-in cash and open positions can be uploaded to Supabase and restored when sync succeeds. Trade history, journal entries, course progress and streaks remain browser-held; a synced badge count does not restore the course record.",
+        "Where is my data? Guest practice records stay in your browser. Signed-in cash, positions and server-recorded trades are stored in Supabase and restored when the service is available. Earlier guest trade history, journal entries, course progress and streaks remain browser-held; a synced badge count does not restore the course record.",
       ],
     },
   ],
@@ -300,7 +300,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "How to influence it",
       p: [
-        "Guest portfolios, journals and course progress use browser storage. Optional sign-in can sync cash and open positions when the service is available, alongside profile and community features. It does not restore individual trade history, journals or course progress on another device.",
+        "Guest portfolios, journals and course progress use browser storage. Optional sign-in stores account cash, positions and server-recorded trades for restoration on another device, alongside profile and community features. Earlier guest trade history, journals and course progress remain browser-held.",
         "The contact page is the roadmap's real input. Describe the thing you were trying to learn and where the site failed you — that is far more actionable than a feature name, and it is how most of the items above ended up on the list.",
       ],
     },
@@ -311,7 +311,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Why this site exists",
       p: [
         "Most people meet trading through advertising: a broker campaign, an influencer's screenshot, or an app that makes placing an order feel like a game. Almost none of that explains what an order actually does, what position sizing is, or how quickly leverage removes an account. TradeHQ exists to be the boring middle step between that advertising and someone's savings.",
-        "TradeHQ does not present practice results as evidence of future income. Community Reviews publish visitor-submitted feedback without independently verifying identity or experience. The Community Practice Board displays optional account-controlled simulated statistics, not verified investment returns.",
+        "TradeHQ does not present practice results as evidence of future income. Community Reviews publish visitor-submitted feedback without independently verifying identity or experience. The Community Practice Board displays server-recorded ranked simulated portfolios, not verified investment returns.",
       ],
     },
     {
@@ -336,7 +336,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Support questions we answer most often",
       list: [
-        "My portfolio disappeared — check which account, browser and device you are using. Guest records are browser-held. Signed-in cash and open positions can be restored if they were successfully synced, but individual trade history, journals and course progress stay on the original browser. If sync fails, contact the maintainer before resetting the practice account.",
+        "My portfolio disappeared — check which account, browser and device you are using. Guest records are browser-held. Account cash, positions and server-recorded trades can be restored when the service is available. Earlier guest history, journals and course progress stay on the original browser. If sync fails, contact the maintainer before resetting the practice account.",
         "How do I reset my practice balance? There is a reset control in the portfolio area; it returns the account to $100,000 in virtual cash and clears open positions.",
         "A price looks wrong — quotes refresh periodically and are simulated between refreshes, so they will not match a live broker feed exactly.",
         "Can I use TradeHQ on my phone? Yes, the whole site works on mobile browsers; there is no app to install.",
@@ -361,7 +361,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "Cookies and analytics",
       p: [
-        "TradeHQ stores guest practice records in local browser storage. Signed-in cash and open positions can also sync with Supabase. Optional analytics and advertising services can use cookies or similar identifiers after the applicable consent choice; the privacy policy explains those providers and controls.",
+        "TradeHQ stores guest practice records in local browser storage. Account cash, positions and server-recorded trades are stored with Supabase. Optional analytics and advertising services can use cookies or similar identifiers after the applicable consent choice; the privacy policy explains those providers and controls.",
       ],
     },
     {

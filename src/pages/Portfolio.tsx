@@ -74,6 +74,12 @@ export default function Portfolio() {
     assetsRef.current = assets;
   }, [assets]);
 
+  useEffect(() => {
+    const refresh = () => setPortfolio(getPortfolio());
+    window.addEventListener('tradehq:portfolio-updated', refresh);
+    return () => window.removeEventListener('tradehq:portfolio-updated', refresh);
+  }, []);
+
   // Fetch real price for a single held asset
   const fetchLivePrice = async (asset: typeof ASSETS[number]) => {
     try {
@@ -168,8 +174,9 @@ export default function Portfolio() {
   useEffect(() => {
     isMounted.current = true;
     const initPortfolio = async () => {
-      let updated = await updatePortfolioOverTime(portfolio);
-      updated = updatePositionPrices(updated, assetsRef.current);
+      await updatePortfolioOverTime(getPortfolio());
+      if (!isMounted.current) return;
+      const updated = updatePositionPrices(getPortfolio(), assetsRef.current);
       setPortfolio(updated);
       savePortfolio(updated);
       initializeMilestones(updated.totalValue);

@@ -1,6 +1,8 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { marketLimit, RateLimitUnavailable } from "../_shared/rateLimitPolicy.ts";
 import { allow, clientIp } from "../_shared/rateLimit.ts";
+import { coinQuote, stockQuote, forexQuote } from "../_shared/providerQuotes.ts";
 import { cachePrice } from "../_shared/priceCache.ts";
 
 const corsHeaders = {
@@ -66,28 +68,8 @@ const COMMODITY_MAP: Record<string, string> = {
   'silver': 'silver-token',
 };
 
-type DataStatus = 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider';
-
-interface DataProvenance {
-  status: DataStatus;
-  provider: string;
-  fetchedAt: string;
-  note?: string;
-}
-
-interface MarketData {
-  price: number;
-  change24h: number;
-  changePercent24h: number;
-  high24h: number;
-  low24h: number;
-  volume24h: number;
-  marketCap?: number;
-  lastUpdated: string;
-  /** Legacy compatibility field. Use provenance.status for user-facing labels. */
-  source: 'live' | 'simulated';
-  provenance: DataProvenance;
-}
+interface DataProvenance { status: 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider'; provider: string; fetchedAt: string; observedAt?: string | null; fields?: Record<string,string>; note?: string; }
+interface MarketData { price: number; change24h: number | null; changePercent24h: number | null; high24h: number | null; low24h: number | null; volume24h: number | null; marketCap?: number; lastUpdated: string | null; source: 'live' | 'simulated'; provenance: DataProvenance; }
 
 interface CandleData {
   time: string;
@@ -105,7 +87,7 @@ async function fetchCryptoData(assetId: string): Promise<MarketData | null> {
 
   try {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_high_24h=true&include_low_24h=true&include_market_cap=true`,
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_last_updated_at=true&include_market_cap=true`,
       { headers: { 'Accept': 'application/json' } }
     );
 
@@ -114,25 +96,7 @@ async function fetchCryptoData(assetId: string): Promise<MarketData | null> {
     const coin = data[coinId];
     if (!coin || !coin.usd) return null;
 
-    const price = coin.usd;
-    const changePct = coin.usd_24h_change ?? 0;
-
-    return {
-      price,
-      change24h: price * (changePct / 100),
-      changePercent24h: changePct,
-      high24h: coin.usd_high_24h ?? price * 1.02,
-      low24h: coin.usd_low_24h ?? price * 0.98,
-      volume24h: coin.usd_24h_vol ?? 0,
-      marketCap: coin.usd_market_cap ?? 0,
-      lastUpdated: new Date().toISOString(),
-      source: 'live',
-      provenance: {
-        status: 'realtime',
-        provider: 'CoinGecko',
-        fetchedAt: new Date().toISOString(),
-      },
-    };
+    return coinQuote(coin);
   } catch (error) {
     console.error(`Crypto fetch error ${assetId}:`, error);
     return null;
@@ -172,18 +136,7 @@ async function fetchStockData(assetId: string): Promise<MarketData | null> {
         const data = await response.json();
         if (data.results?.[0]) {
           const r = data.results[0];
-          const change = r.c - r.o;
-          return {
-            price: r.c, change24h: change, changePercent24h: (change / r.o) * 100,
-            high24h: r.h, low24h: r.l, volume24h: r.v,
-            lastUpdated: new Date().toISOString(), source: 'live',
-            provenance: {
-              status: 'previous_close',
-              provider: 'Polygon',
-              fetchedAt: new Date().toISOString(),
-              note: 'Previous trading day aggregate; not a realtime quote.',
-            },
-          };
+          return stockQuote(r, 'Polygon');
         }
       }
     } catch (e) { console.error(`Polygon error ${symbol}:`, e); }
@@ -200,22 +153,7 @@ async function fetchStockData(assetId: string): Promise<MarketData | null> {
       const data = await response.json();
       const q = data['Global Quote'];
       if (q?.['05. price']) {
-        const price = parseFloat(q['05. price']);
-        return {
-          price,
-          change24h: parseFloat(q['09. change'] || '0'),
-          changePercent24h: parseFloat((q['10. change percent'] || '0%').replace('%', '')),
-          high24h: parseFloat(q['03. high'] || String(price)),
-          low24h: parseFloat(q['04. low'] || String(price)),
-          volume24h: parseFloat(q['06. volume'] || '0'),
-          lastUpdated: new Date().toISOString(), source: 'live',
-          provenance: {
-            status: 'delayed',
-            provider: 'Alpha Vantage',
-            fetchedAt: new Date().toISOString(),
-            note: 'Provider quote may be delayed or end-of-day depending on entitlement.',
-          },
-        };
+        return stockQuote(q, 'Alpha Vantage');
       }
     }
   } catch (e) { console.error(`AV error ${symbol}:`, e); }
@@ -237,19 +175,7 @@ async function fetchForexData(assetId: string): Promise<MarketData | null> {
       const data = await response.json();
       const rate = data['Realtime Currency Exchange Rate'];
       if (rate?.['5. Exchange Rate']) {
-        const price = parseFloat(rate['5. Exchange Rate']);
-        const simChange = price * (Math.random() * 0.002 - 0.001);
-        return {
-          price, change24h: simChange, changePercent24h: (simChange / price) * 100,
-          high24h: price * 1.001, low24h: price * 0.999, volume24h: 0,
-          lastUpdated: new Date().toISOString(), source: 'live',
-          provenance: {
-            status: 'mixed',
-            provider: 'Alpha Vantage + TradeHQ simulation',
-            fetchedAt: new Date().toISOString(),
-            note: 'Exchange rate is provider-sourced; change/high/low fields are simulated.',
-          },
-        };
+        return forexQuote(rate);
       }
     }
   } catch (e) { console.error(`Forex error ${assetId}:`, e); }
@@ -301,17 +227,12 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
   const bad = (msg: string, status = 400) =>
-    new Response(JSON.stringify({ error: msg }), { status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    new Response(JSON.stringify({ error: msg }), { status, headers: { ...corsHeaders, 'Content-Type': 'application/json', ...([429,503].includes(status) ? {'Retry-After':'60'} : {}) } });
 
+  if (req.method !== 'GET') return bad('Only GET is supported', 405);
   try {
     const url = new URL(req.url);
     if (url.search.length > 300) return bad('Request too large', 413);
-
-    // Public proxy abuse protection: per-IP burst + per-minute limits (pseudonymised).
-    const ip = clientIp(req);
-    const okBurst = await allow(`ip:${ip}`, 'lmd-burst', 10, 25);
-    const okMin = okBurst && await allow(`ip:${ip}`, 'lmd-min', 60, 90);
-    if (!okBurst || !okMin) return bad('Too many requests — please slow down.', 429);
 
     const assetId = url.searchParams.get('assetId')?.toLowerCase();
     const assetType = url.searchParams.get('type')?.toLowerCase();
@@ -324,6 +245,8 @@ serve(async (req) => {
     if (!assetId || !/^[a-z0-9-]{1,20}$/.test(assetId)) return bad('Valid assetId is required');
     if (!ALLOWED_DATA_TYPES.has(dataType)) return bad('Unsupported dataType');
     if (assetType && !ALLOWED_TYPES.has(assetType)) return bad('Unsupported type');
+
+    if (!await marketLimit(`ip:${clientIp(req)}`, allow)) return bad('Too many requests — please try again later.', 429);
 
     console.log(`Fetching ${dataType} for ${assetId} (type: ${assetType}, days: ${days})`);
 
@@ -362,27 +285,13 @@ serve(async (req) => {
           const coinId = COMMODITY_MAP[assetId];
           try {
             const response = await fetch(
-              `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true`,
+              `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_market_cap=true&include_last_updated_at=true`,
               { headers: { 'Accept': 'application/json' } }
             );
             if (response.ok) {
               const coinData = await response.json();
               if (coinData[coinId]) {
-                const p = coinData[coinId].usd;
-                data = {
-                  price: p,
-                  change24h: p * ((coinData[coinId].usd_24h_change ?? 0) / 100),
-                  changePercent24h: coinData[coinId].usd_24h_change ?? 0,
-                  high24h: p * 1.01, low24h: p * 0.99,
-                  volume24h: coinData[coinId].usd_24h_vol ?? 0,
-                  lastUpdated: new Date().toISOString(), source: 'live' as const,
-                  provenance: {
-                    status: 'proxy',
-                    provider: 'CoinGecko token proxy',
-                    fetchedAt: new Date().toISOString(),
-                    note: 'Token proxy is not the same instrument as traditional spot commodity data.',
-                  },
-                };
+                data = coinQuote(coinData[coinId], true);
               }
             }
           } catch (e) { console.error('Commodity fetch error:', e); }
@@ -395,8 +304,8 @@ serve(async (req) => {
       }
     }
 
-    if (dataType !== 'candles' && data && !Array.isArray(data) && data.source === 'live') {
-      await cachePrice(assetId, data.price, data.provenance?.provider ?? 'provider');
+    if (dataType !== 'candles' && data && !Array.isArray(data) && data.source === 'live' && data.provenance.status !== 'proxy') {
+      await cachePrice(assetId, data.price, data.provenance?.provider ?? 'provider', data.provenance.observedAt ?? null);
     }
 
 
@@ -413,6 +322,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: unknown) {
+    if (error instanceof RateLimitUnavailable) return bad('Market data temporarily unavailable. Please retry later.', 503);
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('Live market data error:', msg);
     return new Response(

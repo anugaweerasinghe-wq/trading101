@@ -8,17 +8,17 @@ import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/
 
 export interface HybridMarketPrice {
   price: number;
-  change24h: number;
-  changePercent24h: number;
-  high24h: number;
-  low24h: number;
-  volume24h: number;
+  change24h: number | null;
+  changePercent24h: number | null;
+  high24h: number | null;
+  low24h: number | null;
+  volume24h: number | null;
   source: 'live' | 'cached' | 'delayed' | 'simulated';
-  lastUpdated: string;
+  lastUpdated: string | null;
   isDelayed: boolean;
 }
 
-const CACHE_KEY = 'tradehq_hybrid_cache';
+const CACHE_KEY = 'tradehq_hybrid_cache_v2';
 const CACHE_TTL = 60000; // 60s
 
 interface CacheEntry {
@@ -86,13 +86,13 @@ async function flushQueue() {
               status === 'simulated' ? 'simulated' : 'delayed';
             const d: HybridMarketPrice = {
               price: result.data.price,
-              change24h: result.data.change24h ?? 0,
-              changePercent24h: result.data.changePercent24h ?? 0,
-              high24h: result.data.high24h ?? result.data.price,
-              low24h: result.data.low24h ?? result.data.price,
-              volume24h: result.data.volume24h ?? 0,
+              change24h: result.data.change24h ?? null,
+              changePercent24h: result.data.changePercent24h ?? null,
+              high24h: result.data.high24h ?? null,
+              low24h: result.data.low24h ?? null,
+              volume24h: result.data.volume24h ?? null,
               source: normalizedSource,
-              lastUpdated: result.data.lastUpdated ?? new Date().toISOString(),
+              lastUpdated: result.data.lastUpdated ?? null,
               isDelayed: normalizedSource !== 'live',
             };
             setCachedPrice(asset.id, d);
@@ -179,7 +179,7 @@ export function useHybridMarketData(asset: Asset | null) {
     // LiveSim fluctuation
     liveSimRef.current = setInterval(() => {
       setData(prev => {
-        if (!prev || prev.source === 'live') return prev;
+        if (!prev || prev.source !== 'simulated') return prev;
         const base = basePriceRef.current || prev.price;
         const fluctuation = (Math.random() * 2 - 1) * 0.0001; // ±0.01%
         const newPrice = base * (1 + fluctuation);

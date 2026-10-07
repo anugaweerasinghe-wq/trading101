@@ -37,7 +37,7 @@ const sections = [
     icon: Cpu,
     title: "Technology",
     body:
-      "TradeHQ is a modern web application built with React, TypeScript and a serverless backend. Guest practice records stay in your browser so you can start without signing up. Signed-in cash and open positions can sync when the service is available; trade history, journals and course progress remain browser-held. Mentor tools use educational rules and portfolio context, and can fall back to local explanations.",
+      "TradeHQ is a modern web application built with React, TypeScript and a serverless backend. Guest practice records stay in your browser so you can start without signing up. Account cash, positions and server-recorded trades restore across devices when available; earlier guest history, journals and course progress remain browser-held. Mentor tools use educational rules and portfolio context, and can fall back to local explanations.",
   },
 ];
 

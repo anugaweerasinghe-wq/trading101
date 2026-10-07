@@ -26,6 +26,8 @@ interface Duel {
   starts_at: string;
   ends_at: string;
   status: string;
+  score_mode: string;
+  settled_at: string | null;
 }
 
 interface SideStats {
@@ -87,26 +89,20 @@ export default function Challenge() {
   }, []);
 
   const loadSides = useCallback(async (d: Duel) => {
-    const ids = [d.creator_id, d.opponent_id].filter(Boolean) as string[];
-    const [{ data: profiles }, { data: stats }] = await Promise.all([
-      supabase.from("profiles").select("id, username").in("id", ids),
-      supabase.from("trader_stats").select("user_id, portfolio_value").in("user_id", ids),
-    ]);
-    const nameOf = new Map((profiles ?? []).map((p) => [p.id, p.username]));
-    const valueOf = new Map((stats ?? []).map((s) => [s.user_id, Number(s.portfolio_value)]));
+    const { data, error } = await supabase.rpc("get_practice_duel_score", { p_duel_id: d.id });
+    if (error || !data) { setSides({ creator: null, opponent: null }); return; }
+    const scored = data as unknown as Duel & {
+      creator_name: string; opponent_name: string | null;
+      creator_value: number | null; opponent_value: number | null;
+    };
+    setDuel(scored);
     setSides({
-      creator: {
-        username: nameOf.get(d.creator_id) ?? "Challenger",
-        value: valueOf.get(d.creator_id) ?? d.creator_start_value,
-        startValue: d.creator_start_value,
+      creator: scored.creator_value === null ? null : {
+        username: scored.creator_name, value: Number(scored.creator_value), startValue: Number(scored.creator_start_value),
       },
-      opponent: d.opponent_id
-        ? {
-            username: nameOf.get(d.opponent_id) ?? "Opponent",
-            value: valueOf.get(d.opponent_id) ?? d.opponent_start_value ?? STARTING_BALANCE,
-            startValue: d.opponent_start_value ?? STARTING_BALANCE,
-          }
-        : null,
+      opponent: scored.opponent_value === null ? null : {
+        username: scored.opponent_name || "Opponent", value: Number(scored.opponent_value), startValue: Number(scored.opponent_start_value),
+      },
     });
   }, []);
 
@@ -162,7 +158,7 @@ export default function Challenge() {
   };
 
   const joinDuel = async () => {
-    if (!user || !duel) return;
+    if (!user || !duel || duel.score_mode === "legacy") return;
     if (duel.creator_id === user.id) {
       toast.error("You cannot accept your own challenge — send the link to a friend.");
       return;
@@ -185,7 +181,7 @@ export default function Challenge() {
     }
   };
 
-  const shareText = `Join my 30-day TradeHQ practice trading duel. Each side is measured from its own recorded starting value. Scores are client-synced simulated stats, not verified investment performance. ${SHARE_LINE}`;
+  const shareText = `Join my 30-day TradeHQ practice trading duel. Each side is measured from its own recorded starting value. Scores use server-recorded simulated trades and are frozen at the deadline; they are not real investment performance. ${SHARE_LINE}`;
 
   const share = async () => {
     try {
@@ -236,7 +232,7 @@ export default function Challenge() {
     ? "30-day practice trading duel | TradeHQ"
     : "Challenge a friend — 30-day practice trading duel | TradeHQ";
   const description =
-    "Challenge a friend to a 30-day paper-trading exercise on TradeHQ. Each side is measured from its own recorded starting value; scores are client-synced simulated stats.";
+    "Challenge a friend to a 30-day paper-trading exercise on TradeHQ. Each side is measured from its own recorded starting value; scores use server-recorded simulated trades and are frozen at the deadline.";
 
   return (
     <>
@@ -266,8 +262,8 @@ export default function Challenge() {
             </h1>
             <p className="text-sm text-muted-foreground mt-3 max-w-xl mx-auto">
               Send a link, both of you trade the simulator for 30 days, and the scoreboard
-              compares client-synced percentage change from each participant's own recorded starting value.
-              Scores are simulated and not independently verified. No real money is involved.
+              compares server-recorded percentage change from each participant's own starting value at acceptance.
+              Final scores use the last server-cached quotes available at the deadline. Scores are simulated. No real money is involved.
             </p>
           </header>
 
@@ -316,6 +312,9 @@ export default function Challenge() {
                 </Card>
               )}
 
+              {duel.score_mode === "legacy" && (
+                <p className="mb-4 rounded-xl border border-white/10 p-4 text-sm text-muted-foreground">This duel predates server-recorded scoring. Its historical final scores cannot be verified, so no winner is displayed. Create a new duel to use the current scoring system.</p>
+              )}
               <Card className="p-6 md:p-8 glass-tactile border-chrome">
                 <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
                   <Badge variant="outline" className="border-primary/30 text-primary">
@@ -365,7 +364,7 @@ export default function Challenge() {
                           </p>
                         </>
                       ) : (
-                        <p className="text-sm text-muted-foreground py-4">Seat open</p>
+                        <p className="text-sm text-muted-foreground py-4">{duel.score_mode === "legacy" ? "Historical score unavailable" : "Seat open"}</p>
                       )}
                     </div>
                   ))}
@@ -380,19 +379,19 @@ export default function Challenge() {
                         ? "— the duel ended tied."
                         : "so far."
                       : isFinished
-                        ? "finished ahead in the synced practice figures."
+                        ? "finished ahead in the frozen practice figures."
                         : "is currently ahead."}
                   </p>
                 )}
 
                 {isFinished && (
                   <p className="mt-2 text-center text-2xs text-muted-foreground">
-                    Final figures are simulated practice results and do not represent real returns.
+                    Final figures are frozen using server-recorded trades and the last valuation quotes available by the deadline. They do not represent real returns.
                   </p>
                 )}
 
                 {/* Share row */}
-                {!isFull && (
+                {!isFull && duel.score_mode === "server" && (
                   <div className="mt-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4">
                     <p className="text-2xs uppercase tracking-widest text-muted-foreground mb-2">
                       Invite link
@@ -412,7 +411,7 @@ export default function Challenge() {
 
                 <div className="mt-8 flex flex-wrap justify-center gap-3">
                   {!user ? (
-                    !isFull && (
+                    !isFull && duel.score_mode === "server" && (
                       <Button onClick={goSignIn} className="!text-black font-bold rounded-xl">
                         Sign in to join
                       </Button>
@@ -442,7 +441,7 @@ export default function Challenge() {
                   )}
                 </div>
 
-                {isMine && !isFull && (
+                {isMine && !isFull && duel.score_mode === "server" && (
                   <p className="mt-4 text-center text-2xs text-muted-foreground">
                     This is your own challenge — send the link above to a friend so they can take the second seat.
                   </p>
@@ -489,7 +488,7 @@ export default function Challenge() {
                         >
                           <span className="text-sm font-mono">{d.code}</span>
                           <span className="text-2xs text-muted-foreground">
-                            {!d.opponent_id
+                            {d.score_mode === "legacy" ? "Legacy — scores unavailable" : !d.opponent_id
                               ? "Waiting for opponent"
                               : t.over
                                 ? "Finished"
@@ -504,9 +503,9 @@ export default function Challenge() {
 
               <section className="mt-10 grid gap-4 md:grid-cols-3">
                 {[
-                  { t: "1. Create a link", b: "Your current client-synced simulated balance is recorded as your starting line." },
-                  { t: "2. Your friend joins", b: "They sign in, and their starting balance is recorded the moment they accept." },
-                  { t: "3. 30 days of practice", b: "Both scores update when either participant syncs browser-held practice stats. The comparison is not independently verified." },
+                  { t: "1. Create a link", b: "Create an invitation from a ranked practice portfolio. Browser imports cannot enter duels." },
+                  { t: "2. Your friend joins", b: "When they accept, both starting values are recorded together and the 30-day clock begins." },
+                  { t: "3. 30 days of practice", b: "Scores use server-recorded trades and cached valuation quotes. Final values are calculated at the deadline and then frozen." },
                 ].map((s) => (
                   <div key={s.t} className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
                     <h3 className="font-semibold text-sm mb-2">{s.t}</h3>

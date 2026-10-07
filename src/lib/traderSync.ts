@@ -38,17 +38,11 @@ export function computeRealizedPnL(): number {
   return calculateRealizedPnL(getPortfolio());
 }
 
-/** Push the browser-held practice stats to the signed-in user's row. */
+/** Refresh the server portfolio and read its recorded simulation statistics. */
 export async function syncStats(userId: string) {
-  if (typeof window !== "undefined" && localStorage.getItem("tradesandbox_last_bonus")) {
-    throw new Error(
-      "This browser portfolio used the retired weekly cash-refill feature. Reset the local simulator before syncing comparable leaderboard stats.",
-    );
-  }
-  const stats = computeLocalStats();
-  const { error } = await supabase
-    .from("trader_stats")
-    .upsert({ user_id: userId, ...stats }, { onConflict: "user_id" });
+  const { pushPortfolio } = await import("./cloudPortfolio");
+  await pushPortfolio(userId);
+  const { data, error } = await supabase.from("trader_stats").select("*").eq("user_id", userId).single();
   if (error) throw error;
-  return stats;
+  return data;
 }
