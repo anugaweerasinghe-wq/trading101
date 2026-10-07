@@ -346,6 +346,11 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_public_practice_members: {
+        Args: { p_limit?: number; p_username?: string | null }
+        Returns: { user_id: string; username: string; country: string | null; portfolio_value: number | null; pnl_pct: number | null; trades: number; portfolio_status: string; practice_rank: number | null; priced_at: string | null; observed_at: string | null; price_status: string }[]
+      }
+
       get_previous_practice_results: {
         Args: { p_limit?: number }
         Returns: { user_id: string; username: string; country: string | null; portfolio_value: number; pnl_pct: number; trades: number; reported_at: string }[]

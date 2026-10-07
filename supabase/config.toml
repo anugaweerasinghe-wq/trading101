@@ -14,3 +14,7 @@ verify_jwt = false
 
 [functions.submit-review]
 verify_jwt = false
+
+[functions.refresh-portfolio-prices]
+# Single-use scheduler token authentication is checked inside the worker; browser JWTs are insufficient.
+verify_jwt = false

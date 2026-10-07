@@ -13,12 +13,17 @@ try {
     'supabase/migrations/20260802024211_00f706fa-25c6-4a1e-9f9e-17b13547e1b7.sql',
     'supabase/migrations/20260927200000_harden_duel_mutations.sql',
   ]) await db.exec(readFileSync(repo + path, 'utf8'));
-  const migrations = readdirSync(repo + 'supabase/migrations').filter(name => /server_recorded_practice_scores|freeze_server_duel_scores|restore_account_trade_history|preserve_previous_practice_results/.test(name)).sort();
+  const migrations = readdirSync(repo + 'supabase/migrations').filter(name => /server_recorded_practice_scores|freeze_server_duel_scores|restore_account_trade_history|preserve_previous_practice_results|automatic_public_leaderboard|protect_price_refresh_queue/.test(name)).sort();
   for (const path of migrations) {
     if (path.includes('preserve_previous_practice_results')) await db.exec(readFileSync(repo + 'scripts/verify-previous-results-setup.sql', 'utf8'));
+    if (path.includes('automatic_public_leaderboard')) {
+      await db.exec(readFileSync(repo + 'scripts/verify-previous-results.sql', 'utf8'));
+      // A local stand-in for Vault; no production credentials or network calls.
+      await db.exec('CREATE SCHEMA vault; CREATE TABLE vault.decrypted_secrets(name text,decrypted_secret text);');
+    }
     await db.exec(readFileSync(repo + 'supabase/migrations/' + path, 'utf8'));
   }
-  for (const path of ['scripts/verify-server-practice.sql', 'scripts/verify-server-duels.sql', 'scripts/verify-previous-results.sql']) {
+  for (const path of ['scripts/verify-server-practice.sql', 'scripts/verify-server-duels.sql', 'scripts/verify-automatic-portfolios.sql']) {
     const results = await db.exec(readFileSync(repo + path, 'utf8'));
     for (const result of results) for (const row of result.rows) if (row.verification) console.log(row.verification);
     console.log('PASS', path);
