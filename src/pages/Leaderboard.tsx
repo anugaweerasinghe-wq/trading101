@@ -7,11 +7,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { MIN_TRADES_TO_RANK, syncStats } from "@/lib/traderSync";
+import { MIN_TRADES_TO_RANK } from "@/lib/traderSync";
 import { pushPortfolio, reconcilePortfolio, startRankedPractice } from "@/lib/cloudPortfolio";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { STARTING_BALANCE_LABEL } from "@/lib/constants";
@@ -25,6 +25,8 @@ interface BoardRow {
   trades: number;
   pricedAt: string | null;
 }
+
+interface PreviousRow extends Omit<BoardRow, "pricedAt"> { reportedAt: string }
 
 interface DuelRow {
   id: string;
@@ -41,7 +43,7 @@ const LEADERBOARD_FAQS = [
   {
     question: "Is the TradeHQ leaderboard real?",
     answer:
-      "Each row belongs to a public account with a server-recorded ranked practice portfolio. Orders use cached provider quotes or fixed simulator prices. Browser imports and submitted scores are excluded. This is simulated practice, not audited investment performance.",
+      "Ranked practice uses server-recorded orders. Previous results preserve earlier browser-reported summaries separately and do not enter current rankings. Both display simulated practice, not audited investment performance.",
   },
   {
     question: "How do I climb the leaderboard?",
@@ -51,12 +53,12 @@ const LEADERBOARD_FAQS = [
   {
     question: "Do I need an account to compete?",
     answer:
-      "An account and a public profile are needed to appear on the board. Cash and open positions can sync across devices when portfolio sync is available; browser-held trade history is separate. Core learning tools work without signing up.",
+      "An account and a public profile are needed to appear on the board. Account cash, positions and server-recorded trades restore across devices when available; earlier guest history, journals and course progress remain browser-held. Core learning tools work without signing up.",
   },
   {
     question: "What data does TradeHQ store if I sign up?",
     answer:
-      "Optional accounts use authentication data and can store a username, profile fields, simulated cash balance and simulated positions so practice progress can sync. TradeHQ does not require brokerage credentials or a real-money deposit.",
+      "Optional accounts use authentication data and can store a username, profile fields, simulated cash, positions and server-recorded practice trades for restoration across devices. Previous reported summary snapshots are also retained; their public visibility follows your profile setting. TradeHQ does not require brokerage credentials or a real-money deposit.",
   },
   {
     question: "Can I stay private?",
@@ -89,23 +91,40 @@ export default function Leaderboard() {
   const [ranked, setRanked] = useState<boolean | null>(null);
   const [restartOpen, setRestartOpen] = useState(false);
   const [syncing, setSyncing] = useState(false);
-  const [tab, setTab] = useState<"traders" | "duels">("traders");
+  const [tab, setTab] = useState<"traders" | "previous" | "duels">("traders");
+  const [previousRows, setPreviousRows] = useState<PreviousRow[]>([]);
+  const [previousError, setPreviousError] = useState(false);
+  const selectedByUser = useRef(false);
   const [duels, setDuels] = useState<DuelRow[]>([]);
   const [duelsLoading, setDuelsLoading] = useState(true);
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const cloud = await supabase.rpc("get_cloud_leaderboard", { p_limit: 100 });
-      if (cloud.error) throw cloud.error;
-      setRows((cloud.data ?? []).map(row => ({
+      const [cloud, previous] = await Promise.all([
+        supabase.rpc("get_cloud_leaderboard", { p_limit: 100 }),
+        supabase.rpc("get_previous_practice_results", { p_limit: 100 }),
+      ]);
+      const rankedRows = cloud.error ? [] : (cloud.data ?? []).map(row => ({
         userId: row.user_id, username: row.username, country: row.country,
         portfolioValue: Number(row.portfolio_value), pnlPct: Number(row.pnl_pct),
         trades: Number(row.trades), pricedAt: row.priced_at ?? null,
-      })));
+      }));
+      const historicRows = previous.error ? [] : (previous.data ?? []).map(row => ({
+        userId: row.user_id, username: row.username, country: row.country,
+        portfolioValue: Number(row.portfolio_value), pnlPct: Number(row.pnl_pct),
+        trades: Number(row.trades), reportedAt: row.reported_at,
+      }));
+      setRows(rankedRows);
+      setPreviousRows(historicRows);
+      setPreviousError(!!previous.error);
+      if (!selectedByUser.current) setTab(rankedRows.length ? "traders" : historicRows.length ? "previous" : "traders");
+      if (cloud.error) toast.error("Could not load current rankings. Please try again.");
     } catch (error) {
       console.error("Leaderboard load failed", error);
       setRows([]);
+      setPreviousRows([]);
+      setPreviousError(true);
       toast.error("Could not load rankings. Please try again.");
     } finally {
       setLoading(false);
@@ -215,7 +234,7 @@ export default function Leaderboard() {
                 TradeHQ Leaderboard
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Rankings use account orders recorded by TradeHQ's server, with cached provider quotes or fixed simulator prices. Imported browser portfolios are excluded. These are educational simulations, not audited investment performance.
+                Ranked practice uses server-recorded account orders, with cached provider quotes or fixed simulator prices. Previous results keep earlier browser-reported summaries visible separately. Both are educational simulations, not audited investment performance.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 {user ? (
@@ -269,12 +288,14 @@ export default function Leaderboard() {
             {/* Tabs: overall board vs head-to-head duels */}
             <div className="flex gap-2 mb-4">
               {([
-                { id: "traders", label: "Traders" },
+                { id: "traders", label: "Ranked practice" },
+                { id: "previous", label: "Previous results" },
                 { id: "duels", label: "Duels" },
               ] as const).map((t) => (
                 <button
                   key={t.id}
-                  onClick={() => setTab(t.id)}
+                  onClick={() => { selectedByUser.current = true; setTab(t.id); }}
+                  aria-pressed={tab === t.id}
                   className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors border ${
                     tab === t.id
                       ? "bg-primary text-black border-transparent"
@@ -305,9 +326,9 @@ export default function Leaderboard() {
               ) : rows.length === 0 ? (
                 <div className="py-16 px-6 text-center">
                   <Users className="w-10 h-10 text-primary/60 mx-auto mb-4" />
-                  <h2 className="text-lg font-semibold mb-2">No public traders yet — be the first</h2>
+                  <h2 className="text-lg font-semibold mb-2">No ranked practice portfolios yet</h2>
                   <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
-                    This board displays public accounts with at least {MIN_TRADES_TO_RANK}
+                    This board displays public accounts with at least {MIN_TRADES_TO_RANK}{" "}
                     server-recorded trades in a ranked practice portfolio. Results are simulated, not real investment returns.
                   </p>
                   <Link to={user ? "/trade" : "/auth"}>
@@ -355,6 +376,42 @@ export default function Leaderboard() {
                 ))
               )}
             </div>
+            ) : tab === "previous" ? (
+              <section aria-labelledby="previous-results-heading" className="rounded-2xl border border-white/[0.08] bg-white/[0.02] overflow-hidden">
+                <div className="p-6 border-b border-white/[0.06]">
+                  <h2 id="previous-results-heading" className="text-lg font-semibold">Previous results</h2>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    Saved summaries from the earlier browser-based simulator. These figures were reported by each browser and were not verified by the server. They are preserved as previous practice results and do not enter current rankings. Only public profiles with at least five reported trades are shown; making your profile private hides your result.
+                  </p>
+                </div>
+                {loading ? (
+                  <p className="p-8 text-center text-muted-foreground">Loading previous results…</p>
+                ) : previousError ? (
+                  <div className="p-8 text-center">
+                    <p className="text-muted-foreground mb-4">Could not load previous results.</p>
+                    <Button variant="outline" onClick={load}>Try again</Button>
+                  </div>
+                ) : previousRows.length === 0 ? (
+                  <p className="p-8 text-center text-muted-foreground">No previous public results meet the five-trade requirement.</p>
+                ) : (
+                  <>
+                    <div className="hidden md:grid grid-cols-4 gap-4 px-6 py-4 text-xs uppercase text-muted-foreground border-b border-white/[0.06]">
+                      <span>Trader</span><span className="text-right">Reported virtual value</span><span className="text-right">Reported return</span><span className="text-right">Reported trades</span>
+                    </div>
+                    {previousRows.map(trader => (
+                      <Link key={trader.userId} to={`/trader/${trader.username}`} className="grid grid-cols-2 md:grid-cols-4 gap-3 px-6 py-5 border-b border-white/[0.04] hover:bg-white/[0.03] transition-colors">
+                        <div>
+                          <span className="font-semibold text-sm">{trader.username}</span>
+                          <span className="block text-xs text-muted-foreground mt-1">Last reported {new Date(trader.reportedAt).toLocaleDateString()}</span>
+                        </div>
+                        <span className="text-right font-mono text-sm">${trader.portfolioValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                        <span className="text-right font-mono text-sm">{trader.pnlPct >= 0 ? "+" : ""}{trader.pnlPct.toFixed(1)}%</span>
+                        <span className="text-right text-sm text-muted-foreground">{trader.trades} trades</span>
+                      </Link>
+                    ))}
+                  </>
+                )}
+              </section>
             ) : (
               <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden" style={{ backdropFilter: "blur(12px)" }}>
                 {duelsLoading ? (
