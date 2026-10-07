@@ -346,6 +346,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_previous_practice_results: {
+        Args: { p_limit?: number }
+        Returns: { user_id: string; username: string; country: string | null; portfolio_value: number; pnl_pct: number; trades: number; reported_at: string }[]
+      }
       get_practice_duel_score: { Args: { p_duel_id: string }; Returns: Json }
       get_public_practice_duels: { Args: { p_limit?: number }; Returns: Json }
       initialize_practice_portfolio: { Args: { p_import?: Json }; Returns: Json }

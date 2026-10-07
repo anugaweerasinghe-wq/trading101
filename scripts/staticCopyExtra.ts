@@ -132,7 +132,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Why we show it at all",
       p: [
         "Competition is a blunt but effective tool for habit formation. A visible ranking makes people return, and returning is what builds the daily review habit that actually improves results. That is the entire justification for the leaderboard, and it is why the ranking carries no reward.",
-        "It also serves as a live demonstration of variance. Watch the top of the board over a few weeks: names change constantly, and the traders who stay near the top are usually not the ones who spiked fastest. That lesson is difficult to teach in a lesson and obvious in a table.",
+        "Ranked practice uses server-recorded orders. Previous results preserve earlier browser-reported summaries separately, with their last-reported date. They do not enter current rankings and are not verified investment returns.",
       ],
     },
     {

@@ -13,9 +13,12 @@ try {
     'supabase/migrations/20260802024211_00f706fa-25c6-4a1e-9f9e-17b13547e1b7.sql',
     'supabase/migrations/20260927200000_harden_duel_mutations.sql',
   ]) await db.exec(readFileSync(repo + path, 'utf8'));
-  const migrations = readdirSync(repo + 'supabase/migrations').filter(name => /server_recorded_practice_scores|freeze_server_duel_scores|restore_account_trade_history/.test(name)).sort();
-  for (const path of migrations) await db.exec(readFileSync(repo + 'supabase/migrations/' + path, 'utf8'));
-  for (const path of ['scripts/verify-server-practice.sql', 'scripts/verify-server-duels.sql']) {
+  const migrations = readdirSync(repo + 'supabase/migrations').filter(name => /server_recorded_practice_scores|freeze_server_duel_scores|restore_account_trade_history|preserve_previous_practice_results/.test(name)).sort();
+  for (const path of migrations) {
+    if (path.includes('preserve_previous_practice_results')) await db.exec(readFileSync(repo + 'scripts/verify-previous-results-setup.sql', 'utf8'));
+    await db.exec(readFileSync(repo + 'supabase/migrations/' + path, 'utf8'));
+  }
+  for (const path of ['scripts/verify-server-practice.sql', 'scripts/verify-server-duels.sql', 'scripts/verify-previous-results.sql']) {
     const results = await db.exec(readFileSync(repo + path, 'utf8'));
     for (const result of results) for (const row of result.rows) if (row.verification) console.log(row.verification);
     console.log('PASS', path);
