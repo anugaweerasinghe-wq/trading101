@@ -33,6 +33,11 @@ import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/
 export default function Trade() {
   const { symbol } = useParams();
   const [portfolio, setPortfolio] = useState(getPortfolio());
+  useEffect(() => {
+    const refresh = () => setPortfolio(getPortfolio());
+    window.addEventListener("tradehq:portfolio-updated", refresh);
+    return () => window.removeEventListener("tradehq:portfolio-updated", refresh);
+  }, []);
   const [assets, setAssets] = useState<Asset[]>([]);
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -242,7 +247,7 @@ export default function Trade() {
   }, [assets, selectedAsset?.id]);
 
   const handleTrade = useCallback(
-    (
+    async (
       asset: Asset,
       type: "buy" | "sell",
       quantity: number,
@@ -250,7 +255,7 @@ export default function Trade() {
       _limitPrice?: number,
       rationale?: string,
     ) => {
-      const result = executeTrade(portfolio, asset, type, quantity);
+      const result = await executeTrade(portfolio, asset, type, quantity);
 
       if (result.success && result.portfolio) {
         if (rationale && result.portfolio.trades.length > 0) {
@@ -275,18 +280,9 @@ export default function Trade() {
 
         setPortfolio(result.portfolio);
 
-        const priceStr =
-          typeof asset.price === "number"
-            ? asset.price.toLocaleString()
-            : "N/A";
-
         toast({
           title: `${type === "buy" ? "🟢" : "🔴"} Order Executed`,
-          description: `${
-            type === "buy" ? "Bought" : "Sold"
-          } ${quantity.toFixed(4)} ${asset.symbol} at $${priceStr}${
-            rationale ? " 📓" : ""
-          }`,
+          description: result.message,
         });
       } else {
         toast({

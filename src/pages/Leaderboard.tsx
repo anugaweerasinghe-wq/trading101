@@ -12,7 +12,8 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { MIN_TRADES_TO_RANK, syncStats } from "@/lib/traderSync";
-import { pushPortfolio } from "@/lib/cloudPortfolio";
+import { pushPortfolio, reconcilePortfolio, startRankedPractice } from "@/lib/cloudPortfolio";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { STARTING_BALANCE_LABEL } from "@/lib/constants";
 
 interface BoardRow {
@@ -40,12 +41,12 @@ const LEADERBOARD_FAQS = [
   {
     question: "Is the TradeHQ leaderboard real?",
     answer:
-      "Each displayed row is tied to a public TradeHQ account. Rankings use synced simulated portfolios where available, or browser-submitted summary statistics when portfolio sync is unavailable. These account-controlled figures are not independently verified or audited investment-performance records.",
+      "Each row belongs to a public account with a server-recorded ranked practice portfolio. Orders use cached provider quotes or fixed simulator prices. Browser imports and submitted scores are excluded. This is simulated practice, not audited investment performance.",
   },
   {
     question: "How do I climb the leaderboard?",
     answer:
-      "Public accounts with at least 5 recorded practice trades can appear. The board sorts submitted simulated percentage return against a $100,000 virtual starting balance. A rank is not evidence of real-money skill or verified returns.",
+      "Public accounts with at least five server-recorded trades in a ranked portfolio can appear. The board sorts simulated return against a $100,000 virtual starting balance. A rank is not evidence of real-money skill.",
   },
   {
     question: "Do I need an account to compete?",
@@ -85,7 +86,8 @@ export default function Leaderboard() {
   const { user, profile } = useAuth();
   const [rows, setRows] = useState<BoardRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [rankingSource, setRankingSource] = useState<"cloud" | "legacy" | null>(null);
+  const [ranked, setRanked] = useState<boolean | null>(null);
+  const [restartOpen, setRestartOpen] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [tab, setTab] = useState<"traders" | "duels">("traders");
   const [duels, setDuels] = useState<DuelRow[]>([]);
@@ -95,59 +97,12 @@ export default function Leaderboard() {
     setLoading(true);
     try {
       const cloud = await supabase.rpc("get_cloud_leaderboard", { p_limit: 100 });
-      if (!cloud.error) {
-        setRankingSource("cloud");
-        const mapped: BoardRow[] = (cloud.data ?? []).map((row) => ({
-          userId: row.user_id,
-          username: row.username,
-          country: row.country,
-          portfolioValue: Number(row.portfolio_value),
-          pnlPct: Number(row.pnl_pct),
-          trades: Number(row.trades),
-          pricedAt: row.priced_at ?? null,
-        }));
-        setRows(mapped);
-        return;
-      }
-
-      // Compatibility fallback while older deployments finish the cloud-schema migration.
-      console.warn("Cloud leaderboard unavailable; falling back to legacy summaries", cloud.error);
-      setRankingSource("legacy");
-      const { data: profiles, error: profilesError } = await supabase
-        .from("profiles")
-        .select("id, username, country")
-        .eq("is_public", true);
-      if (profilesError) throw profilesError;
-      if (!profiles?.length) {
-        setRows([]);
-        return;
-      }
-
-      const { data: stats, error: statsError } = await supabase
-        .from("trader_stats")
-        .select("user_id, portfolio_value, pnl_pct, trades")
-        .in("user_id", profiles.map((p) => p.id))
-        .gte("trades", MIN_TRADES_TO_RANK);
-      if (statsError) throw statsError;
-
-      const byId = new Map(profiles.map((p) => [p.id, p]));
-      const fallbackRows: BoardRow[] = (stats ?? [])
-        .map((row) => {
-          const p = byId.get(row.user_id);
-          if (!p) return null;
-          return {
-            userId: row.user_id,
-            username: p.username,
-            country: p.country,
-            portfolioValue: Number(row.portfolio_value),
-            pnlPct: Number(row.pnl_pct),
-            trades: Number(row.trades),
-            pricedAt: null,
-          };
-        })
-        .filter(Boolean) as BoardRow[];
-      fallbackRows.sort((a, b) => b.pnlPct - a.pnlPct);
-      setRows(fallbackRows);
+      if (cloud.error) throw cloud.error;
+      setRows((cloud.data ?? []).map(row => ({
+        userId: row.user_id, username: row.username, country: row.country,
+        portfolioValue: Number(row.portfolio_value), pnlPct: Number(row.pnl_pct),
+        trades: Number(row.trades), pricedAt: row.priced_at ?? null,
+      })));
     } catch (error) {
       console.error("Leaderboard load failed", error);
       setRows([]);
@@ -160,6 +115,13 @@ export default function Leaderboard() {
   useEffect(() => {
     load();
   }, [load]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setRanked(null);
+    if (user) reconcilePortfolio(user.id).then(p => { if (!cancelled) setRanked(p.ranked); }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [user?.id]);
 
   // Head-to-head duels between members with public profiles.
   useEffect(() => {
@@ -217,14 +179,8 @@ export default function Leaderboard() {
     if (!user) return;
     setSyncing(true);
     try {
-      try {
-        await pushPortfolio(user.id);
-        toast.success("Practice portfolio synced.");
-      } catch (cloudError) {
-        console.warn("Cloud portfolio sync unavailable; using legacy summary sync", cloudError);
-        await syncStats(user.id);
-        toast.success("Practice stats synced.");
-      }
+      await pushPortfolio(user.id);
+      toast.success("Account portfolio refreshed.");
       await load();
     } catch (error) {
       console.error("Portfolio sync failed", error);
@@ -247,12 +203,12 @@ export default function Leaderboard() {
     <>
       <Helmet>
         <title>Community Practice Board — TradeHQ Practice Stats</title>
-        <meta name="description" content="Community practice board of public TradeHQ accounts using submitted simulated statistics. Results are not independently verified or audited performance records." />
+        <meta name="description" content="Community practice board of public TradeHQ accounts using server-recorded simulated trades. Results are not independently verified or audited performance records." />
         <link rel="canonical" href="https://www.thetradehq.com/leaderboard" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ Community Practice Board" />
-        <meta property="og:description" content="Public TradeHQ accounts sorted by submitted simulated percentage return. Results are not independently verified or audited performance records." />
+        <meta property="og:description" content="Public TradeHQ accounts sorted by server-recorded simulated percentage return. Results are not independently verified or audited performance records." />
         <meta property="og:url" content="https://www.thetradehq.com/leaderboard" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -260,7 +216,7 @@ export default function Leaderboard() {
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="TradeHQ Community Practice Board" />
-        <meta name="twitter:description" content="Public TradeHQ accounts sorted by client-synced simulated percentage return. Stats are not independently verified." />
+        <meta name="twitter:description" content="Public TradeHQ accounts sorted by server-recorded simulated percentage return. Stats are not independently verified." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
@@ -283,25 +239,20 @@ export default function Leaderboard() {
             <div className="text-center mb-12">
               <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                {rankingSource === "cloud" ? "Synced practice portfolios" : rankingSource === "legacy" ? "Browser-submitted practice statistics" : "Account practice statistics"}
+                Server-recorded practice
               </Badge>
               <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
                 TradeHQ Leaderboard
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                {rankingSource === "cloud"
-                  ? "Rankings use synced simulated cash and open positions. These account-controlled practice records are not independently verified."
-                  : rankingSource === "legacy"
-                    ? "Portfolio sync is currently unavailable. Rankings use the latest browser-submitted summaries, which do not refresh an offline user's positions."
-                    : "Rankings show submitted simulated practice statistics from public accounts."}
-                {" "}Results are educational simulation data, not audited investment performance.
+                Rankings use account orders recorded by TradeHQ's server, with cached provider quotes or fixed simulator prices. Imported browser portfolios are excluded. These are educational simulations, not audited investment performance.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 {user ? (
                   <>
                     <Button onClick={handleSync} disabled={syncing} className="!text-black font-bold rounded-xl">
                       {syncing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <RefreshCw className="w-4 h-4 mr-2" />}
-                      Sync portfolio
+                      Refresh portfolio
                     </Button>
                     <Link to="/trader/me">
                       <Button variant="outline" className="rounded-xl">My profile</Button>
@@ -319,6 +270,31 @@ export default function Leaderboard() {
                 </Link>
               </div>
             </div>
+
+            {user && ranked === false && (
+              <div className="mb-6 rounded-xl border border-white/10 p-4 text-sm">
+                <p>Your imported practice portfolio is saved to your account. It cannot enter rankings because its earlier trades were recorded in your browser.</p>
+                <Button variant="outline" className="mt-3" onClick={() => setRestartOpen(true)} disabled={syncing}>Start fresh ranked practice</Button>
+              </div>
+            )}
+            <AlertDialog open={restartOpen} onOpenChange={setRestartOpen}>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Start fresh ranked practice?</AlertDialogTitle>
+                  <AlertDialogDescription>Your current account portfolio will be archived, and a new portfolio will start with $100,000 virtual cash and no positions. Your old practice copy is preserved in account and browser backups. Current duels must finish first.</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Keep current portfolio</AlertDialogCancel>
+                  <AlertDialogAction onClick={async () => {
+                    if (!user) return;
+                    setSyncing(true);
+                    try { await startRankedPractice(user.id); setRanked(true); await load(); toast.success("Fresh ranked portfolio started."); }
+                    catch (error) { toast.error((error as { message?: string }).message || "Could not start ranked practice."); }
+                    finally { setSyncing(false); }
+                  }}>Start fresh</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
 
             {/* Tabs: overall board vs head-to-head duels */}
             <div className="flex gap-2 mb-4">
@@ -362,7 +338,7 @@ export default function Leaderboard() {
                   <h2 className="text-lg font-semibold mb-2">No public traders yet — be the first</h2>
                   <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6">
                     This board displays public accounts with at least {MIN_TRADES_TO_RANK}
-                    recorded practice trades. Ranking values are submitted simulated statistics, not verified returns.
+                    server-recorded trades in a ranked practice portfolio. Results are simulated, not real investment returns.
                   </p>
                   <Link to={user ? "/trade" : "/auth"}>
                     <Button className="!text-black font-bold rounded-xl">

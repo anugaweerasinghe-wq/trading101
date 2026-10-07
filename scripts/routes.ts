@@ -241,9 +241,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/leaderboard",
     title: "Trader Leaderboard — Top Practice Portfolios | TradeHQ",
-    description: `Community practice board for public TradeHQ accounts. Client-synced simulated portfolio statistics are sorted by submitted percentage return and are not independently verified.`,
+    description: `Community practice board for public TradeHQ accounts. Ranked portfolios use server-recorded simulated trades, cached provider quotes or fixed simulator prices. Imported browser scores are excluded.`,
     h1: "Trader Leaderboard",
-    summary: `New accounts start public and can display client-synced simulated portfolio statistics; profile visibility can be switched off. These browser-originated figures are not audited performance records.`,
+    summary: `New accounts start public and can switch private. Rankings require five server-recorded trades in a ranked portfolio. Imported browser portfolios are excluded; practice results are not audited investment returns.`,
     priority: "0.7",
     changefreq: "daily",
   });

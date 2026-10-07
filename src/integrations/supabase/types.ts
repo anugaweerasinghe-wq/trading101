@@ -325,6 +325,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      initialize_practice_portfolio: { Args: { p_import?: Json }; Returns: Json }
+      record_practice_trade: { Args: { p_asset_id: string; p_side: string; p_quantity: number; p_request_id: string }; Returns: Json }
+      start_ranked_practice: { Args: Record<PropertyKey, never>; Returns: Json }
       create_practice_duel: { Args: { p_code: string }; Returns: string }
       get_cloud_leaderboard: {
         Args: { p_limit?: number }

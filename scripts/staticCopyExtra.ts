@@ -311,7 +311,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       h: "Why this site exists",
       p: [
         "Most people meet trading through advertising: a broker campaign, an influencer's screenshot, or an app that makes placing an order feel like a game. Almost none of that explains what an order actually does, what position sizing is, or how quickly leverage removes an account. TradeHQ exists to be the boring middle step between that advertising and someone's savings.",
-        "TradeHQ does not present practice results as evidence of future income. Community Reviews publish visitor-submitted feedback without independently verifying identity or experience. The Community Practice Board displays optional account-controlled simulated statistics, not verified investment returns.",
+        "TradeHQ does not present practice results as evidence of future income. Community Reviews publish visitor-submitted feedback without independently verifying identity or experience. The Community Practice Board displays server-recorded ranked simulated portfolios, not verified investment returns.",
       ],
     },
     {

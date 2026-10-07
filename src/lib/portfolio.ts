@@ -61,12 +61,15 @@ export function savePortfolio(portfolio: Portfolio, opts: { silent?: boolean } =
   if (typeof window !== 'undefined') window.dispatchEvent(new Event('tradehq:portfolio-updated'));
 }
 
-export function executeTrade(
+function executeLocalTrade(
   portfolio: Portfolio,
   asset: Asset,
   type: 'buy' | 'sell',
   quantity: number
 ): { success: boolean; message: string; portfolio?: Portfolio } {
+  if (!Number.isFinite(quantity) || quantity <= 0 || !Number.isFinite(asset.price) || asset.price <= 0) {
+    return { success: false, message: 'Enter a valid positive quantity and price' };
+  }
   const total = asset.price * quantity;
   const fee = total * 0.001; // 0.1% fee
   const totalWithFee = total + fee;
@@ -181,6 +184,36 @@ export function executeTrade(
       message: `Sold ${quantity} ${asset.symbol}`,
       portfolio: newPortfolio,
     };
+  }
+}
+
+/** Signed-in orders are atomic server transactions; failures never execute locally. */
+export async function executeTrade(portfolio: Portfolio, asset: Asset, side: 'buy' | 'sell', quantity: number) {
+  const { supabase } = await import('@/integrations/supabase/client');
+  const { data: { session }, error: authError } = await supabase.auth.getSession();
+  if (authError) return { success: false, message: 'Could not verify your account. Try again.' };
+  if (!session) return executeLocalTrade(portfolio, asset, side, quantity);
+  try {
+    const { reconcilePortfolio, applyServerSnapshot } = await import('./cloudPortfolio');
+    await reconcilePortfolio(session.user.id);
+    const { data, error } = await supabase.rpc('record_practice_trade', {
+      p_asset_id: asset.id, p_side: side, p_quantity: quantity, p_request_id: crypto.randomUUID(),
+    });
+    if (error) throw error;
+    const result = data as unknown as { portfolio: import('./cloudPortfolio').ServerSnapshot; trade: import('./cloudPortfolio').ServerTrade };
+    const { data: current } = await supabase.auth.getSession();
+    if (current.session?.user.id !== session.user.id) throw new Error('Account changed during order');
+    const restored = applyServerSnapshot(result.portfolio, session.user.id);
+    if (!restored.trades.some(t => t.id === result.trade.id)) restored.trades.unshift({
+      id: result.trade.id, assetId: asset.id, symbol: asset.symbol, type: side,
+      quantity: Number(result.trade.quantity), price: Number(result.trade.price),
+      total: Number(result.trade.total), timestamp: new Date(result.trade.created_at),
+    });
+    savePortfolio(restored, { silent: true });
+    return { success: true, portfolio: restored,
+      message: `${side === 'buy' ? 'Bought' : 'Sold'} ${quantity} ${asset.symbol} at $${Number(result.trade.price).toLocaleString()} · ${result.trade.price_source}` };
+  } catch (error) {
+    return { success: false, message: error instanceof Error ? error.message : (error as { message?: string })?.message || 'Account order failed. Try again.' };
   }
 }
 
