@@ -260,7 +260,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "text",
-            data: "A market order executes immediately at the current market price. It's the fastest way to enter or exit a trade.",
+            data: "A market order seeks execution at the best available prices. It prioritises speed over price control, but the final fill price and even full execution can depend on liquidity, market halts and venue rules.",
           },
           {
             type: "list",
@@ -285,7 +285,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "highlight",
-            data: "Limit orders are your shield against volatile markets - you define the maximum you'll pay, and the market comes to you.",
+            data: "A limit order sets a maximum buy price or minimum sell price. It can provide price control, but it may remain unfilled or only partially fill when matching liquidity is unavailable.",
           },
           {
             type: "list",
@@ -304,7 +304,7 @@ export const lessonData: Lesson[] = [
           },
           {
             type: "tip",
-            data: "Use limit orders for most trades! They give you price protection and help you avoid overpaying in volatile markets. Only use market orders when you absolutely need to get in or out immediately.",
+            data: "Market and limit orders involve different trade-offs between execution speed and price control. Which order type is appropriate depends on the instrument, liquidity, venue rules and the trader's objective; there is no universal order type that should be used for most trades. TradeHQ itself currently executes simulated market orders only.",
           },
           {
             type: "heading",
@@ -339,10 +339,10 @@ export const lessonData: Lesson[] = [
           {
             type: "list",
             data: [
-              "Use MARKET orders: When trading very liquid stocks (AAPL, MSFT, SPY) and speed is critical",
-              "Use LIMIT orders: For less liquid stocks, large trades, or when you want specific pricing",
-              "Use STOP orders: To protect profits or limit losses automatically",
-              "As a beginner: Start with limit orders to learn price control",
+              "Market orders: prioritise seeking prompt execution over controlling the exact price",
+              "Limit orders: specify a maximum buy price or minimum sell price but may not execute",
+              "Stop orders: trigger another order after a specified price is reached; the eventual fill can differ from the trigger",
+              "Practice note: TradeHQ currently simulates market orders only; the other order types on this page are conceptual examples",
             ],
           },
         ],
