@@ -1,14 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Star, Quote, MessageSquare } from "lucide-react";
+import { Star, Quote, MessageSquare, ThumbsUp } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { setPendingPath } from "@/lib/pendingRedirect";
 
 interface Review {
   id: string;
@@ -17,7 +20,10 @@ interface Review {
   rating: number;
   is_featured: boolean;
   created_at: string;
+  owner_reply: string | null;
+  owner_reply_updated_at: string | null;
 }
+interface Engagement { count: number; liked: boolean }
 
 const REVIEW_SUBMITTED_KEY = "tradehq:review-submitted:v1";
 
@@ -44,6 +50,15 @@ function Stars({ value, size = 16, onChange }: { value: number; size?: number; o
 }
 
 export default function Reviews() {
+  const { user, loading: authLoading } = useAuth();
+  const userId = user?.id;
+  const navigate = useNavigate();
+  const requestVersion = useRef(0);
+  const authVersion = useRef(0);
+  const pendingLikes = useRef(new Set<string>());
+  const [engagement, setEngagement] = useState<Record<string, Engagement>>({});
+  const [engagementError, setEngagementError] = useState(false);
+  const [liking, setLiking] = useState<Record<string, boolean>>({});
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -53,31 +68,69 @@ export default function Reviews() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(() => !!localStorage.getItem(REVIEW_SUBMITTED_KEY));
 
-  const load = async () => {
-    setLoading(true);
+  const load = useCallback(async (quiet = false) => {
+    const version = ++requestVersion.current;
+    if (!quiet) setLoading(true);
     setLoadError(null);
     try {
       const { data, error } = await supabase
         .from("reviews")
-        .select("id, name, content, rating, is_featured, created_at")
+        .select("id, name, content, rating, is_featured, created_at, owner_reply, owner_reply_updated_at")
         .eq("is_visible", true)
         .order("is_featured", { ascending: false })
         .order("created_at", { ascending: false })
         .limit(100);
       if (error) throw error;
+      if (version !== requestVersion.current) return;
       setReviews(data ?? []);
+      const result = await supabase.rpc("get_review_engagement", { p_review_ids: (data ?? []).map(r => r.id) });
+      if (version !== requestVersion.current) return;
+      setEngagementError(!!result.error);
+      setEngagement(Object.fromEntries((result.error ? [] : result.data ?? []).map(r => [r.review_id, { count: Number(r.like_count), liked: r.liked_by_me }])));
     } catch (error) {
       console.error("Reviews load failed", error);
-      setReviews([]);
-      setLoadError("Reviews are temporarily unavailable. Please retry.");
+      if (version === requestVersion.current) {
+        setReviews([]);
+        setEngagement({});
+        setLoadError("Reviews are temporarily unavailable. Please retry.");
+      }
     } finally {
-      setLoading(false);
+      if (version === requestVersion.current) setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    load();
-  }, []);
+    ++authVersion.current;
+    setEngagement({});
+    void load();
+    const refresh = () => { if (!document.hidden && pendingLikes.current.size === 0) void load(true); };
+    const timer = window.setInterval(refresh, 60000);
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", refresh);
+    const invalidate = () => { ++requestVersion.current; ++authVersion.current; };
+    return () => { invalidate(); clearInterval(timer); window.removeEventListener("focus", refresh); document.removeEventListener("visibilitychange", refresh); };
+  }, [load, userId]);
+
+  const toggleLike = async (review: Review) => {
+    if (!user) { setPendingPath("/reviews"); navigate("/auth"); return; }
+    if (pendingLikes.current.has(review.id)) return;
+    const version = authVersion.current;
+    ++requestVersion.current;
+    pendingLikes.current.add(review.id);
+    setLiking(prev => ({ ...prev, [review.id]: true }));
+    try {
+      const { data, error } = await supabase.rpc("set_review_like", { p_review_id: review.id, p_liked: !engagement[review.id]?.liked });
+      if (version !== authVersion.current) return;
+      if (error || !data?.[0]) throw error ?? new Error("Review unavailable");
+      const result = data[0];
+      setEngagement(prev => ({ ...prev, [review.id]: { count: Number(result.like_count), liked: result.liked_by_me } }));
+    } catch {
+      if (version === authVersion.current) { toast.error("Could not update your like. Please try again."); void load(true); }
+    } finally {
+      pendingLikes.current.delete(review.id);
+      setLiking(prev => ({ ...prev, [review.id]: false }));
+    }
+  };
 
   const stats = useMemo(() => {
     if (!reviews.length) return { avg: 0, count: 0 };
@@ -174,7 +227,7 @@ export default function Reviews() {
                 <Card className="p-8 text-center">
                   <Quote className="w-8 h-8 text-muted-foreground/40 mx-auto mb-3" />
                   <p className="text-muted-foreground mb-4">{loadError}</p>
-                  <Button type="button" variant="outline" onClick={load}>Retry</Button>
+                  <Button type="button" variant="outline" onClick={() => void load()}>Retry</Button>
                 </Card>
               ) : reviews.length === 0 ? (
                 <Card className="p-8 text-center">
@@ -200,6 +253,23 @@ export default function Reviews() {
                       </div>
                       <p className="text-foreground leading-relaxed whitespace-pre-wrap">{r.content}</p>
                       <p className="text-sm text-muted-foreground mt-3">— {r.name || "Anonymous Trader"}</p>
+                      {r.owner_reply && <div className="mt-4 border-l-2 border-primary/40 pl-4">
+                        <p className="text-xs font-semibold text-primary">TradeHQ owner reply</p>
+                        <p className="mt-1 text-sm whitespace-pre-wrap break-words">{r.owner_reply}</p>
+                        {r.owner_reply_updated_at && <time className="text-xs text-muted-foreground" dateTime={r.owner_reply_updated_at}>{new Date(r.owner_reply_updated_at).toLocaleDateString()}</time>}
+                      </div>}
+                      <div className="mt-4 flex items-center gap-2">
+                        <Button type="button" variant="outline" size="sm" disabled={authLoading || !!liking[r.id] || engagementError || engagement[r.id] === undefined}
+                          aria-pressed={!!engagement[r.id]?.liked}
+                          aria-label={`${user ? engagement[r.id]?.liked ? "Unlike" : "Like" : "Sign in to like"} review by ${r.name || "Anonymous Trader"}`}
+                          onClick={() => void toggleLike(r)}>
+                          <ThumbsUp className={`mr-2 h-4 w-4 ${engagement[r.id]?.liked ? "fill-primary/20 text-primary" : ""}`} />
+                          {liking[r.id] ? "Saving…" : engagement[r.id]?.liked ? "Liked" : "Like"} · {engagement[r.id]?.count ?? "—"}
+                        </Button>
+                        <span className="text-xs text-muted-foreground">{engagementError ? "Likes unavailable. " : user ? "One like per account" : "Sign in to like"}
+                          {engagementError && <button type="button" className="underline" onClick={() => void load(true)}>Retry</button>}
+                        </span>
+                      </div>
                     </Card>
                   ))}
                 </div>

@@ -250,6 +250,9 @@ export type Database = {
       }
       reviews: {
         Row: {
+          owner_reply: string | null
+          owner_reply_updated_at: string | null
+          deleted_at: string | null
           content: string
           created_at: string
           id: string
@@ -261,6 +264,9 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          owner_reply?: string | null
+          owner_reply_updated_at?: string | null
+          deleted_at?: string | null
           content: string
           created_at?: string
           id?: string
@@ -272,6 +278,9 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          owner_reply?: string | null
+          owner_reply_updated_at?: string | null
+          deleted_at?: string | null
           content?: string
           created_at?: string
           id?: string
@@ -346,6 +355,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_review_engagement: {
+        Args: { p_review_ids?: string[] }
+        Returns: { review_id: string; like_count: number; liked_by_me: boolean }[]
+      }
+      set_review_like: {
+        Args: { p_review_id: string; p_liked: boolean }
+        Returns: { review_id: string; like_count: number; liked_by_me: boolean }[]
+      }
       get_public_practice_members: {
         Args: { p_limit?: number; p_username?: string | null }
         Returns: { user_id: string; username: string; country: string | null; portfolio_value: number | null; pnl_pct: number | null; trades: number; portfolio_status: string; practice_rank: number | null; priced_at: string | null; observed_at: string | null; price_status: string }[]
