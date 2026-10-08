@@ -82,7 +82,7 @@ const LearnTradingGuide = () => {
         "name": "How do I start trading with no money?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The best way is to use a trading simulator like TradeHQ which provides $100,000 in virtual capital to practice risk-free."
+          "text": "A trading simulator can be one way to practise market mechanics without using real money. TradeHQ provides $100,000 in virtual capital for educational practice."
         }
       }
     ]
@@ -112,7 +112,7 @@ const LearnTradingGuide = () => {
             </motion.div>
             
             <h1 className="text-3xl md:text-5xl font-black mb-6 tracking-tight text-white leading-tight uppercase italic">
-              Practice with <span className="text-emerald-500">$100K Risk-Free</span>
+              Practice with <span className="text-emerald-500">$100K Virtual Cash</span>
             </h1>
 
             <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
