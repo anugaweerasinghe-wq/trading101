@@ -842,7 +842,7 @@ export const META_TITLE_VARIANTS_B: Record<string, string> = {
   gbpusd: "GBP/USD Simulated Analysis — Free Forex Simulator | TradeHQ"
 };
 
-// Variant A descriptions (active): "Learn & practice" + "risk-free" / "strategy builder" hooks, ≤155 chars
+// Variant A descriptions (active): educational practice positioning, virtual-cash context, ≤155 chars
 const CUSTOM_META_DESCRIPTIONS: Record<string, string> = {
   btc: "Practice Bitcoin with $100K virtual cash. Simulated BTC charts and educational mentor prompts. No signup.",
   eth: "Practice Ethereum with $100K virtual cash. Simulated ETH charts and educational DeFi context. No signup.",
