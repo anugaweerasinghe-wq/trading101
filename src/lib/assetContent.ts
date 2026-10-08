@@ -844,23 +844,23 @@ export const META_TITLE_VARIANTS_B: Record<string, string> = {
 
 // Variant A descriptions (active): "Learn & practice" + "risk-free" / "strategy builder" hooks, ≤155 chars
 const CUSTOM_META_DESCRIPTIONS: Record<string, string> = {
-  btc: "Learn & practice Bitcoin trading risk-free with $100K virtual cash. Simulated BTC charts, AI strategy builder, no signup.",
-  eth: "Learn & practice Ethereum trading risk-free with $100K virtual cash. Simulated ETH charts, DeFi strategy builder. No signup.",
-  nvda: "Learn & practice NVIDIA stock trading risk-free with $100K virtual cash. Simulated charts, AI strategy builder. No signup.",
-  aapl: "Learn & practice Apple stock trading risk-free with $100K virtual cash. Earnings strategy builder, simulated charts. No signup.",
-  sol: "Learn & practice Solana trading risk-free with $100K virtual cash. Simulated SOL charts, strategy builder. No signup.",
-  msft: "Learn & practice Microsoft stock trading risk-free with $100K demo. Simulated charts, strategy builder. Start free today.",
-  googl: "Learn & practice Google stock trading risk-free with $100K demo cash. Simulated GOOGL charts, strategy builder. No signup.",
-  amzn: "Learn & practice Amazon stock trading risk-free with $100K demo cash. Simulated charts, strategy builder. No signup.",
-  tsla: "Learn & practice Tesla stock trading risk-free with $100K virtual cash. Simulated TSLA charts, strategy builder. No signup.",
-  meta: "Learn & practice META stock trading risk-free with $100K demo cash. Simulated charts, strategy builder. Start free.",
-  xrp: "Learn & practice XRP trading risk-free with $100K virtual cash. Simulated charts, strategy builder. No signup needed.",
-  bnb: "Learn & practice BNB trading risk-free with $100K demo cash. Simulated charts, strategy builder. Start free today.",
-  spy: "Learn & practice S&P 500 ETF trading risk-free with $100K demo. Simulated charts, strategy builder. No signup.",
-  qqq: "Learn & practice Nasdaq-100 ETF trading risk-free with $100K demo. Simulated charts, strategy builder. Start free.",
-  gold: "Learn & practice gold trading risk-free with $100K virtual cash. Simulated XAU charts, strategy builder. No signup.",
-  oil: "Learn & practice crude oil trading risk-free with $100K demo cash. Simulated WTI charts, strategy builder. No signup.",
-  gbpusd: "Learn & practice GBP/USD forex trading risk-free with $100K demo. Simulated charts, strategy builder. No signup."
+  btc: "Practice Bitcoin with $100K virtual cash. Simulated BTC charts and educational mentor prompts. No signup.",
+  eth: "Practice Ethereum with $100K virtual cash. Simulated ETH charts and educational DeFi context. No signup.",
+  nvda: "Practice NVIDIA with $100K virtual cash. Simulated charts and educational mentor prompts. No signup.",
+  aapl: "Practice Apple with $100K virtual cash. Simulated charts and educational earnings context. No signup.",
+  sol: "Practice Solana with $100K virtual cash. Simulated SOL charts and educational mentor prompts. No signup.",
+  msft: "Practice Microsoft with $100K virtual cash. Simulated charts and educational mentor prompts. No signup.",
+  googl: "Practice Alphabet with $100K virtual cash. Simulated GOOGL charts and educational mentor prompts. No signup.",
+  amzn: "Practice Amazon with $100K virtual cash. Simulated charts and educational mentor prompts. No signup.",
+  tsla: "Practice Tesla with $100K virtual cash. Simulated TSLA charts and educational mentor prompts. No signup.",
+  meta: "Practice Meta with $100K virtual cash. Simulated charts and educational mentor prompts. No signup.",
+  xrp: "Practice XRP with $100K virtual cash. Simulated charts and educational mentor prompts. No signup needed.",
+  bnb: "Practice BNB with $100K virtual cash. Simulated charts and educational mentor prompts. No signup.",
+  spy: "Practice SPY with $100K virtual cash. Simulated ETF charts and educational mentor prompts. No signup.",
+  qqq: "Practice QQQ with $100K virtual cash. Simulated ETF charts and educational mentor prompts. No signup.",
+  gold: "Practice gold with $100K virtual cash. Simulated XAU charts and educational mentor prompts. No signup.",
+  oil: "Practice crude oil with $100K virtual cash. Simulated WTI charts and educational mentor prompts. No signup.",
+  gbpusd: "Practice GBP/USD with $100K virtual cash. Simulated forex charts and educational mentor prompts. No signup."
 };
 
 // Variant B descriptions for A/B testing (CTA-first — swap in after 7-day test)
@@ -932,7 +932,7 @@ export function generateAssetMetaDescription(asset: Asset): string {
 
   let description: string;
   if (content) {
-    description = `Practice ${asset.symbol} trading risk-free. ${content.whatIs} Start with $100K virtual cash now.`;
+    description = `Practice ${asset.symbol} with virtual cash. ${content.whatIs} No real money is involved.`;
   } else {
     description = `Trade ${asset.name} (${asset.symbol}) in our free simulator. Get $100K demo cash, simulated charts, and educational mentor explanations. No signup needed!`;
   }
@@ -969,7 +969,7 @@ export function generateMarketOutlook(asset: Asset): string {
   const practiceAdvice = `TradeHQ provides $100,000 in virtual capital to practise ${asset.symbol} trading. Use the simulator to test a written process, learn order mechanics, and review results over a larger sample. Paper trading can help with practice, but it cannot reproduce every feature of live execution or the emotions attached to real losses.`;
 
   // Educational disclaimer paragraph
-  const disclaimer = `This analysis is for educational purposes only. Past simulated performance does not guarantee future results. Market conditions can change rapidly, and all trading involves risk of loss. Always conduct your own research and consult a qualified financial advisor before making investment decisions. TradeHQ is a practice simulator designed to help you develop skills in a risk-free environment.`;
+  const disclaimer = `This analysis is for educational purposes only. Past simulated performance does not guarantee future results. Market conditions can change rapidly, and all trading involves risk of loss. Always conduct your own research and consult a qualified financial advisor before making investment decisions. TradeHQ is a practice simulator that uses virtual money; simulated results do not predict live-market performance.`;
 
   return `${intro}\n\n${fundamentals}\n\n${strategy}\n\n${riskManagement}\n\n${practiceAdvice}\n\n${disclaimer}`;
 }
