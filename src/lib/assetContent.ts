@@ -78,7 +78,7 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   nvda: [
     { question: "How do I trade the AI boom with a simulator?", answer: "NVDA is the primary AI stock. Practice identifying momentum breakouts and RSI overbought levels using $100K demo cash to learn tech cycles." },
     { question: "Is NVIDIA stock good for beginner stock trading practice?", answer: "NVDA is one company example for a virtual practice exercise. News narratives and historical trends do not establish its suitability for a beginner or predict the next move." },
-    { question: "How to practice NVIDIA stock trading as a student in Sri Lanka?", answer: "Use TradeHQ's free simulator — no US brokerage needed. Practice NVDA with $100K virtual cash and learn semiconductor cycle analysis risk-free." },
+    { question: "How to practice NVIDIA stock trading as a student in Sri Lanka?", answer: "Use TradeHQ's free simulator with $100K virtual cash. It can be used to study semiconductor-cycle assumptions without opening a real-money brokerage account." },
     { question: "What moves NVIDIA stock price the most?", answer: "Data center revenue growth, AI chip demand, and quarterly earnings drive NVDA. Practice correlating these catalysts with price action in the simulator." }
   ],
   aapl: [
@@ -90,12 +90,12 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   tsla: [
     { question: "Why is Tesla stock so volatile in trading simulators?", answer: "Tesla-related practice data can illustrate gains and losses under different price changes. Simulator movements need not reproduce actual news reactions or market volatility." },
     { question: "How to practice Tesla stock trading as a complete beginner?", answer: "Start on TradeHQ with $100K virtual cash. Compare hypothetical position sizes and record an exit condition in your journal. Stop-loss orders are discussed conceptually; this simulator executes market orders." },
-    { question: "What causes Tesla stock to gap up or down?", answer: "Elon Musk's statements, delivery numbers, FSD updates, and macro sentiment cause TSLA gaps. Practice gap-and-go and gap-fill strategies risk-free." },
+    { question: "What can contribute to Tesla stock gaps?", answer: "TSLA can react sharply to delivery reports, earnings, company announcements, broader market moves and other news. A simulator can be used to compare gap scenarios without assuming that one headline determines the move." },
     { question: "Is Tesla stock too risky for student traders to practice?", answer: "The simulator uses virtual funds, so a practice loss is not a real-money loss. That does not establish that TSLA is a suitable real investment or the best learning asset." }
   ],
   spy: [
     { question: "Should beginners start with SPY or individual stocks?", answer: "SPY represents an index-fund example, while individual stocks illustrate company-specific exposure. A learner can compare both; there is no universally required starting asset." },
-    { question: "How to practice paper trading the S&P 500 for free?", answer: "Use TradeHQ's free simulator to trade SPY with $100K virtual cash. Learn to read market breadth, volume patterns, and moving averages risk-free." },
+    { question: "How to practice paper trading the S&P 500 for free?", answer: "Use TradeHQ's free simulator to practise SPY with $100K virtual cash. Compare market breadth, volume and moving-average observations without putting real money at risk." },
     { question: "What is one way to learn index ETF trading?", answer: "Start with SPY to understand how the overall market moves, then compare with QQQ (tech-heavy) to learn sector rotation and relative strength analysis." },
     { question: "Can I practice SPY options strategies in a simulator?", answer: "TradeHQ focuses on spot trading for SPY. Practice identifying entry/exit points, trend direction, and risk management — foundational skills for any strategy." }
   ],
@@ -107,7 +107,7 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   ],
   gold: [
     { question: "How does Gold react during market crashes?", answer: "Gold and stock prices can respond differently across periods. A practice chart is simulated and does not establish an inverse relationship or reproduce a market crash." },
-    { question: "How to practice gold trading for free as a student?", answer: "TradeHQ provides $100K virtual cash to trade gold (XAU). Students can learn safe-haven dynamics and inflation hedging strategies risk-free." },
+    { question: "How to practice gold trading for free as a student?", answer: "TradeHQ provides $100K virtual cash for simulated gold practice. Students can compare how gold has behaved alongside inflation, rates and market stress without using real money." },
     { question: "What factors drive gold prices?", answer: "Real interest rates, USD strength, central bank purchases, and geopolitical tensions drive gold. Practice correlating these macro factors with XAU charts." },
     { question: "Is gold trading good for learning macro analysis?", answer: "Gold can be used to study supply, demand, interest-rate and currency hypotheses. Its reaction to inflation or geopolitical news is uncertain rather than reliably directional." }
   ],
@@ -130,7 +130,7 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
     { question: "How to learn forex trading without money as a student?", answer: "Use TradeHQ's free forex simulator. Students can practice GBP/USD, EUR/USD, and more currency pairs with $100K demo capital — no signup required." }
   ],
   oil: [
-    { question: "How to practice crude oil trading for free?", answer: "TradeHQ lets you trade WTI crude oil with $100K virtual cash. Practice around EIA inventory reports and OPEC+ meetings risk-free." },
+    { question: "How to practice crude oil trading for free?", answer: "TradeHQ lets you practise WTI crude oil with $100K virtual cash. Use scheduled reports and OPEC+ meetings as observation points rather than guaranteed trading signals." },
     { question: "What factors drive crude oil prices?", answer: "OPEC+ production decisions, US inventory data, geopolitical tensions, and global demand forecasts drive oil. Practice correlating news with price action." },
     { question: "Is oil trading suitable for beginner traders?", answer: "Oil can be volatile but educational. Start with small virtual positions and learn to read EIA reports and OPEC announcements before scaling up." },
     { question: "How do geopolitical events affect oil prices?", answer: "Middle East tensions, sanctions, and shipping disruptions can spike oil prices. Practice identifying geopolitical catalysts and managing risk during news events." }
@@ -148,14 +148,14 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
     { question: "How to learn AI stock trading as a student?", answer: "Start with GOOGL and NVDA on TradeHQ. Practice identifying how AI product announcements create momentum trades and gap patterns." }
   ],
   meta: [
-    { question: "How to practice META stock trading for free?", answer: "TradeHQ offers META trading with $100K virtual cash. Learn to correlate social media engagement metrics with price movements risk-free." },
+    { question: "How to practice META stock trading for free?", answer: "TradeHQ offers META practice with $100K virtual cash. Compare reported engagement, advertising and spending metrics with price changes without assuming a stable causal relationship." },
     { question: "What drives Meta Platforms stock price?", answer: "Ad revenue growth, user engagement (Reels, Threads), AI ad targeting improvements, and Reality Labs spending drive META's price action." },
     { question: "Is META good for practicing earnings plays?", answer: "Yes — META has some of the most dramatic earnings reactions in tech. Practice identifying pre-earnings positioning and post-earnings gap strategies." },
     { question: "How to learn social media stock analysis?", answer: "Start with META on TradeHQ. Practice tracking Daily Active Users, ad revenue per user, and engagement metrics as price drivers." }
   ],
   xrp: [
     { question: "How to practice XRP trading for free?", answer: "TradeHQ provides $100K virtual cash to practice XRP trading. Learn how regulatory news and Ripple partnerships affect price action." },
-    { question: "Why does XRP move on regulatory news?", answer: "XRP's price is sensitive to SEC rulings, Ripple partnerships, and cross-border payment adoption. Practice news-driven trading strategies risk-free." },
+    { question: "Why can XRP react to regulatory news?", answer: "XRP has historically reacted to legal and regulatory developments, exchange access, network use and broader crypto-market conditions. A single headline does not guarantee a particular price response." },
     { question: "Is XRP good for learning news-based trading?", answer: "Yes — XRP reacts sharply to legal and partnership news. Practice managing position size around uncertain news events without risking real money." },
     { question: "How to practice crypto trading in Colombo?", answer: "Use TradeHQ's free simulator. Students in Colombo can trade XRP, BTC, ETH and 30+ cryptos with $100K virtual cash — no signup needed." }
   ],
@@ -166,7 +166,7 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
     { question: "How does BNB compare to BTC for trading practice?", answer: "BNB is more correlated with exchange-specific events while BTC tracks macro sentiment. Practice both to learn different types of catalysts." }
   ],
   qqq: [
-    { question: "How to practice Nasdaq-100 ETF trading for free?", answer: "TradeHQ lets you trade QQQ with $100K virtual cash. Practice tech-focused index trading and learn sector rotation strategies risk-free." },
+    { question: "How to practice Nasdaq-100 ETF trading for free?", answer: "TradeHQ lets you practise QQQ with $100K virtual cash. Compare technology-sector concentration and broader index moves without using real money." },
     { question: "What is the difference between SPY and QQQ for practice?", answer: "SPY tracks the broad S&P 500 while QQQ is tech-heavy (Nasdaq-100). Practice comparing both to learn how sector concentration affects returns." },
     { question: "Is QQQ good for beginners learning ETF trading?", answer: "QQQ can illustrate Nasdaq-100 index concentration and how fund exposure differs from a broad-market example. A QQQ/SPY ratio does not establish a reliable risk-on signal." },
     { question: "How to learn tech sector trading as a student?", answer: "Compare the fund's published holdings and weighting method with individual companies. Use virtual cash to study concentration effects rather than assume a technology narrative predicts prices." }
@@ -867,7 +867,7 @@ const CUSTOM_META_DESCRIPTIONS: Record<string, string> = {
 export const META_DESC_VARIANTS_B: Record<string, string> = {
   btc: "Start trading BTC now — $100K free virtual cash, simulated Bitcoin charts, AI mentor. No signup. Master crypto.",
   eth: "Start trading ETH now — $100K free virtual cash, simulated Ethereum charts. No signup. Learn DeFi strategies free.",
-  nvda: "Start trading NVDA now — $100K free demo, simulated NVIDIA charts. No signup. Master AI stocks risk-free.",
+  nvda: "Practice NVDA with $100K virtual cash and simulated NVIDIA charts. No signup. Educational analysis only.",
   aapl: "Start trading AAPL now — $100K free demo, simulated Apple charts. No signup. Practice earnings plays free.",
   sol: "Start trading SOL now — $100K free demo, simulated Solana charts. No signup. Master fast crypto trading.",
   msft: "Start trading MSFT now — $100K free demo, simulated charts. No signup. Practice cloud stock analysis.",
