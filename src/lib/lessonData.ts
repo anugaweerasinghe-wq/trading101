@@ -239,112 +239,20 @@ export const lessonData: Lesson[] = [
       {
         title: "Market Orders vs. Limit Orders",
         content: [
-          {
-            type: "quote",
-            data: "Price is what you pay. Value is what you get. Control your entry, control your destiny.",
-            author: "Trading Wisdom",
-          },
-          {
-            type: "text",
-            data: "One of the most important decisions you'll make when trading is choosing the right order type. The two main types are market orders and limit orders, and each has specific uses.",
-          },
-          {
-            type: "image",
-            data: "/src/assets/lesson-order-types.jpg",
-            alt: "Market order book depth visualization",
-            caption: "Understanding order flow is key to mastering trade execution",
-          },
-          {
-            type: "heading",
-            data: "Market Orders: Buy/Sell Now",
-          },
-          {
-            type: "text",
-            data: "A market order executes immediately at the current market price. It's the fastest way to enter or exit a trade.",
-          },
-          {
-            type: "list",
-            data: [
-              "Pros: Prioritises fast execution over price control",
-              "Cons: Price not guaranteed (can slip in fast markets)",
-              "Best for: Liquid stocks, when speed matters more than price",
-              "Example: You want to buy Tesla RIGHT NOW at whatever price",
-            ],
-          },
-          {
-            type: "example",
-            data: "You see Tesla at $200 and place a market order to buy 10 shares. By the time it executes (milliseconds later), the price might be $200.50 or $199.50. The order prioritises execution, but the exact fill price and even full execution can depend on liquidity, market halts, and venue rules.",
-          },
-          {
-            type: "heading",
-            data: "Limit Orders: Set Your Price",
-          },
-          {
-            type: "text",
-            data: "A limit order only executes at your specified price or better. You have complete control over the price you pay.",
-          },
-          {
-            type: "highlight",
-            data: "Limit orders are your shield against volatile markets - you define the maximum you'll pay, and the market comes to you.",
-          },
-          {
-            type: "list",
-            data: [
-              "Pros: Price control, no surprises",
-              "Cons: May not fill if price doesn't reach your limit",
-              "Best for: Patient traders, volatile markets, large orders",
-              "Example: Only buy if price drops to $195 or lower",
-            ],
-          },
-          {
-            type: "stat",
-            value: "Price limit",
-            label: "Limit Order Mechanic",
-            data: "A limit order restricts the fill price but does not guarantee execution. No professional-use percentage is established here.",
-          },
-          {
-            type: "tip",
-            data: "Use limit orders for most trades! They give you price protection and help you avoid overpaying in volatile markets. Only use market orders when you absolutely need to get in or out immediately.",
-          },
-          {
-            type: "heading",
-            data: "Advanced Order Types",
-          },
-          {
-            type: "text",
-            data: "Once you master market and limit orders, you can explore these:",
-          },
-          {
-            type: "list",
-            data: [
-              "Sell Stop: Triggers a market order at a specified level; the fill price can differ",
-              "Stop-Limit Order: Combines stop and limit order features",
-              "Trailing Stop: Adjusts its trigger with favourable price moves; profits are not guaranteed",
-              "Good-Til-Canceled (GTC): Order stays active until filled or canceled",
-              "Day Order: Expires at end of trading day if not filled",
-            ],
-          },
-          {
-            type: "example",
-            data: "Illustration: buy at $180 with a sell stop at $170. A $170 fill would lose $10 per share before costs; a worse fill increases the loss.",
-          },
-          {
-            type: "heading",
-            data: "Which Should You Use?",
-          },
-          {
-            type: "text",
-            data: "Here's a simple decision guide:",
-          },
-          {
-            type: "list",
-            data: [
-              "Use MARKET orders: When trading very liquid stocks (AAPL, MSFT, SPY) and speed is critical",
-              "Use LIMIT orders: For less liquid stocks, large trades, or when you want specific pricing",
-              "Use STOP orders: To protect profits or limit losses automatically",
-              "As a beginner: Start with limit orders to learn price control",
-            ],
-          },
+          { type: "text", data: "Order types describe different trade-offs between execution and price control. This lesson explains their mechanics rather than recommending one order type for every situation." },
+          { type: "heading", data: "Market Orders: Execution Before Price Control" },
+          { type: "text", data: "A market order seeks to buy or sell promptly at available prices. The last quoted price may differ from the fill price, particularly in fast or thin markets. Trading halts and limited liquidity can interrupt execution." },
+          { type: "example", data: "Hypothetical example: a quote shows $200 and an order requests 10 shares. A $200.50 fill costs $2,005 before fees, while a $199.50 fill costs $1,995. The quote alone does not establish the final cost." },
+          { type: "heading", data: "Limit Orders: A Price Condition" },
+          { type: "text", data: "A buy limit specifies the highest acceptable purchase price; a sell limit specifies the lowest acceptable sale price. Execution is at that price or better, but the order may fill only partly or not at all. Reaching the limit does not guarantee a fill because other orders may have priority." },
+          { type: "example", data: "A hypothetical buy limit at $195 cannot fill above $195. If the market stays higher, the order remains unfilled. Even if a fill occurs, the asset can subsequently fall in value." },
+          { type: "heading", data: "Stop and Stop-Limit Mechanics" },
+          { type: "text", data: "A stop order becomes a market order when its trigger is reached. A stop-limit instead becomes a limit order. A stop can execute beyond its trigger after a gap; a stop-limit can remain unfilled. Neither guarantees a maximum loss." },
+          { type: "heading", data: "What TradeHQ Supports" },
+          { type: "highlight", data: "TradeHQ executes simulated market orders. It does not place resting limit, stop or trailing-stop orders. Study those mechanics using a worksheet; recording an exit condition does not automate it in the simulator." },
+          { type: "tip", data: "For a worksheet exercise, compare a market-order fill with an unfilled limit-order case and a stop triggered after a price gap. Record the assumptions, fees and remaining exposure rather than assuming any order type is always preferable." },
+          { type: "heading", data: "Reference" },
+          { type: "text", data: "SEC Investor.gov \u2014 Types of Orders and Stop, Stop-Limit, and Trailing Stop Orders explain the execution trade-offs: https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders and https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-15" },
         ],
       },
       {
