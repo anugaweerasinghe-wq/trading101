@@ -138,9 +138,9 @@ export const LEARN_ARTICLES: LearnArticle[] = [
   },
   {
     slug: "trading-strategies-for-beginners",
-    title: "5 Trading Strategies You Can Test Risk-Free on a Simulator",
+    title: "5 Trading Strategies You Can Test With Virtual Money",
     summary: "From buy-and-hold to momentum trading — explore five strategy hypotheses you can practice with virtual money before risking real capital.",
-    metaDescription: "5 beginner-friendly trading strategies to practice risk-free. Test momentum, swing, and value trading with $100K virtual cash on TradeHQ.",
+    metaDescription: "Explore five trading-strategy hypotheses with $100K in virtual cash. Compare momentum, swing, value and other approaches without using real money.",
     readTime: "7 min read",
     sections: [
       {
@@ -204,7 +204,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "As a hypothetical accounting exercise, compare a 60% SPY, 20% QQQ and 20% cash allocation with another allocation that also totals 100%. These are arbitrary practice settings, not a suggested beginner portfolio. Overlapping holdings can create concentration even when several instruments are used.",
           "ETFs are also excellent for learning about different sectors and asset classes. Want exposure to the semiconductor industry? There's an ETF for that. Interested in international markets, clean energy, or real estate? ETFs cover virtually every market segment imaginable.",
-          "Use TradeHQ to build a virtual portfolio with ETFs and track its performance against individual stock picks. This exercise teaches you about correlation, diversification benefits, and the trade-off between concentrated bets and broad market exposure. Practice this strategy risk-free before committing real capital."
+          "Use TradeHQ to build a virtual portfolio with ETFs and compare its simulated results with individual-stock examples. The exercise can illustrate correlation, concentration and diversification, but it does not establish that a particular allocation or strategy will work with real money."
         ]
       }
     ],
