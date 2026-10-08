@@ -519,9 +519,9 @@ export interface BonusQuestion {
 
 const BONUS_BANK: BonusQuestion[] = [
   {
-    id: 1, prompt: "What does a 'stop-loss' order do?",
+    id: 1, prompt: "What does a sell stop order generally do when its trigger price is reached?",
     options: [
-      { label: "Automatically closes your trade at a preset loss level", correct: true, explain: "Stop-losses cap your downside — the #1 risk tool every pro uses." },
+      { label: "Triggers an order after a specified price level is reached", correct: true, explain: "A stop order can help implement a predefined exit rule, but it does not guarantee the eventual fill price or a maximum realised loss." },
       { label: "Guarantees you exit at the exact price you set", correct: false, explain: "Slippage in fast markets means stops can fill worse than the trigger." },
       { label: "Doubles your position when price drops", correct: false, explain: "That's averaging down — the opposite of stop-losses." },
     ],
