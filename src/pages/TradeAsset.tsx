@@ -484,7 +484,7 @@ export default function TradeAsset() {
                 {selectedAsset.name} — Practice Trading Simulator
               </h1>
               <p className="text-sm text-muted-foreground mb-2 max-w-3xl">
-                Master {selectedAsset.symbol} trading with $100,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
+                Explore {selectedAsset.symbol} with $100,000 in virtual cash. Read simulated charts, compare position sizes, and review practice gains and losses. No real money is traded.
               </p>
               {/* Data trust signal */}
               <div className="flex items-center gap-3 text-xs">
