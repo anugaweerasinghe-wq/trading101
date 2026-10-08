@@ -291,7 +291,7 @@ export default function TradeAsset() {
       {
         "@type": "PropertyValue",
         "name": "studentPerspective",
-        "value": `Students can practice ${selectedAsset.symbol} trading as beginners — build skills risk-free before committing real capital.`
+        "value": `Students can practise ${selectedAsset.symbol} in a simulator before considering any real-money activity. Practice results do not predict live-market outcomes.`
       }
     ]
   } : null;
@@ -367,7 +367,7 @@ export default function TradeAsset() {
       "name": `How can I practice trading ${selectedAsset.name}?`,
       "acceptedAnswer": {
         "@type": "Answer" as const,
-        "text": `TradeHQ provides $100,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and educational mentor explanations.`
+        "text": `TradeHQ provides $100,000 in virtual capital to practise ${selectedAsset.symbol} without using real money. Select ${selectedAsset.symbol} from the asset list to use simulated charts and educational mentor explanations.`
       }
     }
   ] : [];
@@ -484,7 +484,7 @@ export default function TradeAsset() {
                 {selectedAsset.name} — Practice Trading Simulator
               </h1>
               <p className="text-sm text-muted-foreground mb-2 max-w-3xl">
-                Master {selectedAsset.symbol} trading with $100,000 virtual capital. Read charts, manage risk, and build winning strategies — zero financial risk.
+                Practise {selectedAsset.symbol} with $100,000 in virtual capital. Read charts, compare risk assumptions, and test a documented process — no real money is involved.
               </p>
               {/* Data trust signal */}
               <div className="flex items-center gap-3 text-xs">
@@ -578,7 +578,7 @@ export default function TradeAsset() {
                 {generateStudentUseSection(selectedAsset)}
               </p>
               <p className="text-xs text-muted-foreground/60 mt-3 italic">
-                Student perspective: Practice {selectedAsset.symbol} trading as a beginner in Colombo or anywhere — build skills risk-free.
+                Student perspective: Practise {selectedAsset.symbol} in a simulator from Colombo or anywhere — no real money is involved, and simulated results do not predict live outcomes.
               </p>
             </section>
           )}
