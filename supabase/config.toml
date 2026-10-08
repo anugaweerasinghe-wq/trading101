@@ -18,3 +18,7 @@ verify_jwt = false
 [functions.refresh-portfolio-prices]
 # Single-use scheduler token authentication is checked inside the worker; browser JWTs are insufficient.
 verify_jwt = false
+
+[functions.admin-reviews]
+# The owner master key is checked in the handler before accessing the database.
+verify_jwt = false

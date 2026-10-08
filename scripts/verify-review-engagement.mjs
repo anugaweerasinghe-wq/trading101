@@ -1,0 +1,66 @@
+// Isolated PostgreSQL fixtures only; never connects to production.
+import { PGlite } from '@electric-sql/pglite';
+import { readFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+const db = new PGlite();
+const review = '00000000-0000-4000-8000-000000000501';
+const hidden = '00000000-0000-4000-8000-000000000502';
+const deleted = '00000000-0000-4000-8000-000000000503';
+const alice = '00000000-0000-4000-8000-000000000511';
+const bob = '00000000-0000-4000-8000-000000000512';
+const role = async (name, user='') => db.exec(`RESET ROLE; SELECT set_config('request.jwt.claim.sub','${user}',false); SET ROLE ${name};`);
+const count = async () => (await db.query(`SELECT * FROM public.get_review_engagement(ARRAY['${review}']::uuid[])`)).rows[0];
+try {
+  await db.exec(`CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;
+    CREATE SCHEMA auth; CREATE SCHEMA tradehq_private;
+    CREATE TABLE auth.users(id uuid PRIMARY KEY);
+    CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$ SELECT nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+    GRANT USAGE ON SCHEMA auth TO anon,authenticated;
+    GRANT EXECUTE ON FUNCTION auth.uid() TO anon,authenticated;
+    CREATE TABLE public.reviews(id uuid PRIMARY KEY, name text,content text,rating int, is_visible boolean,is_featured boolean DEFAULT false, created_at timestamptz DEFAULT now(),updated_at timestamptz DEFAULT now());
+    ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
+    CREATE POLICY "Public can read visible reviews" ON public.reviews FOR SELECT TO anon,authenticated USING(is_visible);
+    INSERT INTO auth.users VALUES('${alice}'),('${bob}');
+    INSERT INTO public.reviews(id,content,rating,is_visible) VALUES('${review}','Review fixture',5,true),('${hidden}','Hidden fixture',1,false),('${deleted}','Deleted fixture',2,true);`);
+  await db.exec(readFileSync(new URL('../supabase/migrations/20261008004119_review_engagement.sql', import.meta.url),'utf8'));
+  await db.exec(`UPDATE public.reviews SET deleted_at=now() WHERE id='${deleted}'`);
+  await role('anon');
+  assert.equal((await db.query('SELECT id FROM public.reviews')).rows.length,1);
+  assert.deepEqual(await count(), {review_id:review, like_count:0, liked_by_me:false});
+  await assert.rejects(db.exec(`SELECT public.set_review_like('${review}',true)`), /permission denied/);
+  await assert.rejects(db.exec(`SELECT * FROM public.review_likes`), /permission denied/);
+  await role('authenticated',alice);
+  for (let i=0;i<2;i++) await db.query(`SELECT * FROM public.set_review_like('${review}',true)`);
+  assert.equal((await count()).like_count,1);
+  assert.equal((await count()).liked_by_me,true);
+  await assert.rejects(db.exec(`INSERT INTO public.review_likes(review_id,user_id) VALUES('${review}','${bob}')`), /row-level security/);
+  for (const id of [hidden,deleted]) {
+    await assert.rejects(db.exec(`SELECT * FROM public.set_review_like('${id}',true)`), /unavailable/);
+    assert.equal((await db.query(`SELECT * FROM public.get_review_engagement(ARRAY['${id}']::uuid[])`)).rows.length,0);
+  }
+  for (const sql of [`UPDATE public.reviews SET owner_reply='Forged' WHERE id='${review}'`, `UPDATE public.reviews SET deleted_at=now() WHERE id='${review}'`, `DELETE FROM public.reviews WHERE id='${review}'`]) await assert.rejects(db.exec(sql), /permission denied/);
+  await role('authenticated',bob);
+  assert.equal((await db.query('SELECT * FROM public.review_likes')).rows.length,0);
+  assert.equal((await count()).liked_by_me,false);
+  await db.exec(`SELECT * FROM public.set_review_like('${review}',true)`);
+  assert.equal((await count()).like_count,2);
+  await role('authenticated',alice);
+  await db.exec(`SELECT * FROM public.set_review_like('${review}',false)`);
+  assert.equal((await count()).like_count,1);
+  assert.equal((await count()).liked_by_me,false);
+  await role('service_role');
+  await db.exec(`UPDATE public.reviews SET owner_reply='Owner fixture reply',owner_reply_updated_at=now() WHERE id='${review}'`);
+  await role('anon');
+  assert.equal((await db.query(`SELECT owner_reply FROM public.reviews WHERE id='${review}'`)).rows[0].owner_reply,'Owner fixture reply');
+  assert.equal((await count()).liked_by_me,false);
+  await role('service_role');
+  await db.exec(`UPDATE public.reviews SET deleted_at=now() WHERE id='${review}'`);
+  await role('anon');
+  assert.equal((await db.query('SELECT * FROM public.get_review_engagement()')).rows.length,0);
+  await role('service_role');
+  await db.exec(`UPDATE public.reviews SET deleted_at=null WHERE id='${review}'`);
+  await role('anon');
+  assert.equal((await count()).like_count,1);
+  await assert.rejects(db.query(`SELECT * FROM public.get_review_engagement(array_fill('${review}'::uuid, ARRAY[101]))`),/At most 100/);
+  console.log('PASS review likes, unlike, privacy, owner permissions, hidden/deleted reviews and restore');
+} finally { await db.close(); }

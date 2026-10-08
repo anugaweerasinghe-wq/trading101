@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Lock, Trash2, Eye, EyeOff, Star, Save } from "lucide-react";
+import { Lock, Trash2, Eye, EyeOff, Star, Save, MessageSquare, RotateCcw } from "lucide-react";
 
 interface Review {
   id: string;
@@ -12,6 +12,9 @@ interface Review {
   is_visible: boolean;
   is_featured: boolean;
   created_at: string;
+  owner_reply: string | null;
+  owner_reply_updated_at: string | null;
+  deleted_at: string | null;
 }
 
 export default function AdminReviews() {
@@ -20,71 +23,60 @@ export default function AdminReviews() {
   const [verifying, setVerifying] = useState(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(false);
+  const [replies, setReplies] = useState<Record<string, string>>({});
+  const [busy, setBusy] = useState<Record<string, boolean>>({});
+  const pending = useRef(new Set<string>());
   const [edits, setEdits] = useState<Record<string, Partial<Review>>>({});
+
+  const load = async (): Promise<boolean> => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("admin-reviews", {
+        body: { action: "list" }, headers: { "x-admin-key": key },
+      });
+      if (error || data?.error || !Array.isArray(data?.data)) throw new Error("Could not load reviews. Check your master key and retry.");
+      setReviews(data.data);
+      return true;
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not load reviews");
+      return false;
+    } finally { setLoading(false); }
+  };
 
   const verify = async (e: React.FormEvent) => {
     e.preventDefault();
     setVerifying(true);
-    const { data, error } = await supabase.functions.invoke("verify-admin-key", { body: { key } });
-    setVerifying(false);
-    if (error || !(data as { valid?: boolean })?.valid) {
-      toast.error("Invalid master key");
-      return;
-    }
-    setUnlocked(true);
-    load();
-  };
-
-  const load = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.functions.invoke("admin-reviews", {
-      body: { action: "list" },
-      headers: { "x-admin-key": key },
-    });
-    setLoading(false);
-    if (error || (data as { error?: string })?.error) {
-      toast.error("Could not load reviews");
-      return;
-    }
-    setReviews(((data as { data: Review[] })?.data) ?? []);
+    try { if (await load()) setUnlocked(true); }
+    finally { setVerifying(false); }
   };
 
   const patchField = (id: string, patch: Partial<Review>) => {
-    setEdits((prev) => ({ ...prev, [id]: { ...prev[id], ...patch } }));
+    setEdits(prev => ({ ...prev, [id]: { ...prev[id], ...patch } }));
   };
 
-  const save = async (id: string) => {
-    const patch = edits[id];
-    if (!patch) return;
-    const { error } = await supabase.functions.invoke("admin-reviews", {
-      body: { action: "update", id, patch },
-      headers: { "x-admin-key": key },
-    });
-    if (error) {
-      toast.error("Update failed");
-      return;
+  const mutate = async (id: string, action: string, payload: Record<string, unknown> = {}) => {
+    if (pending.current.has(id)) return;
+    pending.current.add(id);
+    setBusy(prev => ({ ...prev, [id]: true }));
+    try {
+      const { data, error } = await supabase.functions.invoke("admin-reviews", {
+        body: { action, id, ...payload }, headers: { "x-admin-key": key },
+      });
+      if (error || data?.error || data?.ok !== true) throw new Error(data?.error || "Could not save changes. Please retry.");
+      toast.success(action === "delete" ? "Review deleted from public view" : action === "restore" ? "Review restored" : "Saved");
+      if (action === "update") setEdits(prev => { const next = { ...prev }; delete next[id]; return next; });
+      if (action === "reply") setReplies(prev => { const next = { ...prev }; delete next[id]; return next; });
+      await load();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not save changes");
+    } finally {
+      pending.current.delete(id);
+      setBusy(prev => ({ ...prev, [id]: false }));
     }
-    toast.success("Saved");
-    setEdits((prev) => {
-      const next = { ...prev };
-      delete next[id];
-      return next;
-    });
-    load();
   };
 
-  const remove = async (id: string) => {
-    if (!confirm("Delete this review permanently?")) return;
-    const { error } = await supabase.functions.invoke("admin-reviews", {
-      body: { action: "delete", id },
-      headers: { "x-admin-key": key },
-    });
-    if (error) {
-      toast.error("Delete failed");
-      return;
-    }
-    toast.success("Deleted");
-    load();
+  const remove = (id: string) => {
+    if (confirm("Delete this review from public view? You can restore it here later.")) void mutate(id, "delete");
   };
 
   if (!unlocked) {
@@ -104,6 +96,8 @@ export default function AdminReviews() {
               type="password"
               value={key}
               onChange={(e) => setKey(e.target.value)}
+              aria-label="Master key"
+              autoComplete="off"
               placeholder="Master Key"
               className="w-full h-10 px-3 rounded-lg bg-input border border-border text-sm"
             />
@@ -128,27 +122,37 @@ export default function AdminReviews() {
       </Helmet>
       <div className="min-h-screen bg-background p-4 md:p-8">
         <div className="max-w-5xl mx-auto space-y-4">
-          <h1 className="text-xl font-bold mb-4">Reviews ({reviews.length})</h1>
+          <div className="flex items-center justify-between gap-3">
+            <h1 className="text-xl font-bold">Reviews ({reviews.length})</h1>
+            <button type="button" onClick={() => { setUnlocked(false); setKey(""); setReviews([]); setEdits({}); setReplies({}); }} disabled={Object.values(busy).some(Boolean)} className="text-sm underline">Lock admin panel</button>
+          </div>
+          <p className="text-sm text-muted-foreground">Replies are public and labelled as yours. Deleted reviews stay here so you can restore them.</p>
+          <button type="button" disabled={loading} className="text-sm underline" onClick={() => void load()}>Refresh reviews</button>
           {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
           {reviews.map((r) => {
             const e = edits[r.id] ?? {};
             const merged = { ...r, ...e };
             return (
-              <div key={r.id} className="p-4 rounded-xl border border-border bg-white/[0.02] space-y-3">
+              <fieldset disabled={!!busy[r.id]} key={r.id} className="p-4 rounded-xl border border-border bg-white/[0.02] space-y-3">
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <span>{new Date(r.created_at).toLocaleString()}</span>
                   <span className="font-mono">{r.id.slice(0, 8)}</span>
                 </div>
+                {r.deleted_at && <p className="text-sm text-destructive">Deleted from public view</p>}
+                <fieldset disabled={!!r.deleted_at} className="space-y-3">
                 <div className="grid md:grid-cols-2 gap-3">
                   <input
                     value={merged.name ?? ""}
                     onChange={(ev) => patchField(r.id, { name: ev.target.value })}
+                    aria-label="Review author name"
+                    maxLength={60}
                     placeholder="(anonymous)"
                     className="h-9 px-3 rounded-lg bg-input border border-border text-sm"
                   />
                   <div className="flex items-center gap-2">
                     <label className="text-xs text-muted-foreground">Rating</label>
                     <input
+                      aria-label="Review rating"
                       type="number"
                       min={1}
                       max={5}
@@ -160,6 +164,8 @@ export default function AdminReviews() {
                   </div>
                 </div>
                 <textarea
+                  aria-label="Review content"
+                  maxLength={1000}
                   value={merged.content}
                   onChange={(ev) => patchField(r.id, { content: ev.target.value })}
                   rows={3}
@@ -182,23 +188,28 @@ export default function AdminReviews() {
                   </button>
                   <button
                     type="button"
-                    disabled={!edits[r.id]}
-                    onClick={() => save(r.id)}
+                    disabled={!edits[r.id] || !!busy[r.id]}
+                    onClick={() => void mutate(r.id, "update", { patch: edits[r.id] })}
                     className="text-xs px-3 py-1.5 rounded-lg bg-primary text-primary-foreground disabled:opacity-40 ml-auto"
                   >
                     <Save className="w-3 h-3 inline mr-1" />
                     Save
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => remove(r.id)}
-                    className="text-xs px-3 py-1.5 rounded-lg bg-destructive/10 text-destructive border border-destructive/30"
-                  >
-                    <Trash2 className="w-3 h-3 inline mr-1" />
-                    Delete
-                  </button>
                 </div>
-              </div>
+                <div className="space-y-2 border-t border-border pt-3">
+                  <label htmlFor={`reply-${r.id}`} className="text-sm font-medium flex items-center gap-2"><MessageSquare className="h-4 w-4" />Your public reply</label>
+                  <textarea id={`reply-${r.id}`} value={replies[r.id] ?? r.owner_reply ?? ""} onChange={ev => setReplies(prev => ({ ...prev, [r.id]: ev.target.value }))} maxLength={2000} rows={3} className="w-full px-3 py-2 rounded-lg bg-input border border-border text-sm resize-y" placeholder="Reply as the TradeHQ owner…" />
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-xs text-muted-foreground">{(replies[r.id] ?? r.owner_reply ?? "").length}/2000 · Clear the text and save to remove your reply.</span>
+                    <button type="button" disabled={replies[r.id] === undefined || replies[r.id] === (r.owner_reply ?? "")} onClick={() => void mutate(r.id, "reply", { reply: replies[r.id] })} className="text-xs px-3 py-1.5 rounded-lg bg-primary text-primary-foreground disabled:opacity-40">Save reply</button>
+                  </div>
+                </div>
+                </fieldset>
+                <div className="flex justify-end">
+                  {r.deleted_at ? <button type="button" onClick={() => void mutate(r.id, "restore")} className="text-xs px-3 py-1.5 rounded-lg border border-border"><RotateCcw className="w-3 h-3 inline mr-1" />Restore review</button> : <button type="button" onClick={() => remove(r.id)} className="text-xs px-3 py-1.5 rounded-lg bg-destructive/10 text-destructive border border-destructive/30"><Trash2 className="w-3 h-3 inline mr-1" />Delete review</button>}
+                </div>
+                {busy[r.id] && <p className="text-xs text-muted-foreground" role="status">Saving…</p>}
+              </fieldset>
             );
           })}
         </div>
