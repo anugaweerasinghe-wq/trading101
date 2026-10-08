@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 
 type ConsentChoice = "accepted" | "rejected";
 const STORAGE_KEY = "tradehq_consent_v1";
-const ADSENSE_CLIENT = "ca-pub-4160578126993254";
-// The custom analytics choice is not a certified advertising CMP.
-// Enable ads only after the certified CMP integration is configured and verified.
-const ADSENSE_ENABLED = false;
 const AMPLITUDE_API_KEY = "44108a3c4bd34ff14004fa66198d9f20";
 
 function appendScript(id: string, src: string, onload?: () => void) {
@@ -18,12 +14,11 @@ function appendScript(id: string, src: string, onload?: () => void) {
   script.id = id;
   script.src = src;
   script.async = true;
-  if (id === "tradehq-adsense") script.crossOrigin = "anonymous";
   if (onload) script.onload = onload;
   document.head.appendChild(script);
 }
 
-function loadConsentedServices() {
+function loadConsentedAnalytics() {
   appendScript(
     "tradehq-amplitude",
     `https://cdn.amplitude.com/script/${AMPLITUDE_API_KEY}.js`,
@@ -42,14 +37,6 @@ function loadConsentedServices() {
       );
     },
   );
-
-  // Publisher ownership is declared separately in the static HTML and ads.txt.
-  // Accepting analytics here must not enable advertising on its own.
-  if (!ADSENSE_ENABLED) return;
-  appendScript(
-    "tradehq-adsense",
-    `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(ADSENSE_CLIENT)}`,
-  );
 }
 
 export function ConsentBanner() {
@@ -59,7 +46,7 @@ export function ConsentBanner() {
   });
 
   useEffect(() => {
-    if (choice === "accepted") loadConsentedServices();
+    if (choice === "accepted") loadConsentedAnalytics();
   }, [choice]);
 
   useEffect(() => {
@@ -85,10 +72,10 @@ export function ConsentBanner() {
   return (
     <div
       role="dialog"
-      aria-label="Privacy choices"
+      aria-label="Analytics choices"
       className="fixed inset-x-3 bottom-3 z-[120] mx-auto max-w-3xl rounded-2xl border border-border bg-background/95 p-5 shadow-2xl backdrop-blur-xl md:bottom-5"
     >
-      <p className="text-sm font-semibold text-foreground">Privacy choices</p>
+      <p className="text-sm font-semibold text-foreground">Analytics choices</p>
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
         TradeHQ uses essential browser storage for the simulator. Optional analytics are blocked
         until you accept them. You can reject analytics and still use the core site.
@@ -100,18 +87,19 @@ export function ConsentBanner() {
           onClick={() => save("rejected")}
           className="rounded-lg border border-border px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted"
         >
-          Reject optional
+          Reject analytics
         </button>
         <button
           type="button"
           onClick={() => save("accepted")}
           className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90"
         >
-          Accept optional
+          Accept analytics
         </button>
       </div>
       <p className="mt-3 text-[10px] leading-relaxed text-muted-foreground">
-        Advertising is currently paused. This choice controls optional analytics.
+        This choice controls Amplitude analytics. Google provides separate advertising privacy
+        choices where they apply.
       </p>
     </div>
   );

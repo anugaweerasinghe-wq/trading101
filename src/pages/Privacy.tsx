@@ -4,6 +4,7 @@ import { MegaFooter } from "@/components/MegaFooter";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Shield, Lock, Eye, Database, Globe, Mail } from "lucide-react";
 import { SEOSection } from "@/components/SEOSection";
+import { AdvertisingPrivacyChoices } from "@/components/AdvertisingPrivacyChoices";
 
 export default function Privacy() {
   const sections = [
@@ -30,7 +31,7 @@ TradeHQ does not require a payment card, bank account or brokerage account to pl
 
 Amplitude is used for product analytics and may include session replay when analytics consent is granted. This can record interactions such as navigation and clicks subject to the provider's masking and privacy controls.
 
-Google AdSense is the advertising service planned for TradeHQ; ads are currently paused. When advertising is enabled after the required consent flow, Google and its advertising partners may use cookies or similar technologies to deliver and measure ads. Advertising may be personalized or non-personalized depending on consent, location and Google settings.
+Google AdSense provides advertising and regional advertising privacy choices. Ad delivery depends on Google's site approval and settings. Google and its advertising partners may use cookies or similar technologies to deliver and measure ads, subject to the applicable privacy choices. Advertising may be personalized, non-personalized or limited depending on consent, location and Google settings.
 
 TradeHQ does not sell simulated portfolio data to brokers or financial institutions and does not execute real-money trades.`
     },
@@ -52,16 +53,20 @@ TradeHQ uses hosted infrastructure and access controls intended to protect store
 
 Public profiles and community features can publish the information and simulated statistics you choose to share. Avoid including private or sensitive information in public fields. A parent or guardian can use the contact page to raise a privacy concern involving a young user.
 
-AdSense advertising remains disabled in the current build. An advertising consent choice alone does not determine age or replace age-specific advertising protections where they apply.`
+An advertising consent choice alone does not determine age or replace age-specific advertising protections where they apply.`
     },
     {
       icon: Globe,
       title: "Service Providers, Cookies & Your Choices",
       content: `TradeHQ relies on third parties including Vercel for hosting, Supabase for optional authentication/database features, Amplitude for consented analytics/session replay, and Google AdSense for consented advertising. These providers can process data in countries other than your own under their own legal and contractual arrangements.
 
-Optional analytics scripts are blocked until you accept analytics. You can reject analytics, change that choice later from this privacy page, clear browser storage/cookies, and use browser privacy controls. These controls currently apply to analytics; advertising remains paused and will require a separate consent integration. Google also provides ad-personalization controls through Google Ads Settings.
+Optional Amplitude analytics scripts are blocked until you accept analytics. You can reject analytics and change that choice later from this privacy page. Analytics acceptance does not grant advertising consent.
 
-For users in the EEA, United Kingdom and Switzerland, Google requires a Google-certified consent-management platform for AdSense consent collection. AdSense remains disabled in this build until the required advertising consent integration is configured and verified.
+TradeHQ uses Google's consent-management platform for advertising choices in the EEA, United Kingdom and Switzerland. The Google message lets you consent, decline or manage individual options. When it applies, use Advertising privacy choices on this page or in the footer to change or withdraw your decision.
+
+In supported US states, Google's Do Not Sell or Share My Personal Information link lets you opt out of the sale or sharing of personal information for advertising. Google applies restricted data processing to applicable opt-out requests. These regional messages manage Google's advertising partners; optional Amplitude analytics are controlled separately.
+
+You can also clear browser storage/cookies, use browser privacy controls and manage ad personalization through Google Ads Settings. Google's partner list in the message describes the vendors and purposes covered by your advertising choices.
 
 Depending on where you live, privacy law may give you rights to access, correct, delete, restrict or object to certain processing. Use the TradeHQ contact page for a privacy request. The exact rights available depend on your jurisdiction.`
     }
@@ -89,7 +94,7 @@ Depending on where you live, privacy law may give you rights to access, correct,
               This policy describes the data flows used by the current TradeHQ website, including optional analytics and advertising.
             </p>
             <p className="text-sm text-muted-foreground mt-4">
-              Last Updated: October 7, 2026
+              Last Updated: October 8, 2026
             </p>
           </div>
 
@@ -124,6 +129,7 @@ Depending on where you live, privacy law may give you rights to access, correct,
           </div>
 
           <section className="mt-12 glass-liquid-card p-6">
+            <AdvertisingPrivacyChoices className="mb-5 mr-3 rounded-lg border border-border px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted" />
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event("tradehq:open-consent"))}
@@ -162,7 +168,7 @@ Depending on where you live, privacy law may give you rights to access, correct,
               },
               {
                 question: "Does TradeHQ use analytics or advertising cookies?",
-                answer: "Amplitude analytics/session replay can use cookies or similar identifiers after analytics consent. AdSense advertising is currently paused; advertising consent will require a separate verified integration before ads are enabled.",
+                answer: "Amplitude analytics/session replay can use cookies or similar identifiers after analytics consent. Google provides separate regional advertising privacy messages and controls. You can change analytics choices here and use Advertising privacy choices when Google's European message applies, or its Do Not Sell or Share link in supported US states.",
               },
             ]}
           />

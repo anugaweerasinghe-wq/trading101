@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { tradingGlossary } from "@/lib/tradingGlossary";
+import { AdvertisingPrivacyChoices } from "@/components/AdvertisingPrivacyChoices";
 
 /**
  * MegaFooter - Premium Multi-Column SEO Footer
@@ -196,6 +197,7 @@ export function MegaFooter() {
                 </li>
               ))}
             </ul>
+            <AdvertisingPrivacyChoices className="mt-4 text-sm text-muted-foreground hover:text-primary transition-colors duration-200" />
           </div>
 
           {/* Learn Links */}
