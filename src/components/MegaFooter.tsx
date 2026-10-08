@@ -177,7 +177,7 @@ export function MegaFooter() {
             </Link>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
               An educational paper trading simulator. Practice with $100K virtual capital
-              and master stocks, crypto, forex, and commodities risk-free.
+              and study stocks, crypto, forex, and commodities without spending real money.
             </p>
 
             <Link to="/contact" className="text-sm text-primary hover:underline">Contact TradeHQ</Link>
@@ -232,7 +232,7 @@ export function MegaFooter() {
             <h3 className="text-xs font-bold text-foreground mb-4 uppercase tracking-[0.15em]">Trust & Security</h3>
             <div className="space-y-4">
               {[
-                { icon: Shield, color: "text-primary", bg: "bg-primary/10", title: "100% Risk-Free", sub: "No real money required" },
+                { icon: Shield, color: "text-primary", bg: "bg-primary/10", title: "Virtual Cash Only", sub: "No real money is traded" },
                 { icon: CheckCircle2, color: "text-profit", bg: "bg-profit/10", title: "Educational Simulator", sub: "Practice trading skills" },
                 { icon: Award, color: "text-secondary", bg: "bg-secondary/10", title: "149 Assets", sub: "Stocks, crypto, ETFs, forex" },
               ].map((item) => (

@@ -89,7 +89,7 @@ export default function SEOAudit() {
           descEst = ROUTE_META[route].description;
         } else if (isNiche && symbol) {
           titleEst = `${symbol} — Asset Overview & Scenario Drivers | TradeHQ`;
-          descEst = `Practice ${symbol} trading with $100K virtual cash. Expert analysis, real-time charts, technical indicators & risk management tools. Start trading ${symbol} risk-free on TradeHQ simulator.`;
+          descEst = `Practise ${symbol} with $100K virtual cash, simulated charts, portfolio tracking and educational mentor explanations. No real trades.`;
         }
 
         if (titleEst.length < 50) errors.push(`Title too short (${titleEst.length} chars, need 50+)`);

@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 
 type ConsentChoice = "accepted" | "rejected";
 const STORAGE_KEY = "tradehq_consent_v1";
-const ADSENSE_CLIENT = "[CONFIRM_ADSENSE_PUBLISHER_ID]";
+const ADSENSE_CLIENT = "ca-pub-4160578126993254";
+// The custom analytics choice is not a certified advertising CMP.
+// Enable ads only after the certified CMP integration is configured and verified.
+const ADSENSE_ENABLED = false;
 const AMPLITUDE_API_KEY = "44108a3c4bd34ff14004fa66198d9f20";
 
 function appendScript(id: string, src: string, onload?: () => void) {
@@ -15,6 +18,7 @@ function appendScript(id: string, src: string, onload?: () => void) {
   script.id = id;
   script.src = src;
   script.async = true;
+  if (id === "tradehq-adsense") script.crossOrigin = "anonymous";
   if (onload) script.onload = onload;
   document.head.appendChild(script);
 }
@@ -39,9 +43,9 @@ function loadConsentedServices() {
     },
   );
 
-  // Keep AdSense disabled until the real publisher ID and a Google-certified
-  // CMP configuration are confirmed. Never replace this placeholder by guesswork.
-  if (!ADSENSE_CLIENT.startsWith("ca-pub-")) return;
+  // Publisher ownership is declared separately in the static HTML and ads.txt.
+  // Accepting analytics here must not enable advertising on its own.
+  if (!ADSENSE_ENABLED) return;
   appendScript(
     "tradehq-adsense",
     `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(ADSENSE_CLIENT)}`,
@@ -86,8 +90,8 @@ export function ConsentBanner() {
     >
       <p className="text-sm font-semibold text-foreground">Privacy choices</p>
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-        TradeHQ uses essential browser storage for the simulator. Optional analytics and advertising
-        services are blocked until you accept them. You can reject them and still use the core site.
+        TradeHQ uses essential browser storage for the simulator. Optional analytics are blocked
+        until you accept them. You can reject analytics and still use the core site.
         See the <Link to="/privacy" className="text-primary hover:underline">privacy policy</Link>.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
@@ -107,7 +111,7 @@ export function ConsentBanner() {
         </button>
       </div>
       <p className="mt-3 text-[10px] leading-relaxed text-muted-foreground">
-        AdSense remains disabled until a Google-certified CMP and the confirmed publisher ID are configured.
+        Advertising is currently paused. This choice controls optional analytics.
       </p>
     </div>
   );

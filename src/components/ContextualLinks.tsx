@@ -182,7 +182,7 @@ export function ContextualLinks({ variant, asset, assetSymbols }: ContextualLink
           <Link to="/trade" className="text-primary font-medium underline-offset-4 hover:underline">
             TradeHQ simulator
           </Link>
-          . Practice risk-free with these popular assets:{" "}
+          . Practise with virtual cash using these asset examples:{" "}
           {symbols.map((s, i) => (
             <span key={s}>
               <Link to={`/trade/${s}`} className="text-primary underline-offset-4 hover:underline font-medium">

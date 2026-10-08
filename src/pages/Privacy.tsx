@@ -30,7 +30,7 @@ TradeHQ does not require a payment card, bank account or brokerage account to pl
 
 Amplitude is used for product analytics and may include session replay when analytics consent is granted. This can record interactions such as navigation and clicks subject to the provider's masking and privacy controls.
 
-Google AdSense is the advertising service planned/used on TradeHQ. When advertising is enabled after the required consent flow, Google and its advertising partners may use cookies or similar technologies to deliver and measure ads. Advertising may be personalized or non-personalized depending on consent, location and Google settings.
+Google AdSense is the advertising service planned for TradeHQ; ads are currently paused. When advertising is enabled after the required consent flow, Google and its advertising partners may use cookies or similar technologies to deliver and measure ads. Advertising may be personalized or non-personalized depending on consent, location and Google settings.
 
 TradeHQ does not sell simulated portfolio data to brokers or financial institutions and does not execute real-money trades.`
     },
@@ -59,9 +59,9 @@ AdSense advertising remains disabled in the current build. An advertising consen
       title: "Service Providers, Cookies & Your Choices",
       content: `TradeHQ relies on third parties including Vercel for hosting, Supabase for optional authentication/database features, Amplitude for consented analytics/session replay, and Google AdSense for consented advertising. These providers can process data in countries other than your own under their own legal and contractual arrangements.
 
-Non-essential analytics and advertising scripts are blocked until the user has made the applicable consent choice. You can reject optional analytics/advertising, change your choice later from this privacy page, clear browser storage/cookies, and use browser privacy controls. Google also provides ad-personalization controls through Google Ads Settings.
+Optional analytics scripts are blocked until you accept analytics. You can reject analytics, change that choice later from this privacy page, clear browser storage/cookies, and use browser privacy controls. These controls currently apply to analytics; advertising remains paused and will require a separate consent integration. Google also provides ad-personalization controls through Google Ads Settings.
 
-For users in the EEA, United Kingdom and Switzerland, Google requires a Google-certified consent-management platform for AdSense consent collection. AdSense remains disabled in this build until that certified CMP and the confirmed publisher ID are configured.
+For users in the EEA, United Kingdom and Switzerland, Google requires a Google-certified consent-management platform for AdSense consent collection. AdSense remains disabled in this build until the required advertising consent integration is configured and verified.
 
 Depending on where you live, privacy law may give you rights to access, correct, delete, restrict or object to certain processing. Use the TradeHQ contact page for a privacy request. The exact rights available depend on your jurisdiction.`
     }
@@ -129,7 +129,7 @@ Depending on where you live, privacy law may give you rights to access, correct,
               onClick={() => window.dispatchEvent(new Event("tradehq:open-consent"))}
               className="mb-5 rounded-lg border border-border px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted"
             >
-              Change analytics and advertising choices
+              Change analytics choices
             </button>
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -162,7 +162,7 @@ Depending on where you live, privacy law may give you rights to access, correct,
               },
               {
                 question: "Does TradeHQ use analytics or advertising cookies?",
-                answer: "Yes, when the applicable consent choice allows them. TradeHQ uses Amplitude for product analytics/session replay and Google AdSense for advertising. These services can use cookies or similar identifiers according to their settings and your consent choices.",
+                answer: "Amplitude analytics/session replay can use cookies or similar identifiers after analytics consent. AdSense advertising is currently paused; advertising consent will require a separate verified integration before ads are enabled.",
               },
             ]}
           />

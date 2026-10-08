@@ -82,7 +82,7 @@ const LearnTradingGuide = () => {
         "name": "How do I start trading with no money?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The best way is to use a trading simulator like TradeHQ which provides $100,000 in virtual capital to practice risk-free."
+          "text": "One learning exercise is to use a simulator such as TradeHQ to study order entry and portfolio changes with $100,000 in virtual cash. Practice outcomes do not establish readiness for real trading."
         }
       }
     ]
@@ -112,7 +112,7 @@ const LearnTradingGuide = () => {
             </motion.div>
             
             <h1 className="text-3xl md:text-5xl font-black mb-6 tracking-tight text-white leading-tight uppercase italic">
-              Practice with <span className="text-emerald-500">$100K Risk-Free</span>
+              Practice with <span className="text-emerald-500">$100K Virtual Cash</span>
             </h1>
 
             <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
@@ -344,7 +344,7 @@ const LearnTradingGuide = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
               {[
                 { icon: Globe, title: "149 Assets", desc: "Equities, Crypto & Tokenized Securities." },
-                { icon: Shield, title: "No Financial Risk", desc: "Pure educational environment." },
+                { icon: Shield, title: "Virtual Money Only", desc: "Practice losses do not spend real cash." },
                 { icon: Zap, title: "Practice Ready", desc: "Built around simulator exercises and guided learning." }
               ].map((f, i) => (
                 <div key={i} className="text-center group">

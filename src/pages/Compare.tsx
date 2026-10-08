@@ -16,7 +16,7 @@ export default function Compare() {
   if (!pair) return <NotFound />;
 
   const title = `${pair.a.name} vs ${pair.b.name} — Key Differences Explained | TradeHQ`;
-  const description = `${pair.a.name} vs ${pair.b.name}: side-by-side comparison on returns, volatility, use case and risk. Practise both risk-free with $100K virtual cash on TradeHQ. (Educational simulation only — not financial advice.)`;
+  const description = `${pair.a.name} vs ${pair.b.name}: side-by-side comparison on returns, volatility, use case and risk. Practise both with $100K virtual cash on TradeHQ. (Educational simulation only — not financial advice.)`;
   const url = `${SITE_DOMAIN}/compare/${pair.slug}`;
 
   return (
@@ -153,7 +153,7 @@ export default function Compare() {
 
 export function CompareIndex() {
   const title = "Asset Comparisons — Crypto, Stocks & ETFs Side-by-Side | TradeHQ";
-  const description = "Compare Bitcoin vs Ethereum, Tesla vs Nvidia, stocks vs crypto and more. Side-by-side breakdowns of returns, risk and use cases. Practise both sides risk-free.";
+  const description = "Compare Bitcoin vs Ethereum, Tesla vs Nvidia, stocks vs crypto and more. Side-by-side breakdowns of returns, risk and use cases. Compare both in a virtual-money simulation.";
   return (
     <>
       <Helmet>

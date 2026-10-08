@@ -74,7 +74,7 @@ export function CredibilityFooter() {
             </Link>
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
               A financial education hub with simulator-based practice and guided learning. Practice trading with our 
-              risk-free $100K simulator and master the markets with guided learning.
+              $100K virtual-cash simulator and study market mechanics with guided learning.
             </p>
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} TradeHQ. All rights reserved.

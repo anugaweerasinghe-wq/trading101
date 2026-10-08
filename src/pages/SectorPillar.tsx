@@ -262,8 +262,8 @@ export default function SectorPillar() {
                 answer: `${sector.name} on TradeHQ covers ${sector.assetIds.length} simulator-tradable assets. Click any asset above to open the trading terminal with $100,000 of virtual cash.`,
               },
               {
-                question: `Can I trade ${sector.name} assets risk-free?`,
-                answer: `Yes — every TradeHQ trade is fully simulated. Practice ${sector.name} strategies with virtual funds and zero real risk. (Educational simulation only — not financial advice.)`,
+                question: `Can I practise ${sector.name} assets with virtual money?`,
+                answer: `Yes — every TradeHQ trade is fully simulated. Study ${sector.name} orders with virtual funds. Practice gains and losses do not predict real returns. (Educational simulation only — not financial advice.)`,
               },
               {
                 question: `How do I research ${sector.name} before trading?`,

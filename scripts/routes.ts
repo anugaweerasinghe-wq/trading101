@@ -349,7 +349,7 @@ export function buildRoutes(): RouteMeta[] {
     routes.push({
       path: `/trade/${a.id}`,
       title: `Paper Trade ${a.name} (${a.symbol}) Free — ${BALANCE} Simulator | TradeHQ`,
-      description: `Practice trading ${a.name} (${a.symbol}) risk-free with ${BALANCE} in virtual cash. Simulated charts, portfolio tracking, no signup. Educational only.`,
+      description: `Practise ${a.name} (${a.symbol}) with ${BALANCE} virtual cash. Simulated charts, portfolio tracking, no signup. Educational only.`,
       h1: `Paper Trade ${a.name} (${a.symbol})`,
       summary: `Simulate buying and selling ${a.name} (${a.symbol}) with ${BALANCE} in virtual cash. Charts and prices are for education only — no real money, no brokerage relationship.`,
       priority: "0.8",
@@ -456,7 +456,7 @@ export function buildRoutes(): RouteMeta[] {
       title: `How to Trade ${label} — Step-by-Step Guide | TradeHQ`,
       description: `Learn how to trade ${label} step-by-step with ${BALANCE} virtual cash. Free practice account, no signup. Educational simulation only.`,
       h1: `How to Trade ${label}`,
-      summary: h.whyTrade || `Step-by-step guide to trading ${label}, followed by risk-free practice on the free ${BALANCE} simulator.`,
+      summary: h.whyTrade || `Step-by-step guide to trading ${label}, followed by practice with virtual cash on the free ${BALANCE} simulator.`,
       priority: "0.7",
       changefreq: "weekly",
     });

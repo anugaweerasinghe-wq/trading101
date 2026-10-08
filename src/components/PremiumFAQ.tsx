@@ -22,7 +22,7 @@ export function PremiumFAQ() {
     },
     {
       question: "What is paper trading?",
-      answer: "Paper trading is simulated trading using virtual money instead of real capital. It lets you practice buying and selling financial instruments risk-free to build skills and test strategies before investing real money."
+      answer: "Paper trading is simulated trading using virtual money instead of real capital. It lets you study buying and selling mechanics without spending real money. Simulated outcomes do not predict real returns."
     },
     {
       question: "How do I start trading on TradeHQ?",

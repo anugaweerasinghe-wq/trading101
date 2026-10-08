@@ -166,7 +166,7 @@ export default function HowToTrade() {
               { label: asset.fullName },
             ]}
             faqs={[
-              { question: `Can I learn to trade ${asset.fullName} for free?`, answer: `Yes. TradeHQ gives you $100,000 in virtual cash with no signup so you can practise ${asset.fullName} trading risk-free.` },
+              { question: `Can I learn to trade ${asset.fullName} for free?`, answer: `Yes. TradeHQ gives you $100,000 in virtual cash with no signup for ${asset.fullName} practice. Simulated results do not predict real returns.` },
               { question: `How much money do I need to start trading ${asset.fullName}?`, answer: `On TradeHQ — zero. You get $100K practice capital instantly. For real trading, never start with more than you can afford to lose.` },
               { question: `Is trading ${asset.fullName} risky?`, answer: asset.risk },
             ]}

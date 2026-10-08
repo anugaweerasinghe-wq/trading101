@@ -126,7 +126,7 @@ export function LearningProgressTracker() {
   };
 
   const handleShareProgress = () => {
-    const shareText = `I'm leveling up my trading skills on TradeHQ! 📈\n\n🎯 Level ${levelInfo.level}: ${levelInfo.title}\n⚡ ${totalXP}/${maxXP} XP\n✅ ${completedCount}/${modules.length} modules completed\n\nLearn to trade risk-free: https://www.thetradehq.com/learn-trading-guide\n\n#TradingEducation #LearnToTrade #PaperTrading`;
+    const shareText = `I'm leveling up my trading skills on TradeHQ! 📈\n\n🎯 Level ${levelInfo.level}: ${levelInfo.title}\n⚡ ${totalXP}/${maxXP} XP\n✅ ${completedCount}/${modules.length} modules completed\n\nStudy trading with virtual cash: https://www.thetradehq.com/learn-trading-guide\n\n#TradingEducation #LearnToTrade #PaperTrading`;
     
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
     window.open(twitterUrl, '_blank', 'width=550,height=420');

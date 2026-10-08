@@ -8,7 +8,7 @@ export function PremiumFeatures() {
   const features = [
     {
       icon: Shield,
-      title: "100% Risk-Free Practice",
+      title: "Practice with Virtual Cash",
       description: "Trade with $100K virtual cash. Make bold moves, learn from mistakes, and master strategies without risking a single dollar.",
       gradient: "from-primary/20 to-primary/5",
       iconColor: "text-primary",
@@ -82,7 +82,7 @@ export function PremiumFeatures() {
               </span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Practical tools, zero financial risk. Designed to help beginners learn how markets work by doing.
+              Practical tools with virtual money. Study market mechanics through simulated orders and portfolio changes.
             </p>
           </motion.div>
         </div>

@@ -12,7 +12,7 @@ interface SocialShareProps {
 
 export function SocialShare({ 
   title = "I'm learning to trade on TradeHQ!",
-  description = "Master trading with a risk-free $100K simulator",
+  description = "Study trading with a $100K virtual-cash simulator",
   url,
   variant = "default"
 }: SocialShareProps) {

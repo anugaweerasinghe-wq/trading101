@@ -291,7 +291,7 @@ export default function TradeAsset() {
       {
         "@type": "PropertyValue",
         "name": "studentPerspective",
-        "value": `Students can practice ${selectedAsset.symbol} trading as beginners — build skills risk-free before committing real capital.`
+        "value": `Students can study ${selectedAsset.symbol} order mechanics with virtual cash. Simulated outcomes do not establish readiness for real trading.`
       }
     ]
   } : null;
@@ -367,7 +367,7 @@ export default function TradeAsset() {
       "name": `How can I practice trading ${selectedAsset.name}?`,
       "acceptedAnswer": {
         "@type": "Answer" as const,
-        "text": `TradeHQ provides $100,000 in virtual capital to practice ${selectedAsset.symbol} trading risk-free. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and educational mentor explanations.`
+        "text": `TradeHQ provides $100,000 in virtual capital to practise ${selectedAsset.symbol} orders without spending real money. Select ${selectedAsset.symbol} from the asset list to start practicing with simulated charts and educational mentor explanations.`
       }
     }
   ] : [];
@@ -578,7 +578,7 @@ export default function TradeAsset() {
                 {generateStudentUseSection(selectedAsset)}
               </p>
               <p className="text-xs text-muted-foreground/60 mt-3 italic">
-                Student perspective: Practice {selectedAsset.symbol} trading as a beginner in Colombo or anywhere — build skills risk-free.
+                Student perspective: Study {selectedAsset.symbol} order mechanics with virtual cash in Colombo or anywhere. Simulation does not predict real returns.
               </p>
             </section>
           )}
