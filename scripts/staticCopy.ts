@@ -314,6 +314,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         h: "Community reviews",
         p: [
           "This page collects visitor-submitted feedback about the practice simulator. Submissions appear automatically and can be moderated after publication. Browser and server-side duplicate checks limit repeat submissions, but identity and usage are not independently verified. Reviews are feedback about the product, not verified investment-performance testimonials.",
+          "Signed-in visitors can like or unlike reviews once per account. Like totals are public; individual liker identities are private. Replies from the site owner are labelled separately from visitor feedback.",
           "A visible rating summarises the submissions currently displayed; it does not establish that each author used every feature or that the feedback represents all visitors. Read the specific task and experience described. For a factual correction or a privacy concern, the contact page provides a direct way to reach the maintainer.",
         ],
       },
@@ -454,6 +455,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
         h: "Summary of what we store",
         p: [
           "Guest practice cash, positions and trade history stay in your browser. Supabase stores account cash, positions and server-recorded orders with execution prices, fees, time and simulated results. These records restore across devices when available. A first browser import stores an unranked cash/position snapshot; a fresh ranked cycle archives the previous account snapshot privately. Earlier guest history, journals, watchlists, course progress and streaks remain browser-held.",
+          "Review likes store your account ID and review ID to prevent duplicate likes. Only totals are public. Owner replies are public; reviews removed from public view remain in the private admin panel for restoration.",
           "Clearing site data removes browser-held records but does not delete a portfolio already synced to your account. Optional accounts, public profiles, reviews and duels also store the data needed for those features on our backend. Contact the maintainer for an account-data or deletion request.",
         ],
       },
