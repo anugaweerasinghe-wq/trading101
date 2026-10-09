@@ -2,6 +2,7 @@ import type { CourseDocument } from "../../../supabase/functions/_shared/courseD
 
 export function CoursePreview({ document: doc }: { document: CourseDocument }) {
   return <article className="space-y-8 text-foreground">
+    <img src={doc.hero} alt={`${doc.title || "Course"} — cover illustration`} width={1920} height={1080} className="aspect-video w-full rounded-2xl object-cover" />
     <header><p className="text-sm text-primary mb-2">{doc.level}</p><h2 className="text-3xl font-semibold">{doc.title || "Untitled course"}</h2>
       <p className="mt-3 text-muted-foreground">{doc.tagline}</p><p className="mt-5 leading-relaxed">{doc.description}</p></header>
     <section><h3 className="font-semibold mb-3">Learning outcomes</h3><ul className="list-disc pl-5 space-y-2">{doc.outcomes.map((o, i) => <li key={i}>{o}</li>)}</ul></section>

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import { PGlite } from "@electric-sql/pglite";
-import { validateCourseDocument, type CourseDocument } from "../supabase/functions/_shared/courseDocument.ts";
+import { courseCovers, lessonWordCount, validateCourseDocument, type CourseDocument } from "../supabase/functions/_shared/courseDocument.ts";
 import { createCourseAdminHandler } from "../supabase/functions/_shared/courseAdmin.ts";
 import { generateCourse, courseReferences } from "../supabase/functions/_shared/courseGenerator.ts";
 import { renderApprovedCourse } from "../src/lib/courseHtml.ts";
@@ -10,18 +10,25 @@ import { sharedQuote } from "../supabase/functions/_shared/sharedQuote.ts";
 // Test-only fixture; never inserted into production or published.
 const document: CourseDocument = {
   slug: "test-course", title: "Test Course", tagline: "A test-only fixture.", description: "Private verification data.",
-  hero: "/og-image.png", level: "Beginner", badge: { name: "Completion", description: "Complete the lessons." },
+  hero: courseCovers[0].path, level: "Beginner", badge: { name: "Completion", description: "Complete the lessons." },
   outcomes: ["Understand snapshots", "Calculate returns", "Check source timestamps"], prerequisites: "Arithmetic.",
   progression: "Definition, example, exercise.", notFor: "Real-money recommendations.",
   lessons: Array.from({ length: 3 }, (_, i) => ({
     slug: "lesson-" + i, title: "Test lesson " + i, summary: "Test-only lesson.", readingMinutes: 6,
-    body: [Array.from({ length: 530 }, (_, n) => "word" + i + "x" + n).join(" ")],
+    body: [Array.from({ length: 600 }, (_, n) => "word" + i + "x" + n).join(" ")],
     keyTakeaways: ["One", "Two", "Three"],
     sources: courseReferences.slice(0, 2),
     quiz: Array.from({ length: 3 }, () => ({ question: "Which is two?", options: ["One", "Two", "Three", "Four"], correctAnswer: 1, explanation: "Two is the second option." })),
   })),
 };
 assert.deepEqual(validateCourseDocument(document, true), []);
+const boundary = structuredClone(document);
+boundary.lessons[0].body = [Array(550).fill("word").join(" "), "## Heading words do not make a short lesson long enough"];
+assert.equal(lessonWordCount(boundary.lessons[0].body), 550);
+assert.ok(validateCourseDocument(boundary, true).some(e => e.includes("over 550")));
+const enough = structuredClone(boundary); enough.lessons[0].body[0] += " extra";
+assert.equal(lessonWordCount(enough.lessons[0].body), 551);
+assert.deepEqual(validateCourseDocument(enough, true), []);
 const incomplete = structuredClone(document); incomplete.lessons[0].body = [];
 assert.ok(validateCourseDocument(incomplete, true).length > 0);
 const unsafe = structuredClone(document); unsafe.lessons[0].sources[0].url = "javascript:alert(1)";
@@ -55,6 +62,7 @@ assert.ok(!html.includes('content="noindex'));
 assert.ok(html.includes("&lt;/script&gt;"));
 assert.ok(!html.includes("<script>alert(1)</script>"));
 assert.ok(html.includes("approved-course-bootstrap"));
+assert.ok(html.includes('src="' + document.hero + '"'));
 assert.equal(renderApprovedCourse(shell, document, "missing"), null);
 
 const now = Date.now();
@@ -74,6 +82,9 @@ const claim = { lease: "test", period: "2026-10", slot: 1, apiKey: "test-free-ke
 const fetcher = (async (url: string | URL | Request, init?: RequestInit) => {
   if (String(url).includes("generativelanguage")) {
     aiCalls++; assert.ok(!String(url).includes(claim.apiKey));
+    const prompt = JSON.parse(JSON.parse(String(init!.body)).contents[0].parts[0].text);
+    assert.equal(prompt.covers.length, 4);
+    assert.ok(prompt.style.some((s: string) => s.includes("TradeHQ")));
     assert.equal((init!.headers as Record<string, string>)["x-goog-api-key"], claim.apiKey);
     return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: JSON.stringify(document) }] } }] }));
   }
@@ -99,8 +110,12 @@ try {
     CREATE FUNCTION vault.update_secret(k uuid,s text) RETURNS void LANGUAGE sql AS $$ UPDATE vault.secrets SET secret=s WHERE id=k $$;
     CREATE SCHEMA net; CREATE FUNCTION net.http_post(url text,body jsonb,headers jsonb,timeout_milliseconds integer) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;
     CREATE SCHEMA cron; CREATE FUNCTION cron.schedule(name text,schedule text,command text) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;`);
-  for (const file of readdirSync("supabase/migrations").filter(f => /course_draft_approval|course_generation_schedule|support_gemini_auth_keys|validate_gemini_auth_key_length/.test(f)).sort()) {
+  for (const file of readdirSync("supabase/migrations").filter(f => /course_draft_approval|course_generation_schedule|support_gemini_auth_keys|validate_gemini_auth_key_length|course_lesson_quality_floor/.test(f)).sort()) {
     await db.exec(readFileSync("supabase/migrations/" + file, "utf8"));
+  }
+  for (const [fixture, valid] of [[boundary, false], [enough, true]] as const) {
+    const result = await db.query<{ valid: boolean }>("select tradehq_private.course_document_valid($1::jsonb,true) as valid", [JSON.stringify(fixture)]);
+    assert.equal(result.rows[0].valid, valid);
   }
   const doc = JSON.stringify(document);
   const added = await db.query<{ id: string }>("select public.ingest_course_draft('2026-10',1,$1::jsonb,'{}'::jsonb) as id", [doc]);
