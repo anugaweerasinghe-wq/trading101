@@ -2,7 +2,9 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { BookOpen, X } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { createClient } from "@supabase/supabase-js";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 
 type PublishedCourse = { slug: string; published_at: string; document: { title?: string } | null };
 const STORAGE_KEY = "tradehq-seen-course-publications-v1";
@@ -42,7 +44,7 @@ export function CoursePublicationNotices() {
         }
         // Limit storage growth without replaying recent notices.
         const recent = Object.entries(seen).filter(([marker]) => {
-          const stamp = marker.slice(marker.lastIndexOf(":") + 1);
+          const stamp = marker.substring(marker.indexOf(":") + 1);
           return Date.now() - Date.parse(stamp) < 30 * 86400000 || !Number.isFinite(Date.parse(stamp));
         });
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(Object.fromEntries(recent.slice(-150)))); } catch { /* Private-browsing mode: session deduplication still works. */ }
