@@ -343,7 +343,7 @@ const LearnTradingGuide = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
               {[
-                { icon: Globe, title: "149 Assets", desc: "Equities, Crypto & Tokenized Securities." },
+                { icon: Globe, title: "170 Assets", desc: "Equities, Crypto & Tokenized Securities." },
                 { icon: Shield, title: "Virtual Money Only", desc: "Practice losses do not spend real cash." },
                 { icon: Zap, title: "Practice Ready", desc: "Built around simulator exercises and guided learning." }
               ].map((f, i) => (

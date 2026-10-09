@@ -1,10 +1,12 @@
 import { Asset, AssetType } from './types';
+import { additionalCryptoAssets } from './additionalCryptoAssets';
 
 export const INITIAL_CASH = 100000; // $100,000 starting balance
 
 export const ASSETS: Asset[] = [
+  ...additionalCryptoAssets,
   // ==========================================
-  // MAJOR CRYPTOCURRENCIES (30+)
+  // ORIGINAL CRYPTOCURRENCIES (legacy MATIC retained for account history)
   // ==========================================
   {
     id: 'btc',

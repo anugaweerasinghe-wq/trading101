@@ -2,7 +2,7 @@ import { marketLimit, RateLimitUnavailable } from "../_shared/rateLimitPolicy.ts
 import { allow, clientIp } from "../_shared/rateLimit.ts";
 import { coinQuote } from "../_shared/providerQuotes.ts";
 import { CRYPTO_ID_MAP, COMMODITY_MAP, fetchCryptoData, fetchCryptoCandles, fetchStockData, fetchForexData, type MarketData, type CandleData, type DataProvenance } from "../_shared/marketProviders.ts";
-import { cachePrice } from "../_shared/priceCache.ts";
+import { cachePrice, readSharedCryptoQuote } from "../_shared/priceCache.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -79,6 +79,7 @@ Deno.serve(async (req) => {
 
     let data: MarketData | CandleData[] | null = null;
     let candleProvenance: DataProvenance | null = null;
+    let servedSharedQuote = false;
 
     if (dataType === 'candles') {
       if (assetType === 'crypto' && CRYPTO_ID_MAP[assetId]) {
@@ -102,7 +103,9 @@ Deno.serve(async (req) => {
       }
     } else {
       if (assetType === 'crypto') {
-        data = await fetchCryptoData(assetId);
+        data = await readSharedCryptoQuote(assetId);
+        servedSharedQuote = !!data;
+        if (!data) data = await fetchCryptoData(assetId);
       } else if (assetType === 'stock' || assetType === 'etf') {
         data = await fetchStockData(assetId);
       } else if (assetType === 'forex') {
@@ -132,7 +135,10 @@ Deno.serve(async (req) => {
     }
 
     if (dataType !== 'candles' && data && !Array.isArray(data) && data.source === 'live' && data.provenance.status !== 'proxy') {
-      await cachePrice(assetId, data.price, data.provenance?.provider ?? 'provider', data.provenance.observedAt ?? null, data.provenance.status);
+      // A shared-cache read must not advance fetchedAt or add valuation history.
+      if (!servedSharedQuote) {
+        await cachePrice(assetId, data.price, data.provenance?.provider ?? 'provider', data.provenance.observedAt ?? null, data.provenance.status, data);
+      }
     }
 
 

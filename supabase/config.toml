@@ -22,3 +22,11 @@ verify_jwt = false
 [functions.admin-reviews]
 # The owner master key is checked in the handler before accessing the database.
 verify_jwt = false
+
+[functions.admin-courses]
+# Owner master key and server rate limiting are checked before any database access.
+verify_jwt = false
+
+[functions.generate-course-draft]
+# Expiring, single-use scheduler token; claim RPC is service-role-only.
+verify_jwt = false

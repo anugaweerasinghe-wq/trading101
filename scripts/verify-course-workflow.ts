@@ -1,0 +1,169 @@
+import assert from "node:assert/strict";
+import { readFileSync, readdirSync } from "node:fs";
+import { PGlite } from "@electric-sql/pglite";
+import { validateCourseDocument, type CourseDocument } from "../supabase/functions/_shared/courseDocument.ts";
+import { createCourseAdminHandler } from "../supabase/functions/_shared/courseAdmin.ts";
+import { generateCourse, courseReferences } from "../supabase/functions/_shared/courseGenerator.ts";
+import { renderApprovedCourse } from "../src/lib/courseHtml.ts";
+import { sharedQuote } from "../supabase/functions/_shared/sharedQuote.ts";
+
+// Test-only fixture; never inserted into production or published.
+const document: CourseDocument = {
+  slug: "test-course", title: "Test Course", tagline: "A test-only fixture.", description: "Private verification data.",
+  hero: "/og-image.png", level: "Beginner", badge: { name: "Completion", description: "Complete the lessons." },
+  outcomes: ["Understand snapshots", "Calculate returns", "Check source timestamps"], prerequisites: "Arithmetic.",
+  progression: "Definition, example, exercise.", notFor: "Real-money recommendations.",
+  lessons: Array.from({ length: 3 }, (_, i) => ({
+    slug: "lesson-" + i, title: "Test lesson " + i, summary: "Test-only lesson.", readingMinutes: 6,
+    body: [Array.from({ length: 530 }, (_, n) => "word" + i + "x" + n).join(" ")],
+    keyTakeaways: ["One", "Two", "Three"],
+    sources: courseReferences.slice(0, 2),
+    quiz: Array.from({ length: 3 }, () => ({ question: "Which is two?", options: ["One", "Two", "Three", "Four"], correctAnswer: 1, explanation: "Two is the second option." })),
+  })),
+};
+assert.deepEqual(validateCourseDocument(document, true), []);
+const incomplete = structuredClone(document); incomplete.lessons[0].body = [];
+assert.ok(validateCourseDocument(incomplete, true).length > 0);
+const unsafe = structuredClone(document); unsafe.lessons[0].sources[0].url = "javascript:alert(1)";
+assert.ok(validateCourseDocument(unsafe).length > 0);
+const invalidQuiz = structuredClone(document); invalidQuiz.lessons[0].quiz[0].correctAnswer = 4;
+assert.ok(validateCourseDocument(invalidQuiz).length > 0);
+
+let writes = 0;
+const handler = createCourseAdminHandler({
+  getKey: () => "test-owner-key", rateLimit: async () => true,
+  store: {
+    list: async () => [], save: async () => { writes++; return {}; }, publish: async () => { writes++; return {}; },
+    reject: async () => { writes++; return {}; }, settings: async () => ({}), configure: async () => ({}), run: async () => 1,
+  },
+});
+const request = (body: unknown, key = "test-owner-key") => new Request("https://example.test", {
+  method: "POST", headers: { "x-admin-key": key }, body: JSON.stringify(body),
+});
+assert.equal((await handler(request({ action: "save", document }, "wrong"))).status, 401);
+assert.equal(writes, 0);
+assert.equal((await handler(request({ action: "publish", id: "12345678-1234-1234-1234-123456789012", revision: 1, reviewer: "Owner", reviewed: false }))).status, 400);
+assert.equal(writes, 0);
+assert.equal((await handler(request({ action: "save", document }))).status, 200);
+assert.equal(writes, 1);
+
+const shell = '<html><head><title>Shell</title><meta name="robots" content="noindex, follow"></head><body><div id="root"></div></body></html>';
+const hostile = structuredClone(document); hostile.title = "</script><script>alert(1)</script>";
+const html = renderApprovedCourse(shell, hostile)!;
+assert.ok(html.includes('content="index, follow"'));
+assert.ok(!html.includes('content="noindex'));
+assert.ok(html.includes("&lt;/script&gt;"));
+assert.ok(!html.includes("<script>alert(1)</script>"));
+assert.ok(html.includes("approved-course-bootstrap"));
+assert.equal(renderApprovedCourse(shell, document, "missing"), null);
+
+const now = Date.now();
+const row = { price: "100", source: "CoinGecko", updated_at: new Date(now - 60000).toISOString(),
+  observed_at: new Date(now - 10 * 86400000).toISOString(), quote_data: null };
+assert.equal(sharedQuote(row, now)?.provenance.status, "delayed");
+assert.equal(sharedQuote(row, now)?.change24h, null);
+assert.equal(sharedQuote({ ...row, updated_at: new Date(now - 7 * 60000).toISOString() }, now), null);
+const current = new Date(now - 30000).toISOString();
+const quote = { price: 100, change24h: 2, changePercent24h: 2, volume24h: 1234, provenance: { observedAt: current } };
+assert.equal(sharedQuote({ ...row, observed_at: current.replace("Z", "+00:00"), quote_data: quote }, now)?.change24h, 2);
+assert.equal(sharedQuote({ ...row, observed_at: current, price: 101, quote_data: quote }, now)?.change24h, null);
+
+let aiCalls = 0;
+const claim = { lease: "test", period: "2026-10", slot: 1, apiKey: "test-free-key", model: "gemini-3.8-flash",
+  gscProperty: "", gscCredentials: null, topicRequests: ["Price snapshots"], existing: [] };
+const fetcher = (async (url: string | URL | Request, init?: RequestInit) => {
+  if (String(url).includes("generativelanguage")) {
+    aiCalls++; assert.ok(!String(url).includes(claim.apiKey));
+    assert.equal((init!.headers as Record<string, string>)["x-goog-api-key"], claim.apiKey);
+    return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: JSON.stringify(document) }] } }] }));
+  }
+  return new Response("<main>" + "Trusted test-only reference. ".repeat(100) + "</main>", { headers: { "Content-Type": "text/html" } });
+}) as typeof fetch;
+const generated = await generateCourse(claim, fetcher);
+assert.equal(generated.research.method, "Owner topic requests"); assert.equal(aiCalls, 1);
+await assert.rejects(generateCourse({ ...claim, topicRequests: [] }, fetcher), /Connect Search Console/);
+assert.equal(aiCalls, 1);
+const limited = (async (url: string | URL | Request, init?: RequestInit) => String(url).includes("generativelanguage")
+  ? new Response("", { status: 429 }) : fetcher(url, init)) as typeof fetch;
+await assert.rejects(generateCourse(claim, limited), /Free AI quota exhausted/);
+
+const db = new PGlite();
+try {
+  await db.exec(`CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;
+    CREATE SCHEMA tradehq_private; GRANT USAGE ON SCHEMA tradehq_private TO service_role;
+    CREATE SCHEMA vault;
+    CREATE TABLE vault.secrets(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),name text UNIQUE,secret text);
+    CREATE VIEW vault.decrypted_secrets AS SELECT id,name,secret AS decrypted_secret FROM vault.secrets;
+    CREATE FUNCTION vault.create_secret(s text,n text) RETURNS uuid LANGUAGE plpgsql AS $$
+      DECLARE k uuid; BEGIN INSERT INTO vault.secrets(name,secret) VALUES(n,s) RETURNING id INTO k; RETURN k; END; $$;
+    CREATE FUNCTION vault.update_secret(k uuid,s text) RETURNS void LANGUAGE sql AS $$ UPDATE vault.secrets SET secret=s WHERE id=k $$;
+    CREATE SCHEMA net; CREATE FUNCTION net.http_post(url text,body jsonb,headers jsonb,timeout_milliseconds integer) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;
+    CREATE SCHEMA cron; CREATE FUNCTION cron.schedule(name text,schedule text,command text) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;`);
+  for (const file of readdirSync("supabase/migrations").filter(f => /course_draft_approval|course_generation_schedule/.test(f)).sort()) {
+    await db.exec(readFileSync("supabase/migrations/" + file, "utf8"));
+  }
+  const doc = JSON.stringify(document);
+  const added = await db.query<{ id: string }>("select public.ingest_course_draft('2026-10',1,$1::jsonb,'{}'::jsonb) as id", [doc]);
+  const id = added.rows[0].id;
+  const same = await db.query<{ id: string }>("select public.ingest_course_draft('2026-10',1,$1::jsonb,'{}'::jsonb) as id", [doc]);
+  assert.equal(same.rows[0].id, id);
+  await db.exec("SET ROLE anon");
+  assert.equal((await db.query("select * from public.published_courses")).rows.length, 0);
+  await assert.rejects(db.query("select * from public.course_drafts"), /permission denied/);
+  await assert.rejects(db.query("select public.publish_course_draft($1,1,'Owner')", [id]), /permission denied/);
+  await assert.rejects(db.query("select public.course_generation_status()"), /permission denied/);
+  await db.exec("RESET ROLE");
+  await assert.rejects(db.query("select public.publish_course_draft($1,2,'Owner')", [id]), /Course changed/);
+  await db.query("select public.publish_course_draft($1,1,'Owner')", [id]);
+  await db.exec("SET ROLE anon");
+  const approved = await db.query<{ document: CourseDocument }>("select document from public.published_courses");
+  assert.equal(approved.rows[0].document.editorial?.reviewer, "Owner");
+  const catalog = await db.query<{ doc: CourseDocument }>("select public.get_published_course_catalog() as doc");
+  assert.deepEqual(catalog.rows[0].doc.lessons[0].body, []);
+  await db.exec("RESET ROLE");
+  const edited = structuredClone(document); edited.title = "Revised draft";
+  await db.query("select public.save_course_draft($1,1,$2::jsonb)", [id, JSON.stringify(edited)]);
+  const stillLive = await db.query<{ document: CourseDocument }>("select document from public.published_courses");
+  assert.equal(stillLive.rows[0].document.title, "Test Course");
+  await assert.rejects(db.query("select public.save_course_draft($1,1,$2::jsonb)", [id, doc]), /Course changed/);
+  await db.query("select public.publish_course_draft($1,2,'Owner')", [id]);
+  const afterApproval = await db.query<{ document: CourseDocument }>("select document from public.published_courses");
+  assert.equal(afterApproval.rows[0].document.title, "Revised draft");
+  const empty = await db.query<{ valid: boolean }>("select tradehq_private.course_document_valid($1::jsonb,true) as valid", [JSON.stringify(incomplete)]);
+  assert.equal(empty.rows[0].valid, false);
+  const settings = { enabled: true, freeConfirmed: false, model: "gemini-3.8-flash", topicRequests: [] };
+  await assert.rejects(db.query("select public.configure_course_generation($1::jsonb)", [JSON.stringify(settings)]), /billing disabled/);
+  const meta = await db.query<{ value: Record<string, unknown> }>("select public.course_generation_status() as value");
+  assert.equal(meta.rows[0].value.hasApiKey, false);
+  assert.ok(!Object.keys(meta.rows[0].value).includes("apiKey"));
+  assert.equal((await db.query<{ value: number | null }>("select public.request_course_generation() as value")).rows[0].value, null);
+  const ready = { ...settings, enabled: true, freeConfirmed: true, apiKey: "test-free-provider-key-123456", topicRequests: ["Price snapshots"] };
+  await db.query("select public.configure_course_generation($1::jsonb)", [JSON.stringify(ready)]);
+  await db.exec("DELETE FROM public.course_drafts WHERE id <> '" + id + "'");
+  // Use a different period from the current clock for the existing fixture.
+  await db.query("UPDATE public.course_drafts SET generation_period='2000-01' WHERE id=$1", [id]);
+  assert.equal((await db.query<{ value: number }>("select public.request_course_generation(true) as value")).rows[0].value, 1);
+  assert.equal((await db.query<{ value: number | null }>("select public.request_course_generation(true) as value")).rows[0].value, null);
+  const token = (await db.query<{ token: string }>("select pending_token as token from tradehq_private.course_generation_state")).rows[0].token;
+  assert.equal((await db.query<{ value: unknown }>("select public.claim_course_generation($1) as value", ["x".repeat(64)])).rows[0].value, null);
+  const lease = (await db.query<{ value: { lease: string; slot: number; apiKey: string } }>("select public.claim_course_generation($1) as value", [token])).rows[0].value;
+  assert.equal(lease.slot, 1); assert.equal(lease.apiKey, ready.apiKey);
+  assert.equal((await db.query<{ value: unknown }>("select public.claim_course_generation($1) as value", [token])).rows[0].value, null);
+  await db.query("select public.finish_course_generation($1,NULL,NULL,'Free AI quota exhausted')", [lease.lease]);
+  assert.equal((await db.query<{ value: number | null }>("select public.request_course_generation() as value")).rows[0].value, null);
+  await db.query("select public.request_course_generation(true)");
+  const retryToken = (await db.query<{ token: string }>("select pending_token as token from tradehq_private.course_generation_state")).rows[0].token;
+  const retry = (await db.query<{ value: { lease: string } }>("select public.claim_course_generation($1) as value", [retryToken])).rows[0].value;
+  const nextDoc = { ...document, slug: "monthly-generated-course", title: "Monthly draft" };
+  await db.query("select public.finish_course_generation($1,$2::jsonb,'{}'::jsonb,NULL)", [retry.lease, JSON.stringify(nextDoc)]);
+  assert.equal((await db.query("select * from public.published_courses")).rows.length, 1);
+  assert.equal((await db.query("select * from public.course_drafts where status='draft'")).rows.length, 1);
+  assert.equal((await db.query<{ value: boolean }>("select public.finish_course_generation($1,$2::jsonb,'{}'::jsonb,NULL) as value", [retry.lease, JSON.stringify(nextDoc)])).rows[0].value, false);
+  await db.query("select public.request_course_generation(true)");
+  const secondToken = (await db.query<{ token: string }>("select pending_token as token from tradehq_private.course_generation_state")).rows[0].token;
+  const second = (await db.query<{ value: { lease: string; slot: number } }>("select public.claim_course_generation($1) as value", [secondToken])).rows[0].value;
+  assert.equal(second.slot, 2);
+  await db.query("select public.finish_course_generation($1,$2::jsonb,'{}'::jsonb,NULL)", [second.lease, JSON.stringify({ ...nextDoc, slug: "second-monthly-course" })]);
+  assert.equal((await db.query<{ value: number | null }>("select public.request_course_generation(true) as value")).rows[0].value, null);
+} finally { await db.close(); }
+console.log("PASS course workflow: owner authorization, private drafts, review gate, revision conflicts, published snapshots, compact catalog, safe SEO HTML, free-quota pause, secret-free status and idempotent monthly slots.");

@@ -41,8 +41,25 @@
       "destination": "/og-image.png"
     },
     {
+      "source": "/course-sitemap.xml",
+      "destination": "/api/course-sitemap"
+    },
+    {
+      "source": "/courses/:track/:lesson",
+      "destination": "/api/course?track=:track&lesson=:lesson"
+    },
+    {
+      "source": "/courses/:track",
+      "destination": "/api/course?track=:track"
+    },
+    {
       "source": "/(.*)",
       "destination": "/app-shell.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/course.ts": {
+      "includeFiles": "dist/**/*.html"
+    }
+  }
 }

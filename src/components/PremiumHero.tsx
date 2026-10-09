@@ -67,7 +67,7 @@ export function PremiumHero() {
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-profit" />
             </span>
             <span className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
-              Simulator Active • 149 Markets
+              Simulator Active • 170 Markets
             </span>
           </div>
         </motion.div>
@@ -146,7 +146,7 @@ export function PremiumHero() {
           className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl mx-auto"
         >
           {[
-            { label: 'Tradeable Assets', value: '149', icon: TrendingUp, glow: 'hsl(180 70% 50% / 0.1)' },
+            { label: 'Tradeable Assets', value: '170', icon: TrendingUp, glow: 'hsl(180 70% 50% / 0.1)' },
             { label: 'Virtual Capital', value: '$100K', icon: Shield, glow: 'hsl(152 60% 42% / 0.1)' },
             { label: 'Educational Mentor', value: 'Free', icon: Sparkles, glow: 'hsl(280 60% 55% / 0.1)' },
           ].map((stat, i) => (

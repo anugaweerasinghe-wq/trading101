@@ -27,5 +27,6 @@ jobs:
       - run: node --import tsx scripts/verify-member-activity.ts
       - run: node scripts/verify-review-engagement.mjs
       - run: node --import tsx scripts/verify-review-admin.ts
+      - run: node --import tsx scripts/verify-course-workflow.ts
       - run: npm run verify:backend
       - run: npm run build

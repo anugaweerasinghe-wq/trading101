@@ -18,7 +18,7 @@ import {
   FileText,
   AlertTriangle,
 } from "lucide-react";
-import { courseTracks } from "@/lib/coursesData";
+import { useCourseCatalog } from "@/hooks/useCourseCatalog";
 import { loadProgress, trackCompletionPct } from "@/lib/courseProgress";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
 import { AIAnswerBlock } from "@/components/seo/AIAnswerBlock";
@@ -47,8 +47,8 @@ const WHY_TRUST = [
   },
   {
     icon: Users,
-    title: "Written and maintained by a real person",
-    body: "All courses are written and reviewed by Anuga Weerasinghe, TradeHQ's creator. An author byline and sources appear on every lesson page.",
+    title: "Reviewed before publication",
+    body: "Courses are maintained by Anuga Weerasinghe, TradeHQ's creator. New AI-assisted courses are reviewed before publication, with the reviewer and review date shown on each lesson.",
   },
   {
     icon: Award,
@@ -88,7 +88,7 @@ const FAQ = [
   },
   {
     q: "Where does the content come from?",
-    a: "Written and reviewed by TradeHQ creator Anuga Weerasinghe. Every lesson lists its public sources (SEC, CFTC, FRED, CME Group, Investopedia) so you can verify any claim yourself.",
+    a: "Courses are maintained by TradeHQ creator Anuga Weerasinghe. New AI-assisted courses require editorial review before publication and show their reviewer and review date. Every lesson lists its sources.",
   },
   {
     q: "Will you cover crypto, forex or DeFi in depth?",
@@ -97,12 +97,13 @@ const FAQ = [
 ];
 
 export default function Courses() {
+  const { tracks: courseTracks } = useCourseCatalog();
   const progress = loadProgress();
   const resume = progress.lastLesson;
 
   const title = "Free Trading Courses — Options, Futures, Macro & Psychology | TradeHQ";
   const description =
-    "Four structured trading courses covering options, futures, macro reading and trading psychology. Free lessons, quizzes and completion badges. Practice with $100,000 virtual cash on TradeHQ.";
+    "Structured trading courses covering options, futures, macro reading and trading psychology. Free lessons, quizzes and completion badges. Practice with $100,000 virtual cash on TradeHQ.";
 
   const itemListSchema = {
     "@context": "https://schema.org",
@@ -140,7 +141,7 @@ export default function Courses() {
       courseMode: "online",
       courseWorkload: `PT${t.lessons.length * 15}M`,
     },
-    author: { "@type": "Person", name: "Anuga Weerasinghe" },
+    author: t.editorial ? { "@type": "Organization", name: "TradeHQ" } : { "@type": "Person", name: "Anuga Weerasinghe" },
   }));
 
   return (
@@ -185,7 +186,7 @@ export default function Courses() {
               Learn to Trade — Properly
             </h1>
             <p className="mt-5 text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Four structured courses on the topics that actually decide whether a
+              Structured courses on the topics that actually decide whether a
               trader survives their first year: options, futures, macro reading and psychology.
               Twenty full-length lessons. Quizzes, sources, completion badges, and a
               <span className="text-emerald-400 font-semibold"> $100,000 virtual practice account</span>
@@ -201,7 +202,7 @@ export default function Courses() {
                 href="#tracks"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500 text-black font-semibold hover:bg-emerald-400 transition"
               >
-                Browse the 4 tracks <ArrowRight className="w-4 h-4" />
+                Browse the courses <ArrowRight className="w-4 h-4" />
               </a>
               <Link
                 to="/learn"
@@ -215,7 +216,7 @@ export default function Courses() {
           <AIAnswerBlock
             className="mb-12"
             question="Are TradeHQ's free trading courses any good?"
-            answer="TradeHQ offers four structured trading courses — Options Fundamentals, Futures & Derivatives, Macro Reading, and Trading Psychology — with 20 lessons total, quizzes, cited public sources (SEC, CFTC, FRED, CME) and completion badges. The free $100,000 virtual account supports spot instruments. Options and futures contract exercises are conceptual; TradeHQ does not execute derivatives contracts. Written by TradeHQ creator Anuga Weerasinghe; educational only, not financial advice."
+            answer={"TradeHQ offers " + courseTracks.length + " structured course tracks with " + courseTracks.reduce((n, t) => n + t.lessons.length, 0) + " lessons, quizzes, cited sources and completion badges. AI-assisted additions receive an editorial review before publication. The free $100,000 virtual account supports spot instruments; derivatives exercises are conceptual."}
           />
 
           {resume && (
@@ -259,7 +260,7 @@ export default function Courses() {
           <section id="tracks" className="mb-16">
             <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
               <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
-                <BookOpen className="w-6 h-6 text-emerald-400" /> The four tracks
+                <BookOpen className="w-6 h-6 text-emerald-400" /> Course tracks
               </h2>
               <span className="text-xs text-muted-foreground">
                 {courseTracks.reduce((n, t) => n + t.lessons.length, 0)} lessons · Free forever
