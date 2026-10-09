@@ -78,6 +78,7 @@ try {
  CREATE FUNCTION net.http_post(url text,body jsonb,headers jsonb,timeout_milliseconds integer) RETURNS bigint LANGUAGE plpgsql AS $$ BEGIN INSERT INTO net.requests VALUES(headers); RETURN 1; END; $$;
  CREATE SCHEMA cron; CREATE FUNCTION cron.schedule(name text,schedule text,command text) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;`);
  await db.exec(readFileSync('supabase/migrations/20261009125658_daily_practice_and_content_cleanup.sql', 'utf8'));
+ await db.exec(readFileSync('supabase/migrations/20261009135016_daily_practice_cycle_recovery.sql', 'utf8'));
  const query = async <T>(sql: string, args: unknown[] = []) => (await db.query<{ v: T }>(sql, args)).rows[0]?.v;
  assert.equal(await query('SELECT tradehq_private.daily_exercises_valid($1::jsonb) AS v', [JSON.stringify(bank.exercises)]), true);
  await db.exec('SET ROLE anon');
@@ -119,5 +120,10 @@ try {
  const status = await query<Record<string, unknown>>('SELECT public.daily_practice_status() AS v'); assert.ok(!JSON.stringify(status).includes('test-only-secret'));
  await db.exec("UPDATE tradehq_private.daily_practice_state SET attempts=3,retry_after=NULL,last_started=NULL");
  assert.equal(await query('SELECT public.request_daily_practice(true) AS v'), null);
+ // Exhausted past cycles reset only when the next two-month preparation window opens.
+ await db.exec("UPDATE tradehq_private.daily_practice_state SET next_due=((clock_timestamp() AT TIME ZONE 'Asia/Colombo')::date-interval '2 months')::date,retry_after=clock_timestamp()+interval '1 day',last_started=NULL");
+ assert.equal(await query('SELECT public.request_daily_practice(false) AS v'), 1);
+ assert.equal(await query('SELECT attempts AS v FROM tradehq_private.daily_practice_state'), 0);
+ assert.equal((await db.query('SELECT * FROM public.daily_practice_batches')).rows.length, 1);
  console.log('PASS Daily: 50 unique cases/150 questions, date rotation, frozen attempts, storage failures, owner review/revision guards, private drafts, future banks, five resumable parts, token replay rejection, cooldown, attempt cap and no paid fallback.');
 } finally { await db.close(); }
