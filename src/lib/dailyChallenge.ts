@@ -85,7 +85,7 @@ const CHALLENGES: DailyChallenge[] = [
     scenario: "Fed pauses rate cuts. SPY drops 1.5% intraday.",
     context: "Powell signaled 'higher for longer.' VIX spiked to 22. Volume is 1.4x the 20-day average.",
     options: [
-      { label: "Buy the dip — Fed always backs off", value: "long", rationale: "Mean reversion" },
+      { label: "Consider a rebound case — verify policy assumptions", value: "long", rationale: "Mean reversion" },
       { label: "Wait — VIX hasn't peaked yet", value: "hold", rationale: "Let volatility cool" },
       { label: "Short — more downside coming", value: "short", rationale: "Trend follow" },
     ],
@@ -463,10 +463,23 @@ export function hasPlayedToday(): boolean {
   return s.lastCompletedDate === utcDateKey();
 }
 
+/** Completing deeper practice secures the streak without answering the quick scenario. */
+export function hasPlayedQuickToday(): boolean {
+  return getStreak().history.some(h => h.date === utcDateKey() && h.challengeId > 0);
+}
+
 export function recordChallenge(challengeId: number, decision: ChallengeDecision): StreakState {
   const todayKey = utcDateKey();
   const prev = getStreak();
-  if (prev.lastCompletedDate === todayKey) return prev; // Already played today
+  if (prev.lastCompletedDate === todayKey) {
+    // A later quick scenario fills in its real choice without counting another day.
+    if (challengeId > 0 && prev.history.some(h => h.date === todayKey && h.challengeId === 0)) {
+      const next = { ...prev, history: prev.history.map(h => h.date === todayKey && h.challengeId === 0 ? { ...h, challengeId, decision } : h) };
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch {}
+      return next;
+    }
+    return prev;
+  }
 
   const continuingStreak = prev.lastCompletedDate && isYesterday(prev.lastCompletedDate, todayKey);
   const current = continuingStreak ? prev.current + 1 : 1;
