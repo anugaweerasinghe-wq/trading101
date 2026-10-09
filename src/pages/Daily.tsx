@@ -7,7 +7,7 @@ import { Flame, Trophy, Check, ArrowRight, Sparkles, TrendingUp, Brain, Lock, X 
 import {
   getTodayChallenge,
   getStreak,
-  hasPlayedToday,
+  hasPlayedQuickToday,
   recordChallenge,
   getUnlockedBadges,
   getNextBadge,
@@ -31,7 +31,7 @@ export default function Daily() {
 
   useEffect(() => {
     setStreak(getStreak());
-    setSubmitted(hasPlayedToday()); setSelected(null); setBonusPick(null);
+    setSubmitted(hasPlayedQuickToday()); setSelected(null); setBonusPick(null);
   }, [date]);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export default function Daily() {
                 Today's Trading Scenario
               </h1>
               <p className="text-foreground/70 max-w-xl mx-auto text-[15px] leading-relaxed">
-                A fresh simulated setup every day. Pick a response, compare the trade-offs, and grow your streak — no direction is treated as a guaranteed forecast.
+                A quick scenario plus deeper 3–5 minute practice below. Compare assumptions, work through the answers and build your streak; no direction is a guaranteed forecast.
               </p>
             </header>
 
@@ -241,7 +241,7 @@ export default function Daily() {
                     <div className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Decision Review</div>
                   </div>
                   <p className="text-[15px] text-foreground leading-relaxed">
-                      This snapshot does not establish one objectively correct market direction. Compare what evidence would support each option, what evidence would invalidate it, and how uncertainty changes a simulated position. Treat the exercise as process practice, not a trading signal.
+                      {challenge.insight}
                     </p>
                 </div>
               )}

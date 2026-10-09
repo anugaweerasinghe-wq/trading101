@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { PGlite } from '@electric-sql/pglite';
 import { starterPracticeBank as bank } from '../src/lib/dailyPracticeBank.ts';
 import { exerciseForDate, validateBatch, validateExercises, type DailyExercise } from '../supabase/functions/_shared/dailyPractice.ts';
+import { recordChallenge, getStreak, hasPlayedQuickToday, getTodayChallenge } from '../src/lib/dailyChallenge.ts';
 import { newPractice, readPractice, savePractice } from '../src/lib/dailyPracticeProgress.ts';
 import { createCourseAdminHandler } from '../supabase/functions/_shared/courseAdmin.ts';
 import { generatePractice } from '../supabase/functions/_shared/dailyPracticeGenerator.ts';
@@ -20,6 +21,19 @@ assert.equal(savePractice({ ...progress, bankId: 'another', exercise: bank.exerc
 assert.equal(readPractice('2026-10-10', storage), null);
 assert.equal(readPractice('2026-10-09', { getItem: () => '{broken' }), null);
 assert.equal(savePractice(progress, { ...storage, setItem: () => { throw new Error('blocked'); } }).saved, false);
+// Real streak engine: deeper-first, quick-first and reload share one completion.
+const oldWindow = Object.getOwnPropertyDescriptor(globalThis, 'window'), oldStorage = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+try {
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: {} });
+  Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: storage });
+  const deeper = recordChallenge(0, 'hold'); assert.equal(deeper.totalCompleted, 1); assert.equal(hasPlayedQuickToday(), false);
+  const quick = recordChallenge(getTodayChallenge().id, 'long'); assert.equal(quick.totalCompleted, 1); assert.equal(quick.current, 1);
+  assert.equal(hasPlayedQuickToday(), true); assert.equal(getStreak().history[0].decision, 'long');
+  assert.equal(recordChallenge(0, 'hold').totalCompleted, 1); assert.equal(recordChallenge(getTodayChallenge().id, 'short').history[0].decision, 'long');
+} finally {
+  if (oldWindow) Object.defineProperty(globalThis, 'window', oldWindow); else Reflect.deleteProperty(globalThis, 'window');
+  if (oldStorage) Object.defineProperty(globalThis, 'localStorage', oldStorage); else Reflect.deleteProperty(globalThis, 'localStorage');
+}
 let writes = 0;
 const handler = createCourseAdminHandler({ getKey: () => 'test-key', rateLimit: async () => true, store: {
  list: async () => [], save: async () => null, publish: async () => null, reject: async () => null, settings: async () => null, configure: async () => null, run: async () => null,
