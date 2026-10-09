@@ -36,7 +36,7 @@ export function CourseGenerationSettings({ settings, busy, save, generate }: {
           className="w-full rounded-xl border border-border bg-background px-3 py-2" /></label>
       <label className="space-y-2 text-sm"><span className="block text-muted-foreground">Free-tier model</span>
         <select value={model} onChange={e => setModel(e.target.value)} className="w-full rounded-xl border border-border bg-background px-3 py-2">
-          <option value="gemini-3.8-flash">Gemini 3.8 Flash</option><option value="gemini-3.5-flash-lite">Gemini 3.5 Flash-Lite</option></select></label>
+          <option value="gemini-3.8-flash">Gemini 3.8 Flash</option><option value="gemini-3.5-flash">Gemini 3.5 Flash</option><option value="gemini-3.5-flash-lite">Gemini 3.5 Flash-Lite</option></select></label>
     </div>
     <p className="text-sm text-muted-foreground">Create the key in <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="text-primary underline">Google AI Studio</a> using an eligible adult account and a project with billing disabled.
       No OpenAI key or ChatGPT subscription is used. Quota errors pause generation; there is no paid fallback.</p>

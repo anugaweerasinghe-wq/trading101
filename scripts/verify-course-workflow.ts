@@ -110,7 +110,7 @@ try {
     CREATE FUNCTION vault.update_secret(k uuid,s text) RETURNS void LANGUAGE sql AS $$ UPDATE vault.secrets SET secret=s WHERE id=k $$;
     CREATE SCHEMA net; CREATE FUNCTION net.http_post(url text,body jsonb,headers jsonb,timeout_milliseconds integer) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;
     CREATE SCHEMA cron; CREATE FUNCTION cron.schedule(name text,schedule text,command text) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;`);
-  for (const file of readdirSync("supabase/migrations").filter(f => /course_draft_approval|course_generation_schedule|support_gemini_auth_keys|validate_gemini_auth_key_length|course_lesson_quality_floor/.test(f)).sort()) {
+  for (const file of readdirSync("supabase/migrations").filter(f => /course_draft_approval|course_generation_schedule|support_gemini_auth_keys|validate_gemini_auth_key_length|course_lesson_quality_floor|course_generation_model_choice/.test(f)).sort()) {
     await db.exec(readFileSync("supabase/migrations/" + file, "utf8"));
   }
   for (const [fixture, valid] of [[boundary, false], [enough, true]] as const) {
@@ -152,8 +152,9 @@ try {
   assert.equal(meta.rows[0].value.hasApiKey, false);
   assert.ok(!Object.keys(meta.rows[0].value).includes("apiKey"));
   assert.equal((await db.query<{ value: number | null }>("select public.request_course_generation() as value")).rows[0].value, null);
-  const ready = { ...settings, enabled: true, freeConfirmed: true, apiKey: "AQ.test-free-provider-key-123456", topicRequests: ["Price snapshots"] };
+  const ready = { ...settings, enabled: true, freeConfirmed: true, model: "gemini-3.5-flash", apiKey: "AQ.test-free-provider-key-123456", topicRequests: ["Price snapshots"] };
   await db.query("select public.configure_course_generation($1::jsonb)", [JSON.stringify(ready)]);
+  await assert.rejects(db.query("select public.configure_course_generation($1::jsonb)", [JSON.stringify({ ...ready, model: "unapproved-model" })]), /Invalid generation settings/);
   await assert.rejects(db.query("select public.configure_course_generation($1::jsonb)", [JSON.stringify({ ...ready, apiKey: "x".repeat(257) })]), /Invalid API key/);
   await assert.rejects(db.query("select public.configure_course_generation($1::jsonb)", [JSON.stringify({ ...ready, apiKey: "AQ.invalid key with spaces" })]), /Invalid API key/);
   await db.exec("DELETE FROM public.course_drafts WHERE id <> '" + id + "'");
