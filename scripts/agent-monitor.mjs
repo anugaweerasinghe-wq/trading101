@@ -1,3 +1,4 @@
+import { uniqueRoutes } from "./routes.ts";
 const origin="https://www.thetradehq.com";
 const repository=process.env.GITHUB_REPOSITORY||"anugaweerasinghe-wq/trading101";
 const token=process.env.GITHUB_TOKEN;
@@ -28,7 +29,7 @@ async function main(){
  const xml=await sitemap.text();
  const extra=[...xml.matchAll(/<loc>\s*([^<]+)\s*<\/loc>/g)].map(m=>m[1].replaceAll("&amp;","&"));
  if(extra.length<10)throw Error("No meaningful sitemap entries");
- const urls=[...new Set([...paths.map(p=>origin+p),...extra])].filter(u=>{try{const x=new URL(u);return x.protocol==="https:"&&["www.thetradehq.com","thetradehq.com"].includes(x.hostname)}catch{return false}}).slice(0,400);
+ const urls=[...new Set([...paths.map(p=>origin+p),...uniqueRoutes().map(r=>origin+r.path),...extra])].filter(u=>{try{const x=new URL(u);return x.protocol==="https:"&&["www.thetradehq.com","thetradehq.com"].includes(x.hostname)}catch{return false}}).slice(0,400);
  let next=0;const failures=[];
  await Promise.all(Array.from({length:5},async()=>{while(next<urls.length){const u=urls[next++],failure=await check(u);if(failure)failures.push(failure);}}));
  console.log("Scanned "+urls.length+" public URLs; issues: "+failures.length);
