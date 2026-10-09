@@ -6,7 +6,7 @@ import { createClient } from "@supabase/supabase-js";
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 
-type PublishedCourse = { slug: string; published_at: string; document: { title?: string } | null };
+type PublishedCourse = { slug: string; published_at: string; title: string | null };
 const STORAGE_KEY = "tradehq-seen-course-publications-v1";
 const RECENT_DAYS = 7;
 const RECHECK_MS = 45000;
@@ -22,7 +22,7 @@ export function CoursePublicationNotices() {
       try {
         const cutoff = new Date(Date.now() - RECENT_DAYS * 86400000).toISOString();
         const { data, error } = await supabase.from("published_courses")
-          .select("slug,published_at,document")
+          .select("slug,published_at,title:document->>title")
           .gte("published_at", cutoff).order("published_at", { ascending: true }).limit(20);
         if (!active || error || !Array.isArray(data)) return;
         let seen: Record<string, boolean> = {};
@@ -33,7 +33,7 @@ export function CoursePublicationNotices() {
           if (!course.slug || !course.published_at || seen[marker] || sessionSeen.current.has(marker)) continue;
           sessionSeen.current.add(marker);
           seen[marker] = true;
-          const title = typeof course.document?.title === "string" ? course.document.title.trim() : "A new course";
+          const title = typeof course.title === "string" ? course.title.trim() : "A new course";
           toast.custom(id => <div role="status" className="flex items-start gap-3 w-[min(360px,calc(100vw-24px))] rounded-2xl border border-border bg-card p-4 text-foreground shadow-xl">
             <button type="button" className="flex flex-1 items-start gap-3 text-left min-w-0" onClick={() => { toast.dismiss(id); navigate("/courses/" + encodeURIComponent(course.slug)); }} aria-label={"Open new course: " + title}>
               <BookOpen className="w-5 h-5 mt-0.5 shrink-0 text-primary"/>
