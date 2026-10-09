@@ -1,8 +1,8 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import type { ServerResponse } from "node:http";
-import { renderApprovedCourse } from "../src/lib/courseHtml";
-import type { CourseDocument } from "../supabase/functions/_shared/courseDocument";
+import { renderApprovedCourse } from "../src/lib/courseHtml.js";
+import type { CourseDocument } from "../supabase/functions/_shared/courseDocument.js";
 const url = "https://cbdktpjgczhthflspqjb.supabase.co";
 const publicKey = "sb_publishable_lmCNfCn4tsB1tD604M49Xw_n4zum_Nr";
 export default async function handler(req: { query: Record<string, string | string[] | undefined> }, res: ServerResponse) {
@@ -14,7 +14,7 @@ export default async function handler(req: { query: Record<string, string | stri
   if (existsSync(staticPath)) { res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" }); res.end(readFileSync(staticPath, "utf8")); return; }
   try {
     const response = await fetch(url + "/rest/v1/published_courses?select=document&slug=eq." + encodeURIComponent(String(track)) + "&limit=1",
-      { headers: { apikey: publicKey }, signal: AbortSignal.timeout(6000) });
+      { headers: { apikey: publicKey }, signal: AbortSignal.timeout(15000) });
     if (!response.ok) throw new Error("Course store unavailable");
     const rows = await response.json();
     if (!rows.length) { res.writeHead(404, { "X-Robots-Tag": "noindex", "Cache-Control": "no-store" }); res.end("Course not found"); return; }

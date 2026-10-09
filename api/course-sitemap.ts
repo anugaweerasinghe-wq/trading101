@@ -1,10 +1,10 @@
 import type { ServerResponse } from "node:http";
-import { escapeCourseHtml } from "../src/lib/courseHtml";
+import { escapeCourseHtml } from "../src/lib/courseHtml.js";
 export default async function handler(_req: unknown, res: ServerResponse) {
   try {
     const response = await fetch("https://cbdktpjgczhthflspqjb.supabase.co/rest/v1/rpc/get_published_course_catalog", {
       method: "POST", headers: { apikey: "sb_publishable_lmCNfCn4tsB1tD604M49Xw_n4zum_Nr", "Content-Type": "application/json" }, body: "{}",
-      signal: AbortSignal.timeout(6000),
+      signal: AbortSignal.timeout(15000),
     });
     if (!response.ok) throw new Error("Course store unavailable");
     const courses = await response.json();

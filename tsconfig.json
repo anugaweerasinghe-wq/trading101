@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "noImplicitAny": false,
     "noUnusedLocals": false,
