@@ -110,7 +110,7 @@ export function DailyChallengeCard() {
       )}
 
       <p className="text-[10px] text-muted-foreground/70 text-center mt-2">
-        Educational simulation only — not financial advice.
+        Quick scenario + 3–5 minute practice · virtual learning only.
       </p>
     </div>
   );

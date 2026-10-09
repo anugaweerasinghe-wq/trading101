@@ -207,7 +207,7 @@ export default function AIMentor() {
               {
                 question: "What is the TradeHQ AI Mentor?",
                 answer:
-                  "An educational mentor that requests AI responses when the service is available and otherwise uses a labeled, rule-based knowledge library. It explains trading concepts; it does not assess whether a real-money trade suits you.",
+                  "An educational mentor using a labelled built-in library of authored answers and topic matching. It makes no AI API request. It explains trading concepts; it does not assess whether a real-money trade suits you.",
               },
               {
                 question: "Can the AI Mentor predict prices?",

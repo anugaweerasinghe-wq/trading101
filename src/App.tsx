@@ -39,6 +39,7 @@ const LearnArticle = lazy(() => import("./pages/LearnArticle"));
 const Daily = lazy(() => import("./pages/Daily"));
 const Reviews = lazy(() => import("./pages/Reviews"));
 const AdminReviews = lazy(() => import("./pages/AdminReviews"));
+const AdminDaily = lazy(() => import("./pages/AdminDaily"));
 const AdminCourses = lazy(() => import("./pages/AdminCourses"));
 const Roadmap = lazy(() => import("./pages/Roadmap"));
 const Compare = lazy(() => import("./pages/Compare"));
@@ -128,6 +129,7 @@ function AnimatedRoutes() {
           <Route path="/admin/validator" element={<AdminValidator />} />
           <Route path="/admin/editor" element={<AdminEditor />} />
           <Route path="/admin/reviews" element={<AdminReviews />} />
+          <Route path="/admin/daily" element={<AdminDaily />} />
           <Route path="/admin/courses" element={<AdminCourses />} />
 
           {/* CATCH-ALL */}

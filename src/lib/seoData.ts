@@ -219,28 +219,28 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     "type": "crypto",
     "whyTrade": "Bitcoin is a digital asset with a protocol-defined issuance schedule. Its market price is separate from that schedule and can change without a protocol change.",
     "steps": [
-      "Open the free virtual practice terminal for BTC; no real-money account is created.",
+      "Compare the coin’s percentage change with whole-account return using cash and holding values.",
       "Visit /trade/btc and read the quote and chart data-status labels; they may have different provenance.",
       "Choose hypothetical quantity and price assumptions, then calculate position value and the 0.1% practice fee before submitting a market order.",
       "Record the reason for the exercise and any intended manual exit. TradeHQ does not place resting limit or stop orders or open short positions.",
-      "Compare the recorded fills and fee-inclusive result with the original assumptions. Add your own explanation to the journal; it is not written automatically."
+      "Write the position’s percentage move, dollar change and whole-account return on separate lines. Recompute allocation using the new total. Then reconcile fees and inspect observation age. This review prevents a profitable asset move from being mistaken for an equally large account return, and preserves unfavorable as well as favorable cases."
     ],
-    "beginnerTip": "Use BTC as a worksheet for describing price observations and position arithmetic. An indicator or chart pattern is not a verified entry signal. This terminal does not offer every indicator mentioned in the glossary.",
-    "risk": "A BTC practice loss depends on quantity, price change and costs. Real execution can involve gaps, slippage and liquidity limits that this simulator does not reproduce. Virtual results do not establish a tolerable real-money risk level.",
-    "studentNote": "For learners in Sri Lanka or elsewhere, BTC is an educational catalogue example, not a savings plan or an access recommendation. Local eligibility, funding and tax questions require current official information outside this simulator.",
+    "beginnerTip": "Begin with the difference between coin return and account return. A hypothetical 10% BTC rise applied to a $10,000 holding adds $1,000 before costs, while an otherwise cash-only $100,000 account rises only 1%. The same headline percentage can therefore describe a much larger asset move than portfolio move.",
+    "risk": "BTC price risk and quote-data risk are distinct. A correctly identified asset can still have an older provider observation; a recent page fetch does not make that observation current. A small BTC weight can limit its contribution to one assumed account move, but it cannot prevent the holding from losing value. Real execution is not reproduced by a paper mark.",
+    "studentNote": "A short BTC study session can focus on one unit conversion: coin quantity × dollars per coin. Keep virtual accounting separate from questions about real wallets, local access or funding. The practice account holds no real coins and makes no on-chain transfer; current eligibility and tax questions belong to official local information.",
     "drivers": [
       "Compare the protocol supply schedule, exchange trading activity and news claims as separate sources of information. A halving event does not by itself determine the direction or timing of a price change.",
       "Compare a dated primary description of Bitcoin with the practice chart. A simulated movement is not evidence that a particular news item changed the real market price."
     ],
-    "firstTrade": "A hypothetical $25,000 BTC holding loses $1,000 before costs if its price falls 4%. This arithmetic uses chosen inputs, not a recommended allocation or an executable stop. A 0.1% simulator purchase fee on $25,000 is $25. Review both upward and downward cases using the same quantity. Actual simulator results also include selling fees. A manual exit assumption can be crossed by a price move; it is not a guaranteed maximum loss.",
-    "timing": "Venue hours, available liquidity and actual data timestamps are separate from the time you open TradeHQ. The BTC chart may use provider history or synthetic candles. Consult the displayed status before treating a practice observation as a current-market event; no session or timeframe is presented as the best time to trade.",
+    "firstTrade": "Use a hypothetical $100,000 account with $90,000 cash and a $10,000 BTC holding before fees. A selected 10% BTC rise takes the holding to $11,000 and total value to $101,000, before excluded costs. The asset return is 10%; account return is 1%. The current holding weight is $11,000 ÷ $101,000 = about 10.89%, not 11% of the original balance. If the $10,000 purchase incurred the simulator’s 0.1% fee, cash would instead be $89,990 and total marked equity $100,990. These inputs teach accounting rather than recommend exposure.",
+    "timing": "Compare BTC’s provider observation timestamp with the chart’s source label. A periodically refreshed reference can differ from a venue’s last trade or a different-minute quote without proving either is fraudulent. Save the observation time used in your worksheet so that a later account change can be reconstructed. Opening the page is not an exchange fill.",
     "mistakes": [
-      "Treating the displayed BTC practice price as a guaranteed executable real-market quote.",
-      "Confusing position value with maximum loss, or excluding the fees applied on both buys and sells.",
-      "Assuming an intended manual exit is a pending stop order, or that selling can create a short position.",
-      "Drawing a general performance conclusion from a short, selected or synthetic price sample."
+      "Reporting the BTC return as the entire account return despite a large cash balance.",
+      "Calculating new allocation with the original account denominator.",
+      "Calling an aggregate provider mark a reserved exchange fill.",
+      "Ignoring both buy and sell fees in the result."
     ],
-    "review": "For a BTC worksheet, compare planned quantity, filled quantity, fee and resulting cash. Explain any changed assumption and include unfavorable outcomes. Compare alternative rules over the same data window rather than changing both the method and the observation period. Trade history records fills; your written rationale remains your responsibility."
+    "review": "Write the position’s percentage move, dollar change and whole-account return on separate lines. Recompute allocation using the new total. Then reconcile fees and inspect observation age. This review prevents a profitable asset move from being mistaken for an equally large account return, and preserves unfavorable as well as favorable cases."
   },
   {
     "symbol": "eth",
@@ -249,28 +249,28 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     "type": "crypto",
     "whyTrade": "Ethereum is a network for running applications and smart contracts; ether, or ETH, is its native currency. People use ETH to pay network fees, transfer value and participate in staking. Trading ETH means exchanging that currency at a market price. TradeHQ lets you practise the price and quantity calculations with virtual funds; it does not send coins to a wallet or stake them.",
     "steps": [
-      "Open the free virtual practice terminal for ETH; no real-money account is created.",
+      "Keep ETH quantity, simulator transaction fees and conceptual network charges in separate ledger fields.",
       "Visit /trade/eth and read the quote and chart data-status labels; they may have different provenance.",
       "Choose hypothetical quantity and price assumptions, then calculate position value and the 0.1% practice fee before submitting a market order.",
       "Record the reason for the exercise and any intended manual exit. TradeHQ does not place resting limit or stop orders or open short positions.",
-      "Compare the recorded fills and fee-inclusive result with the original assumptions. Add your own explanation to the journal; it is not written automatically."
+      "After the exercise, reconcile ETH units, notional cost, simulator fee and cash separately. If the quote moves $100 per ETH and you own 2 ETH, the gross marked change is $200. A gas-charge discussion belongs in a separate network worksheet. Check that neither staking income nor a wallet transfer was invented in the virtual ledger."
     ],
     "beginnerTip": "Separate the network from the currency: Ethereum is the system, while ETH is the unit whose price you see. A lower price per coin than BTC does not by itself mean ETH is cheaper in valuation terms.",
-    "risk": "An ETH practice loss depends on quantity, price change and costs. Real execution can involve gaps, slippage and liquidity limits that this simulator does not reproduce. Virtual results do not establish a tolerable real-money risk level.",
-    "studentNote": "For learners in Sri Lanka or elsewhere, ETH is an educational catalogue example, not a savings plan or an access recommendation. Local eligibility, funding and tax questions require current official information outside this simulator.",
+    "risk": "Network fees, staking mechanics and ETH market-price exposure are different risks and activities. TradeHQ illustrates only the supported virtual spot accounting; it does not stake ETH, transfer coins or pay staking rewards. A correct network explanation cannot establish which direction the market price will move. Include the actual simulator fees when assessing a paper outcome.",
+    "studentNote": "Use this guide to learn the difference between Ethereum as a network and ETH as a unit. A classroom example can compare exchange fees and hypothetical network charges without funding a wallet. Local real-asset access, eligibility and taxes require current official sources; a simulator lesson is not permission to transact.",
     "drivers": [
       "Network use and ETH price measure different things. Gas is the unit used to measure transaction work; the network fee is paid in ETH. A busy network can change fees without producing a matching percentage change in the exchange price.",
       "Staking helps secure Ethereum, while layer-two networks handle activity with a different fee structure. These concepts explain how the network works; a TradeHQ price chart does not measure staking rewards, network demand or the effect of a particular headline."
     ],
-    "firstTrade": "For a hypothetical $20,000 ETH holding, a 5% price decline is a $1,000 gross loss. The purchase also incurs a $20 simulator fee at 0.1%. These selected values illustrate exposure, not a safe percentage or a suggested trade. Review both upward and downward cases using the same quantity. Actual simulator results also include selling fees. A manual exit assumption can be crossed by a price move; it is not a guaranteed maximum loss.",
-    "timing": "Venue hours, available liquidity and actual data timestamps are separate from the time you open TradeHQ. The ETH chart may use provider history or synthetic candles. Consult the displayed status before treating a practice observation as a current-market event; no session or timeframe is presented as the best time to trade.",
+    "firstTrade": "For a hypothetical buy of 2 ETH at $2,500 per ETH, notional is $5,000 and the simulator’s 0.1% purchase fee is $5. The cash debit is $5,005. If the later quote is $2,400, the marked holding is $4,800, giving a $200 price loss and $205 equity reduction after the purchase fee. A sale at that quote would add a $4.80 exit fee. A separately quoted blockchain gas fee is not a simulator cost: this paper buy did not create a network transaction or send ETH to a wallet.",
+    "timing": "A provider can aggregate ETH market observations while a blockchain explorer describes network activity. Match the question to the source: exchange-price timestamps for paper valuation, network records for transaction mechanics. Do not use a synthetic practice candle as evidence that a gas-fee change caused a real price reaction.",
     "mistakes": [
-      "Treating the displayed ETH practice price as a guaranteed executable real-market quote.",
-      "Confusing position value with maximum loss, or excluding the fees applied on both buys and sells.",
-      "Assuming an intended manual exit is a pending stop order, or that selling can create a short position.",
-      "Drawing a general performance conclusion from a short, selected or synthetic price sample."
+      "Adding a real blockchain gas charge to a paper buy that sent no coins.",
+      "Describing virtual ETH as staked funds earning rewards.",
+      "Comparing whole-coin prices as if they establish relative business valuation.",
+      "Mixing dollar loss with loss per ETH unit."
     ],
-    "review": "After a practice trade, explain the result in units before judging it in dollars. If you hold 2 ETH and the price falls by $100 per ETH, the gross position loss is $200. Then include the buy and sell fees. Compare that calculation with the recorded fills, and note whether the chart used provider history or simulated candles. This makes the review about what happened in the exercise rather than whether a prediction sounded convincing."
+    "review": "After the exercise, reconcile ETH units, notional cost, simulator fee and cash separately. If the quote moves $100 per ETH and you own 2 ETH, the gross marked change is $200. A gas-charge discussion belongs in a separate network worksheet. Check that neither staking income nor a wallet transfer was invented in the virtual ledger."
   },
   {
     "symbol": "tsla",
@@ -279,28 +279,28 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     "type": "stock",
     "whyTrade": "Tesla is a listed company. A simulated TSLA holding represents a stock-price exercise and does not provide options exposure, voting rights or actual share ownership. Company results and delivery reports are different information sets.",
     "steps": [
-      "Open the free virtual practice terminal for TSLA; no real-money account is created.",
+      "Write the report metric you intend to investigate and a separate hypothetical gap case before viewing the outcome.",
       "Visit /trade/tsla and read the quote and chart data-status labels; they may have different provenance.",
       "Choose hypothetical quantity and price assumptions, then calculate position value and the 0.1% practice fee before submitting a market order.",
       "Record the reason for the exercise and any intended manual exit. TradeHQ does not place resting limit or stop orders or open short positions.",
-      "Compare the recorded fills and fee-inclusive result with the original assumptions. Add your own explanation to the journal; it is not written automatically."
+      "Compare the original thesis with the information actually available before the exercise. Did you mean delivery volume, revenue or margins? Reconstruct shares, assumed entry, observed mark and fees. Keep the gap case even if it contradicts the intended exit, and do not rewrite a winning trade’s reason after seeing its result."
     ],
-    "beginnerTip": "Use TSLA as a worksheet for describing price observations and position arithmetic. An indicator or chart pattern is not a verified entry signal. This terminal does not offer every indicator mentioned in the glossary.",
-    "risk": "A TSLA practice loss depends on quantity, price change and costs. Real execution can involve gaps, slippage and liquidity limits that this simulator does not reproduce. Virtual results do not establish a tolerable real-money risk level.",
-    "studentNote": "For learners in Sri Lanka or elsewhere, TSLA is an educational catalogue example, not a savings plan or an access recommendation. Local eligibility, funding and tax questions require current official information outside this simulator.",
+    "beginnerTip": "Read deliveries, revenue and profit margins as separate measurements. A hypothetical rise in units delivered does not imply the same rise in revenue, because prices and product mix can change. A stock-price reaction also depends on expectations that a short headline may omit.",
+    "risk": "An event-sensitive stock worksheet should distinguish a chosen exit threshold from the next observed price. A gap can cross the threshold, and a journal note is not an automated order. Delivery growth alone cannot validate a price target. The simulator does not reproduce real opening-auction fills, shareholder rights or options exposure.",
+    "studentNote": "A TSLA study task can separate an observable report metric from an interpretation: “deliveries rose” is different from “profit must rise” or “the stock must rally.” Use a dated primary company record when investigating those claims. Virtual shares do not establish real ownership, market access or local eligibility.",
     "drivers": [
       "Distinguish reported deliveries, revenue, margins and management statements. Their relationship with the share price is uncertain and can change; no single announcement guarantees a direction or magnitude.",
       "Compare a dated primary description of Tesla with the practice chart. A simulated movement is not evidence that a particular news item changed the real market price."
     ],
-    "firstTrade": "A hypothetical $30,000 TSLA holding has a $900 gross change for a 3% price move, before fees. A 0.1% purchase fee is $30. The example does not recommend a $30,000 position or imply an exit will fill after a gap. Review both upward and downward cases using the same quantity. Actual simulator results also include selling fees. A manual exit assumption can be crossed by a price move; it is not a guaranteed maximum loss.",
-    "timing": "Venue hours, available liquidity and actual data timestamps are separate from the time you open TradeHQ. The TSLA chart may use provider history or synthetic candles. Consult the displayed status before treating a practice observation as a current-market event; no session or timeframe is presented as the best time to trade.",
+    "firstTrade": "Suppose a conceptual TSLA worksheet holds 20 shares at $200, a $4,000 notional. The 0.1% simulator buy fee is $4. For a selected gap to $180, the mark becomes $3,600 and the gross price loss is $400. A note saying “exit at $190” would not guarantee a $200 loss: TradeHQ has no resting stop order, and the worksheet’s $180 observation has already crossed that intended threshold. Record the $200 planned threshold loss and $400 stressed price loss as different assumptions, then include fees when reviewing net equity.",
+    "timing": "Attach a date and reporting period to any delivery or earnings evidence. Then note whether the chart represents provider history or synthetic practice candles. A company report and a quote fetched afterward can be associated in time without establishing a single proven cause for the movement. Preserve the original hypothesis before reading the outcome.",
     "mistakes": [
-      "Treating the displayed TSLA practice price as a guaranteed executable real-market quote.",
-      "Confusing position value with maximum loss, or excluding the fees applied on both buys and sells.",
-      "Assuming an intended manual exit is a pending stop order, or that selling can create a short position.",
-      "Drawing a general performance conclusion from a short, selected or synthetic price sample."
+      "Treating delivery volume as interchangeable with revenue or profit.",
+      "Calling a journal exit threshold an executed stop order.",
+      "Deleting a gap case because it exceeded the chosen worksheet loss.",
+      "Inventing a report-based reason after seeing the stock movement."
     ],
-    "review": "For a TSLA worksheet, compare planned quantity, filled quantity, fee and resulting cash. Explain any changed assumption and include unfavorable outcomes. Compare alternative rules over the same data window rather than changing both the method and the observation period. Trade history records fills; your written rationale remains your responsibility."
+    "review": "Compare the original thesis with the information actually available before the exercise. Did you mean delivery volume, revenue or margins? Reconstruct shares, assumed entry, observed mark and fees. Keep the gap case even if it contradicts the intended exit, and do not rewrite a winning trade’s reason after seeing its result."
   },
   {
     "symbol": "nvda",
@@ -309,28 +309,28 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     "type": "stock",
     "whyTrade": "Nvidia supplies computing products and services. Its share price and its operating business are different objects: a change in sales does not translate mechanically into the same percentage stock return.",
     "steps": [
-      "Open the free virtual practice terminal for NVDA; no real-money account is created.",
+      "List direct company exposure and any assumed fund overlap before computing the combined account weight.",
       "Visit /trade/nvda and read the quote and chart data-status labels; they may have different provenance.",
       "Choose hypothetical quantity and price assumptions, then calculate position value and the 0.1% practice fee before submitting a market order.",
       "Record the reason for the exercise and any intended manual exit. TradeHQ does not place resting limit or stop orders or open short positions.",
-      "Compare the recorded fills and fee-inclusive result with the original assumptions. Add your own explanation to the journal; it is not written automatically."
+      "Review both the direct holding and any assumed fund overlap. Record whether fund weights were actual dated inputs or deliberately hypothetical. Recompute the account denominator after price changes, and separate operating metrics from share-price results. The goal is a reproducible exposure explanation, not a claim that two technology labels imply diversification."
     ],
-    "beginnerTip": "Use NVDA as a worksheet for describing price observations and position arithmetic. An indicator or chart pattern is not a verified entry signal. This terminal does not offer every indicator mentioned in the glossary.",
-    "risk": "A NVDA practice loss depends on quantity, price change and costs. Real execution can involve gaps, slippage and liquidity limits that this simulator does not reproduce. Virtual results do not establish a tolerable real-money risk level.",
-    "studentNote": "For learners in Sri Lanka or elsewhere, NVDA is an educational catalogue example, not a savings plan or an access recommendation. Local eligibility, funding and tax questions require current official information outside this simulator.",
+    "beginnerTip": "Separate company operating measures from the share-price return. A hypothetical 20% sales increase and a 5% stock decline can coexist when expectations, costs or guidance differ. The price observation alone does not tell you which explanation is correct.",
+    "risk": "Direct NVDA shares can overlap a technology or broad-market fund you also hold. Row count is therefore an incomplete diversification measure. Inspect actual fund weights and their dates before computing look-through exposure. Company sales growth and diversification labels do not guarantee protection from losses or a positive share-price response.",
+    "studentNote": "A useful NVDA learning task can be done without a directional bet: compare the meaning of sales, earnings and market capitalization, then calculate a small hypothetical holding. Real share access and local obligations are separate questions. A virtual price gain does not verify an ability to assess a company’s fair value.",
     "drivers": [
       "Company results, customer spending statements, supply constraints and export rules can provide business context. Verify any current figures from dated primary reports; none of these topics establishes that a trend-following strategy will outperform.",
       "Compare a dated primary description of Nvidia with the practice chart. A simulated movement is not evidence that a particular news item changed the real market price."
     ],
-    "firstTrade": "A hypothetical $10,000 NVDA holding rises $200 before costs after a 2% price increase. The simulator purchase fee is $10 at 0.1%. A subsequent decline can exceed an earlier gain; this example is not a weekly-return assumption or target. Review both upward and downward cases using the same quantity. Actual simulator results also include selling fees. A manual exit assumption can be crossed by a price move; it is not a guaranteed maximum loss.",
-    "timing": "Venue hours, available liquidity and actual data timestamps are separate from the time you open TradeHQ. The NVDA chart may use provider history or synthetic candles. Consult the displayed status before treating a practice observation as a current-market event; no session or timeframe is presented as the best time to trade.",
+    "firstTrade": "Imagine a $10,000 worksheet with $2,000 held directly in NVDA and $8,000 in a fund. Assume, only for this exercise, that the fund has a 10% NVDA weight. The indirect exposure is $800, so combined NVDA exposure is $2,800, or 28% of total value. Counting two account rows misses this overlap. A selected 10% NVDA fall contributes $280 of loss through the two exposures if other holdings stay unchanged and weights are fixed. Real fund weights need a dated holdings source; the assumed 10% is not a current portfolio fact.",
+    "timing": "Distinguish a dated financial statement, guidance and an intraday price quote. They answer different questions and update on different schedules. A synthetic chart cannot validate a claim about customer demand. In a report exercise, write what the market was expected to learn as well as what the company announced.",
     "mistakes": [
-      "Treating the displayed NVDA practice price as a guaranteed executable real-market quote.",
-      "Confusing position value with maximum loss, or excluding the fees applied on both buys and sells.",
-      "Assuming an intended manual exit is a pending stop order, or that selling can create a short position.",
-      "Drawing a general performance conclusion from a short, selected or synthetic price sample."
+      "Counting a fund and direct shares as wholly independent exposures.",
+      "Using an undated assumed fund weight as a current fact.",
+      "Assuming a sales-growth percentage dictates the stock-return percentage.",
+      "Inferring fair value from the nominal price of one share."
     ],
-    "review": "For an NVDA worksheet, compare planned quantity, filled quantity, fee and resulting cash. Explain any changed assumption and include unfavorable outcomes. Compare alternative rules over the same data window rather than changing both the method and the observation period. Trade history records fills; your written rationale remains your responsibility."
+    "review": "Review both the direct holding and any assumed fund overlap. Record whether fund weights were actual dated inputs or deliberately hypothetical. Recompute the account denominator after price changes, and separate operating metrics from share-price results. The goal is a reproducible exposure explanation, not a claim that two technology labels imply diversification."
   },
   {
     "symbol": "spy",
@@ -339,28 +339,28 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     "type": "etf",
     "whyTrade": "SPY is an exchange-traded fund designed to track the S&P 500. An index methodology, a fund holding and a country economy are different things; broad coverage does not remove market losses or concentration.",
     "steps": [
-      "Open the free virtual practice terminal for SPY; no real-money account is created.",
+      "Identify fund units and current account weight; label any distribution or fund-expense concepts not simulated.",
       "Visit /trade/spy and read the quote and chart data-status labels; they may have different provenance.",
       "Choose hypothetical quantity and price assumptions, then calculate position value and the 0.1% practice fee before submitting a market order.",
       "Record the reason for the exercise and any intended manual exit. TradeHQ does not place resting limit or stop orders or open short positions.",
-      "Compare the recorded fills and fee-inclusive result with the original assumptions. Add your own explanation to the journal; it is not written automatically."
+      "Review units, the marked price and whole-account exposure separately. Explain how the $100 holding loss becomes a much smaller account percentage because most of this worksheet is cash. Include fees and note any distribution or expense mechanics excluded from the simulator rather than silently inventing cash entries."
     ],
-    "beginnerTip": "Use SPY as a worksheet for describing price observations and position arithmetic. An indicator or chart pattern is not a verified entry signal. This terminal does not offer every indicator mentioned in the glossary.",
-    "risk": "A SPY practice loss depends on quantity, price change and costs. Real execution can involve gaps, slippage and liquidity limits that this simulator does not reproduce. Virtual results do not establish a tolerable real-money risk level.",
-    "studentNote": "For learners in Sri Lanka or elsewhere, SPY is an educational catalogue example, not a savings plan or an access recommendation. Local eligibility, funding and tax questions require current official information outside this simulator.",
+    "beginnerTip": "An ETF unit represents fund exposure; it is not a direct account row for each constituent company. Nominal share price also differs from the dollars you hold. Twenty $50 units and two $500 units both make $1,000 positions before fees.",
+    "risk": "A broad fund can reduce exposure to one company while remaining exposed to market losses and overlap with direct stocks. Diversification is not immunity. Actual fund constituents and weights require dated disclosures, and a fixed index name does not establish that every constituent contributes equally to your result.",
+    "studentNote": "SPY can teach the distinction between an index, a fund and a virtual holding. A learner can inspect a dated fund description and calculate a hypothetical exposure without acquiring real units. The worksheet is not a claim about local fund eligibility, investment suitability or tax treatment.",
     "drivers": [
       "Fund holdings, index methodology, distributions and expenses describe the instrument. Consult current fund documents for those details. An index comparison can be a benchmark, but a short practice sample cannot prove an investing strategy is better.",
       "Compare a dated primary description of S&P 500 ETF with the practice chart. A simulated movement is not evidence that a particular news item changed the real market price."
     ],
-    "firstTrade": "A hypothetical $25,000 SPY position falls $500 before costs after a 2% decline. The purchase fee is $25 at 0.1%. The allocation and change are selected arithmetic inputs, not a recommendation to hold a quarter of an account. Review both upward and downward cases using the same quantity. Actual simulator results also include selling fees. A manual exit assumption can be crossed by a price move; it is not a guaranteed maximum loss.",
-    "timing": "Venue hours, available liquidity and actual data timestamps are separate from the time you open TradeHQ. The SPY chart may use provider history or synthetic candles. Consult the displayed status before treating a practice observation as a current-market event; no session or timeframe is presented as the best time to trade.",
+    "firstTrade": "A hypothetical SPY worksheet holds ten units at $500, or $5,000, while the account has $95,000 cash before purchase fees. A selected 2% price decline changes the holding to $4,900: a $100 price loss, or 0.1% of the original $100,000 account. The simulator purchase fee on $5,000 is $5. If marked at the lower quote after that fee, equity would be $99,895. Fund-level holdings, distributions and expenses are separate concepts; this simple paper mark does not reproduce a complete fund accounting statement.",
+    "timing": "A recently fetched fund quote can still refer to an earlier market observation, particularly outside the relevant session. Read the source and observation time rather than calling a weekend page refresh a new trade. The simulator’s chart status also determines whether candles are provider history or synthetic practice inputs.",
     "mistakes": [
-      "Treating the displayed SPY practice price as a guaranteed executable real-market quote.",
-      "Confusing position value with maximum loss, or excluding the fees applied on both buys and sells.",
-      "Assuming an intended manual exit is a pending stop order, or that selling can create a short position.",
-      "Drawing a general performance conclusion from a short, selected or synthetic price sample."
+      "Describing fund units as direct ownership of every index constituent.",
+      "Treating a broad-market fund as unable to lose value.",
+      "Ignoring overlap between the fund and separately held company shares.",
+      "Inventing a cash distribution that the simulator did not record."
     ],
-    "review": "For a SPY worksheet, compare planned quantity, filled quantity, fee and resulting cash. Explain any changed assumption and include unfavorable outcomes. Compare alternative rules over the same data window rather than changing both the method and the observation period. Trade history records fills; your written rationale remains your responsibility."
+    "review": "Review units, the marked price and whole-account exposure separately. Explain how the $100 holding loss becomes a much smaller account percentage because most of this worksheet is cash. Include fees and note any distribution or expense mechanics excluded from the simulator rather than silently inventing cash entries."
   },
   {
     "symbol": "sol",
@@ -369,28 +369,28 @@ export const HOWTO_ASSETS: HowToAsset[] = [
     "type": "crypto",
     "whyTrade": "Solana is a blockchain network and SOL is its native token. A TradeHQ holding is a simulated token-price exposure; it does not validate transactions or reproduce staking, network outages or token custody.",
     "steps": [
-      "Open the free virtual practice terminal for SOL; no real-money account is created.",
+      "Verify the provider asset identifier, source and observation timestamp; do not turn missing data into zero.",
       "Visit /trade/sol and read the quote and chart data-status labels; they may have different provenance.",
       "Choose hypothetical quantity and price assumptions, then calculate position value and the 0.1% practice fee before submitting a market order.",
       "Record the reason for the exercise and any intended manual exit. TradeHQ does not place resting limit or stop orders or open short positions.",
-      "Compare the recorded fills and fee-inclusive result with the original assumptions. Add your own explanation to the journal; it is not written automatically."
+      "Reconstruct quantity, asset identifier, price source and observation time before interpreting gains or losses. If there was a timeout or fallback, state what was known and what remained unavailable. Include fees only for actual recorded virtual transactions; quote refreshes do not buy or sell your SOL units."
     ],
-    "beginnerTip": "Use SOL as a worksheet for describing price observations and position arithmetic. An indicator or chart pattern is not a verified entry signal. This terminal does not offer every indicator mentioned in the glossary.",
-    "risk": "A SOL practice loss depends on quantity, price change and costs. Real execution can involve gaps, slippage and liquidity limits that this simulator does not reproduce. Virtual results do not establish a tolerable real-money risk level.",
-    "studentNote": "For learners in Sri Lanka or elsewhere, SOL is an educational catalogue example, not a savings plan or an access recommendation. Local eligibility, funding and tax questions require current official information outside this simulator.",
+    "beginnerTip": "Check the explicit provider asset identifier rather than trusting a ticker match. A short symbol can be reused by unrelated projects. The correct arithmetic with another project’s price still produces a wrong portfolio value.",
+    "risk": "Project identity, market price and network operation are different inputs. An unavailable price request does not establish a network outage, and a network incident does not guarantee a particular rebound. A provider observation can also be stale even when successfully fetched. Preserve these distinctions when describing a paper result.",
+    "studentNote": "Use SOL as a case for distinguishing data availability from asset performance. A practice portfolio update needs a valid mapped observation; it is not a blockchain transfer and does not create a real wallet balance. Local access and legal questions should be checked with current official information outside the worksheet.",
     "drivers": [
       "Network activity, reported reliability incidents and published supply schedules describe different aspects of the ecosystem. Their effect on an exchange price is uncertain. Verify dated claims instead of inferring a predictable price response.",
       "Compare a dated primary description of Solana with the practice chart. A simulated movement is not evidence that a particular news item changed the real market price."
     ],
-    "firstTrade": "A hypothetical $12,500 SOL holding declines $1,000 before costs after an 8% price fall. The purchase fee is $12.50 at 0.1%. This chosen example does not say SOL moves twice as far as BTC or establish a safe position size. Review both upward and downward cases using the same quantity. Actual simulator results also include selling fees. A manual exit assumption can be crossed by a price move; it is not a guaranteed maximum loss.",
-    "timing": "Venue hours, available liquidity and actual data timestamps are separate from the time you open TradeHQ. The SOL chart may use provider history or synthetic candles. Consult the displayed status before treating a practice observation as a current-market event; no session or timeframe is presented as the best time to trade.",
+    "firstTrade": "Take a hypothetical holding of 25 SOL units. A valid provider observation of $100 gives a $2,500 mark. If a later request times out, it supplies no new price; converting the empty response to zero would fabricate a $2,500 loss. Retain the last valid observation with its age and failure label until usable data arrives. If the supported mapping instead uses a fixed simulator fallback, label that fixed input plainly. Neither case means the real market stopped moving. This worksheet is about data handling, not a claim about present network availability.",
+    "timing": "Compare the provider observation time, page fetch time and any separate network-status evidence. Do not substitute one timestamp for another. The chart may use provider history or synthetic candles, so use its label before connecting a displayed movement with a real network event or application-usage claim.",
     "mistakes": [
-      "Treating the displayed SOL practice price as a guaranteed executable real-market quote.",
-      "Confusing position value with maximum loss, or excluding the fees applied on both buys and sells.",
-      "Assuming an intended manual exit is a pending stop order, or that selling can create a short position.",
-      "Drawing a general performance conclusion from a short, selected or synthetic price sample."
+      "Matching a reused ticker without checking the provider identifier.",
+      "Treating a timeout as a zero quote.",
+      "Labelling a fixed fallback as a fresh real-market observation.",
+      "Calling a price-request error evidence of a blockchain incident."
     ],
-    "review": "For a SOL worksheet, compare planned quantity, filled quantity, fee and resulting cash. Explain any changed assumption and include unfavorable outcomes. Compare alternative rules over the same data window rather than changing both the method and the observation period. Trade history records fills; your written rationale remains your responsibility."
+    "review": "Reconstruct quantity, asset identifier, price source and observation time before interpreting gains or losses. If there was a timeout or fallback, state what was known and what remained unavailable. Include fees only for actual recorded virtual transactions; quote refreshes do not buy or sell your SOL units."
   }
 ];
 
@@ -464,13 +464,13 @@ export const STRATEGIES: Strategy[] = [
     successRate: "Performance depends on market regime, entry/exit rules, costs and sample size. Use the simulator to measure your own distribution of outcomes.",
     depth: {
       context:
-        "Swing trading sits between day trading and investing: positions are held long enough for a thesis to play out, short enough that a single position is never a life decision. It suits anyone with a job because the analysis happens once, usually in the evening, and the market does the work while you are away. The trade-off is overnight risk — earnings, macro prints and weekend headlines all move price while your stop cannot protect you at the exact level you set.",
+        "Swing trading sits between day trading and investing: positions are held long enough for a thesis to play out, short enough that a single position is never a life decision. A scheduled review can fit some learners’ routines, but holdings remain exposed between observations and suitability cannot be inferred from employment status. The trade-off is overnight risk — earnings, macro prints and weekend headlines all move price while your stop cannot protect you at the exact level you set.",
       regime:
         "It performs when a market is trending on the daily chart with regular pullbacks: think large-cap tech in an uptrend, or a major FX pair in a sustained rate-differential move. It performs badly in tight, headline-driven chop where every pullback becomes a reversal, and around earnings, where a single gap can exceed several planned stops.",
       mistakes: [
         "Treating a round-number exit or a volatility multiple as guaranteed protection. Compare alternative distances and include gaps and costs.",
-        "Holding through earnings on a full-size position because 'it should beat'. Either halve the size or close before the print — that event has nothing to do with your entry signal.",
-        "Adding to a losing swing. Averaging down converts a defined-risk trade into an undefined one, which is the single most common way practice accounts hit zero.",
+        "Holding through earnings on a full-size position because 'it should beat'. Compare several explicitly hypothetical exposures and gap outcomes before reviewing the original thesis.",
+        "Adding to a losing swing. Averaging down converts a defined-risk trade into an undefined one, and can increase exposure while the original thesis weakens.",
       ],
       math:
         "Hypothetical arithmetic: fixed realized 47% wins at 2R and 53% losses at 1R give 0.41R gross expectancy per trade. With an arbitrary $1,000 practice loss amount, that is $410 before costs. These assumed inputs do not establish performance. Losing-run probabilities require a sample length and independence assumption; no particular run is guaranteed or universally normal.",
@@ -481,9 +481,9 @@ export const STRATEGIES: Strategy[] = [
     name: "Day Trading",
     oneLiner: "Opening and closing all positions within a single session.",
     bestFor: "Full-time traders. Anyone who has at least 3 hours of focused screen time.",
-    worstFor: "Part-time hobbyists — fatigue + emotion = death.",
+    worstFor: "Learners whose schedule cannot support the chosen observation window.",
     steps: [
-      "Trade only the first 90 minutes and the last 60 minutes of the session.",
+      "Define a session window for the worksheet and compare its actual volume, spreads and events with other windows.",
       "Use the 5-min chart with VWAP.",
       "Use a deliberately small and consistent simulated risk budget, and set a session limit that you can evaluate afterwards.",
       "Close everything before the close — no overnight exposure.",
@@ -493,7 +493,7 @@ export const STRATEGIES: Strategy[] = [
     successRate: "There is no dependable universal win-rate range. Evaluate the method by expectancy, drawdown, costs and consistency across a larger sample.",
     depth: {
       context:
-        "Day trading concentrates a whole trading career into single sessions. Because everything is closed by the bell there is no overnight gap risk, but there is also no time for a thesis to recover — the market either agrees with you within hours or it does not. Most of the day's directional movement happens in the opening 90 minutes and the final hour, which is why disciplined day traders trade those windows and stay flat through the low-volume midday drift.",
+        "Day trading concentrates a whole trading career into single sessions. Because everything is closed by the bell there is no overnight gap risk, but there is also no time for a thesis to recover — the market either agrees with you within hours or it does not. Activity and execution conditions vary across assets, sessions and events. Compare a dated sample instead of assuming that one universally best hour establishes an edge.",
       regime:
         "Good days have a clear opening drive, expanding range and volume above the recent average. Bad days are narrow, overlapping and volume-starved — typically the sessions before a major holiday or the day before a central-bank decision, when institutions stand aside. Learning to recognise a no-trade day is worth more than any additional indicator.",
       mistakes: [

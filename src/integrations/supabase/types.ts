@@ -103,6 +103,7 @@ export type Database = {
       }
       market_articles: {
         Row: {
+          is_published: boolean
           content: string
           created_at: string
           focus_asset: string
@@ -113,6 +114,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          is_published?: boolean
           content?: string
           created_at?: string
           focus_asset: string
@@ -123,6 +125,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          is_published?: boolean
           content?: string
           created_at?: string
           focus_asset?: string

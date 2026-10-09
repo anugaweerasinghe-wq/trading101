@@ -30,3 +30,6 @@ verify_jwt = false
 [functions.generate-course-draft]
 # Expiring, single-use scheduler token; claim RPC is service-role-only.
 verify_jwt = false
+
+[functions.generate-daily-practice]
+verify_jwt = false

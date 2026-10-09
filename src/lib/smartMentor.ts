@@ -202,55 +202,12 @@ export const MENTOR_SUGGESTIONS = [
   "How does leverage work?",
 ];
 
-/**
- * Async AI reply with multi-LLM backend (Gemini → Groq → Lovable Gemini)
- * and rule-based smart-mentor as a guaranteed last-resort fallback.
- */
-import { supabase } from "@/integrations/supabase/client";
-
-export async function getAIReply(
-  input: string,
-  opts: { system?: string; history?: { role: "user" | "assistant"; content: string }[] } = {},
-): Promise<string> {
-  try {
-    const { data, error } = await supabase.functions.invoke("ai-chat", {
-      body: { message: input, system: opts.system, history: opts.history },
-    });
-    if (error) throw error;
-    const text = (data as { text?: string })?.text;
-    if (text && text.trim()) return text.trim();
-  } catch (e) {
-    console.warn("AI chat failed, using rule-based fallback", e);
-  }
-  return "Rule-based educational response (AI service unavailable):\n\n" + getSmartMentorReply(input);
+/** Built-in authored answers: no network calls or AI credits for mentor chat. */
+export async function getAIReply(input: string, _opts: { system?: string; history?: { role: "user" | "assistant"; content: string }[] } = {}): Promise<string> {
+  return "Built-in educational response:\n\n" + getSmartMentorReply(input);
 }
-
-export async function getPortfolioAIReply(
-  input: string,
-  ctx: PortfolioContext,
-  history?: { role: "user" | "assistant"; content: string }[],
-): Promise<string> {
-  const ctxLines = [
-    `User portfolio: total $${ctx.totalValue.toFixed(0)}, cash $${ctx.cash.toFixed(0)}, ${ctx.positionsCount} positions, ${ctx.tradesCount} trades${ctx.winRate !== null ? `, win rate ${ctx.winRate.toFixed(0)}%` : ""}.`,
-    ctx.topPosition ? `Top position: ${ctx.topPosition.symbol} at ${ctx.topPosition.weightPct.toFixed(0)}% weight, P&L ${ctx.topPosition.pnlPct >= 0 ? "+" : ""}${ctx.topPosition.pnlPct.toFixed(1)}%.` : "",
-    ctx.selectedSymbol ? `Currently viewing ${ctx.selectedSymbol} (${(ctx.selectedChangePct ?? 0) >= 0 ? "+" : ""}${(ctx.selectedChangePct ?? 0).toFixed(2)}% today).` : "",
-  ].filter(Boolean).join(" ");
-
-  const system = `You are TradeHQ's educational mentor. The supplied context is a client-reported practice snapshot, not full account access or verified market data.
-${ctxLines}
-Rules: be concise (under 120 words), conversational, no markdown headers. Reference their real numbers when relevant. Never give buy/sell signals. End every reply with: (Educational simulation only — not financial advice.)`;
-
-  try {
-    const { data, error } = await supabase.functions.invoke("ai-chat", {
-      body: { message: input, system, history },
-    });
-    if (error) throw error;
-    const text = (data as { text?: string })?.text;
-    if (text && text.trim()) return text.trim();
-  } catch (e) {
-    console.warn("AI portfolio chat failed, using rule-based fallback", e);
-  }
-  return "Rule-based educational response (AI service unavailable):\n\n" + getPortfolioMentorReply(input, ctx);
+export async function getPortfolioAIReply(input: string, ctx: PortfolioContext, _history?: { role: "user" | "assistant"; content: string }[]): Promise<string> {
+  return "Built-in educational response:\n\n" + getPortfolioMentorReply(input, ctx);
 }
 
 /**
@@ -315,7 +272,7 @@ export function getPortfolioMentorReply(input: string, ctx: PortfolioContext): s
     if (ctx.tradesCount < 10) return `You have ${ctx.tradesCount} trades — too few for pattern analysis. The sample is small; no universal trade count establishes a dependable pattern.${ctx.winRate !== null ? ` Current win rate: ${ctx.winRate.toFixed(0)}%.` : ""}` + DISCLAIMER;
     const wr = ctx.winRate ?? 0;
     const verdict = "descriptive sample; no benchmark ranking";
-    return `**Trade history review** (${ctx.tradesCount} trades, ${wr.toFixed(0)}% win rate — ${verdict}):\n\n• Win rate alone is misleading without R-multiple. With fixed realized 3R wins and 1R losses,40%wins gives0.6R gross expectancy;60%wins at1R gives0.2R beforecosts. These are hypothetical inputs.\n• Track avg-win / avg-loss in your journal.\n• Look for time-of-day or asset-class patterns.` + DISCLAIMER;
+    return `**Trade history review** (${ctx.tradesCount} trades, ${wr.toFixed(0)}% win rate — ${verdict}):\n\n• Win rate alone is misleading without R-multiple. With fixed realized 3R wins and 1R losses, 40% wins gives 0.6R gross expectancy; 60% wins at 1R gives 0.2R before costs. These are hypothetical inputs.\n• Track avg-win / avg-loss in your journal.\n• Look for time-of-day or asset-class patterns.` + DISCLAIMER;
   }
 
   // What should I do

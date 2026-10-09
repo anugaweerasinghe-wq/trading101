@@ -14,7 +14,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What TradeHQ actually is",
         p: [
-          "TradeHQ is a free paper-trading simulator for people learning how markets work. Every account starts with $100,000 in virtual cash. Nothing on the site touches real money: there is no brokerage account, no deposit, no withdrawal and no order ever reaches an exchange. Prices shown in the simulator are sourced from public market data and, between refreshes, moved by a small simulation layer so charts behave realistically during practice sessions.",
+          "TradeHQ is a free paper-trading simulator for people learning how markets work. Every account starts with $100,000 in virtual cash. Nothing on the site touches real money: there is no brokerage account, no deposit, no withdrawal and no order ever reaches an exchange. Supported holdings use periodically refreshed provider quotes. Unsupported assets can use fixed simulator prices, and charts may show synthetic practice candles. Price and chart labels explain their source and freshness.",
           "The point of a simulator is to let you make the expensive mistakes for free. Most beginners lose money not because they picked the wrong stock but because they sized positions badly, moved a stop, doubled down after a loss, or traded an instrument they did not understand. All of those habits are visible in a practice account, and all of them are cheaper to unlearn there.",
         ],
       },
@@ -230,16 +230,16 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "What the leaderboard shows",
         p: [
-          "The leaderboard ranks public practice profiles with enough recorded trades to qualify. New accounts start public; you can make your profile private at any time from your profile page. Ranked figures are simulated: percentage return on a $100,000 virtual starting balance, win rate, and number of trades.",
-          "There is no prize, no fee and no real money involved. The leaderboard exists because a visible scoreboard makes people practise more often, and frequency is what builds skill.",
+          "All public practice profiles can appear without a minimum trade count. Comparable portfolios receive numbered practice ranks after their first server-recorded trade, ordered by simulated return. Unranked members appear separately. New accounts start public and can switch private from their profile. Values use a $100,000 virtual starting balance and display quote freshness and simulation status.",
+          "There is no prize, no fee and no real money involved. Use the scoreboard as a prompt to review exposure, costs and assumptions; rank alone does not measure a reliable method.",
         ],
       },
       {
         h: "How to read a ranking without fooling yourself",
         list: [
-          "A large return over a handful of trades usually means one oversized position, not skill.",
+          "A large return over a handful of trades is insufficient evidence of skill; inspect exposure and the full record.",
           "Compare drawdown alongside return — a 60% gain that survived a 40% drawdown is a fragile method.",
-          "Short measurement windows favour risk-takers; over months, the ranking composition changes.",
+          "Short windows can hide adverse paths and sample uncertainty. Compare consistent periods before drawing a conclusion.",
           "Nobody's practice ranking is a recommendation to copy their trades.",
         ],
       },
@@ -287,17 +287,17 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How the daily challenge works",
         p: [
-          "Every day the simulator presents one hypothetical market scenario. You choose a response, compare the reasoning and trade-offs, then answer a short bonus knowledge question about market basics. Completing the reflection advances a streak counter stored in your browser; no market direction is graded as objectively correct.",
+          "Daily offers a quick hypothetical market scenario alongside a deeper 3–5 minute practice exercise. You choose a response, compare the reasoning and trade-offs, then answer a short bonus knowledge question about market basics. Completing the quick reasoning step or all three deeper questions advances the browser-stored streak at most once per local day. Directional reflections are not forecast scores.",
           "The scenario's prices, news events and dates are exercise inputs, not a report of what happened in today's markets. Choosing long, short or hold records a reflection; it does not place an order. Use the explanation to compare assumptions and uncertainty rather than treating completion as evidence of forecasting skill.",
         ],
       },
       {
-        h: "Why streaks matter more than strategy at the start",
+        h: "Using a daily habit to support review",
         list: [
           "Skill in trading comes from repetition and review, and both need frequency.",
           "A small daily task is easier to sustain than a weekly marathon session.",
           "Streaks make the boring parts — journaling, reviewing, sizing — habitual.",
-          "Missing a day is not failure; abandoning the habit is.",
+          "After a missed day, resume when your schedule allows; a streak is a participation aid, not a skill grade.",
         ],
       },
     ],

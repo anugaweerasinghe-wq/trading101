@@ -16,9 +16,12 @@ import {
   type ChallengeDecision,
   type StreakState,
 } from "@/lib/dailyChallenge";
+import { DailyPractice } from "@/components/DailyPractice";
+import { practiceDate } from "../../supabase/functions/_shared/dailyPractice";
 import { cn } from "@/lib/utils";
 
 export default function Daily() {
+  const [date, setDate] = useState(practiceDate);
   const challenge = getTodayChallenge();
   const bonus = getTodayBonus();
   const [streak, setStreak] = useState<StreakState | null>(null);
@@ -28,7 +31,14 @@ export default function Daily() {
 
   useEffect(() => {
     setStreak(getStreak());
-    if (hasPlayedToday()) setSubmitted(true);
+    setSubmitted(hasPlayedToday()); setSelected(null); setBonusPick(null);
+  }, [date]);
+
+  useEffect(() => {
+    const tick = () => setDate(practiceDate());
+    const timer = window.setInterval(tick, 30000);
+    document.addEventListener("visibilitychange", tick);
+    return () => { window.clearInterval(timer); document.removeEventListener("visibilitychange", tick); };
   }, []);
 
   const handleSubmit = (decision: ChallengeDecision) => {
@@ -49,7 +59,7 @@ export default function Daily() {
     <>
       <Helmet>
         <title>Daily Trading Challenge — Build Your Streak | TradeHQ</title>
-        <meta name="description" content="A new simulated market scenario every day. Compare long, short and hold reasoning, build a streak, and practise decision-making without treating any direction as a guaranteed answer." />
+        <meta name="description" content="A quick daily scenario plus a 3–5 minute exercise with calculations, visuals and worked answers. Practise from 50 rotating cases and build your streak for free." />
         <link rel="canonical" href="https://www.thetradehq.com/daily" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Daily Trading Challenge — TradeHQ" />
@@ -305,6 +315,8 @@ export default function Daily() {
                 Educational simulation only — not financial advice. Come back tomorrow for a new challenge.
               </p>
             </article>
+
+            <DailyPractice key={date} date={date} onComplete={() => setStreak(recordChallenge(0, "hold"))} />
 
             {/* Badges — premium */}
             <section
