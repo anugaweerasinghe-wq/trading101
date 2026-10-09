@@ -1,8 +1,8 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import type { ServerResponse } from "node:http";
-import { renderApprovedCourse } from "../src/lib/courseHtml";
-import type { CourseDocument } from "../supabase/functions/_shared/courseDocument";
+import { renderApprovedCourse } from "../src/lib/courseHtml.js";
+import type { CourseDocument } from "../supabase/functions/_shared/courseDocument.js";
 const url = "https://cbdktpjgczhthflspqjb.supabase.co";
 const publicKey = "sb_publishable_lmCNfCn4tsB1tD604M49Xw_n4zum_Nr";
 export default async function handler(req: { query: Record<string, string | string[] | undefined> }, res: ServerResponse) {

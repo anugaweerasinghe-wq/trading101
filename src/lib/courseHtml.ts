@@ -1,4 +1,4 @@
-import { validateCourseDocument, type CourseDocument } from "../../supabase/functions/_shared/courseDocument";
+import { validateCourseDocument, type CourseDocument } from "../../supabase/functions/_shared/courseDocument.js";
 
 export const escapeCourseHtml = (value: string) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 const domain = "https://www.thetradehq.com";

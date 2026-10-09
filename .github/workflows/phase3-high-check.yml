@@ -30,3 +30,4 @@ jobs:
       - run: node --import tsx scripts/verify-course-workflow.ts
       - run: npm run verify:backend
       - run: npm run build
+      - run: node scripts/verify-course-node.mjs
