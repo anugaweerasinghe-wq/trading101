@@ -4,6 +4,7 @@ import { PGlite } from "@electric-sql/pglite";
 import { courseCovers, lessonWordCount, validateCourseDocument, type CourseDocument } from "../supabase/functions/_shared/courseDocument.ts";
 import { createCourseAdminHandler } from "../supabase/functions/_shared/courseAdmin.ts";
 import { generateCourse, courseReferences } from "../supabase/functions/_shared/courseGenerator.ts";
+import { checkCourseDemand } from "../supabase/functions/_shared/courseDemandCheck.ts";
 import { renderApprovedCourse } from "../src/lib/courseHtml.ts";
 import { sharedQuote } from "../supabase/functions/_shared/sharedQuote.ts";
 
@@ -98,6 +99,31 @@ const limited = (async (url: string | URL | Request, init?: RequestInit) => Stri
   ? new Response("", { status: 429 }) : fetcher(url, init)) as typeof fetch;
 await assert.rejects(generateCourse(claim, limited), /Free AI quota exhausted/);
 
+const testKeys = await crypto.subtle.generateKey({ name: "RSASSA-PKCS1-v1_5", modulusLength: 2048,
+  publicExponent: new Uint8Array([1, 0, 1]), hash: "SHA-256" }, true, ["sign", "verify"]);
+const privateBytes = new Uint8Array(await crypto.subtle.exportKey("pkcs8", testKeys.privateKey));
+const testCredentials = { client_email: "test@example.test", private_key: "-----BEGIN PRIVATE KEY-----\n" +
+  Buffer.from(privateBytes).toString("base64") + "\n-----END PRIVATE KEY-----", token_uri: "https://untrusted.example.test" };
+const checkFetcher = (async (url: string | URL | Request) => {
+  const value = String(url);
+  if (value === "https://oauth2.googleapis.com/token") return new Response(JSON.stringify({ access_token: "test-only-token" }));
+  assert.equal(value, "https://www.googleapis.com/webmasters/v3/sites/https%3A%2F%2Fwww.thetradehq.com%2F/searchAnalytics/query");
+  return new Response(JSON.stringify({ rows: [] }));
+}) as typeof fetch;
+const demandCheck = await checkCourseDemand(testCredentials, "https://www.thetradehq.com/", checkFetcher);
+assert.equal(demandCheck.ok, true); assert.equal(demandCheck.queryHttpStatus, 200); assert.equal(demandCheck.matchingQueries, 0);
+assert.ok(!JSON.stringify(demandCheck).includes("test-only-token"));
+const deniedFetcher = (async (url: string | URL | Request, init?: RequestInit) => {
+  if (String(url) === "https://www.googleapis.com/webmasters/v3/sites") return new Response(JSON.stringify({ siteEntry: [
+    { siteUrl: "sc-domain:thetradehq.com" }, { siteUrl: "sc-domain:unrelated.example" } ] }));
+  if (String(url).includes("searchAnalytics")) return new Response("Sensitive provider response must not be echoed", { status: 403 });
+  return checkFetcher(url, init);
+}) as typeof fetch;
+const deniedCheck = await checkCourseDemand(testCredentials, "https://www.thetradehq.com/", deniedFetcher);
+assert.equal(deniedCheck.error, "property_access_denied");
+assert.deepEqual(deniedCheck.availableProperties, ["sc-domain:thetradehq.com"]);
+assert.ok(!JSON.stringify(deniedCheck).includes("Sensitive provider response"));
+
 const db = new PGlite();
 try {
   await db.exec(`CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;
@@ -110,7 +136,7 @@ try {
     CREATE FUNCTION vault.update_secret(k uuid,s text) RETURNS void LANGUAGE sql AS $$ UPDATE vault.secrets SET secret=s WHERE id=k $$;
     CREATE SCHEMA net; CREATE FUNCTION net.http_post(url text,body jsonb,headers jsonb,timeout_milliseconds integer) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;
     CREATE SCHEMA cron; CREATE FUNCTION cron.schedule(name text,schedule text,command text) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;`);
-  for (const file of readdirSync("supabase/migrations").filter(f => /course_draft_approval|course_generation_schedule|support_gemini_auth_keys|validate_gemini_auth_key_length|course_lesson_quality_floor|course_generation_model_choice/.test(f)).sort()) {
+  for (const file of readdirSync("supabase/migrations").filter(f => /course_draft_approval|course_generation_schedule|support_gemini_auth_keys|validate_gemini_auth_key_length|course_lesson_quality_floor|course_generation_model_choice|course_demand_connection_check/.test(f)).sort()) {
     await db.exec(readFileSync("supabase/migrations/" + file, "utf8"));
   }
   for (const [fixture, valid] of [[boundary, false], [enough, true]] as const) {
@@ -162,6 +188,26 @@ try {
   await db.query("UPDATE public.course_drafts SET generation_period='2000-01' WHERE id=$1", [id]);
   assert.equal((await db.query<{ value: number }>("select public.request_course_generation(true) as value")).rows[0].value, 1);
   assert.equal((await db.query<{ value: number | null }>("select public.request_course_generation(true) as value")).rows[0].value, null);
+  await db.exec("SET ROLE anon");
+  await assert.rejects(db.query("select public.request_course_demand_check()"), /permission denied/);
+  await assert.rejects(db.query("select public.claim_course_demand_check('" + "a".repeat(64) + "')"), /permission denied/);
+  await db.exec("RESET ROLE");
+  await db.query("INSERT INTO vault.secrets(name,secret) VALUES('tradehq_course_gsc_credentials',$1)", [JSON.stringify({ type: "service_account", client_email: "test@example.test", private_key: "test-only" })]);
+  await db.query("UPDATE tradehq_private.course_generation_settings SET gsc_property='https://www.thetradehq.com/' WHERE id");
+  const beforeCheck = JSON.stringify((await db.query("select * from tradehq_private.course_generation_runs order by period,slot")).rows);
+  assert.equal((await db.query<{ value: number }>("select public.request_course_demand_check() as value")).rows[0].value, 1);
+  assert.equal((await db.query<{ value: unknown }>("select public.claim_course_demand_check($1) as value", ["f".repeat(64)])).rows[0].value, null);
+  // Only a matching stored hash can authorize a check. Test-only token never leaves this local DB.
+  const checkToken = "c".repeat(64);
+  await db.query("UPDATE tradehq_private.course_demand_check SET token_hash=encode(sha256(convert_to($1,'UTF8')),'hex') WHERE id", [checkToken]);
+  const checked = (await db.query<{ value: { lease: string; credentials: { client_email: string } } }>("select public.claim_course_demand_check($1) as value", [checkToken])).rows[0].value;
+  assert.equal(checked.credentials.client_email, "test@example.test");
+  assert.equal((await db.query<{ value: unknown }>("select public.claim_course_demand_check($1) as value", [checkToken])).rows[0].value, null);
+  await db.query("select public.finish_course_demand_check($1,$2::jsonb)", [checked.lease, JSON.stringify({ ok: true, matchingQueries: 0, secret: "must-not-be-saved" })]);
+  assert.ok(!JSON.stringify((await db.query("select result from tradehq_private.course_demand_check")).rows).includes("must-not-be-saved"));
+  assert.equal(JSON.stringify((await db.query("select * from tradehq_private.course_generation_runs order by period,slot")).rows), beforeCheck);
+  await db.query("UPDATE tradehq_private.course_demand_check SET token_hash=encode(sha256(convert_to($1,'UTF8')),'hex'),expires_at=clock_timestamp()-interval '1 second' WHERE id", [checkToken]);
+  assert.equal((await db.query<{ value: unknown }>("select public.claim_course_demand_check($1) as value", [checkToken])).rows[0].value, null);
   const token = (await db.query<{ token: string }>("select pending_token as token from tradehq_private.course_generation_state")).rows[0].token;
   assert.equal((await db.query<{ value: unknown }>("select public.claim_course_generation($1) as value", ["x".repeat(64)])).rows[0].value, null);
   const lease = (await db.query<{ value: { lease: string; slot: number; apiKey: string } }>("select public.claim_course_generation($1) as value", [token])).rows[0].value;
