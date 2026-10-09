@@ -1,0 +1,3092 @@
+import type { DailyBatch } from "../../supabase/functions/_shared/dailyPractice";
+/** Original hypothetical teaching cases. No market forecasts or live charts. */
+export const starterPracticeBank: DailyBatch = {
+  "id": "authored-2026-10",
+  "effectiveFrom": "2026-10-09",
+  "exercises": [
+    {
+      "id": "practice-01",
+      "title": "A rising coin, a mostly cash account",
+      "category": "Portfolio arithmetic",
+      "scenario": "A hypothetical account starts with $80,000 cash and a $20,000 Bitcoin position. Bitcoin then rises by 10%. No trades, deposits, withdrawals or fees occur during this interval. A friend says the account must also be up 10%. Work through the position value and the cash separately before judging that claim.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Cash",
+            "value": 80000
+          },
+          {
+            "label": "BTC before",
+            "value": 20000
+          },
+          {
+            "label": "BTC after",
+            "value": 22000
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the Bitcoin position worth after the rise?",
+          "options": [
+            "$22,000",
+            "$30,000",
+            "$20,010"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Multiply the $20,000 position by 1.10. The $2,000 gain belongs to the invested portion. A quoted percentage change describes the asset, not automatically every account that holds it."
+        },
+        {
+          "prompt": "What is the return of the entire account in this case?",
+          "options": [
+            "2%",
+            "10%",
+            "20%"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Cash remains $80,000 and the position becomes $22,000, giving $102,000 total. Divide the $2,000 account gain by the original $100,000. That is 2%, before any costs excluded from this case."
+        },
+        {
+          "prompt": "Which denominator gives the new Bitcoin allocation?",
+          "options": [
+            "$102,000 total account value",
+            "$100,000 starting value",
+            "$22,000 position value"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The new weight is $22,000 divided by $102,000, approximately 21.57%. Using the original balance gives 22%, but that is not the current portfolio weight because total value changed."
+        }
+      ],
+      "reflection": "Why can an accurate asset return still produce a misleading account-return claim?",
+      "reflectionGuide": "Name the share of money exposed to the move, show the unchanged cash, and use starting account value for return. Distinguish that calculation from current allocation, which uses the new total.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-11",
+      "title": "The unchanged-price round trip",
+      "category": "Costs and orders",
+      "scenario": "You buy $1,000 of a hypothetical asset and later sell the same quantity at the same quote. Apply a 0.1% fee to each $1,000 transaction. There is no spread or slippage in this worksheet. The price chart is flat, but the cash ledger will not be. Work out the two separate charges before describing the result.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Buy notional",
+            "value": 1000
+          },
+          {
+            "label": "Sell notional",
+            "value": 1000
+          },
+          {
+            "label": "Each fee",
+            "value": 1
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the fee on the $1,000 buy?",
+          "options": [
+            "$10",
+            "$0.10",
+            "$1"
+          ],
+          "correctAnswer": 2,
+          "explanation": "A 0.1% fee is 0.001 times the trade value. Multiplying $1,000 by 0.001 gives $1. Converting a percentage to a decimal correctly matters before using any fee estimate."
+        },
+        {
+          "prompt": "What is the net result of the flat-price round trip?",
+          "options": [
+            "No gain or loss",
+            "A $1 gain",
+            "A $2 loss"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The buy debits $1,001 and the sale credits $999. Subtract the debit from the credit to obtain −$2. The asset made no price gain, but both fees affected the account."
+        },
+        {
+          "prompt": "Would doubling the number of identical round trips remove that loss?",
+          "options": [
+            "Yes; fees cancel each other",
+            "Yes; a flat price ensures break-even",
+            "No; it doubles these assumed fees"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Two identical round trips incur $4 of fees under these inputs. More activity alone does not create an edge. This case deliberately excludes other execution costs, so real-world costs could differ."
+        }
+      ],
+      "reflection": "What should your journal say when the chart is flat but equity is lower?",
+      "reflectionGuide": "Reconcile the two fee entries rather than blaming an unexplained price change. Mark the excluded spread and slippage assumptions so the worksheet is not mistaken for a complete real execution model.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-21",
+      "title": "A snapshot has an observation time",
+      "category": "Price data",
+      "scenario": "A screen refreshes at 10:05 but shows a provider observation stamped 10:02. A different website displays a newer-looking number without a timestamp. All times are hypothetical. Before declaring one quote incorrect, distinguish when the page loaded from when the underlying price was observed, and check the asset identifier and currency.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "minute after 10:00",
+        "bars": [
+          {
+            "label": "Observed",
+            "value": 2
+          },
+          {
+            "label": "Page loaded",
+            "value": 5
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "How old is the stated observation at the 10:05 refresh?",
+          "options": [
+            "Five hours",
+            "Three minutes",
+            "Zero minutes"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Subtract 10:02 from 10:05 to get three minutes. Refreshing a page does not necessarily obtain a new market observation; it can display a cached provider response with an older timestamp."
+        },
+        {
+          "prompt": "Which timestamp best describes the age of the quote itself?",
+          "options": [
+            "The time your account was created",
+            "The provider observation time",
+            "Only the page refresh time"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The observation timestamp belongs to the price data. The loading timestamp describes the interface request. Both can be useful, but substituting the latter can make an old observation appear newly priced."
+        },
+        {
+          "prompt": "What should be checked before comparing the other website’s number?",
+          "options": [
+            "Only the website’s font size",
+            "Matching asset, currency, time and methodology",
+            "Only which number is larger"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Two plausible prices can refer to different currencies, timestamps or market sources. An identifier and methodology check helps make the comparison meaningful; a visual difference alone does not establish an error."
+        }
+      ],
+      "reflection": "Write an honest freshness label for this screen.",
+      "reflectionGuide": "Say “page loaded at 10:05; quote observed at 10:02.” Avoid calling it a continuous tick feed. Mention the missing timestamp when describing the competing quote instead of assuming it is fresher.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-31",
+      "title": "An ETF can overlap a stock you own",
+      "category": "Risk and uncertainty",
+      "scenario": "Your hypothetical $10,000 account holds $2,000 of stock A and $8,000 of an ETF. For this worksheet the ETF has a fixed 10% exposure to stock A. Ignore other assets, fees and changing weights. Although you see two account rows, part of both rows depends on the same company. Look through the fund rather than counting labels.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Direct A",
+            "value": 2000
+          },
+          {
+            "label": "A inside ETF",
+            "value": 800
+          },
+          {
+            "label": "Other ETF holdings",
+            "value": 7200
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "How much indirect A exposure is inside the ETF?",
+          "options": [
+            "$800",
+            "$8,000",
+            "$200"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Ten percent of the $8,000 ETF position is $800 under the assumed fixed weight. A fund holding can contain exposure to an asset already held directly, even though it appears as another row."
+        },
+        {
+          "prompt": "What is the combined direct and indirect A exposure?",
+          "options": [
+            "$2,800",
+            "$2,000",
+            "$10,000"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Add the $2,000 direct holding and $800 look-through exposure. The resulting $2,800 is 28% of this $10,000 account. Counting the ETF as completely unrelated would miss the overlap."
+        },
+        {
+          "prompt": "Does owning two rows guarantee broad diversification?",
+          "options": [
+            "No; underlying exposures can overlap",
+            "Yes; row count is the diversification measure",
+            "Yes; any ETF eliminates company risk"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Diversification depends on what the instruments expose you to, not just how many names are displayed. A fund may hold many securities, but its overlap with direct positions can still increase concentration."
+        }
+      ],
+      "reflection": "What fund information would you inspect beyond this worksheet?",
+      "reflectionGuide": "Check the actual holdings, weights and date of disclosure. The assumed 10% is not a live ETF fact. Look for sector and company overlap as well as the number of fund constituents.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-41",
+      "title": "A good process can have a losing outcome",
+      "category": "Decision habits",
+      "scenario": "Two learners each make one hypothetical decision. One records evidence, exposure and a review condition, then loses $50. The other skips those steps and gains $50. A single result cannot tell you which process is repeatable. Evaluate what was known at decision time separately from the outcome that became visible later.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$ outcome magnitude",
+        "bars": [
+          {
+            "label": "Documented loss",
+            "value": 50
+          },
+          {
+            "label": "Undocumented gain",
+            "value": 50
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "Does the winning result prove the undocumented process was better?",
+          "options": [
+            "Yes; every profitable decision is well reasoned",
+            "Yes; evidence matters only after a loss",
+            "No; one outcome cannot establish that"
+          ],
+          "correctAnswer": 2,
+          "explanation": "An outcome is one observation produced under uncertainty. It can be favorable despite a weak process or unfavorable despite careful reasoning. Assessing the pre-decision evidence avoids judging everything through hindsight."
+        },
+        {
+          "prompt": "What should a process review examine first?",
+          "options": [
+            "Only the final profit color",
+            "Only whether a friend agreed afterward",
+            "The information and rules available before acting"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Review the dated thesis, exposure and decision criteria before adding later information. That preserves a fair account of what could reasonably have been considered and makes later changes to the thesis visible."
+        },
+        {
+          "prompt": "What would help compare the methods over time?",
+          "options": [
+            "Deleting the losing decision",
+            "Calling either method certain after one result",
+            "Consistent prospective records across more decisions"
+          ],
+          "correctAnswer": 2,
+          "explanation": "A complete sequence of records can reveal repeated weaknesses or strengths better than a selected result. It still needs context and uncertainty; prospective documentation reduces retrospective storytelling and omitted failures."
+        }
+      ],
+      "reflection": "How would you review the losing decision without automatically calling it foolish?",
+      "reflectionGuide": "Compare the planned reasoning with the evidence available then, note execution and costs, and identify what changed. Keep the loss in the record while avoiding a claim that good preparation guarantees success.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-02",
+      "title": "Two unequal positions fall together",
+      "category": "Portfolio arithmetic",
+      "scenario": "Consider $60,000 cash, $30,000 in a stock and $10,000 in a crypto asset. The stock falls 5% while the crypto falls 20%. Treat these as simultaneous hypothetical moves with no trades or fees. Both position losses matter, but averaging the two percentage changes ignores how much money was invested in each.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Stock start",
+            "value": 30000
+          },
+          {
+            "label": "Crypto start",
+            "value": 10000
+          },
+          {
+            "label": "Cash",
+            "value": 60000
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "How much does the stock position lose?",
+          "options": [
+            "$5,000",
+            "$150",
+            "$1,500"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The loss is $30,000 multiplied by 0.05, or $1,500. A price move must be applied to the dollars held in that asset; it is not applied to cash or to another position."
+        },
+        {
+          "prompt": "What is the combined account loss?",
+          "options": [
+            "$12,500",
+            "$2,000",
+            "$3,500"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The crypto loses $10,000 × 20% = $2,000. Add the $1,500 stock loss to obtain $3,500. The account becomes $96,500, so its return is −3.5% under the stated assumptions."
+        },
+        {
+          "prompt": "Why is a simple average of −5% and −20% unsuitable here?",
+          "options": [
+            "Cash must lose 12.5% too",
+            "Losses cannot be added",
+            "The positions have different dollar weights"
+          ],
+          "correctAnswer": 2,
+          "explanation": "A simple average assumes equal exposure to the two assets and omits cash. Dollar-weighted changes preserve the different position sizes. Neither asset volatility nor the number of holdings alone supplies the missing weights."
+        }
+      ],
+      "reflection": "Explain which position contributed more to the loss and why.",
+      "reflectionGuide": "The smaller crypto position lost $2,000, exceeding the stock’s $1,500 loss because its assumed decline was much larger. Discuss both size and price change rather than treating either factor as the whole explanation.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-12",
+      "title": "A sale fee uses the exit value",
+      "category": "Costs and orders",
+      "scenario": "A hypothetical position was bought for $2,000 before its buy fee. Its market value is now $2,200 and you sell it all. Use a 0.1% fee on each transaction’s actual notional value. The sale fee is based on $2,200, not on the original $2,000 purchase or on the $200 gross price gain.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Buy value",
+            "value": 2000
+          },
+          {
+            "label": "Sale value",
+            "value": 2200
+          },
+          {
+            "label": "Gross gain",
+            "value": 200
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the sale fee under the stated rule?",
+          "options": [
+            "$0.20",
+            "$2.20",
+            "$2"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Multiply the $2,200 exit notional by 0.001. That gives $2.20. A fee on the transaction’s whole value differs from a tax or charge calculated only on profit."
+        },
+        {
+          "prompt": "What net sale proceeds reach cash?",
+          "options": [
+            "$197.80",
+            "$2,197.80",
+            "$2,200"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Subtract the $2.20 sale fee from $2,200 gross proceeds. The $2,197.80 cash credit contains original capital and gain. It should not all be reported as profit."
+        },
+        {
+          "prompt": "What is the net gain after the $2 buy fee and sale fee?",
+          "options": [
+            "$197.80",
+            "$195.80",
+            "$200"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The original cash debit was $2,002. Compare it with $2,197.80 net proceeds to get $195.80. Both fee bases are their respective trade values, and each fee is counted once."
+        }
+      ],
+      "reflection": "How would you explain the difference between gross gain and net gain?",
+      "reflectionGuide": "Show the $200 price gain and subtract the $2 purchase fee plus $2.20 exit fee. Keep these expenses separate from the sale proceeds so the account ledger stays easy to verify.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-22",
+      "title": "An aggregate is not one exchange’s last trade",
+      "category": "Price data",
+      "scenario": "A hypothetical asset trades at $100 on venue A and $102 on venue B. A provider reports an aggregate $101 reference. No volume weights or exclusion rules have been supplied. These three numbers can describe different measurements at the same time. A paper-trading mark also does not promise execution at any of these real venues.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Venue A",
+            "value": 100
+          },
+          {
+            "label": "Venue B",
+            "value": 102
+          },
+          {
+            "label": "Reference",
+            "value": 101
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "Does the $101 reference prove a trade occurred at exactly $101?",
+          "options": [
+            "No; a reference can combine observations",
+            "Yes; every aggregate is a last trade",
+            "Yes; a midpoint is always executable"
+          ],
+          "correctAnswer": 0,
+          "explanation": "An aggregate can summarize multiple market observations without being the price of a particular transaction. To describe a last trade, you need the actual venue, transaction and timestamp rather than only a reference figure."
+        },
+        {
+          "prompt": "Can you recover the provider’s weighting method from these numbers alone?",
+          "options": [
+            "No; methodology and input weights are missing",
+            "Yes; all aggregates are equal-weight averages",
+            "Yes; the larger venue price has full weight"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The stated reference happens to lie between the two inputs, but that does not reveal weighting, filtering or source coverage. Consult the methodology instead of inventing an algorithm from a single result."
+        },
+        {
+          "prompt": "What does the simulator’s mark establish?",
+          "options": [
+            "A valuation input for the paper account",
+            "A reserved real exchange fill",
+            "A guaranteed price for unlimited quantity"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A mark supports simulated valuation under the product’s rules. Real execution depends on an actual venue and available liquidity. Treat the provider number as a reference rather than a promise that money can be exchanged at that price."
+        }
+      ],
+      "reflection": "Describe a fair comparison between a venue quote and an aggregate.",
+      "reflectionGuide": "Label each source and timestamp, explain that their methodologies can differ, and compare like currencies. Acknowledge that this case omits volume weights and does not model real exchange execution.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-32",
+      "title": "Correlation can change when you need it",
+      "category": "Risk and uncertainty",
+      "scenario": "Two hypothetical assets moved in opposite directions in three earlier observations. In a fourth observation both fall. A learner calls the fourth pair impossible because the assets were “uncorrelated.” The small sample cannot establish a permanent relationship, and low historical correlation does not promise that losses will offset in every interval.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "fourth-interval loss (%)",
+        "bars": [
+          {
+            "label": "Asset A",
+            "value": 4
+          },
+          {
+            "label": "Asset B",
+            "value": 6
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "Does three earlier observations establish a permanent correlation?",
+          "options": [
+            "Yes; three is always enough",
+            "Yes; opposite moves guarantee independence",
+            "No; the sample and period are limited"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Correlation is a sample-dependent statistic, not a fixed contract between assets. Three observations supply very little evidence, and a relationship estimated in one period may not hold in another."
+        },
+        {
+          "prompt": "Can low past correlation guarantee no simultaneous losses?",
+          "options": [
+            "Yes; simultaneous losses violate the definition",
+            "Yes; one asset must rise every day",
+            "No; individual intervals can still move together"
+          ],
+          "correctAnswer": 2,
+          "explanation": "A low aggregate relationship can coexist with particular intervals where both assets fall. Correlation does not promise a hedge on every date, and changing conditions can alter the estimated relationship."
+        },
+        {
+          "prompt": "What is the better way to describe the earlier evidence?",
+          "options": [
+            "A guaranteed hedge",
+            "Proof of market-neutral profits",
+            "A limited historical pattern, with its sample stated"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Specify the period, observations and method used. Avoid upgrading a historical estimate into a guarantee. Even a designed hedge can retain mismatch, liquidity and cost risks beyond the correlation statistic."
+        }
+      ],
+      "reflection": "Write a diversification claim that acknowledges this limit.",
+      "reflectionGuide": "State that different exposures may reduce concentration but can still lose together. Identify the historical sample and avoid promising that one position will always offset another.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-42",
+      "title": "Write the thesis before the price moves",
+      "category": "Decision habits",
+      "scenario": "A learner buys a hypothetical stock at $40, then sees it rise to $44. Afterward they write that a strong report made the rise obvious, although their original reason was a chart pattern. The revised story hides what was actually tested. A dated pre-decision note lets you compare the original hypothesis with the later evidence.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Entry",
+            "value": 40
+          },
+          {
+            "label": "Later quote",
+            "value": 44
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the observed price change in this case?",
+          "options": [
+            "+40%",
+            "+10%",
+            "+4%"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The $4 increase divided by the $40 starting price is 10%. That observed return is separate from why the learner acted and does not validate a reason invented after the movement."
+        },
+        {
+          "prompt": "What is wrong with replacing the original reason after the rise?",
+          "options": [
+            "It makes the report a proven cause",
+            "It prevents a fair test of the original hypothesis",
+            "It improves the historical evidence"
+          ],
+          "correctAnswer": 1,
+          "explanation": "A rewritten explanation can make outcomes look more predictable than they were. Preserve the original thesis and add new information as a dated update rather than silently changing what the decision supposedly tested."
+        },
+        {
+          "prompt": "What should a useful pre-decision note contain?",
+          "options": [
+            "Only the hoped-for profit",
+            "Evidence, uncertainty and a review condition",
+            "A certainty claim about the next quote"
+          ],
+          "correctAnswer": 1,
+          "explanation": "A brief note can state the observable evidence, alternative explanations and what would prompt reconsideration. It creates a reviewable process without pretending a future price is known."
+        }
+      ],
+      "reflection": "Draft a pre-decision note for this case using only the supplied facts.",
+      "reflectionGuide": "You can state the hypothetical entry and acknowledge that no actual report evidence is supplied. Name information to investigate and a review condition; avoid inventing a catalyst to explain the observed gain.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-03",
+      "title": "Cash after a fee-paying buy",
+      "category": "Portfolio arithmetic",
+      "scenario": "A virtual account has $10,000 cash. You plan to buy 20 shares at a fixed $100 quote. For this worksheet use TradeHQ’s 0.1% fee on the $2,000 trade value. The quote stays unchanged afterward. Separate cash spent, the marked position value, and the fee: the fee is not a share that remains in the account.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Starting cash",
+            "value": 10000
+          },
+          {
+            "label": "Trade value",
+            "value": 2000
+          },
+          {
+            "label": "Fee",
+            "value": 2
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the total cash debit for this purchase?",
+          "options": [
+            "$2,200",
+            "$2,002",
+            "$2,000"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Twenty shares at $100 have a $2,000 notional value. The fee is $2,000 × 0.001 = $2, so cash falls by $2,002. Counting only share cost would leave the cash ledger overstated."
+        },
+        {
+          "prompt": "What cash remains after that debit?",
+          "options": [
+            "$9,998",
+            "$7,998",
+            "$8,000"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Subtract the full $2,002 debit from $10,000. The resulting $7,998 cash plus $2,000 of shares equals $9,998 in equity at the unchanged mark; the $2 difference is the fee."
+        },
+        {
+          "prompt": "Is the unchanged quote enough to keep total equity at $10,000?",
+          "options": [
+            "No; equity is $7,998",
+            "No; equity is $9,998 after the fee",
+            "Yes; fees become holdings"
+          ],
+          "correctAnswer": 1,
+          "explanation": "An unchanged asset price does not refund transaction costs. The marked holding still has $2,000 of value, but $2 has left cash. Equity includes cash and holdings, not the cash balance alone."
+        }
+      ],
+      "reflection": "Write a three-line ledger for cash, holding value and total equity.",
+      "reflectionGuide": "Check that cash plus marked holdings equals equity. Keep the fee as an expense already deducted from cash; deducting it a second time from equity would also be an error.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-13",
+      "title": "An affordable quantity still needs fee room",
+      "category": "Costs and orders",
+      "scenario": "A virtual account has exactly $1,000 cash and an asset quote of $100 per unit. A learner tries to buy ten units because ten times $100 is $1,000. Apply the simulator’s 0.1% purchase fee. For this worksheet consider whole-unit alternatives only; the actual supported quantity precision depends on the instrument.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Cash available",
+            "value": 1000
+          },
+          {
+            "label": "Ten-unit cost",
+            "value": 1000
+          },
+          {
+            "label": "Nine-unit cost",
+            "value": 900
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What would ten units cost including the fee?",
+          "options": [
+            "$1,001",
+            "$1,000",
+            "$990"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Ten units have a $1,000 notional, and 0.1% adds $1. The total exceeds available cash. A displayed balance that exactly matches notional does not leave room for a fee."
+        },
+        {
+          "prompt": "Which stated whole-unit alternative fits the cash balance?",
+          "options": [
+            "Nine units, costing $900.90",
+            "Ten units, costing $1,001",
+            "Eleven units, costing $1,101.10"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Nine units cost $900 plus $0.90 fee, or $900.90. The remaining $99.10 is cash. Checking the full debit is more reliable than checking notional alone."
+        },
+        {
+          "prompt": "What should an insufficient-cash message lead you to inspect first?",
+          "options": [
+            "Quantity, current quote and the total debit",
+            "Whether the asset must rise tomorrow",
+            "Whether fees can be ignored in a simulator"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Affordability depends on the current price, requested quantity and applicable costs. It is an execution constraint, not a signal about direction. Reducing a quantity should follow a budget check rather than a forecast."
+        }
+      ],
+      "reflection": "Draft a pre-click affordability check in your own words.",
+      "reflectionGuide": "Use quantity × current quote, add the stated purchase fee, and compare the full amount with available cash. Leave room for a changing quote; do not assume a future fill must use an earlier display.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-23",
+      "title": "Currency mismatch looks like a price error",
+      "category": "Price data",
+      "scenario": "One hypothetical page quotes an asset at 100 US dollars, another at 92 euros. For this worksheet assume one euro equals 1.10 US dollars at the same time. The figures are selected inputs, not current currency rates. Convert to a common unit before deciding how far apart the two asset quotes really are.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$ equivalent",
+        "bars": [
+          {
+            "label": "USD quote",
+            "value": 100
+          },
+          {
+            "label": "EUR converted",
+            "value": 101.2
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is €92 expressed in dollars at the stated exchange rate?",
+          "options": [
+            "$83.64",
+            "$92",
+            "$101.20"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Multiply €92 by $1.10 per euro to get $101.20. The currency units matter: dividing by 1.10 would use the opposite conversion and answer a different question."
+        },
+        {
+          "prompt": "What dollar difference separates the converted quote from $100?",
+          "options": [
+            "$8",
+            "$10",
+            "$1.20"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The converted €92 quote is $101.20, so it is $1.20 above $100. Comparing the raw 92 and 100 without currency labels would suggest an $8 gap that is not this common-unit difference."
+        },
+        {
+          "prompt": "What remains necessary for a reliable cross-site comparison?",
+          "options": [
+            "A rule that the lower number is correct",
+            "Ignoring conversion because both are prices",
+            "Matched timestamps and source definitions"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Currency conversion resolves one mismatch only. Different observation times, venue inputs or asset identifiers can still affect the comparison. A fair audit records these fields rather than declaring accuracy from one converted pair."
+        }
+      ],
+      "reflection": "List the inputs you would save alongside this calculation.",
+      "reflectionGuide": "Record both asset quotes, their currency units, their timestamps and the assumed conversion rate. Label the rate hypothetical; an actual comparison would need a rate appropriate to the same time window.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-33",
+      "title": "A planned payoff ratio is not a realized result",
+      "category": "Risk and uncertainty",
+      "scenario": "A worksheet lists a $100 planned loss and a $300 planned gain per attempt. Four attempts produce the full $300 gain and six produce the full $100 loss. Costs are excluded. First calculate this deliberately fixed-payoff sample, then ask what happens if real exits fail to match the plan.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Gain per winner",
+            "value": 300
+          },
+          {
+            "label": "Loss per loser",
+            "value": 100
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What gross total do four full winners contribute?",
+          "options": [
+            "$400",
+            "$1,200",
+            "$300"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Four winners times $300 each equal $1,200. This assumes every listed winner realizes the entire planned payoff. An intended target alone does not establish what a position actually returns."
+        },
+        {
+          "prompt": "What is the net sample result after six full losses, before costs?",
+          "options": [
+            "−$600",
+            "+$600",
+            "+$1,200"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Six losses total $600. Subtract $600 from the $1,200 gains to obtain a $600 positive sample result. It is a calculation for these exact outcomes, not proof that future attempts will match them."
+        },
+        {
+          "prompt": "What would invalidate using this sample as a general profit promise?",
+          "options": [
+            "Nothing; the planned ratio ensures profit",
+            "Different realized payoffs, outcomes or costs",
+            "Only a different chart color"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Actual win frequency, average realized gains, average losses and costs determine the result. Exits may differ from planned thresholds. A stated risk-to-reward ratio is not sufficient evidence of a profitable strategy."
+        }
+      ],
+      "reflection": "Which records would you need to evaluate the plan after use?",
+      "reflectionGuide": "Compare planned and realized exits, fees and each outcome over a stated sample. Include losses that exceeded the worksheet assumption and avoid selecting only attempts that fit the original targets.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-43",
+      "title": "The old high is a reference, not a promise",
+      "category": "Decision habits",
+      "scenario": "A hypothetical asset once traded at $200 and now trades at $120. A learner calls it “40% off” and assumes it must return to $200. No evidence about business conditions or valuation is supplied. The previous quote is a historical reference; it does not independently establish fair value or the likelihood of recovery.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Earlier high",
+            "value": 200
+          },
+          {
+            "label": "Current quote",
+            "value": 120
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the decline from $200 to $120?",
+          "options": [
+            "40%",
+            "66.67%",
+            "80%"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The decline is $80 divided by the original $200, or 40%. This measures a past price change. It does not show that the current asset is undervalued or that the earlier high was justified."
+        },
+        {
+          "prompt": "What rise from $120 would restore $200, approximately?",
+          "options": [
+            "66.67%",
+            "40%",
+            "80%"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The required $80 gain is divided by the current $120 base, giving approximately 66.67%. A 40% rebound would not undo a 40% loss because it applies to a smaller base."
+        },
+        {
+          "prompt": "What conclusion does the earlier high alone support?",
+          "options": [
+            "Only that the asset had a higher quoted price before",
+            "A guaranteed return to $200",
+            "A verified current bargain"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A historical price can anchor expectations without supplying present valuation evidence. Investigate current conditions and alternative outcomes instead of treating a prior high as an entitlement or an inevitable destination."
+        }
+      ],
+      "reflection": "Rewrite “it has to get back to $200” as an investigable question.",
+      "reflectionGuide": "Ask which current evidence could support or weaken a recovery hypothesis. Show the required 66.67% rise and state that the previous high alone supplies neither fair value nor a probability.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-04",
+      "title": "Selling half is not selling the gain",
+      "category": "Portfolio arithmetic",
+      "scenario": "You own 10 hypothetical shares bought at $80 each. The current quote is $100 and you sell five shares. Ignore fees for the first two questions, then consider what fee tracking would change. The sale realizes a gain on the shares sold, while the unsold shares still carry an unrealized gain.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Cost per share",
+            "value": 80
+          },
+          {
+            "label": "Sale per share",
+            "value": 100
+          },
+          {
+            "label": "Remaining mark",
+            "value": 500
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "How much gross cash arrives from the five-share sale?",
+          "options": [
+            "$500",
+            "$100",
+            "$1,000"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Five shares multiplied by the $100 sale price gives $500 proceeds. Proceeds include both recovery of original capital and profit; they are not the same thing as the realized gain."
+        },
+        {
+          "prompt": "What is the gross realized gain on those five shares?",
+          "options": [
+            "$100",
+            "$200",
+            "$500"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The sold shares cost 5 × $80 = $400. Subtract this cost from $500 proceeds for a $100 gross realized gain. The other $100 price gain remains attached to the five unsold shares."
+        },
+        {
+          "prompt": "How should a net-return review handle transaction fees?",
+          "options": [
+            "Include applicable buy and sell fees once",
+            "Ignore fees because some shares remain",
+            "Subtract the full sale proceeds"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Net performance includes relevant transaction expenses. Record which fee belongs to which calculation and avoid double counting. Gross realized gain, remaining unrealized gain and net account return answer different questions."
+        }
+      ],
+      "reflection": "Why would calling the $500 proceeds “profit” distort your review?",
+      "reflectionGuide": "State the $400 original capital inside the proceeds and the $100 gross gain. Then separate the five shares still held; their marked gain has not become cash through this sale.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-14",
+      "title": "The quote changes before you submit",
+      "category": "Costs and orders",
+      "scenario": "You calculate a two-unit purchase using a $500 displayed quote, but the quote becomes $510 before submission. Use the later $510 value and a 0.1% fee for this worksheet. This is a changing-input example, not a claim that TradeHQ simulates order-book slippage or provides a guaranteed locked quote.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Earlier unit quote",
+            "value": 500
+          },
+          {
+            "label": "Later unit quote",
+            "value": 510
+          },
+          {
+            "label": "Later notional",
+            "value": 1020
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the two-unit notional using the later quote?",
+          "options": [
+            "$1,000",
+            "$510",
+            "$1,020"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Multiply two units by the later $510 quote. The notional becomes $1,020, $20 more than the earlier estimate. The relevant input must be identified before judging the debit."
+        },
+        {
+          "prompt": "What is the later total debit including the stated fee?",
+          "options": [
+            "$1,001",
+            "$1,020.10",
+            "$1,021.02"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The fee is $1,020 × 0.001 = $1.02. Add it to notional for a $1,021.02 debit. A fee calculated on the earlier estimate would not match this assumed transaction."
+        },
+        {
+          "prompt": "What is the most useful review step after a changed quote?",
+          "options": [
+            "Assume the provider owes the earlier price",
+            "Treat the difference as proof of manipulation",
+            "Compare the submitted trade record with the earlier estimate"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The record and timestamps can explain whether different inputs were used. A discrepancy deserves investigation, but it does not independently prove wrongdoing. A periodic quote is not a promise of a future real-market fill."
+        }
+      ],
+      "reflection": "What two timestamps would help explain this transaction?",
+      "reflectionGuide": "Identify when the display was loaded and when the transaction was recorded. Keep price change, fee and unsupported real-order execution assumptions separate when reconstructing the amount.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-24",
+      "title": "A closed market can have a fresh fetch",
+      "category": "Price data",
+      "scenario": "A stock’s last eligible quote was observed on Friday afternoon. The page fetches that same observation on Sunday. No new stock trade is stated. Crypto on the page has a separate Sunday observation. The shared interface can therefore contain assets with different ages even when the page request itself is recent.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "illustrative age in hours",
+        "bars": [
+          {
+            "label": "Stock observation age",
+            "value": 40
+          },
+          {
+            "label": "Crypto observation age",
+            "value": 0.1
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "Does a Sunday fetch prove the stock traded on Sunday?",
+          "options": [
+            "Yes; all markets share crypto hours",
+            "No; it may return the earlier observation",
+            "Yes; every fetch creates a market trade"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Fetching data and observing a new market transaction are different events. The case explicitly supplies an earlier stock observation; a recent HTTP response must not be presented as evidence of Sunday stock trading."
+        },
+        {
+          "prompt": "Should the stock inherit the crypto quote’s freshness label?",
+          "options": [
+            "Yes; one fresh quote refreshes all holdings",
+            "No; freshness belongs to each observation",
+            "Yes; both are on one page"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Each asset has its own source and timestamp. A shared page or batch request does not make every observation equally recent. Per-asset freshness prevents a current crypto quote from hiding an older stock mark."
+        },
+        {
+          "prompt": "What wording best describes this stock mark?",
+          "options": [
+            "A guaranteed Sunday sale price",
+            "Last observed quote, with its Friday timestamp",
+            "Live Sunday stock tick"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The supplied timestamp gives readers evidence for the mark’s age. “Last observed” is precise without inventing a new transaction or promising an executable price during a different market session."
+        }
+      ],
+      "reflection": "Explain how you would display mixed freshness in a portfolio.",
+      "reflectionGuide": "Use per-asset source and observation times, with a compact summary when any holdings are stale. Keep the fetch time available without presenting it as the market timestamp for every row.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-34",
+      "title": "A high win rate can lose money",
+      "category": "Risk and uncertainty",
+      "scenario": "In ten hypothetical attempts, eight gain $10 each and two lose $60 each. Ignore fees. The learner highlights the 80% win rate and calls the method profitable. Counting wins answers one question; comparing the dollars won and lost answers another. Work through both before deciding what the sample demonstrates.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Total gains",
+            "value": 80
+          },
+          {
+            "label": "Total losses",
+            "value": 120
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the total from the eight winners?",
+          "options": [
+            "$80",
+            "$800",
+            "$10"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Eight gains of $10 sum to $80. A count of profitable attempts does not tell you the total dollars earned unless the size of each outcome is included."
+        },
+        {
+          "prompt": "What is the net result across all ten attempts?",
+          "options": [
+            "−$40",
+            "+$80",
+            "+$40"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The two $60 losses total $120. Subtract $120 from $80 for a $40 loss. The 80% win rate is accurate, but it does not make the sample profitable."
+        },
+        {
+          "prompt": "Which summary better explains performance than win rate alone?",
+          "options": [
+            "Win frequency plus gain/loss sizes and costs",
+            "Only the largest winning streak",
+            "Only the number of green entries"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Frequency and magnitude must be considered together. Costs can further reduce net results. A useful review includes all outcomes rather than selecting a statistic that looks favorable while omitting the account impact."
+        }
+      ],
+      "reflection": "Write a fair two-sentence review of this method’s sample.",
+      "reflectionGuide": "Report eight winners out of ten and the $40 gross loss. Explain that the two larger losses outweighed the small gains. Avoid claiming either future success or failure from this small hypothetical sample.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-44",
+      "title": "One rumor is not three independent sources",
+      "category": "Decision habits",
+      "scenario": "Three hypothetical social posts repeat the same anonymous rumor about a company. All link back to the same original post, and none cites a company filing. Counting the reposts as independent confirmation exaggerates the evidence. Trace the source chain before using popularity as a reason for a simulated decision.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "posts",
+        "bars": [
+          {
+            "label": "Reposts",
+            "value": 3
+          },
+          {
+            "label": "Original rumor source",
+            "value": 1
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "How many original rumor sources are stated here?",
+          "options": [
+            "Three",
+            "Four",
+            "One"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The three posts share one anonymous origin. Multiple repetitions can amplify visibility without adding independent evidence. The source chain matters more than the raw number of posts."
+        },
+        {
+          "prompt": "What would be a stronger next verification step?",
+          "options": [
+            "Count more reposts of the same rumor",
+            "Assume popularity confirms accuracy",
+            "Find a relevant primary statement or filing"
+          ],
+          "correctAnswer": 2,
+          "explanation": "A primary record can provide attributable information to compare with the claim. It may confirm, contradict or leave the rumor unresolved. More copies of the same unsupported statement do not independently verify it."
+        },
+        {
+          "prompt": "How should the claim be labelled while unresolved?",
+          "options": [
+            "A confirmed company fact",
+            "A guaranteed catalyst",
+            "An unverified rumor with its source identified"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Labelling the uncertainty prevents an unattributed claim from being presented as established evidence. A price reaction or a large audience does not itself prove that the underlying statement is correct."
+        }
+      ],
+      "reflection": "Draft an evidence note that does not spread the rumor as fact.",
+      "reflectionGuide": "Identify that the posts share an anonymous origin, record what primary evidence is missing, and state what would resolve the question. Avoid repeating the claim with confident language simply because others did.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-05",
+      "title": "A rebound that does not restore the balance",
+      "category": "Portfolio arithmetic",
+      "scenario": "A hypothetical account begins at $100,000, falls to $80,000, and then rises 20% from that lower balance. No money enters or leaves. Someone adds −20% and +20% and declares the account even. Follow the dollar amounts instead: returns apply to the balance present at the start of each interval.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Start",
+            "value": 100000
+          },
+          {
+            "label": "After loss",
+            "value": 80000
+          },
+          {
+            "label": "After rebound",
+            "value": 96000
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What balance follows the 20% rebound from $80,000?",
+          "options": [
+            "$100,000",
+            "$120,000",
+            "$96,000"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The rebound adds $80,000 × 0.20 = $16,000. The resulting $96,000 is still $4,000 below the initial balance. The rise and fall use different dollar bases."
+        },
+        {
+          "prompt": "What percentage gain from $80,000 would restore $100,000?",
+          "options": [
+            "20%",
+            "40%",
+            "25%"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The missing $20,000 must be divided by the current $80,000: 0.25. A 25% rise recovers the original balance. This arithmetic says nothing about how likely or how soon such a rise is."
+        },
+        {
+          "prompt": "What is the full-period return after the stated rebound?",
+          "options": [
+            "0%",
+            "+4%",
+            "−4%"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Compare the final $96,000 with the original $100,000. The $4,000 shortfall is 4% of starting value. Compounding multiplies interval growth factors; adding the two percentages would give the wrong answer."
+        }
+      ],
+      "reflection": "Explain the mistake without using the word “compounding.”",
+      "reflectionGuide": "Describe how losing $20,000 leaves a smaller amount to grow. A 20% gain on $80,000 adds only $16,000. Use the changing base to explain the remaining shortfall.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-15",
+      "title": "A spread is not a commission",
+      "category": "Costs and orders",
+      "scenario": "Outside the simulator, a hypothetical venue shows a $99 bid and $101 ask. A buyer crosses the ask and immediately sells at the unchanged bid. Ignore commissions and use one unit. This worksheet isolates spread cost; TradeHQ’s single provider quote and 0.1% fee should not be described as a real bid-ask order book.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Bid",
+            "value": 99
+          },
+          {
+            "label": "Ask",
+            "value": 101
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "At which stated quote does this hypothetical buyer purchase?",
+          "options": [
+            "$100 midpoint",
+            "$101 ask",
+            "$99 bid"
+          ],
+          "correctAnswer": 1,
+          "explanation": "A buyer accepting the displayed seller’s price crosses the ask at $101. The midpoint is a comparison reference, not a guaranteed executable quote in this example."
+        },
+        {
+          "prompt": "What happens after immediately selling at the unchanged bid?",
+          "options": [
+            "A $2 gross gain",
+            "A $2 gross loss",
+            "No loss because the midpoint is stable"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Paying $101 and receiving $99 produces a $2 loss before commissions. An unchanged midpoint does not remove the difference between the two sides of the market."
+        },
+        {
+          "prompt": "How should this worksheet be compared with TradeHQ?",
+          "options": [
+            "As the simulator’s hidden $2 fee",
+            "As a separate execution-cost concept",
+            "As proof TradeHQ fills at a real exchange ask"
+          ],
+          "correctAnswer": 1,
+          "explanation": "This exercise describes an explicitly hypothetical bid-ask venue. The simulator uses marked snapshots and its stated fee; a lesson must not invent exchange routing, order-book fills or costs that the product does not implement."
+        }
+      ],
+      "reflection": "Explain why a flat midpoint may coexist with a trading loss.",
+      "reflectionGuide": "Describe buying at one side and selling at the other, using the $101 and $99 inputs. Mention separately excluded commissions and identify that the worksheet is outside the simulator execution model.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-25",
+      "title": "A ticker can identify more than one asset",
+      "category": "Price data",
+      "scenario": "A learner sees the same short symbol on two crypto listings. The listings have different provider identifiers and describe different projects. One is quoted at $2 and the other at $20. These are hypothetical projects. Choosing the first matching ticker would value ten units very differently, so identity must be checked before arithmetic.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Project A quote",
+            "value": 2
+          },
+          {
+            "label": "Project B quote",
+            "value": 20
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the value of ten units of project A at its stated quote?",
+          "options": [
+            "$20",
+            "$200",
+            "$2"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Ten units multiplied by project A’s $2 quote give $20. Using the other project’s $20 quote would value the holding at $200 and introduce a tenfold identity error."
+        },
+        {
+          "prompt": "Which field helps distinguish the two listings?",
+          "options": [
+            "The explicit provider asset identifier",
+            "Only the shared ticker",
+            "The higher price"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A short symbol can be ambiguous. A stable provider identifier and project information help establish which asset is meant. Price magnitude is not a dependable way to resolve an identity mismatch."
+        },
+        {
+          "prompt": "What should happen when an asset mapping is uncertain?",
+          "options": [
+            "Flag it instead of silently using another project",
+            "Use the first symbol match",
+            "Average the unrelated project prices"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A wrong identity makes subsequent calculations misleading even if multiplication is correct. Flagging an unsupported or uncertain mapping is more honest than silently substituting a different asset with a familiar symbol."
+        }
+      ],
+      "reflection": "Write an identity checklist before accepting a quote.",
+      "reflectionGuide": "Match the provider ID, project name and supported asset mapping, then check currency and observation time. If these disagree, retain an explicit unavailable or fallback label while investigating.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-35",
+      "title": "A few winners do not establish an edge",
+      "category": "Risk and uncertainty",
+      "scenario": "A new practice method has three hypothetical winning attempts and no recorded losses yet. Its author announces a 100% success rate and invites others to copy it. The count is mathematically true for the recorded sample, but evidence about repeatability is still weak. Consider sample size, selection and uncertainty before interpreting the headline.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "recorded attempts",
+        "bars": [
+          {
+            "label": "Winners",
+            "value": 3
+          },
+          {
+            "label": "Losers",
+            "value": 0
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the observed win rate for the three recorded attempts?",
+          "options": [
+            "Proof of a guaranteed 100% future rate",
+            "33%",
+            "100% within this sample"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Three winners divided by three recorded attempts is 100%. The qualifier matters: it describes these observations only. A tiny observed sample should not be treated as a promise about future outcomes."
+        },
+        {
+          "prompt": "What missing information most affects the claim?",
+          "options": [
+            "A more impressive strategy name",
+            "The author’s preferred chart theme",
+            "A complete, larger record with losses and selection rules"
+          ],
+          "correctAnswer": 2,
+          "explanation": "You need to know what was counted, whether failed attempts were omitted and how results behave across more conditions. Three selected winners alone cannot separate skill, chance and reporting bias."
+        },
+        {
+          "prompt": "What is an appropriate next practice step?",
+          "options": [
+            "Increase exposure because losses are impossible",
+            "Delete any later losing entry",
+            "Record prospective attempts under consistent rules"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Define the method before observing results and record subsequent outcomes consistently. That reduces hindsight editing and cherry-picking. Practice remains simulated, and a broader record still carries uncertainty rather than a guarantee."
+        }
+      ],
+      "reflection": "How would you rewrite the author’s headline honestly?",
+      "reflectionGuide": "Say “three recorded attempts were profitable” and identify the sample limit. Add the requirement for a complete record and avoid language implying verified skill or recommending that others copy the trades.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-45",
+      "title": "Paper results omit some real-money pressures",
+      "category": "Decision habits",
+      "scenario": "A learner grows a hypothetical paper balance from $100,000 to $110,000 and says this proves they would make $10,000 with real savings. The simulator uses virtual cash and marked snapshots. Real execution, personal constraints and emotional responses are not fully reproduced. Calculate the paper result, then state what the experiment actually tested.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Paper start",
+            "value": 100000
+          },
+          {
+            "label": "Paper end",
+            "value": 110000
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the paper account’s stated return?",
+          "options": [
+            "1%",
+            "10%",
+            "110%"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The hypothetical gain is $10,000 on $100,000, or 10%. It is a virtual result under the simulator’s inputs and rules, not evidence that real money has been earned."
+        },
+        {
+          "prompt": "What does this result fail to establish?",
+          "options": [
+            "Whether virtual positions were displayed",
+            "The same real-world outcome under different constraints",
+            "Whether subtraction is possible"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The experiment does not reproduce every real cost, fill condition, emotional pressure or personal constraint. A paper gain can support learning while remaining insufficient to predict real returns."
+        },
+        {
+          "prompt": "What is the most useful description of the achievement?",
+          "options": [
+            "Proof that losses are no longer possible",
+            "A simulated result with a reviewable process and limitations",
+            "A certified real-money profit"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Report the virtual outcome, the assumptions and the record of decisions. This preserves the educational value without turning one simulation into a guarantee or a certification of trading skill."
+        }
+      ],
+      "reflection": "Write a balanced description of this practice result.",
+      "reflectionGuide": "Include the 10% virtual return and the conditions used, then describe what you learned about decisions or fees. State that real execution and personal risk are not validated by the paper account.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-06",
+      "title": "Allocation drift uses a new total",
+      "category": "Portfolio arithmetic",
+      "scenario": "Your worksheet contains $40,000 in fund A and $60,000 in fund B. Fund A rises 25% while fund B stays flat. Ignore fees and cash flows. You originally assigned fund A a 40% weight. Before deciding whether it is above that target, recalculate both the holding value and the portfolio denominator.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "A before",
+            "value": 40000
+          },
+          {
+            "label": "A after",
+            "value": 50000
+          },
+          {
+            "label": "B unchanged",
+            "value": 60000
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the new combined portfolio value?",
+          "options": [
+            "$125,000",
+            "$110,000",
+            "$100,000"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Fund A becomes $40,000 × 1.25 = $50,000. Fund B remains $60,000. Together they total $110,000; applying A’s 25% rise to the entire portfolio would overstate the change."
+        },
+        {
+          "prompt": "What is fund A’s new weight, rounded to two decimals?",
+          "options": [
+            "40%",
+            "45.45%",
+            "50%"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Divide $50,000 by $110,000 and multiply by 100. The result is approximately 45.45%. A’s $10,000 gain changes both its numerator and the portfolio’s denominator."
+        },
+        {
+          "prompt": "How far above the 40% target is that weight?",
+          "options": [
+            "About 10 percentage points",
+            "About 5.45 percentage points",
+            "About 25 percentage points"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Subtract the target weight from the current weight: 45.45% − 40% = 5.45 percentage points. Weight drift is distinct from the asset’s 25% price rise and does not by itself prove the asset is expensive."
+        }
+      ],
+      "reflection": "What information would you need before choosing whether to rebalance?",
+      "reflectionGuide": "Identify the documented target, acceptable drift, costs and purpose of the allocation. A weight calculation reveals concentration; it cannot independently determine fair value or create a universal rebalancing rule.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-16",
+      "title": "The planned exit is only a worksheet",
+      "category": "Costs and orders",
+      "scenario": "A learner holds ten units marked at $50 and writes “exit if the quote reaches $45” in a journal. TradeHQ supports manual market buys and sells, not automatic stop orders. For the arithmetic assume all ten units could be sold at exactly $45 and ignore fees. Then separate that calculation from what the written plan actually executes.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Current position",
+            "value": 500
+          },
+          {
+            "label": "Assumed exit value",
+            "value": 450
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the gross loss from $50 to the assumed $45 exit?",
+          "options": [
+            "$50",
+            "$5",
+            "$450"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Each unit loses $5 and ten units lose $50. The $450 exit value is proceeds, not loss. This calculation assumes an exact $45 exit and does not guarantee that execution price."
+        },
+        {
+          "prompt": "Does writing the journal threshold place a simulator stop order?",
+          "options": [
+            "No; it records a plan only",
+            "Yes; the journal submits an automatic sell",
+            "Yes; every saved note becomes an order"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A written threshold helps define an intention but does not create a supported order type. A manual market sale still needs to be submitted. Journaling should not imply automatic monitoring or execution."
+        },
+        {
+          "prompt": "Why might an actual manual exit differ from the worksheet?",
+          "options": [
+            "The observed quote and timing may differ",
+            "A journal guarantees the threshold price",
+            "The gross loss must always be exactly $50"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A user may see a different price when returning or submitting. The worksheet’s fixed exit is an assumption, not a fill guarantee. Fees would also affect a net result if included."
+        }
+      ],
+      "reflection": "Turn this threshold into an honest practice plan.",
+      "reflectionGuide": "Say when you intend to review the position and which evidence would prompt a manual action. State that the journal does not execute it and that the assumed exit price is not protected.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-26",
+      "title": "Unsupported does not mean real-time",
+      "category": "Price data",
+      "scenario": "A hypothetical portfolio holds an asset with a fixed simulator quote of $25. The provider has no usable mapping for that asset. Another holding has a valid provider snapshot. The fixed asset remains worth the same marked amount while the provider-priced holding changes. This is a fallback valuation, not evidence that the first asset’s real market stopped moving.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Fixed mark",
+            "value": 25
+          },
+          {
+            "label": "Provider mark",
+            "value": 38
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What does the unchanged $25 mark establish?",
+          "options": [
+            "The real asset has no price movement",
+            "Every venue traded at $25",
+            "The simulator is using a fixed input"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The fixed value is an application input for unsupported pricing. Its stability describes the fallback, not the real market. A valuation label should explain that distinction so readers know the mark’s limitation."
+        },
+        {
+          "prompt": "How should an account containing this asset be described?",
+          "options": [
+            "Fully continuous real-time pricing",
+            "Entirely provider-priced because one quote is live",
+            "A mix of provider-priced and fixed-price holdings"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Coverage is per asset. One usable provider quote does not convert another holding’s fixed fallback into current market data. A mixed account needs an honest summary and accessible detail for each position."
+        },
+        {
+          "prompt": "What would improve the fallback situation?",
+          "options": [
+            "Removing all timestamps",
+            "Calling the fixed value live",
+            "A verified asset mapping and usable provider observation"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Expanded coverage requires a correct mapping and working data source. A label change cannot supply missing observations. Retain clear fallback status until verified data is available instead of hiding the limitation."
+        }
+      ],
+      "reflection": "Draft a compact explanation for the fixed-price row.",
+      "reflectionGuide": "Say that $25 is a fixed simulator input and is not a current real-market quote. Explain that total account value includes this assumption, even though other holdings may use newer provider snapshots.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-36",
+      "title": "Rank reflects return, not a complete risk record",
+      "category": "Risk and uncertainty",
+      "scenario": "Two hypothetical public practice accounts end at $120,000 and $115,000 from $100,000 starts. The first briefly fell to $65,000; the second’s low was $95,000. Ignore costs and cash flows. A return-ranked leaderboard can place the first account above the second without explaining the very different paths used to reach those final values.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "A final",
+            "value": 120000
+          },
+          {
+            "label": "A low",
+            "value": 65000
+          },
+          {
+            "label": "B final",
+            "value": 115000
+          },
+          {
+            "label": "B low",
+            "value": 95000
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is account A’s ending return from the stated start?",
+          "options": [
+            "−35%",
+            "20%",
+            "65%"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The ending gain is $20,000 on $100,000, or 20%. The interim low describes another part of the path; it does not replace the final-value calculation."
+        },
+        {
+          "prompt": "What does this ending-return comparison leave out?",
+          "options": [
+            "Whether the arithmetic can be done",
+            "The size and timing of interim losses",
+            "All useful information"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Ending return is useful but incomplete. The account paths show very different interim losses. A full drawdown calculation needs dated peaks and troughs, not merely a position on the final scoreboard."
+        },
+        {
+          "prompt": "What is a responsible use of the leaderboard?",
+          "options": [
+            "Copy the top account’s positions",
+            "Compare simulated outcomes while reviewing limitations",
+            "Treat rank as a verified skill certification"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Practice ranks summarize selected simulated statistics. They do not certify a sustainable method, explain every risk or recommend real trades. User privacy choices and eligibility also affect which profiles appear."
+        }
+      ],
+      "reflection": "What extra journal evidence would help compare these accounts?",
+      "reflectionGuide": "Ask for dated equity observations, position concentration, fees and the trade record. Explain why a return order can be mechanically correct while remaining insufficient for judging the quality of a method.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-46",
+      "title": "A review rule beats checking from boredom",
+      "category": "Decision habits",
+      "scenario": "A learner refreshes a hypothetical position 40 times in an hour without any new evidence. Another schedules two observation sessions and records the same available facts. Neither count proves better returns. The question is whether checking serves a documented learning purpose or simply triggers repeated reactions to the same inputs.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "checks in the worksheet",
+        "bars": [
+          {
+            "label": "Repeated checks",
+            "value": 40
+          },
+          {
+            "label": "Planned sessions",
+            "value": 2
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "Does the higher refresh count demonstrate a stronger method?",
+          "options": [
+            "No; activity count alone does not show learning quality",
+            "Yes; more refreshes always improve returns",
+            "Yes; each refresh is new evidence"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Repeatedly viewing the same information can increase activity without adding evidence. A useful evaluation asks what changed and what decision the check was meant to inform, rather than treating attention volume as skill."
+        },
+        {
+          "prompt": "What should a planned observation session record?",
+          "options": [
+            "The input, its timestamp and any change to the thesis",
+            "Only how often the button was clicked",
+            "A claim that the next move is certain"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Record what was observed and whether it meets an established review condition. This separates new information from repeated exposure to the same quote and makes the learning process easier to assess."
+        },
+        {
+          "prompt": "What does a review schedule do inside TradeHQ?",
+          "options": [
+            "Organize the user’s manual practice; it does not place orders",
+            "Execute automatic stop orders",
+            "Guarantee fresh market ticks"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A personal schedule helps organize attention but does not create an automated order or change provider observation timing. The simulator’s supported manual actions and shared pricing refresh remain separate features."
+        }
+      ],
+      "reflection": "Write a two-session review plan with a concrete question for each session.",
+      "reflectionGuide": "Choose observable questions, such as quote freshness or allocation drift, and state what evidence would merit a manual action. Do not promise that checking less or more will independently improve returns.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-07",
+      "title": "Two buys, one weighted entry price",
+      "category": "Portfolio arithmetic",
+      "scenario": "A hypothetical trader buys two units at $100, then one unit at $130. Fees are excluded so that the entry-price calculation is visible. The trader writes $115 because it is halfway between the two quotes. But there were different quantities at those prices. Your task is to recover total spend and divide by total units.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "First quote",
+            "value": 100
+          },
+          {
+            "label": "Second quote",
+            "value": 130
+          },
+          {
+            "label": "Total spend",
+            "value": 330
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the combined cost of the three units?",
+          "options": [
+            "$330",
+            "$230",
+            "$345"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The first purchase costs 2 × $100 = $200; the second costs $130. Their sum is $330. Adding the two quoted prices alone would omit one unit from the first purchase."
+        },
+        {
+          "prompt": "What is the quantity-weighted entry price before fees?",
+          "options": [
+            "$110 per unit",
+            "$115 per unit",
+            "$165 per unit"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Divide the total $330 cost by three units to get $110. The cheaper quote receives twice the weight because twice as many units were bought there. A midpoint only works for equal quantities."
+        },
+        {
+          "prompt": "Does the weighted entry guarantee the next profitable exit?",
+          "options": [
+            "No; it is a cost reference",
+            "Yes; a lower entry ensures profit",
+            "Yes; three units diversify the position"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Entry cost describes past transactions, not future market movement. A later net exit also depends on sale price and fees. Increasing units of the same asset does not create exposure to a different underlying asset."
+        }
+      ],
+      "reflection": "How would you adapt this ledger if each buy had a fee?",
+      "reflectionGuide": "Record quantities and notional costs first, then track fees under a consistent cost method. Explain whether your displayed average excludes fees; compare net proceeds with total relevant expenses when reviewing performance.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-17",
+      "title": "A network fee is a different charge",
+      "category": "Costs and orders",
+      "scenario": "A crypto worksheet compares a $1,000 trade with a 0.1% platform fee and a separate hypothetical $8 blockchain transfer charge. TradeHQ paper trades do not send real crypto on a blockchain. The transfer figure belongs to a different activity, so do not add it to the simulator ledger as if a virtual purchase created a real wallet transaction.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Platform fee",
+            "value": 1
+          },
+          {
+            "label": "Hypothetical transfer",
+            "value": 8
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the stated platform fee on $1,000?",
+          "options": [
+            "$8",
+            "$10",
+            "$1"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The fee is $1,000 × 0.001 = $1. This percentage charge is tied to the trade value in the case. It is distinct from a separate transfer charge described elsewhere."
+        },
+        {
+          "prompt": "Which action is associated with the hypothetical blockchain charge?",
+          "options": [
+            "Every virtual buy on TradeHQ",
+            "Refreshing the leaderboard",
+            "A real on-chain transfer outside this simulator"
+          ],
+          "correctAnswer": 2,
+          "explanation": "On-chain transfers are different from changing a virtual holding record. The worksheet’s $8 transfer charge must not be represented as a simulator debit or a fee for viewing a portfolio."
+        },
+        {
+          "prompt": "What should a cost comparison state explicitly?",
+          "options": [
+            "That all crypto fees are identical",
+            "That a fixed $8 charge always applies",
+            "The activity, provider and cost assumptions"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Costs vary with the activity and provider. This example supplies an assumed transfer charge rather than a current network quote. A useful comparison labels its assumptions and avoids turning one number into a universal rule."
+        }
+      ],
+      "reflection": "Separate a paper trade, an exchange trade and an on-chain transfer.",
+      "reflectionGuide": "Identify which record changes in each activity and which fee schedule would need checking. Keep the hypothetical transfer amount outside the virtual account and avoid implying that TradeHQ holds real customer crypto.",
+      "sources": [
+        {
+          "label": "FINRA — Crypto assets",
+          "url": "https://www.finra.org/investors/investing/investment-products/crypto-assets"
+        }
+      ]
+    },
+    {
+      "id": "practice-27",
+      "title": "A timeout is not a new zero price",
+      "category": "Price data",
+      "scenario": "A refresh request times out while the account’s last valid hypothetical quote is $50. You hold ten units. The provider returned no replacement observation. A developer could accidentally turn an empty response into zero and erase the marked holding. Think through the last-known value, freshness warning and distinction between missing data and a genuine price.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Last valid quote",
+            "value": 50
+          },
+          {
+            "label": "Last marked holding",
+            "value": 500
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What was the last-known marked value of the ten units?",
+          "options": [
+            "$0",
+            "$500",
+            "$50"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Ten units at the last valid $50 observation were worth $500. That is a last-known mark, not confirmation of the current market value after the failed refresh."
+        },
+        {
+          "prompt": "Does a timeout supply evidence that the asset is worth zero?",
+          "options": [
+            "Yes; the account has sold the asset",
+            "No; it supplies no new valid observation",
+            "Yes; missing values are zero"
+          ],
+          "correctAnswer": 1,
+          "explanation": "A network failure is a data-availability event. It does not state a market price and does not execute a sale. Treating absence as zero would fabricate a price change and distort account valuation."
+        },
+        {
+          "prompt": "What is the most honest display during this failure?",
+          "options": [
+            "A new timestamp on the old quote without warning",
+            "Last valid mark with age and a refresh warning",
+            "A fresh zero quote"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Keep the known observation identifiable and disclose that refresh failed. Updating only the displayed timestamp would hide the data’s age. Users need to see what is known and what is unavailable."
+        }
+      ],
+      "reflection": "Explain what you know and what remains unknown after the timeout.",
+      "reflectionGuide": "You know the previous quote, its time and the quantity held. You do not know a newer provider observation from this failed request. State that limit rather than inferring a market event.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-37",
+      "title": "A scenario is not a probability estimate",
+      "category": "Risk and uncertainty",
+      "scenario": "A worksheet imagines an asset worth $100 falling to $80 or rising to $120. No probability is assigned to either branch. A learner averages the two prices and calls $100 the asset’s expected future price. A pair of possibilities can organize thinking, but it is not automatically a complete probabilistic model.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Downside branch",
+            "value": 80
+          },
+          {
+            "label": "Upside branch",
+            "value": 120
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the arithmetic midpoint of the two listed prices?",
+          "options": [
+            "$100",
+            "$200",
+            "$20"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Add $80 and $120, then divide by two, giving $100. This is an arithmetic midpoint. Its calculation does not provide evidence that the branches are equally likely."
+        },
+        {
+          "prompt": "What assumption is missing before calling that midpoint an expected price?",
+          "options": [
+            "Probabilities and an adequate set of outcomes",
+            "The chart’s color",
+            "An extra decimal place"
+          ],
+          "correctAnswer": 0,
+          "explanation": "An expected value weights outcomes by their probabilities. The worksheet supplies neither probabilities nor proof that these are the only outcomes. The midpoint should not be given a probabilistic interpretation without those assumptions."
+        },
+        {
+          "prompt": "How can the two branches still be useful?",
+          "options": [
+            "As labelled stress cases for exposure review",
+            "As a guaranteed future range",
+            "As proof the position cannot lose more"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Stress cases help examine account sensitivity to selected moves. They are not a hard boundary on possible prices and do not quantify likelihood. Keep the selected inputs and their limitations visible."
+        }
+      ],
+      "reflection": "Write what the branches tell you and what they do not.",
+      "reflectionGuide": "They illustrate sensitivity to two assumed price moves. They do not supply probabilities, exclude other outcomes or justify a forecast. Explain how you would use them to examine exposure rather than predict direction.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-47",
+      "title": "Separate observation from interpretation",
+      "category": "Decision habits",
+      "scenario": "A hypothetical asset falls from $50 to $48 while reported volume increases. A journal says “institutions are definitely selling and it will keep falling.” The price and volume are supplied observations, but the identity of sellers and future direction are not. Practice writing a note that preserves what is known without dressing a hypothesis as a fact.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Earlier quote",
+            "value": 50
+          },
+          {
+            "label": "Later quote",
+            "value": 48
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the stated price change?",
+          "options": [
+            "−2%",
+            "+4%",
+            "−4%"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The $2 fall divided by the $50 reference equals −4%. This calculation describes the price change in the supplied interval, not the identity or motive of the participants."
+        },
+        {
+          "prompt": "Which part of the journal goes beyond the supplied evidence?",
+          "options": [
+            "The $50 and $48 observations",
+            "The fact that the displayed prices differ",
+            "Who sold and the claim of continued decline"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The case does not identify traders or provide a forecast. Increased volume indicates more reported trading activity under the measure used; it does not by itself prove institutional selling or continuation."
+        },
+        {
+          "prompt": "What is a better journal structure?",
+          "options": [
+            "A single certain explanation",
+            "Only a predicted target price",
+            "Observation, possible explanations, and a question to test"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Separate the measured inputs from interpretations and state how a hypothesis could be checked. This keeps reasoning reviewable and makes room for alternative explanations rather than treating one story as settled."
+        }
+      ],
+      "reflection": "Rewrite the original journal note in three short parts.",
+      "reflectionGuide": "Keep the −4% change and reported volume increase as observations. Label any participant explanation speculative, and identify missing evidence rather than promising the next direction.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-08",
+      "title": "A small position loses half its value",
+      "category": "Portfolio arithmetic",
+      "scenario": "The account starts with $95,000 cash and $5,000 in one hypothetical asset. The asset loses 50% while cash stays flat. A dramatic percentage in the asset headline can make the account loss feel equally dramatic. Use the actual exposure before describing the result, and remember that a smaller account loss is still a real simulated loss.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Cash",
+            "value": 95000
+          },
+          {
+            "label": "Position start",
+            "value": 5000
+          },
+          {
+            "label": "Position end",
+            "value": 2500
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What dollar loss occurs in the position?",
+          "options": [
+            "$50,000",
+            "$500",
+            "$2,500"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Half of the $5,000 holding is $2,500. The remaining holding is also worth $2,500. The 50% decline applies to that position, not to the $95,000 cash balance."
+        },
+        {
+          "prompt": "What is the resulting account return?",
+          "options": [
+            "−50%",
+            "−5%",
+            "−2.5%"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The account becomes $95,000 + $2,500 = $97,500. The $2,500 loss divided by the initial $100,000 equals 2.5%. Keep asset return and account return explicitly labelled."
+        },
+        {
+          "prompt": "What lesson does this example support?",
+          "options": [
+            "Small positions cannot lose money",
+            "Holding cash predicts a market rebound",
+            "Position size affects the account impact"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Size controls how much a particular asset move contributes to this account. It does not eliminate that asset’s risk or establish the best allocation. This single assumed outcome cannot prove a generally superior strategy."
+        }
+      ],
+      "reflection": "How could you report this result without either minimizing or exaggerating it?",
+      "reflectionGuide": "Give both figures: a 50% asset decline and a 2.5% account decline, with a $2,500 loss. Include the initial exposure and avoid treating one hypothetical outcome as proof of skill.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-18",
+      "title": "Turnover adds up across many small trades",
+      "category": "Costs and orders",
+      "scenario": "You make 20 hypothetical transactions, each with $500 notional and a 0.1% transaction fee. For this worksheet their combined gross price gains are $8 and no other costs occur. Treat a transaction as one buy or one sell, so a round trip counts twice. Evaluate total turnover and fees before calling the activity profitable.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Per transaction",
+            "value": 500
+          },
+          {
+            "label": "Total gross gain",
+            "value": 8
+          },
+          {
+            "label": "Transactions",
+            "value": 20
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the total traded notional across these transactions?",
+          "options": [
+            "$5,000",
+            "$10,000",
+            "$500"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Twenty transactions times $500 each give $10,000 turnover. This sum measures activity, not necessarily the largest simultaneous holding. Buys and sells each contribute to traded notional."
+        },
+        {
+          "prompt": "What is the total fee for all 20 transactions?",
+          "options": [
+            "$20",
+            "$10",
+            "$1"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Each $500 transaction costs $0.50 at 0.1%. Multiplying by 20 gives $10. A small per-transaction charge can exceed a small gross gain when repeated enough times."
+        },
+        {
+          "prompt": "What is the net result after these fees?",
+          "options": [
+            "A $10 gain",
+            "A $2 loss",
+            "An $8 gain"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The $8 gross gain minus $10 fees is −$2. Activity count and gross wins do not establish net profitability. The result follows the specified costs only; excluded real execution costs would need separate treatment."
+        }
+      ],
+      "reflection": "What would a “most active” badge fail to tell you here?",
+      "reflectionGuide": "Explain that activity is a count, while net performance includes gains and expenses. Show the $8 minus $10 result and avoid treating a frequent-trading statistic as a skill rating.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-28",
+      "title": "Offline valuation is not an offline trade",
+      "category": "Price data",
+      "scenario": "A user closes the browser holding two hypothetical units. A server refresh later changes the shared quote from $100 to $110. No order was submitted. Assume the server uses the newer quote to mark eligible cloud holdings. The account can show a different valuation when the user returns, while its units and trade history stay unchanged.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Earlier position",
+            "value": 200
+          },
+          {
+            "label": "Later position",
+            "value": 220
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the later marked value of two units at $110?",
+          "options": [
+            "$220",
+            "$200",
+            "$110"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Two units times $110 equal $220. The $20 change arises from a different valuation input, not from acquiring another unit. Quantity and quote should be tracked as separate fields."
+        },
+        {
+          "prompt": "Does that mark change prove an order executed while the user was offline?",
+          "options": [
+            "No; no order was submitted",
+            "Yes; every refresh buys an asset",
+            "Yes; valuation and trading are identical"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A price refresh can revalue an existing holding without changing ownership quantity. An order is a separate event with its own transaction record. Server-side valuation must not be described as automatic trading."
+        },
+        {
+          "prompt": "What would you check when returning to the portfolio?",
+          "options": [
+            "Units, source, observation time and recorded trades",
+            "Only whether the number increased",
+            "Only the leaderboard position"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The holding quantity and trade record verify activity; the quote source and timestamp explain valuation. An increase alone cannot tell you whether it came from a new trade, a price change or an input error."
+        }
+      ],
+      "reflection": "Describe the feature without promising constant tick-by-tick updates.",
+      "reflectionGuide": "Explain that eligible cloud holdings use shared periodically refreshed quotes, even when the browser is closed. State the observation time and preserve fallback or stale labels; avoid implying automated order execution.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-38",
+      "title": "A pair trade can still lose together",
+      "category": "Risk and uncertainty",
+      "scenario": "A conceptual worksheet buys $1,000 of asset A and shorts $1,000 of asset B outside TradeHQ’s supported spot orders. A falls 10% while B rises 10%. Ignore borrowing costs and fees. The equal notionals do not guarantee the positions offset: the relative move in this case hurts both legs.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "A long notional",
+            "value": 1000
+          },
+          {
+            "label": "B short notional",
+            "value": 1000
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the assumed long-leg result when A falls 10%?",
+          "options": [
+            "+$100",
+            "$0",
+            "−$100"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The $1,000 long loses 10%, or $100. A conceptual long gains when its marked asset rises and loses when it falls under these simple fixed-notional assumptions."
+        },
+        {
+          "prompt": "What is the assumed short-leg result when B rises 10%?",
+          "options": [
+            "+$100",
+            "$0",
+            "−$100"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The simplified short loses $100 when the borrowed asset rises 10%. Combining that with the long loss gives −$200 before excluded costs. Equal initial notional is not equal-and-opposite realized profit."
+        },
+        {
+          "prompt": "How should “market-neutral” be interpreted in education?",
+          "options": [
+            "A guarantee of profit in every market",
+            "A supported short order on TradeHQ",
+            "An exposure aim with residual risks, not guaranteed profits"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Strategies may aim to reduce broad-market exposure, yet relative-price moves, hedge mismatch, costs and liquidity can create losses. TradeHQ does not execute the short leg; this remains a conceptual worksheet."
+        }
+      ],
+      "reflection": "Why is “profits regardless of direction” misleading for this pair?",
+      "reflectionGuide": "Use the two $100 losses to show that the relative relationship can move adversely. Label the borrowed short conceptual and note excluded costs; reducing one type of exposure does not remove every risk.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-48",
+      "title": "Precommit a fair comparison window",
+      "category": "Decision habits",
+      "scenario": "A hypothetical learner tests two practice methods over ten recorded sessions. Method A leads after session four; method B leads after session ten. The learner chooses whichever ending date makes their favorite method look best. Changing the window after seeing results can produce a flattering summary without a fair comparison.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "session number",
+        "bars": [
+          {
+            "label": "Early window end",
+            "value": 4
+          },
+          {
+            "label": "Planned window end",
+            "value": 10
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the main problem with choosing the end date afterward?",
+          "options": [
+            "It guarantees a reliable comparison",
+            "It selects a favorable result after seeing outcomes",
+            "It creates more independent observations"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Post-hoc window selection can cherry-pick a period that favors the preferred method. State the intended comparison window beforehand and disclose any later changes rather than hiding inconvenient intervals."
+        },
+        {
+          "prompt": "What should be held consistent in the comparison?",
+          "options": [
+            "Only the best individual session",
+            "Window, starting conditions and included costs",
+            "Only the method names"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Comparable starting balances, timing and costs reduce avoidable differences between methods. The record should include the full chosen window, not just each method’s best moment."
+        },
+        {
+          "prompt": "Does a fair ten-session window settle future superiority?",
+          "options": [
+            "Yes; the higher final balance is a certification",
+            "No; it still has limited sample and conditions",
+            "Yes; ten sessions prove every future result"
+          ],
+          "correctAnswer": 1,
+          "explanation": "A fair comparison improves evidence quality but does not eliminate uncertainty or regime dependence. Report the sample, path and limitations rather than declaring a permanent winner from a short simulated test."
+        }
+      ],
+      "reflection": "Create a short comparison protocol before viewing results.",
+      "reflectionGuide": "Specify the same observation window, starting account assumptions, fee treatment and decision rules for both methods. Commit to retaining all sessions and explaining changes to the protocol.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-09",
+      "title": "Comparing returns after adding money",
+      "category": "Portfolio arithmetic",
+      "scenario": "Account A starts at $1,000 and ends at $1,200 with no cash flows. Account B starts at $1,000, receives a $500 deposit just before the end, and finishes at $1,600. These are worksheet accounts outside TradeHQ’s fixed starting-balance simulator. Final balance alone cannot tell you which account’s investments performed better.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "A final",
+            "value": 1200
+          },
+          {
+            "label": "B final",
+            "value": 1600
+          },
+          {
+            "label": "B deposit",
+            "value": 500
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is account A’s return with no cash flows?",
+          "options": [
+            "10%",
+            "20%",
+            "200%"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Account A gained $200 on a $1,000 starting balance: $200 ÷ $1,000 = 20%. With no deposits or withdrawals, the ordinary starting-to-ending balance calculation is sufficient for this example."
+        },
+        {
+          "prompt": "How much of B’s $600 balance increase is the stated deposit?",
+          "options": [
+            "$100",
+            "$500",
+            "$600"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Account B’s increase combines a $500 contribution and a $100 investment gain. The larger final account is not automatically the better-performing investment. Separate outside cash flows before comparing results."
+        },
+        {
+          "prompt": "Why did the scenario specify that the deposit arrived just before the end?",
+          "options": [
+            "Timing removes the need to record deposits",
+            "Cash-flow timing can affect return measurement",
+            "Deposits create trading profits"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Money invested for different lengths of time complicates performance measurement. This simplified end-of-period deposit makes the original capital’s $100 gain clear; more complex flows need a consistent time- or money-weighted method."
+        }
+      ],
+      "reflection": "What extra ledger fields would make a real cash-flow comparison defensible?",
+      "reflectionGuide": "Record the date and amount of every deposit or withdrawal as well as valuations. Explain the chosen return method. TradeHQ’s fixed practice balance should not be described as supporting these worksheet deposits.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-19",
+      "title": "A short thesis does not create a short position",
+      "category": "Costs and orders",
+      "scenario": "A hypothetical asset is quoted at $100 and your research expects it could fall. You hold zero units. TradeHQ’s supported sell operation disposes of owned spot units; it does not borrow assets or open short positions. Use this case to distinguish a directional idea, a manual sale of a holding and a different product’s leveraged or borrowed exposure.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "units",
+        "bars": [
+          {
+            "label": "Owned units",
+            "value": 0
+          },
+          {
+            "label": "Proposed sell units",
+            "value": 2
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "Can selling two unowned units open a short on TradeHQ?",
+          "options": [
+            "No; the simulator does not implement short selling",
+            "Yes; every sell button borrows units",
+            "Yes; a bearish note supplies collateral"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A bearish idea does not alter the product’s supported mechanics. Selling an owned spot holding and borrowing an asset to sell short are different operations; TradeHQ only implements the former."
+        },
+        {
+          "prompt": "What supported action could reduce existing spot exposure?",
+          "options": [
+            "Manually sell some units already owned",
+            "Create a negative holding by journaling",
+            "Request borrowed assets from the leaderboard"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Selling owned units reduces the quantity held and returns net proceeds to virtual cash. It does not create a profit from a future fall after the position is closed, nor does it establish a borrowed liability."
+        },
+        {
+          "prompt": "How should an educational short-sale example be labelled?",
+          "options": [
+            "A conceptual worksheet outside supported simulator orders",
+            "A live TradeHQ execution guide",
+            "A guaranteed way to profit from a decline"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A lesson can explain short mechanics while clearly separating them from the available simulator. Borrowing costs, losses and execution constraints would also matter in a real short; a direction prediction alone is incomplete."
+        }
+      ],
+      "reflection": "Rewrite a bearish practice plan using only supported actions.",
+      "reflectionGuide": "Describe observation, a hypothetical worksheet or reducing an owned position with a manual sale. Do not promise a negative position, leverage or automated order execution that the simulator does not support.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-29",
+      "title": "Comparing prices from different minutes",
+      "category": "Price data",
+      "scenario": "A provider observes $100 at 12:00 and another observes $103 at 12:04. A learner sees both at 12:05 and calls the first provider inaccurate. No same-minute pair is supplied. The gap could involve time, method or venue. Keep those possibilities separate from a demonstrated error before choosing which mark to trust.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "12:00 observation",
+            "value": 100
+          },
+          {
+            "label": "12:04 observation",
+            "value": 103
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "How far apart are the two observation times?",
+          "options": [
+            "One minute",
+            "Five minutes",
+            "Four minutes"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The relevant gap is between 12:00 and 12:04, which is four minutes. Both numbers being visible at 12:05 does not make their underlying market observations simultaneous."
+        },
+        {
+          "prompt": "What does the $3 difference prove on its own?",
+          "options": [
+            "That the earlier provider is fraudulent",
+            "That the asset will keep rising",
+            "Only that the supplied observations differ"
+          ],
+          "correctAnswer": 2,
+          "explanation": "A mismatch is a starting point for checking, not a conclusion about accuracy or future direction. Without matched times and methods, the difference can have several explanations supported by the case."
+        },
+        {
+          "prompt": "What would make the next comparison more informative?",
+          "options": [
+            "Comparing whichever two numbers are convenient",
+            "Discarding every lower price",
+            "Same asset, currency and time window with source details"
+          ],
+          "correctAnswer": 2,
+          "explanation": "A controlled comparison reduces avoidable mismatches before investigating remaining differences. Matching definitions and documenting timestamps make a discrepancy easier to explain than choosing a quote based on its direction."
+        }
+      ],
+      "reflection": "Write a cautious discrepancy report with these inputs.",
+      "reflectionGuide": "Include both values and observation times, say that they are not simultaneous, and request comparable data before judging accuracy. Do not turn a four-minute price difference into a directional forecast.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-39",
+      "title": "The same headline can fit several explanations",
+      "category": "Risk and uncertainty",
+      "scenario": "A hypothetical company reports revenue growth of 15%, but its stock falls 4% after the report. The worksheet provides no prior expectations, margins or guidance. One learner says growing revenue proves the price should rise. Another says the fall proves the company is failing. Both explanations reach beyond the supplied evidence.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "percent",
+        "bars": [
+          {
+            "label": "Revenue growth",
+            "value": 15
+          },
+          {
+            "label": "Price decline magnitude",
+            "value": 4
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What does the stated revenue growth measure?",
+          "options": [
+            "The company’s profit margin",
+            "A business metric over its reporting comparison",
+            "A guaranteed stock return"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Revenue growth and share-price return are different measurements. Higher sales do not directly specify expenses, profitability, expectations or valuation. The report needs its own definitions and comparison period."
+        },
+        {
+          "prompt": "Which additional evidence would help explain the price reaction?",
+          "options": [
+            "A rule that revenue and prices must match",
+            "Prior expectations, margins, guidance and market conditions",
+            "Only the direction of one candle"
+          ],
+          "correctAnswer": 1,
+          "explanation": "A market response can reflect how new information differs from expectations as well as broader conditions. The missing fields prevent a confident single-cause explanation from this short case."
+        },
+        {
+          "prompt": "What is the best-supported conclusion from the supplied facts?",
+          "options": [
+            "The business is certainly failing",
+            "Revenue grew while the stock fell; the cause is unresolved",
+            "The stock must rebound next session"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Report the two observations separately and acknowledge the missing evidence. Neither a price decline nor a revenue increase supplies a complete business assessment or establishes the next market move."
+        }
+      ],
+      "reflection": "Write one observation, one hypothesis and one question to investigate.",
+      "reflectionGuide": "Keep the observed numbers distinct from proposed causes. For example, ask how the report compared with expectations, then seek the actual source instead of presenting the hypothesis as an established explanation.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-49",
+      "title": "A reflection can be useful without a forecast score",
+      "category": "Decision habits",
+      "scenario": "Two learners disagree about a hypothetical market’s next direction. Both can identify the scenario’s assumptions, missing evidence and position exposure. TradeHQ’s quick directional challenge is a reflection exercise, while the deeper questions assess explicit concepts and arithmetic. A system should not manufacture a single correct forecast from an uncertain case.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "learning checks",
+        "bars": [
+          {
+            "label": "Reasoning tasks",
+            "value": 3
+          },
+          {
+            "label": "Guaranteed forecasts",
+            "value": 0
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What can be scored objectively when inputs are explicit?",
+          "options": [
+            "A calculation or concept with a justified answer",
+            "The next uncertain market direction",
+            "Which choice feels most confident"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A question with stated numbers or clear product mechanics can have a checkable answer. Directional outcomes without enough evidence should not be labelled objectively correct merely to provide a score."
+        },
+        {
+          "prompt": "What makes a directional reflection useful?",
+          "options": [
+            "Evidence, alternatives and an explicit uncertainty statement",
+            "Pretending there is no uncertainty",
+            "Choosing the most popular answer"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A reflection can assess how a learner frames the problem, considers alternatives and controls exposure. It should not claim to predict future prices or equate confidence with correctness."
+        },
+        {
+          "prompt": "What does completing either Daily activity do to the daily streak?",
+          "options": [
+            "At most one completion is counted for that local day",
+            "Every answer adds a new streak day",
+            "A wrong forecast erases the entire history"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The streak records a daily practice habit, not a verified forecasting record. Completing both activities on the same date should not create multiple elapsed days or inflate the streak count."
+        }
+      ],
+      "reflection": "Name one thing you can check and one thing this case leaves uncertain.",
+      "reflectionGuide": "Use arithmetic or product mechanics as the checkable item, and future direction as unresolved. Explain that the daily completion tracks participation, while learning quality requires reviewing the reasoning.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-10",
+      "title": "A position value is not a share price",
+      "category": "Portfolio arithmetic",
+      "scenario": "A worksheet has 40 shares of company A at $25 and five shares of company B at $200. Both positions therefore have equal market value. A learner says B takes up eight times more of the account because its per-share price is eight times higher. Compare quantities and prices before drawing a concentration conclusion.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "A position",
+            "value": 1000
+          },
+          {
+            "label": "B position",
+            "value": 1000
+          },
+          {
+            "label": "A quote",
+            "value": 25
+          },
+          {
+            "label": "B quote",
+            "value": 200
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the market value of the 40-share A position?",
+          "options": [
+            "$1,000",
+            "$25",
+            "$40"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Multiply 40 shares by $25 per share. The resulting $1,000 is the position value. Neither the quoted price nor the share count alone tells you how many dollars are exposed."
+        },
+        {
+          "prompt": "How do the two dollar exposures compare in this case?",
+          "options": [
+            "They are equal",
+            "B is eight times larger",
+            "A is eight times larger"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Five shares at $200 also equal $1,000. Equal dollar exposure does not imply equal volatility or equal risk, but the higher nominal share price does not create a larger allocation here."
+        },
+        {
+          "prompt": "What would be needed to compare the businesses’ valuations?",
+          "options": [
+            "Business measures and shares outstanding, among other evidence",
+            "Only their nominal share prices",
+            "Only your share quantities"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A share price is the price of one ownership unit. Different share counts and business fundamentals make nominal prices unsuitable for declaring one company cheaper. Position arithmetic and business valuation are separate tasks."
+        }
+      ],
+      "reflection": "Write a sentence separating equal exposure from equal risk.",
+      "reflectionGuide": "Show that both holdings are $1,000, then name risks that could differ, such as business conditions or price variability. Do not infer either company’s quality from the dollar price of one share.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-20",
+      "title": "Small decimal quantities still need units",
+      "category": "Costs and orders",
+      "scenario": "A hypothetical crypto quote is $40,000 per coin. A learner buys 0.025 coin before fees. The long decimal can make the purchase seem either tiny or expensive depending on which number is noticed. Translate the quantity into notional dollars and apply the 0.1% fee before comparing it with an account balance.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Notional",
+            "value": 1000
+          },
+          {
+            "label": "Fee",
+            "value": 1
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the notional value of 0.025 coin at $40,000?",
+          "options": [
+            "$100",
+            "$40,000",
+            "$1,000"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Multiply 0.025 coin by $40,000 per coin. The coin units cancel, leaving $1,000. A decimal quantity should always be read with its unit and the price per unit."
+        },
+        {
+          "prompt": "What debit follows when the 0.1% fee is included?",
+          "options": [
+            "$1,000.10",
+            "$1,025",
+            "$1,001"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The $1,000 trade has a $1 fee. The full debit is $1,001. Using the quantity 0.025 as a dollar fee would mix incompatible units and produce the wrong cash result."
+        },
+        {
+          "prompt": "Does a high price per whole coin prevent a small dollar exposure?",
+          "options": [
+            "Yes; every purchase must cost a whole coin",
+            "No; fractional quantities eliminate losses",
+            "No; fractional quantity changes the exposure"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Fractional quantities can represent smaller dollar amounts when the instrument supports them. They do not eliminate price risk. Verify supported precision and costs rather than inferring affordability from the whole-coin price."
+        }
+      ],
+      "reflection": "Write the calculation so a beginner can follow the units.",
+      "reflectionGuide": "Use “0.025 coin × $40,000 per coin = $1,000,” then add the $1 stated fee. Keep quantity, price, notional and fee as separately labelled fields.",
+      "sources": [
+        {
+          "label": "FINRA — Crypto assets",
+          "url": "https://www.finra.org/investors/investing/investment-products/crypto-assets"
+        }
+      ]
+    },
+    {
+      "id": "practice-30",
+      "title": "Price-change percentages need a window",
+      "category": "Price data",
+      "scenario": "A coin is quoted at $110. One page says +10% from a $100 reference; another says −8.33% from a $120 reference. Both reference values are hypothetical and represent different periods. An identical current price can have opposite signed changes when the start points differ. Identify the window before treating either percentage as contradictory.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Reference A",
+            "value": 100
+          },
+          {
+            "label": "Reference B",
+            "value": 120
+          },
+          {
+            "label": "Current",
+            "value": 110
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is the change from $100 to $110?",
+          "options": [
+            "−10%",
+            "+10%",
+            "+110%"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The gain is $10 and the starting base is $100. Dividing $10 by $100 gives 10%. The current price alone is not sufficient to calculate a percentage change without a reference."
+        },
+        {
+          "prompt": "What is the change from $120 to $110, approximately?",
+          "options": [
+            "+8.33%",
+            "−8.33%",
+            "−10%"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The $10 loss is divided by the $120 starting reference, giving approximately −8.33%. Using $100 or the final $110 as the denominator would answer a different calculation."
+        },
+        {
+          "prompt": "What should the interface attach to a percentage-change label?",
+          "options": [
+            "Only an arrow color",
+            "Its reference period or start time",
+            "A promise that the trend continues"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The time window explains what the percentage measures. Different valid windows can produce different signs. A color or arrow may summarize a result, but it cannot replace the reference definition."
+        }
+      ],
+      "reflection": "Explain how both percentages could be correct.",
+      "reflectionGuide": "Show each starting value and divide the $10 change by that value. Mention that the windows differ and that neither past-window change is a guarantee of the next price move.",
+      "sources": [
+        {
+          "label": "CoinGecko — Price methodology",
+          "url": "https://www.coingecko.com/en/methodology"
+        }
+      ]
+    },
+    {
+      "id": "practice-40",
+      "title": "A single stress test is not the worst case",
+      "category": "Risk and uncertainty",
+      "scenario": "A worksheet tests a $10,000 position against a 10% decline and obtains a $1,000 loss. The learner calls that the maximum possible loss. No contractual protection or price floor is stated. Stress testing one selected move shows sensitivity to that input, but the choice of scenario does not restrict what the asset can do.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$",
+        "bars": [
+          {
+            "label": "Position value",
+            "value": 10000
+          },
+          {
+            "label": "Test loss",
+            "value": 1000
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What loss follows from the selected 10% decline?",
+          "options": [
+            "$1,000",
+            "$10,000",
+            "$100"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Multiply $10,000 by 0.10 to get $1,000. This is the loss in the supplied stress case. It should be labelled with the assumed move rather than described as a universal risk bound."
+        },
+        {
+          "prompt": "Does choosing a 10% stress move cap the asset’s decline at 10%?",
+          "options": [
+            "No; the worksheet imposes no protection",
+            "Yes; selected scenarios limit markets",
+            "Yes; a journal creates a price floor"
+          ],
+          "correctAnswer": 0,
+          "explanation": "A chosen scenario is an analytical input, not an order or contractual guarantee. Larger declines remain possible, and missing data or execution constraints can complicate an actual exit."
+        },
+        {
+          "prompt": "What would make a sensitivity review more informative?",
+          "options": [
+            "Several labelled moves and the account impact of each",
+            "Only the most comfortable scenario",
+            "Deleting adverse outcomes from the record"
+          ],
+          "correctAnswer": 0,
+          "explanation": "Testing multiple selected conditions reveals how exposure responds across a wider range. Even a larger set is not exhaustive. Keep assumptions clear and avoid calling a scenario list a complete forecast distribution."
+        }
+      ],
+      "reflection": "Design a second stress case without presenting it as a prediction.",
+      "reflectionGuide": "Choose another explicitly hypothetical decline, multiply it by the position value and compare the account impact. State that neither test supplies a probability or a guaranteed maximum loss.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    },
+    {
+      "id": "practice-50",
+      "title": "Review an error without rewriting the score",
+      "category": "Decision habits",
+      "scenario": "You answer a hypothetical fee question incorrectly, then read the worked explanation and recognize that 0.1% equals 0.001 rather than 0.01. A tempting response is to erase the attempt so the record looks perfect. Keeping the original answer and writing the corrected reasoning gives the mistake an educational purpose.",
+      "visual": {
+        "caption": "Hypothetical case inputs — not a live market chart",
+        "unit": "$ fee on $1,000",
+        "bars": [
+          {
+            "label": "Correct fee",
+            "value": 1
+          },
+          {
+            "label": "Mistaken fee",
+            "value": 10
+          }
+        ]
+      },
+      "questions": [
+        {
+          "prompt": "What is 0.1% expressed as a decimal multiplier?",
+          "options": [
+            "0.01",
+            "0.1",
+            "0.001"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Divide the percentage number by 100: 0.1 ÷ 100 = 0.001. Multiplying $1,000 by that decimal gives a $1 fee. The mistaken 0.01 multiplier would represent 1%."
+        },
+        {
+          "prompt": "How much larger is the mistaken $10 estimate than the correct $1 fee?",
+          "options": [
+            "Two times as large",
+            "The same amount",
+            "Ten times as large"
+          ],
+          "correctAnswer": 2,
+          "explanation": "Divide $10 by $1 to obtain a factor of ten. Identifying the source of a decimal conversion error is more useful than memorizing a corrected option without understanding how the units changed."
+        },
+        {
+          "prompt": "What is the most useful response after reviewing the error?",
+          "options": [
+            "Rewrite the original answer as correct",
+            "Ignore the explanation because the score is imperfect",
+            "Keep the attempt and explain the corrected conversion"
+          ],
+          "correctAnswer": 2,
+          "explanation": "A saved attempt preserves evidence of the learning gap. A short corrected explanation helps test understanding next time. Practice progress is not a certification and should not require a perfect record to be worthwhile."
+        }
+      ],
+      "reflection": "Write a reusable percent-to-decimal check for future fee calculations.",
+      "reflectionGuide": "Divide the stated percent by 100, multiply by notional dollars, and check the order of magnitude. Keep the original attempt visible and note how the tenfold error occurred.",
+      "sources": [
+        {
+          "label": "Investor.gov — Investing basics",
+          "url": "https://www.investor.gov/introduction-investing"
+        }
+      ]
+    }
+  ]
+};

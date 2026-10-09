@@ -21,7 +21,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Is TradeHQ free? Yes, entirely. There is no paid tier, no trial and no card required.",
         "Do I need an account? No. Practice trading, courses and the glossary work without signing up. An optional account supports profiles and community features. Account cash, positions and server-recorded trades restore across devices when available; earlier guest trade history, journals and course progress remain on the original browser.",
         "Is the money real? No. Every balance, order and result is simulated, and the platform holds no funds.",
-        "Are the prices real? They are based on public market data and refreshed periodically, with a simulation layer between refreshes. They are not a live trading feed.",
+        "Are the prices real? Supported assets use periodically refreshed provider observations. Unsupported assets can use fixed simulator prices; charts may be synthetic. Check each source and timestamp rather than assuming a continuous exchange feed.",
         "Does TradeHQ give advice? No. There are no signals, price targets or recommendations anywhere on the site.",
         "Where is my data? Guest practice records stay in your browser. Signed-in cash, positions and server-recorded trades are stored in Supabase and restored when the service is available. Earlier guest trade history, journal entries, course progress and streaks remain browser-held; a synced badge count does not restore the course record.",
       ],
@@ -113,7 +113,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
         "Liquidity: how easily you can get in and out without moving the price. Low liquidity magnifies every other mistake.",
         "Volatility: how much an instrument typically moves. It defines what a sensible stop distance and position size look like.",
         "Leverage: borrowing to control a larger position. It multiplies both outcomes and is the most common reason beginners lose accounts quickly.",
-        "Expectancy: average win times win rate, minus average loss times loss rate. It is the only honest measure of whether a method has an edge.",
+        "Expectancy: average win times win rate, minus average loss times loss rate. This sample calculation also needs costs, uncertainty and a consistent outcome record; it does not by itself establish a lasting edge.",
       ],
     },
     {
@@ -169,8 +169,8 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
     {
       h: "How it works and what it costs",
       p: [
-        "The mentor requests AI responses through the site's backend when available. If the request fails or returns no answer, a local rule-based library supplies a labeled educational response. That fallback uses predefined topic matching and calculations, not a language model. Availability and request limits can affect the AI service.",
-        "Conversations are used to produce your answer. Advertising and analytics data flows are described separately in the privacy policy; AI answers can be wrong, so check substantive claims against the linked lessons or an authoritative source before relying on them.",
+        "The mentor uses a built-in library of authored educational answers, topic matching and calculations. Chat does not call an AI provider or use AI credits. Its coverage is limited to the available topics; an unfamiliar question may receive a general explanation rather than a tailored answer.",
+        "Mentor topic matching happens in your browser and does not send the conversation to an AI provider. Advertising and analytics are separate services described in the privacy policy. Educational answers can still contain mistakes or omit context; check substantive claims against a primary source before relying on them.",
       ],
     },
     {
@@ -183,26 +183,34 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
 
   "/daily": [
     {
+      h: "A longer daily practice session",
+      p: [
+        "The deeper exercise develops one case across three checkable questions, so the learner can calculate an input, interpret the result and identify a limitation. Topics rotate between portfolio arithmetic, transaction costs and supported orders, price-data freshness, risk and uncertainty, and decision habits. The visuals show selected hypothetical inputs with numeric labels; they are not live market charts. Worked explanations appear after each submitted answer, including when the answer was wrong.",
+        "An optional reflection asks you to explain the case in your own words. Its review guide helps you check the reasoning without sending your note to an AI grader. Answers and reflections are saved on this browser, and the started exercise keeps its own snapshot if a new bank is approved while you are working. Clearing site data removes this local history; an account does not synchronize these notes to another device.",
+        "A new 50-exercise bank is prepared every two calendar months in five parts using the configured free-tier Gemini API. Each completed bank remains private and editable in the owner’s admin panel until final review and approval. If generation hits a quota limit, fails validation or awaits review, the approved bank continues rotating. Fifty exercises can therefore repeat before the next bank begins; revisits are review practice rather than a claim of brand-new daily content. The feature does not use a paid provider fallback.",
+      ],
+    },
+    {
       h: "What the challenges cover",
       list: [
         "A hypothetical market scenario with stated exercise inputs, rather than current market news.",
         "Comparing long, short and hold reasoning without grading one market direction as objectively correct.",
-        "Reviewing the scenario's educational insight and the trade-offs in each response.",
-        "A short bonus knowledge question about market concepts.",
+        "A bank of 50 deeper exercises, each with a substantial hypothetical case, a labelled visual and three linked questions with worked explanations.",
+        "The existing short bonus quiz plus an optional longer reflection and a review guide.",
       ],
     },
     {
       h: "How the streak is counted",
       p: [
         "A streak advances once per calendar day in your own local time zone, so completing a challenge late one evening and early the next morning still counts as two consecutive days. The counter lives in your browser, which means clearing site data resets it and using a different device starts a separate count even when you have an account; sign-in does not back up local streaks.",
-        "There is no penalty for missing a day beyond the counter resetting, and there is no reward for a long streak other than the habit itself. Nothing about the challenge involves money, prizes or entry fees.",
+        "There is no penalty for missing a day beyond the counter resetting, and longer streaks unlock browser-local completion badges, not prizes or qualifications. Nothing about the challenge involves money, prizes or entry fees.",
       ],
     },
     {
       h: "If you miss a day",
       p: [
-        "Nothing bad happens beyond the counter going back to one. The purpose of the streak is to make practice frequent, not to punish a missed evening, and restarting after a gap is the normal experience rather than a failure. Traders who quit after breaking a streak lose far more than the streak itself.",
-        "If daily is unrealistic for your schedule, a fixed three-days-a-week rhythm produces most of the benefit. Consistency of review matters more than the raw number of sessions.",
+        "Nothing bad happens beyond the counter going back to one. The purpose of the streak is to make practice frequent, not to punish a missed evening, and restarting after a gap is the normal experience rather than a failure. The counter is not a judgment about you or a measurement of future returns.",
+        "If daily practice does not fit your schedule, choose a workable review rhythm. A record of what you learned is more informative than a raw session count.",
       ],
     },
   ],
@@ -338,7 +346,7 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       list: [
         "My portfolio disappeared — check which account, browser and device you are using. Guest records are browser-held. Account cash, positions and server-recorded trades can be restored when the service is available. Earlier guest history, journals and course progress stay on the original browser. If sync fails, contact the maintainer before resetting the practice account.",
         "How do I reset my practice balance? There is a reset control in the portfolio area; it returns the account to $100,000 in virtual cash and clears open positions.",
-        "A price looks wrong — quotes refresh periodically and are simulated between refreshes, so they will not match a live broker feed exactly.",
+        "A price looks wrong — quotes refresh periodically, can be stale or use a labelled fixed fallback, and need not match a broker’s executable price.",
         "Can I use TradeHQ on my phone? Yes, the whole site works on mobile browsers; there is no app to install.",
         "Do you have an affiliate or partnership programme? No.",
       ],
@@ -369,14 +377,14 @@ export const EXTRA_SECTIONS: Record<string, PageSection[]> = {
       list: [
         "Contact messages: kept only as long as needed to answer you.",
         "Reviews: published with your chosen display name, and removable on request.",
-        "Accounts: email address plus the practice data you choose to sync; deletable on request.",
+        "Accounts: email address and server-recorded practice trades and holdings; deletable on request. Guest practice, journal notes, course progress and Daily reflections remain browser-specific unless a feature explicitly states otherwise.",
         "Public trader profiles and duels: profile fields and selected simulated statistics can be public. New accounts start public, and you can make your profile private at any time.",
       ],
     },
     {
       h: "Children and jurisdiction",
       p: [
-        "The core simulator works without an account, and optional signup does not collect age. AdSense is currently disabled; advertising consent is not an age check. Parents or guardians can raise privacy concerns through the contact page. TradeHQ holds no funds and executes no real trades. This policy does not determine the legal classification of the service or certify compliance in every jurisdiction.",
+        "The core simulator works without an account, and optional signup does not collect age. Advertising availability depends on provider approval, settings and applicable consent choices; advertising consent is not an age check. Parents or guardians can raise privacy concerns through the contact page. TradeHQ holds no funds and executes no real trades. This policy does not determine the legal classification of the service or certify compliance in every jurisdiction.",
       ],
     },
     {

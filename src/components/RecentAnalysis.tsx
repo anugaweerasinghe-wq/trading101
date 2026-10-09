@@ -22,6 +22,7 @@ export function RecentAnalysis({ focusAsset }: { focusAsset: string }) {
         .from('market_articles')
         .select('id, title, slug, sentiment, created_at, updated_at, content')
         .eq('focus_asset', focusAsset.toLowerCase())
+        .eq('is_published', true)
         .order('created_at', { ascending: false })
         .limit(3);
       if (data) setArticles(data);

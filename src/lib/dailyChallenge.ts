@@ -530,7 +530,7 @@ const BONUS_BANK: BonusQuestion[] = [
     id: 2, prompt: "If RSI reads 80, the asset is generally considered…",
     options: [
       { label: "Oversold — likely bounce", correct: false, explain: "Oversold is RSI <30, not 80." },
-      { label: "Overbought — pullback risk rises", correct: true, explain: "RSI >70 signals overbought; >80 is extreme." },
+      { label: "Conventionally called overbought; not a forecast", correct: true, explain: "RSI >70 signals overbought; >80 is extreme." },
       { label: "Neutral — keep buying", correct: false, explain: "Neutral RSI is around 50." },
     ],
   },
@@ -545,23 +545,23 @@ const BONUS_BANK: BonusQuestion[] = [
   {
     id: 4, prompt: "Why do traders watch the VIX?",
     options: [
-      { label: "It measures expected S&P 500 volatility (the 'fear gauge')", correct: true, explain: "Rising VIX = market expects bigger moves. Often spikes at lows." },
+      { label: "It measures expected S&P 500 volatility (the 'fear gauge')", correct: true, explain: "VIX reflects option-implied S&P 500 volatility over roughly 30 days. It does not predict the direction of the next market move." },
       { label: "It tracks Bitcoin dominance", correct: false, explain: "That's BTC.D, not VIX." },
       { label: "It signals interest-rate decisions", correct: false, explain: "Rate signals come from Fed funds futures." },
     ],
   },
   {
-    id: 5, prompt: "A 'breakout' on heavy volume usually suggests…",
+    id: 5, prompt: "What does higher reported volume during a breakout establish?",
     options: [
-      { label: "Real conviction — higher follow-through odds", correct: true, explain: "Volume validates price — low-volume breakouts often fake out." },
-      { label: "A trap — short immediately", correct: false, explain: "High-volume breakouts are statistically more reliable, not less." },
-      { label: "The trend is ending", correct: false, explain: "Reversals usually need a divergence, not a breakout." },
+      { label: "More reported trading activity during the move", correct: true, explain: "Volume measures activity under the data source’s definition. It does not prove conviction or guarantee that the move continues." },
+      { label: "A trap — short immediately", correct: false, explain: "Volume alone does not establish a reliable forecast or justify an immediate directional order." },
+      { label: "The trend is ending", correct: false, explain: "The amount of reported volume does not by itself establish that a trend is ending." },
     ],
   },
   {
     id: 6, prompt: "What does 'diversification' protect you from?",
     options: [
-      { label: "Single-asset blow-up risk", correct: true, explain: "Spreads exposure so one bad position can't sink your account." },
+      { label: "Single-asset blow-up risk", correct: true, explain: "Spreading exposure can reduce concentration in one asset, but correlated holdings can still lose together and no allocation prevents every loss." },
       { label: "All market crashes", correct: false, explain: "In a broad crash, most assets fall together — diversification helps but isn't bulletproof." },
       { label: "Inflation", correct: false, explain: "Inflation needs hedges (commodities, TIPS), not just diversification." },
     ],
@@ -577,7 +577,7 @@ const BONUS_BANK: BonusQuestion[] = [
   {
     id: 8, prompt: "Why is 'risk-reward ratio' so important?",
     options: [
-      { label: "Even a 40% win rate is profitable with 1:3 R:R", correct: true, explain: "Math beats prediction — asymmetric trades survive losing streaks." },
+      { label: "Fixed realized +3R wins and −1R losses at 40% wins average +0.6R before costs", correct: true, explain: "For those exact realized inputs, 0.4×3−0.6×1=0.6R before costs. Planned targets, actual outcomes and fees can differ; a stated ratio does not guarantee profit." },
       { label: "Higher win rate always = more profit", correct: false, explain: "Not if the wins are tiny and losses huge." },
       { label: "It tells you which asset to trade", correct: false, explain: "It's about trade structure, not asset selection." },
     ],

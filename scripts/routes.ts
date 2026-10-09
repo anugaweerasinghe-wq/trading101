@@ -261,9 +261,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/daily",
     title: "Daily Trading Challenge — Build Your Streak | TradeHQ",
-    description: `A new hypothetical market scenario every 24 hours. Compare long, short and hold reasoning, answer a knowledge question, and build a streak. Free, no signup.`,
+    description: "A quick daily scenario plus 3–5 minute practice with visuals, three questions and worked answers. Learn from 50 rotating exercises for free.",
     h1: "Daily Trading Challenge",
-    summary: `A new hypothetical scenario every day. Choose a response, compare the trade-offs, answer a bonus knowledge question, and build a streak without treating any direction as objectively correct.`,
+    summary: "Practise a quick scenario or go deeper with a hypothetical case, labelled visual, three linked questions and worked explanations. Fifty exercises rotate; new banks are prepared every two months and wait for owner approval. Progress and reflections stay on this browser.",
     priority: "0.9",
     changefreq: "daily",
   });
@@ -563,6 +563,7 @@ function extraRoutes(): RouteMeta[] {
       changefreq: "monthly",
     });
   }
+  out.push({ path: "/admin/daily", title: "Daily Practice Administration | TradeHQ", description: "Private owner editing and approval for daily practice banks.", h1: "Daily practice administration", summary: "Owner administration requires the master key.", priority: "0.1", changefreq: "monthly", noindex: true });
   return out;
 }
 

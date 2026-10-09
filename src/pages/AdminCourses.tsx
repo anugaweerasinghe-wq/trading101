@@ -77,11 +77,12 @@ export default function AdminCourses() {
         <BookOpen className="w-7 h-7 text-primary" /><div><h1 className="text-xl font-semibold">Course desk</h1><p className="text-sm text-muted-foreground mt-2">Review drafts, edit lessons and approve publication.</p></div>
         <label className="block text-sm space-y-2"><span>Master key</span><input type="password" autoComplete="off" value={key} onChange={e => setKey(e.target.value)} className="w-full rounded-xl bg-background border border-border px-3 py-3" /></label>
         <button disabled={busy} className="w-full rounded-xl bg-primary text-primary-foreground py-3 text-sm disabled:opacity-50">{busy ? "Checking…" : "Open course desk"}</button>
+        <Link className="block text-sm text-primary" to="/admin/daily">Daily practice administration →</Link>
         <Link className="block text-sm text-muted-foreground" to="/admin/reviews">Review administration →</Link>
       </form>
     </main> : <main className="min-h-screen bg-background px-4 sm:px-6 py-8 max-w-7xl mx-auto">
       <header className="flex items-center justify-between gap-4 mb-8"><div><p className="text-xs uppercase tracking-widest text-primary mb-2">TradeHQ · Admin</p><h1 className="text-2xl font-semibold">Course desk</h1></div>
-        <div className="flex items-center gap-4 text-sm"><Link to="/admin/reviews" className="text-muted-foreground">Reviews</Link><button onClick={() => { if (dirty && !confirm("Discard unsaved edits and lock?")) return; setUnlocked(false); setKey(""); setDocument(null); }} className="flex items-center gap-2"><Lock className="w-4 h-4" />Lock</button></div></header>
+        <div className="flex items-center gap-4 text-sm"><Link to="/admin/daily" className="text-primary">Daily practice</Link><Link to="/admin/reviews" className="text-muted-foreground">Reviews</Link><button onClick={() => { if (dirty && !confirm("Discard unsaved edits and lock?")) return; setUnlocked(false); setKey(""); setDocument(null); }} className="flex items-center gap-2"><Lock className="w-4 h-4" />Lock</button></div></header>
       <div className="flex flex-wrap gap-3 mb-6">
         <button type="button" onClick={() => setMode("edit")} className="rounded-xl border border-border px-4 py-2 text-sm">Draft inbox ({drafts.filter(d => d.status === "draft").length})</button>
         <button type="button" onClick={() => setMode("settings")} className="rounded-xl border border-border px-4 py-2 text-sm inline-flex items-center gap-2"><Settings2 className="w-4 h-4" />Generation settings</button>

@@ -1,5 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2.75.1";
 import { createCourseAdminHandler } from "../_shared/courseAdmin.ts";
+import { validateBatch } from "../_shared/dailyPractice.ts";
 import { validateCourseDocument } from "../_shared/courseDocument.ts";
 import { clientIp, allow } from "../_shared/rateLimit.ts";
 
@@ -14,6 +15,23 @@ Deno.serve(createCourseAdminHandler({
   rateLimit: async req => await allow("course-admin-global", "course-admin-global", 300, 60)
     && await allow("course-admin:" + clientIp(req), "course-admin", 300, 30),
   store: {
+    async daily(action, body) {
+      if (action === "daily-list") {
+        const { data, error } = await client.from("daily_practice_drafts").select("id,effective_from,revision,status,document,research,updated_at").order("effective_from", { ascending: false }).limit(24);
+        if (error) throw error; return data ?? [];
+      }
+      if (action === "daily-status") return rpc("daily_practice_status", {});
+      if (action === "daily-configure") return rpc("configure_daily_practice", { p_enabled: body.enabled });
+      if (action === "daily-generate") return rpc("request_daily_practice", { p_manual: true });
+      if (action === "daily-save") return rpc("save_daily_practice", { p_id: body.id, p_revision: body.revision, p_document: body.document });
+      if (action === "daily-publish") {
+        const { data, error } = await client.from("daily_practice_drafts").select("document").eq("id", body.id).single();
+        if (error) throw error;
+        if (!validateBatch(data.document)) throw new Error("Daily bank is incomplete");
+        return rpc("publish_daily_practice", { p_id: body.id, p_revision: body.revision, p_reviewer: body.reviewer });
+      }
+      return rpc("reject_daily_practice", { p_id: body.id, p_revision: body.revision });
+    },
     settings: () => rpc("course_generation_status", {}),
     configure: settings => rpc("configure_course_generation", { p_settings: settings }),
     run: () => rpc("request_course_generation", { p_force: true }),
