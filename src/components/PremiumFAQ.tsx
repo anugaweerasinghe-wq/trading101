@@ -26,11 +26,11 @@ export function PremiumFAQ() {
     },
     {
       question: "How do I start trading on TradeHQ?",
-      answer: "Just click 'Start Trading Free' — you'll instantly receive $100,000 in virtual cash to trade 149 assets. No signup, no email, no account creation needed."
+      answer: "Just click 'Start Trading Free' — you'll instantly receive $100,000 in virtual cash to trade 170 assets. No signup, no email, no account creation needed."
     },
     {
       question: "What stocks and crypto can I trade?",
-      answer: "You can practice trading across 149 assets including major cryptocurrencies (BTC, ETH, SOL), tech stocks (NVDA, AAPL, TSLA), ETFs (SPY, QQQ), forex pairs (EUR/USD, GBP/USD), and commodities (Gold, Oil)."
+      answer: "You can practice trading across 170 assets including major cryptocurrencies (BTC, ETH, SOL), tech stocks (NVDA, AAPL, TSLA), ETFs (SPY, QQQ), forex pairs (EUR/USD, GBP/USD), and commodities (Gold, Oil)."
     },
     {
       question: "Is there a leaderboard or competition?",

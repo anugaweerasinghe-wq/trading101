@@ -1,5 +1,5 @@
 import { coinQuote, stockQuote, forexQuote } from "./providerQuotes.ts";
-// CoinGecko ID mapping — all 30 crypto assets
+// Fifty current crypto instruments plus legacy MATIC, retained without rewriting holdings.
 export const CRYPTO_ID_MAP: Record<string, string> = {
   'btc': 'bitcoin', 'eth': 'ethereum', 'sol': 'solana', 'bnb': 'binancecoin',
   'xrp': 'ripple', 'ada': 'cardano', 'doge': 'dogecoin', 'avax': 'avalanche-2',
@@ -9,6 +9,27 @@ export const CRYPTO_ID_MAP: Record<string, string> = {
   'vet': 'vechain', 'fil': 'filecoin', 'hbar': 'hedera-hashgraph', 'apt': 'aptos',
   'arb': 'arbitrum', 'op': 'optimism', 'inj': 'injective-protocol', 'sui': 'sui',
   'sei': 'sei-network', 'tia': 'celestia',
+  'usdc': 'usd-coin',
+  'usdt': 'tether',
+  'dai': 'dai',
+  'trx': 'tron',
+  'bch': 'bitcoin-cash',
+  'ton': 'the-open-network',
+  'etc': 'ethereum-classic',
+  'xmr': 'monero',
+  'aave': 'aave',
+  'grt': 'the-graph',
+  'ldo': 'lido-dao',
+  'rune': 'thorchain',
+  'kas': 'kaspa',
+  'stx': 'blockstack',
+  'imx': 'immutable-x',
+  'render': 'render-token',
+  'pepe': 'pepe',
+  'bonk': 'bonk',
+  'wld': 'worldcoin-wld',
+  'pol': 'polygon-ecosystem-token',
+  'tao': 'bittensor',
 };
 
 // Stock/ETF symbols — all mapped

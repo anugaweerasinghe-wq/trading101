@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { CRYPTO_ID_MAP } from "../supabase/functions/_shared/marketProviders.ts";
 import { refreshHeldQuotes } from "../supabase/functions/_shared/refreshPrices.ts";
 const stored: string[] = [];
 let calls = 0;
@@ -15,3 +16,12 @@ assert.deepEqual(await refreshHeldQuotes([{ assetId: "btc", type: "crypto" }], f
 assert.equal(stored.length, 0);
 assert.deepEqual(await refreshHeldQuotes([], deps), { requested: 0, updated: 0, unavailable: 0 });
 console.log("Refresh pricing passed: crypto batching/deduplication, missing providers, rate limits, no synthetic replacement and empty portfolios.");
+
+const expanded = Object.keys(CRYPTO_ID_MAP).filter(id => id !== "matic").map(assetId => ({ assetId, type: "crypto" }));
+assert.equal(expanded.length, 50);
+let expandedCalls = 0;
+const expandedResult = await refreshHeldQuotes(expanded, { ...deps,
+  fetch: (async () => { expandedCalls++; return new Response(JSON.stringify(Object.fromEntries(expanded.map(a => [CRYPTO_ID_MAP[a.assetId], { usd: 1, last_updated_at: Math.floor(Date.now() / 1000) }])))); }) as typeof fetch,
+});
+assert.equal(expandedResult.updated, 50); assert.equal(expandedCalls, 1);
+console.log("PASS 50 current crypto instruments share one upstream quote request; legacy MATIC remains mapped for history.");

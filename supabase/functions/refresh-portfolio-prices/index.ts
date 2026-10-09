@@ -15,7 +15,7 @@ Deno.serve(async req => {
   try {
     const result = await refreshHeldQuotes(claim.assets as HeldAsset[], {
       fetch, stock: fetchStockData, forex: fetchForexData,
-      store: (asset, q) => cachePrice(asset, q.price, q.provenance.provider, q.provenance.observedAt ?? null, q.provenance.status),
+      store: (asset, q) => cachePrice(asset, q.price, q.provenance.provider, q.provenance.observedAt ?? null, q.provenance.status, q),
     });
     const { error: finishError } = await admin.rpc("finish_portfolio_price_refresh", { p_lease: claim.lease, p_result: result });
     if (finishError) return json({ error: "Refresh status could not be saved" }, 503);

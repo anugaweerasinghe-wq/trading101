@@ -22,6 +22,7 @@ export interface CourseLesson {
 }
 
 export interface CourseTrack {
+  editorial?: { assisted: boolean; reviewer: string; reviewedAt: string };
   slug: string;
   title: string;
   tagline: string;

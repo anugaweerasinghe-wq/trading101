@@ -124,11 +124,11 @@ export default function Markets() {
     <>
       <Helmet>
         <title>Practice Markets — Stocks, Crypto, ETFs & Forex | TradeHQ</title>
-        <meta name="description" content="Browse 149 practice markets across stocks, crypto, ETFs, forex and commodities. Quotes may be simulated, cached or delayed. Trade with $100K virtual cash." />
+        <meta name="description" content="Browse 170 practice markets across stocks, crypto, ETFs, forex and commodities. Quotes may be simulated, cached or delayed. Trade with $100K virtual cash." />
         <link rel="canonical" href="https://www.thetradehq.com/markets" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Practice Markets — 149 Stocks, Crypto, ETFs & Forex | TradeHQ" />
+        <meta property="og:title" content="Practice Markets — 170 Stocks, Crypto, ETFs & Forex | TradeHQ" />
         <meta property="og:description" content="Explore simulated, cached or delayed market data across stocks, crypto, ETFs, forex and commodities." />
         <meta property="og:url" content="https://www.thetradehq.com/markets" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
@@ -136,7 +136,7 @@ export default function Markets() {
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Practice Markets — 149 Assets | TradeHQ" />
+        <meta name="twitter:title" content="Practice Markets — 170 Assets | TradeHQ" />
         <meta name="twitter:description" content="Track stocks, crypto, ETFs, forex & commodities. Free market dashboard." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
       </Helmet>

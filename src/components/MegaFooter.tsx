@@ -236,7 +236,7 @@ export function MegaFooter() {
               {[
                 { icon: Shield, color: "text-primary", bg: "bg-primary/10", title: "Virtual Cash Only", sub: "No real money is traded" },
                 { icon: CheckCircle2, color: "text-profit", bg: "bg-profit/10", title: "Educational Simulator", sub: "Practice trading skills" },
-                { icon: Award, color: "text-secondary", bg: "bg-secondary/10", title: "149 Assets", sub: "Stocks, crypto, ETFs, forex" },
+                { icon: Award, color: "text-secondary", bg: "bg-secondary/10", title: "170 Assets", sub: "Stocks, crypto, ETFs, forex" },
               ].map((item) => (
                 <div key={item.title} className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-lg ${item.bg} flex items-center justify-center`}>

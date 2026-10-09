@@ -17,7 +17,7 @@ export function PremiumFeatures() {
     {
       icon: Zap,
       title: "Instant Market Simulation",
-      description: "Execute trades instantly on 149 assets. Experience the thrill of real market action with simulated price feeds and charts.",
+      description: "Execute trades instantly on 170 assets. Experience the thrill of real market action with simulated price feeds and charts.",
       gradient: "from-profit/20 to-profit/5",
       iconColor: "text-profit",
       borderGlow: "hover:border-profit/30",

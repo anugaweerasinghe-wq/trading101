@@ -31,7 +31,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
         paragraphs: [
           "Paper trading is the practice of simulating trades without using real money. Instead of risking your hard-earned savings, you use virtual currency to buy and sell stocks, ETFs, cryptocurrencies, and other financial instruments. The term dates back to a time when aspiring traders would literally write their hypothetical trades on paper to track performance.",
           "Today, paper trading is usually done digitally through simulated platforms. It can help beginners practise order entry, chart reading, record-keeping, and portfolio mechanics without risking real money. It is one practical way to learn how markets work, but it cannot reproduce every part of live trading, especially slippage, liquidity constraints, and the emotions attached to real losses.",
-          "On TradeHQ, every user starts with $100,000 in virtual cash. You can trade 149 assets including blue-chip stocks like Apple (AAPL), cryptocurrencies like Bitcoin (BTC), ETFs like SPY, forex pairs, and commodities like gold. Every trade you make is tracked, giving you a realistic portfolio experience."
+          "On TradeHQ, every user starts with $100,000 in virtual cash. You can trade 170 assets including blue-chip stocks like Apple (AAPL), cryptocurrencies like Bitcoin (BTC), ETFs like SPY, forex pairs, and commodities like gold. Every trade you make is tracked, giving you a realistic portfolio experience."
         ]
       },
       {
@@ -132,7 +132,7 @@ export const LEARN_ARTICLES: LearnArticle[] = [
     relatedLinks: [
       { href: "/trade/btc", label: "Practice trading Bitcoin (BTC)" },
       { href: "/trade/aapl", label: "Practice trading Apple (AAPL)" },
-      { href: "/markets", label: "Explore all 149 tradeable assets" },
+      { href: "/markets", label: "Explore all 170 tradeable assets" },
       { href: "/learn/article/how-to-build-a-portfolio", label: "How to build a balanced portfolio" },
     ],
   },

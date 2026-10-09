@@ -21,7 +21,7 @@ export async function refreshHeldQuotes(assets: HeldAsset[], deps: Dependencies)
   if (mapped.length) {
     try {
       const ids = mapped.map(a => CRYPTO_ID_MAP[a.assetId]).join(",");
-      const response = await deps.fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_last_updated_at=true`,
+      const response = await deps.fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_last_updated_at=true&include_24hr_change=true&include_24hr_vol=true&include_market_cap=true`,
         { headers: { Accept: "application/json" }, signal: AbortSignal.timeout(12000) });
       const body = response.ok ? await response.json() : {};
       for (const asset of mapped) await save(asset.assetId, body[CRYPTO_ID_MAP[asset.assetId]] ? coinQuote(body[CRYPTO_ID_MAP[asset.assetId]]) : null);

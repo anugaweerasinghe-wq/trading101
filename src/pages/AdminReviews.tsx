@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
@@ -88,6 +89,7 @@ export default function AdminReviews() {
         </Helmet>
         <div className="min-h-screen bg-background flex items-center justify-center p-4">
           <form onSubmit={verify} className="w-full max-w-sm space-y-4 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08]">
+            <Link to="/admin/courses" className="block text-sm text-primary mb-4">Course desk →</Link>
             <div className="flex items-center gap-2 mb-2">
               <Lock className="w-5 h-5 text-primary" />
               <h1 className="text-lg font-bold">Admin Reviews</h1>

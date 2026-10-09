@@ -8,7 +8,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Award, ArrowLeft, ArrowRight, CheckCircle2, XCircle, ExternalLink, Sparkles, Bot } from "lucide-react";
-import { getLesson, getTrack } from "@/lib/coursesData";
+import type { CourseTrack as Track, CourseLesson as Lesson } from "@/lib/coursesData";
+import { useCourseDocument } from "@/hooks/useCourseCatalog";
 import { markLessonStarted, markLessonCompleted, awardBadge, getTrackProgress } from "@/lib/courseProgress";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
@@ -20,9 +21,15 @@ const AUTHOR = "Anuga Weerasinghe";
 
 export default function CourseLesson() {
   const { trackSlug, lessonSlug } = useParams<{ trackSlug: string; lessonSlug: string }>();
-  const found = trackSlug && lessonSlug ? getLesson(trackSlug, lessonSlug) : undefined;
-  if (!found) return <NotFound />;
-  const { track, lesson, index } = found;
+  const { track, isPending, isError, refetch } = useCourseDocument(trackSlug);
+  const index = track?.lessons.findIndex(l => l.slug === lessonSlug) ?? -1;
+  if (!track && isPending) return <main className="container pt-28 pb-16" aria-live="polite">Loading lesson…</main>;
+  if (!track && isError) return <main className="container pt-28 pb-16"><p>Could not load lessons.</p><button onClick={() => void refetch()}>Retry</button></main>;
+  if (!track || index < 0) return <NotFound />;
+  return <CourseLessonContent key={track.slug + "/" + lessonSlug} track={track} lesson={track.lessons[index]} index={index} />;
+}
+
+function CourseLessonContent({ track, lesson, index }: { track: Track; lesson: Lesson; index: number }) {
 
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -53,7 +60,8 @@ export default function CourseLesson() {
     educationalLevel: track.level,
     inLanguage: "en",
     url,
-    author: { "@type": "Person", name: AUTHOR },
+    author: track.editorial ? { "@type": "Organization", name: "TradeHQ" } : { "@type": "Person", name: AUTHOR },
+    ...(track.editorial ? { dateModified: track.editorial.reviewedAt, reviewedBy: { "@type": "Person", name: track.editorial.reviewer } } : {}),
     publisher: { "@type": "Organization", name: "TradeHQ", url: DOMAIN },
     isPartOf: {
       "@type": "Course",
@@ -149,7 +157,7 @@ export default function CourseLesson() {
           <p className="text-base text-muted-foreground mb-4">{lesson.summary}</p>
 
           <div className="text-xs text-muted-foreground mb-6">
-            By <span className="text-foreground font-medium">{AUTHOR}</span>
+            {track.editorial ? <>Prepared with AI assistance · Reviewed by <span className="text-foreground font-medium">{track.editorial.reviewer}</span> · {new Date(track.editorial.reviewedAt).toLocaleDateString("en-GB")}</> : <>By <span className="text-foreground font-medium">{AUTHOR}</span></>}
           </div>
 
           <div className="rounded-2xl overflow-hidden mb-8 bg-black aspect-[16/9]">

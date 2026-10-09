@@ -6,7 +6,8 @@ import { MegaFooter } from "@/components/MegaFooter";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Circle, Clock, Award } from "lucide-react";
-import { getTrack } from "@/lib/coursesData";
+import type { CourseTrack as Track } from "@/lib/coursesData";
+import { useCourseDocument } from "@/hooks/useCourseCatalog";
 import { getTrackProgress, trackCompletionPct } from "@/lib/courseProgress";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { EducationalDisclaimer } from "@/components/EducationalDisclaimer";
@@ -15,8 +16,14 @@ const DOMAIN = "https://www.thetradehq.com";
 
 export default function CourseTrack() {
   const { trackSlug } = useParams<{ trackSlug: string }>();
-  const track = trackSlug ? getTrack(trackSlug) : undefined;
+  const { track, isPending, isError, refetch } = useCourseDocument(trackSlug);
+  if (!track && isPending) return <main className="container pt-28 pb-16" aria-live="polite">Loading course…</main>;
+  if (!track && isError) return <main className="container pt-28 pb-16"><p>Could not load courses.</p><button onClick={() => void refetch()}>Retry</button></main>;
   if (!track) return <NotFound />;
+  return <CourseTrackContent track={track} />;
+}
+
+function CourseTrackContent({ track }: { track: Track }) {
 
   const url = `${DOMAIN}/courses/${track.slug}`;
   const title = `${track.title} — Free Trading Course | TradeHQ`;
