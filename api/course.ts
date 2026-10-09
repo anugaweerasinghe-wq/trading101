@@ -14,7 +14,7 @@ export default async function handler(req: { query: Record<string, string | stri
   if (existsSync(staticPath)) { res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" }); res.end(readFileSync(staticPath, "utf8")); return; }
   try {
     const response = await fetch(url + "/rest/v1/published_courses?select=document&slug=eq." + encodeURIComponent(String(track)) + "&limit=1",
-      { headers: { apikey: publicKey }, signal: AbortSignal.timeout(6000) });
+      { headers: { apikey: publicKey }, signal: AbortSignal.timeout(15000) });
     if (!response.ok) throw new Error("Course store unavailable");
     const rows = await response.json();
     if (!rows.length) { res.writeHead(404, { "X-Robots-Tag": "noindex", "Cache-Control": "no-store" }); res.end("Course not found"); return; }
