@@ -30,8 +30,8 @@ export function PracticeEditor({ exercise: e, onChange }: { exercise: DailyExerc
         <Text label="Worked explanation" value={q.explanation} multiline onChange={explanation => change({ explanation })} />
       </fieldset>;
     })}
-    <Text label="Reflection prompt" value={e.reflection} multiline onChange={reflection => edit({ reflection })} />
-    <Text label="Reflection review guide" value={e.reflectionGuide} multiline onChange={reflectionGuide => edit({ reflectionGuide })} />
+    <Text label="Takeaway review prompt" value={e.reflection} multiline onChange={reflection => edit({ reflection })} />
+    <Text label="Final case takeaway" value={e.reflectionGuide} multiline onChange={reflectionGuide => edit({ reflectionGuide })} />
     <fieldset className="border border-white/10 rounded-2xl p-4 space-y-4"><legend className="px-2 font-medium text-sm">Primary sources</legend>
       {e.sources.map((s, i) => <div key={i} className="space-y-2 border-b border-white/10 pb-4">
         <Text label={`Source ${i + 1} label`} value={s.label} onChange={label => edit({ sources: e.sources.map((old, n) => n === i ? { ...old, label } : old) })} />

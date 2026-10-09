@@ -12,7 +12,6 @@ import { AIReadySummary } from "@/components/AIReadySummary";
 import { GEOKeyTakeaways } from "@/components/GEOKeyTakeaways";
 import { TradingStrengthMeter } from "@/components/TradingStrengthMeter";
 import { ContextualLinks } from "@/components/ContextualLinks";
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
 
 import { AssetSearchDropdown } from "@/components/trading/AssetSearchDropdown";
 import { MinimalistAreaChart } from "@/components/trading/MinimalistAreaChart";
@@ -27,7 +26,7 @@ import { getPortfolio, executeTrade, updatePositionPrices } from "@/lib/portfoli
 import { getFavorites, toggleFavorite } from "@/lib/favorites";
 import { useToast } from "@/hooks/use-toast";
 import { useLiveMarketData } from "@/hooks/useLiveMarketData";
-import { generatePriceMovement } from "@/lib/priceMovement";
+import { marketRequests } from "@/lib/marketDataClient";
 import { persistPrice, getPersistedPrices } from "@/lib/pricePersistence";
 import { 
   getAssetContent, 
@@ -80,17 +79,8 @@ export default function TradeAsset() {
   const fetchLivePrice = useCallback(async (asset: Asset): Promise<{ asset: Asset; status: 'live' | 'delayed' | 'simulated' | 'cached' }> => {
     if (!asset || typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) return { asset, status: 'cached' };
     try {
-      const response = await fetch(
-        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
-        {
-          headers: {
-            'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      if (response.ok) {
-        const result = await response.json();
+      const result = await marketRequests.request(asset);
+      if (!Array.isArray(result.data)) {
         if (result.success && result.data && typeof result.data.price === 'number' && result.data.price > 0) {
           const provenanceStatus = result.provenance?.status ?? result.data.provenance?.status;
           const status = provenanceStatus === 'realtime'
@@ -127,11 +117,11 @@ export default function TradeAsset() {
       const cached = getPersistedPrices();
       const hydratedAssets = ASSETS.map(a => {
         const p = cached[a.id];
-        return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
+        return p && p.source !== 'simulated' ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
       });
       setAssets(hydratedAssets);
       setPortfolio(updatePositionPrices(getPortfolio(), hydratedAssets));
-      setSelectedAsset(targetAsset ? (cached[targetAsset.id] ? { ...targetAsset, price: cached[targetAsset.id].price, change: cached[targetAsset.id].change, changePercent: cached[targetAsset.id].changePercent } : targetAsset) : null);
+      setSelectedAsset(targetAsset ? (cached[targetAsset.id] && cached[targetAsset.id].source !== 'simulated' ? { ...targetAsset, price: cached[targetAsset.id].price, change: cached[targetAsset.id].change, changePercent: cached[targetAsset.id].changePercent } : targetAsset) : null);
       if (targetAsset && cached[targetAsset.id]) {
         setDataSource(cached[targetAsset.id].source === 'live' ? 'live' : cached[targetAsset.id].source === 'delayed' ? 'delayed' : 'cached');
       }
@@ -151,11 +141,12 @@ export default function TradeAsset() {
     if (isLoading || assets.length === 0) return;
 
     // Fetch real price for selected asset
+    let cancelled = false;
     const fetchSelected = async () => {
       if (!selectedAsset || !isMounted.current) return;
       const quote = await fetchLivePrice(selectedAsset);
       const updated = quote.asset;
-      if (isMounted.current) {
+      if (isMounted.current && !cancelled) {
         if (updated.price !== selectedAsset.price || quote.status !== 'cached') {
           if (quote.status === 'live') {
             persistPrice(updated.id, updated.price, updated.change, updated.changePercent, 'live');
@@ -180,23 +171,10 @@ export default function TradeAsset() {
     // Periodic refresh every 60s
     const refreshInterval = setInterval(fetchSelected, 60000);
 
-    // Micro-fluctuation: ±0.01% anchored to current price (visual liveness only)
-    const microInterval = setInterval(() => {
-      if (!isMounted.current) return;
-      setAssets(prev => {
-        const nextAssets = prev.map(asset => {
-          const movement = generatePriceMovement(asset.price);
-          return { ...asset, price: movement.price };
-        });
-        setPortfolio(current => updatePositionPrices(current, nextAssets));
-        return nextAssets;
-      });
-    }, 3000);
-
     return () => {
+      cancelled = true;
       clearTimeout(initialTimer);
       clearInterval(refreshInterval);
-      clearInterval(microInterval);
     };
   }, [isLoading, selectedAsset?.id, fetchLivePrice]);
 

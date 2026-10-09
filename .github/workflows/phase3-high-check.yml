@@ -23,6 +23,7 @@ jobs:
       - run: node --import tsx scripts/verify-provider-quotes.ts
       - run: node --import tsx scripts/verify-refresh-prices.ts
       - run: node --import tsx scripts/verify-market-rate-limit.ts
+      - run: node --import tsx scripts/verify-market-requests.ts
       - run: node --import tsx scripts/verify-snapshot-version.ts
       - run: node --import tsx scripts/verify-member-activity.ts
       - run: node scripts/verify-review-engagement.mjs

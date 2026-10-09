@@ -20,7 +20,7 @@ import {
 import { updatePortfolioOverTime } from "@/lib/portfolioHistory";
 import { ASSETS } from "@/lib/assets";
 import { persistPrice, getPersistedPrices } from "@/lib/pricePersistence";
-import { generatePriceMovement } from "@/lib/priceMovement";
+import { marketRequests } from "@/lib/marketDataClient";
 import { recordSnapshot } from "@/lib/portfolioHistory";
 import { calculateDayChange } from "@/lib/portfolio";
 import { Card } from "@/components/ui/card";
@@ -47,7 +47,6 @@ import {
   initializeMilestones,
   getMilestoneState,
 } from "@/lib/notifications";
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
 
 import { useAuth } from "@/hooks/useAuth";
 import { pushPortfolio } from "@/lib/cloudPortfolio";
@@ -65,7 +64,7 @@ export default function Portfolio() {
     const cached = getPersistedPrices();
     return ASSETS.map((a) => {
       const p = cached[a.id];
-      return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
+      return p && p.source !== 'simulated' ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
     });
   });
   const [dataStatus, setDataStatus] = useState<"live" | "delayed" | "cached" | "simulated">("cached");
@@ -94,17 +93,8 @@ export default function Portfolio() {
   // Fetch real price for a single held asset
   const fetchLivePrice = useCallback(async (asset: typeof ASSETS[number]) => {
     try {
-      const response = await fetch(
-        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
-        {
-          headers: {
-            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-      if (response.ok) {
-        const result = await response.json();
+      const result = await marketRequests.request(asset);
+      if (!Array.isArray(result.data)) {
         if (result.success && result.data && typeof result.data.price === "number" && result.data.price > 0) {
           const provenanceStatus = result.provenance?.status ?? result.data.provenance?.status;
           const normalizedStatus = provenanceStatus === "realtime"
@@ -218,19 +208,6 @@ export default function Portfolio() {
     document.addEventListener("visibilitychange", refreshVisible);
     window.addEventListener("focus", refreshVisible);
 
-    // Visual micro-fluctuation every 3s for liveness, anchored to last real price
-    const microInterval = setInterval(() => {
-      if (userRef.current) return;
-      setAssets((prev) => {
-        const nextAssets = prev.map((a) => {
-          const m = generatePriceMovement(a.price);
-          return { ...a, price: m.price, change: m.change, changePercent: m.changePercent };
-        });
-        setPortfolio((currentPortfolio) => updatePositionPrices(currentPortfolio, nextAssets));
-        return nextAssets;
-      });
-    }, 3000);
-
     // "Updated Xs ago" ticker
     const tickInterval = setInterval(() => {
       setSecondsAgo(Math.floor((Date.now() - lastUpdatedRef.current.getTime()) / 1000));
@@ -241,7 +218,6 @@ export default function Portfolio() {
       clearInterval(liveInterval);
       document.removeEventListener("visibilitychange", refreshVisible);
       window.removeEventListener("focus", refreshVisible);
-      clearInterval(microInterval);
       clearInterval(tickInterval);
     };
   }, [user?.id, refreshHeldAssets]);

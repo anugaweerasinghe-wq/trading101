@@ -287,7 +287,7 @@ export const STATIC_COPY: Record<string, PageContent> = {
       {
         h: "How the daily challenge works",
         p: [
-          "Daily offers a quick hypothetical market scenario alongside a deeper 3–5 minute practice exercise. You choose a response, compare the reasoning and trade-offs, then answer a short bonus knowledge question about market basics. Completing the quick reasoning step or all three deeper questions advances the browser-stored streak at most once per local day. Directional reflections are not forecast scores.",
+          "Daily offers a quick hypothetical market scenario alongside a longer ten-question case study. You choose a response, compare the reasoning and trade-offs, then answer a short bonus knowledge question about market basics. Completing the quick reasoning step or all ten case-study questions advances the browser-stored streak at most once per local day. Directional reflections are not forecast scores.",
           "The scenario's prices, news events and dates are exercise inputs, not a report of what happened in today's markets. Choosing long, short or hold records a reflection; it does not place an order. Use the explanation to compare assumptions and uncertainty rather than treating completion as evidence of forecasting skill.",
         ],
       },

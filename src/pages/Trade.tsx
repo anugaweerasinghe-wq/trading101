@@ -27,8 +27,7 @@ import { getFavorites, toggleFavorite } from "@/lib/favorites";
 import { recordLoss } from "@/components/trading/RevengeTradingBlocker";
 import { useToast } from "@/hooks/use-toast";
 import { persistPrice, getPersistedPrices } from "@/lib/pricePersistence";
-import { generatePriceMovement } from "@/lib/priceMovement";
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
+import { refreshAssetSnapshots } from "@/lib/marketDataClient";
 
 export default function Trade() {
   const { symbol } = useParams();
@@ -52,132 +51,19 @@ export default function Trade() {
     assetsRef.current = assets;
   }, [assets]);
 
-  const fetchLivePrice = async (asset: Asset): Promise<{ asset: Asset; status: "live" | "delayed" | "simulated" | "cached" }> => {
-    if (
-      !asset ||
-      typeof asset.price !== "number" ||
-      isNaN(asset.price) ||
-      asset.price <= 0
-    ) {
-      return { asset, status: "cached" };
-    }
-
-    try {
-      const response = await fetch(
-        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
-        {
-          headers: {
-            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-
-      if (response.ok) {
-        const result = await response.json();
-
-        if (
-          result.success &&
-          result.data &&
-          typeof result.data.price === "number" &&
-          result.data.price > 0
-        ) {
-          const provenanceStatus = result.provenance?.status ?? result.data.provenance?.status;
-          const status = provenanceStatus === "realtime"
-            ? "live"
-            : provenanceStatus === "simulated"
-              ? "simulated"
-              : "delayed";
-          return {
-            asset: {
-              ...asset,
-              price: result.data.price,
-              change:
-                typeof result.data.change24h === "number"
-                  ? result.data.change24h
-                  : asset.change,
-              changePercent:
-                typeof result.data.changePercent24h === "number"
-                  ? result.data.changePercent24h
-                  : asset.changePercent,
-            },
-            status,
-          };
-        }
-      }
-    } catch (_err) {}
-
-    return { asset, status: "cached" };
-  };
-
-  const simulatePrice = (asset: Asset): Asset => {
-    const movement = generatePriceMovement(asset.price);
-    return { ...asset, price: movement.price, change: movement.change, changePercent: movement.changePercent };
-  };
-
   const refreshAllAssets = useCallback(async () => {
-    if (!isMounted.current || isRefreshing.current) return;
-
-    const currentAssets = assetsRef.current;
-    if (currentAssets.length === 0) return;
-
+    if (!isMounted.current || isRefreshing.current || document.hidden || assetsRef.current.length === 0) return;
     isRefreshing.current = true;
-
     try {
-      // Fetch in staggered batches of 5 with 1s delay between batches
-      const batchSize = 5;
-      const updatedMap = new Map<string, { asset: Asset; gotLive: boolean }>();
-
-      for (let i = 0; i < currentAssets.length; i += batchSize) {
-        if (!isMounted.current) break;
-        const batch = currentAssets.slice(i, i + batchSize);
-
-        const results = await Promise.allSettled(
-          batch.map(async (asset) => {
-            const quote = await fetchLivePrice(asset);
-            const updated = quote.asset;
-            const gotLive = quote.status === "live";
-            if (quote.status === "live") {
-              persistPrice(updated.id, updated.price, updated.change, updated.changePercent, "live");
-            } else if (quote.status === "delayed") {
-              persistPrice(updated.id, updated.price, updated.change, updated.changePercent, "delayed");
-            } else if (quote.status === "simulated") {
-              persistPrice(updated.id, updated.price, updated.change, updated.changePercent, "simulated");
-            }
-            return { asset: updated, gotLive };
-          })
-        );
-
-        results.forEach((r) => {
-          if (r.status === 'fulfilled') updatedMap.set(r.value.asset.id, r.value);
-        });
-
-        // 1s delay between batches to respect rate limits
-        if (i + batchSize < currentAssets.length) {
-          await new Promise((r) => setTimeout(r, 1000));
-        }
-      }
-
-      const newLiveIds = new Set<string>();
-      const allUpdated = currentAssets.map((asset) => {
-        const entry = updatedMap.get(asset.id);
-        if (entry) {
-          if (entry.gotLive) newLiveIds.add(asset.id);
-          return entry.asset;
-        }
-        return simulatePrice(asset);
-      });
-
+      // One database snapshot read serves the whole list. Never call every provider per visitor.
+      const result = await refreshAssetSnapshots(assetsRef.current);
       if (isMounted.current) {
-        setAssets(allUpdated);
-        setPortfolio((current) => updatePositionPrices(current, allUpdated));
-        setLiveAssetIds(newLiveIds);
+        setAssets(result.assets);
+        setPortfolio(current => updatePositionPrices(current, result.assets));
+        setLiveAssetIds(result.providerIds);
       }
-    } catch (err) {
-      console.error("Batch refresh error:", err);
-    } finally {
-      isRefreshing.current = false;
-    }
+    } catch { /* Keep the last known prices without fabricating movement. */ }
+    finally { isRefreshing.current = false; }
   }, []);
 
   useEffect(() => {
@@ -197,7 +83,7 @@ export default function Trade() {
     const cached = getPersistedPrices();
     const hydratedAssets = validAssets.map(a => {
       const p = cached[a.id];
-      return p ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
+      return p && p.source !== 'simulated' ? { ...a, price: p.price, change: p.change, changePercent: p.changePercent } : a;
     });
 
     setTimeout(() => {
@@ -229,7 +115,7 @@ export default function Trade() {
     if (isLoading || assets.length === 0) return;
 
     const initialRefresh = setTimeout(refreshAllAssets, 2000);
-    const interval = setInterval(refreshAllAssets, 60000);
+    const interval = setInterval(refreshAllAssets, 120000);
 
     return () => {
       clearTimeout(initialRefresh);
@@ -376,6 +262,7 @@ export default function Trade() {
                 if (
                   isLive &&
                   selectedAsset &&
+                  livePrice !== selectedAsset.price &&
                   typeof livePrice === "number" &&
                   livePrice > 0
                 ) {
@@ -496,7 +383,7 @@ export default function Trade() {
                               ? 'bg-green-500/10 text-green-500'
                               : 'bg-muted/50 text-muted-foreground'
                           }`}>
-                            {liveAssetIds.has(asset.id) ? 'LIVE' : 'SIM'}
+                            {liveAssetIds.has(asset.id) ? 'SNAPSHOT' : 'FIXED'}
                           </span>
                         </div>
                       </Link>

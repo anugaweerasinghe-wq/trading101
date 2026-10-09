@@ -1,4 +1,4 @@
-import { validateBatch } from "./dailyPractice.ts";
+import { validateBatch, validateExercises } from "./dailyPractice.ts";
 import { validateCourseDocument } from "./courseDocument.ts";
 
 export interface CourseAdminStore {
@@ -30,7 +30,7 @@ export function createCourseAdminHandler(options: {
       for (let i = 0; i < expected.length; i++) mismatch |= expected.charCodeAt(i) ^ supplied.charCodeAt(i);
       if (mismatch) return response({ error: "Incorrect master key." }, 401);
       const raw = await req.text();
-      if (raw.length > 410000) return response({ error: "Document is too large." }, 413);
+      if (raw.length > 760000) return response({ error: "Document is too large." }, 413);
       let body: Record<string, unknown>;
       try { body = JSON.parse(raw); if (!body || typeof body !== "object" || Array.isArray(body)) throw new Error(); }
       catch { return response({ error: "Invalid request." }, 400); }
@@ -39,7 +39,7 @@ export function createCourseAdminHandler(options: {
         if (body.action === "daily-configure" && typeof body.enabled !== "boolean") return response({ error: "Invalid settings." }, 400);
         if (["daily-save", "daily-publish", "daily-reject"].includes(body.action)) {
           if (typeof body.id !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.id) || !Number.isInteger(body.revision) || Number(body.revision) < 1) return response({ error: "Invalid daily revision." }, 400);
-          if (body.action === "daily-save" && !validateBatch(body.document)) return response({ error: "Complete all 50 exercises before saving." }, 400);
+          if (body.action === "daily-save" && (!validateBatch(body.document) || validateExercises(body.document.exercises, 50, 10).length > 0)) return response({ error: "Complete all 50 exercises before saving." }, 400);
           if (body.action === "daily-publish" && (body.reviewed !== true || typeof body.reviewer !== "string" || body.reviewer.trim().length < 2 || body.reviewer.length > 80)) return response({ error: "Confirm your review and enter your name." }, 400);
         }
         return response({ data: await options.store.daily(body.action, body) });

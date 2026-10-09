@@ -1,326 +1,69 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Asset } from '@/lib/types';
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/config';
-
+import type { Asset } from '@/lib/types';
+import { marketRequests } from '@/lib/marketDataClient';
 export interface MarketDataProvenance {
   status: 'realtime' | 'delayed' | 'previous_close' | 'proxy' | 'mixed' | 'simulated' | 'provider';
-  provider: string;
-  fetchedAt: string;
-  observedAt?: string | null;
-  fields?: Record<string, string>;
-  note?: string;
+  provider: string; fetchedAt: string; observedAt?: string | null; fields?: Record<string, string>; note?: string;
 }
-
 export interface LiveMarketData {
-  price: number;
-  change24h: number | null;
-  changePercent24h: number | null;
-  high24h: number | null;
-  low24h: number | null;
-  volume24h: number | null;
-  marketCap?: number;
-  lastUpdated: string | null;
-  source: 'live' | 'simulated';
-  provenance?: MarketDataProvenance;
+  price: number; change24h: number | null; changePercent24h: number | null; high24h: number | null;
+  low24h: number | null; volume24h: number | null; marketCap?: number; lastUpdated: string | null;
+  source: 'live' | 'simulated'; provenance?: MarketDataProvenance;
 }
-
-export interface CandleData {
-  time: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-}
-
-interface UseLiveMarketDataOptions {
-  refreshInterval?: number; // in milliseconds, default 30000 (30 seconds)
-  enabled?: boolean;
-}
-
-// Cache for market data with localStorage persistence
-const CACHE_TTL = 120000; // 120 seconds (CoinGecko-friendly interval)
-const LS_CACHE_KEY = 'tradehq_market_cache_v2';
-
-function getLocalStorageCache(): Map<string, { data: LiveMarketData; timestamp: number }> {
-  try {
-    const stored = localStorage.getItem(LS_CACHE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      return new Map(Object.entries(parsed));
-    }
-  } catch { /* ignore */ }
-  return new Map();
-}
-
-function setLocalStorageCache(cache: Map<string, { data: LiveMarketData; timestamp: number }>) {
-  try {
-    const obj: Record<string, any> = {};
-    cache.forEach((v, k) => { obj[k] = v; });
-    localStorage.setItem(LS_CACHE_KEY, JSON.stringify(obj));
-  } catch { /* ignore */ }
-}
-
-const marketDataCache = getLocalStorageCache();
-
-export function useLiveMarketData(
-  asset: Asset | null,
-  options: UseLiveMarketDataOptions = {}
-) {
-  const { refreshInterval = 120000, enabled = true } = options; // 120s default (CoinGecko-friendly)
-  
+export interface CandleData { time: string; open: number; high: number; low: number; close: number; volume: number }
+interface UseLiveMarketDataOptions { refreshInterval?: number; enabled?: boolean }
+export function useLiveMarketData(asset: Asset | null, { refreshInterval = 120000, enabled = true }: UseLiveMarketDataOptions = {}) {
   const [liveData, setLiveData] = useState<LiveMarketData | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false), [error, setError] = useState<string | null>(null);
   const [lastFetch, setLastFetch] = useState<Date | null>(null);
-  
-  const isMounted = useRef(true);
-  const fetchInProgress = useRef(false);
-
+  const current = useRef(asset); current.current = asset;
+  const generation = useRef(0), busy = useRef<number | null>(null);
   const fetchLiveData = useCallback(async () => {
-    if (!asset || !enabled || fetchInProgress.current) return;
-    
-    // Validate asset has a valid price
-    if (typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) {
-      console.log(`Skipping live fetch for ${asset.symbol}: invalid base price`);
-      return;
-    }
-
-    // Check cache first
-    const cacheKey = `${asset.id}-quote`;
-    const cached = marketDataCache.get(cacheKey);
-    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
-      setLiveData(cached.data);
-      return;
-    }
-
-    fetchInProgress.current = true;
-    setIsLoading(true);
-    setError(null);
-
+    const a = current.current, version = generation.current;
+    if (!a || !enabled || busy.current === version || !Number.isFinite(a.price) || a.price <= 0) return;
+    busy.current = version; setIsLoading(true);
     try {
-      // Fetch live market data using URL params
-      const response = await fetch(
-        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=quote`,
-        {
-          headers: {
-            'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      if (isMounted.current && result.success && result.data) {
-        const data = result.data;
-        // Validate that we got a valid price back
-        if (typeof data.price === 'number' && !isNaN(data.price) && data.price > 0) {
-          const provenanceStatus = result.provenance?.status ?? data.provenance?.status;
-          const hasCompleteRealtimeFields =
-            provenanceStatus === 'realtime' &&
-            ['change24h', 'changePercent24h', 'high24h', 'low24h', 'volume24h']
-              .every((key) => typeof data[key] === 'number' && Number.isFinite(data[key]));
-          const marketData: LiveMarketData = {
-            price: data.price,
-            change24h: typeof data.change24h === 'number' && Number.isFinite(data.change24h) ? data.change24h : null,
-            changePercent24h: typeof data.changePercent24h === 'number' && Number.isFinite(data.changePercent24h) ? data.changePercent24h : null,
-            high24h: typeof data.high24h === 'number' && Number.isFinite(data.high24h) ? data.high24h : null,
-            low24h: typeof data.low24h === 'number' && Number.isFinite(data.low24h) ? data.low24h : null,
-            volume24h: typeof data.volume24h === 'number' && Number.isFinite(data.volume24h) ? data.volume24h : null,
-            marketCap: typeof data.marketCap === 'number' ? data.marketCap : undefined,
-            lastUpdated: data.lastUpdated ?? null,
-            // Only complete provider data explicitly marked realtime may surface as "live".
-            source: data.source === 'live' ? 'live' : 'simulated',
-            provenance: result.provenance ?? data.provenance,
-          };
-          setLiveData(marketData);
-          setLastFetch(new Date());
-          
-          // Update cache (memory + localStorage)
-          marketDataCache.set(cacheKey, { data: marketData, timestamp: Date.now() });
-          setLocalStorageCache(marketDataCache);
-        }
-      }
-    } catch (err) {
-      console.error('Live market data fetch error:', err);
-      if (isMounted.current) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch live data');
-        
-        // Fallback to simulated data based on asset
-        setLiveData({
-          price: asset.price,
-          change24h: asset.change,
-          changePercent24h: asset.changePercent,
-          high24h: asset.price * 1.02,
-          low24h: asset.price * 0.98,
-          volume24h: asset.type === 'crypto' ? 50000000000 : 10000000,
-          lastUpdated: new Date().toISOString(),
-          source: 'simulated',
-        });
-      }
-    } finally {
-      fetchInProgress.current = false;
-      if (isMounted.current) {
-        setIsLoading(false);
-      }
-    }
-  }, [asset, enabled]);
-
-  // Initial fetch and refresh interval
+      const result = await marketRequests.request(a);
+      if (generation.current !== version || current.current?.id !== a.id || Array.isArray(result.data)) return;
+      const data: LiveMarketData = { ...result.data, provenance: result.provenance ?? result.data.provenance };
+      setLiveData(data); setLastFetch(new Date(data.provenance?.fetchedAt ?? Date.now())); setError(null);
+    } catch (e) {
+      if (generation.current === version && current.current?.id === a.id) setError(e instanceof Error ? e.message : 'Price service is temporarily unavailable.');
+    } finally { if (busy.current === version) busy.current = null; if (generation.current === version) setIsLoading(false); }
+  }, [enabled]);
   useEffect(() => {
-    isMounted.current = true;
-
-    if (asset && enabled) {
-      fetchLiveData();
-
-      const interval = setInterval(fetchLiveData, refreshInterval);
-      return () => {
-        clearInterval(interval);
-        isMounted.current = false;
-      };
-    }
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, [asset?.id, enabled, refreshInterval, fetchLiveData]);
-
-  return {
-    liveData,
-    isLoading,
-    error,
-    lastFetch,
-    refetch: fetchLiveData,
-    isLive: liveData?.source === 'live',
-  };
+    generation.current++; setLiveData(null); setError(null); setLastFetch(null); setIsLoading(false);
+    if (!asset || !enabled) return;
+    const visible = () => { if (!document.hidden) void fetchLiveData(); };
+    void fetchLiveData(); const timer = window.setInterval(visible, Math.max(refreshInterval, 30000));
+    document.addEventListener('visibilitychange', visible);
+    return () => { generation.current++; window.clearInterval(timer); document.removeEventListener('visibilitychange', visible); };
+  }, [asset?.id, asset?.type, enabled, refreshInterval, fetchLiveData]);
+  return { liveData, isLoading, error, lastFetch, refetch: fetchLiveData, isLive: liveData?.provenance?.status === 'realtime' };
 }
-
-// Hook for fetching candle data for charts
-export function useLiveCandleData(
-  asset: Asset | null,
-  options: UseLiveMarketDataOptions = {}
-) {
-  const { refreshInterval = 60000, enabled = true } = options; // 1 minute for candles
-  
-  const [candles, setCandles] = useState<CandleData[]>([]);
-  const [provenance, setProvenance] = useState<MarketDataProvenance | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  
-  const isMounted = useRef(true);
-  const fetchInProgress = useRef(false);
-
+export function useLiveCandleData(asset: Asset | null, { refreshInterval = 300000, enabled = true }: UseLiveMarketDataOptions = {}) {
+  const [candles, setCandles] = useState<CandleData[]>([]), [provenance, setProvenance] = useState<MarketDataProvenance | null>(null);
+  const [isLoading, setIsLoading] = useState(false), [error, setError] = useState<string | null>(null);
+  const current = useRef(asset); current.current = asset;
+  const generation = useRef(0), busy = useRef<number | null>(null);
   const fetchCandles = useCallback(async () => {
-    if (!asset || !enabled || fetchInProgress.current) return;
-    
-    // Validate asset has a valid price
-    if (typeof asset.price !== 'number' || isNaN(asset.price) || asset.price <= 0) {
-      console.log(`Skipping candle fetch for ${asset.symbol}: invalid base price`);
-      return;
-    }
-
-    fetchInProgress.current = true;
-    setIsLoading(true);
-
+    const a = current.current, version = generation.current;
+    if (!a || !enabled || busy.current === version) return;
+    busy.current = version; setIsLoading(true);
     try {
-      const response = await fetch(
-        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=candles`,
-        {
-          headers: {
-            'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      if (isMounted.current && result.success && Array.isArray(result.data)) {
-        setCandles(result.data);
-        setProvenance(result.provenance ?? null);
-      }
-    } catch (err) {
-      console.error('Candle data fetch error:', err);
-      if (isMounted.current) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch candles');
-        // Generate fallback candles and label them explicitly as simulated.
-        setCandles(generateFallbackCandles(asset.price));
-        setProvenance({
-          status: 'simulated',
-          provider: 'TradeHQ simulation',
-          fetchedAt: new Date().toISOString(),
-        });
-      }
-    } finally {
-      fetchInProgress.current = false;
-      if (isMounted.current) {
-        setIsLoading(false);
-      }
-    }
-  }, [asset, enabled]);
-
+      const result = await marketRequests.request(a, 'candles');
+      if (generation.current !== version || current.current?.id !== a.id || !Array.isArray(result.data)) return;
+      setCandles(result.data); setProvenance(result.provenance ?? null); setError(null);
+    } catch (e) { if (generation.current === version) setError(e instanceof Error ? e.message : 'Chart data is temporarily unavailable.'); }
+    finally { if (busy.current === version) busy.current = null; if (generation.current === version) setIsLoading(false); }
+  }, [enabled]);
   useEffect(() => {
-    isMounted.current = true;
-
-    if (asset && enabled) {
-      fetchCandles();
-
-      const interval = setInterval(fetchCandles, refreshInterval);
-      return () => {
-        clearInterval(interval);
-        isMounted.current = false;
-      };
-    }
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, [asset?.id, enabled, refreshInterval, fetchCandles]);
-
-  return {
-    candles,
-    isLoading,
-    error,
-    provenance,
-    source: provenance?.status === 'provider' ? 'provider' : 'simulated',
-    refetch: fetchCandles,
-  };
-}
-
-// Generate fallback candle data for when API is unavailable
-function generateFallbackCandles(basePrice: number, count: number = 60): CandleData[] {
-  const candles: CandleData[] = [];
-  let price = basePrice * (0.98 + Math.random() * 0.04);
-  const now = Date.now();
-
-  for (let i = count; i >= 0; i--) {
-    const open = price;
-    const volatility = 0.003;
-    const change = (Math.random() - 0.48) * basePrice * volatility;
-    const close = price + change;
-    const high = Math.max(open, close) * (1 + Math.random() * volatility);
-    const low = Math.min(open, close) * (1 - Math.random() * volatility);
-    
-    candles.push({
-      time: new Date(now - i * 60000).toISOString(),
-      open: Number(open.toFixed(4)),
-      high: Number(high.toFixed(4)),
-      low: Number(low.toFixed(4)),
-      close: Number(close.toFixed(4)),
-      volume: Math.floor(Math.random() * 100000),
-    });
-
-    price = close;
-  }
-
-  return candles;
+    generation.current++; setCandles([]); setProvenance(null); setError(null); setIsLoading(false);
+    if (!asset || !enabled) return;
+    const visible = () => { if (!document.hidden) void fetchCandles(); };
+    void fetchCandles(); const timer = window.setInterval(visible, Math.max(refreshInterval, 300000));
+    document.addEventListener('visibilitychange', visible);
+    return () => { generation.current++; window.clearInterval(timer); document.removeEventListener('visibilitychange', visible); };
+  }, [asset?.id, asset?.type, enabled, refreshInterval, fetchCandles]);
+  return { candles, isLoading, error, provenance, source: provenance?.status === 'provider' ? 'provider' : 'simulated', refetch: fetchCandles };
 }
