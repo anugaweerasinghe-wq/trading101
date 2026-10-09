@@ -563,6 +563,16 @@ function extraRoutes(): RouteMeta[] {
       changefreq: "monthly",
     });
   }
+  for (const entry of [
+    ["/admin", "Admin Dashboard"],
+    ["/admin/courses", "Course Administration"],
+    ["/admin/reviews", "Review Administration"],
+    ["/admin/validator", "Link Validator"],
+    ["/admin/seo-audit", "SEO Audit"],
+    ["/admin/editor", "Editorial Administration"],
+  ]) {
+    out.push({ path: entry[0], title: entry[1] + " | TradeHQ", description: "Restricted TradeHQ administration utility.", h1: entry[1], summary: "Owner-only workspace for TradeHQ administration.", priority: "0.1", changefreq: "monthly", noindex: true });
+  }
   out.push({ path: "/admin/daily", title: "Daily Practice Administration | TradeHQ", description: "Private owner editing and approval for daily practice banks.", h1: "Daily practice administration", summary: "Owner administration requires the master key.", priority: "0.1", changefreq: "monthly", noindex: true });
   return out;
 }

@@ -13,6 +13,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { recordVisit } from "@/lib/lastVisit";
 import { snapshotWatchlist } from "@/lib/watchlistDiff";
 import { ConsentBanner } from "@/components/ConsentBanner";
+import { CoursePublicationNotices } from "@/components/courses/CoursePublicationNotices";
 
 import Index from "./pages/Index";
 
@@ -41,6 +42,7 @@ const Reviews = lazy(() => import("./pages/Reviews"));
 const AdminReviews = lazy(() => import("./pages/AdminReviews"));
 const AdminDaily = lazy(() => import("./pages/AdminDaily"));
 const AdminCourses = lazy(() => import("./pages/AdminCourses"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const Roadmap = lazy(() => import("./pages/Roadmap"));
 const Compare = lazy(() => import("./pages/Compare"));
 const CompareIndex = lazy(() => import("./pages/Compare").then(m => ({ default: m.CompareIndex })));
@@ -124,7 +126,8 @@ function AnimatedRoutes() {
           <Route path="/wiki/:slug" element={<WikiTerm />} />
           <Route path="/niche/:symbol" element={<NicheAsset />} />
 
-          {/* ADMIN ROUTES — kept exactly as original */}
+          {/* ADMIN ROUTES — existing desks preserved */}
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/seo-audit" element={<SEOAudit />} />
           <Route path="/admin/validator" element={<AdminValidator />} />
           <Route path="/admin/editor" element={<AdminEditor />} />
@@ -170,6 +173,7 @@ const App = () => (
             <PushNotificationPrompt />
             <WatchlistSnapshot />
             <ConsentBanner />
+            <CoursePublicationNotices />
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
