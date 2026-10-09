@@ -63,6 +63,10 @@ const row = { price: "100", source: "CoinGecko", updated_at: new Date(now - 6000
 assert.equal(sharedQuote(row, now)?.provenance.status, "delayed");
 assert.equal(sharedQuote(row, now)?.change24h, null);
 assert.equal(sharedQuote({ ...row, updated_at: new Date(now - 7 * 60000).toISOString() }, now), null);
+const current = new Date(now - 30000).toISOString();
+const quote = { price: 100, change24h: 2, changePercent24h: 2, volume24h: 1234, provenance: { observedAt: current } };
+assert.equal(sharedQuote({ ...row, observed_at: current.replace("Z", "+00:00"), quote_data: quote }, now)?.change24h, 2);
+assert.equal(sharedQuote({ ...row, observed_at: current, price: 101, quote_data: quote }, now)?.change24h, null);
 
 let aiCalls = 0;
 const claim = { lease: "test", period: "2026-10", slot: 1, apiKey: "test-free-key", model: "gemini-3.8-flash",

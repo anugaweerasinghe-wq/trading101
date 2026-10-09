@@ -8,8 +8,9 @@ export function sharedQuote(row: Record<string, unknown>, now = Date.now()): Mar
   if (!Number.isFinite(price) || price <= 0 || price >= 1e9) return null;
   const observed = row.observed_at ? String(row.observed_at) : null;
   const candidate = row.quote_data as MarketData | null;
-  const saved = candidate && Number(candidate.price) === price && candidate.provenance?.observedAt === observed ? candidate : null;
   const observedTime = observed ? Date.parse(observed) : NaN;
+  const saved = candidate && Number(candidate.price) === price && Number.isFinite(observedTime)
+    && Date.parse(candidate.provenance?.observedAt ?? "") === observedTime ? candidate : null;
   const stale = !Number.isFinite(observedTime) || now - observedTime > 15 * 60000 || observedTime > now + 60000;
   return {
     price, change24h: saved?.change24h ?? null, changePercent24h: saved?.changePercent24h ?? null,
