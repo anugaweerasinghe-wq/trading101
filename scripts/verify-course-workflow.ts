@@ -99,7 +99,7 @@ try {
     CREATE FUNCTION vault.update_secret(k uuid,s text) RETURNS void LANGUAGE sql AS $$ UPDATE vault.secrets SET secret=s WHERE id=k $$;
     CREATE SCHEMA net; CREATE FUNCTION net.http_post(url text,body jsonb,headers jsonb,timeout_milliseconds integer) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;
     CREATE SCHEMA cron; CREATE FUNCTION cron.schedule(name text,schedule text,command text) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;`);
-  for (const file of readdirSync("supabase/migrations").filter(f => /course_draft_approval|course_generation_schedule/.test(f)).sort()) {
+  for (const file of readdirSync("supabase/migrations").filter(f => /course_draft_approval|course_generation_schedule|support_gemini_auth_keys|validate_gemini_auth_key_length/.test(f)).sort()) {
     await db.exec(readFileSync("supabase/migrations/" + file, "utf8"));
   }
   const doc = JSON.stringify(document);
@@ -137,8 +137,10 @@ try {
   assert.equal(meta.rows[0].value.hasApiKey, false);
   assert.ok(!Object.keys(meta.rows[0].value).includes("apiKey"));
   assert.equal((await db.query<{ value: number | null }>("select public.request_course_generation() as value")).rows[0].value, null);
-  const ready = { ...settings, enabled: true, freeConfirmed: true, apiKey: "test-free-provider-key-123456", topicRequests: ["Price snapshots"] };
+  const ready = { ...settings, enabled: true, freeConfirmed: true, apiKey: "AQ.test-free-provider-key-123456", topicRequests: ["Price snapshots"] };
   await db.query("select public.configure_course_generation($1::jsonb)", [JSON.stringify(ready)]);
+  await assert.rejects(db.query("select public.configure_course_generation($1::jsonb)", [JSON.stringify({ ...ready, apiKey: "x".repeat(257) })]), /Invalid API key/);
+  await assert.rejects(db.query("select public.configure_course_generation($1::jsonb)", [JSON.stringify({ ...ready, apiKey: "AQ.invalid key with spaces" })]), /Invalid API key/);
   await db.exec("DELETE FROM public.course_drafts WHERE id <> '" + id + "'");
   // Use a different period from the current clock for the existing fixture.
   await db.query("UPDATE public.course_drafts SET generation_period='2000-01' WHERE id=$1", [id]);
