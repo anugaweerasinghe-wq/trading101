@@ -21,7 +21,7 @@ export function renderApprovedCourse(shell: string, doc: CourseDocument, lessonS
       + esc(doc.progression) + "</p><h2>Scope</h2><p>" + esc(doc.notFor) + "</p><h2>Lessons</h2><ol>"
       + doc.lessons.map(l => '<li><a href="/courses/' + esc(doc.slug) + "/" + esc(l.slug) + '">' + esc(l.title) + "</a><p>" + esc(l.summary) + "</p></li>").join("") + "</ol>";
   const article = '<main style="max-width:820px;margin:0 auto;padding:48px 24px;color:#e5e7eb;background:#0a0a0f;font-family:system-ui"><nav><a href="/">TradeHQ</a> · <a href="/courses">Courses</a></nav><article><h1>'
-    + esc(lesson?.title ?? doc.title) + "</h1>" + editorial + body + '</article><p style="margin-top:40px">Educational only. Practice uses virtual cash; simulated performance does not predict real returns.</p></main>';
+    + esc(lesson?.title ?? doc.title) + "</h1>" + editorial + '<img src="' + esc(doc.hero) + '" alt="' + esc(doc.title + " — cover illustration") + '" width="1920" height="1080" style="width:100%;height:auto;border-radius:16px;margin:24px 0">' + body + '</article><p style="margin-top:40px">Educational only. Practice uses virtual cash; simulated performance does not predict real returns.</p></main>';
   const structured = lesson ? {
     "@context": "https://schema.org", "@type": "LearningResource", name: lesson.title, description: lesson.summary,
     url, learningResourceType: "Lesson", inLanguage: "en", isPartOf: { "@type": "Course", name: doc.title, url: domain + "/courses/" + doc.slug },
