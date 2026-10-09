@@ -15,7 +15,7 @@ import { PRICE_REFRESH_COPY, priceLabel, quoteTimeLabel } from "@/lib/practicePr
 import { pushPortfolio, reconcilePortfolio, startRankedPractice } from "@/lib/cloudPortfolio";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { STARTING_BALANCE_LABEL } from "@/lib/constants";
-import { compareMemberActivity } from "@/lib/memberActivity";
+import { compareMemberRank } from "@/lib/memberActivity";
 
 interface BoardRow {
   userId: string;
@@ -54,7 +54,7 @@ const LEADERBOARD_FAQS = [
   {
     question: "How do I climb the leaderboard?",
     answer:
-      "Every public member appears, including accounts with no trades yet. Members with the most server-recorded trades appear first; previous reported trades break ties. Comparable ranked portfolios receive a rank after their first server-recorded trade, calculated from simulated return against a $100,000 virtual starting balance. Previous activity never changes that rank. A rank is not evidence of real-money skill.",
+      "Every public member appears, including accounts with no trades yet. Ranked members appear first in return-rank order; unranked members follow, ordered by practice activity. Comparable ranked portfolios receive a rank after their first server-recorded trade, calculated from simulated return against a $100,000 virtual starting balance. Ranks and display order update automatically when this page refreshes. Previous activity never changes a return rank. A rank is not evidence of real-money skill.",
   },
   {
     question: "Do I need an account to compete?",
@@ -122,7 +122,7 @@ export default function Leaderboard() {
         portfolioValue: row.portfolio_value === null ? null : Number(row.portfolio_value), pnlPct: row.pnl_pct === null ? null : Number(row.pnl_pct),
         trades: Number(row.trades), previousTrades: previousTrades.get(row.user_id) ?? 0, pricedAt: row.priced_at ?? null, observedAt: row.observed_at ?? null,
         priceStatus: row.price_status, portfolioStatus: row.portfolio_status, practiceRank: row.practice_rank,
-      })).sort(compareMemberActivity);
+      })).sort(compareMemberRank);
       const historicRows = previous.error ? [] : (previous.data ?? []).map(row => ({
         userId: row.user_id, username: row.username, country: row.country,
         portfolioValue: Number(row.portfolio_value), pnlPct: Number(row.pnl_pct),
@@ -218,7 +218,7 @@ export default function Leaderboard() {
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ Community Practice Board" />
-        <meta property="og:description" content="Public TradeHQ accounts sorted by practice activity, with comparable portfolios ranked by simulated return. Results are not audited investment performance." />
+        <meta property="og:description" content="Public TradeHQ accounts ordered by simulated return rank, followed by unranked members. Results are not audited investment performance." />
         <meta property="og:url" content="https://www.thetradehq.com/leaderboard" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -226,7 +226,7 @@ export default function Leaderboard() {
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="TradeHQ Community Practice Board" />
-        <meta name="twitter:description" content="Public TradeHQ accounts sorted by practice activity, with comparable portfolios ranked by simulated return. Stats are not independently verified." />
+        <meta name="twitter:description" content="Public TradeHQ accounts ordered by simulated return rank, followed by unranked members. Stats are not independently verified." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
@@ -354,7 +354,7 @@ export default function Leaderboard() {
                     <h2 className="font-semibold text-sm">Public members <span className="ml-1.5 rounded-md bg-muted px-2 py-0.5 text-xs tabular-nums text-muted-foreground">{loading || loadError ? "—" : rows.length}</span></h2>
                     <p className="mt-1 text-xs text-muted-foreground">No minimum trades to appear</p>
                   </div>
-                  <span className="rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground">Sorted by activity</span>
+                  <span className="rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground">Sorted by return rank</span>
                 </div>
                 <div className="hidden md:grid grid-cols-[minmax(0,1fr)_140px_110px_90px] gap-4 px-6 py-3 text-[11px] font-medium tracking-wider text-muted-foreground uppercase border-b border-border/60 bg-muted/20">
                   <span>Member / return rank</span><span className="text-right">Virtual value</span><span className="text-right">Ranked return</span><span className="text-right">Trades</span>
@@ -406,7 +406,7 @@ export default function Leaderboard() {
                       </details>
                     </article>
                   ))}
-                <p className="border-t border-border/60 px-4 sm:px-6 py-3 text-[11px] text-muted-foreground leading-relaxed">Most server trades first; previous reported activity breaks ties. Return rank is calculated separately from simulated return.</p>
+                <p className="border-t border-border/60 px-4 sm:px-6 py-3 text-[11px] text-muted-foreground leading-relaxed">Ranked members first, by simulated return. Unranked members follow, ordered by practice activity. Order updates automatically every minute while this page is visible.</p>
               </section>
             ) : tab === "previous" ? (
               <section aria-labelledby="previous-results-heading" className="rounded-2xl border border-border bg-card overflow-hidden">
