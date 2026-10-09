@@ -21,6 +21,7 @@ import { practiceDate } from "../../supabase/functions/_shared/dailyPractice";
 import { cn } from "@/lib/utils";
 
 export default function Daily() {
+  const [deeperOpen, setDeeperOpen] = useState(false);
   const [date, setDate] = useState(practiceDate);
   const challenge = getTodayChallenge();
   const bonus = getTodayBonus();
@@ -30,6 +31,7 @@ export default function Daily() {
   const [bonusPick, setBonusPick] = useState<number | null>(null);
 
   useEffect(() => {
+    setDeeperOpen(false);
     setStreak(getStreak());
     setSubmitted(hasPlayedQuickToday()); setSelected(null); setBonusPick(null);
   }, [date]);
@@ -59,7 +61,7 @@ export default function Daily() {
     <>
       <Helmet>
         <title>Daily Trading Challenge — Build Your Streak | TradeHQ</title>
-        <meta name="description" content="A quick daily scenario plus a 3–5 minute exercise with calculations, visuals and worked answers. Practise from 50 rotating cases and build your streak for free." />
+        <meta name="description" content="A quick daily scenario plus a 8–12 minute case study with calculations, visuals and worked answers. Practise from 50 rotating cases and build your streak for free." />
         <link rel="canonical" href="https://www.thetradehq.com/daily" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Daily Trading Challenge — TradeHQ" />
@@ -110,7 +112,7 @@ export default function Daily() {
                 Today's Trading Scenario
               </h1>
               <p className="text-foreground/70 max-w-xl mx-auto text-[15px] leading-relaxed">
-                A quick scenario plus deeper 3–5 minute practice below. Compare assumptions, work through the answers and build your streak; no direction is a guaranteed forecast.
+                A quick scenario plus an optional 10-question case study. Compare assumptions, work through the answers and build your streak; no direction is a guaranteed forecast.
               </p>
             </header>
 
@@ -303,6 +305,9 @@ export default function Daily() {
                       Practice This Trade Now <ArrowRight className="w-4 h-4" />
                     </button>
                   </Link>
+                  <a href="#deeper-practice" onClick={() => setDeeperOpen(true)} aria-expanded={deeperOpen} aria-controls="deeper-practice" className="flex-1 h-12 rounded-xl bg-primary/10 border border-primary/40 font-semibold text-sm text-primary flex items-center justify-center gap-2">
+                    Go Deeper <Brain className="w-4 h-4" />
+                  </a>
                   <Link to="/learn" className="flex-1">
                     <button className="w-full h-12 rounded-xl bg-white/[0.05] border border-white/[0.1] font-semibold text-sm text-foreground active:scale-[0.97] transition-transform">
                       Learn More Concepts
@@ -316,7 +321,7 @@ export default function Daily() {
               </p>
             </article>
 
-            <DailyPractice key={date} date={date} onComplete={() => setStreak(recordChallenge(0, "hold"))} />
+            <DailyPractice key={date} date={date} open={deeperOpen} onOpen={() => setDeeperOpen(true)} onClose={() => setDeeperOpen(false)} onComplete={() => setStreak(recordChallenge(0, "hold"))} />
 
             {/* Badges — premium */}
             <section

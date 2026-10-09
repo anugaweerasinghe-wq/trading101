@@ -10,18 +10,15 @@ const corsHeaders = {
 };
 
 function generateSimulatedData(basePrice: number, type: string): MarketData {
-  const volatility = type === 'crypto' ? 0.03 : type === 'forex' ? 0.005 : 0.015;
-  const change = basePrice * (Math.random() * volatility * 2 - volatility);
   return {
-    price: basePrice + change * 0.1,
-    change24h: change, changePercent24h: (change / basePrice) * 100,
-    high24h: basePrice * (1 + volatility), low24h: basePrice * (1 - volatility),
-    volume24h: Math.floor(Math.random() * 1000000000),
-    lastUpdated: new Date().toISOString(), source: 'simulated',
+    price: basePrice,
+    change24h: null, changePercent24h: null,
+    high24h: null, low24h: null, volume24h: null,
+    lastUpdated: null, source: 'simulated',
     provenance: {
-      status: 'simulated',
-      provider: 'TradeHQ simulation',
+      status: 'simulated', provider: 'TradeHQ fixed simulator quote',
       fetchedAt: new Date().toISOString(),
+      note: 'No usable provider observation. This is a fixed simulator input, not a live market quote.',
     },
   };
 }

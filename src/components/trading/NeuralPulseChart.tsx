@@ -2,7 +2,7 @@ import { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import { createChart, IChartApi, ISeriesApi, LineStyle, ColorType } from "lightweight-charts";
 import { Asset } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/config";
+import { marketRequests } from "@/lib/marketDataClient";
 
 interface NeuralPulseChartProps {
   asset: Asset;
@@ -63,6 +63,7 @@ function generateFallbackOHLC(basePrice: number, count: number, intervalMinutes:
 export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
+  const requestVersion = useRef(0);
   const [range, setRange] = useState<TimeRange>('1M');
   const [liveData, setLiveData] = useState<OHLCData[] | null>(null);
   const [dataSource, setDataSource] = useState<'provider' | 'simulated'>('simulated');
@@ -73,21 +74,14 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
   // Fetch provider-backed or explicitly simulated candle history from edge function
   const fetchLiveCandles = useCallback(async () => {
     if (!asset) return;
+    const version = ++requestVersion.current;
     setIsLoadingData(true);
+    if (config.days > 365) { setLiveData(null); setDataSource('simulated'); setIsLoadingData(false); return; }
     
     try {
-      const response = await fetch(
-        `${SUPABASE_URL}/functions/v1/live-market-data?assetId=${asset.id}&type=${asset.type}&basePrice=${asset.price}&dataType=candles&days=${config.days}`,
-        {
-          headers: {
-            "Authorization": `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
-        const result = await response.json();
+      const result = await marketRequests.request(asset, 'candles', config.days);
+      if (version !== requestVersion.current) return;
+      if (Array.isArray(result.data)) {
         if (result.success && Array.isArray(result.data) && result.data.length > 5) {
           // Convert API candle data to chart format with unique daily keys
           const seen = new Set<string>();
@@ -129,55 +123,17 @@ export function NeuralPulseChart({ asset, height = 420 }: NeuralPulseChartProps)
       console.warn('Neural Pulse: Primary data source failed, using fallback', err);
     }
 
-    // Backup: Try CoinGecko OHLC directly for crypto
-    if (asset.type === 'crypto') {
-      try {
-        const coinMap: Record<string, string> = {
-          btc: 'bitcoin', eth: 'ethereum', sol: 'solana', bnb: 'binancecoin',
-          xrp: 'ripple', ada: 'cardano', doge: 'dogecoin', avax: 'avalanche-2',
-          dot: 'polkadot', link: 'chainlink', ltc: 'litecoin',
-        };
-        const coinId = coinMap[asset.id.toLowerCase()];
-        if (coinId) {
-          const days = config.days > 365 ? 'max' : config.days;
-          const resp = await fetch(
-            `https://api.coingecko.com/api/v3/coins/${coinId}/ohlc?vs_currency=usd&days=${days}`,
-            { headers: { Accept: 'application/json' } }
-          );
-          if (resp.ok) {
-            const raw = await resp.json();
-            if (Array.isArray(raw) && raw.length > 5) {
-              const seen = new Set<string>();
-              const formatted: OHLCData[] = [];
-              for (const c of raw) {
-                const d = new Date(c[0]);
-                const timeStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-                if (seen.has(timeStr)) continue;
-                seen.add(timeStr);
-                formatted.push({ time: timeStr, open: c[1], high: c[2], low: c[3], close: c[4] });
-              }
-              if (formatted.length > 2) {
-                setLiveData(formatted);
-                setDataSource('provider');
-                setIsLoadingData(false);
-                return;
-              }
-            }
-          }
-        }
-      } catch (err2) {
-        console.warn('Neural Pulse: Backup CoinGecko source also failed', err2);
-      }
-    }
-
+    if (version !== requestVersion.current) return;
     // Final fallback: simulated data
     setLiveData(null);
     setDataSource('simulated');
     setIsLoadingData(false);
-  }, [asset?.id, asset?.type, asset?.price, config.days]);
+  }, [asset?.id, asset?.type, config.days]);
 
   useEffect(() => {
-    fetchLiveCandles();
+    setLiveData(null); setDataSource('simulated');
+    void fetchLiveCandles();
+    return () => { requestVersion.current++; };
   }, [fetchLiveCandles, range]);
 
   const chartData = useMemo(() => {

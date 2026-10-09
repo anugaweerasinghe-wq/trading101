@@ -4,11 +4,11 @@ import { PGlite } from '@electric-sql/pglite';
 import { starterPracticeBank as bank } from '../src/lib/dailyPracticeBank.ts';
 import { exerciseForDate, validateBatch, validateExercises, type DailyExercise } from '../supabase/functions/_shared/dailyPractice.ts';
 import { recordChallenge, getStreak, hasPlayedQuickToday, getTodayChallenge } from '../src/lib/dailyChallenge.ts';
-import { newPractice, readPractice, savePractice } from '../src/lib/dailyPracticeProgress.ts';
+import { newPractice, readPractice, savePractice, upgradePractice } from '../src/lib/dailyPracticeProgress.ts';
 import { createCourseAdminHandler } from '../supabase/functions/_shared/courseAdmin.ts';
 import { generatePractice } from '../supabase/functions/_shared/dailyPracticeGenerator.ts';
 assert.ok(validateBatch(bank)); assert.equal(new Set(bank.exercises.map(e => e.id)).size, 50);
-assert.equal(new Set(bank.exercises.flatMap(e => e.questions.map(q => q.prompt))).size, 150);
+assert.equal(new Set(bank.exercises.flatMap(e => e.questions.map(q => q.prompt))).size, 500);
 for (const bad of [null, {}, { ...bank, effectiveFrom: '2026-02-30' }, { ...bank, exercises: [null] }, { ...bank, exercises: bank.exercises.map((e, i) => i ? e : { ...e, title: 23 }) }]) assert.equal(validateBatch(bad), false);
 const invalid = structuredClone(bank); (invalid.exercises[0].questions[0].options as unknown[])[0] = {}; assert.ok(validateExercises(invalid.exercises).length);
 for (let i = 0; i < 50; i++) assert.equal(exerciseForDate(bank, new Date(Date.UTC(2026, 9, 9 + i)).toISOString().slice(0, 10)).id, bank.exercises[i].id);
@@ -21,6 +21,14 @@ assert.equal(savePractice({ ...progress, bankId: 'another', exercise: bank.exerc
 assert.equal(readPractice('2026-10-10', storage), null);
 assert.equal(readPractice('2026-10-09', { getItem: () => '{broken' }), null);
 assert.equal(savePractice(progress, { ...storage, setItem: () => { throw new Error('blocked'); } }).saved, false);
+// Only an exact preserved three-question prefix may be extended, with old answers retained.
+const legacy = { ...progress, bankId: 'authored-2026-10', exercise: { ...bank.exercises[0], questions: bank.exercises[0].questions.slice(0,3) } };
+const upgraded = upgradePractice(legacy, bank);
+assert.equal(upgraded.exercise.questions.length, 10); assert.deepEqual(upgraded.answers, legacy.answers);
+memory.clear(); savePractice(legacy, storage); assert.equal(savePractice(upgraded, storage).progress.exercise.questions.length, 10);
+const changedBank = structuredClone(bank); changedBank.exercises[0].questions[0].prompt += ' changed';
+assert.equal(upgradePractice(legacy, changedBank), legacy);
+memory.clear();
 // Real streak engine: deeper-first, quick-first and reload share one completion.
 const oldWindow = Object.getOwnPropertyDescriptor(globalThis, 'window'), oldStorage = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
 try {
@@ -79,6 +87,7 @@ try {
  CREATE SCHEMA cron; CREATE FUNCTION cron.schedule(name text,schedule text,command text) RETURNS bigint LANGUAGE sql AS $$ SELECT 1::bigint $$;`);
  await db.exec(readFileSync('supabase/migrations/20261009125658_daily_practice_and_content_cleanup.sql', 'utf8'));
  await db.exec(readFileSync('supabase/migrations/20261009135016_daily_practice_cycle_recovery.sql', 'utf8'));
+ await db.exec(readFileSync('supabase/migrations/20261009142312_daily_depth_and_scored_cases.sql', 'utf8'));
  const query = async <T>(sql: string, args: unknown[] = []) => (await db.query<{ v: T }>(sql, args)).rows[0]?.v;
  assert.equal(await query('SELECT tradehq_private.daily_exercises_valid($1::jsonb) AS v', [JSON.stringify(bank.exercises)]), true);
  await db.exec('SET ROLE anon');
@@ -87,7 +96,7 @@ try {
  await assert.rejects(db.query('SELECT * FROM public.daily_practice_drafts'), /permission denied/);
  await assert.rejects(db.query('SELECT public.claim_daily_practice($1)', ['a'.repeat(64)]), /permission denied/);
  await db.exec('RESET ROLE');
- const row = (await db.query<{ id: string }>('SELECT id FROM public.daily_practice_drafts')).rows[0];
+ const row = (await db.query<{ id: string }>("SELECT id FROM public.daily_practice_drafts WHERE document->>'id'='authored-2026-10-depth'")).rows[0];
  const edited = { ...bank, exercises: bank.exercises.map((e, i) => i ? e : { ...e, title: 'Edited private starter case' }) };
  await db.query('SELECT public.save_daily_practice($1,1,$2::jsonb)', [row.id, JSON.stringify(edited)]);
  assert.equal((await query<typeof bank>('SELECT public.get_daily_practice_bank() AS v')).exercises[0].title, bank.exercises[0].title);
@@ -106,8 +115,8 @@ try {
   assert.equal(await query('SELECT public.finish_daily_practice($1,$2::jsonb,$3::jsonb,NULL) AS v', [lease.lease, JSON.stringify(chunk(part)), '{}']), true);
   assert.equal(await query('SELECT public.finish_daily_practice($1,$2::jsonb,$3::jsonb,NULL) AS v', [lease.lease, JSON.stringify(chunk(part)), '{}']), false);
  }
- assert.equal((await db.query('SELECT * FROM public.daily_practice_drafts')).rows.length, 2);
- assert.equal((await db.query('SELECT * FROM public.daily_practice_batches')).rows.length, 1);
+ assert.equal((await db.query('SELECT * FROM public.daily_practice_drafts')).rows.length, 3);
+ assert.equal((await db.query('SELECT * FROM public.daily_practice_batches')).rows.length, 2);
  assert.equal(await query('SELECT next_due::text AS v FROM tradehq_private.daily_practice_state'), '2027-02-09');
  assert.equal(due, '2026-12-09');
  // A quota failure cannot be bypassed by an owner/manual request.
@@ -124,6 +133,6 @@ try {
  await db.exec("UPDATE tradehq_private.daily_practice_state SET next_due=((clock_timestamp() AT TIME ZONE 'Asia/Colombo')::date-interval '2 months')::date,retry_after=clock_timestamp()+interval '1 day',last_started=NULL");
  assert.equal(await query('SELECT public.request_daily_practice(false) AS v'), 1);
  assert.equal(await query('SELECT attempts AS v FROM tradehq_private.daily_practice_state'), 0);
- assert.equal((await db.query('SELECT * FROM public.daily_practice_batches')).rows.length, 1);
- console.log('PASS Daily: 50 unique cases/150 questions, date rotation, frozen attempts, storage failures, owner review/revision guards, private drafts, future banks, five resumable parts, token replay rejection, cooldown, attempt cap and no paid fallback.');
+ assert.equal((await db.query('SELECT * FROM public.daily_practice_batches')).rows.length, 2);
+ console.log('PASS Daily: 50 unique cases/500 questions, date rotation, frozen attempts, storage failures, owner review/revision guards, private drafts, future banks, five resumable parts, token replay rejection, cooldown, attempt cap and no paid fallback.');
 } finally { await db.close(); }

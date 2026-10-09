@@ -1,4 +1,4 @@
-import type { MarketData } from "./marketProviders.ts";
+import type { MarketData } from "./marketTypes.ts";
 
 /** Preserve observation time and missing fields when serving a shared provider quote. */
 export function sharedQuote(row: Record<string, unknown>, now = Date.now()): MarketData | null {

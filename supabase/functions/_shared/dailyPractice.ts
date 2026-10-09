@@ -9,7 +9,7 @@ export interface DailyExercise {
 export interface DailyBatch { id: string; effectiveFrom: string; exercises: DailyExercise[]; reviewer?: string; reviewedAt?: string }
 const text = (v: unknown, min: number, max: number) => typeof v === "string" && v.trim().length >= min && v.length <= max;
 export const normalized = (s: string) => s.toLowerCase().replace(/−/g, "-").replace(/[^a-z0-9+.-]+/g, " ").trim();
-export function validateExercises(value: unknown, count = 50): string[] {
+export function validateExercises(value: unknown, count = 50, questionCount?: number): string[] {
   const errors: string[] = [];
   if (!Array.isArray(value) || value.length !== count) return [`A batch needs exactly ${count} exercises.`];
   const ids = new Set<string>(), titles = new Set<string>(), prompts = new Set<string>();
@@ -21,11 +21,11 @@ export function validateExercises(value: unknown, count = 50): string[] {
     if (!text(e.title, 8, 120) || titles.has(normalized(typeof e.title === "string" ? e.title : ""))) errors.push(`${label} needs a distinct title.`);
     titles.add(normalized(typeof e.title === "string" ? e.title : ""));
     if (!(DAILY_CATEGORIES as readonly string[]).includes(e.category)) errors.push(`${label} needs a supported category.`);
-    if (!text(e.scenario, 180, 3000)) errors.push(`${label} needs a substantial scenario.`);
+    if (!text(e.scenario, 180, 5000)) errors.push(`${label} needs a substantial scenario.`);
     const v = e.visual;
     if (!v || !text(v.caption, 10, 240) || !text(v.unit, 1, 30) || !Array.isArray(v.bars) || v.bars.length < 2 || v.bars.length > 6
       || v.bars.some((b: { label: string; value: number }) => !b || !text(b.label, 1, 50) || !Number.isFinite(b.value) || b.value < 0 || b.value > 1e9)) errors.push(`${label} needs a labelled nonnegative illustration.`);
-    if (!Array.isArray(e.questions) || e.questions.length !== 3) errors.push(`${label} needs three questions.`);
+    if (!Array.isArray(e.questions) || (questionCount ? e.questions.length !== questionCount : ![3, 10].includes(e.questions.length))) errors.push(`${label} needs ${questionCount ?? 'three saved or ten new'} questions.`);
     else e.questions.forEach((q: PracticeQuestion, n: number) => {
       if (!q || !text(q.prompt, 12, 450) || !text(q.explanation, 100, 2000) || !Array.isArray(q.options) || q.options.length !== 3
         || q.options.some(o => !text(o, 1, 350)) || new Set(q.options.map(normalized)).size !== 3
