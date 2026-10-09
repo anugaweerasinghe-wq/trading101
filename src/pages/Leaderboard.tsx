@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
 import { Link } from "react-router-dom";
-import { Trophy, ArrowRight, Medal, Home, ChevronRight, Users, Swords, RefreshCw, Loader2 } from "lucide-react";
+import { Trophy, ArrowRight, Medal, Home, ChevronRight, Users, Swords, RefreshCw, Loader2, ChevronDown, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AssetFAQSection } from "@/components/AssetFAQSection";
@@ -218,7 +218,7 @@ export default function Leaderboard() {
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="TradeHQ Community Practice Board" />
-        <meta property="og:description" content="Public TradeHQ accounts sorted by server-recorded simulated percentage return. Results are not independently verified or audited performance records." />
+        <meta property="og:description" content="Public TradeHQ accounts sorted by practice activity, with comparable portfolios ranked by simulated return. Results are not audited investment performance." />
         <meta property="og:url" content="https://www.thetradehq.com/leaderboard" />
         <meta property="og:image" content="https://www.thetradehq.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -226,7 +226,7 @@ export default function Leaderboard() {
         <meta property="og:site_name" content="TradeHQ" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="TradeHQ Community Practice Board" />
-        <meta name="twitter:description" content="Public TradeHQ accounts sorted by server-recorded simulated percentage return. Stats are not independently verified." />
+        <meta name="twitter:description" content="Public TradeHQ accounts sorted by practice activity, with comparable portfolios ranked by simulated return. Stats are not independently verified." />
         <meta name="twitter:image" content="https://www.thetradehq.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
@@ -235,7 +235,7 @@ export default function Leaderboard() {
       <div className="min-h-screen bg-background">
         <Navigation />
         <main className="pt-28 pb-20">
-          <div className="container mx-auto px-6 max-w-4xl">
+          <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8" aria-label="Breadcrumb">
               <Link to="/" className="flex items-center gap-1 hover:text-primary transition-colors">
@@ -246,40 +246,42 @@ export default function Leaderboard() {
               <span className="text-foreground font-medium">Leaderboard</span>
             </nav>
 
-            <div className="text-center mb-12">
-              <Badge variant="outline" className="mb-4 px-4 py-1.5 border-primary/30 text-primary inline-flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Server-recorded practice
-              </Badge>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-                TradeHQ Leaderboard
+            <header className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-xl">
+                <p className="mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-primary">
+                  <Users className="h-4 w-4" aria-hidden="true" /> The community
+                </p>
+              <h1 className="text-4xl md:text-5xl font-bold mb-3 tracking-tight">
+                Leaderboard<span className="text-primary">.</span>
               </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                All public members appear here. Ranked practice uses server-recorded orders; imported portfolios and members with no trades remain unranked. Previous results preserve browser-reported summaries separately. All values are educational simulations, not audited investment performance.
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                A place for every public member. Follow the community's practice portfolios and see how your progress compares.
               </p>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              <p className="mt-3 text-xs text-muted-foreground">Educational simulations · not audited investment performance.</p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 lg:max-w-xs lg:justify-end">
                 {user ? (
                   <>
-                    <Button onClick={handleSync} disabled={syncing} className="!text-black font-bold rounded-xl">
+                    <Button onClick={handleSync} disabled={syncing} size="sm" className="!text-black font-semibold rounded-xl">
                       {syncing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <RefreshCw className="w-4 h-4 mr-2" />}
                       Refresh portfolio
                     </Button>
                     <Link to="/trader/me">
-                      <Button variant="outline" className="rounded-xl">My profile</Button>
+                      <Button variant="outline" size="sm" className="rounded-xl">My profile</Button>
                     </Link>
                   </>
                 ) : (
                   <Link to="/auth">
-                    <Button className="!text-black font-bold rounded-xl">Create a free account to join</Button>
+                    <Button size="sm" className="!text-black font-semibold rounded-xl">Create a free account to join</Button>
                   </Link>
                 )}
                 <Link to="/challenge">
-                  <Button variant="outline" className="rounded-xl">
+                  <Button variant="outline" size="sm" className="rounded-xl">
                     <Swords className="w-4 h-4 mr-2" /> Challenge a friend
                   </Button>
                 </Link>
               </div>
-            </div>
+            </header>
 
             {user && ranked === false && (
               <div className="mb-6 rounded-xl border border-white/10 p-4 text-sm">
@@ -307,7 +309,8 @@ export default function Leaderboard() {
             </AlertDialog>
 
             {/* Tabs: overall board vs head-to-head duels */}
-            <div className="flex gap-2 mb-4">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-5">
+            <div className="inline-flex gap-1 rounded-2xl border border-border bg-card p-1">
               {([
                 { id: "traders", label: "Public members" },
                 { id: "previous", label: "Previous results" },
@@ -317,62 +320,105 @@ export default function Leaderboard() {
                   key={t.id}
                   onClick={() => setTab(t.id)}
                   aria-pressed={tab === t.id}
-                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors border ${
+                  className={`flex-1 sm:flex-none px-3 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
                     tab === t.id
-                      ? "bg-primary text-black border-transparent"
-                      : "border-white/[0.08] text-muted-foreground hover:text-foreground"
+                      ? "bg-primary/10 text-primary shadow-sm"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
                   }`}
                 >
                   {t.label}
                 </button>
               ))}
             </div>
-
-            <div className="mb-4 text-xs text-muted-foreground leading-relaxed">
-              <p>{PRICE_REFRESH_COPY}</p>
-              <p className="mt-1">This page refreshes every minute while visible. {lastRefreshed && `Last loaded ${lastRefreshed.toLocaleTimeString()}.`}</p>
-              <Link to="/trader/me" className="text-primary underline">Manage my public/private visibility</Link>
+              <p className="flex items-center gap-2 text-xs text-muted-foreground" role="status">
+                <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} aria-hidden="true" />
+                {loading ? "Loading board…" : loadError ? "Update unavailable" : lastRefreshed ? `Updated ${lastRefreshed.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })}` : "Waiting for update"}
+              </p>
             </div>
+            <details className="group mb-5 rounded-xl border border-border/60 px-4 py-3 text-xs text-muted-foreground">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
+                <span>Prices may be delayed or cached. <span className="text-foreground">How updates work</span></span>
+                <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <div className="pt-3 space-y-2 leading-relaxed">
+                <p>{PRICE_REFRESH_COPY}</p>
+                <p>This page refreshes every minute while visible. {lastRefreshed && `Last loaded ${lastRefreshed.toLocaleTimeString()}.`}</p>
+                <p>Ranked practice uses server-recorded orders. Imported portfolios and members with no trades remain unranked. Previous results preserve browser-reported summaries separately.</p>
+                <Link to="/trader/me" className="inline-flex items-center gap-1.5 text-primary hover:underline"><ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />Manage my public/private visibility</Link>
+              </div>
+            </details>
             {tab === "traders" ? (
-              <section aria-label="Public members" className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden">
-                <div className="p-4 border-b border-white/[0.06] text-sm">
-                  <p>{rows.length} public members · no minimum trades to appear</p>
-                  <p className="mt-1 text-xs text-muted-foreground">Most server trades first; previous reported activity breaks ties. Practice rank still reflects simulated return.</p>
+              <section aria-label="Public members" className="bg-card border border-border rounded-2xl overflow-hidden shadow-[0_12px_40px_-24px_rgba(0,0,0,0.5)]">
+                <div className="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-5 border-b border-border">
+                  <div>
+                    <h2 className="font-semibold text-sm">Public members <span className="ml-1.5 rounded-md bg-muted px-2 py-0.5 text-xs tabular-nums text-muted-foreground">{loading || loadError ? "—" : rows.length}</span></h2>
+                    <p className="mt-1 text-xs text-muted-foreground">No minimum trades to appear</p>
+                  </div>
+                  <span className="rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground">Sorted by activity</span>
                 </div>
-                <div className="hidden md:grid grid-cols-5 gap-4 px-6 py-4 text-xs text-muted-foreground uppercase border-b border-white/[0.06]">
-                  <span>Practice rank</span><span>Member</span><span className="text-right">Virtual value</span><span className="text-right">Ranked return</span><span className="text-right">Server trades</span>
+                <div className="hidden md:grid grid-cols-[minmax(0,1fr)_140px_110px_90px] gap-4 px-6 py-3 text-[11px] font-medium tracking-wider text-muted-foreground uppercase border-b border-border/60 bg-muted/20">
+                  <span>Member / return rank</span><span className="text-right">Virtual value</span><span className="text-right">Ranked return</span><span className="text-right">Trades</span>
                 </div>
                 {loading ? <p className="p-8 text-center">Loading public members…</p>
                   : loadError ? <div className="p-8 text-center"><p>Could not load public members.</p><Button variant="outline" onClick={() => void load()}>Try again</Button></div>
                   : rows.length === 0 ? <p className="p-8 text-center">No public members yet.</p>
                   : rows.map(trader => (
-                    <Link key={trader.userId} to={`/trader/${trader.username}`} className={`grid grid-cols-2 md:grid-cols-5 gap-3 px-4 md:px-6 py-5 border-b border-white/[0.04] hover:bg-white/[0.03] ${profile?.id === trader.userId ? "bg-primary/[0.06]" : ""}`}>
-                      <div>{trader.practiceRank !== null ? getRankIcon(trader.practiceRank) : <span className="text-xs text-muted-foreground">Unranked</span>}</div>
-                      <div>
-                        <span className="font-semibold text-sm">{trader.username}</span>
-                        {trader.country && <span className="block text-xs text-muted-foreground">{trader.country}</span>}
-                        <span className="block text-xs text-muted-foreground mt-1">{trader.portfolioStatus === "imported" ? "Imported practice · unranked" : trader.trades === 0 ? trader.previousTrades > 0 ? "Previous reported activity · unranked" : "No trades yet" : "Server-recorded practice"}</span>
-                      </div>
-                      <div className="md:text-right text-xs text-muted-foreground">
-                        <span className="block font-mono text-sm text-foreground">{trader.portfolioValue === null ? "—" : `$${trader.portfolioValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}</span>
-                        <span className="block mt-1">{priceLabel(trader.priceStatus)}</span>
-                        <span className="block mt-1">{quoteTimeLabel(trader.pricedAt, trader.observedAt)}</span>
-                      </div>
-                      <div className="text-right font-mono text-sm">{trader.pnlPct === null ? "—" : `${trader.pnlPct >= 0 ? "+" : ""}${trader.pnlPct.toFixed(1)}%`}</div>
-                      <div className="md:text-right text-xs text-muted-foreground">
-                        <p>{trader.trades} server trades</p>
-                        {trader.previousTrades > 0 && <p className="mt-1">{trader.previousTrades} previous reported trades · unverified</p>}
-                      </div>
-                    </Link>
+                    <article key={trader.userId} aria-label={`Practice portfolio of ${trader.username}`} className={`border-b border-border/60 last:border-b-0 ${profile?.id === trader.userId ? "bg-primary/[0.05] border-l-2 border-l-primary" : ""}`}>
+                      <Link to={`/trader/${trader.username}`} className="grid grid-cols-3 md:grid-cols-[minmax(0,1fr)_140px_110px_90px] items-center gap-x-4 gap-y-4 px-4 md:px-6 pt-4 pb-2 hover:bg-muted/30 transition-colors">
+                        <div className="col-span-3 md:col-span-1 flex items-center gap-3 min-w-0">
+                          <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/40 text-sm font-semibold text-muted-foreground">{trader.username.slice(0, 1).toUpperCase()}</span>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="truncate font-semibold text-sm" title={trader.username}>{trader.username}</span>
+                              {profile?.id === trader.userId && <span className="rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary">You</span>}
+                            </div>
+                            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-muted-foreground">
+                              {trader.practiceRank !== null ? <span className="inline-flex items-center gap-1.5">{trader.practiceRank <= 3 && <span aria-hidden="true" className="[&>svg]:h-3.5 [&>svg]:w-3.5">{getRankIcon(trader.practiceRank)}</span>}Return rank #{trader.practiceRank}</span> : <span>{trader.portfolioStatus === "imported" ? "Imported · unranked" : trader.trades === 0 && trader.previousTrades === 0 ? "No trades yet · unranked" : "Unranked"}</span>}
+                              {trader.country && <span>· {trader.country}</span>}
+                            </div>
+                          </div>
+                          <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground md:hidden" aria-hidden="true" />
+                        </div>
+                        <div className="md:text-right">
+                          <span className="block mb-1 text-[10px] text-muted-foreground md:hidden">Virtual value</span>
+                          <span className="font-mono text-sm tabular-nums">{trader.portfolioValue === null ? "—" : `$${trader.portfolioValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}</span>
+                        </div>
+                        <div className="text-center md:text-right">
+                          <span className="block mb-1 text-[10px] text-muted-foreground md:hidden">Ranked return</span>
+                          <span className={`font-mono text-sm tabular-nums ${trader.pnlPct === null || trader.pnlPct === 0 ? "text-muted-foreground" : trader.pnlPct > 0 ? "text-profit" : "text-loss"}`}>{trader.pnlPct === null ? "—" : `${trader.pnlPct >= 0 ? "+" : ""}${trader.pnlPct.toFixed(1)}%`}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className="block mb-1 text-[10px] text-muted-foreground md:hidden">Server trades</span>
+                          <span className="font-mono text-sm tabular-nums text-muted-foreground">{trader.trades}</span>
+                        </div>
+                      </Link>
+                      <details className="group px-4 md:px-6 pb-3 text-[11px] text-muted-foreground">
+                        <summary className="flex w-fit cursor-pointer list-none items-center gap-1 py-1 hover:text-foreground [&::-webkit-details-marker]:hidden">
+                          Portfolio details<span className="sr-only"> for {trader.username}</span><ChevronDown className="h-3 w-3 transition-transform group-open:rotate-180" aria-hidden="true" />
+                        </summary>
+                        <div className="mt-2 rounded-xl border border-border/60 bg-background/50 p-3 space-y-1.5 leading-relaxed">
+                          <p>{trader.portfolioStatus === "imported" ? "Imported practice · unranked" : trader.trades === 0 ? trader.previousTrades > 0 ? "Previous reported activity · unranked" : "No server-recorded trades yet" : "Server-recorded practice"}</p>
+                          <p>{priceLabel(trader.priceStatus)}</p>
+                          {quoteTimeLabel(trader.pricedAt, trader.observedAt) && <p>{quoteTimeLabel(trader.pricedAt, trader.observedAt)}</p>}
+                          {trader.previousTrades > 0 && <p>{trader.previousTrades} previous reported trades · unverified</p>}
+                          <Link to={`/trader/${trader.username}`} className="inline-flex items-center gap-1 text-primary hover:underline">View profile<ArrowRight className="h-3 w-3" aria-hidden="true" /></Link>
+                        </div>
+                      </details>
+                    </article>
                   ))}
+                <p className="border-t border-border/60 px-4 sm:px-6 py-3 text-[11px] text-muted-foreground leading-relaxed">Most server trades first; previous reported activity breaks ties. Return rank is calculated separately from simulated return.</p>
               </section>
             ) : tab === "previous" ? (
-              <section aria-labelledby="previous-results-heading" className="rounded-2xl border border-white/[0.08] bg-white/[0.02] overflow-hidden">
-                <div className="p-6 border-b border-white/[0.06]">
-                  <h2 id="previous-results-heading" className="text-lg font-semibold">Previous results</h2>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              <section aria-labelledby="previous-results-heading" className="rounded-2xl border border-border bg-card overflow-hidden">
+                <div className="p-4 sm:p-6 border-b border-border">
+                  <h2 id="previous-results-heading" className="text-sm font-semibold">Previous results</h2>
+                  <p className="mt-2 text-xs text-muted-foreground">Browser-reported snapshots · unverified · excluded from current rankings.</p>
+                  <details className="mt-3 text-xs text-muted-foreground">
+                  <summary className="cursor-pointer hover:text-foreground">About these results</summary>
+                  <p className="mt-2 leading-relaxed">
                     Saved summaries from the earlier browser-based simulator. These figures were reported by each browser and were not verified by the server. They are preserved as previous practice results and do not enter current rankings. All saved public summaries appear, including zero-trade accounts. Making your profile private hides your result. These snapshots do not update with current prices.
                   </p>
+                  </details>
                 </div>
                 {loading ? (
                   <p className="p-8 text-center text-muted-foreground">Loading previous results…</p>
@@ -385,25 +431,25 @@ export default function Leaderboard() {
                   <p className="p-8 text-center text-muted-foreground">No previous public results are available.</p>
                 ) : (
                   <>
-                    <div className="hidden md:grid grid-cols-4 gap-4 px-6 py-4 text-xs uppercase text-muted-foreground border-b border-white/[0.06]">
+                    <div className="hidden md:grid grid-cols-[minmax(0,1fr)_140px_110px_90px] gap-4 px-6 py-3 text-[11px] font-medium uppercase tracking-wider text-muted-foreground border-b border-border/60 bg-muted/20">
                       <span>Trader</span><span className="text-right">Reported virtual value</span><span className="text-right">Reported return</span><span className="text-right">Reported trades</span>
                     </div>
                     {previousRows.map(trader => (
-                      <Link key={trader.userId} to={`/trader/${trader.username}`} className="grid grid-cols-2 md:grid-cols-4 gap-3 px-6 py-5 border-b border-white/[0.04] hover:bg-white/[0.03] transition-colors">
-                        <div>
-                          <span className="font-semibold text-sm">{trader.username}</span>
+                      <Link key={trader.userId} to={`/trader/${trader.username}`} className="grid grid-cols-3 md:grid-cols-[minmax(0,1fr)_140px_110px_90px] items-center gap-4 px-4 md:px-6 py-4 border-b border-border/60 last:border-b-0 hover:bg-muted/30 transition-colors">
+                        <div className="col-span-3 md:col-span-1 min-w-0">
+                          <span className="block truncate font-semibold text-sm" title={trader.username}>{trader.username}</span>
                           <span className="block text-xs text-muted-foreground mt-1">Last reported {new Date(trader.reportedAt).toLocaleDateString()}</span>
                         </div>
-                        <span className="text-right font-mono text-sm">${trader.portfolioValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-                        <span className="text-right font-mono text-sm">{trader.pnlPct >= 0 ? "+" : ""}{trader.pnlPct.toFixed(1)}%</span>
-                        <span className="text-right text-sm text-muted-foreground">{trader.trades} trades</span>
+                        <div className="md:text-right"><span className="block mb-1 text-[10px] text-muted-foreground md:hidden">Reported value</span><span className="font-mono text-sm tabular-nums">${trader.portfolioValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span></div>
+                        <div className="text-center md:text-right"><span className="block mb-1 text-[10px] text-muted-foreground md:hidden">Reported return</span><span className="font-mono text-sm tabular-nums">{trader.pnlPct >= 0 ? "+" : ""}{trader.pnlPct.toFixed(1)}%</span></div>
+                        <div className="text-right"><span className="block mb-1 text-[10px] text-muted-foreground md:hidden">Reported trades</span><span className="font-mono text-sm tabular-nums text-muted-foreground">{trader.trades}</span></div>
                       </Link>
                     ))}
                   </>
                 )}
               </section>
             ) : (
-              <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl overflow-hidden" style={{ backdropFilter: "blur(12px)" }}>
+              <div className="bg-card border border-border rounded-2xl overflow-hidden">
                 {duelsLoading ? (
                   <div className="py-16 text-center text-muted-foreground text-sm">
                     <Loader2 className="w-5 h-5 animate-spin mx-auto mb-3" />
