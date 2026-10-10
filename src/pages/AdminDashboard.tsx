@@ -106,8 +106,8 @@ export default function AdminDashboard() {
         </section>
         <section className={card}>
           <div className="flex items-center gap-3"><Wrench className="w-5 h-5 text-primary"/><h2 className="font-semibold">Development and validation tools</h2></div>
-          <p className="text-sm text-muted-foreground">Code-changing assistants must work on branches, pass checks, and produce reviewable pull requests. Live autonomous edits and an admin chat-to-code interface are deliberately disabled until secure permissions and rollback checks are configured.</p>
-          <div className="flex flex-wrap gap-x-7 gap-y-3"><Link className={linkStyle} to="/admin/validator"><CheckCircle2 className="w-4 h-4"/>Internal link validator</Link><Link className={linkStyle} to="/admin/seo-audit">SEO audit utility</Link><Link className={linkStyle} to="/admin/editor">Legacy editor (opens Courses)</Link><a className={linkStyle} href={"https://github.com/" + repo + "/pulls"} target="_blank" rel="noopener noreferrer">Review code proposals ↗</a></div>
+          <p className="text-sm text-muted-foreground">Code-changing assistants must work on branches, pass checks, and produce reviewable pull requests. An AI issue-to-PR coding assistant can propose limited frontend edits without deploying. Use the AI development desk to submit requests and review proposals; approval is always manual.</p>
+          <div className="flex flex-wrap gap-x-7 gap-y-3"><Link className={linkStyle} to="/admin/ai"><Bot className="w-4 h-4"/>AI development desk</Link><Link className={linkStyle} to="/admin/validator"><CheckCircle2 className="w-4 h-4"/>Internal link validator</Link><Link className={linkStyle} to="/admin/seo-audit">SEO audit utility</Link><Link className={linkStyle} to="/admin/editor">Legacy editor (opens Courses)</Link><a className={linkStyle} href={"https://github.com/" + repo + "/pulls"} target="_blank" rel="noopener noreferrer">Review code proposals ↗</a></div>
         </section>
       </>}
     </div>
