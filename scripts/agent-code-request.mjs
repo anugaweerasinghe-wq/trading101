@@ -6,10 +6,11 @@
  */
 import fs from "node:fs/promises";
 import path from "node:path";
+import { requestGeminiJson } from "./gemini-free-models.mjs";
 const repo = process.env.GITHUB_REPOSITORY || "anugaweerasinghe-wq/trading101";
 const token = process.env.GITHUB_TOKEN;
 const apiKey = process.env.GEMINI_API_KEY;
-const model = process.env.GEMINI_AGENT_MODEL || "gemini-2.5-flash-lite";
+const model = process.env.GEMINI_AGENT_MODEL || "gemini-3.5-flash-lite";
 const issueNumber = Number(process.env.TRADEHQ_ISSUE_NUMBER);
 const prefix = "[TradeHQ Code Request]";
 const deadline = 40000;
@@ -64,26 +65,11 @@ async function collect(directory, results = []) {
 }
 async function generate(prompt, maxOutputTokens) {
   if (!apiKey) throw new Error("No GEMINI_API_KEY secret configured. Open repository Settings → Secrets and variables → Actions.");
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), deadline);
-  try {
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(model) + ":generateContent", {
-      method: "POST", signal: controller.signal,
-      headers: { "x-goog-api-key": apiKey, "content-type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: { responseMimeType: "application/json", temperature: 0.15, maxOutputTokens },
-      }),
-    });
-    if (!response.ok) throw new Error("Gemini free-tier request failed (HTTP " + response.status + "). No paid fallback.");
-    const result = await response.json();
-    const answer = result.candidates?.[0]?.content?.parts?.map(part => part.text || "").join("") || "";
-    if (!answer.trim()) throw new Error("Gemini returned an empty result.");
-    return JSON.parse(answer);
-  } catch (error) {
-    if (error instanceof SyntaxError) throw new Error("Gemini returned invalid JSON; no changes were committed.");
-    throw error;
-  } finally { clearTimeout(timeout); }
+  const { value } = await requestGeminiJson({
+    apiKey, prompt, preferredModel: model,
+    temperature: 0.15, maxOutputTokens, timeoutMs: deadline,
+  });
+  return value;
 }
 async function main() {
   if (!token || !Number.isInteger(issueNumber) || issueNumber <= 0) throw new Error("Missing trusted GitHub Actions environment.");
