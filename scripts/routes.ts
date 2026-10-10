@@ -565,6 +565,7 @@ function extraRoutes(): RouteMeta[] {
   }
   for (const entry of [
     ["/admin", "Admin Dashboard"],
+    ["/admin/ai", "AI Development Desk"],
     ["/admin/courses", "Course Administration"],
     ["/admin/reviews", "Review Administration"],
     ["/admin/validator", "Link Validator"],
