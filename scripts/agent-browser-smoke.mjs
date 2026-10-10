@@ -10,7 +10,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 const origin = process.env.TRADEHQ_SCAN_ORIGIN || "https://www.thetradehq.com";
-const repo = process.env.GITHUB_REPOSITORY || "anugaweerasinghe-wq/trading101";
+const repo = process.env.GITHUB_REPOSITORY || "anugaweerasinghe1-del/trading101";
 const token = process.env.GITHUB_TOKEN;
 const routes = ["/", "/trade", "/markets", "/courses", "/daily", "/leaderboard", "/reviews", "/auth", "/contact", "/admin", "/admin/ai", "/learn"];
 const title = "[TradeHQ Agent] Browser smoke report";
