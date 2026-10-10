@@ -1,0 +1,67 @@
+name: TradeHQ AI Code Proposals
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tradehq-ai-code-request
+  cancel-in-progress: false
+
+jobs:
+  propose:
+    # Public issues are untrusted. Only the exact repository owner can request AI code proposals.
+    if: github.event.issue.user.login == github.repository_owner && github.event.issue.title == '[TradeHQ Code Request]' && !github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    outputs:
+      branch: ${{ steps.assistant.outputs.branch }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+      - name: Draft a limited frontend patch in a new branch
+        id: assistant
+        run: node scripts/agent-code-request.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_AGENT_MODEL: gemini-2.5-flash-lite
+          TRADEHQ_ISSUE_NUMBER: ${{ github.event.issue.number }}
+
+  verify:
+    needs: propose
+    if: needs.propose.outputs.branch != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ needs.propose.outputs.branch }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - name: Check backend invariants without production credentials
+        run: npm run verify:backend
+      - name: Verify page build, SEO and routes
+        run: npm run build
+      - name: Validate courses and Daily Practice
+        run: |
+          node --import tsx scripts/verify-course-workflow.ts
+          node --import tsx scripts/verify-daily-practice.ts
+          node scripts/verify-course-node.mjs
