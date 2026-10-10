@@ -51,11 +51,14 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ needs.propose.outputs.branch }}
+          fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '20'
           cache: npm
+      - name: Independently reject unsafe or oversized AI source patches
+        run: node scripts/verify-ai-pr-scope.mjs
       - run: npm ci
       - name: Check backend invariants without production credentials
         run: npm run verify:backend
@@ -77,9 +80,14 @@ jobs:
       - name: Fail visibly if GitHub Actions could not create its review PR
         env:
           PR_CREATED: ${{ needs.propose.outputs.pr_created }}
+          VALIDATION_RESULT: ${{ needs.verify.result }}
         run: |
           if [ "$PR_CREATED" != "true" ]; then
             echo "::error::The AI prepared a branch but GitHub Actions could not create its draft PR. Enable repository Actions > General > Allow GitHub Actions to create pull requests, or open the comparison link from the GitHub issue."
             exit 1
           fi
-          echo "Draft PR creation verified. Production remains unchanged until owner review."
+          if [ "$VALIDATION_RESULT" != "success" ]; then
+            echo "::error::An AI proposal exists but independent validation did not pass ($VALIDATION_RESULT). Do not merge. Inspect the verify job."
+            exit 1
+          fi
+          echo "Draft PR creation and independent validation verified. Production remains unchanged until owner review."

@@ -6,7 +6,7 @@
  */
 import { getFeatureInventory, hasObviousDuplicate } from "./agent-feature-inventory.mjs";
 import { requestGeminiJson } from "./gemini-free-models.mjs";
-const repo = process.env.GITHUB_REPOSITORY || "anugaweerasinghe-wq/trading101";
+const repo = process.env.GITHUB_REPOSITORY || "anugaweerasinghe1-del/trading101";
 const token = process.env.GITHUB_TOKEN, key = process.env.GEMINI_API_KEY;
 const model = process.env.GEMINI_AGENT_MODEL || "gemini-3.5-flash-lite";
 const refresh = process.env.TRADEHQ_IDEAS_REFRESH === "1";
