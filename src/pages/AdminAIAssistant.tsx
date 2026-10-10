@@ -40,7 +40,7 @@ export default function AdminAIAssistant() {
       ]);
       if (issueResponse.ok) {
         const value = await issueResponse.json() as GithubIssue[];
-        setIssues(value.filter(x => !x.pull_request && x.user?.login === owner && (x.title === ISSUE_TITLE || x.title.startsWith("[TradeHQ Ideas]"))));
+        setIssues(value.filter(x => !x.pull_request && (x.title === ISSUE_TITLE && x.user?.login === owner || x.title.startsWith("[TradeHQ Ideas]") && x.user?.login === "github-actions[bot]")));
       }
       if (prResponse.ok) {
         const value = await prResponse.json() as GithubPr[];
