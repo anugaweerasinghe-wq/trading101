@@ -5,8 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Activity, BookOpen, Bot, CalendarCheck, CheckCircle2, ExternalLink, Lock, MessageSquare, RefreshCw, ShieldCheck, Sparkles, Wrench } from "lucide-react";
 
 type Course = { id: string; status: string; document?: { title?: string }; updated_at?: string };
-type DailyStatus = { enabled?: boolean; nextDue?: string; prepareAfter?: string; completed?: number; lastError?: string | null; model?: string; hasApiKey?: boolean; freeConfirmed?: boolean };
-type CourseStatus = { enabled?: boolean; model?: string; runs?: Array<{ status?: string; last_error?: string | null }> };
+type DailyStatus = { enabled?: boolean; nextDue?: string; prepareAfter?: string; completed?: number; attempts?: number; lastStarted?: string | null; lastFinished?: string | null; lastError?: string | null; model?: string; hasApiKey?: boolean; freeConfirmed?: boolean };
+type CourseStatus = { enabled?: boolean; model?: string; lastStarted?: string | null; lastFinished?: string | null; runs?: Array<{ status?: string; last_error?: string | null; period?: string; slot?: number }> };
 type AgentIssue = { id: number; title: string; html_url: string; created_at: string; state: string; body?: string | null; pull_request?: unknown };
 type Run = { id: number; status: string; conclusion: string | null; html_url: string; created_at: string; updated_at?: string };
 type Proposal = { number: number; title: string; html_url: string; draft: boolean; created_at: string };
@@ -150,6 +150,22 @@ export default function AdminDashboard() {
               <p className="text-sm">Latest code workflow: <strong>{codeRun ? codeRun.conclusion || codeRun.status : "Unavailable"}</strong></p>
               {codeRun && <a href={codeRun.html_url} target="_blank" rel="noopener noreferrer" className={linkStyle}>View coding run #{codeRun.id} <ExternalLink className="w-3 h-3"/></a>}
               <p className="text-xs text-muted-foreground">An Actions success does not prove a PR was created. Verify the draft and approval below.</p>
+            </div>
+          </div>
+          <h3 className="text-sm font-semibold">Backend content-generation runs</h3>
+          <div className="grid gap-3 md:grid-cols-2">
+            <div className="rounded-xl border border-border p-4 space-y-2">
+              <h4 className="text-sm font-semibold">Course drafting</h4>
+              <p className="text-xs text-muted-foreground">Status: {courseStatus ? (courseStatus.enabled ? "Enabled" : "Paused") : "Unavailable"} · Last completed attempt: {courseStatus?.lastFinished ? new Date(courseStatus.lastFinished).toLocaleString() : "Not reported"}</p>
+              {courseStatus?.runs?.length ? <div className="space-y-1">{courseStatus.runs.map((item, index) => <p key={item.period + "-" + item.slot + "-" + index} className="text-xs">{item.period || "Period unknown"} · Slot {item.slot ?? "?"}: <strong>{item.status || "Unknown"}</strong>{item.last_error ? " · " + item.last_error : ""}</p>)}</div> : <p className="text-xs text-muted-foreground">No worker run records available from the admin API.</p>}
+              <Link className={linkStyle} to="/admin/courses">Open editorial approvals →</Link>
+            </div>
+            <div className="rounded-xl border border-border p-4 space-y-2">
+              <h4 className="text-sm font-semibold">Daily question-bank regeneration</h4>
+              <p className="text-xs text-muted-foreground">Status: {daily ? (daily.enabled ? "Enabled" : "Paused") : "Unavailable"} · Next preparation: {daily?.prepareAfter || "Not reported"} · Next due: {daily?.nextDue || "Not reported"}</p>
+              <p className="text-xs text-muted-foreground">Current cycle: {daily ? (daily.completed ?? "?") + "/50 batches, " + (daily.attempts ?? "?") + " attempts" : "Unavailable"} · Last completed attempt: {daily?.lastFinished ? new Date(daily.lastFinished).toLocaleString() : "Not reported"}</p>
+              {daily?.lastError && <p className="text-xs text-amber-400">{daily.lastError}</p>}
+              <Link className={linkStyle} to="/admin/daily">Inspect bank and settings →</Link>
             </div>
           </div>
           <h3 className="text-sm font-semibold">Pending human code approvals</h3>
