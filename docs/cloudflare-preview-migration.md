@@ -11,7 +11,7 @@ TradeHQ generates hundreds of unique, SEO-aware static HTML routes. Vercel also 
 3. Choose Vite; repository root as project root; build command **npm run build:cloudflare**; output directory **dist**; Node.js 22 or 24.
 4. Select Free only. Do not enable billing, paid Workers plans or paid API fallbacks.
 5. Leave both thetradehq.com and www.thetradehq.com connected to Vercel. Do not edit any DNS records.
-6. Cloudflare's preview deployments can carry a noindex header. Check the staging project's default pages.dev production URL separately to avoid creating an indexable duplicate while the real domain stays on Vercel. If necessary, restrict its indexing before exposing it.
+6. The preview build deliberately writes a site-wide X-Robots-Tag: noindex header in dist/_headers, including for the staging project's main pages.dev address. Cloudflare preview deployments also apply protections. Verify response headers on staging before sharing it. Do NOT set TRADEHQ_CLOUDFLARE_LIVE=1 yet. At an owner-approved live cutover, that build-time flag is required to remove the staging-wide noindex header, followed by a crawler/SEO regression test.
 
 ## Required verification BEFORE considering DNS cutover
 - Unique raw HTML, canonical, title and H1 for /, /markets, /wiki/macd, /privacy and /terms.
