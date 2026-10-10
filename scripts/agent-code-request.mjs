@@ -148,16 +148,23 @@ async function main() {
     "- Automated tests are launched in a separate read-only job without AI credentials.",
     "- The owner must review all code, security implications, AdSense/YMYL claims, and tests before merging.",
   ].join("\n\n");
-  let prUrl;
+  let prUrl, prCreated = false, prError = "";
   try {
     const pr = await github("POST", "/pulls", { title, head: branch, base: "main", body: prBody, draft: true });
     prUrl = pr.html_url;
-  } catch {
+    prCreated = true;
+  } catch (error) {
+    prError = error instanceof Error ? error.message.slice(0,250) : "Unknown GitHub PR permission error";
     prUrl = "https://github.com/" + repo + "/compare/main..." + branch;
   }
-  if (process.env.GITHUB_OUTPUT) await fs.appendFile(process.env.GITHUB_OUTPUT, "branch=" + branch + "\n");
-  await comment("AI proposed edits on an isolated branch. Review here: " + prUrl + "\n\nNo changes were merged or deployed. The test job must also pass.");
-  console.log("Created branch " + branch + " for " + changes.length + " frontend file(s). Review: " + prUrl);
+  if (process.env.GITHUB_OUTPUT) await fs.appendFile(process.env.GITHUB_OUTPUT,
+    "branch=" + branch + "\npr_created=" + String(prCreated) + "\n");
+  await comment("AI proposed edits on an isolated branch. Review here: " + prUrl +
+    (prCreated ? "\n\nDraft PR created successfully; human review required." :
+    "\n\n⚠️ Automatic draft PR creation failed: " + prError +
+    "\nRepository owner: check Settings → Actions → General → Workflow permissions → Allow GitHub Actions to create pull requests.") +
+    "\nNo changes were merged or deployed. Check the separate read-only validation job.");
+  console.log("AI edited " + changes.length + " file(s); draft PR created: " + prCreated + ". " + prUrl);
 }
 try { await main(); }
 catch(error) {

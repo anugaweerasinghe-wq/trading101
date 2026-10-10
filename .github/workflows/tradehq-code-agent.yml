@@ -23,6 +23,7 @@ jobs:
       issues: write
     outputs:
       branch: ${{ steps.assistant.outputs.branch }}
+      pr_created: ${{ steps.assistant.outputs.pr_created }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -65,3 +66,20 @@ jobs:
           node --import tsx scripts/verify-course-workflow.ts
           node --import tsx scripts/verify-daily-practice.ts
           node scripts/verify-course-node.mjs
+
+  confirm-pr-created:
+    needs: [propose, verify]
+    if: always() && needs.propose.outputs.branch != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Fail visibly if GitHub Actions could not create its review PR
+        env:
+          PR_CREATED: ${{ needs.propose.outputs.pr_created }}
+        run: |
+          if [ "$PR_CREATED" != "true" ]; then
+            echo "::error::The AI prepared a branch but GitHub Actions could not create its draft PR. Enable repository Actions > General > Allow GitHub Actions to create pull requests, or open the comparison link from the GitHub issue."
+            exit 1
+          fi
+          echo "Draft PR creation verified. Production remains unchanged until owner review."
