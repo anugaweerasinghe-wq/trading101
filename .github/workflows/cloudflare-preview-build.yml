@@ -25,6 +25,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build:cloudflare
+      - name: Bundle Cloudflare Pages Functions using Wrangler
+        run: npx --yes wrangler@4 pages functions build functions --outfile /tmp/tradehq-pages-worker.js
       - name: Validate non-indexable fallback and narrow function routing
         run: |
           node --check scripts/prepare-cloudflare.mjs
