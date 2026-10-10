@@ -6,6 +6,8 @@ const scripts = [
   "scripts/agent-code-request.mjs",
   "scripts/agent-monthly-ideas.mjs",
   "scripts/agent-monitor.mjs",
+  "scripts/agent-browser-smoke.mjs",
+  "scripts/agent-feature-inventory.mjs",
 ];
 for (const file of scripts) {
   const result = spawnSync(process.execPath, ["--check", file], { encoding: "utf8" });
