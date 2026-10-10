@@ -8,7 +8,8 @@ type Course = { id: string; status: string; document?: { title?: string }; updat
 type DailyStatus = { enabled?: boolean; nextDue?: string; prepareAfter?: string; completed?: number; lastError?: string | null; model?: string; hasApiKey?: boolean; freeConfirmed?: boolean };
 type CourseStatus = { enabled?: boolean; model?: string; runs?: Array<{ status?: string; last_error?: string | null }> };
 type AgentIssue = { id: number; title: string; html_url: string; created_at: string; state: string; body?: string | null; pull_request?: unknown };
-type Run = { id: number; status: string; conclusion: string | null; html_url: string; created_at: string };
+type Run = { id: number; status: string; conclusion: string | null; html_url: string; created_at: string; updated_at?: string };
+type Proposal = { number: number; title: string; html_url: string; draft: boolean; created_at: string };
 const repo = "anugaweerasinghe-wq/trading101";
 const card = "rounded-2xl border border-border bg-card/60 p-5 space-y-3";
 const linkStyle = "inline-flex items-center gap-1 text-sm text-primary hover:underline";
@@ -17,12 +18,18 @@ export default function AdminDashboard() {
   const [unlocked, setUnlocked] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<Course[] | null>(null);
+  const [deskWarnings, setDeskWarnings] = useState<string[]>([]);
   const [daily, setDaily] = useState<DailyStatus | null>(null);
   const [courseStatus, setCourseStatus] = useState<CourseStatus | null>(null);
   const [reviews, setReviews] = useState<number | null>(null);
   const [issues, setIssues] = useState<AgentIssue[]>([]);
   const [run, setRun] = useState<Run | null>(null);
+  const [codeRun, setCodeRun] = useState<Run | null>(null);
+  const [previousSuccess, setPreviousSuccess] = useState<Run | null>(null);
+  const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [agentError, setAgentError] = useState("");
+  const [lastGitHubChecked, setLastGitHubChecked] = useState<Date | null>(null);
   const adminCall = useCallback(async (action: string) => {
     const { data, error: callError } = await supabase.functions.invoke("admin-courses", {
       body: { action }, headers: { "x-admin-key": key },
@@ -30,31 +37,53 @@ export default function AdminDashboard() {
     if (callError || data?.error) throw new Error(data?.error || "Admin verification failed.");
     return data.data;
   }, [key]);
+  // Verify one privileged endpoint before displaying any administration data.
+  // An unrelated review or practice outage must never be interpreted as a bad master key.
   const refresh = useCallback(async () => {
-    const [drafts, practice, settings, result] = await Promise.all([
-      adminCall("list"), adminCall("daily-status"), adminCall("settings"),
+    const settings = await adminCall("settings");
+    if (!settings) throw new Error("Administrator verification failed.");
+    setCourseStatus(settings);
+    const [drafts, practice, result] = await Promise.allSettled([
+      adminCall("list"), adminCall("daily-status"),
       supabase.functions.invoke("admin-reviews", { body: { action: "list" }, headers: { "x-admin-key": key } }),
     ]);
-    if (!Array.isArray(drafts) || !practice || !settings || result.error || result.data?.error || !Array.isArray(result.data?.data)) {
-      throw new Error("Could not verify every admin desk. Check the master key.");
-    }
-    setCourses(drafts); setDaily(practice); setCourseStatus(settings); setReviews(result.data.data.length);
+    const warnings: string[] = [];
+    if (drafts.status === "fulfilled" && Array.isArray(drafts.value)) setCourses(drafts.value);
+    else { setCourses(null); warnings.push("Course drafts are temporarily unavailable."); }
+    if (practice.status === "fulfilled" && practice.value) setDaily(practice.value);
+    else { setDaily(null); warnings.push("Daily Practice status is temporarily unavailable."); }
+    if (result.status === "fulfilled" && !result.value.error && !result.value.data?.error &&
+        Array.isArray(result.value.data?.data)) setReviews(result.value.data.data.length);
+    else { setReviews(null); warnings.push("Review moderation status is temporarily unavailable."); }
+    setDeskWarnings(warnings);
   }, [adminCall, key]);
+  // Public GitHub data is used only for observability, never for authorization.
+  // No PAT or administrative credentials are exposed in the browser.
   const loadAgents = useCallback(async () => {
+    const base = "https://api.github.com/repos/" + repo;
+    const targets = [
+      base + "/issues?state=open&per_page=100",
+      base + "/actions/workflows/tradehq-agents.yml/runs?per_page=10",
+      base + "/actions/workflows/tradehq-code-agent.yml/runs?per_page=10",
+      base + "/pulls?state=open&per_page=50",
+    ];
     try {
-      const [issuesResponse, runsResponse] = await Promise.all([
-        fetch("https://api.github.com/repos/" + repo + "/issues?state=open&per_page=100"),
-        fetch("https://api.github.com/repos/" + repo + "/actions/workflows/tradehq-agents.yml/runs?per_page=1"),
-      ]);
-      if (issuesResponse.ok) {
-        const items = await issuesResponse.json();
-        setIssues(Array.isArray(items) ? items.filter((i: AgentIssue) => !i.pull_request && /^\[TradeHQ (Agent|Ideas)\]/.test(i.title)) : []);
+      const responses = await Promise.all(targets.map(url => fetch(url, { headers: { Accept: "application/vnd.github+json" } })));
+      const failures = responses.map((response, i) => response.ok ? "" : ["issue reports", "monitor runs", "coding runs", "approval PRs"][i] + " HTTP " + response.status).filter(Boolean);
+      const values = await Promise.all(responses.map(response => response.ok ? response.json() : Promise.resolve(null)));
+      if (Array.isArray(values[0])) setIssues(values[0].filter((i: AgentIssue) => !i.pull_request && /^\[TradeHQ (Agent|Ideas)\]/.test(i.title)));
+      if (Array.isArray(values[1]?.workflow_runs)) {
+        const runs = values[1].workflow_runs as Run[];
+        setRun(runs[0] ?? null);
+        setPreviousSuccess(runs.find(item => item.conclusion === "success") ?? null);
       }
-      if (runsResponse.ok) {
-        const data = await runsResponse.json();
-        setRun(data.workflow_runs?.[0] ?? null);
-      }
-    } catch { /* Public GitHub reporting is optional; admin data remains available. */ }
+      if (Array.isArray(values[2]?.workflow_runs)) setCodeRun(values[2].workflow_runs[0] ?? null);
+      if (Array.isArray(values[3])) setProposals((values[3] as Proposal[]).filter(item => /^AI (smoke-test |proposal:)/i.test(item.title)));
+      setAgentError(failures.length ? "GitHub status unavailable for " + failures.join(", ") + ". Use the linked GitHub history for confirmation." : "");
+      setLastGitHubChecked(new Date());
+    } catch {
+      setAgentError("GitHub operational data could not be loaded. Statuses may be stale; verify in GitHub Actions.");
+    }
   }, []);
   const unlock = async (event: React.FormEvent) => {
     event.preventDefault(); setError(""); setBusy(true);
@@ -66,7 +95,7 @@ export default function AdminDashboard() {
     if (!unlocked) return;
     const interval = window.setInterval(() => {
       if (document.visibilityState === "visible") { void refresh().catch(() => setError("Dashboard data refresh failed.")); void loadAgents(); }
-    }, 120000);
+    }, 900000);
     return () => window.clearInterval(interval);
   }, [unlocked, refresh, loadAgents]);
   const agentFindings = issues.filter(item => item.title.startsWith("[TradeHQ Agent]") && (item.title.endsWith("failures") || item.title.endsWith("failed")));
@@ -77,7 +106,7 @@ export default function AdminDashboard() {
     <div className="mx-auto max-w-6xl space-y-7">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div><p className="text-xs tracking-[0.2em] text-primary uppercase mb-2">TradeHQ · private workspace</p><h1 className="text-3xl font-semibold">Admin dashboard</h1><p className="text-sm text-muted-foreground mt-2">Editorial controls, community moderation, automated checks and proposed improvements in one place.</p></div>
-        <div className="flex gap-3">{unlocked && <button type="button" onClick={() => { setUnlocked(false); setKey(""); setCourses([]); setDaily(null); setCourseStatus(null); setReviews(null); setIssues([]); setRun(null); }} className="rounded-xl border border-border px-4 py-2 flex items-center gap-2 text-sm"><Lock className="w-4 h-4"/> Lock</button>}<Link to="/" className={linkStyle}>View website <ExternalLink className="h-3 w-3"/></Link></div>
+        <div className="flex gap-3">{unlocked && <button type="button" onClick={() => { setUnlocked(false); setKey(""); setCourses(null); setDeskWarnings([]); setDaily(null); setCourseStatus(null); setReviews(null); setIssues([]); setRun(null); setCodeRun(null); setPreviousSuccess(null); setProposals([]); setAgentError(""); setLastGitHubChecked(null); }} className="rounded-xl border border-border px-4 py-2 flex items-center gap-2 text-sm"><Lock className="w-4 h-4"/> Lock</button>}<Link to="/" className={linkStyle}>View website <ExternalLink className="h-3 w-3"/></Link></div>
       </header>
       {!unlocked ? <form onSubmit={unlock} className="max-w-md rounded-2xl border border-border bg-card p-6 space-y-5">
         <div className="flex gap-3 items-center"><ShieldCheck className="w-6 h-6 text-primary"/><h2 className="font-semibold">Verify administrator access</h2></div>
@@ -87,19 +116,45 @@ export default function AdminDashboard() {
         <button type="submit" disabled={busy} className="w-full rounded-xl bg-primary text-primary-foreground py-3 text-sm font-medium disabled:opacity-50">{busy ? "Verifying…" : "Open dashboard"}</button>
       </form> : <>
         {error && <p role="alert" className="text-sm text-amber-400">{error}</p>}
-        <div className="flex flex-wrap justify-between gap-3 items-center"><h2 className="text-lg font-semibold">Operations overview</h2><button type="button" disabled={busy} className="text-sm border border-border rounded-xl px-4 py-2 flex items-center gap-2 disabled:opacity-40" onClick={() => { setBusy(true); void Promise.all([refresh(),loadAgents()]).catch(() => setError("Refresh failed.")).finally(() => setBusy(false)); }}><RefreshCw className="w-4 h-4"/> Refresh</button></div>
+        {deskWarnings.length > 0 && <div role="status" className="rounded-xl border border-amber-500/30 px-4 py-3 text-sm text-amber-400"><strong>Some admin services are unavailable.</strong> {deskWarnings.join(" ")} Verified services remain accessible.</div>}
+        <div className="flex flex-wrap justify-between gap-3 items-center"><h2 className="text-lg font-semibold">Operations overview</h2><button type="button" disabled={busy} className="text-sm border border-border rounded-xl px-4 py-2 flex items-center gap-2 disabled:opacity-40" onClick={() => { setBusy(true); setError(""); void Promise.all([refresh(),loadAgents()]).catch(() => setError("Admin verification failed. Check your key or refresh.")).finally(() => setBusy(false)); }}><RefreshCw className="w-4 h-4"/> Refresh</button></div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <section className={card}><BookOpen className="w-6 h-6 text-primary"/><h3 className="font-semibold">Courses</h3><p className="text-2xl font-semibold">{courses.filter(c => c.status === "draft").length} <span className="text-sm font-normal text-muted-foreground">drafts awaiting review</span></p><p className="text-xs text-muted-foreground">Generation: {courseStatus?.enabled ? "enabled" : "paused"} · {courseStatus?.model || "unknown"}</p><Link className={linkStyle} to="/admin/courses">Manage drafts and approvals →</Link></section>
-          <section className={card}><CalendarCheck className="w-6 h-6 text-primary"/><h3 className="font-semibold">Daily practice</h3><p className="text-2xl font-semibold">{daily?.completed ?? 0}/50 <span className="text-sm font-normal text-muted-foreground">next bank ready</span></p><p className="text-xs text-muted-foreground">{daily?.enabled ? "Schedule enabled" : "Schedule paused"} · Next due {daily?.nextDue || "unknown"}</p>{daily?.lastError && <p className="text-xs text-amber-400">{daily.lastError}</p>}<Link className={linkStyle} to="/admin/daily">Review questions and schedule →</Link></section>
+          <section className={card}><BookOpen className="w-6 h-6 text-primary"/><h3 className="font-semibold">Courses</h3><p className="text-2xl font-semibold">{courses === null ? "—" : courses.filter(c => c.status === "draft").length} <span className="text-sm font-normal text-muted-foreground">drafts awaiting review</span></p><p className="text-xs text-muted-foreground">Generation: {courseStatus?.enabled ? "enabled" : "paused"} · {courseStatus?.model || "unknown"}</p><Link className={linkStyle} to="/admin/courses">Manage drafts and approvals →</Link></section>
+          <section className={card}><CalendarCheck className="w-6 h-6 text-primary"/><h3 className="font-semibold">Daily practice</h3><p className="text-2xl font-semibold">{daily ? (daily.completed ?? 0) + "/50" : "—"} <span className="text-sm font-normal text-muted-foreground">next bank ready</span></p><p className="text-xs text-muted-foreground">{daily?.enabled ? "Schedule enabled" : "Schedule paused"} · Next due {daily?.nextDue || "unknown"}</p>{daily?.lastError && <p className="text-xs text-amber-400">{daily.lastError}</p>}<Link className={linkStyle} to="/admin/daily">Review questions and schedule →</Link></section>
           <section className={card}><MessageSquare className="w-6 h-6 text-primary"/><h3 className="font-semibold">Community reviews</h3><p className="text-2xl font-semibold">{reviews ?? "—"} <span className="text-sm font-normal text-muted-foreground">reviews in moderation desk</span></p><Link className={linkStyle} to="/admin/reviews">Reply, feature or moderate →</Link></section>
         </div>
         <section className={card}>
           <div className="flex gap-3 items-center"><Activity className="w-5 h-5 text-primary"/><h2 className="font-semibold">Automated website checks</h2></div>
           <p className="text-sm text-muted-foreground">Read-only GitHub Actions checks inspect public routes, deployed assets and a sample of pages in headless Chrome. Status reports show what was checked and when; no agent logs in, places trades or edits production.</p>
-          <p className="text-sm">{run ? <>Latest run: <strong>{run.conclusion || run.status}</strong> · {new Date(run.created_at).toLocaleString()}</> : "No completed agent workflow was returned from GitHub yet."}</p>
-          <div className="flex flex-wrap gap-4"><a className={linkStyle} href={"https://github.com/" + repo + "/actions/workflows/tradehq-agents.yml"} target="_blank" rel="noopener noreferrer">View execution history <ExternalLink className="w-3 h-3"/></a><span className="text-sm text-muted-foreground">{agentFindings.length} open potential failure(s)</span></div>
+          <p className="text-sm">{run ? <>Latest run: <strong>{run.conclusion || run.status}</strong> · {new Date(run.created_at).toLocaleString()}</> : "No monitoring workflow status could be verified from GitHub."}</p>
+          <div className="flex flex-wrap gap-4"><a className={linkStyle} href={"https://github.com/" + repo + "/actions/workflows/tradehq-agents.yml"} target="_blank" rel="noopener noreferrer">View execution history <ExternalLink className="w-3 h-3"/></a><span className="text-sm text-muted-foreground">{agentError ? "Findings unavailable" : agentFindings.length + " open potential failure(s)"}</span></div>
           {agentReports.length ? <div className="grid gap-2 sm:grid-cols-2">{agentReports.map(item => <a key={item.id} href={item.html_url} target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border p-3 text-sm hover:border-primary/40"><strong>{item.title.replace("[TradeHQ Agent] ", "")}</strong><span className="block text-xs text-muted-foreground mt-1">{(item.body || "").match(/\*\*Checked at \(UTC\):\*\*\s*([^\n]+)/)?.[1] || "Read latest inspection details"} · Evidence ↗</span></a>)}</div> : <p className="text-sm text-muted-foreground">No daily or browser-scan report exists yet. The scheduled workflow has not proven a completed inspection.</p>}
-          {agentFindings.length === 0 ? <p className="text-sm text-muted-foreground">No open findings reported. This does not imply that every feature has been tested.</p> : <div className="space-y-2">{agentFindings.map(item => <div key={item.id} className="rounded-xl border border-border p-3 space-y-2"><a href={item.html_url} target="_blank" rel="noopener noreferrer" className="block text-sm hover:underline">{item.title}<span className="block text-xs text-muted-foreground mt-1">{new Date(item.created_at).toLocaleString()} · See evidence and reproduction steps ↗</span></a><a className={linkStyle} target="_blank" rel="noopener noreferrer" href={"https://github.com/" + repo + "/issues/new?" + new URLSearchParams({ title: "[TradeHQ Code Request]", body: ("Investigate this site-monitor finding and propose a safe frontend-only fix without changing backend/auth or trading logic. Finding: " + item.html_url + "\n\n" + (item.body || "").slice(0,1200)).slice(0,2400) }).toString()}>Propose a reviewed AI fix <ExternalLink className="h-3 w-3"/></a></div>)}</div>}
+          {agentFindings.length === 0 && !agentError ? <p className="text-sm text-muted-foreground">No open findings reported. This does not imply that every feature has been tested.</p> : <div className="space-y-2">{agentFindings.map(item => <div key={item.id} className="rounded-xl border border-border p-3 space-y-2"><a href={item.html_url} target="_blank" rel="noopener noreferrer" className="block text-sm hover:underline">{item.title}<span className="block text-xs text-muted-foreground mt-1">{new Date(item.created_at).toLocaleString()} · See evidence and reproduction steps ↗</span></a><a className={linkStyle} target="_blank" rel="noopener noreferrer" href={"https://github.com/" + repo + "/issues/new?" + new URLSearchParams({ title: "[TradeHQ Code Request]", body: ("Investigate this site-monitor finding and propose a safe frontend-only fix without changing backend/auth or trading logic. Finding: " + item.html_url + "\n\n" + (item.body || "").slice(0,1200)).slice(0,2400) }).toString()}>Propose a reviewed AI fix <ExternalLink className="h-3 w-3"/></a></div>)}</div>}
+        </section>
+        <section className={card}>
+          <div className="flex items-center gap-3"><Bot className="w-5 h-5 text-primary"/><h2 className="font-semibold">Automation operations and approvals</h2></div>
+          <p className="text-sm text-muted-foreground">Live read-only workflow records from GitHub, not simulated agent activity. Scheduled times are targets, not guarantees of execution. Source: public GitHub Actions; if API access fails, inspect the links below.</p>
+          {agentError && <p role="status" className="text-sm text-amber-400">{agentError}</p>}
+          {lastGitHubChecked && <p className="text-xs text-muted-foreground">GitHub last checked: {lastGitHubChecked.toLocaleString()} · Background refresh at most every 15 minutes while this page is open.</p>}
+          <div className="grid gap-3 md:grid-cols-2">
+            <div className="rounded-xl border border-border p-4 space-y-2">
+              <h3 className="font-semibold text-sm">Route scanner + independent browser smoke</h3>
+              <p className="text-xs text-muted-foreground">Scheduled daily at 08:47 Sri Lanka time (03:17 UTC). Route and Chrome jobs run independently; a successful workflow means both relevant jobs completed.</p>
+              <p className="text-sm">Latest: <strong>{run ? run.conclusion || run.status : "Unavailable"}</strong></p>
+              <p className="text-xs text-muted-foreground">Last successful workflow: {previousSuccess ? new Date(previousSuccess.created_at).toLocaleString() : "Not verified"}</p>
+              {run && <a href={run.html_url} target="_blank" rel="noopener noreferrer" className={linkStyle}>Latest run #{run.id} <ExternalLink className="w-3 h-3"/></a>}
+            </div>
+            <div className="rounded-xl border border-border p-4 space-y-2">
+              <h3 className="font-semibold text-sm">Gemini ideas + reviewed code proposals</h3>
+              <p className="text-xs text-muted-foreground">Ideas scheduled monthly on the 1st at 10:11 Sri Lanka time (04:41 UTC). Code proposals run only when the repository owner opens a qualified GitHub issue.</p>
+              <p className="text-sm">Latest code workflow: <strong>{codeRun ? codeRun.conclusion || codeRun.status : "Unavailable"}</strong></p>
+              {codeRun && <a href={codeRun.html_url} target="_blank" rel="noopener noreferrer" className={linkStyle}>View coding run #{codeRun.id} <ExternalLink className="w-3 h-3"/></a>}
+              <p className="text-xs text-muted-foreground">An Actions success does not prove a PR was created. Verify the draft and approval below.</p>
+            </div>
+          </div>
+          <h3 className="text-sm font-semibold">Pending human code approvals</h3>
+          {agentError ? <p className="text-sm text-muted-foreground">Queue may be incomplete while GitHub API reporting is unavailable.</p> : proposals.length ? <div className="space-y-2">{proposals.map(pr => <a key={pr.number} href={pr.html_url} target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border px-4 py-3 text-sm hover:border-primary/40">#{pr.number} {pr.title} <span className="text-xs text-muted-foreground">· {pr.draft ? "Draft, review required" : "Open, review required"} · Open PR ↗</span></a>)}</div> : <p className="text-sm text-muted-foreground">No matching open AI proposals returned.</p>}
+          <p className="text-xs text-muted-foreground">No automatic merges, production deployments, sensitive database changes or privileged agent repairs are enabled by this dashboard.</p>
         </section>
         <section className={card}>
           <div className="flex items-center gap-3"><Sparkles className="w-5 h-5 text-primary"/><h2 className="font-semibold">Monthly AI improvement ideas</h2></div>
