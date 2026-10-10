@@ -8,11 +8,19 @@ const scripts = [
   "scripts/agent-monitor.mjs",
   "scripts/agent-browser-smoke.mjs",
   "scripts/agent-feature-inventory.mjs",
+  "scripts/verify-ai-pr-scope.mjs",
 ];
 for (const file of scripts) {
   const result = spawnSync(process.execPath, ["--check", file], { encoding: "utf8" });
   assert.equal(result.status, 0, file + " syntax failed: " + result.stderr);
 }
+const scopeCheck = spawnSync(process.execPath, ["scripts/verify-ai-pr-scope.mjs", "--self-test"], { encoding: "utf8" });
+assert.equal(scopeCheck.status, 0, "AI scope-check regression: " + scopeCheck.stdout + scopeCheck.stderr);
+const dashboard = readFileSync("src/pages/AdminDashboard.tsx", "utf8");
+const assistant = readFileSync("src/pages/AdminAIAssistant.tsx", "utf8");
+assert.match(dashboard, /anugaweerasinghe1-del\/trading101/);
+assert.match(assistant, /anugaweerasinghe1-del\/trading101/);
+assert.match(assistant, /AI \(proposal:\|smoke-test proposal:\)/);
 const workflow = readFileSync(".github/workflows/tradehq-code-agent.yml", "utf8");
 const agent = readFileSync("scripts/agent-code-request.mjs", "utf8");
 const app = readFileSync("src/App.tsx", "utf8");
@@ -23,6 +31,9 @@ assert.match(workflow, /contents: read/);
 assert.match(workflow, /needs: propose/);
 assert.match(workflow, /confirm-pr-created/);
 assert.match(workflow, /pr_created/);
+assert.match(workflow, /verify-ai-pr-scope\.mjs/);
+assert.match(workflow, /VALIDATION_RESULT/);
+assert.match(workflow, /fetch-depth: 0/);
 assert.match(agent, /pr_created=/);
 assert.doesNotMatch(workflow, /merge_pull_request|gh pr merge|pull_request_target/);
 assert.match(agent, /\/git\/refs/);
@@ -32,4 +43,4 @@ assert.match(agent, /src\\\/\(pages\|components\)/);
 assert.match(agent, /Cannot|\ballowed\b/);
 assert.match(app, /path="\/admin\/ai"/);
 assert.match(routes, /"\/admin\/ai"/);
-console.log("TradeHQ AI agent syntax, access boundaries, route and review gates verified.");
+console.log("TradeHQ AI agent syntax, transfer owner, independent safety scope, route and review gates verified.");
