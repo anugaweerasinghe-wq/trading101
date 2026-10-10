@@ -5,8 +5,10 @@ on:
     branches: [main]
     paths:
       - .github/workflows/tradehq-agents.yml
+      - functions/**
       - scripts/agent-monitor.mjs
       - scripts/agent-browser-smoke.mjs
+      - scripts/agent-repair-triage.mjs
       - src/pages/AdminDashboard.tsx
       - src/pages/AdminAIAssistant.tsx
   schedule:
@@ -85,5 +87,27 @@ jobs:
           node-version: '20'
       - name: Render twelve public website screens in headless Chrome
         run: node scripts/agent-browser-smoke.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  triage:
+    needs: [scan, browser]
+    # Always inspect both outcomes; if a monitor crashes before reporting,
+    # triage fails visibly rather than treating a stale report as healthy.
+    if: always() && (needs.scan.result == 'success' || needs.scan.result == 'failure') && (needs.browser.result == 'success' || needs.browser.result == 'failure')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+      - name: Deduplicate repeated public failures for owner review only
+        run: node scripts/agent-repair-triage.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
