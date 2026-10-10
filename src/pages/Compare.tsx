@@ -1,6 +1,6 @@
 import NotFound from "./NotFound";
 import { tradeRouteForSymbol } from "@/lib/assets";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { MegaFooter } from "@/components/MegaFooter";
@@ -16,8 +16,11 @@ export default function Compare() {
   if (!pair) return <NotFound />;
 
   const title = `${pair.a.name} vs ${pair.b.name} — Key Differences Explained | TradeHQ`;
-  const description = `${pair.a.name} vs ${pair.b.name}: side-by-side comparison on returns, volatility, use case and risk. Practise both with $100K virtual cash on TradeHQ. (Educational simulation only — not financial advice.)`;
+  const description = `${pair.a.name} vs ${pair.b.name}: compare instrument structure, risks and research questions, with a specific educational worksheet and sources. TradeHQ uses virtual funds and simplified execution.`;
   const url = `${SITE_DOMAIN}/compare/${pair.slug}`;
+  const aRoute = tradeRouteForSymbol(pair.a.symbol);
+  const bRoute = tradeRouteForSymbol(pair.b.symbol);
+  const categoryComparison = aRoute === "/trade" || bRoute === "/trade";
 
   return (
     <>
@@ -54,15 +57,15 @@ export default function Compare() {
             <Card className="p-6 border-emerald-500/20">
               <div className="text-xs text-emerald-400 mb-1">{pair.a.tag}</div>
               <div className="text-2xl font-bold">{pair.a.name} <span className="text-muted-foreground text-base">({pair.a.symbol})</span></div>
-              <Link to={tradeRouteForSymbol(pair.a.symbol)}>
-                <Button variant="outline" size="sm" className="mt-4">Practise {pair.a.symbol} <ArrowRight className="ml-2 h-3 w-3" /></Button>
+              <Link to={aRoute}>
+                <Button variant="outline" size="sm" className="mt-4">{aRoute === "/trade" ? "Browse practice instruments" : `Practise ${pair.a.symbol}`} <ArrowRight className="ml-2 h-3 w-3" /></Button>
               </Link>
             </Card>
             <Card className="p-6 border-rose-500/20">
               <div className="text-xs text-rose-400 mb-1">{pair.b.tag}</div>
               <div className="text-2xl font-bold">{pair.b.name} <span className="text-muted-foreground text-base">({pair.b.symbol})</span></div>
-              <Link to={tradeRouteForSymbol(pair.b.symbol)}>
-                <Button variant="outline" size="sm" className="mt-4">Practise {pair.b.symbol} <ArrowRight className="ml-2 h-3 w-3" /></Button>
+              <Link to={bRoute}>
+                <Button variant="outline" size="sm" className="mt-4">{bRoute === "/trade" ? "Browse practice instruments" : `Practise ${pair.b.symbol}`} <ArrowRight className="ml-2 h-3 w-3" /></Button>
               </Link>
             </Card>
           </div>
@@ -111,14 +114,24 @@ export default function Compare() {
           <Card className="p-6 mb-8">
             <h2 className="text-xl font-semibold mb-2">How to compare a practice worksheet</h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              For {pair.a.symbol} and {pair.b.symbol}, define hypothetical quantities, a common
-              observation window and cost assumptions before comparing outcomes. Equal dollar
-              values do not establish equal risk. Record unfavorable cases as well as favorable
-              ones, and distinguish provider data from simulation. Portfolio metrics describe
-              practice results and may include generated history; they do not establish the
-              drawdown you would experience in a real account or which asset suits you.
+              {pair.worksheet}
+            </p>
+            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+              Equal dollar values do not establish equal risk. Record unfavorable as well as favorable
+              cases. Provider observations and generated history are different; simulated portfolio
+              metrics do not establish real-account drawdowns or suitability.
             </p>
           </Card>
+
+          <section className="mb-8">
+            <h2 className="text-xl font-semibold mb-3">Sources for your research</h2>
+            <p className="text-sm text-muted-foreground mb-3">Check the source date, reporting period and product definitions. These references explain structures and research inputs; they do not validate a price forecast.</p>
+            <ul className="space-y-2 text-sm">
+              {pair.sources.map((source) => (
+                <li key={source.href}><a href={source.href} className="text-emerald-400 underline underline-offset-4">{source.label}</a></li>
+              ))}
+            </ul>
+          </section>
 
           <section className="mb-10">
             <h2 className="text-2xl font-semibold mb-4">More comparisons</h2>
@@ -138,9 +151,11 @@ export default function Compare() {
               { label: `${pair.a.name} vs ${pair.b.name}` },
             ]}
             faqs={[
-              { question: `Is ${pair.a.name} better than ${pair.b.name}?`, answer: `${pair.verdict} You can practise both on TradeHQ with $100,000 virtual cash before committing real capital.` },
-              { question: `Can I trade ${pair.a.name} and ${pair.b.name} on TradeHQ for free?`, answer: `Yes — both ${pair.a.name} and ${pair.b.name} are tradable on the TradeHQ practice simulator with no signup required.` },
-              { question: `Which is more volatile, ${pair.a.name} or ${pair.b.name}?`, answer: pair.bullets.find((b) => /volatil/i.test(b)) ?? `Volatility differs by asset class — use the practice account to feel it without risking real money.` },
+              { question: `Is ${pair.a.name} better than ${pair.b.name}?`, answer: pair.verdict },
+              { question: `What can I practise from this comparison on TradeHQ?`, answer: categoryComparison
+                ? `Forex and equities are categories, not ticker symbols. Browse the practice terminal to choose supported instruments such as EUR/USD and AAPL. Virtual spot exercises use simplified data and fills; they do not reproduce every real product or execution condition.`
+                : `The terminal has practice routes for ${pair.a.symbol} and ${pair.b.symbol} with virtual funds. Those named examples do not represent every product in their categories. Guest practice is available; TradeHQ does not deliver physical assets, stake tokens, place resting stop orders or open short positions.` },
+              { question: `How should I compare volatility for ${pair.a.name} and ${pair.b.name}?`, answer: `Specify the exact instruments, matching dates, observation interval and return calculation before comparing variability. A ranking can change with the sample. Generated practice history does not establish historical market volatility, and equal dollar values do not imply equal risk.` },
             ]}
             faqHeading="Comparison FAQ"
           />
@@ -169,19 +184,16 @@ export function CompareIndex() {
 
           <section className="mb-10 max-w-3xl space-y-4">
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Most "X vs Y" questions are really questions about risk tolerance and time horizon. Two
-              assets rarely do the same job: one may be a slow compounding holding suited to a decade,
-              the other a volatile position that can halve in a quarter. Each comparison below sets out
-              what the two instruments actually are, where their returns come from, how differently they
-              behave in a drawdown, and the mistakes people commonly make when treating them as
-              interchangeable.
+              Start by identifying the exposure: a company share, fund, currency pair and network token
+              have different structures. The pages below compare those structures and offer specific
+              research questions, source links and hypothetical worksheets. A category such as forex
+              or stocks is broader than the named examples available in the practice terminal.
             </p>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              A useful habit when reading any comparison: convert the claim into a position size. If one
-              asset is four times as volatile as the other, an equal dollar allocation is not an equal
-              bet — it is a concentrated position in the riskier one with a token holding in the other.
-              Comparing annualised volatility and worst historical drawdown before comparing returns is
-              what turns a comparison into a decision.
+              For a numerical comparison, state matching dates, data sources, calculation methods and
+              costs. Equal dollar allocations do not establish equal risk, and a past volatility or
+              drawdown estimate is not a guaranteed future outcome. Separate documented market
+              observations from TradeHQ's generated history and simplified fills.
             </p>
             <p className="text-xs text-muted-foreground/70 italic">
               (Educational simulation only — not financial advice.)
@@ -202,13 +214,13 @@ export function CompareIndex() {
           </div>
 
           <section className="mt-10 max-w-3xl">
-            <h2 className="text-xl font-semibold mb-3">Test the comparison instead of arguing about it</h2>
+            <h2 className="text-xl font-semibold mb-3">Work through a specific comparison</h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Every asset named on these pages is available in the practice terminal with $100,000 of
-              virtual cash. Take both sides of a comparison at matched risk, hold them for a month, and
-              read the portfolio analytics afterwards: the volatility gap, the largest drawdown, and how
-              each one behaved on the days the market fell. Thirty days of watching that is worth more
-              than any amount of reading, and it costs nothing because none of it is real money.
+              Choose a page and follow its worksheet with stated hypothetical inputs. The terminal
+              offers supported named instruments and virtual funds; it does not reproduce every
+              exposure discussed here. Use the exercise to check units, costs and account arithmetic,
+              then consult dated external sources for business or network facts. A month of simulator
+              results does not establish a reliable strategy or readiness to trade real money.
             </p>
           </section>
         </main>

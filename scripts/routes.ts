@@ -441,9 +441,9 @@ export function buildRoutes(): RouteMeta[] {
   routes.push({
     path: "/compare",
     title: "Compare Assets — Head-to-Head Trading Guides | TradeHQ",
-    description: `Side-by-side comparisons of stocks, crypto and ETFs. Practice trading both with ${BALANCE} in free virtual cash.`,
+    description: "Compare named assets and instrument categories using specific educational worksheets, research questions and sources. TradeHQ uses virtual funds and simplified fills.",
     h1: "Compare Assets",
-    summary: `Head-to-head comparisons across stocks, crypto and ETFs — so you can decide what to paper trade first with your ${BALANCE} practice balance.`,
+    summary: "Compare instrument structures, risks and research inputs. Use a pair-specific worksheet with stated assumptions, and distinguish simulated practice from documented market observations.",
     priority: "0.7",
     changefreq: "weekly",
   });

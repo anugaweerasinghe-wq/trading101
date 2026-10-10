@@ -10,6 +10,8 @@ export interface ComparePair {
   bullets: string[];   // 4 differentiators
   deepDive: string[];  // 2 long-form paragraphs, unique per pair
   mistakes: string[];  // 3 concrete errors people make with this comparison
+  worksheet: string;   // a pair-specific exercise, not a trading recommendation
+  sources: { label: string; href: string }[];
 }
 
 export const COMPARE_PAIRS: ComparePair[] = [
@@ -26,13 +28,18 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Volatility: compare percentage changes over the same stated sample rather than use a fixed ETH/BTC volatility multiple.",
     ],
     deepDive: [
-      "The two assets answer different questions. Bitcoin's design goal is credible scarcity: a fixed issuance schedule, a deliberately simple scripting language, and a network whose main job is to never change in ways holders did not agree to. Ethereum's design goal is expressiveness: a general-purpose virtual machine where anyone can deploy code that settles value. That difference shows up in how each network's value is argued for. Bitcoin's case is monetary and rests on adoption as a savings asset; Ethereum's case is closer to an economy, where fees paid by applications and the burn mechanism tie network usage to the supply of the token.",
+      "Bitcoin transactions transfer value under rules verified by network participants. Ethereum also supports applications through smart contracts. Those mechanisms raise different research questions: how transactions are validated, what users pay to transact, how protocol changes are adopted and how application execution works. Neither design guarantees demand for its token. Use the network documentation to distinguish technical rules from a claim about savings, purchasing power or future market price.",
       "For a practice comparison, measure BTC and ETH returns over the same observation period. Correlation depends on that sample and can change; two token names do not by themselves establish independent exposures. Record the market-data source, interval and method before interpreting a relationship. Network activity, fees and issuance are additional variables to investigate rather than guaranteed leading indicators. A BTC/ETH split changes weights but does not prove diversification or prescribe a suitable total crypto allocation.",
     ],
     mistakes: [
       "Treating two token names as proof of diversification. Measure correlation over a stated sample and compare combined exposure under different price shocks.",
-      "Assuming staking yield is free money. Staking rewards come with lock-up periods, validator risk and, through liquid staking tokens, an extra layer of smart-contract exposure.",
+      "Assuming staking rewards are a guaranteed return. Withdrawal arrangements, validator penalties, service-provider costs and smart-contract risks vary with the method; token-price losses are separate.",
       "Treating a lower unit price as proof of cheaper valuation. Units, circulating supply, issuance and the rights associated with an asset are different measures.",
+    ],
+    worksheet: "Create separate BTC and ETH columns for transaction validation, network fees, supply changes and custody assumptions. Cite a dated network source for each fact. In a second table, apply the same hypothetical percentage rise and fall to equal starting values, including practice fees. Keep that arithmetic separate from staking income, which TradeHQ does not pay, and from any claim that two tokens provide independent exposures. Add a row distinguishing the simulator transaction fee from a network transaction charge: the former changes virtual cash, while the latter belongs to an external network example. Check whether a quoted network cost uses native units or dollars before comparing it with another network's fee.",
+    sources: [
+      { label: "Bitcoin: how transactions work", href: "https://bitcoin.org/en/how-it-works" },
+      { label: "Ethereum: staking methods and risks", href: "https://ethereum.org/staking/" },
     ],
   },
   {
@@ -49,18 +56,23 @@ export const COMPARE_PAIRS: ComparePair[] = [
     ],
     deepDive: [
       "NVIDIA reporting separates compute and networking from graphics and discusses customer concentration. Tesla reporting separates automotive from energy generation and storage. Those categories suggest different questions: how customers fund compute capacity, how consumers and businesses buy vehicles, and how energy demand affects storage orders. Use current filings to measure those contributions instead of assuming a budget change produces an immediate margin or price response.",
-      "That difference matters for how each is analysed. For Nvidia, the numbers that move the story are data-centre revenue growth, gross margin and customer concentration. For Tesla, they are deliveries, automotive gross margin excluding regulatory credits, and progress on the autonomy and energy segments that carry the long-duration part of the valuation. Both trade at multiples that assume years of execution, which is why both can fall sharply on results that would be considered good for an average company — the bar is set by expectations, not by absolute performance.",
+      "A useful reporting worksheet separates revenue, margin, capital spending and forward-looking statements. Record how each company defines its segments and whether a margin excludes particular items before comparing numbers. An earnings headline does not reveal all those inputs or establish how the share price will react. Compare reported results with clearly stated prior assumptions; avoid describing a valuation multiple or a market reaction without its date and source.",
     ],
     mistakes: [
       "Treating both companies as one AI exposure. Compare business mix, customer demand and shared market factors rather than assuming their drivers are unrelated.",
       "Treating a beta estimate or a familiar ticker as a guaranteed risk classification. Compare the same benchmark and sample, and consider hypothetical price shocks without prescribing leverage or a fixed drawdown.",
-      "Reading a headline earnings beat as a bullish signal. In high-expectation stocks the reaction is driven by guidance and margins, not by the beat itself.",
+      "Treating a headline earnings beat as a price forecast. Guidance, margins, expectations and wider market conditions can all matter; a positive result does not guarantee a gain.",
+    ],
+    worksheet: "Choose matching reporting periods from Tesla and NVIDIA. Record each company's segment revenue, the definition of a selected margin and one disclosed demand risk, with page references. Write one alternative outcome for each assumption. Keep delivery counts and compute revenue in their own units; neither is a directly comparable volume measure or a simulated earnings-trading signal. Identify whether each selected figure comes from a quarterly report, annual report or presentation. A quarter and a fiscal year cannot be compared as if they cover the same duration. Preserve the original units and any stated exclusions so that another reader can reconstruct the comparison.",
+    sources: [
+      { label: "Tesla: quarterly disclosures and filings", href: "https://ir.tesla.com/" },
+      { label: "NVIDIA: financial reports", href: "https://investor.nvidia.com/financial-info/financial-reports/default.aspx" },
     ],
   },
   {
     slug: "bitcoin-vs-gold",
     a: { symbol: "BTC", name: "Bitcoin", tag: "Digital store of value" },
-    b: { symbol: "GLD", name: "Gold", tag: "Physical hedge" },
+    b: { symbol: "GLD", name: "Gold (GLD fund)", tag: "Gold fund exposure" },
     intro: "Gold and Bitcoin have different ownership, custody and market arrangements. A gold fund also differs from physical gold. Compare specified exposures over matching dates; neither a long history nor a digital supply rule guarantees a hedge.",
     verdict: "Practice comparison: contrast physical gold exposure, costs and custody with Bitcoin network and custody risks. Neither is assured currency-crisis insurance or a guarantee of asymmetric upside.",
     bullets: [
@@ -75,8 +87,13 @@ export const COMPARE_PAIRS: ComparePair[] = [
     ],
     mistakes: [
       "Assuming equal dollar positions have equal risk. Compare variability and portfolio contributions under stated data and assumptions; no relative position size is prescribed.",
-      "Calling bitcoin an inflation hedge based on 2020-2021. It behaved like a high-beta risk asset through the 2022 inflation peak, which is the opposite of a hedge.",
-      "Ignoring custody. Vault fees for gold and key management for bitcoin are real, ongoing costs that a price chart never shows.",
+      "Calling an asset an inflation hedge from one favorable period. Define the inflation measure, dates and specific exposure before evaluating a relationship; it may change in another sample.",
+      "Treating a gold fund as physical delivery. Fund expenses, physical storage and Bitcoin custody involve different arrangements and product-specific costs.",
+    ],
+    worksheet: "Label the gold column GLD fund exposure, not a bar in a vault. Read the fund's expense and custody descriptions alongside Bitcoin's transaction and wallet documentation. Compare equal hypothetical starting values under both rising and falling price scenarios, with a separate column for costs excluded by the simulator. Do not label either result an inflation hedge without matching dated market and inflation data.",
+    sources: [
+      { label: "SPDR Gold Shares: fund information", href: "https://www.spdrgoldshares.com/usa/" },
+      { label: "Bitcoin: transactions and wallets", href: "https://bitcoin.org/en/how-it-works" },
     ],
   },
   {
@@ -100,6 +117,11 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Comparing headline per-share metrics without checking share-count changes, capital spending and cash returns. Those factors can alter what per-share growth means.",
       "Assuming an index position gives the same exposure for every investor. If you are comparing a single stock with an index fund, check the fund's current holdings and weights first.",
     ],
+    worksheet: "Use Apple and Microsoft filings from comparable reporting periods. Record hardware/services and enterprise/cloud segment definitions, capital spending and share-count changes. Mark any metric that cannot be compared directly. Explain how a share-count change could affect a per-share measure without changing the total business result; do not convert that explanation into a share-price prediction.",
+    sources: [
+      { label: "Apple: investor reports", href: "https://investor.apple.com/investor-relations/default.aspx" },
+      { label: "Microsoft: investor reports", href: "https://www.microsoft.com/en-us/investor/default" },
+    ],
   },
   {
     slug: "ethereum-vs-solana",
@@ -114,13 +136,18 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Staking: rewards, issuance, fees and operational risks differ; advertised yield is not a guaranteed real return.",
     ],
     deepDive: [
-      "The architectural bet is the whole story. Ethereum decided that the base layer should stay small enough for ordinary hardware to verify, pushing throughput to rollups that post proofs back to the main chain. That preserves decentralisation and creates a modular ecosystem, at the cost of a fragmented user experience across many L2s. Solana decided that hardware improves faster than coordination does, so it runs one chain with parallel execution and higher validator requirements. That produces a single, fast, cheap environment, at the cost of a smaller validator set and a history of network halts.",
+      "A network comparison should identify where execution happens and how results are verified. Ethereum's scaling documentation discusses layer-2 rollups with different security models; a mainnet transaction and a rollup transaction should not be counted interchangeably. Solana's documentation describes its own account and transaction model. Compare a specific operation, confirmation criterion and observation window before quoting throughput or fees. Network requirements, validator participation and reliability need dated evidence rather than permanent rankings.",
       "Network activity and token returns are different measures. A comparison can examine where fees are charged, how supply changes and which security assumptions apply without presuming that greater activity raises price. Staking rewards are denominated in the token and can be affected by costs, issuance, protocol rules and market-price losses. Comparing nominal reward percentages alone does not establish an inflation-adjusted investment return. Document the source and period and separate the network’s design from a forecast of its token’s value.",
     ],
     mistakes: [
       "Choosing on transactions per second alone. Sustained throughput under real load, and what happens when the chain is congested, matter far more than a benchmark figure.",
-      "Reading a nominal staking yield as a real return. Subtract issuance before comparing anything.",
-      "Assuming an outage is priced in permanently. Reliability events tend to affect institutional adoption timelines, which is a slow variable, not a one-day price move.",
+      "Reading a token reward percentage as a cash return. State the period, token-price change, fees, penalties and supply assumptions; subtracting issuance alone does not calculate an investor's return.",
+      "Predicting a token-price response from an outage. Record the incident's date, duration and affected services separately from any claim about adoption or price.",
+    ],
+    worksheet: "Choose the same type of application operation on Ethereum and Solana. Record whether Ethereum activity is on mainnet or a named layer 2, what each transaction count includes, how confirmation is defined and when fees were measured. Put reliability incidents in a separate dated log. Leave token-price forecasts out of the table: neither a faster operation nor a lower fee establishes investment performance.",
+    sources: [
+      { label: "Ethereum: scaling and rollup security models", href: "https://ethereum.org/developers/docs/scaling/" },
+      { label: "Solana: accounts and transactions", href: "https://solana.com/docs" },
     ],
   },
   {
@@ -136,19 +163,24 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Practice access: TradeHQ uses virtual funds and simplified fills, separate from actual venue hours, eligibility and execution.",
     ],
     deepDive: [
-      "Equities and crypto are not competing versions of the same thing. A share is a legal claim on a company's future cash flows, protected by securities law, with audited accounts and a regulator that can act on fraud. A crypto token is a unit of a protocol whose value comes from what its network is used for and what people will pay for it; the disclosure regime is thinner and the investor protections are largely whatever the exchange chooses to offer. That is not an argument that one is good and one is bad — it is a description of what you own and what recourse exists when something goes wrong.",
+      "Identify the instrument before comparing ownership or disclosures. A company share represents equity ownership; an equity fund holds a specified portfolio under its own terms. Bitcoin is a network asset rather than a share in a company. Other crypto products can have different structures, so Bitcoin cannot stand in for every token. Check the actual product documents, custody arrangement and applicable jurisdiction; a category label does not establish voting rights, distributions, legal protection or recovery after a loss.",
       "For a virtual comparison, use equal starting values, matching dates and a stated calculation method. A price-only series and an index with reinvested dividends answer different questions. Measure drawdowns and variability from the same sample rather than repeat a permanent return or maximum-loss percentage. Position weights determine each contribution to a hypothetical loss, but no beginner core/satellite split is universally appropriate. A simulator’s simplified data and fills do not establish that either exposure is suitable for real-money savings.",
     ],
     mistakes: [
       "Treating an index and a token as equivalent exposures. Compare several hypothetical declines and their portfolio contributions without turning one loss percentage into a position-sizing rule.",
-      "Judging either over a single year. Both need a multi-year horizon before returns say anything about the strategy.",
-      "Using leverage on 24/7 markets. Crypto liquidations happen while you sleep, and there is no closing bell to stop the move.",
+      "Generalizing from one observation window. Report the selected dates and compare other samples rather than assume any holding period makes a strategy reliable.",
+      "Assuming virtual spot practice reproduces leveraged trading. TradeHQ does not model borrowing agreements, margin calls or forced liquidations.",
+    ],
+    worksheet: "Use SPY and BTC as named examples, not complete representations of stocks and crypto. Specify whether the equity series includes reinvested distributions, then compare it with a BTC price series over matching dates. Write down holdings, custody and distribution rights from the relevant documents. For hypothetical account arithmetic, show both asset return and total-account return with cash included; do not prescribe an allocation.",
+    sources: [
+      { label: "Investor.gov: stock ownership and risks", href: "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks" },
+      { label: "Bitcoin: network transactions", href: "https://bitcoin.org/en/how-it-works" },
     ],
   },
   {
     slug: "nvidia-vs-amd",
-    a: { symbol: "NVDA", name: "Nvidia", tag: "AI accelerator leader" },
-    b: { symbol: "AMD", name: "AMD", tag: "Challenger + CPU strength" },
+    a: { symbol: "NVDA", name: "Nvidia", tag: "Compute hardware + CUDA" },
+    b: { symbol: "AMD", name: "AMD", tag: "Compute hardware + ROCm" },
     intro: "NVIDIA and AMD sell compute products with different hardware and software ecosystems. Compare reported product mix, demand and costs using matching periods instead of treating a roadmap or a competitive narrative as an investment conclusion.",
     verdict: "Practice comparison: examine product mix, software support, customer demand and reported costs. Neither incumbency nor a challenger narrative establishes compounding dominance or greater share-price upside.",
     bullets: [
@@ -158,13 +190,20 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Demand: compare reported compute spending and competing outcomes; share gains do not guarantee a stock re-rating.",
     ],
     deepDive: [
-      "The competitive question is not whether AMD can build a capable accelerator — it can — but whether the surrounding software is good enough that a large customer will accept the migration cost. Nvidia's CUDA ecosystem has more than fifteen years of libraries, tooling and trained engineers behind it, and that accumulated familiarity is the real moat. AMD's ROCm has improved substantially and the largest buyers have strong commercial reasons to fund a credible second source, which is why AMD's share gains, when they come, tend to arrive through a handful of very large design wins rather than through gradual market drift.",
+      "Hardware and software should be examined together. For a stated workload, check supported models, libraries, numerical precision, memory and deployment requirements in each vendor's documentation. Then separate those compatibility findings from company-level revenue, costs and customer risks in the filings. A benchmark result describes its test setup; it does not establish purchasing decisions, a permanent software advantage or future market share. Version and date the comparison because supported products and tools change.",
       "A market-share hypothesis and a stock-price response are different propositions. Compare what was known before an announcement with alternative expectations and reported results. Customer spending, supply, competition, software compatibility and costs can affect both companies, but that does not establish a predictable asymmetric reaction. A price already reflects changing expectations, and a positive business development need not produce a gain. Use matched reporting periods and dated inputs when comparing valuation or profitability.",
     ],
     mistakes: [
-      "Assuming benchmark performance decides market share. Software maturity, supply allocation and existing contracts usually decide it first.",
-      "Pairing them as a long/short hedge without accounting for beta. Both move with the same capex cycle, but not with the same amplitude.",
-      "Extrapolating one quarter's growth rate. Semiconductor demand is cyclical, and order patterns are lumpy by nature.",
+      "Treating one benchmark as proof of market share. Check the workload, software version, availability and disclosed customer arrangements separately.",
+      "Calling two compute stocks a guaranteed hedge. Shared demand factors do not establish equal or opposite price responses; TradeHQ does not open short positions.",
+      "Extrapolating one quarter's growth indefinitely. Compare several dated reports and distinguish reported results from a forecast.",
+    ],
+    worksheet: "Select one workload and record the supported hardware and software versions for NVIDIA and AMD before comparing a benchmark. In a separate filings table, record segment definitions, costs and disclosed customer risks for matching periods. Mark missing data explicitly. A software compatibility result and a revenue figure answer different questions; neither is a forecast of market share or the next share-price move. For a performance result, record the test author, precision, batch size and hardware configuration. Distinguish a vendor demonstration from an independently reproduced measurement. If those details are unavailable, leave the comparison unresolved rather than infer a winner from a headline, and explain which missing input prevents a fair comparison.",
+    sources: [
+      { label: "NVIDIA: financial reports", href: "https://investor.nvidia.com/financial-info/financial-reports/default.aspx" },
+      { label: "AMD: SEC filings", href: "https://ir.amd.com/financial-information/sec-filings" },
+      { label: "NVIDIA: CUDA documentation", href: "https://docs.nvidia.com/cuda/" },
+      { label: "AMD: ROCm documentation", href: "https://rocm.docs.amd.com/en/latest/" },
     ],
   },
   {
@@ -180,13 +219,18 @@ export const COMPARE_PAIRS: ComparePair[] = [
       "Analysis: macroeconomic and company information can inform hypotheses without establishing a dependable trading edge.",
     ],
     deepDive: [
-      "Currency prices are relative: every quote is one economy priced against another, so a EUR/USD move can come from Europe, from the United States, or from a global risk event that affects both differently. The dominant drivers are interest-rate differentials, growth expectations and central-bank policy, which is why professional FX participants spend their time on macroeconomic releases rather than on company analysis. There is no equivalent of earnings, no dividend, and no long-term upward drift — a currency pair is a mean-reverting relationship punctuated by policy-driven trends, which is a fundamentally different game from owning productive assets.",
+      "A EUR/USD quote expresses dollars per euro; a stock price expresses currency per share. Neither unit should be confused with the whole account's return. Currency research can examine dated policy and economic information, while stock research can examine company reports, but neither approach guarantees a dependable price response. A pair can trend or fluctuate over a selected period; it has no obligation to return to a chosen average. Identify the instrument and calculation units before comparing outcomes.",
       "Leverage increases gains and losses relative to the funds committed, and requirements depend on the product, jurisdiction and provider. A quoted price’s usual daily range does not establish a safe leverage level or explain a universal share of account losses. For a learning exercise, compare hypothetical unleveraged exposures and record how a price shock changes account value. TradeHQ uses simplified spot practice, so it does not reproduce a margin agreement, forced liquidation or every currency execution condition.",
     ],
     mistakes: [
-      "Using the leverage the broker offers. Available leverage is a marketing number, not a recommendation; position size should be set from the stop distance and account risk.",
-      "Trading FX around scheduled data without a plan. Spreads widen and slippage during a rate decision can exceed a normal day's range.",
-      "Expecting long-term appreciation from a currency pair. There is no equivalent of retained earnings compounding in your favour.",
+      "Treating available leverage or a stop distance as proof of safety. A stop trigger does not guarantee execution at a chosen price; TradeHQ does not place resting stops or model margin contracts.",
+      "Inferring a real news reaction from a simulated chart. A scheduled release needs dated external observations and venue conditions to support an event study.",
+      "Confusing quote units with company ownership. Currency appreciation and retained company earnings describe different mechanisms; neither guarantees an account gain.",
+    ],
+    worksheet: "Choose a named pair such as EUR/USD and a named equity such as AAPL from the practice terminal. Write dollars per euro and dollars per share next to their hypothetical prices, then calculate quantity times price using those units. Apply positive and negative price changes without leverage. Keep company distributions, currency conversion costs and real venue execution in separate fields when they are excluded from the exercise.",
+    sources: [
+      { label: "TradeHQ: order mechanics and execution limits", href: "/learn/market-orders-vs-limit-orders" },
+      { label: "Investor.gov: stocks and ownership", href: "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks" },
     ],
   },
 ];

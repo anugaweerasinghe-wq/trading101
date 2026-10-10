@@ -76,7 +76,7 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/c
 ## Advertising audience decision required before activation
 
 N-M04 remains an owner decision, not a finding that TradeHQ is automatically child-directed.
-AdSense is currently disabled behind the unconfirmed publisher placeholder. Before enabling it:
+As verified on 10 October 2026, `index.html` loads the real AdSense script and publisher metadata, and `ads.txt` contains the publisher record. Script loading does not establish account approval or ad serving. Verify the account's actual status and audience settings before making advertising changes:
 
 - Record the intended audience and whether any site or section is child-directed; student wording alone is insufficient to decide this.
 - Review current Google age-treatment requirements and configure the applicable signals and advertising protections for that audience. Unknown age must not be silently treated as verified adult age.
