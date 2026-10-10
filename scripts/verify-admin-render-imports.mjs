@@ -6,6 +6,17 @@ const pages = ["src/pages/AdminDashboard.tsx", "src/pages/AdminAIAssistant.tsx"]
 for (const file of pages) {
   const source = fs.readFileSync(file, "utf8");
   const ast = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  assert.equal(ast.parseDiagnostics.length, 0, file + ": TSX parse errors: " +
+    ast.parseDiagnostics.map(d => ts.flattenDiagnosticMessageText(d.messageText, " ")).join("; "));
+  if (file.endsWith("AdminDashboard.tsx")) {
+    // A broken optional desk must not lock the owner out of the rest of the dashboard.
+    assert.ok(source.indexOf('adminCall("settings")') >= 0 && source.includes("Promise.allSettled"),
+      "Dashboard must verify the administrator first, then load independent desks separately.");
+    assert.ok(source.includes("tradehq-code-agent.yml") && source.includes("tradehq-agents.yml"),
+      "Dashboard must expose live monitor and code-proposal history.");
+    assert.ok(source.includes("agentError") && source.includes("deskWarnings"),
+      "Dashboard must disclose incomplete reporting rather than invent success or zero counts.");
+  }
   const known = new Set();
   function bindNames(binding) {
     if (ts.isIdentifier(binding)) known.add(binding.text);
