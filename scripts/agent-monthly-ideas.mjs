@@ -2,6 +2,7 @@
  * Optional monthly free-tier Gemini research. Makes suggestions, never code changes.
  * A missing key pauses safely with no paid fallback.
  */
+import { readFileSync } from "node:fs";
 const repo=process.env.GITHUB_REPOSITORY||"anugaweerasinghe-wq/trading101";
 const token=process.env.GITHUB_TOKEN,key=process.env.GEMINI_API_KEY;
 const model=process.env.GEMINI_AGENT_MODEL||"gemini-2.5-flash-lite";
@@ -17,7 +18,9 @@ async function main(){
  if(existing.some(i=>!i.pull_request&&i.title===title)){console.log("Already generated this month.");return;}
  if(!key){console.log("Paused: repository GEMINI_API_KEY secret not configured. No API call or charge.");return;}
  const features="free simulated paper trading, courses, daily scored questions, portfolio, journal, leaderboard, reviews, glossary, market guides and AI mentor";
- const prompt="Find precisely two fresh, feasible, free-to-run feature ideas for TradeHQ, an educational website with "+features+". Do not duplicate existing features or invent user analytics or claim market returns. Each must include title, rationale, userExperience, implementation, risks, tests. Answer JSON only with {ideas:[{title,rationale,userExperience,implementation,risks,tests}]} and no other fields.";
+ const routes=readFileSync("src/App.tsx","utf8").match(/<Route path="[^"]+"/g)?.slice(0,90).join(", ")||"";
+ const history=existing.filter(i=>i.title?.startsWith("[TradeHQ Ideas]")).slice(0,10).map(i=>(i.body||"").slice(0,1800)).join("\n---\n");
+ const prompt="Find precisely two NEW, feasible, free-to-run feature ideas for TradeHQ, an educational website with "+features+". Existing website routes: "+routes+". Avoid duplicates of these past suggestions: "+history+". Do not invent user analytics, market performance, user endorsements or revenue data. Prefer accessible education and retention improvements that respect AdSense/YMYL. Every idea needs a no-cost implementation sketch, specific acceptance tests and risks. Each idea must include title, rationale, userExperience, implementation, risks, tests. Answer JSON only with {ideas:[{title,rationale,userExperience,implementation,risks,tests}]} and no other fields.";
  const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+encodeURIComponent(model)+":generateContent",{method:"POST",headers:{"x-goog-api-key":key,"content-type":"application/json"},body:JSON.stringify({contents:[{role:"user",parts:[{text:prompt}]}],generationConfig:{responseMimeType:"application/json",temperature:0.35,maxOutputTokens:1500}})});
  if(!r.ok)throw Error("Gemini HTTP "+r.status+". Free-tier error; no paid fallback.");
  const result=await r.json();
