@@ -10,7 +10,8 @@ type CourseStatus = { enabled?: boolean; model?: string; lastStarted?: string | 
 type AgentIssue = { id: number; title: string; html_url: string; created_at: string; state: string; body?: string | null; pull_request?: unknown };
 type Run = { id: number; status: string; conclusion: string | null; html_url: string; created_at: string; updated_at?: string };
 type Proposal = { number: number; title: string; html_url: string; draft: boolean; created_at: string };
-const repo = "anugaweerasinghe-wq/trading101";
+type AgentJob = { id: number; runId: number; workflow: string; name: string; status: string; conclusion: string | null; html_url: string; started_at: string };
+const repo = "anugaweerasinghe1-del/trading101";
 const card = "rounded-2xl border border-border bg-card/60 p-5 space-y-3";
 const linkStyle = "inline-flex items-center gap-1 text-sm text-primary hover:underline";
 export default function AdminDashboard() {
@@ -30,6 +31,8 @@ export default function AdminDashboard() {
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [agentError, setAgentError] = useState("");
   const [lastGitHubChecked, setLastGitHubChecked] = useState<Date | null>(null);
+  const [jobHistory, setJobHistory] = useState<AgentJob[]>([]);
+  const [jobHistoryError, setJobHistoryError] = useState("");
   const adminCall = useCallback(async (action: string) => {
     const { data, error: callError } = await supabase.functions.invoke("admin-courses", {
       body: { action }, headers: { "x-admin-key": key },
@@ -79,6 +82,25 @@ export default function AdminDashboard() {
       }
       if (Array.isArray(values[2]?.workflow_runs)) setCodeRun(values[2].workflow_runs[0] ?? null);
       if (Array.isArray(values[3])) setProposals((values[3] as Proposal[]).filter(item => /^AI (smoke-test |proposal:)/i.test(item.title)));
+      // Read only recent jobs and label sampled history honestly. Never infer that a green run means every function works.
+      const recent = [
+        ...(Array.isArray(values[1]?.workflow_runs) ? (values[1].workflow_runs as Run[]).slice(0, 2).map(r => ({ run: r, workflow: "Website monitor" })) : []),
+        ...(Array.isArray(values[2]?.workflow_runs) ? (values[2].workflow_runs as Run[]).slice(0, 2).map(r => ({ run: r, workflow: "AI code proposals" })) : []),
+      ];
+      if (recent.length) {
+        const jobResponses = await Promise.allSettled(recent.map(async entry => {
+          const response = await fetch(base + "/actions/runs/" + entry.run.id + "/jobs?per_page=25");
+          if (!response.ok) throw new Error("Job history HTTP " + response.status);
+          const data = await response.json() as { jobs?: Array<{ id: number; name: string; status: string; conclusion: string | null; html_url: string; started_at: string }> };
+          if (!Array.isArray(data.jobs)) throw new Error("Invalid GitHub job response");
+          return data.jobs.map(job => ({ ...job, runId: entry.run.id, workflow: entry.workflow }));
+        }));
+        setJobHistory(jobResponses.flatMap(item => item.status === "fulfilled" ? item.value : []).sort((a, b) => (b.started_at || "").localeCompare(a.started_at || "")).slice(0, 16));
+        setJobHistoryError(jobResponses.some(x => x.status === "rejected") ? "Some job histories are unavailable; verify full details on GitHub Actions." : "");
+      } else {
+        setJobHistory([]);
+        setJobHistoryError("No recent GitHub runs were returned for job inspection.");
+      }
       setAgentError(failures.length ? "GitHub status unavailable for " + failures.join(", ") + ". Use the linked GitHub history for confirmation." : "");
       setLastGitHubChecked(new Date());
     } catch {
@@ -106,7 +128,7 @@ export default function AdminDashboard() {
     <div className="mx-auto max-w-6xl space-y-7">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div><p className="text-xs tracking-[0.2em] text-primary uppercase mb-2">TradeHQ · private workspace</p><h1 className="text-3xl font-semibold">Admin dashboard</h1><p className="text-sm text-muted-foreground mt-2">Editorial controls, community moderation, automated checks and proposed improvements in one place.</p></div>
-        <div className="flex gap-3">{unlocked && <button type="button" onClick={() => { setUnlocked(false); setKey(""); setCourses(null); setDeskWarnings([]); setDaily(null); setCourseStatus(null); setReviews(null); setIssues([]); setRun(null); setCodeRun(null); setPreviousSuccess(null); setProposals([]); setAgentError(""); setLastGitHubChecked(null); }} className="rounded-xl border border-border px-4 py-2 flex items-center gap-2 text-sm"><Lock className="w-4 h-4"/> Lock</button>}<Link to="/" className={linkStyle}>View website <ExternalLink className="h-3 w-3"/></Link></div>
+        <div className="flex gap-3">{unlocked && <button type="button" onClick={() => { setUnlocked(false); setKey(""); setCourses(null); setDeskWarnings([]); setDaily(null); setCourseStatus(null); setReviews(null); setIssues([]); setRun(null); setCodeRun(null); setPreviousSuccess(null); setProposals([]); setAgentError(""); setLastGitHubChecked(null); setJobHistory([]); setJobHistoryError(""); }} className="rounded-xl border border-border px-4 py-2 flex items-center gap-2 text-sm"><Lock className="w-4 h-4"/> Lock</button>}<Link to="/" className={linkStyle}>View website <ExternalLink className="h-3 w-3"/></Link></div>
       </header>
       {!unlocked ? <form onSubmit={unlock} className="max-w-md rounded-2xl border border-border bg-card p-6 space-y-5">
         <div className="flex gap-3 items-center"><ShieldCheck className="w-6 h-6 text-primary"/><h2 className="font-semibold">Verify administrator access</h2></div>
@@ -141,7 +163,7 @@ export default function AdminDashboard() {
               <h3 className="font-semibold text-sm">Route scanner + independent browser smoke</h3>
               <p className="text-xs text-muted-foreground">Scheduled daily at 08:47 Sri Lanka time (03:17 UTC). Route and Chrome jobs run independently; a successful workflow means both relevant jobs completed.</p>
               <p className="text-sm">Latest: <strong>{run ? run.conclusion || run.status : "Unavailable"}</strong></p>
-              <p className="text-xs text-muted-foreground">Last successful workflow: {previousSuccess ? new Date(previousSuccess.created_at).toLocaleString() : "Not verified"}</p>
+              <p className="text-xs text-muted-foreground">Last successful workflow within recent history: {previousSuccess ? new Date(previousSuccess.created_at).toLocaleString() : "Not verified"}</p>
               {run && <a href={run.html_url} target="_blank" rel="noopener noreferrer" className={linkStyle}>Latest run #{run.id} <ExternalLink className="w-3 h-3"/></a>}
             </div>
             <div className="rounded-xl border border-border p-4 space-y-2">
@@ -152,6 +174,14 @@ export default function AdminDashboard() {
               <p className="text-xs text-muted-foreground">An Actions success does not prove a PR was created. Verify the draft and approval below.</p>
             </div>
           </div>
+          <h3 className="text-sm font-semibold">Recent workflow jobs</h3>
+          <p className="text-xs text-muted-foreground">Latest two runs for each agent workflow. Includes failures and skipped jobs; older history is available on GitHub. A missing failure here does not imply there has never been one.</p>
+          {jobHistoryError && <p className="text-xs text-amber-400">{jobHistoryError}</p>}
+          {jobHistory.length ? <div className="divide-y divide-border rounded-xl border border-border">{jobHistory.map(job => <div key={job.id} className="flex flex-wrap items-center justify-between gap-2 p-3 text-sm">
+            <div><strong>{job.workflow} · {job.name}</strong><p className="text-xs text-muted-foreground">{job.started_at ? new Date(job.started_at).toLocaleString() : "Start time unavailable"} · <span className={job.conclusion === "failure" ? "text-amber-400" : ""}>{job.conclusion || job.status || "Unknown"}</span></p></div>
+            <a href={job.html_url || ("https://github.com/" + repo + "/actions/runs/" + job.runId)} target="_blank" rel="noopener noreferrer" className={linkStyle}>Logs and retry options ↗</a>
+          </div>)}</div> : <p className="text-sm text-muted-foreground">No job-level records available for inspection.</p>}
+          <p className="text-xs text-muted-foreground">To rerun failed jobs, open the GitHub run and use its authorized Re-run jobs control. No automatic repair is triggered from this dashboard.</p>
           <h3 className="text-sm font-semibold">Backend content-generation runs</h3>
           <div className="grid gap-3 md:grid-cols-2">
             <div className="rounded-xl border border-border p-4 space-y-2">
