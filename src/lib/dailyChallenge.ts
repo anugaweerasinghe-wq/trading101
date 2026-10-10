@@ -532,7 +532,7 @@ export interface BonusQuestion {
 
 const BONUS_BANK: BonusQuestion[] = [
   {
-    id: 1, prompt: "What does a 'stop-loss' order do?",
+    id: 1, prompt: "What does a sell stop order generally do when its trigger price is reached?",
     options: [
       { label: "Triggers a market order when the stop price is reached", correct: true, explain: "A stop becomes a market order at its trigger. Gaps and slippage can produce a worse fill, so it does not guarantee a maximum loss. TradeHQ does not execute stop orders; this is a conceptual question. See SEC Investor.gov, Types of Orders." },
       { label: "Guarantees you exit at the exact price you set", correct: false, explain: "Slippage in fast markets means stops can fill worse than the trigger." },

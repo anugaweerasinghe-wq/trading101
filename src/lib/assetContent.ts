@@ -79,12 +79,12 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
     { question: "How do I trade the AI boom with a simulator?", answer: "NVDA is one company example in the simulator. Use $100K virtual cash to study how price changes affect a position, and distinguish AI-sector narratives from evidence about future returns." },
     { question: "Is NVIDIA stock good for beginner stock trading practice?", answer: "NVDA is one company example for a virtual practice exercise. News narratives and historical trends do not establish its suitability for a beginner or predict the next move." },
     { question: "How to practice NVIDIA stock trading as a student in Sri Lanka?", answer: "Use TradeHQ to study NVDA position values with $100K virtual cash. No US brokerage is needed for this practice; it does not establish readiness for real trading." },
-    { question: "What moves NVIDIA stock price the most?", answer: "Data center revenue growth, AI chip demand, and quarterly earnings drive NVDA. Practice correlating these catalysts with price action in the simulator." }
+    { question: "What factors can affect NVIDIA stock price?", answer: "Data-centre revenue, AI-chip demand, quarterly results, guidance and broader market conditions are among the factors investors monitor. Their effect on NVDA can vary by period and is not mechanically predictable." }
   ],
   aapl: [
     { question: "Is Apple stock good for day trading practice?", answer: "AAPL is available for learning order entry and portfolio accounting with virtual cash. Earnings reactions are uncertain, and no stock has predictably profitable news responses." },
     { question: "How to practice Apple stock trading without real money?", answer: "TradeHQ lets you practise AAPL orders with $100K virtual cash. Compare hypothetical price rises and falls after an announcement; news does not imply a predictable response." },
-    { question: "What makes Apple stock move during earnings season?", answer: "iPhone revenue, Services growth, and guidance drive AAPL earnings moves. Practice reading pre-earnings positioning and post-earnings gap fills." },
+    { question: "What can affect Apple stock around earnings?", answer: "Reported revenue, Services growth, margins, guidance and broader expectations can all matter around earnings. Use hypothetical upward and downward gaps for practice. Simulated charts do not reproduce actual earnings reactions." },
     { question: "Can students in Sri Lanka practice US stock trading for free?", answer: "Yes. TradeHQ simulates US stocks including AAPL with virtual cash. No brokerage account, ID verification, or minimum deposit required." }
   ],
   tsla: [
@@ -96,74 +96,74 @@ export const ASSET_FAQS: Record<string, AssetFAQ[]> = {
   spy: [
     { question: "Should beginners start with SPY or individual stocks?", answer: "SPY represents an index-fund example, while individual stocks illustrate company-specific exposure. A learner can compare both; there is no universally required starting asset." },
     { question: "How to practice paper trading the S&P 500 for free?", answer: "Use TradeHQ to practise SPY orders with $100K virtual cash. Compare position values and chart descriptions; the simulator does not reproduce every live-market execution condition." },
-    { question: "What is one way to learn index ETF trading?", answer: "Start with SPY to understand how the overall market moves, then compare with QQQ (tech-heavy) to learn sector rotation and relative strength analysis." },
-    { question: "Can I practice SPY options strategies in a simulator?", answer: "TradeHQ focuses on spot trading for SPY. Practice identifying entry/exit points, trend direction, and risk management — foundational skills for any strategy." }
+    { question: "What is one way to study index ETF differences?", answer: "Compare SPY with a more technology-concentrated fund such as QQQ over the same period and position value. The exercise can illustrate differences in holdings and concentration without implying that either fund is a required starting point." },
+    { question: "Can I practice SPY options strategies in this simulator?", answer: "TradeHQ focuses on spot practice for SPY and does not simulate options contracts. You can study price changes and portfolio accounting, while options-specific payoffs, Greeks and assignment require separate educational examples." }
   ],
   sol: [
-    { question: "Is Solana trading harder than Bitcoin?", answer: "Solana is faster and often more volatile. Practice your 'entry and exit' speed in the simulator to account for Solana's aggressive price swings." },
-    { question: "How to practice Solana trading for free?", answer: "TradeHQ offers SOL trading with $100K virtual cash. Practice fast-moving crypto trades and learn to handle high-volatility altcoin price action." },
-    { question: "What drives Solana price movements?", answer: "Network activity, DeFi TVL, NFT minting volume, and ecosystem growth drive SOL. Practice correlating on-chain metrics with price action." },
+    { question: "Is Solana trading harder than Bitcoin?", answer: "The difficulty of a practice exercise depends on the period, chosen assumptions and what is being studied. SOL and BTC can show different volatility over different windows, so compare them over the same stated interval rather than assume a permanent ranking." },
+    { question: "How to practice Solana trading for free?", answer: "TradeHQ offers SOL practice with $100K virtual cash. Use it to compare how different price changes affect position value without assuming that past volatility will persist." },
+    { question: "What factors can affect Solana price movements?", answer: "Network activity, application usage, liquidity, ecosystem developments and broader crypto-market conditions are among the factors observers track. Their relationship with SOL price can change over time." },
     { question: "Is Solana suitable for beginner crypto traders?", answer: "Use virtual cash to compare how different price shocks affect a SOL position. A tight exit setting is a practice assumption, not a universal risk rule." }
   ],
   gold: [
     { question: "How does Gold react during market crashes?", answer: "Gold and stock prices can respond differently across periods. A practice chart is simulated and does not establish an inverse relationship or reproduce a market crash." },
     { question: "How to practice gold trading for free as a student?", answer: "TradeHQ provides $100K virtual cash for gold (XAU) practice. Compare gains and losses under different price assumptions; gold is not a guaranteed hedge against inflation or market stress." },
-    { question: "What factors drive gold prices?", answer: "Real interest rates, USD strength, central bank purchases, and geopolitical tensions drive gold. Practice correlating these macro factors with XAU charts." },
+    { question: "What factors can affect gold prices?", answer: "Real interest rates, the US dollar, central-bank demand, inflation expectations and geopolitical events are commonly discussed factors. Their effects are not fixed, so compare them over clearly stated periods." },
     { question: "Is gold trading good for learning macro analysis?", answer: "Gold can be used to study supply, demand, interest-rate and currency hypotheses. Its reaction to inflation or geopolitical news is uncertain rather than reliably directional." }
   ],
   amzn: [
     { question: "When is a useful time to trade Amazon stock?", answer: "Earnings and other announcements can affect expectations and volatility, but there is no universally best trading time. A practice exercise can compare different possible news responses." },
-    { question: "How to practice Amazon stock trading without a brokerage?", answer: "Use TradeHQ's free simulator — no brokerage account needed. Trade AMZN with $100K virtual cash and learn earnings-driven price patterns." },
-    { question: "What drives Amazon stock price the most?", answer: "AWS cloud revenue, e-commerce growth, advertising income, and operating margins are key AMZN drivers. Practice reading these metrics before earnings." },
-    { question: "Can students practice trading Amazon stock for free?", answer: "Yes. TradeHQ simulates AMZN with virtual capital. Students worldwide can learn to trade one of the world's largest companies without financial risk." }
+    { question: "How to practice Amazon stock trading without a brokerage?", answer: "Use TradeHQ's free simulator with $100K virtual cash. Compare hypothetical gains and losses in AMZN positions. Actual earnings reactions require separately sourced historical data, and need not repeat." },
+    { question: "What factors can affect Amazon stock price?", answer: "AWS growth, retail margins, advertising revenue, guidance and broader consumer or market conditions are among the factors investors monitor. Their importance can change from one period to another." },
+    { question: "Can students practice Amazon stock with virtual money?", answer: "Yes. TradeHQ simulates AMZN with virtual capital, so the exercise does not put real money at risk. Simulated results do not predict returns from a real account." }
   ],
   eurusd: [
     { question: "How do I learn Forex trading for free?", answer: "Use a $100,000 demo account to trade the EUR/USD pair. Compare session schedules as a learning exercise. Practice data does not reproduce actual session liquidity or execution." },
-    { question: "What is a free forex simulator for beginners?", answer: "TradeHQ offers EUR/USD trading with $100K virtual cash. Practice currency pair analysis, pip calculations, and session-based trading strategies." },
+    { question: "What is a free forex simulator for beginners?", answer: "TradeHQ offers EUR/USD practice with $100K virtual cash. Use it for currency-pair arithmetic and pip calculations; simulated charts do not reproduce actual session liquidity." },
     { question: "How to practice forex trading without money in Sri Lanka?", answer: "TradeHQ is free for students in Sri Lanka and worldwide. Practice EUR/USD and GBP/USD with simulated charts — no deposit or signup required." },
-    { question: "What moves EUR/USD the most?", answer: "ECB and Fed interest rate decisions, inflation data, employment reports, and trade balance shifts drive EUR/USD. Practice fundamental analysis with these catalysts." }
+    { question: "What factors can affect EUR/USD?", answer: "ECB and Federal Reserve policy, inflation, employment data, growth expectations and broader risk conditions can affect EUR/USD. No single release guarantees a particular currency move." }
   ],
   gbpusd: [
-    { question: "How can I practice GBP/USD forex trading for free?", answer: "TradeHQ provides $100K virtual cash to practice Cable (GBP/USD) trading. Focus on London session volatility and BOE vs Fed policy divergence." },
+    { question: "How can I practice GBP/USD forex trading for free?", answer: "TradeHQ provides $100K virtual cash for GBP/USD practice. Study position values under different price assumptions. Bank of England and Federal Reserve policy are external research topics; simulated charts do not reproduce their announcements." },
     { question: "What is a useful time to trade GBP/USD?", answer: "Trading activity varies by session, holidays, news and daylight-saving changes. Session overlap is context rather than a profitable-timing rule; TradeHQ practice data need not mirror actual liquidity." },
     { question: "Is GBP/USD good for beginner forex traders?", answer: "GBP/USD is one currency-pair example. Observed volatility changes by period, and no pair or technical level guarantees faster learning or better outcomes." },
     { question: "How to learn forex trading without money as a student?", answer: "Use TradeHQ's free forex simulator. Students can practice GBP/USD, EUR/USD, and more currency pairs with $100K demo capital — no signup required." }
   ],
   oil: [
     { question: "How to practice crude oil trading for free?", answer: "TradeHQ provides a WTI-labelled spot practice instrument with $100K virtual cash. Inventory reports and OPEC+ decisions are study topics; this simulator does not execute oil futures or reproduce actual news reactions." },
-    { question: "What factors drive crude oil prices?", answer: "OPEC+ production decisions, US inventory data, geopolitical tensions, and global demand forecasts drive oil. Practice correlating news with price action." },
-    { question: "Is oil trading suitable for beginner traders?", answer: "Oil can be volatile but educational. Start with small virtual positions and learn to read EIA reports and OPEC announcements before scaling up." },
-    { question: "How do geopolitical events affect oil prices?", answer: "Middle East tensions, sanctions, and shipping disruptions can spike oil prices. Practice identifying geopolitical catalysts and managing risk during news events." }
+    { question: "What factors can affect crude oil prices?", answer: "OPEC+ production decisions, inventory data, geopolitical events and global demand expectations are among the factors that can affect oil prices. Their effects can overlap or be offset by other developments." },
+    { question: "Is oil useful for a beginner practice exercise?", answer: "Oil can illustrate how commodity prices respond to supply, demand and news. A learner can compare hypothetical position sizes with virtual cash; this does not establish that oil is suitable for a real-money beginner account." },
+    { question: "How can geopolitical events affect oil prices?", answer: "Conflict, sanctions and shipping disruptions can alter supply expectations and coincide with sharp oil moves, but the magnitude and direction are not guaranteed. Use historical examples as observations rather than trading instructions." }
   ],
   msft: [
-    { question: "How to practice Microsoft stock trading for free?", answer: "TradeHQ offers MSFT trading with $100K virtual cash. Practice position sizing with MSFT's steady trends before moving to higher-volatility tech stocks." },
-    { question: "What drives Microsoft stock price?", answer: "Azure cloud growth, AI Copilot adoption, enterprise software renewals, and LinkedIn revenue drive MSFT. Practice reading these metrics pre-earnings." },
+    { question: "How to practice Microsoft stock trading for free?", answer: "TradeHQ offers MSFT practice with $100K virtual cash. Compare hypothetical position sizes and observed volatility over a stated period without assuming MSFT is inherently steadier than other technology stocks." },
+    { question: "What factors can affect Microsoft stock price?", answer: "Azure growth, software subscriptions, AI-related spending and adoption, guidance and broader market conditions are among the factors investors monitor. Their effects vary by period." },
     { question: "Is MSFT good for learning stock trading basics?", answer: "MSFT is one available company example for learning order mechanics and business analysis. Its volatility depends on the period examined and is not inherently suitable for every beginner." },
     { question: "Can I practice trading US tech stocks from Sri Lanka?", answer: "Yes. TradeHQ simulates US stocks including MSFT, AAPL, and NVDA. Students anywhere can practice free with $100K virtual cash." }
   ],
   googl: [
-    { question: "How to practice trading Google stock for free?", answer: "Use TradeHQ to trade GOOGL with $100K virtual cash. Learn to identify breakout patterns around AI announcements and earnings reports." },
-    { question: "What moves Alphabet stock price the most?", answer: "Search ad revenue, YouTube growth, Google Cloud performance, and AI product launches drive GOOGL. Practice correlating these with chart patterns." },
-    { question: "Is Google stock good for practicing breakout trading?", answer: "Yes — GOOGL often consolidates then breaks out on AI news. Practice identifying consolidation ranges and volume-confirmed breakouts." },
-    { question: "How to learn AI stock trading as a student?", answer: "Start with GOOGL and NVDA on TradeHQ. Practice identifying how AI product announcements create momentum trades and gap patterns." }
+    { question: "How to practice Alphabet stock with virtual money?", answer: "Use TradeHQ to practise GOOGL with $100K virtual cash. Study hypothetical price changes and chart patterns; simulated charts do not reproduce actual announcement reactions or traded volume." },
+    { question: "What factors can affect Alphabet stock price?", answer: "Search advertising, YouTube, Google Cloud, AI products, regulation, guidance and broader market conditions are among the factors investors monitor. Their relative importance changes over time." },
+    { question: "Can GOOGL be used to study breakout concepts?", answer: "A GOOGL chart can be used to study consolidation and breakout definitions, but past examples do not establish that news will produce a breakout or that volume confirms a profitable trade." },
+    { question: "How can a student compare AI-related stocks?", answer: "Compare hypothetical GOOGL and NVDA positions with equal dollar values. Research company announcements separately from simulated charts; an AI narrative does not predict a price move." }
   ],
   meta: [
     { question: "How to practice META stock trading for free?", answer: "TradeHQ offers META practice with $100K virtual cash. Compare hypothetical price and quantity changes; an engagement metric alone does not predict share-price performance." },
-    { question: "What drives Meta Platforms stock price?", answer: "Ad revenue growth, user engagement (Reels, Threads), AI ad targeting improvements, and Reality Labs spending drive META's price action." },
-    { question: "Is META good for practicing earnings plays?", answer: "Yes — META has some of the most dramatic earnings reactions in tech. Practice identifying pre-earnings positioning and post-earnings gap strategies." },
-    { question: "How to learn social media stock analysis?", answer: "Start with META on TradeHQ. Practice tracking Daily Active Users, ad revenue per user, and engagement metrics as price drivers." }
+    { question: "What factors can affect Meta Platforms stock price?", answer: "Advertising revenue, engagement, capital spending, Reality Labs results, guidance and broader market conditions are among the factors investors monitor. Their effect on META is not mechanically predictable." },
+    { question: "Can META be used to study earnings reactions?", answer: "Actual META earnings reactions can be studied with separately sourced historical prices and company reports. TradeHQ charts are simulated; use hypothetical gaps for practice rather than infer a repeatable earnings strategy." },
+    { question: "How can I study a social-media company in the simulator?", answer: "Use Meta as a company research example, with engagement, advertising and spending figures from its published reports. Keep that research separate from simulated price changes, which cannot establish how the market reacted." }
   ],
   xrp: [
-    { question: "How to practice XRP trading for free?", answer: "TradeHQ provides $100K virtual cash to practice XRP trading. Learn how regulatory news and Ripple partnerships affect price action." },
+    { question: "How to practice XRP trading for free?", answer: "TradeHQ provides $100K virtual cash for XRP practice. Compare legal, regulatory, network and broader crypto-market developments with price changes without assuming a fixed relationship." },
     { question: "Why does XRP move on regulatory news?", answer: "Regulatory developments, company announcements and wider crypto conditions can affect XRP sentiment. Compare hypothetical gains and losses with virtual cash; a headline does not determine the next price move." },
-    { question: "Is XRP good for learning news-based trading?", answer: "Yes — XRP reacts sharply to legal and partnership news. Practice managing position size around uncertain news events without risking real money." },
+    { question: "Can XRP be used to study news reactions?", answer: "Study legal or project-related announcements separately from simulated charts. Use hypothetical XRP price changes to compare gains and losses; neither a headline nor a practice result predicts a future response." },
     { question: "How to practice crypto trading in Colombo?", answer: "Use TradeHQ's free simulator. Students in Colombo can trade XRP, BTC, ETH and 30+ cryptos with $100K virtual cash — no signup needed." }
   ],
   bnb: [
-    { question: "How to practice BNB trading for free?", answer: "Use TradeHQ to trade BNB with $100K virtual cash. Learn how exchange activity and token burns affect BNB's price patterns." },
-    { question: "What drives BNB token price?", answer: "Binance exchange volume, quarterly BNB burns, BNB Chain DeFi activity, and exchange regulatory news drive BNB price movements." },
-    { question: "Is BNB good for practicing exchange token analysis?", answer: "Yes — BNB teaches you how exchange tokens correlate with platform activity. Practice tracking volume trends and burn schedules as indicators." },
-    { question: "How does BNB compare to BTC for trading practice?", answer: "BNB is more correlated with exchange-specific events while BTC tracks macro sentiment. Practice both to learn different types of catalysts." }
+    { question: "How to practice BNB trading for free?", answer: "Use TradeHQ to practise BNB with $100K virtual cash. Compare exchange activity, token-burn announcements and broader crypto conditions with price changes without assuming causation." },
+    { question: "What factors can affect BNB token price?", answer: "Exchange activity, token-burn events, BNB Chain usage, regulation and broader crypto-market conditions are among the factors observers monitor. Their effects can vary by period." },
+    { question: "Can BNB be used to study exchange-token activity?", answer: "BNB can be used as one example for comparing platform activity, volume and burn schedules with price changes. Those relationships are not guaranteed indicators of future returns." },
+    { question: "How does BNB compare with BTC for practice?", answer: "BNB and BTC have different network designs and narratives. Compare them over the same stated period rather than assuming BNB is always more exchange-sensitive or BTC always follows macro sentiment." }
   ],
   qqq: [
     { question: "How to practice Nasdaq-100 ETF trading for free?", answer: "Use TradeHQ's $100K virtual cash to compare QQQ with another ETF example. Record changes in value and concentration; neither past relative performance nor sector exposure guarantees future returns." },
