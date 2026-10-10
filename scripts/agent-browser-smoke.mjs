@@ -7,7 +7,7 @@
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 const origin = process.env.TRADEHQ_SCAN_ORIGIN || "https://www.thetradehq.com";
 const repo = process.env.GITHUB_REPOSITORY || "anugaweerasinghe-wq/trading101";
@@ -88,6 +88,6 @@ export async function main() {
   }
   console.log("Chrome public pages checked: "+routes.length+"; findings: "+failures.length);
 }
-if(process.argv[1]&&fileURLToPath(import.meta.url)===process.argv[1]){
+if(process.argv[1]&&fileURLToPath(import.meta.url)===resolve(process.argv[1])){
   main().catch(e=>{console.error(e.message);process.exitCode=1;});
 }
