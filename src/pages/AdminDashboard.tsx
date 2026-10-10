@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
-import { Activity, BookOpen, CalendarCheck, CheckCircle2, ExternalLink, Lock, MessageSquare, RefreshCw, ShieldCheck, Sparkles, Wrench } from "lucide-react";
+import { Activity, BookOpen, Bot, CalendarCheck, CheckCircle2, ExternalLink, Lock, MessageSquare, RefreshCw, ShieldCheck, Sparkles, Wrench } from "lucide-react";
 
 type Course = { id: string; status: string; document?: { title?: string }; updated_at?: string };
 type DailyStatus = { enabled?: boolean; nextDue?: string; prepareAfter?: string; completed?: number; lastError?: string | null; model?: string; hasApiKey?: boolean; freeConfirmed?: boolean };
