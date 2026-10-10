@@ -58,7 +58,7 @@ export function readFailures(issues, currentRun) {
 export function severity(item) {
   // A high priority for owner inspection never authorizes edits to financial/auth paths.
   if (/^\/(auth|reset-password|admin|trade|portfolio|markets)(\/|$)/.test(item.path) ||
-      /HTTP 5\d\d|Production JS bundle|blank screen/i.test(item.reason)) return "HIGH";
+      /HTTP 5\d\d|Production JS bundle|blank screen|very little visible content/i.test(item.reason)) return "HIGH";
   if (/No HTML title|HTTP 4\d\d/.test(item.reason)) return "MEDIUM";
   return "REVIEW";
 }
