@@ -168,6 +168,7 @@ async function main() {
   } catch {
     prUrl = "https://github.com/" + repo + "/compare/main..." + branch;
   }
+  if (process.env.GITHUB_OUTPUT) await fs.appendFile(process.env.GITHUB_OUTPUT, "branch=" + branch + "\n");
   await comment("AI proposed edits on an isolated branch. Review here: " + prUrl + "\n\nNo changes were merged or deployed. The test job must also pass.");
   console.log("Created branch " + branch + " for " + changes.length + " frontend file(s). Review: " + prUrl);
 }
