@@ -10,7 +10,9 @@ type CourseStatus = { enabled?: boolean; model?: string; lastStarted?: string | 
 type AgentIssue = { id: number; title: string; html_url: string; created_at: string; state: string; body?: string | null; pull_request?: unknown };
 type Run = { id: number; status: string; conclusion: string | null; html_url: string; created_at: string; updated_at?: string };
 type Proposal = { number: number; title: string; html_url: string; draft: boolean; created_at: string };
-const repo = "anugaweerasinghe-wq/trading101";
+type AgentJob = { id: number; runId: number; workflow: string; name: string; status: string; conclusion: string | null; html_url: string; started_at: string };
+type DeployCheck = { name: string; status: string; conclusion: string | null; details_url: string };
+const repo = "anugaweerasinghe1-del/trading101";
 const card = "rounded-2xl border border-border bg-card/60 p-5 space-y-3";
 const linkStyle = "inline-flex items-center gap-1 text-sm text-primary hover:underline";
 export default function AdminDashboard() {
@@ -27,9 +29,14 @@ export default function AdminDashboard() {
   const [run, setRun] = useState<Run | null>(null);
   const [codeRun, setCodeRun] = useState<Run | null>(null);
   const [previousSuccess, setPreviousSuccess] = useState<Run | null>(null);
+  const [previousFailure, setPreviousFailure] = useState<Run | null>(null);
+  const [previousCodeFailure, setPreviousCodeFailure] = useState<Run | null>(null);
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [agentError, setAgentError] = useState("");
   const [lastGitHubChecked, setLastGitHubChecked] = useState<Date | null>(null);
+  const [jobHistory, setJobHistory] = useState<AgentJob[]>([]);
+  const [jobHistoryError, setJobHistoryError] = useState("");
+  const [deploymentChecks, setDeploymentChecks] = useState<{ pages: DeployCheck | null; worker: DeployCheck | null; error: string } | null>(null);
   const adminCall = useCallback(async (action: string) => {
     const { data, error: callError } = await supabase.functions.invoke("admin-courses", {
       body: { action }, headers: { "x-admin-key": key },
@@ -62,7 +69,7 @@ export default function AdminDashboard() {
   const loadAgents = useCallback(async () => {
     const base = "https://api.github.com/repos/" + repo;
     const targets = [
-      base + "/issues?state=open&per_page=100",
+      base + "/issues?state=all&per_page=100",
       base + "/actions/workflows/tradehq-agents.yml/runs?per_page=10",
       base + "/actions/workflows/tradehq-code-agent.yml/runs?per_page=10",
       base + "/pulls?state=open&per_page=50",
@@ -76,9 +83,47 @@ export default function AdminDashboard() {
         const runs = values[1].workflow_runs as Run[];
         setRun(runs[0] ?? null);
         setPreviousSuccess(runs.find(item => item.conclusion === "success") ?? null);
+        setPreviousFailure(runs.find(item => item.conclusion === "failure") ?? null);
       }
-      if (Array.isArray(values[2]?.workflow_runs)) setCodeRun(values[2].workflow_runs[0] ?? null);
+      if (Array.isArray(values[2]?.workflow_runs)) {
+        const history = values[2].workflow_runs as Run[];
+        setCodeRun(history[0] ?? null);
+        setPreviousCodeFailure(history.find(item => item.conclusion === "failure") ?? null);
+      }
       if (Array.isArray(values[3])) setProposals((values[3] as Proposal[]).filter(item => /^AI (smoke-test |proposal:)/i.test(item.title)));
+      // Read only recent jobs and label sampled history honestly. Never infer that a green run means every function works.
+      const recent = [
+        ...(Array.isArray(values[1]?.workflow_runs) ? (values[1].workflow_runs as Run[]).slice(0, 2).map(r => ({ run: r, workflow: "Website monitor" })) : []),
+        ...(Array.isArray(values[2]?.workflow_runs) ? (values[2].workflow_runs as Run[]).slice(0, 2).map(r => ({ run: r, workflow: "AI code proposals" })) : []),
+      ];
+      if (recent.length) {
+        const jobResponses = await Promise.allSettled(recent.map(async entry => {
+          const response = await fetch(base + "/actions/runs/" + entry.run.id + "/jobs?per_page=25");
+          if (!response.ok) throw new Error("Job history HTTP " + response.status);
+          const data = await response.json() as { jobs?: Array<{ id: number; name: string; status: string; conclusion: string | null; html_url: string; started_at: string }> };
+          if (!Array.isArray(data.jobs)) throw new Error("Invalid GitHub job response");
+          return data.jobs.map(job => ({ ...job, runId: entry.run.id, workflow: entry.workflow }));
+        }));
+        setJobHistory(jobResponses.flatMap(item => item.status === "fulfilled" ? item.value : []).sort((a, b) => (b.started_at || "").localeCompare(a.started_at || "")).slice(0, 16));
+        setJobHistoryError(jobResponses.some(x => x.status === "rejected") ? "Some job histories are unavailable; verify full details on GitHub Actions." : "");
+      } else {
+        setJobHistory([]);
+        setJobHistoryError("No recent GitHub runs were returned for job inspection.");
+      }
+      // Different integrations: Pages is the intended production host; a separately named Worker is not proof of a Pages failure.
+      try {
+        const response = await fetch(base + "/commits/main/check-runs?per_page=50");
+        if (!response.ok) throw new Error("GitHub deployment status HTTP " + response.status);
+        const payload = await response.json() as { check_runs?: DeployCheck[] };
+        if (!Array.isArray(payload.check_runs)) throw new Error("Invalid deployment status response");
+        setDeploymentChecks({
+          pages: payload.check_runs.find(check => check.name === "Cloudflare Pages") || null,
+          worker: payload.check_runs.find(check => check.name.startsWith("Workers Builds:")) || null,
+          error: "",
+        });
+      } catch (failure) {
+        setDeploymentChecks({ pages: null, worker: null, error: failure instanceof Error ? failure.message : "GitHub deployment checks unavailable" });
+      }
       setAgentError(failures.length ? "GitHub status unavailable for " + failures.join(", ") + ". Use the linked GitHub history for confirmation." : "");
       setLastGitHubChecked(new Date());
     } catch {
@@ -98,15 +143,15 @@ export default function AdminDashboard() {
     }, 900000);
     return () => window.clearInterval(interval);
   }, [unlocked, refresh, loadAgents]);
-  const agentFindings = issues.filter(item => item.title.startsWith("[TradeHQ Agent]") && (item.title.endsWith("failures") || item.title.endsWith("failed")));
-  const agentReports = issues.filter(item => item.title.startsWith("[TradeHQ Agent]") && item.title.endsWith("report"));
+  const agentFindings = issues.filter(item => item.state === "open" && item.title.startsWith("[TradeHQ Agent]") && (item.title.endsWith("failures") || item.title.endsWith("failed")));
+  const agentReports = issues.filter(item => item.state === "open" && item.title.startsWith("[TradeHQ Agent]") && item.title.endsWith("report"));
   const ideas = issues.filter(item => item.title.startsWith("[TradeHQ Ideas]"));
   return <main className="min-h-screen bg-background text-foreground px-4 py-10">
     <Helmet><title>Administration | TradeHQ</title><meta name="robots" content="noindex,nofollow" /></Helmet>
     <div className="mx-auto max-w-6xl space-y-7">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div><p className="text-xs tracking-[0.2em] text-primary uppercase mb-2">TradeHQ · private workspace</p><h1 className="text-3xl font-semibold">Admin dashboard</h1><p className="text-sm text-muted-foreground mt-2">Editorial controls, community moderation, automated checks and proposed improvements in one place.</p></div>
-        <div className="flex gap-3">{unlocked && <button type="button" onClick={() => { setUnlocked(false); setKey(""); setCourses(null); setDeskWarnings([]); setDaily(null); setCourseStatus(null); setReviews(null); setIssues([]); setRun(null); setCodeRun(null); setPreviousSuccess(null); setProposals([]); setAgentError(""); setLastGitHubChecked(null); }} className="rounded-xl border border-border px-4 py-2 flex items-center gap-2 text-sm"><Lock className="w-4 h-4"/> Lock</button>}<Link to="/" className={linkStyle}>View website <ExternalLink className="h-3 w-3"/></Link></div>
+        <div className="flex gap-3">{unlocked && <button type="button" onClick={() => { setUnlocked(false); setKey(""); setCourses(null); setDeskWarnings([]); setDaily(null); setCourseStatus(null); setReviews(null); setIssues([]); setRun(null); setCodeRun(null); setPreviousSuccess(null); setPreviousFailure(null); setPreviousCodeFailure(null); setProposals([]); setAgentError(""); setLastGitHubChecked(null); setJobHistory([]); setJobHistoryError(""); setDeploymentChecks(null); }} className="rounded-xl border border-border px-4 py-2 flex items-center gap-2 text-sm"><Lock className="w-4 h-4"/> Lock</button>}<Link to="/" className={linkStyle}>View website <ExternalLink className="h-3 w-3"/></Link></div>
       </header>
       {!unlocked ? <form onSubmit={unlock} className="max-w-md rounded-2xl border border-border bg-card p-6 space-y-5">
         <div className="flex gap-3 items-center"><ShieldCheck className="w-6 h-6 text-primary"/><h2 className="font-semibold">Verify administrator access</h2></div>
@@ -119,8 +164,8 @@ export default function AdminDashboard() {
         {deskWarnings.length > 0 && <div role="status" className="rounded-xl border border-amber-500/30 px-4 py-3 text-sm text-amber-400"><strong>Some admin services are unavailable.</strong> {deskWarnings.join(" ")} Verified services remain accessible.</div>}
         <div className="flex flex-wrap justify-between gap-3 items-center"><h2 className="text-lg font-semibold">Operations overview</h2><button type="button" disabled={busy} className="text-sm border border-border rounded-xl px-4 py-2 flex items-center gap-2 disabled:opacity-40" onClick={() => { setBusy(true); setError(""); void Promise.all([refresh(),loadAgents()]).catch(() => setError("Admin verification failed. Check your key or refresh.")).finally(() => setBusy(false)); }}><RefreshCw className="w-4 h-4"/> Refresh</button></div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <section className={card}><BookOpen className="w-6 h-6 text-primary"/><h3 className="font-semibold">Courses</h3><p className="text-2xl font-semibold">{courses === null ? "—" : courses.filter(c => c.status === "draft").length} <span className="text-sm font-normal text-muted-foreground">drafts awaiting review</span></p><p className="text-xs text-muted-foreground">Generation: {courseStatus?.enabled ? "enabled" : "paused"} · {courseStatus?.model || "unknown"}</p><Link className={linkStyle} to="/admin/courses">Manage drafts and approvals →</Link></section>
-          <section className={card}><CalendarCheck className="w-6 h-6 text-primary"/><h3 className="font-semibold">Daily practice</h3><p className="text-2xl font-semibold">{daily ? (daily.completed ?? 0) + "/50" : "—"} <span className="text-sm font-normal text-muted-foreground">next bank ready</span></p><p className="text-xs text-muted-foreground">{daily?.enabled ? "Schedule enabled" : "Schedule paused"} · Next due {daily?.nextDue || "unknown"}</p>{daily?.lastError && <p className="text-xs text-amber-400">{daily.lastError}</p>}<Link className={linkStyle} to="/admin/daily">Review questions and schedule →</Link></section>
+          <section className={card}><BookOpen className="w-6 h-6 text-primary"/><h3 className="font-semibold">Courses</h3><p className="text-2xl font-semibold">{courses === null ? "—" : courses.filter(c => c.status === "draft").length} <span className="text-sm font-normal text-muted-foreground">drafts awaiting review</span></p><p className="text-xs text-muted-foreground">Generation: {courseStatus ? (courseStatus.enabled ? "enabled" : "paused") : "unavailable"} · {courseStatus?.model || "unknown"}</p><Link className={linkStyle} to="/admin/courses">Manage drafts and approvals →</Link></section>
+          <section className={card}><CalendarCheck className="w-6 h-6 text-primary"/><h3 className="font-semibold">Daily practice</h3><p className="text-2xl font-semibold">{daily ? (daily.completed ?? 0) + "/50" : "—"} <span className="text-sm font-normal text-muted-foreground">next bank ready</span></p><p className="text-xs text-muted-foreground">{daily ? (daily.enabled ? "Schedule enabled" : "Schedule paused") : "Schedule unavailable"} · Next due {daily?.nextDue || "unknown"}</p>{daily?.lastError && <p className="text-xs text-amber-400">{daily.lastError}</p>}<Link className={linkStyle} to="/admin/daily">Review questions and schedule →</Link></section>
           <section className={card}><MessageSquare className="w-6 h-6 text-primary"/><h3 className="font-semibold">Community reviews</h3><p className="text-2xl font-semibold">{reviews ?? "—"} <span className="text-sm font-normal text-muted-foreground">reviews in moderation desk</span></p><Link className={linkStyle} to="/admin/reviews">Reply, feature or moderate →</Link></section>
         </div>
         <section className={card}>
@@ -141,7 +186,9 @@ export default function AdminDashboard() {
               <h3 className="font-semibold text-sm">Route scanner + independent browser smoke</h3>
               <p className="text-xs text-muted-foreground">Scheduled daily at 08:47 Sri Lanka time (03:17 UTC). Route and Chrome jobs run independently; a successful workflow means both relevant jobs completed.</p>
               <p className="text-sm">Latest: <strong>{run ? run.conclusion || run.status : "Unavailable"}</strong></p>
-              <p className="text-xs text-muted-foreground">Last successful workflow: {previousSuccess ? new Date(previousSuccess.created_at).toLocaleString() : "Not verified"}</p>
+              <p className="text-xs text-muted-foreground">Last successful workflow within recent history: {previousSuccess ? new Date(previousSuccess.created_at).toLocaleString() : "Not verified"}</p>
+              <p className="text-xs text-muted-foreground">Last failed within sampled ten runs: {previousFailure ? new Date(previousFailure.created_at).toLocaleString() : "None verified"}</p>
+              {previousFailure && <a href={previousFailure.html_url} target="_blank" rel="noopener noreferrer" className={linkStyle}>Inspect failed run #{previousFailure.id} ↗</a>}
               {run && <a href={run.html_url} target="_blank" rel="noopener noreferrer" className={linkStyle}>Latest run #{run.id} <ExternalLink className="w-3 h-3"/></a>}
             </div>
             <div className="rounded-xl border border-border p-4 space-y-2">
@@ -149,9 +196,26 @@ export default function AdminDashboard() {
               <p className="text-xs text-muted-foreground">Ideas scheduled monthly on the 1st at 10:11 Sri Lanka time (04:41 UTC). Code proposals run only when the repository owner opens a qualified GitHub issue.</p>
               <p className="text-sm">Latest code workflow: <strong>{codeRun ? codeRun.conclusion || codeRun.status : "Unavailable"}</strong></p>
               {codeRun && <a href={codeRun.html_url} target="_blank" rel="noopener noreferrer" className={linkStyle}>View coding run #{codeRun.id} <ExternalLink className="w-3 h-3"/></a>}
+              <p className="text-xs text-muted-foreground">Last failed code-agent run in sample: {previousCodeFailure ? new Date(previousCodeFailure.created_at).toLocaleString() : "None verified"}</p>
+              {previousCodeFailure && <a href={previousCodeFailure.html_url} target="_blank" rel="noopener noreferrer" className={linkStyle}>Inspect code-agent failure ↗</a>}
               <p className="text-xs text-muted-foreground">An Actions success does not prove a PR was created. Verify the draft and approval below.</p>
             </div>
           </div>
+          <h3 className="text-sm font-semibold">Cloudflare Git deployment checks (main)</h3>
+          <p className="text-xs text-muted-foreground">Read-only check records attached to the newest main commit. These do not prove which build is currently serving the live domain. Pages is the active intended host; the separately named Worker is a distinct integration.</p>
+          {deploymentChecks?.error && <p className="text-xs text-amber-400">{deploymentChecks.error}. Inspect Cloudflare directly before releasing.</p>}
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-border p-3 text-sm space-y-1"><strong>Cloudflare Pages · tradehq-preview</strong><p className={deploymentChecks?.pages?.conclusion === "failure" ? "text-amber-400" : "text-xs text-muted-foreground"}>{deploymentChecks?.pages ? (deploymentChecks.pages.conclusion || deploymentChecks.pages.status) : "Unavailable / not reported"}</p>{deploymentChecks?.pages?.details_url && <a className={linkStyle} href={deploymentChecks.pages.details_url} target="_blank" rel="noopener noreferrer">Pages build evidence ↗</a>}</div>
+            <div className="rounded-xl border border-border p-3 text-sm space-y-1"><strong>Separate Workers integration · thetradehq</strong><p className="text-xs text-muted-foreground">{deploymentChecks?.worker ? (deploymentChecks.worker.conclusion || deploymentChecks.worker.status) : "Unavailable / not reported"} · Not a substitute for the Pages check</p>{deploymentChecks?.worker?.details_url && <a className={linkStyle} href={deploymentChecks.worker.details_url} target="_blank" rel="noopener noreferrer">Worker build evidence ↗</a>}</div>
+          </div>
+          <h3 className="text-sm font-semibold">Recent workflow jobs</h3>
+          <p className="text-xs text-muted-foreground">Latest two runs for each agent workflow. Includes failures and skipped jobs; older history is available on GitHub. A missing failure here does not imply there has never been one.</p>
+          {jobHistoryError && <p className="text-xs text-amber-400">{jobHistoryError}</p>}
+          {jobHistory.length ? <div className="divide-y divide-border rounded-xl border border-border">{jobHistory.map(job => <div key={job.id} className="flex flex-wrap items-center justify-between gap-2 p-3 text-sm">
+            <div><strong>{job.workflow} · {job.name}</strong><p className="text-xs text-muted-foreground">{job.started_at ? new Date(job.started_at).toLocaleString() : "Start time unavailable"} · <span className={job.conclusion === "failure" ? "text-amber-400" : ""}>{job.conclusion || job.status || "Unknown"}</span></p></div>
+            <a href={job.html_url || ("https://github.com/" + repo + "/actions/runs/" + job.runId)} target="_blank" rel="noopener noreferrer" className={linkStyle}>Logs and retry options ↗</a>
+          </div>)}</div> : <p className="text-sm text-muted-foreground">No job-level records available for inspection.</p>}
+          <p className="text-xs text-muted-foreground">To rerun failed jobs, open the GitHub run and use its authorized Re-run jobs control. No automatic repair is triggered from this dashboard.</p>
           <h3 className="text-sm font-semibold">Backend content-generation runs</h3>
           <div className="grid gap-3 md:grid-cols-2">
             <div className="rounded-xl border border-border p-4 space-y-2">
@@ -174,7 +238,7 @@ export default function AdminDashboard() {
         </section>
         <section className={card}>
           <div className="flex items-center gap-3"><Sparkles className="w-5 h-5 text-primary"/><h2 className="font-semibold">Monthly AI improvement ideas</h2></div>
-          <p className="text-sm text-muted-foreground">Two suggestions per month can be drafted with the optional free-tier Gemini API key in GitHub Actions. Ideas are proposals, not automatically published features.</p>
+          <p className="text-sm text-muted-foreground">Historical open and closed idea reports from the latest 100 GitHub issues (not a complete archive). Two free-tier Gemini suggestions may be drafted each month. Ideas are proposals, not deployed features.</p>
           {ideas.length ? ideas.map(item => <a key={item.id} href={item.html_url} target="_blank" rel="noopener noreferrer" className="block border border-border rounded-xl p-3 text-sm hover:border-primary/40">{item.title} <ExternalLink className="w-3 h-3 inline"/></a>) : <p className="text-sm text-muted-foreground">No monthly idea report has been published by the workflow yet.</p>}
         </section>
         <section className={card}>

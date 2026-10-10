@@ -7,7 +7,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { requestGeminiJson } from "./gemini-free-models.mjs";
-const repo = process.env.GITHUB_REPOSITORY || "anugaweerasinghe-wq/trading101";
+const repo = process.env.GITHUB_REPOSITORY || "anugaweerasinghe1-del/trading101";
 const token = process.env.GITHUB_TOKEN;
 const apiKey = process.env.GEMINI_API_KEY;
 const model = process.env.GEMINI_AGENT_MODEL || "gemini-3.5-flash-lite";

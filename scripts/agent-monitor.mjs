@@ -1,6 +1,6 @@
 import { uniqueRoutes } from "./routes.ts";
 const origin="https://www.thetradehq.com";
-const repository=process.env.GITHUB_REPOSITORY||"anugaweerasinghe-wq/trading101";
+const repository=process.env.GITHUB_REPOSITORY||"anugaweerasinghe1-del/trading101";
 const token=process.env.GITHUB_TOKEN;
 const paths=["/","/trade","/markets","/portfolio","/courses","/daily","/leaderboard","/reviews","/auth","/contact","/learn","/wiki","/admin","/admin/ai","/robots.txt","/ads.txt"];
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
