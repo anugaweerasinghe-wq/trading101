@@ -312,7 +312,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "Head-to-head comparisons",
         p: [
-          "Comparison pages answer the question beginners actually ask: given two instruments that look similar, which one should I learn on first? Each page explains what each side really is, where they differ structurally, when one is the better learning vehicle, and the mistakes people make when they treat them as interchangeable.",
+          "Start by identifying the exposure: a company share, fund, currency pair and network token have different structures. Each page compares those structures and offers specific research questions, source links and a hypothetical worksheet. A category such as forex or stocks is broader than the named examples available in the practice terminal. The exercise helps distinguish ownership, quote units and costs without ranking real-money suitability.",
         ],
       },
       {
@@ -322,18 +322,25 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
       {
         h: "Why comparison beats a ranking",
         p: [
-          "There is no such thing as the best asset to trade, only assets that suit different tolerances, schedules and levels of experience. A pair of instruments that look interchangeable on a price chart can differ completely in what moves them, when they are liquid, how far they typically travel in a day, and how badly they punish a mis-sized position. That is what these pages compare.",
+          "For a numerical comparison, state matching dates, data sources, calculation methods and costs. Equal dollar allocations do not establish equal risk, and a past volatility or drawdown estimate is not a guaranteed future outcome. Separate documented market observations from TradeHQ's generated history and simplified fills. A simulator exercise can illustrate arithmetic without reproducing liquidity, physical delivery, staking or every real execution condition.",
           "None of them tell you what to buy, and none of them predict which side will perform better. The comparison section highlights differences in mechanics, assumptions and risks. It does not rank either instrument as the better investment or prescribe which one to practise first.",
         ],
       },
       {
         h: "How to use a comparison",
         list: [
-          "Read both deep-dive sections before looking at the verdict, so you form a view of each instrument on its own terms first.",
-          "Practise both sides in the simulator for a week before deciding which suits you.",
-          "Note that 'better' here means better to learn on, never better to buy — no page here recommends an instrument.",
-          "Check the mistakes section even if you think the comparison is obvious; the obvious version is usually where the error lives.",
+          "Choose a page and follow its pair-specific worksheet with stated hypothetical inputs. Use supported named instruments rather than assume an entire category is tradable.",
+          "Record both favorable and unfavorable scenarios, the quantity units and any excluded costs. Keep asset return separate from total-account return when cash remains uninvested.",
+          "Read the relevant product, company or network documents and record their dates. A reporting definition, network measurement and price forecast answer different questions.",
+          "Check the mistakes section and mark missing information explicitly. A month of practice results does not establish a reliable strategy or readiness to trade real money.",
           DISCLAIMER,
+        ],
+      },
+      {
+        h: "Keep the comparison reproducible",
+        p: [
+          "Save the source title, date and units with each input. A quarter and a fiscal year cover different durations; a price-only series and a series with reinvested distributions measure different outcomes. If definitions or dates do not match, mark the figures as non-comparable instead of turning them into a ranking. Revisit the original source when a company changes its reporting categories or a network changes its rules.",
+          "A useful worksheet also records what remains unknown. Missing data is different from a measured zero, and a provider fetch time is different from the underlying observation time. State those limits beside the result so another reader can reconstruct the exercise. Neither a polished chart nor a familiar ticker establishes the reliability of its inputs.",
         ],
       },
     ],
@@ -348,13 +355,15 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
         { h: "What the comparison shows", p: [p.verdict] },
         { h: "Common mistakes with this comparison", list: p.mistakes },
         {
-          h: "Practise both sides",
+          h: "How to compare a practice worksheet",
           p: [
-            `Rather than picking on paper, trade both in the simulator with identical position sizes for a few weeks and compare how each behaves in your own hands. ${DISCLAIMER}`,
+            p.worksheet,
+            "Equal dollar values do not establish equal risk. Record unfavorable as well as favorable cases. Provider observations and generated history are different; simulated portfolio metrics do not establish real-account drawdowns or suitability.",
           ],
         },
       ],
       links: [
+        ...p.sources,
         { href: "/compare", label: "All comparisons" },
         { href: "/markets", label: "Browse markets" },
         { href: "/trade", label: "Practice desk" },
