@@ -16,6 +16,14 @@ if (!/name=["']robots["'][^>]*content=["']noindex, follow["']/.test(shell)
 }
 writeFileSync(resolve(dir, "404.html"), shell, "utf8");
 
+// A staging pages.dev *production* deployment is not necessarily a preview URL.
+// Make every staging static page explicitly noindex by default. Removing this
+// protection requires a deliberate environment flag at owner-approved cutover.
+const productionApproved = process.env.TRADEHQ_CLOUDFLARE_LIVE === "1";
+writeFileSync(resolve(dir, "_headers"), productionApproved
+  ? "# Live domain indexing explicitly approved; retain page-level SEO metadata.\n"
+  : "/*\n  X-Robots-Tag: noindex\n", "utf8");
+
 const include = [
   "/auth", "/reset-password", "/admin", "/admin/*",
   "/trader/*", "/trade/*", "/challenge", "/challenge/*",
