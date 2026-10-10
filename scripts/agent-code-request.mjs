@@ -140,6 +140,7 @@ async function main() {
   const mainRef = await github("GET", "/git/ref/heads/main");
   const baseSha = mainRef.object?.sha;
   if (!/^[0-9a-f]{40}$/.test(baseSha || "")) throw new Error("Could not verify main branch commit.");
+  if (process.env.GITHUB_SHA && baseSha !== process.env.GITHUB_SHA) throw new Error("Main branch changed during drafting. Request a fresh proposal to prevent stale-file overwrites.");
   const branch = "ai/issue-" + issueNumber;
   await github("POST", "/git/refs", { ref: "refs/heads/" + branch, sha: baseSha });
   for (const edit of changes) {
