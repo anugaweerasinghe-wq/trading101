@@ -32,6 +32,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build:cloudflare
+      - run: node --import tsx scripts/verify-cloudflare-courses-root.ts
       - name: Verify staging and production SEO headers offline
         run: node scripts/verify-cloudflare-seo.mjs
       - name: Bundle Cloudflare Pages Functions using Wrangler
