@@ -19,6 +19,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - run: node scripts/verify-ai-agents.mjs
       - run: node --import tsx scripts/verify-journal-summary.ts
       - run: node --import tsx scripts/verify-provider-quotes.ts
       - run: node --import tsx scripts/verify-refresh-prices.ts
