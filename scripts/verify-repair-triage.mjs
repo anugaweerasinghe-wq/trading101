@@ -2,10 +2,10 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { readFailures, previousState, nextState, severity } from "./agent-repair-triage.mjs";
 const cases = [
-  { number: 75, title: "[TradeHQ Agent] Daily route report", state: "open", body: "**GitHub run ID:** 100\n**Failed URLs:** 1" },
-  { number: 74, title: "[TradeHQ Agent] Browser smoke report", state: "open", body: "**GitHub run ID:** 100\n**Potential failures:** 1" },
-  { number: 71, title: "[TradeHQ Agent] Website route failures", state: "open", body: "Public route monitoring at 2026-10-10.\n\n- /auth: HTTP 500" },
-  { number: 70, title: "[TradeHQ Agent] Browser smoke failures", state: "open", body: "### Flagged routes\n- \`/learn\`: Rendered root has very little visible content (0 chars)" },
+  { number: 75, title: "[TradeHQ Agent] Daily route report", state: "open", user: { login: "github-actions[bot]" }, body: "**GitHub run ID:** 100\n**Failed URLs:** 1" },
+  { number: 74, title: "[TradeHQ Agent] Browser smoke report", state: "open", user: { login: "github-actions[bot]" }, body: "**GitHub run ID:** 100\n**Potential failures:** 1" },
+  { number: 71, title: "[TradeHQ Agent] Website route failures", state: "open", user: { login: "github-actions[bot]" }, body: "Public route monitoring at 2026-10-10.\n\n- /auth: HTTP 500" },
+  { number: 70, title: "[TradeHQ Agent] Browser smoke failures", state: "open", user: { login: "github-actions[bot]" }, body: "### Flagged routes\n- \`/learn\`: Rendered root has very little visible content (0 chars)" },
 ];
 const { records, routeCount, browserCount } = readFailures(cases, "100");
 assert.equal(records.length, 2);
@@ -25,6 +25,7 @@ assert.deepEqual(previousState("No past metadata."), {runId:"",streaks:{}});
 assert.deepEqual(previousState("<!-- tradehq-triage-state-v1 "+JSON.stringify(next)+" -->"), next);
 assert.throws(()=>readFailures(cases,"101"),/Fresh reports/);
 assert.throws(()=>readFailures(cases.filter(x=>x.number!==74),"100"),/Fresh reports/);
+assert.throws(()=>readFailures([{...cases[0],user:{login:"untrusted-reporter"}},...cases.slice(1)],"100"),/Fresh reports/);
 assert.throws(()=>readFailures(cases.filter(x=>x.number!==71),"100"),/without the evidence/);
 const empty = cases.slice(0,2).map(x=>({...x,body:x.body.replace(/:\*\* 1$/,":** 0")}));
 assert.equal(readFailures(empty,"100").records.length,0);
