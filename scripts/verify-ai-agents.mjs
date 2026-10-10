@@ -20,7 +20,7 @@ const dashboard = readFileSync("src/pages/AdminDashboard.tsx", "utf8");
 const assistant = readFileSync("src/pages/AdminAIAssistant.tsx", "utf8");
 assert.match(dashboard, /anugaweerasinghe1-del\/trading101/);
 assert.match(assistant, /anugaweerasinghe1-del\/trading101/);
-assert.match(assistant, /AI \\(proposal:\\|smoke-test proposal:\\)/);
+assert.match(assistant, /smoke-test proposal:/);
 assert.match(assistant, /Cloudflare Pages deployment FAILED; release blocked/);
 assert.match(assistant, /Cloudflare Pages deployment NOT VERIFIED/);
 assert.match(assistant, /Workers Builds:/);
