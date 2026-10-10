@@ -11,6 +11,7 @@ type AgentIssue = { id: number; title: string; html_url: string; created_at: str
 type Run = { id: number; status: string; conclusion: string | null; html_url: string; created_at: string; updated_at?: string };
 type Proposal = { number: number; title: string; html_url: string; draft: boolean; created_at: string };
 type AgentJob = { id: number; runId: number; workflow: string; name: string; status: string; conclusion: string | null; html_url: string; started_at: string };
+type DeployCheck = { name: string; status: string; conclusion: string | null; details_url: string };
 const repo = "anugaweerasinghe1-del/trading101";
 const card = "rounded-2xl border border-border bg-card/60 p-5 space-y-3";
 const linkStyle = "inline-flex items-center gap-1 text-sm text-primary hover:underline";
@@ -33,6 +34,7 @@ export default function AdminDashboard() {
   const [lastGitHubChecked, setLastGitHubChecked] = useState<Date | null>(null);
   const [jobHistory, setJobHistory] = useState<AgentJob[]>([]);
   const [jobHistoryError, setJobHistoryError] = useState("");
+  const [deploymentChecks, setDeploymentChecks] = useState<{ pages: DeployCheck | null; worker: DeployCheck | null; error: string } | null>(null);
   const adminCall = useCallback(async (action: string) => {
     const { data, error: callError } = await supabase.functions.invoke("admin-courses", {
       body: { action }, headers: { "x-admin-key": key },
@@ -101,6 +103,20 @@ export default function AdminDashboard() {
         setJobHistory([]);
         setJobHistoryError("No recent GitHub runs were returned for job inspection.");
       }
+      // Different integrations: Pages is the intended production host; a separately named Worker is not proof of a Pages failure.
+      try {
+        const response = await fetch(base + "/commits/main/check-runs?per_page=50");
+        if (!response.ok) throw new Error("GitHub deployment status HTTP " + response.status);
+        const payload = await response.json() as { check_runs?: DeployCheck[] };
+        if (!Array.isArray(payload.check_runs)) throw new Error("Invalid deployment status response");
+        setDeploymentChecks({
+          pages: payload.check_runs.find(check => check.name === "Cloudflare Pages") || null,
+          worker: payload.check_runs.find(check => check.name.startsWith("Workers Builds:")) || null,
+          error: "",
+        });
+      } catch (failure) {
+        setDeploymentChecks({ pages: null, worker: null, error: failure instanceof Error ? failure.message : "GitHub deployment checks unavailable" });
+      }
       setAgentError(failures.length ? "GitHub status unavailable for " + failures.join(", ") + ". Use the linked GitHub history for confirmation." : "");
       setLastGitHubChecked(new Date());
     } catch {
@@ -128,7 +144,7 @@ export default function AdminDashboard() {
     <div className="mx-auto max-w-6xl space-y-7">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div><p className="text-xs tracking-[0.2em] text-primary uppercase mb-2">TradeHQ · private workspace</p><h1 className="text-3xl font-semibold">Admin dashboard</h1><p className="text-sm text-muted-foreground mt-2">Editorial controls, community moderation, automated checks and proposed improvements in one place.</p></div>
-        <div className="flex gap-3">{unlocked && <button type="button" onClick={() => { setUnlocked(false); setKey(""); setCourses(null); setDeskWarnings([]); setDaily(null); setCourseStatus(null); setReviews(null); setIssues([]); setRun(null); setCodeRun(null); setPreviousSuccess(null); setProposals([]); setAgentError(""); setLastGitHubChecked(null); setJobHistory([]); setJobHistoryError(""); }} className="rounded-xl border border-border px-4 py-2 flex items-center gap-2 text-sm"><Lock className="w-4 h-4"/> Lock</button>}<Link to="/" className={linkStyle}>View website <ExternalLink className="h-3 w-3"/></Link></div>
+        <div className="flex gap-3">{unlocked && <button type="button" onClick={() => { setUnlocked(false); setKey(""); setCourses(null); setDeskWarnings([]); setDaily(null); setCourseStatus(null); setReviews(null); setIssues([]); setRun(null); setCodeRun(null); setPreviousSuccess(null); setProposals([]); setAgentError(""); setLastGitHubChecked(null); setJobHistory([]); setJobHistoryError(""); setDeploymentChecks(null); }} className="rounded-xl border border-border px-4 py-2 flex items-center gap-2 text-sm"><Lock className="w-4 h-4"/> Lock</button>}<Link to="/" className={linkStyle}>View website <ExternalLink className="h-3 w-3"/></Link></div>
       </header>
       {!unlocked ? <form onSubmit={unlock} className="max-w-md rounded-2xl border border-border bg-card p-6 space-y-5">
         <div className="flex gap-3 items-center"><ShieldCheck className="w-6 h-6 text-primary"/><h2 className="font-semibold">Verify administrator access</h2></div>
@@ -173,6 +189,13 @@ export default function AdminDashboard() {
               {codeRun && <a href={codeRun.html_url} target="_blank" rel="noopener noreferrer" className={linkStyle}>View coding run #{codeRun.id} <ExternalLink className="w-3 h-3"/></a>}
               <p className="text-xs text-muted-foreground">An Actions success does not prove a PR was created. Verify the draft and approval below.</p>
             </div>
+          </div>
+          <h3 className="text-sm font-semibold">Cloudflare Git deployment checks (main)</h3>
+          <p className="text-xs text-muted-foreground">Read-only check records attached to the newest main commit. These do not prove which build is currently serving the live domain. Pages is the active intended host; the separately named Worker is a distinct integration.</p>
+          {deploymentChecks?.error && <p className="text-xs text-amber-400">{deploymentChecks.error}. Inspect Cloudflare directly before releasing.</p>}
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-border p-3 text-sm space-y-1"><strong>Cloudflare Pages · tradehq-preview</strong><p className={deploymentChecks?.pages?.conclusion === "failure" ? "text-amber-400" : "text-xs text-muted-foreground"}>{deploymentChecks?.pages ? (deploymentChecks.pages.conclusion || deploymentChecks.pages.status) : "Unavailable / not reported"}</p>{deploymentChecks?.pages?.details_url && <a className={linkStyle} href={deploymentChecks.pages.details_url} target="_blank" rel="noopener noreferrer">Pages build evidence ↗</a>}</div>
+            <div className="rounded-xl border border-border p-3 text-sm space-y-1"><strong>Separate Workers integration · thetradehq</strong><p className="text-xs text-muted-foreground">{deploymentChecks?.worker ? (deploymentChecks.worker.conclusion || deploymentChecks.worker.status) : "Unavailable / not reported"} · Not a substitute for the Pages check</p>{deploymentChecks?.worker?.details_url && <a className={linkStyle} href={deploymentChecks.worker.details_url} target="_blank" rel="noopener noreferrer">Worker build evidence ↗</a>}</div>
           </div>
           <h3 className="text-sm font-semibold">Recent workflow jobs</h3>
           <p className="text-xs text-muted-foreground">Latest two runs for each agent workflow. Includes failures and skipped jobs; older history is available on GitHub. A missing failure here does not imply there has never been one.</p>
