@@ -43,6 +43,7 @@ const AdminReviews = lazy(() => import("./pages/AdminReviews"));
 const AdminDaily = lazy(() => import("./pages/AdminDaily"));
 const AdminCourses = lazy(() => import("./pages/AdminCourses"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const AdminAIAssistant = lazy(() => import("./pages/AdminAIAssistant"));
 const Roadmap = lazy(() => import("./pages/Roadmap"));
 const Compare = lazy(() => import("./pages/Compare"));
 const CompareIndex = lazy(() => import("./pages/Compare").then(m => ({ default: m.CompareIndex })));
@@ -128,6 +129,7 @@ function AnimatedRoutes() {
 
           {/* ADMIN ROUTES — existing desks preserved */}
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/ai" element={<AdminAIAssistant />} />
           <Route path="/admin/seo-audit" element={<SEOAudit />} />
           <Route path="/admin/validator" element={<AdminValidator />} />
           <Route path="/admin/editor" element={<AdminEditor />} />
