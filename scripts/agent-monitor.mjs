@@ -2,7 +2,7 @@ import { uniqueRoutes } from "./routes.ts";
 const origin="https://www.thetradehq.com";
 const repository=process.env.GITHUB_REPOSITORY||"anugaweerasinghe-wq/trading101";
 const token=process.env.GITHUB_TOKEN;
-const paths=["/","/trade","/markets","/portfolio","/courses","/daily","/leaderboard","/reviews","/auth","/contact","/learn","/wiki"];
+const paths=["/","/trade","/markets","/portfolio","/courses","/daily","/leaderboard","/reviews","/auth","/contact","/learn","/wiki","/admin","/admin/ai","/robots.txt","/ads.txt"];
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function page(url){
  const controller=new AbortController(), timer=setTimeout(()=>controller.abort(),12000);
@@ -24,6 +24,7 @@ async function check(url){
  }
 }
 async function main(){
+ const started=new Date().toISOString();
  const sitemap=await page(origin+"/sitemap.xml");
  if(!sitemap.ok)throw Error("Sitemap HTTP "+sitemap.status);
  const xml=await sitemap.text();
@@ -33,6 +34,12 @@ async function main(){
  let next=0;const failures=[];
  await Promise.all(Array.from({length:5},async()=>{while(next<urls.length){const u=urls[next++],failure=await check(u);if(failure)failures.push(failure);}}));
  console.log("Scanned "+urls.length+" public URLs; issues: "+failures.length);
+ // Check the actual public JavaScript bundle so healthy SPA fallback responses aren't enough.
+ try {
+  const html=await (await page(origin+"/")).text();
+  const scripts=[...html.matchAll(/<script[^>]*\bsrc=["']([^"']+)["']/gi)].map(x=>x[1]).filter(x=>x.startsWith("/assets/")).slice(0,2);
+  for(const src of scripts){const failing=await check(origin+src);if(failing)failures.push({...failing,issue:"Production JS bundle: "+failing.issue});}
+ } catch { failures.push({url:origin+"/",issue:"Could not inspect public JS bundle."}); }
  const title="[TradeHQ Agent] Website route failures";
  const issues=await api("GET","/issues?state=open&per_page=100");
  const existing=issues.find(item=>!item.pull_request&&item.title===title);
@@ -43,5 +50,18 @@ async function main(){
   else await api("POST","/issues",{title,body});
   process.exitCode=1;
  }else if(existing)await api("PATCH","/issues/"+existing.number,{state:"closed",state_reason:"completed"});
+ const reportTitle="[TradeHQ Agent] Daily route report";
+ const report=[
+   "## Public route and asset monitoring",
+   "**Checked at (UTC):** "+started, "**URLs checked:** "+urls.length,
+   "**Failed URLs:** "+failures.length, "**JavaScript bundle:** checked when exposed by the page HTML",
+   "Coverage: public route HTTP status and HTML title, sitemap, robots.txt, ads.txt and production bundle HTTP status.",
+   "Does NOT prove private login, price API quality or browser interactions.",
+   failures.length?"### Failed checks\n"+failures.slice(0,30).map(f=>"- "+new URL(f.url).pathname+": "+f.issue).join("\n"):"All sampled HTTP routes returned healthy statuses; this does not prove application behavior.",
+   "No production edits, secrets or personal data."
+ ].join("\n\n");
+ const previous=issues.find(item=>!item.pull_request&&item.title===reportTitle);
+ if(previous)await api("PATCH","/issues/"+previous.number,{body:report});
+ else await api("POST","/issues",{title:reportTitle,body:report});
 }
 main().catch(e=>{console.error(e.message);process.exitCode=1});

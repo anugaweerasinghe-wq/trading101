@@ -95,12 +95,13 @@ export default function AdminAIAssistant() {
         </> : <>
           <section className={borderCard+" space-y-4"}>
             <div className="flex gap-3 items-center"><Sparkles className="w-6 h-6 text-primary"/><h2 className="text-xl font-semibold">Two new ideas each month</h2></div>
-            <p className="text-sm text-muted-foreground">On the first day of each month the free-tier Gemini workflow suggests two improvements, including implementation notes, risks and tests. Ideas remain unimplemented until you approve them.</p>
+            <p className="text-sm text-muted-foreground">On the first day of each month, Gemini now researches the actual TradeHQ code and routes, rejects duplicate ideas, then independently reviews the best candidates before recommending two improvements. Nothing is implemented without your approval.</p>
             <div className="flex gap-3 items-start rounded-xl border border-border p-4"><KeyRound className="w-5 h-5 text-primary mt-0.5"/><div><strong className="text-sm">One-time GitHub secret required</strong><p className="text-xs text-muted-foreground mt-1">GitHub repository → Settings → Secrets and variables → Actions → New repository secret → name <code>GEMINI_API_KEY</code>. Add your eligible free-tier Gemini API key directly in GitHub, not in this dashboard or chat. Keep billing disabled.</p></div></div>
             <div className="flex flex-wrap gap-4">
               <a className="text-primary text-sm hover:underline inline-flex gap-1 items-center" href={gitRoot+"/actions/workflows/tradehq-agents.yml"} target="_blank" rel="noopener noreferrer">View schedule or run manually <ExternalLink className="w-3 h-3"/></a>
               <a className="text-primary text-sm hover:underline inline-flex gap-1 items-center" href={gitRoot+"/settings/secrets/actions"} target="_blank" rel="noopener noreferrer">Configure secret securely <ExternalLink className="w-3 h-3"/></a>
             </div>
+            <p className="text-xs text-muted-foreground">To replace an older weak monthly report, use <strong>Run workflow → task: ideas_refresh</strong>. The existing report is updated rather than creating duplicates. Choose <strong>ideas</strong> for its normal monthly run.</p>
             <h3 className="font-semibold text-sm">Research reports</h3>
             {ideaIssues.length ? ideaIssues.map(issue=><a href={issue.html_url} key={issue.number} target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border p-3 text-sm hover:border-primary/40">{issue.title} <ExternalLink className="w-3 h-3 inline"/></a>):<p className="text-sm text-muted-foreground">No generated suggestions yet; the scheduled workflow has not produced a report.</p>}
           </section>
