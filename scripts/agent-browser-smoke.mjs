@@ -69,7 +69,7 @@ export async function main() {
   }
   const issues=await github("GET","/issues?state=open&per_page=100");
   const body=[
-    "## Public browser-smoke checks", "**Checked at (UTC):** "+started,
+    "## Public browser-smoke checks", "**Checked at (UTC):** "+started, "**GitHub run ID:** "+(process.env.GITHUB_RUN_ID||"unavailable"),
     "**Checked routes:** "+routes.length, "**Potential failures:** "+failures.length,
     "**Browser:** "+chrome,
     "Checks real browser rendering for public pages, visible error banners, and locked admin landing pages.",
