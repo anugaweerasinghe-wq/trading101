@@ -7,6 +7,8 @@ on:
       - .github/workflows/tradehq-agents.yml
       - scripts/agent-monitor.mjs
       - scripts/agent-browser-smoke.mjs
+      - src/pages/AdminDashboard.tsx
+      - src/pages/AdminAIAssistant.tsx
   schedule:
     - cron: '17 3 * * *'
     - cron: '41 4 1 * *'
