@@ -53,7 +53,7 @@ async function main(){
  const reportTitle="[TradeHQ Agent] Daily route report";
  const report=[
    "## Public route and asset monitoring",
-   "**Checked at (UTC):** "+started, "**URLs checked:** "+urls.length,
+   "**Checked at (UTC):** "+started, "**GitHub run ID:** "+(process.env.GITHUB_RUN_ID||"unavailable"), "**URLs checked:** "+urls.length,
    "**Failed URLs:** "+failures.length, "**JavaScript bundle:** checked when exposed by the page HTML",
    "Coverage: public route HTTP status and HTML title, sitemap, robots.txt, ads.txt and production bundle HTTP status.",
    "Does NOT prove private login, price API quality or browser interactions.",
