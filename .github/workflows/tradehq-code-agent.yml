@@ -36,7 +36,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_AGENT_MODEL: gemini-2.5-flash-lite
+          GEMINI_AGENT_MODEL: gemini-3.5-flash-lite
           TRADEHQ_ISSUE_NUMBER: ${{ github.event.issue.number }}
 
   verify:
