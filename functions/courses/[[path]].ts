@@ -25,6 +25,20 @@ export async function onRequestGet({ request, env }: PagesContext): Promise<Resp
   const url = new URL(request.url);
   const parts = url.pathname.split("/").filter(Boolean);
   const valid = (v: string | undefined) => !!v && v.length <= 80 && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v);
+  // Cloudflare's optional /courses/[[path]] catch-all also matches /courses itself.
+  // Serve its prerendered listing directly rather than treating it as a missing course slug.
+  if (parts.length === 1 && parts[0] === "courses") {
+    const staticResponse = await env.ASSETS.fetch(new Request(new URL("/courses/", url)));
+    if (staticResponse.ok && staticResponse.headers.get("content-type")?.includes("text/html")) {
+      const html = await staticResponse.text();
+      if (html.includes('<link rel="canonical" href="https://www.thetradehq.com/courses"')) {
+        const headers = new Headers(staticResponse.headers);
+        if (url.hostname.endsWith(".pages.dev")) headers.set("X-Robots-Tag", "noindex");
+        return new Response(html, { status: 200, headers });
+      }
+    }
+    return result("Courses are temporarily unavailable. Please retry.", 503);
+  }
   if (parts.length < 2 || parts.length > 3 || parts[0] !== "courses"
     || !valid(parts[1]) || (parts.length === 3 && !valid(parts[2]))) {
     return result("Course not found", 404);
