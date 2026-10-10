@@ -6,7 +6,7 @@ Status: PREVIEW ONLY. Vercel remains production; do not switch thetradehq.com or
 TradeHQ generates hundreds of unique, SEO-aware static HTML routes. Vercel also implements two dynamic published-course handlers in api/course.ts and api/course-sitemap.ts. The Cloudflare preview build keeps prerendered pages, ports those two functions to Pages, and creates a 404 fallback which does not copy the indexable homepage.
 
 ## Creating a Cloudflare Pages staging project
-1. In Cloudflare Workers & Pages, choose Pages with **Git integration** and connect the existing public repository anugaweerasinghe-wq/trading101.
+1. In Cloudflare Workers & Pages, choose Pages with **Git integration** and connect the existing public repository anugaweerasinghe1-del/trading101.
 2. For this isolated staging project, choose the branch migration/cloudflare-pages-preview-20261010 as the production branch. Do not use main yet.
 3. Choose Vite; repository root as project root; build command **npm run build:cloudflare**; output directory **dist**; Node.js 22 or 24.
 4. Select Free only. Do not enable billing, paid Workers plans or paid API fallbacks.
@@ -33,3 +33,17 @@ TradeHQ generates hundreds of unique, SEO-aware static HTML routes. Vercel also 
 - Backend and domain migration are distinct; the Lovable/Supabase backend is NOT being moved in this batch.
 
 Important: A successful GitHub build or draft PR is not proof Cloudflare deploys or signed-in functionality works. Record a real pages.dev preview URL and test results before approval.
+
+## Verified cutover gates (2026-10-10)
+- Reconnected GitHub account and repository: anugaweerasinghe1-del/trading101.
+- Cloudflare Pages tradehq-preview deployment and Vercel preview succeeded from the new owner's migration-branch commit; a separate Workers Builds: thetradehq check failed. Do not confuse that Worker with the working Pages project.
+- The owner tested auth, persistent sign-in, sign-out and portfolios on staging and verified five routes return 200 + noindex. Re-test after switching deployment branch or live environment flag.
+- The Cloudflare SEO build now scopes noindex to pages.dev hostnames in live mode and keeps staging-wide noindex in non-live mode. Pages Functions must set their own response headers.
+- Prerequisite: both PR validation workflows pass at the same reviewed branch head; only then merge into main.
+- In Pages project Settings, change production branch from migration/cloudflare-pages-preview-20261010 to main; select npm run build:cloudflare with dist output.
+- Set TRADEHQ_CLOUDFLARE_LIVE=1 in the PRODUCTION build environment only, never Preview. Redeploy and verify the resulting commit SHA and static SEO config before moving DNS.
+- SAVE all current DNS values: apex/www A/CNAME, email MX/SPF/DKIM/DMARC, TXT Google verification and any CAA records; also preserve the last ready Vercel production deployment.
+- Add www.thetradehq.com under Pages Custom domains only after the correct production build and SEO checks. Cloudflare may change its DNS record automatically; this is the actual traffic cutover.
+- Verify the real www URL: TLS, redirects, homepage HTML, canonical, meta robots, ads.txt, robots.txt, sitemaps, lessons, login, portfolio, leaderboard, reviews, admin and unknown paths. If any critical problem, restore original DNS and Vercel quickly.
+- After www is stable, use the Cloudflare FREE single redirect rule for apex: https://thetradehq.com/* to https://www.thetradehq.com/${1}, status 301, preserve query string; requires proxied apex DNS. Never redirect www back to apex.
+- Keep Vercel active for rollback. Cloudflare Pages static delivery is free; Functions share Workers Free 100,000 requests/day. Free plan: 500 builds/month and up to 20,000 files/project. Backend, AI, DNS registration and integrations have separate quotas/costs; years-long zero cost is not guaranteed.
