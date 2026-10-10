@@ -12,7 +12,7 @@ function assert(condition, message) {
 const headerFile = "dist/_headers";
 function expectStaging() {
   const h = readFileSync(headerFile, "utf8");
-  assert(h.includes("/*\n  X-Robots-Tag: noindex\n"), "Staging lacks global noindex");
+  assert(h.startsWith("/*\n  X-Robots-Tag: noindex\n"), "Staging lacks global noindex");
   assert(h.includes("https://:project.pages.dev/*\n  X-Robots-Tag: noindex\n"), "Missing pages.dev host protection");
   assert(h.includes("https://:version.:project.pages.dev/*\n  X-Robots-Tag: noindex\n"), "Missing hashed pages.dev host protection");
 }
@@ -23,7 +23,7 @@ try {
     env: { ...process.env, TRADEHQ_CLOUDFLARE_LIVE: "1" },
   });
   const h = readFileSync(headerFile, "utf8");
-  assert(!h.includes("/*\n  X-Robots-Tag: noindex\n"),
+  assert(!h.startsWith("/*\n  X-Robots-Tag: noindex\n"),
     "Live mode still has site-wide noindex; Google could drop indexed URLs");
   assert(h.includes("https://:project.pages.dev/*\n  X-Robots-Tag: noindex\n"),
     "Live mode allows canonical pages.dev duplicate indexing");
