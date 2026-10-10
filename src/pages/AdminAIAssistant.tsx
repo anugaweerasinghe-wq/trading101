@@ -61,10 +61,18 @@ export default function AdminAIAssistant() {
         if (!response.ok) throw new Error("HTTP " + response.status);
         const result = await response.json() as { check_runs?: Array<{ name: string; status: string; conclusion: string | null }> };
         if (!Array.isArray(result.check_runs)) throw new Error("No valid check information");
-        const relevant = result.check_runs.filter(c => c.name === "build" || /Cloudflare Pages preview build/i.test(c.name));
-        const failed = relevant.some(c => c.conclusion === "failure" || c.conclusion === "cancelled");
+        const relevant = result.check_runs.filter(c => c.name === "build" || c.name === "Cloudflare Pages");
+        const worker = result.check_runs.find(c => c.name.startsWith("Workers Builds:"));
+        const pages = relevant.find(c => c.name === "Cloudflare Pages");
+        const failed = relevant.some(c => c.conclusion === "failure" || c.conclusion === "cancelled" || c.conclusion === "timed_out");
         const pending = relevant.some(c => c.status !== "completed");
-        return { number: pr.number, summary: !relevant.length ? "Validation not reported" : failed ? "Validation failed" : pending ? "Validation in progress" : "Reported validation passed", failed, link: pr.html_url + "/checks" };
+        const summary = failed ? (pages?.conclusion === "failure" ? "Cloudflare Pages deployment FAILED; release blocked" : "Validation failed; release blocked")
+          : pending ? "Validation pending; do not merge"
+          : !relevant.length ? "Validation not reported; do not merge"
+          : !pages ? "CI passed; Cloudflare Pages deployment NOT VERIFIED"
+          : "CI and Cloudflare Pages checks reported success";
+        const workerNote = worker ? " · Separate Worker: " + (worker.conclusion || worker.status) : "";
+        return { number: pr.number, summary: summary + workerNote, failed: failed || pending || !pages || relevant.length < 2, link: pr.html_url + "/checks" };
       }));
       const next: Record<number, PrChecks> = {};
       summaries.forEach((result, index) => {
@@ -124,7 +132,7 @@ export default function AdminAIAssistant() {
               <strong>#{pr.number} {pr.title}</strong>
               <p className="text-xs text-muted-foreground">{pr.draft ? "DRAFT — owner review required" : "Open — owner review still required"} · {checks[pr.number]?.summary || "Validation not checked"} · {new Date(pr.created_at).toLocaleDateString()}</p>
               <div className="flex flex-wrap gap-4"><a href={pr.html_url + "/files"} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Review exact diff ↗</a><a href={checks[pr.number]?.link || pr.html_url + "/checks"} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Inspect tests ↗</a><a href={pr.html_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Approve or close on GitHub ↗</a></div>
-              {checks[pr.number]?.failed && <p className="text-xs text-amber-400">Failed checks: do not merge. Inspect the failing job and request a fix.</p>}
+              {checks[pr.number]?.failed && <p className="text-xs text-amber-400">Do not merge until CI and the actual Cloudflare Pages deployment are verified. Inspect failing or missing checks.</p>}
             </div>)}
             <h3 className="font-semibold text-sm pt-2">Previous requests</h3>
             {codeIssues.length === 0 ? <p className="text-sm text-muted-foreground">No code requests submitted yet.</p> : codeIssues.slice(0,8).map(issue=><a key={issue.number} href={issue.html_url} target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border p-3 text-sm hover:border-primary/40">Request #{issue.number} · {issue.state}{issue.user?.login === legacyOwner ? " · Legacy owner (historical only)" : ""}<span className="block text-xs text-muted-foreground mt-1">Open GitHub issue for agent replies and test results ↗</span></a>)}
