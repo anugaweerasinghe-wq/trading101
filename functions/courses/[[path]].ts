@@ -21,6 +21,12 @@ function result(message: string, status: number) {
     },
   });
 }
+function servedStaticHtml(html: string, response: Response, hostname: string) {
+  const headers = new Headers(response.headers);
+  // Pages Functions do not automatically inherit _headers; protect all pages.dev mirrors.
+  if (hostname.endsWith(".pages.dev")) headers.set("X-Robots-Tag", "noindex");
+  return new Response(html, { status: 200, headers });
+}
 export async function onRequestGet({ request, env }: PagesContext): Promise<Response> {
   const url = new URL(request.url);
   const parts = url.pathname.split("/").filter(Boolean);
@@ -32,9 +38,7 @@ export async function onRequestGet({ request, env }: PagesContext): Promise<Resp
     if (staticResponse.ok && staticResponse.headers.get("content-type")?.includes("text/html")) {
       const html = await staticResponse.text();
       if (html.includes('<link rel="canonical" href="https://www.thetradehq.com/courses"')) {
-        const headers = new Headers(staticResponse.headers);
-        if (url.hostname.endsWith(".pages.dev")) headers.set("X-Robots-Tag", "noindex");
-        return new Response(html, { status: 200, headers });
+        return servedStaticHtml(html, staticResponse, url.hostname);
       }
     }
     return result("Courses are temporarily unavailable. Please retry.", 503);
@@ -49,7 +53,7 @@ export async function onRequestGet({ request, env }: PagesContext): Promise<Resp
   if (staticResponse.ok && staticResponse.headers.get("content-type")?.includes("text/html")) {
     const html = await staticResponse.text();
     if (html.includes('<link rel="canonical" href="https://www.thetradehq.com' + path + '"')) {
-      return new Response(html, staticResponse);
+      return servedStaticHtml(html, staticResponse, url.hostname);
     }
   }
   try {
