@@ -1,0 +1,31 @@
+name: Cloudflare Pages preview build
+
+on:
+  pull_request:
+    paths:
+      - "functions/**"
+      - "scripts/prepare-cloudflare.mjs"
+      - "package.json"
+      - "docs/cloudflare-preview-migration.md"
+      - ".github/workflows/cloudflare-preview-build.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run build:cloudflare
+      - name: Validate non-indexable fallback and narrow function routing
+        run: |
+          node --check scripts/prepare-cloudflare.mjs
+          node --input-type=module -e 'import { readFileSync } from "node:fs"; const routes=JSON.parse(readFileSync("dist/_routes.json","utf8")); if (routes.include.includes("/*") || !routes.include.includes("/courses/*")) process.exit(1); const shell=readFileSync("dist/404.html","utf8"); if (!shell.includes("noindex, follow") || shell.includes("rel=\"canonical\"")) process.exit(1);'
