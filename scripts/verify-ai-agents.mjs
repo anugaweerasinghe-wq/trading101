@@ -21,6 +21,9 @@ assert.match(workflow, /github\.event\.issue\.user\.login == github\.repository_
 assert.match(workflow, /pull-requests: write/);
 assert.match(workflow, /contents: read/);
 assert.match(workflow, /needs: propose/);
+assert.match(workflow, /confirm-pr-created/);
+assert.match(workflow, /pr_created/);
+assert.match(agent, /pr_created=/);
 assert.doesNotMatch(workflow, /merge_pull_request|gh pr merge|pull_request_target/);
 assert.match(agent, /\/git\/refs/);
 assert.match(agent, /draft: true/);
