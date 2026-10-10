@@ -62,8 +62,14 @@ jobs:
       - run: npm ci
       - name: Check backend invariants without production credentials
         run: npm run verify:backend
-      - name: Verify page build, SEO and routes
-        run: npm run build
+      - name: Verify Cloudflare Pages output and normal site build without production credentials
+        run: npm run build:cloudflare
+        env:
+          TRADEHQ_CLOUDFLARE_LIVE: '0'
+      - name: Verify Cloudflare route and preview SEO invariants
+        run: |
+          node scripts/verify-cloudflare-seo.mjs
+          node --import tsx scripts/verify-cloudflare-courses-root.ts
       - name: Validate courses and Daily Practice
         run: |
           node --import tsx scripts/verify-course-workflow.ts
