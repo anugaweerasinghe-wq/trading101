@@ -22,6 +22,7 @@ jobs:
       - run: node scripts/verify-ai-agents.mjs
       - run: node scripts/verify-gemini-models.mjs
       - run: node scripts/verify-agent-monitor-ideas.mjs
+      - run: node scripts/verify-repair-triage.mjs
       - run: node scripts/verify-admin-render-imports.mjs
       - run: node --import tsx scripts/verify-journal-summary.ts
       - run: node --import tsx scripts/verify-provider-quotes.ts
