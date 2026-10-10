@@ -5,6 +5,8 @@ on:
     paths:
       - "functions/**"
       - "scripts/prepare-cloudflare.mjs"
+      - "scripts/verify-cloudflare-seo.mjs"
+      - "scripts/smoke-cloudflare-preview.mjs"
       - "package.json"
       - "docs/cloudflare-preview-migration.md"
       - ".github/workflows/cloudflare-preview-build.yml"
@@ -25,6 +27,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build:cloudflare
+      - name: Verify staging and production SEO headers offline
+        run: node scripts/verify-cloudflare-seo.mjs
       - name: Bundle Cloudflare Pages Functions using Wrangler
         run: npx --yes wrangler@4 pages functions build functions --outfile /tmp/tradehq-pages-worker.js
       - name: Validate non-indexable fallback and narrow function routing
