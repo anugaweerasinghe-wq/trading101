@@ -47,3 +47,9 @@ Important: A successful GitHub build or draft PR is not proof Cloudflare deploys
 - Verify the real www URL: TLS, redirects, homepage HTML, canonical, meta robots, ads.txt, robots.txt, sitemaps, lessons, login, portfolio, leaderboard, reviews, admin and unknown paths. If any critical problem, restore original DNS and Vercel quickly.
 - After www is stable, use the Cloudflare FREE single redirect rule for apex: https://thetradehq.com/* to https://www.thetradehq.com/${1}, status 301, preserve query string; requires proxied apex DNS. Never redirect www back to apex.
 - Keep Vercel active for rollback. Cloudflare Pages static delivery is free; Functions share Workers Free 100,000 requests/day. Free plan: 500 builds/month and up to 20,000 files/project. Backend, AI, DNS registration and integrations have separate quotas/costs; years-long zero cost is not guaranteed.
+
+## Post-cutover release evidence — 10 October 2026
+
+PRs #86, #87 and #88 passed both required exact-head validation workflows and external Pages previews before merging. Their merge SHAs also received successful production Pages deployments. Latest verified functional release: #88, `7f0e73f9e14118bf8f107f30b4c198e3306fb8cb`; deployment `73b2a9ca-1448-44b5-ae54-6c1ce4ca248f`. All eight live comparison routes passed HTTP/canonical/content checks and Chrome verified the Forex/Equities page. The fresh monitor on #87 passed 352 URLs and 12 browser routes. Full evidence and limits are in `autonomous-progress-20261010.md`.
+
+Today's apex requests still redirect 308 through Vercel to www, which serves the site through Cloudflare. This is observed current behavior, not evidence that the suggested Cloudflare apex redirect was configured. Neither DNS nor the failed separate Worker was changed. Cloudflare dashboard access is currently blocked by sign-in, so Worker bindings/routes and actual quota consumption remain unverified.
