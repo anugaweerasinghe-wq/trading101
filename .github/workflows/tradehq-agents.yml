@@ -1,6 +1,12 @@
 name: TradeHQ Agents
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/tradehq-agents.yml
+      - scripts/agent-monitor.mjs
+      - scripts/agent-browser-smoke.mjs
   schedule:
     - cron: '17 3 * * *'
     - cron: '41 4 1 * *'
@@ -26,7 +32,7 @@ concurrency:
 
 jobs:
   scan:
-    if: (github.event_name == 'schedule' && github.event.schedule == '17 3 * * *') || (github.event_name == 'workflow_dispatch' && inputs.task == 'scan')
+    if: (github.event_name == 'schedule' && github.event.schedule == '17 3 * * *') || (github.event_name == 'workflow_dispatch' && inputs.task == 'scan') || github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
@@ -62,7 +68,7 @@ jobs:
           TRADEHQ_IDEAS_REFRESH: ${{ inputs.task == 'ideas_refresh' && '1' || '0' }}
 
   browser:
-    if: (github.event_name == 'schedule' && github.event.schedule == '17 3 * * *') || (github.event_name == 'workflow_dispatch' && inputs.task == 'scan')
+    if: (github.event_name == 'schedule' && github.event.schedule == '17 3 * * *') || (github.event_name == 'workflow_dispatch' && inputs.task == 'scan') || github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     permissions:
