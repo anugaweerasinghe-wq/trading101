@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { summarizeReleaseEvidence, type ReleaseCheck, type ReleaseRun } from "@/lib/aiReleaseEvidence";
 import { supabase } from "@/integrations/supabase/client";
 import { Bot, CheckCircle2, Code2, ExternalLink, GitPullRequest, KeyRound, Lock, MessageSquare, ShieldCheck, Sparkles } from "lucide-react";
 
@@ -57,27 +58,27 @@ export default function AdminAIAssistant() {
       setPrs(proposals);
       // Only inspect a few open proposals. Public GitHub API requests are rate-limited.
       const summaries = await Promise.allSettled(proposals.slice(0, 3).map(async pr => {
-        const response = await fetch(root + "/commits/" + encodeURIComponent(pr.head.sha) + "/check-runs?per_page=50");
-        if (!response.ok) throw new Error("HTTP " + response.status);
-        const result = await response.json() as { check_runs?: Array<{ name: string; status: string; conclusion: string | null }> };
-        if (!Array.isArray(result.check_runs)) throw new Error("No valid check information");
-        const relevant = result.check_runs.filter(c => c.name === "build" || c.name === "Cloudflare Pages");
-        const worker = result.check_runs.find(c => c.name.startsWith("Workers Builds:"));
-        const pages = relevant.find(c => c.name === "Cloudflare Pages");
-        const failed = relevant.some(c => c.conclusion === "failure" || c.conclusion === "cancelled" || c.conclusion === "timed_out");
-        const pending = relevant.some(c => c.status !== "completed");
-        const summary = failed ? (pages?.conclusion === "failure" ? "Cloudflare Pages deployment FAILED; release blocked" : "Validation failed; release blocked")
-          : pending ? "Validation pending; do not merge"
-          : !relevant.length ? "Validation not reported; do not merge"
-          : !pages ? "CI passed; Cloudflare Pages deployment NOT VERIFIED"
-          : "CI and Cloudflare Pages checks reported success";
-        const workerNote = worker ? " · Separate Worker: " + (worker.conclusion || worker.status) : "";
-        return { number: pr.number, summary: summary + workerNote, failed: failed || pending || !pages || relevant.length < 2, link: pr.html_url + "/checks" };
+        const [response, runResponse] = await Promise.all([
+          fetch(root + "/commits/" + encodeURIComponent(pr.head.sha) + "/check-runs?per_page=100"),
+          fetch(root + "/actions/runs?head_sha=" + encodeURIComponent(pr.head.sha) + "&per_page=100"),
+        ]);
+        if (!response.ok || !runResponse.ok) throw new Error("HTTP " + response.status + "/" + runResponse.status);
+        const [result, runResult] = await Promise.all([
+          response.json() as Promise<{ total_count: number; check_runs: ReleaseCheck[] }>,
+          runResponse.json() as Promise<{ total_count: number; workflow_runs: ReleaseRun[] }>,
+        ]);
+        if (!Array.isArray(result.check_runs) || !Array.isArray(runResult.workflow_runs)
+          || !Number.isInteger(result.total_count) || !Number.isInteger(runResult.total_count)
+          || result.total_count > result.check_runs.length || runResult.total_count > runResult.workflow_runs.length) {
+          throw new Error("Incomplete release evidence; verify all results on GitHub");
+        }
+        const evidence = summarizeReleaseEvidence(pr.head.sha, result.check_runs, runResult.workflow_runs);
+        return { number: pr.number, ...evidence, link: pr.html_url + "/checks" };
       }));
       const next: Record<number, PrChecks> = {};
       summaries.forEach((result, index) => {
         if (result.status === "fulfilled") next[result.value.number] = result.value;
-        else next[proposals[index].number] = { summary: "Validation unavailable", failed: false, link: proposals[index].html_url + "/checks" };
+        else next[proposals[index].number] = { summary: "Validation unavailable; do not merge", failed: true, link: proposals[index].html_url + "/checks" };
       });
       setChecks(next);
       setGithubError(summaries.some(x => x.status === "rejected") ? "Some PR check results could not be fetched; verify directly on GitHub." : "");
@@ -130,7 +131,7 @@ export default function AdminAIAssistant() {
             <div className="flex items-center gap-3"><GitPullRequest className="w-5 h-5 text-primary"/><h2 className="font-semibold">Pending AI code proposals</h2></div>
             {prs.length === 0 ? <p className="text-sm text-muted-foreground">{githubError ? "Approval queue cannot be verified." : "No open AI pull requests returned."}</p> : prs.map(pr => <div key={pr.number} className="rounded-xl border border-border p-3 text-sm space-y-2">
               <strong>#{pr.number} {pr.title}</strong>
-              <p className="text-xs text-muted-foreground">{pr.draft ? "DRAFT — owner review required" : "Open — owner review still required"} · {checks[pr.number]?.summary || "Validation not checked"} · {new Date(pr.created_at).toLocaleDateString()}</p>
+              <p className="text-xs text-muted-foreground">{pr.draft ? "DRAFT — owner review required" : "Open — owner review still required"} · Commit {pr.head.sha.slice(0, 7)} · {checks[pr.number]?.summary || "Validation not checked; do not merge"} · {new Date(pr.created_at).toLocaleDateString()}</p>
               <div className="flex flex-wrap gap-4"><a href={pr.html_url + "/files"} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Review exact diff ↗</a><a href={checks[pr.number]?.link || pr.html_url + "/checks"} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Inspect tests ↗</a><a href={pr.html_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Approve or close on GitHub ↗</a></div>
               {checks[pr.number]?.failed && <p className="text-xs text-amber-400">Do not merge until CI and the actual Cloudflare Pages deployment are verified. Inspect failing or missing checks.</p>}
             </div>)}
