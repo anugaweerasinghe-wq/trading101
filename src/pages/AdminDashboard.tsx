@@ -69,7 +69,8 @@ export default function AdminDashboard() {
     }, 120000);
     return () => window.clearInterval(interval);
   }, [unlocked, refresh, loadAgents]);
-  const agentFindings = issues.filter(item => item.title.startsWith("[TradeHQ Agent]"));
+  const agentFindings = issues.filter(item => item.title.startsWith("[TradeHQ Agent]") && (item.title.endsWith("failures") || item.title.endsWith("failed")));
+  const agentReports = issues.filter(item => item.title.startsWith("[TradeHQ Agent]") && item.title.endsWith("report"));
   const ideas = issues.filter(item => item.title.startsWith("[TradeHQ Ideas]"));
   return <main className="min-h-screen bg-background text-foreground px-4 py-10">
     <Helmet><title>Administration | TradeHQ</title><meta name="robots" content="noindex,nofollow" /></Helmet>
@@ -94,9 +95,10 @@ export default function AdminDashboard() {
         </div>
         <section className={card}>
           <div className="flex gap-3 items-center"><Activity className="w-5 h-5 text-primary"/><h2 className="font-semibold">Automated website checks</h2></div>
-          <p className="text-sm text-muted-foreground">Read-only GitHub Actions checks inspect live public routes. Findings are proposed for review here; agents do not edit production directly. Reports describe public route failures only, never private customer data.</p>
+          <p className="text-sm text-muted-foreground">Read-only GitHub Actions checks inspect public routes, deployed assets and a sample of pages in headless Chrome. Status reports show what was checked and when; no agent logs in, places trades or edits production.</p>
           <p className="text-sm">{run ? <>Latest run: <strong>{run.conclusion || run.status}</strong> · {new Date(run.created_at).toLocaleString()}</> : "No completed agent workflow was returned from GitHub yet."}</p>
-          <div className="flex flex-wrap gap-4"><a className={linkStyle} href={"https://github.com/" + repo + "/actions/workflows/tradehq-agents.yml"} target="_blank" rel="noopener noreferrer">View execution history <ExternalLink className="w-3 h-3"/></a><span className="text-sm text-muted-foreground">{agentFindings.length} open report(s)</span></div>
+          <div className="flex flex-wrap gap-4"><a className={linkStyle} href={"https://github.com/" + repo + "/actions/workflows/tradehq-agents.yml"} target="_blank" rel="noopener noreferrer">View execution history <ExternalLink className="w-3 h-3"/></a><span className="text-sm text-muted-foreground">{agentFindings.length} open potential failure(s)</span></div>
+          {agentReports.length ? <div className="grid gap-2 sm:grid-cols-2">{agentReports.map(item => <a key={item.id} href={item.html_url} target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border p-3 text-sm hover:border-primary/40"><strong>{item.title.replace("[TradeHQ Agent] ", "")}</strong><span className="block text-xs text-muted-foreground mt-1">{(item.body || "").match(/\*\*Checked at \(UTC\):\*\*\s*([^\n]+)/)?.[1] || "Read latest inspection details"} · Evidence ↗</span></a>)}</div> : <p className="text-sm text-muted-foreground">No daily or browser-scan report exists yet. The scheduled workflow has not proven a completed inspection.</p>}
           {agentFindings.length === 0 ? <p className="text-sm text-muted-foreground">No open findings reported. This does not imply that every feature has been tested.</p> : <div className="space-y-2">{agentFindings.map(item => <div key={item.id} className="rounded-xl border border-border p-3 space-y-2"><a href={item.html_url} target="_blank" rel="noopener noreferrer" className="block text-sm hover:underline">{item.title}<span className="block text-xs text-muted-foreground mt-1">{new Date(item.created_at).toLocaleString()} · See evidence and reproduction steps ↗</span></a><a className={linkStyle} target="_blank" rel="noopener noreferrer" href={"https://github.com/" + repo + "/issues/new?" + new URLSearchParams({ title: "[TradeHQ Code Request]", body: ("Investigate this site-monitor finding and propose a safe frontend-only fix without changing backend/auth or trading logic. Finding: " + item.html_url + "\n\n" + (item.body || "").slice(0,1200)).slice(0,2400) }).toString()}>Propose a reviewed AI fix <ExternalLink className="h-3 w-3"/></a></div>)}</div>}
         </section>
         <section className={card}>
