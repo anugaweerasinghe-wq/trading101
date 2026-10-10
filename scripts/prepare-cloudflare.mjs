@@ -20,10 +20,15 @@ writeFileSync(resolve(dir, "404.html"), shell, "utf8");
 // Make every staging static page explicitly noindex by default. Removing this
 // protection requires a deliberate environment flag at owner-approved cutover.
 const productionApproved = process.env.TRADEHQ_CLOUDFLARE_LIVE === "1";
-// Static staging is noindex until a separately approved production build.
+// Cloudflare _headers supports host-qualified URL patterns. Keep BOTH the
+// main and per-deployment pages.dev mirrors noindex after custom-domain launch.
+// Pages Functions do not inherit these rules and must set their own headers.
+const pagesDevNoindex =
+  "https://:project.pages.dev/*\n  X-Robots-Tag: noindex\n" +
+  "https://:version.:project.pages.dev/*\n  X-Robots-Tag: noindex\n";
 writeFileSync(resolve(dir, "_headers"), productionApproved
-  ? "# Production SEO indexability explicitly enabled.\n"
-  : "/*\n  X-Robots-Tag: noindex\n", "utf8");
+  ? pagesDevNoindex
+  : "/*\n  X-Robots-Tag: noindex\n" + pagesDevNoindex, "utf8");
 const include = [
   "/auth", "/reset-password", "/admin", "/admin/*",
   "/trader/*", "/trade/*", "/challenge", "/challenge/*",
