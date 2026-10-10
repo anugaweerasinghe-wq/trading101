@@ -27,7 +27,7 @@ function count(body, label) {
 }
 export function readFailures(issues, currentRun) {
   if (!/^\d+$/.test(currentRun)) throw Error("Missing GitHub Actions run ID.");
-  const find = title => issues.find(x => !x.pull_request && x.title === title && x.state === "open");
+  const find = title => issues.find(x => !x.pull_request && x.title === title && x.state === "open" && x.user?.login === "github-actions[bot]");
   const routes = find(routeTitle), browser = find(browserTitle);
   if (!routes || !browser || extractRunId(routes.body) !== currentRun || extractRunId(browser.body) !== currentRun) {
     throw Error("Fresh reports from BOTH independent monitors are missing. No recurrence or success inferred.");
@@ -94,7 +94,7 @@ async function main() {
   const open = await github("GET", "/issues?state=open&per_page=100");
   const { records, routeCount, browserCount } = readFailures(open, runId);
   const all = await github("GET", "/issues?state=all&per_page=100");
-  const existing = all.find(x => !x.pull_request && x.title === TITLE);
+  const existing = all.find(x => !x.pull_request && x.title === TITLE && x.user?.login === "github-actions[bot]");
   const state = nextState(previousState(existing?.body), records, runId);
   if (!records.length) {
     if (existing?.state === "open") {
