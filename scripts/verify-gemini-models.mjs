@@ -48,4 +48,91 @@ for (const status of [401, 403, 429, 500]) {
   }), /not in TradeHQ/);
   assert.equal(count, 0, "never invoke a model not in the allowlist");
 }
-console.log("Gemini free-tier model fallback, request safety and no-paid-fallback tests passed.");
+// An intermittently malformed JSON response permits exactly ONE extra request,
+// and it must use the SAME approved free-tier model, never a paid or other fallback.
+const malformed = response(200, {
+  candidates: [{ content: { parts: [{ text: '{"ideas":[' }] }, finishReason: "STOP" }],
+});
+const empty = response(200, {
+  candidates: [{ content: { parts: [{ text: "" }] }, finishReason: "STOP" }],
+});
+{
+  const calls = [];
+  const result = await requestGeminiJson({
+    apiKey: testKey, prompt: "Mock",
+    fetchImpl: async (url, options) => {
+      calls.push({ url, options });
+      return calls.length === 1 ? malformed : success;
+    },
+  });
+  assert.equal(result.model, FREE_FLASH_LITE_MODELS[0]);
+  assert.equal(result.value.ideas.length, 2);
+  assert.equal(calls.length, 2, "retry malformed JSON only once");
+  assert.equal(calls[0].url, calls[1].url, "malformed JSON must not select another model");
+  const firstBody = JSON.parse(calls[0].options.body);
+  const secondBody = JSON.parse(calls[1].options.body);
+  assert.equal(firstBody.generationConfig.responseMimeType, "application/json");
+  assert.equal(secondBody.generationConfig.responseMimeType, "application/json");
+  assert.ok(secondBody.contents[0].parts[0].text.includes("syntactically valid JSON"));
+}
+{
+  let count = 0;
+  await assert.rejects(requestGeminiJson({
+    apiKey: testKey, prompt: "Mock",
+    fetchImpl: async () => { count++; return malformed; },
+  }), /invalid or empty JSON.*after one retry/);
+  assert.equal(count, 2, "two malformed responses must stop without publishing");
+}
+{
+  let count = 0;
+  const result = await requestGeminiJson({
+    apiKey: testKey, prompt: "Mock",
+    fetchImpl: async () => { count++; return count === 1 ? empty : success; },
+  });
+  assert.equal(result.model, FREE_FLASH_LITE_MODELS[0]);
+  assert.equal(count, 2, "empty response gets only one bounded retry");
+}
+{
+  let count = 0;
+  await assert.rejects(requestGeminiJson({
+    apiKey: testKey, prompt: "Mock",
+    fetchImpl: async () => { count++; return count === 1 ? malformed : response(429); },
+  }), /429/);
+  assert.equal(count, 2, "do not fall back after rate limit on JSON retry");
+}
+{
+  let count = 0;
+  await assert.rejects(requestGeminiJson({
+    apiKey: testKey, prompt: "Mock",
+    fetchImpl: async () => {
+      count++;
+      return response(200, { candidates: [{ finishReason: "MAX_TOKENS", content: { parts: [{ text: "{}" }] } }] });
+    },
+  }), /token limit/);
+  assert.equal(count, 1, "do not retry truncated output");
+}
+{
+  let count = 0;
+  await assert.rejects(requestGeminiJson({
+    apiKey: testKey, prompt: "Mock",
+    fetchImpl: async () => {
+      count++;
+      return response(200, { candidates: [{ finishReason: "SAFETY", content: { parts: [] } }] });
+    },
+  }), /stopped with SAFETY/);
+  assert.equal(count, 1, "do not retry safety-blocked output");
+}
+{
+  let count = 0;
+  const invalidRoot = response(200, {
+    candidates: [{ content: { parts: [{ text: '"not a JSON object"' }] }, finishReason: "STOP" }],
+  });
+  const result = await requestGeminiJson({
+    apiKey: testKey, prompt: "Mock",
+    fetchImpl: async () => { count++; return count === 1 ? invalidRoot : success; },
+  });
+  assert.equal(result.value.ideas.length, 2);
+  assert.equal(count, 2, "a JSON primitive must not pass the required object shape");
+}
+
+console.log("Gemini free-tier model fallback, request safety and no-paid-fallback and bounded JSON retry tests passed.");
