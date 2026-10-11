@@ -10,10 +10,16 @@ import { monitorFindings } from "./agent-repair-review.mjs";
 
 const workflowPath = ".github/workflows/tradehq-agents.yml";
 const age = 30 * 60 * 60 * 1000;
+const ciAge = 24 * 60 * 60 * 1000;
+const ciWorkflows = new Map([
+  [".github/workflows/phase3-high-check.yml", 368399831],
+  [".github/workflows/cloudflare-preview-build.yml", 380314743],
+]);
+const requiredChecks = ["TradeHQ Phase 3 tests", "TradeHQ Cloudflare compatibility / Cloudflare build and SEO", "TradeHQ Required validation"];
 const reportTitles = Object.values(REPORT_TITLES);
-function interval(start, end, now) {
+function interval(start, end, now, maxAge = age) {
   const a = isoTime(start), b = isoTime(end);
-  assert.ok(a <= b && a >= now - age && b <= now + 60_000, "Stale, future or inconsistent evidence time.");
+  assert.ok(a <= b && a >= now - maxAge && b <= now + 60_000, "Stale, future or inconsistent evidence time.");
   return [a, b];
 }
 function reportsFrom(issues) {
@@ -56,7 +62,8 @@ function bindReport(source, issue, job, logs, run, now, expectedRoutes) {
   assert.equal(f.checked, source === "route" ? expectedRoutes : 12, "Monitoring coverage differs from the reviewed inventory.");
   assert.equal(f.failed, 0, "Failed monitor evidence cannot authorize downstream automation.");
   const observed = isoTime(f.observedAt), updated = isoTime(issue.updated_at);
-  assert.ok(observed >= start && observed <= end && updated >= observed - 1000 && updated <= end + 1000, "Report was edited outside producing job.");
+  assert.ok(observed >= start && observed <= end + 1000 && updated >= observed - 1000 && updated <= end + 1000,
+    "Report was edited outside producing job.");
   return { source, issueId: issue.id, issueNumber: issue.number, updatedAt: issue.updated_at,
     bodySha256: a.bodySha256, observedAt: a.observedAt, checked: a.checked, failed: a.failed, jobId: job.id };
 }
@@ -66,7 +73,7 @@ function providerChecks(checks, sha, now) {
     && x.app?.slug === "cloudflare-workers-and-pages");
   const pages = trusted.filter(x => x.name === "Cloudflare Pages").sort((a, b) => b.id - a.id)[0];
   assert.ok(pages && pages.status === "completed" && pages.conclusion === "success", "Trusted Cloudflare Pages success missing.");
-  interval(pages.started_at, pages.completed_at, now);
+  interval(pages.started_at, pages.completed_at, now, ciAge);
   assert.ok(/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(pages.external_id || ""), "Missing Pages deployment identity.");
   const url = new URL(pages.details_url);
   const resource = url.searchParams.get("to") || url.pathname;
@@ -119,16 +126,42 @@ export async function collectTrustedEvidence({ runId, monitorSha, mainSha, targe
   const provider = providerChecks(checks, targetSha, now);
   const actionsPath = "/actions/runs?head_sha=" + targetSha;
   const actions = await reader.list(actionsPath, "workflow_runs");
-  const required = [".github/workflows/phase3-high-check.yml", ".github/workflows/cloudflare-preview-build.yml"];
-  const ci = actions.filter(x => required.includes(x.path)).map(x => ({ runId: x.id, attempt: x.run_attempt,
-    workflow: x.path, headSha: x.head_sha, status: x.status, conclusion: x.conclusion }));
-  assert.ok(ci.some(x => x.workflow === required[0]), "Normal Phase 3 evidence missing.");
-  for (const path of new Set(ci.map(x => x.workflow))) {
+  assert.ok(actions.some(x => x.path === ".github/workflows/phase3-high-check.yml"), "Normal Phase 3 evidence missing.");
+  const ci = [];
+  for (const path of ciWorkflows.keys()) {
     const latest = actions.filter(x => x.path === path).sort((a, b) => b.id - a.id || b.run_attempt - a.run_attempt)[0];
+    if (!latest) continue; // Reusable Cloudflare jobs share the Phase 3 run after #98.
     positiveId(latest.id); positiveId(latest.run_attempt);
     assert.ok(latest.head_sha === targetSha && latest.status === "completed" && latest.conclusion === "success",
       "Failed, inconclusive or stale target CI evidence.");
-    interval(latest.run_started_at, latest.updated_at, now);
+    assert.ok(latest.workflow_id === ciWorkflows.get(path) && latest.repository?.id === repo.id
+      && latest.head_repository?.id === repo.id && ["push","pull_request","workflow_dispatch"].includes(latest.event),
+      "Target CI workflow/repository identity mismatch.");
+    const [start, end] = interval(latest.run_started_at, latest.updated_at, now, ciAge);
+    const checkIds = [];
+    if (path === ".github/workflows/phase3-high-check.yml") {
+      assert.equal(latest.event, pr ? "pull_request" : "push", "Normal CI event mismatch.");
+      if (pr) {
+        const matches = latest.pull_requests?.filter(x => x.number === prNumber && x.head?.sha === targetSha
+          && x.base?.sha === mainSha && x.head?.repo?.id === repo.id && x.base?.repo?.id === repo.id);
+        assert.equal(matches?.length, 1, "Normal CI PR binding missing or ambiguous.");
+      } else assert.equal(latest.head_branch, "main", "Normal main CI branch mismatch.");
+      positiveId(latest.check_suite_id);
+      for (const name of requiredChecks) {
+        const matches = checks.filter(x => x.name === name);
+        assert.equal(matches.length, 1, "Missing or ambiguous required CI check.");
+        const check = matches[0]; positiveId(check.id);
+        assert.ok(check.head_sha === targetSha && check.app?.id === 15368 && check.app?.slug === "github-actions"
+          && check.check_suite?.id === latest.check_suite_id && check.status === "completed" && check.conclusion === "success",
+          "Required CI identity, suite or outcome mismatch.");
+        const [checkStart, checkEnd] = interval(check.started_at, check.completed_at, now, ciAge);
+        assert.ok(checkStart >= start && checkEnd <= end + 1000, "Required check does not belong to the current CI attempt.");
+        checkIds.push({ name, checkId: check.id });
+      }
+    }
+    ci.push({ runId: latest.id, attempt: latest.run_attempt, workflow: path, workflowId: latest.workflow_id,
+      headSha: latest.head_sha, status: latest.status, conclusion: latest.conclusion,
+      startedAt: latest.run_started_at, completedAt: latest.updated_at, checks: checkIds });
   }
   // Re-read both identities and complete collections; no snapshot is considered atomic.
   same(main, await reader.get("/branches/main"), "Main moved during evidence collection.");

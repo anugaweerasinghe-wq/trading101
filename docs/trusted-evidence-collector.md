@@ -1,6 +1,6 @@
 # On-demand trusted evidence collection
 
-Independent draft based on main 0a31f949bfcbe6f03becc27d63ee4f688c082ed7, 11 October 2026. Does not depend on CI prerequisite draft #98 or planning draft #97. Merge ordering remains owner-controlled; #95 is untouched.
+Independent draft based on main 0a31f949bfcbe6f03becc27d63ee4f688c082ed7, 11 October 2026, with no code imports or overlapping edits from CI prerequisite draft #98 or planning draft #97. Operational collection requires the three unique CI gates proposed by #98; legacy ambiguous build names cannot satisfy it. Merge ordering remains owner-controlled; #95 is untouched.
 
 ## Implementation
 
@@ -12,10 +12,11 @@ The collector requires:
 
 - Explicit verified main, monitor SHA and run ID. Monitor source must be on main history, on the expected workflow/repository, with a completed successful current attempt from push/schedule/manual execution on main.
 - Exactly one open bot report per monitor, one successful source job from the attempt-specific jobs endpoint, and one matching attestation in that job's trusted logs.
-- Exact body digest, source SHA, repository, run/attempt and issue bindings. Observation/update/attestation times must fall within the source job. Maximum age is 30 hours; future tolerance is one minute.
+- Exact body digest, source SHA, repository, run/attempt and issue bindings. Observation/update/attestation times must fall within the source job, with a one-second end tolerance for GitHub timestamp precision. Maximum age is 30 hours; future tolerance is one minute.
 - Reviewed coverage: 352 route URLs and 12 Chrome routes, matching the audited inventory. A changed inventory requires deliberate review; reports cannot choose their own threshold.
 - Complete bounded pagination: 100/page, at most five pages, unique IDs, consistent totals, consecutive trusted next links. Full array pages without a total or next link are ambiguous and rejected.
 - Trusted Pages success on the target SHA, matching Cloudflare App ID/slug and project/deployment identity. Actions and Worker results are separate records. Worker dependencies remain unverified.
+- Normal Phase 3 success from the registered workflow/repository and correct push-main or exact PR context. All three unique GitHub Actions checks must be successful, unambiguous, match its current check suite and fall within its current attempt. CI and Pages must be under 24 hours old. The reusable Cloudflare job needs no separate workflow run; any recognized separate compatibility run is also checked. Output records only the latest recognized runs.
 - Re-reading main, source run/attempt/jobs, reports, target CI/check collections and optional PR head/base. Changes block the packet.
 
 Budget: at most 50 HTTP GETs and 120 seconds, 15-second response timeout, bounded body/log sizes. No retries after quota/auth/server failures. Credentials stay in headers for api.github.com and are stripped for the trusted one-time Azure log redirect. Redirect URLs/tokens are never saved or printed.

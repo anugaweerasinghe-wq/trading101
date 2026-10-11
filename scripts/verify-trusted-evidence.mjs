@@ -34,7 +34,14 @@ function fixture() {
     external_id: "12345678-1234-1234-1234-123456789012",
     details_url: "https://dash.cloudflare.com/?to=/account/pages/view/tradehq-preview/12345678-1234-1234-1234-123456789012" }];
   checks.push({ ...checks[0], id: 301, name: "Workers Builds: thetradehq", conclusion: "failure" });
+  for (const [i,name] of ["TradeHQ Phase 3 tests", "TradeHQ Cloudflare compatibility / Cloudflare build and SEO", "TradeHQ Required validation"].entries()) {
+    checks.push({ id: 310+i, name, head_sha: mainSha, app: { id: 15368, slug: "github-actions" },
+      check_suite: { id: 500 }, status: "completed", conclusion: "success",
+      started_at: "2026-10-11T05:11:00Z", completed_at: "2026-10-11T05:19:00Z" });
+  }
   const actions = [{ id: 400, path: ".github/workflows/phase3-high-check.yml", head_sha: mainSha,
+    workflow_id: 368399831, repository: repo, head_repository: repo, check_suite_id: 500,
+    event: "push", head_branch: "main", pull_requests: [],
     status: "completed", conclusion: "success", run_attempt: 1, run_started_at: "2026-10-11T05:10:00Z", updated_at: "2026-10-11T05:20:00Z" }];
   return { repo, run, reports, jobs, logs, checks, actions, calls: [], seen: new Map(), mutate: null };
 }
@@ -68,9 +75,20 @@ const packet = await collectTrustedEvidence({ ...options, reader: readerFor(f) }
 assert.equal(packet.monitoring.attempt, 2);
 assert.equal(packet.monitoring.reports.length, 2);
 assert.equal(packet.cloudflare.workers[0].conclusion, "failure");
+assert.equal(packet.githubActions[0].checks.length, 3, "Reusable Cloudflare evidence is bound within the normal Phase 3 suite.");
 assert.deepEqual(Object.values(packet.authorization), [false, false, false, false, false]);
 assert.ok(!/PRIVATE_(?:TOKEN|REPORT|LOG)_SENTINEL/.test(JSON.stringify(packet)));
 assert.ok(f.calls.every(x => x.startsWith(root)));
+// GitHub job/issue times have second precision; a real console record can include fractions.
+f = fixture();
+f.jobs[0].completed_at = "2026-10-11T05:01:00Z";
+f.reports[0].updated_at = "2026-10-11T05:01:00Z";
+f.reports[0].body = f.reports[0].body.replace("05:01:00.000Z", "05:01:00.500Z");
+f.logs[0] = "2026-10-11T05:01:00.6000000Z " + ATTESTATION_PREFIX + JSON.stringify(makeAttestation("route",f.reports[0].body,f.reports[0],
+  { GITHUB_REPOSITORY:EVIDENCE_REPOSITORY, GITHUB_REPOSITORY_ID:String(EVIDENCE_REPOSITORY_ID), GITHUB_RUN_ID:String(runId), GITHUB_RUN_ATTEMPT:"2", GITHUB_SHA:monitorSha }));
+assert.equal((await collectTrustedEvidence({ ...options, reader:readerFor(f) })).monitoring.reports.length,2);
+f.jobs[0].completed_at = "2026-10-11T05:00:59Z";
+await assert.rejects(collectTrustedEvidence({ ...options, reader:readerFor(f) }), /outside producing job/);
 const attacks = [
   x => { x.repo.id++; },
   x => { x.repo.private = true; },
@@ -112,6 +130,25 @@ const attacks = [
   x => { delete x.actions[0].run_attempt; },
   x => { x.actions[0].head_sha = monitorSha; },
   x => { x.actions[0].run_started_at = "2026-10-09T05:00:00Z"; },
+  x => { x.actions[0].run_started_at = "2026-10-10T05:00:00Z"; },
+  x => { x.actions[0].workflow_id++; },
+  x => { x.actions[0].repository = { id: 7 }; },
+  x => { x.actions[0].head_repository = { id: 7 }; },
+  x => { x.actions[0].event = "pull_request_target"; },
+  x => { x.actions[0].head_branch = "feature"; },
+  x => { x.actions[0].check_suite_id++; },
+  x => { x.actions[0].run_started_at = "2026-10-11T05:12:00Z"; },
+  x => { x.checks.pop(); },
+  x => { x.checks.push({ ...x.checks[2], id: 999 }); },
+  x => { x.checks[2].app.id++; },
+  x => { x.checks[2].app.slug = "untrusted"; },
+  x => { x.checks[2].head_sha = monitorSha; },
+  x => { x.checks[2].check_suite.id++; },
+  x => { x.checks[2].conclusion = "skipped"; },
+  x => { x.checks[2].status = "in_progress"; },
+  x => { x.checks[2].started_at = null; },
+  x => { x.checks[2].started_at = "2026-10-10T05:00:00Z"; },
+  x => { x.checks[2].completed_at = "2026-10-11T05:21:00Z"; },
   x => { x.actions.length = 0; },
   x => { x.mutate = (path, n, data) => path === "/branches/main" && n > 1 ? { commit: { sha: monitorSha } } : data; },
   x => { x.mutate = (path, n, data) => { if (path === "/issues" && n > 1) data[0].body += "later edit"; return data; }; },
@@ -126,12 +163,24 @@ await assert.rejects(collectTrustedEvidence({ ...options, targetSha: "c".repeat(
 f = fixture();
 f.checks.forEach(check => { check.head_sha = "c".repeat(40); });
 f.actions[0].head_sha = "c".repeat(40);
+f.actions[0].event = "pull_request";
+f.actions[0].pull_requests = [{ number: 999, head: { sha: "c".repeat(40), repo: f.repo }, base: { sha: mainSha, repo: f.repo } }];
 const proposalPacket = await collectTrustedEvidence({ ...options, targetSha: "c".repeat(40), prNumber: 999, reader: readerFor(f) });
 assert.equal(proposalPacket.targetSha, "c".repeat(40));
 f = fixture();
 f.mutate = (path, n, data) => { if (path === "/pulls/999" && n > 1) data.head.sha = mainSha; return data; };
 f.checks.forEach(check => { check.head_sha = "c".repeat(40); }); f.actions[0].head_sha = "c".repeat(40);
+f.actions[0].event = "pull_request";
+f.actions[0].pull_requests = [{ number: 999, head: { sha: "c".repeat(40), repo: f.repo }, base: { sha: mainSha, repo: f.repo } }];
 await assert.rejects(collectTrustedEvidence({ ...options, targetSha: "c".repeat(40), prNumber: 999, reader: readerFor(f) }));
+for (const mutate of [x => { x.actions[0].pull_requests = []; }, x => { x.actions[0].pull_requests[0].head.sha = mainSha; },
+  x => { x.actions[0].pull_requests[0].base.sha = monitorSha; }, x => { x.actions[0].pull_requests.push(x.actions[0].pull_requests[0]); }]) {
+  f = fixture(); f.checks.forEach(check => { check.head_sha = "c".repeat(40); }); f.actions[0].head_sha = "c".repeat(40);
+  f.actions[0].event = "pull_request";
+  f.actions[0].pull_requests = [{ number: 999, head: { sha: "c".repeat(40), repo: f.repo }, base: { sha: mainSha, repo: f.repo } }];
+  mutate(f);
+  await assert.rejects(collectTrustedEvidence({ ...options, targetSha: "c".repeat(40), prNumber: 999, reader: readerFor(f) }));
+}
 
 // Exercise real pagination, including completeness, gaps, changed totals and origin leakage.
 const entries = Array.from({ length: 205 }, (_, i) => ({ id: i + 1 }));
