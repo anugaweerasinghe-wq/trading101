@@ -1,0 +1,35 @@
+# Offline durable repair-control prototype
+
+Status: proposed and tested locally, not installed, connected or authorized for production. The SQL lives in `docs/proposals/repair-control-prototype.sql`, outside Supabase migrations. No application, workflow or Edge Function calls it. No existing role receives a new permission. The SQL refuses to create objects without an explicit offline test setting; that setting is a mistake-prevention guard, not a security boundary against a database owner.
+
+## Problem and scope
+
+Stage 2 currently accepts owner-stop and attempt assertions in an offline review packet. Such inputs cannot supply durable attempt history or a server-controlled stop. This draft tests a possible private store using the existing PGlite dependency, without writing a production database or introducing a paid service.
+
+The prototype starts stopped, blocks missing state, serializes transitions on a policy row, and separately constrains the database to one active candidate. Claims are restricted to the existing About-page heading/layout symptom categories, one attempt per source/symptom/path fingerprint, and at most one accepted claim per rolling 24 hours. A renamed candidate cannot erase the fingerprint history. These limits are deliberately conservative; a legitimate recurring defect can remain blocked indefinitely until a separately reviewed recovery design exists. An expired claim also stays active until an owner stop/resume invalidates it.
+
+Claims bind the base SHA, evidence digest and stop generation. Validation binds one proposed head SHA. Recorded approvals expire within the claim's 30-minute lease and reject a different head, base or digest. Stop and resume increment the generation and invalidate every active claim/approval while preserving attempts and frequency history. Server time, rather than supplied client time, controls leases and expiry.
+
+The functions use security-invoker execution, an empty search path and qualified objects. The private schema, tables and functions deny PUBLIC, anon, authenticated and service_role access, including the role that normally bypasses RLS. Tables also enable RLS without application policies. Only the database owner in the disposable test operates transitions. There is no public RPC, new role, security-definer function or permission expansion.
+
+## What this does not prove
+
+A recorded `validate` or `approve` transition is not independent CI evidence or verified owner identity. The store cannot establish that an About-page diff is mechanically LOW risk, that Gemini stayed within its quota, or that a Pages preview matches the proposed head. Every returned result still has `codeWrites: false` and `productionRelease: false`, including a valid review. There is no operational approval service, autonomous repair, merge or release integration.
+
+Accepted candidates retain immutable review fields. Rejections and other transition outcomes use daily fixed-code counters with first/last timestamps, capped at 10,000 with explicit truncation. This avoids arbitrary input and unbounded per-request logs, but is not a complete per-event forensic audit trail. It records no user identifiers, report bodies, prompts, tokens or personal data.
+
+## Verification
+
+Run `node scripts/agent-repair-control-prototype.test.mjs` or the existing `node scripts/verify-repair-triage.mjs`. The test creates and removes its own local directory, creates fixture roles locally, and applies the SQL only to PGlite. It never reads a Supabase URL or credential and never connects to a production database.
+
+Tests cover the install guard, missing/default-stopped state, HIGH/unknown scope rejection, stale/future inputs, one active claim, SHA/digest binding, validation before approval, expiry, persistence after closing/reopening the local store, duplicate attempts, rolling limits across stop/resume, generation invalidation, audit truncation, RLS and denied application roles. PGlite queues operations on one connection: the concurrent-call fixture is not proof of real multi-session PostgreSQL behavior. A disposable PostgreSQL concurrency test remains necessary before installation.
+
+## Approval boundary and next steps
+
+Do not copy this file into migrations or run it against Supabase. Installation, a backend identity, grants, an authenticated owner interface and live stop operation require a separate design and explicit owner approval. Before any such approval: test real PostgreSQL locking and rollback in a disposable non-production environment; connect trusted evidence and independent validation; verify owner identity; bind approvals to the exact PR head; define complete audit retention/recovery; and preserve an independent release authorization gate. No production rollback rehearsal is authorized here.
+
+If an installation is eventually approved, the default stopped state must remain until all integrations are demonstrated. Missing state, connection errors or uncertain evidence must deny actions. No caller may treat this prototype's booleans as permission to modify code or release.
+
+## October 11 progress ledger
+
+Baseline main: `0a31f949bfcbe6f03becc27d63ee4f688c082ed7`. This draft is independent of the CI prerequisite and trusted-evidence drafts. Local implementation/test results are distinct from remote CI, preview and deployment evidence, which are recorded against the exact published head in its PR. No database settings, grants, cron jobs, secrets or production code are changed. The 17/42 audit maturity baseline is unchanged: an uninstalled prototype supplies no new evidence of operational automation.
