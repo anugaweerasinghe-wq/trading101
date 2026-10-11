@@ -41,3 +41,6 @@ assert.match(script,/No AI patch, branch, PR, automatic merge/);
 assert.doesNotMatch(script,/\/git\/refs|\/pulls|\/contents\/|GEMINI_API_KEY|SUPABASE_SERVICE_ROLE/);
 assert.doesNotMatch(workflow,/gh pr merge|pull_request_target/);
 console.log("Public failure recurrence, fresh-run evidence, restricted categories, human review and issue-only controls passed.");
+
+// Offline Stage 2 review tests run in the existing credential-free CI check.
+await import("./verify-repair-review.mjs");
