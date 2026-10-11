@@ -1,5 +1,11 @@
 # Autonomous operations continuation ledger — 10 October 2026
 
+## 11 October release follow-up
+
+PR #89 merged as `848f4755c96f78ffbf6b8a9b835e0e99e02ea7a3`. Exact-SHA production Phase 3 run `38105454366` and Pages deployment `576e040e-35ba-4f09-b7b4-5d846d5c33dd` passed. Thirteen fresh HTTP routes/assets passed with expected production canonicals and the publisher record; Chrome rendered the comparison and all six course tracks. The PR conversation records the final release evidence. AdSense Policy Centre had no current issues during the account review, while site approval remained pending. A fresh Supabase usage-page navigation still redirected to sign-in after the secure sign-in request timed out; monthly consumption remains unverified.
+
+That final course-page check found stale catalog copy: the introduction said 20 lessons despite 26 published lessons, the FAQ said every track had five lessons despite two three-lesson tracks, and crawler content retained a four-track heading. The next narrow correction derives displayed counts from each existing catalog, describes variable track lengths and estimates accurately, and acknowledges the already published cryptocurrency track. Local and remote validation plus preview/production checks remain required; this paragraph does not claim the new correction is deployed. No course data, review, scoring, progress storage, authorization or schedule changes are included.
+
 ## Source and release checkpoint
 
 - Starting main: `27bf154772067ed5cfc31031adb571f942244dfb`; PRs #79, #81, #84 and #85 confirmed merged.

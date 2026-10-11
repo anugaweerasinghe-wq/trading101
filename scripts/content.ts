@@ -223,7 +223,7 @@ export async function buildContentMap(): Promise<Map<string, PageContent>> {
   map.set("/courses", {
     sections: [
       {
-        h: "Four structured tracks",
+        h: `${tracks.length} structured tracks, ${tracks.reduce((total, track) => total + track.lessons.length, 0)} lessons`,
         p: [
           "Courses on TradeHQ are sequential tracks, not a pile of articles. Each track states what you will be able to do at the end, what you need to know first, how the lessons build on one another, and who the track is not suitable for. Every lesson ends with key takeaways, cited sources and a short quiz, and each completed track awards a badge.",
         ],
