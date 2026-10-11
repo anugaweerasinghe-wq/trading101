@@ -80,7 +80,7 @@ const FAQ = [
   },
   {
     q: "How long does a track take?",
-    a: "Each track is 5 lessons. Most people finish a track in 60–90 minutes of reading plus quiz time. Progress is saved automatically in your browser so you can resume any time.",
+    a: "Lesson counts vary by track. Each course card lists its syllabus and estimated reading time; allow additional time for quizzes and worksheet exercises. Progress is saved in your browser so you can resume on the same browser.",
   },
   {
     q: "What do I get for completing a track?",
@@ -92,12 +92,13 @@ const FAQ = [
   },
   {
     q: "Will you cover crypto, forex or DeFi in depth?",
-    a: "Existing lessons already reference crypto, forex and macro. Dedicated advanced crypto and forex tracks are on the public roadmap and will be added free.",
+    a: "The published catalog includes a cryptocurrency price-feed and portfolio-valuation track. Other lessons reference forex and macro. Check the current syllabus for each track's scope; future topics are not guaranteed.",
   },
 ];
 
 export default function Courses() {
   const { tracks: courseTracks } = useCourseCatalog();
+  const lessonCount = courseTracks.reduce((total, track) => total + track.lessons.length, 0);
   const progress = loadProgress();
   const resume = progress.lastLesson;
 
@@ -186,9 +187,8 @@ export default function Courses() {
               Learn to Trade — Properly
             </h1>
             <p className="mt-5 text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Structured courses on the topics that actually decide whether a
-              trader survives their first year: options, futures, macro reading and psychology.
-              Twenty full-length lessons. Quizzes, sources, completion badges, and a
+              Explore the published catalog's {courseTracks.length} course tracks and {lessonCount} lessons.
+              Each course card lists its topics and syllabus. Quizzes, sources, completion badges, and a
               <span className="text-emerald-400 font-semibold"> $100,000 virtual practice account</span>
               {" "}for supported spot instruments. Options and futures contract mechanics are
               taught through conceptual examples and worksheet exercises.
@@ -216,7 +216,7 @@ export default function Courses() {
           <AIAnswerBlock
             className="mb-12"
             question="Are TradeHQ's free trading courses any good?"
-            answer={"TradeHQ offers " + courseTracks.length + " structured course tracks with " + courseTracks.reduce((n, t) => n + t.lessons.length, 0) + " lessons, quizzes, cited sources and completion badges. AI-assisted additions receive an editorial review before publication. The free $100,000 virtual account supports spot instruments; derivatives exercises are conceptual."}
+            answer={"TradeHQ offers " + courseTracks.length + " structured course tracks with " + lessonCount + " lessons, quizzes, cited sources and completion badges. AI-assisted additions receive an editorial review before publication. The free $100,000 virtual account supports spot instruments; derivatives exercises are conceptual."}
           />
 
           {resume && (
@@ -263,7 +263,7 @@ export default function Courses() {
                 <BookOpen className="w-6 h-6 text-emerald-400" /> Course tracks
               </h2>
               <span className="text-xs text-muted-foreground">
-                {courseTracks.reduce((n, t) => n + t.lessons.length, 0)} lessons · Free forever
+                {lessonCount} lessons · Free forever
               </span>
             </div>
 
